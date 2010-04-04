@@ -59,21 +59,19 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         if (attribute.IsRequired)
                             attributeTitle.Text = "<span>*</span> ";
 
-                        //text prompt
+                        //text prompt / title
                         string textPrompt = string.Empty;
                         if (!string.IsNullOrEmpty(attribute.TextPrompt))
                             textPrompt = attribute.TextPrompt;
                         else
-                            textPrompt += attribute.ProductAttribute.Name;
+                            textPrompt = attribute.ProductAttribute.Name;
 
                         attributeTitle.Text += Server.HtmlEncode(textPrompt);
                         attributeTitle.Style.Add("font-weight", "bold");
 
                         //description
                         if (!string.IsNullOrEmpty(attribute.ProductAttribute.Description))
-                            attributeTitle.Text += string.Format("<div>{0}</div>",
-                                                                 Server.HtmlEncode(
-                                                                     attribute.ProductAttribute.Description));
+                            attributeTitle.Text += string.Format("<br /><span>{0}</span>", Server.HtmlEncode(attribute.ProductAttribute.Description));
 
                         bool addBreak = true;
                         switch (attribute.AttributeControlType)
@@ -96,7 +94,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         }
                         divAttribute.Controls.Add(attributeTitle);
 
-                        string controlID = string.Format("{0}_{1}", attribute.ProductAttribute.Name, attribute.ProductVariantAttributeID);
+                        string controlID = string.Format("{0}_{1}", attribute.ProductAttribute.ProductAttributeID, attribute.ProductVariantAttributeID);
                         switch (attribute.AttributeControlType)
                         {
                             case AttributeControlTypeEnum.DropdownList:
@@ -201,7 +199,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var productVariantAttributes = ProductAttributeManager.GetProductVariantAttributesByProductVariantID(this.ProductVariantID);
                 foreach (ProductVariantAttribute attribute in productVariantAttributes)
                 {
-                    string controlID = string.Format("{0}_{1}", attribute.ProductAttribute.Name, attribute.ProductVariantAttributeID);
+                    string controlID = string.Format("{0}_{1}", attribute.ProductAttribute.ProductAttributeID, attribute.ProductVariantAttributeID);
                     switch (attribute.AttributeControlType)
                     {
                         case AttributeControlTypeEnum.DropdownList:
