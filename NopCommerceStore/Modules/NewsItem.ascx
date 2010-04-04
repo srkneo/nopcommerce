@@ -66,7 +66,7 @@
         </div>
         <div class="clear">
         </div>
-        <div class="commentList">
+        <div class="commentlist">
             <asp:Repeater ID="rptrComments" runat="server">
                 <ItemTemplate>
                     <nopCommerce:NewsComment ID="ctrlNewsComment" runat="server" NewsComment='<%# Container.DataItem %>' />
