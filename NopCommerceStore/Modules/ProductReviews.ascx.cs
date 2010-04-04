@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (Page.IsValid)
             {
-                string writeReviewURL = CommonHelper.GetStoreLocation() + "ProductReviewAdd.aspx?ProductID=" + this.ProductID.ToString();
+                string writeReviewURL = CommonHelper.GetStoreLocation() + "productreviewadd.aspx?productid=" + this.ProductID.ToString();
                 Response.Redirect(writeReviewURL);
             }
         }

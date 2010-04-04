@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="http://www.nopcommerce.com/Documentation.aspx" title="<%=GetLocaleResourceString("Admin.HelpHome.nopDocumentation.TitleDescription")%>"
+                    <a href="http://www.nopcommerce.com/documentation.aspx" title="<%=GetLocaleResourceString("Admin.HelpHome.nopDocumentation.TitleDescription")%>"
                         target="_blank">
                         <%=GetLocaleResourceString("Admin.HelpHome.nopDocumentation.Title")%></a>
                 </div>
@@ -26,7 +26,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="http://forums.nopcommerce.com/forums" title="<%=GetLocaleResourceString("Admin.HelpHome.nopCommunity.TitleDescription")%>"
+                    <a href="http://www.nopcommerce.com/boards/" title="<%=GetLocaleResourceString("Admin.HelpHome.nopCommunity.TitleDescription")%>"
                         target="_blank">
                         <%=GetLocaleResourceString("Admin.HelpHome.nopCommunity.Title")%></a>
                 </div>

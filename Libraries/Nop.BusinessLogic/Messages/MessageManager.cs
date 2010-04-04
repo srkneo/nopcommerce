@@ -1439,7 +1439,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             {
                 tokens.Add("Order.CreatedOn", order.CreatedOn.ToString("D"));
             }
-            tokens.Add("Order.OrderURLForCustomer", string.Format("{0}OrderDetails.aspx?OrderID={1}", SettingManager.StoreURL, order.OrderID));
+            tokens.Add("Order.OrderURLForCustomer", string.Format("{0}orderdetails.aspx?orderid={1}", SettingManager.StoreURL, order.OrderID));
 
             foreach (string token in tokens.Keys)
                 Template = Template.Replace(string.Format(@"%{0}%", token), tokens[token]);
@@ -1461,8 +1461,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("Store.URL", SettingManager.StoreURL);
             tokens.Add("Store.Email", AdminEmailAddress);
             tokens.Add("NewsLetterSubscription.Email", HttpUtility.HtmlEncode(subscription.Email));
-            tokens.Add("NewsLetterSubscription.ActivationUrl", String.Format("{0}NewsLetterSubscriptionActivation.aspx?T={1}&Active=1", SettingManager.StoreURL, subscription.NewsLetterSubscriptionGuid));
-            tokens.Add("NewsLetterSubscription.DeactivationUrl", String.Format("{0}NewsLetterSubscriptionActivation.aspx?T={1}&Active=0", SettingManager.StoreURL, subscription.NewsLetterSubscriptionGuid));
+            tokens.Add("NewsLetterSubscription.ActivationUrl", String.Format("{0}newslettersubscriptionactivation.aspx?t={1}&active=1", SettingManager.StoreURL, subscription.NewsLetterSubscriptionGuid));
+            tokens.Add("NewsLetterSubscription.DeactivationUrl", String.Format("{0}newslettersubscriptionactivation.aspx?t={1}&active=0", SettingManager.StoreURL, subscription.NewsLetterSubscriptionGuid));
 
             var customer = subscription.Customer;
             if(customer != null)
@@ -1496,11 +1496,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("Customer.FullName", HttpUtility.HtmlEncode(customer.FullName));
 
             string passwordRecoveryURL = string.Empty;
-            passwordRecoveryURL = string.Format("{0}PasswordRecovery.aspx?PRT={1}&Email={2}", SettingManager.StoreURL, customer.PasswordRecoveryToken, customer.Email);
+            passwordRecoveryURL = string.Format("{0}passwordrecovery.aspx?prt={1}&email={2}", SettingManager.StoreURL, customer.PasswordRecoveryToken, customer.Email);
             tokens.Add("Customer.PasswordRecoveryURL", passwordRecoveryURL);
             
             string accountActivationURL = string.Empty;
-            accountActivationURL = string.Format("{0}AccountActivation.aspx?ACT={1}&Email={2}", SettingManager.StoreURL, customer.AccountActivationToken, customer.Email);
+            accountActivationURL = string.Format("{0}accountactivation.aspx?act={1}&email={2}", SettingManager.StoreURL, customer.AccountActivationToken, customer.Email);
             tokens.Add("Customer.AccountActivationURL", accountActivationURL);
             
             foreach (string token in tokens.Keys)

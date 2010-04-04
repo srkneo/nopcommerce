@@ -195,7 +195,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                 }
 
-                Response.Redirect("~/Wishlist.aspx");
+                Response.Redirect("~/wishlist.aspx");
             }
         }
 
@@ -314,7 +314,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
             }
 
-            Response.Redirect("~/ShoppingCart.aspx");
+            Response.Redirect("~/shoppingcart.aspx");
         }
 
         [DefaultValue(false)]

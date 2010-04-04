@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (product != null)
             {
                 ProductManager.AddProductToCompareList(product.ProductID);
-                Response.Redirect("~/CompareProducts.aspx");
+                Response.Redirect("~/compareproducts.aspx");
             }
             else
                 Response.Redirect(CommonHelper.GetStoreLocation());

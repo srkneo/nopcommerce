@@ -9,7 +9,7 @@
     </div>
     <div id="divFailed" style="display:none" runat="server">
         <img src="_images/Cross.gif" alt="Cross"/>Your Transaction Failed to be processed <asp:HyperLink ID="HyperLink1"
-            runat="server" NavigateUrl="~/Default.aspx">please try again </asp:HyperLink><br />
+            runat="server" NavigateUrl="~/default.aspx">please try again </asp:HyperLink><br />
     </div>
     
         <div id="divFraud" style="display:none" runat="server">

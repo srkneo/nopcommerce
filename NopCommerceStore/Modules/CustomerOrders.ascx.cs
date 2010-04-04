@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var initialOrder = recurringPayment.InitialOrder;
             if (initialOrder != null)
             {
-                initialOrderInfo = string.Format("<a href=\"{0}OrderDetails.aspx?OrderID={1}\">{2}</a>", CommonHelper.GetStoreLocation(), initialOrder.OrderID, string.Format(GetLocaleResourceString("Order.RecurringPayments.InitialOrder.View"), initialOrder.OrderID));
+                initialOrderInfo = string.Format("<a href=\"{0}orderdetails.aspx?orderid={1}\">{2}</a>", CommonHelper.GetStoreLocation(), initialOrder.OrderID, string.Format(GetLocaleResourceString("Order.RecurringPayments.InitialOrder.View"), initialOrder.OrderID));
             }
             return initialOrderInfo;
         }
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         protected void btnOrderDetails_Click(object sender, CommandEventArgs e)
         {
             int orderID = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect(string.Format("~/OrderDetails.aspx?OrderID={0}", orderID));
+            Response.Redirect(string.Format("~/orderdetails.aspx?orderid={0}", orderID));
         }
         
         protected void gvRecurringPayments_RowCommand(object sender, GridViewCommandEventArgs e)

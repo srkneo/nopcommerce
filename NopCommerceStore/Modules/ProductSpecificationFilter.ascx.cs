@@ -157,10 +157,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (!String.IsNullOrEmpty(qsp))
                 {
-                    if (!reservedQueryStringParamsSplitted.Contains(qsp))
+                    string _qsp = qsp.ToLowerInvariant();
+                    if (!reservedQueryStringParamsSplitted.Contains(_qsp))
                     {
-                        if (!result.Contains(qsp))
-                            result.Add(qsp);
+                        if (!result.Contains(_qsp))
+                            result.Add(_qsp);
                     }
                 }
             }
@@ -259,7 +260,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (ViewState["ExcludedQueryStringParams"] == null)
                     return string.Empty;
                 else
-                    return (string)ViewState["ExcludedQueryStringParams"];
+                    return ((string)ViewState["ExcludedQueryStringParams"]).ToLowerInvariant();
             }
             set
             {
@@ -274,7 +275,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (ViewState["ReservedQueryStringParams"] == null)
                     return string.Empty;
                 else
-                    return (string)ViewState["ReservedQueryStringParams"];
+                    return ((string)ViewState["ReservedQueryStringParams"]).ToLowerInvariant();
             }
             set
             {

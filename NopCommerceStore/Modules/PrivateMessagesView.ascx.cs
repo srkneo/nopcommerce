@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (pm.ToUserID != NopContext.Current.User.CustomerID && pm.FromUserID != NopContext.Current.User.CustomerID)
                 {
-                    Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+                    Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
                 }
 
                 if (!pm.IsRead && pm.ToUserID == NopContext.Current.User.CustomerID)
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             else
             {
-                Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+                Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
             }
 
             lblFrom.Text = Server.HtmlEncode(CustomerManager.FormatUserName(pm.FromUser));
@@ -78,12 +78,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var pm = ForumManager.GetPrivateMessageByID(this.PrivateMessageID);
             if (pm != null)
             {
-                string replyURL = string.Format("{0}SendPM.aspx?R={1}", CommonHelper.GetStoreLocation(), pm.PrivateMessageID);
+                string replyURL = string.Format("{0}sendpm.aspx?r={1}", CommonHelper.GetStoreLocation(), pm.PrivateMessageID);
                 Response.Redirect(replyURL);
             }
             else
             {
-                Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+                Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
             }
         }
 
@@ -107,12 +107,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                 }
             }
-            Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+            Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+            Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
         }
 
         public int PrivateMessageID

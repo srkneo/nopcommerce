@@ -65,7 +65,7 @@
                 <%=GetLocaleResourceString("Login.ReturningCustomer")%></span>
             <asp:Panel ID="pnlLogin" runat="server" DefaultButton="LoginForm$LoginButton" CssClass="login-block">
                 <asp:Login ID="LoginForm" TitleText="" OnLoggedIn="OnLoggedIn" OnLoggingIn="OnLoggingIn"
-                    runat="server" CreateUserUrl="~/Register.aspx" DestinationPageUrl="~/Default.aspx"
+                    runat="server" CreateUserUrl="~/register.aspx" DestinationPageUrl="~/Default.aspx"
                     OnLoginError="OnLoginError" RememberMeSet="True" FailureText="<% $NopResources:Login.FailureText %>">
                     <LayoutTemplate>
                         <table class="login-table-container">
@@ -104,7 +104,7 @@
                                 </tr>
                                 <tr class="row">
                                     <td class="forgot-password" colspan="2">
-                                        <asp:HyperLink ID="hlForgotPassword" runat="server" NavigateUrl="~/PasswordRecovery.aspx"
+                                        <asp:HyperLink ID="hlForgotPassword" runat="server" NavigateUrl="~/passwordrecovery.aspx"
                                             Text="<% $NopResources:Login.ForgotPassword %>"></asp:HyperLink>
                                     </td>
                                 </tr>

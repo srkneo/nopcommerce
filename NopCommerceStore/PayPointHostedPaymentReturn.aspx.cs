@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     OrderManager.MarkOrderAsPaid(order.OrderID);
                 }
-                Response.Redirect("~/CheckoutCompleted.aspx");
+                Response.Redirect("~/checkoutcompleted.aspx");
             }
         }
         #endregion

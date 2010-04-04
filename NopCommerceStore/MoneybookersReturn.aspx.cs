@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web
                 string md5sig = HttpContext.Current.Request.Form["md5sig"];
                 string amount = HttpContext.Current.Request.Form["amount"];
                 string currency = HttpContext.Current.Request.Form["currency"];
-                
+
                 if (status == "2")
                 {
                     Order order = OrderManager.GetOrderByID(Convert.ToInt32(mb_transaction_id));
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web
                     {
                         OrderManager.MarkOrderAsPaid(order.OrderID);
                     }
-                    Response.Redirect("~/CheckoutCompleted.aspx");
+                    Response.Redirect("~/checkoutcompleted.aspx");
                 }
                 else
                     Response.Redirect(CommonHelper.GetStoreLocation());

@@ -174,7 +174,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             get
             {
-                return (((string)this.ViewState["QueryStringProperty"]) ?? "Price");
+                return (((string)this.ViewState["QueryStringProperty"]) ?? "Price").ToLowerInvariant();
             }
             set
             {
@@ -189,7 +189,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (ViewState["ExcludedQueryStringParams"] == null)
                     return string.Empty;
                 else
-                    return (string)ViewState["ExcludedQueryStringParams"];
+                    return ((string)ViewState["ExcludedQueryStringParams"]).ToLowerInvariant();
             }
             set
             {

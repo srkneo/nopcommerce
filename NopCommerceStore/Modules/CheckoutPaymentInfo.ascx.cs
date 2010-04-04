@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             else
             {
                 if (!this.OnePageCheckout)
-                    Response.Redirect("~/CheckoutPaymentMethod.aspx");
+                    Response.Redirect("~/checkoutpaymentmethod.aspx");
             }
         }
 
@@ -120,7 +120,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var args1 = new CheckoutStepEventArgs() { PaymentInfoEntered = true };
                 OnCheckoutStepChanged(args1);
                 if (!this.OnePageCheckout)
-                    Response.Redirect("~/CheckoutConfirm.aspx");
+                    Response.Redirect("~/checkoutconfirm.aspx");
             }
         }
 
@@ -133,7 +133,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             if (Cart.Count == 0)
-                Response.Redirect("~/ShoppingCart.aspx");
+                Response.Redirect("~/shoppingcart.aspx");
         }
 
         protected PaymentInfo PaymentInfo

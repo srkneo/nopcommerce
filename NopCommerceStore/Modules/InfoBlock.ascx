@@ -8,13 +8,13 @@
     </div>
     <div class="listbox">
         <ul>
-            <li><a href="<%=Page.ResolveUrl("~/ContactUs.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/contactus.aspx")%>">
                 <%=GetLocaleResourceString("ContactUs.ContactUs")%></a> </li>
-            <li><a href="<%=Page.ResolveUrl("~/AboutUs.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/aboutus.aspx")%>">
                 <%=GetLocaleResourceString("Content.AboutUs")%></a></li>
             <% if (BlogManager.BlogEnabled)
                { %>
-            <li><a href="<%=Page.ResolveUrl("~/Blog.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/blog.aspx")%>">
                 <%=GetLocaleResourceString("Blog.Blog")%></a></li>
             <%} %>
             <% if (ForumManager.ForumsEnabled)
@@ -24,24 +24,24 @@
             <%} %>
             <% if (ProductManager.RecentlyAddedProductsEnabled)
                { %>
-            <li><a href="<%=Page.ResolveUrl("~/RecentlyAddedProducts.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/recentlyaddedproducts.aspx")%>">
                 <%=GetLocaleResourceString("Products.NewProducts")%></a></li>
             <%} %>
             <% if (ProductManager.RecentlyViewedProductsEnabled)
                { %>
-            <li><a href="<%=Page.ResolveUrl("~/RecentlyViewedProducts.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/recentlyviewedproducts.aspx")%>">
                 <%=GetLocaleResourceString("Products.RecentlyViewedProducts")%></a></li>
             <%} %>
             <% if (ProductManager.CompareProductsEnabled)
                { %>
-            <li><a href="<%=Page.ResolveUrl("~/CompareProducts.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/compareproducts.aspx")%>">
                 <%=GetLocaleResourceString("Products.CompareProductsList")%></a></li>
             <%} %>
-            <li><a href="<%=Page.ResolveUrl("~/ShippingInfo.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/shippinginfo.aspx")%>">
                 <%=GetLocaleResourceString("Content.Shipping&Returns")%></a></li>
-            <li><a href="<%=Page.ResolveUrl("~/PrivacyInfo.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/privacyinfo.aspx")%>">
                 <%=GetLocaleResourceString("Content.PrivacyNotice")%></a></li>
-            <li><a href="<%=Page.ResolveUrl("~/ConditionsInfo.aspx")%>">
+            <li><a href="<%=Page.ResolveUrl("~/conditionsinfo.aspx")%>">
                 <%=GetLocaleResourceString("Content.ConditionsOfUse")%></a></li>
         </ul>
     </div>

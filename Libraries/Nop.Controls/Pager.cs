@@ -431,11 +431,13 @@ namespace NopSolutions.NopCommerce.Controls
         {
             get
             {
-                return (((string)this.ViewState["QueryStringProperty"]) ?? "PageIndex");
+                return (((string)this.ViewState["QueryStringProperty"]) ?? "PageIndex").ToLowerInvariant();
             }
             set
             {
-                this.ViewState["QueryStringProperty"] = value;
+                if (value == null)
+                    value = string.Empty;
+                this.ViewState["QueryStringProperty"] = value.ToLowerInvariant();
             }
         }
 

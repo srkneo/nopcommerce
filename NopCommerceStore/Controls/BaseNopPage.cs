@@ -99,12 +99,12 @@ namespace NopSolutions.NopCommerce.Web
                 if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
                 {
                     //it's not login/logout/passwordrecovery/captchaimage/register/accountactivation page
-                    if (!CommonHelper.GetThisPageURL(false).ToLower().Contains("/login.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLower().Contains("/logout.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLower().Contains("/passwordrecovery.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLower().Contains("/captchaimage.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLower().Contains("/accountactivation.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLower().Contains("/register.aspx"))
+                    if (!CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/login.aspx") &&
+                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/logout.aspx") &&
+                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/passwordrecovery.aspx") &&
+                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/captchaimage.aspx") &&
+                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/accountactivation.aspx") &&
+                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/register.aspx"))
                     {
                         string loginURL = SEOHelper.GetLoginPageURL(false);
                         Response.Redirect(loginURL);

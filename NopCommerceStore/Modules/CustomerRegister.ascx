@@ -13,8 +13,8 @@
             EnableScriptLocalization="true" ID="sm1" ScriptMode="Release" CompositeScript-ScriptMode="Release" />
         <asp:CreateUserWizard ID="CreateUserForm" EmailRegularExpression="[\w\.-]+(\+[\w-]*)?@([\w-]+\.)+[\w-]+"
             RequireEmail="False" runat="server" OnCreatedUser="CreatedUser" OnCreatingUser="CreatingUser"
-            OnCreateUserError="CreateUserError" FinishDestinationPageUrl="~/Default.aspx"
-            ContinueDestinationPageUrl="~/Default.aspx" Width="100%" LoginCreatedUser="true">
+            OnCreateUserError="CreateUserError" FinishDestinationPageUrl="~/default.aspx"
+            ContinueDestinationPageUrl="~/default.aspx" Width="100%" LoginCreatedUser="true">
             <WizardSteps>
                 <asp:CreateUserWizardStep ID="CreateUserWizardStep1" runat="server" Title="">
                     <ContentTemplate>

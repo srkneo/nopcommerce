@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var args1 = new CheckoutStepEventArgs() { BillingAddressSelected = true };
                 OnCheckoutStepChanged(args1);
                 if (!this.OnePageCheckout) 
-                    Response.Redirect("~/CheckoutShippingMethod.aspx");
+                    Response.Redirect("~/checkoutshippingmethod.aspx");
                 return;
             }
 
@@ -102,7 +102,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var args2 = new CheckoutStepEventArgs() { BillingAddressSelected = true };
             OnCheckoutStepChanged(args2);
             if (!this.OnePageCheckout)
-                Response.Redirect("~/CheckoutShippingMethod.aspx");
+                Response.Redirect("~/checkoutshippingmethod.aspx");
         }
         
         protected AddressCollection GetAllowedBillingAddresses(Customer customer)
@@ -187,7 +187,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             if (Cart.Count == 0)
-                Response.Redirect("~/ShoppingCart.aspx");
+                Response.Redirect("~/shoppingcart.aspx");
         }
 
         protected void btnTheSameAsShippingAddress_Click(object sender, EventArgs e)

@@ -60,11 +60,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 phCheckoutInfo.Visible = true;
                 if (shoppingCart.Count == 1)
                 {
-                    lShoppingCart.Text = string.Format(GetLocaleResourceString("MiniShoppingCartBox.OneItemText"), string.Format("<a href=\"{0}\" class=\"items\">{1}</a>", Page.ResolveUrl("~/ShoppingCart.aspx"), GetLocaleResourceString("MiniShoppingCartBox.OneItem")));
+                    lShoppingCart.Text = string.Format(GetLocaleResourceString("MiniShoppingCartBox.OneItemText"), string.Format("<a href=\"{0}\" class=\"items\">{1}</a>", Page.ResolveUrl("~/shoppingcart.aspx"), GetLocaleResourceString("MiniShoppingCartBox.OneItem")));
                 }
                 else
                 {
-                    lShoppingCart.Text = string.Format(GetLocaleResourceString("MiniShoppingCartBox.SeveralItemsText"), string.Format("<a href=\"{0}\" class=\"items\">{1}</a>", Page.ResolveUrl("~/ShoppingCart.aspx"), string.Format(GetLocaleResourceString("MiniShoppingCartBox.SeveralItems"), shoppingCart.Count)));
+                    lShoppingCart.Text = string.Format(GetLocaleResourceString("MiniShoppingCartBox.SeveralItemsText"), string.Format("<a href=\"{0}\" class=\"items\">{1}</a>", Page.ResolveUrl("~/shoppingcart.aspx"), string.Format(GetLocaleResourceString("MiniShoppingCartBox.SeveralItems"), shoppingCart.Count)));
                 }
 
                 lblOrderSubtotal.Text = GetLocaleResourceString("MiniShoppingCartBox.OrderSubtotal", GetOrderSubtotal(shoppingCart));
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BtnCheckout_OnClick(object sender, EventArgs e)
         {
-            Response.Redirect("~/Checkout.aspx");
+            Response.Redirect("~/checkout.aspx");
         }
 
         protected string GetOrderSubtotal(ShoppingCart shoppingCart)

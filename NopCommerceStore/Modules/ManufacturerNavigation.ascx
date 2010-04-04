@@ -22,7 +22,7 @@
             </FooterTemplate>
         </asp:Repeater>
         <div class="viewall">
-            <a href="<%=CommonHelper.GetStoreLocation()%>Manufacturers.aspx">
+            <a href="<%=CommonHelper.GetStoreLocation()%>manufacturers.aspx">
                 <%=GetLocaleResourceString("Manufacturer.ViewAll")%></a>
         </div>
     </div>

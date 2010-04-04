@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             //string str = string.Empty;
             //str = Page.Request.QueryString["ReturnUrl"];
             //if (string.IsNullOrEmpty(str))
-            //    str = "~/Default.aspx";
+            //    str = "~/default.aspx";
 
             //this.LoginForm.DestinationPageUrl = str;
         }
@@ -119,7 +119,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
-            string url = CommonHelper.GetStoreLocation() + "Register.aspx";
+            string url = CommonHelper.GetStoreLocation() + "register.aspx";
             //string returnURL = CommonHelper.QueryString("ReturnURL");
             //if (!String.IsNullOrEmpty(returnURL))
             //{
@@ -130,7 +130,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnCheckoutAsGuest_Click(object sender, EventArgs e)
         {
-            string url = CommonHelper.GetStoreLocation() + "Checkout.aspx";
+            string url = CommonHelper.GetStoreLocation() + "checkout.aspx";
             Response.Redirect(url);
         }
 

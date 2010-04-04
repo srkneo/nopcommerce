@@ -60,12 +60,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnAddBillingAddress_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/AddressEdit.aspx?IsBillingAddress=true");
+            Response.Redirect("~/addressedit.aspx?isbillingaddress=true");
         }
 
         protected void btnAddShippingAddress_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/AddressEdit.aspx?IsBillingAddress=false");
+            Response.Redirect("~/addressedit.aspx?isbillingaddress=false");
         }
     }
 }

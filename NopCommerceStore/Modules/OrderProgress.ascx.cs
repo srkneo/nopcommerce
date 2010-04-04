@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 case "cart":
                     {
-                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "ShoppingCart.aspx";
+                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "shoppingcart.aspx";
                         hlAddress.NavigateUrl = string.Empty;
                         hlShipping.NavigateUrl = string.Empty;
                         hlPayment.NavigateUrl = string.Empty;
@@ -66,8 +66,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     break;
                 case "address":
                     {
-                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "ShoppingCart.aspx";
-                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutShippingAddress.aspx";
+                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "shoppingcart.aspx";
+                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutshippingaddress.aspx";
                         hlShipping.NavigateUrl = string.Empty;
                         hlPayment.NavigateUrl = string.Empty;
                         hlConfirm.NavigateUrl = string.Empty;
@@ -76,9 +76,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     break;
                 case "shipping":
                     {
-                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "ShoppingCart.aspx";
-                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutShippingAddress.aspx";
-                        hlShipping.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutShippingMethod.aspx";
+                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "shoppingcart.aspx";
+                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutshippingaddress.aspx";
+                        hlShipping.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutshippingmethod.aspx";
                         hlPayment.NavigateUrl = string.Empty;
                         hlConfirm.NavigateUrl = string.Empty;
                         hlComplete.NavigateUrl = string.Empty;
@@ -86,21 +86,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     break;
                 case "payment":
                     {
-                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "ShoppingCart.aspx";
-                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutShippingAddress.aspx";
-                        hlShipping.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutShippingMethod.aspx";
-                        hlPayment.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutPaymentMethod.aspx";
+                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "shoppingcart.aspx";
+                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutshippingaddress.aspx";
+                        hlShipping.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutshippingmethod.aspx";
+                        hlPayment.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutpaymentmethod.aspx";
                         hlConfirm.NavigateUrl = string.Empty;
                         hlComplete.NavigateUrl = string.Empty;
                     }
                     break;
                 case "confirm":
                     {
-                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "ShoppingCart.aspx";
-                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutShippingAddress.aspx";
-                        hlShipping.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutShippingMethod.aspx";
-                        hlPayment.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutPaymentMethod.aspx";
-                        hlConfirm.NavigateUrl = CommonHelper.GetStoreLocation() + "CheckoutConfirm.aspx";
+                        hlCart.NavigateUrl = CommonHelper.GetStoreLocation() + "shoppingcart.aspx";
+                        hlAddress.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutshippingaddress.aspx";
+                        hlShipping.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutshippingmethod.aspx";
+                        hlPayment.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutpaymentmethod.aspx";
+                        hlConfirm.NavigateUrl = CommonHelper.GetStoreLocation() + "checkoutconfirm.aspx";
                         hlComplete.NavigateUrl = string.Empty;
                     }
                     break;

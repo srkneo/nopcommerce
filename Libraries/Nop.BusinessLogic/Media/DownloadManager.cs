@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             if (download == null)
                 throw new ArgumentNullException("download");
             string url = CommonHelper.GetStoreAdminLocation() + "GetDownloadAdmin.ashx?DownloadID=" + download.DownloadID;
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             {
                 url = string.Format("{0}GetDownload.ashx?OrderProductVariantGUID={1}", CommonHelper.GetStoreLocation(), orderProductVariant.OrderProductVariantGUID);
             }
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             {
                 url = string.Format("{0}GetLicense.ashx?OrderProductVariantGUID={1}", CommonHelper.GetStoreLocation(), orderProductVariant.OrderProductVariantGUID);
             }
-            return url;
+            return url.ToLowerInvariant();
         }
 
 
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             {
                 url = CommonHelper.GetStoreLocation() + "GetDownload.ashx?SampleDownloadProductVariantID=" + productVariant.ProductVariantID.ToString();
             }
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (!string.IsNullOrEmpty(txtSearchTerms.Text))
             {
-                Response.Redirect(string.Format("~/search.aspx?searchTerms={0}", HttpUtility.UrlEncode(txtSearchTerms.Text)));
+                Response.Redirect(string.Format("~/search.aspx?searchterms={0}", HttpUtility.UrlEncode(txtSearchTerms.Text)));
             }
         }
 

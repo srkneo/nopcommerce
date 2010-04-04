@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if (SettingManager.GetSettingValueBoolean("Checkout.UseOnePageCheckout"))
             {
-                Response.Redirect("~/Checkout.aspx");
+                Response.Redirect("~/checkout.aspx");
             }
 
             string title = GetLocaleResourceString("PageTitle.CheckoutShippingMethod");

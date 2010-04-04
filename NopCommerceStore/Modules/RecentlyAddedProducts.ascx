@@ -9,7 +9,7 @@
                     <h1><%=GetLocaleResourceString("Products.NewProducts")%></h1>
                 </td>
                 <td style="text-align: right;">
-                    <a href="<%=Page.ResolveUrl("~/RecentlyAddedProductsRSS.aspx")%>">
+                    <a href="<%=Page.ResolveUrl("~/recentlyaddedproductsrss.aspx")%>">
                         <asp:Image ID="imgRSS" runat="server" ImageUrl="~/images/icon_rss.gif" AlternateText="RSS" /></a>
                 </td>
             </tr>

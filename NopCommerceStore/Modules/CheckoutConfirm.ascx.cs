@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         OnCheckoutStepChanged(args1);
                         if (!this.OnePageCheckout)
                         {
-                            Response.Redirect("~/CheckoutPaymentInfo.aspx");
+                            Response.Redirect("~/checkoutpaymentinfo.aspx");
                         }
                         else
                         {
@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var args2 = new CheckoutStepEventArgs() { OrderConfirmed = true };
                     OnCheckoutStepChanged(args2);
                     if (!this.OnePageCheckout)
-                        Response.Redirect("~/CheckoutCompleted.aspx");
+                        Response.Redirect("~/checkoutcompleted.aspx");
                 }
                 catch (Exception exc)
                 {
@@ -102,7 +102,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             if (Cart.Count == 0)
-                Response.Redirect("~/ShoppingCart.aspx");
+                Response.Redirect("~/shoppingcart.aspx");
         }
 
         protected override void OnPreRender(EventArgs e)

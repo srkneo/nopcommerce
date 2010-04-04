@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="ForumsSettings.aspx" title="<%=GetLocaleResourceString("Admin.ForumsHome.ForumsSettings.TitleDescription")%>">
+                    <a href="forumssettings.aspx" title="<%=GetLocaleResourceString("Admin.ForumsHome.ForumsSettings.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ForumsHome.ForumsSettings.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Forums.aspx" title="<%=GetLocaleResourceString("Admin.ForumsHome.Forums.TitleDescription")%>">
+                    <a href="forums.aspx" title="<%=GetLocaleResourceString("Admin.ForumsHome.Forums.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ForumsHome.Forums.Title")%></a>
                 </div>
                 <div class="description">

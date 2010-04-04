@@ -344,7 +344,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (NopContext.Current.User != null && !NopContext.Current.User.IsGuest)
                 {
                     CustomerManager.Logout();
-                    Response.Redirect("~/Register.aspx");
+                    Response.Redirect("~/register.aspx");
                 }
 
                 #region Username/emails hack

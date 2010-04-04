@@ -8,7 +8,7 @@
 <body style="background-color: #efefef;">
     <form id="form1" runat="server">
     <div class="login-block">
-        <asp:Login runat="server" ID="LoginForm" TitleText="" DestinationPageUrl="~/Administration/Default.aspx"
+        <asp:Login runat="server" ID="LoginForm" TitleText="" DestinationPageUrl="~/administration/default.aspx"
             RememberMeSet="True" FailureText="<% $NopResources:Login.FailureText %>">
             <LayoutTemplate>
                 <table class="login-table-container">

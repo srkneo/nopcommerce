@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="BlogSettings.aspx" title="<%=GetLocaleResourceString("Admin.BlogHome.BlogSettings.TitleDescription")%>">
+                    <a href="blogsettings.aspx" title="<%=GetLocaleResourceString("Admin.BlogHome.BlogSettings.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.BlogHome.BlogSettings.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Blog.aspx" title="<%=GetLocaleResourceString("Admin.BlogHome.Blog.TitleDescription")%>">
+                    <a href="blog.aspx" title="<%=GetLocaleResourceString("Admin.BlogHome.Blog.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.BlogHome.Blog.Title")%>
                     </a>
                 </div>
@@ -37,7 +37,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="BlogComments.aspx" title="<%=GetLocaleResourceString("Admin.BlogHome.BlogComments.TitleDescription")%>">
+                    <a href="blogcomments.aspx" title="<%=GetLocaleResourceString("Admin.BlogHome.BlogComments.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.BlogHome.BlogComments.Title")%></a>
                 </div>
                 <div class="description">

@@ -266,6 +266,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
             {
                 URL = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Path);
             }
+            URL = URL.ToLowerInvariant();
             return URL;
         }
 
@@ -293,7 +294,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
             if (!result.EndsWith("/"))
                 result += "/";
 
-            return result;
+            return result.ToLowerInvariant();
         }
 
         /// <summary>
@@ -316,7 +317,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
             string result = GetStoreLocation(UseSSL);
             result += "Administration/";
 
-            return result;
+            return result.ToLowerInvariant();
         }
 
         /// <summary>
@@ -345,7 +346,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
             if (!result.EndsWith("/"))
                 result += "/";
 
-            return result;
+            return result.ToLowerInvariant();
         }
 
         /// <summary>
@@ -366,8 +367,9 @@ namespace NopSolutions.NopCommerce.Common.Utils
             string storeHost = GetStoreHost(UseSSL);
             if (storeHost.EndsWith("/"))
                 storeHost = storeHost.Substring(0, storeHost.Length - 1);
-            string URL = storeHost + HttpContext.Current.Request.RawUrl;
-            HttpContext.Current.Response.Redirect(URL);
+            string url = storeHost + HttpContext.Current.Request.RawUrl;
+            url = url.ToLowerInvariant();
+            HttpContext.Current.Response.Redirect(url);
         }
 
         /// <summary>
@@ -379,6 +381,19 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <returns>New url</returns>
         public static string ModifyQueryString(string url, string queryStringModification, string targetLocationModification)
         {
+            if (url == null)
+                url = string.Empty;
+            url = url.ToLowerInvariant();
+            
+            if (queryStringModification == null)
+                queryStringModification = string.Empty;
+            queryStringModification = queryStringModification.ToLowerInvariant();
+            
+            if (targetLocationModification == null)
+                targetLocationModification = string.Empty;
+            targetLocationModification = targetLocationModification.ToLowerInvariant();
+
+
             string str = string.Empty;
             string str2 = string.Empty;
             if (url.Contains("#"))
@@ -451,7 +466,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
             {
                 str2 = targetLocationModification;
             }
-            return (url + (string.IsNullOrEmpty(str) ? "" : ("?" + str)) + (string.IsNullOrEmpty(str2) ? "" : ("#" + str2)));
+            return (url + (string.IsNullOrEmpty(str) ? "" : ("?" + str)) + (string.IsNullOrEmpty(str2) ? "" : ("#" + str2))).ToLowerInvariant();
         }
 
         /// <summary>
@@ -462,6 +477,15 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <returns>New url</returns>
         public static string RemoveQueryString(string url, string queryString)
         {
+            if (url == null)
+                url = string.Empty;
+            url = url.ToLowerInvariant();
+
+            if (queryString == null)
+                queryString = string.Empty;
+            queryString = queryString.ToLowerInvariant();
+            
+
             string str = string.Empty;
             if (url.Contains("?"))
             {

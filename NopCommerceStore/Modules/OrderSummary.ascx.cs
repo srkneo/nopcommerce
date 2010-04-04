@@ -202,7 +202,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                 }
 
-                Response.Redirect("~/ShoppingCart.aspx");
+                Response.Redirect("~/shoppingcart.aspx");
             }
         }
 
@@ -224,7 +224,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             else
             {
-                Response.Redirect("~/Checkout.aspx");
+                Response.Redirect("~/checkout.aspx");
             }
         }
 

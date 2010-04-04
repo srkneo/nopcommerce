@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var args1 = new CheckoutStepEventArgs() { ShippingMethodSelected = true };
                 OnCheckoutStepChanged(args1);
                 if (!this.OnePageCheckout)
-                    Response.Redirect("~/CheckoutPaymentMethod.aspx");
+                    Response.Redirect("~/checkoutpaymentmethod.aspx");
             }
             else
             {
@@ -135,7 +135,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var args1 = new CheckoutStepEventArgs() { ShippingMethodSelected = true };
                     OnCheckoutStepChanged(args1);
                     if (!this.OnePageCheckout)
-                        Response.Redirect("~/CheckoutPaymentMethod.aspx");
+                        Response.Redirect("~/checkoutpaymentmethod.aspx");
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             if (Cart.Count == 0)
-                Response.Redirect("~/ShoppingCart.aspx");
+                Response.Redirect("~/shoppingcart.aspx");
         }
 
         public event CheckoutStepChangedEventHandler CheckoutStepChanged

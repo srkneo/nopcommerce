@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 else
                 {
-                    Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+                    Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
                 }
             }
             else
@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
             if (toCustomer == null || toCustomer.IsGuest)
             {
-                Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+                Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
             }
 
             lblSendTo.Text = Server.HtmlEncode(CustomerManager.FormatUserName(toCustomer));
@@ -106,7 +106,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                     else
                     {
-                        Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+                        Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
                     }
                 }
                 else
@@ -116,13 +116,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 if (toCustomer == null || toCustomer.IsGuest)
                 {
-                    Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+                    Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
                 }
 
                 var pm = ForumManager.InsertPrivateMessage(NopContext.Current.User.CustomerID, toCustomer.CustomerID,
                     subject, message, false, false, false, DateTime.Now);
 
-                Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx?Tab=sent");
+                Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx?tab=sent");
             }
             catch (Exception exc)
             {
@@ -133,7 +133,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx");
+            Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
         }
 
         public int ToCustomerID

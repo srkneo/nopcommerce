@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="ProductTemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.ProductTemplates.TitleDescription")%>">
+                    <a href="producttemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.ProductTemplates.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.TemplatesHome.ProductTemplates.Title")%>
                     </a>
                 </div>
@@ -26,7 +26,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="CategoryTemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.CategoryTemplates.TitleDescription")%>">
+                    <a href="categorytemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.CategoryTemplates.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.TemplatesHome.CategoryTemplates.Title")%></a>
                 </div>
                 <div class="description">
@@ -37,7 +37,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="ManufacturerTemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.ManufacturerTemplates.TitleDescription")%>">
+                    <a href="manufacturertemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.ManufacturerTemplates.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.TemplatesHome.ManufacturerTemplates.Title")%></a>
                 </div>
                 <div class="description">
@@ -48,7 +48,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="MessageTemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.MessageTemplates.TitleDescription")%>">
+                    <a href="messagetemplates.aspx" title="<%=GetLocaleResourceString("Admin.TemplatesHome.MessageTemplates.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.TemplatesHome.MessageTemplates.Title")%></a>
                 </div>
                 <div class="description">

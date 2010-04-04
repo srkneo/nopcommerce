@@ -73,13 +73,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
         protected void btnEditAddress_Click(object sender, CommandEventArgs e)
         {
             int addressID = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect(string.Format("~/AddressEdit.aspx?AddressID={0}", addressID));
+            Response.Redirect(string.Format("~/addressedit.aspx?addressid={0}", addressID));
         }
 
         protected void btnDeleteAddress_Click(object sender, CommandEventArgs e)
         {
             int addressID = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect(string.Format("~/AddressEdit.aspx?AddressID={0}&Delete={1}", addressID,true));
+            Response.Redirect(string.Format("~/addressedit.aspx?addressid={0}&delete={1}", addressID, true));
         }
 
         [DefaultValue(true)]

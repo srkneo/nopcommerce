@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="Orders.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.Orders.TitleDescription")%>">
+                    <a href="orders.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.Orders.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.SalesHome.Orders.Title")%>
                     </a>
                 </div>
@@ -26,7 +26,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="RecurringPayments.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.RecurringPayments.TitleDescription")%>">
+                    <a href="recurringpayments.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.RecurringPayments.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.SalesHome.RecurringPayments.Title")%>
                     </a>
                 </div>
@@ -38,7 +38,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="PurchasedGiftCards.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.PurchasedGiftCards.TitleDescription")%>">
+                    <a href="purchasedgiftcards.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.PurchasedGiftCards.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.SalesHome.PurchasedGiftCards.Title")%>
                     </a>
                 </div>
@@ -50,7 +50,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="SalesReport.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.SalesReport.TitleDescription")%>">
+                    <a href="salesreport.aspx" title="<%=GetLocaleResourceString("Admin.SalesHome.SalesReport.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.SalesHome.SalesReport.Title")%></a>
                 </div>
                 <div class="description">

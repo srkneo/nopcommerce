@@ -13,39 +13,39 @@
             <ul>
                 <asp:LoginView ID="topLoginView" runat="server">
                     <AnonymousTemplate>
-                        <li><a href="<%=Page.ResolveUrl("~/Register.aspx")%>" class="ico-register">
+                        <li><a href="<%=Page.ResolveUrl("~/register.aspx")%>" class="ico-register">
                             <%=GetLocaleResourceString("Account.Register")%></a></li>
-                        <li><a href="<%=Page.ResolveUrl("~/Login.aspx")%>" class="ico-login">
+                        <li><a href="<%=Page.ResolveUrl("~/login.aspx")%>" class="ico-login">
                             <%=GetLocaleResourceString("Account.Login")%></a></li>
                     </AnonymousTemplate>
                     <LoggedInTemplate>
                         <li>
                             <%=Page.User.Identity.Name %>
                         </li>
-                        <li><a href="<%=Page.ResolveUrl("~/Logout.aspx")%>" class="ico-logout">
+                        <li><a href="<%=Page.ResolveUrl("~/logout.aspx")%>" class="ico-logout">
                             <%=GetLocaleResourceString("Account.Logout")%></a> </li>
                         <% if (ForumManager.AllowPrivateMessages)
                            { %>
-                        <li><a href="<%=Page.ResolveUrl("~/PrivateMessages.aspx")%>" class="ico-inbox">
+                        <li><a href="<%=Page.ResolveUrl("~/privatemessages.aspx")%>" class="ico-inbox">
                             <%=GetLocaleResourceString("PrivateMessages.Inbox")%></a>
                             <%=GetUnreadPrivateMessages()%>
                         </li>
                         <%} %>
                     </LoggedInTemplate>
                 </asp:LoginView>
-                <li><a href="<%=Page.ResolveUrl("~/ShoppingCart.aspx")%>" class="ico-cart">
+                <li><a href="<%=Page.ResolveUrl("~/shoppingcart.aspx")%>" class="ico-cart">
                     <%=GetLocaleResourceString("Account.ShoppingCart")%>
-                </a><a href="<%=Page.ResolveUrl("~/ShoppingCart.aspx")%>">(<%=ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart).Count%>)</a>
+                </a><a href="<%=Page.ResolveUrl("~/shoppingcart.aspx")%>">(<%=ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart).Count%>)</a>
                 </li>
                 <% if (SettingManager.GetSettingValueBoolean("Common.EnableWishlist"))
                    { %>
-                <li><a href="<%=Page.ResolveUrl("~/Wishlist.aspx")%>" class="ico-wishlist">
-                    <%=GetLocaleResourceString("Wishlist.Wishlist")%></a> <a href="<%=Page.ResolveUrl("~/Wishlist.aspx")%>">
+                <li><a href="<%=Page.ResolveUrl("~/wishlist.aspx")%>" class="ico-wishlist">
+                    <%=GetLocaleResourceString("Wishlist.Wishlist")%></a> <a href="<%=Page.ResolveUrl("~/wishlist.aspx")%>">
                         (<%=ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.Wishlist).Count%>)</a></li>
                 <%} %>
                 <% if (NopContext.Current.User != null && NopContext.Current.User.IsAdmin)
                    { %>
-                <li><a href="<%=Page.ResolveUrl("~/Administration/")%>" class="ico-admin">
+                <li><a href="<%=Page.ResolveUrl("~/administration/")%>" class="ico-admin">
                     <%=GetLocaleResourceString("Account.Administration")%></a> </li>
                 <%} %>
             </ul>

@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #region Utilities
         protected void BindData()
         {
-            this.lnkPrint.NavigateUrl = Page.ResolveUrl("~/PrintOrderDetails.aspx?OrderID=" + this.OrderID);
+            this.lnkPrint.NavigateUrl = Page.ResolveUrl("~/PrintOrderDetails.aspx?OrderID=" + this.OrderID).ToLowerInvariant();
             this.lblOrderID.Text = order.OrderID.ToString();
             this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(order.CreatedOn).ToString("D");
             this.lblOrderStatus.Text = OrderManager.GetOrderStatusName(order.OrderStatusID);
@@ -263,7 +263,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             try
             {
                 OrderManager.ReOrder(OrderID);
-                Response.Redirect("~/ShoppingCart.aspx");
+                Response.Redirect("~/shoppingcart.aspx");
             }
             catch(Exception)
             {

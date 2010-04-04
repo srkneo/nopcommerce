@@ -90,7 +90,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (cartTotal.HasValue)
                 {
                     string expressCheckoutURL = payPalExpress.SetExpressCheckout(cartTotal.Value,
-                        CommonHelper.GetStoreLocation(false) + "PaypalExpressReturn.aspx",
+                        CommonHelper.GetStoreLocation(false) + "paypalexpressreturn.aspx",
                         CommonHelper.GetStoreLocation(false));
                     Response.Redirect(expressCheckoutURL);
                 }

@@ -87,7 +87,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 result = string.Format("<a class=\"link\" href=\"{0}OrderDetails.aspx?OrderID={1}\" >{1}</a>", CommonHelper.GetStoreLocation(), order.OrderID);
             }
-            return result;
+            return result.ToLowerInvariant();
         }
         public string GetOrderDate(OrderProductVariant opv)
         {

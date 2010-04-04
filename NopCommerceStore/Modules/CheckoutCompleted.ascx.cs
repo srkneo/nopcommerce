@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     var lastOrder = orderCollection[0];
                     lblOrderNumber.Text = lastOrder.OrderID.ToString();
-                    hlOrderDetails.NavigateUrl = string.Format("{0}OrderDetails.aspx?OrderID={1}", CommonHelper.GetStoreLocation(), lastOrder.OrderID);
+                    hlOrderDetails.NavigateUrl = string.Format("{0}OrderDetails.aspx?OrderID={1}", CommonHelper.GetStoreLocation(), lastOrder.OrderID).ToLowerInvariant();
                 }
             }
         }

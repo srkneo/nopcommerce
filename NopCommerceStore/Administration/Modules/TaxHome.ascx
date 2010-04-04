@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="TaxSettings.aspx" title="<%=GetLocaleResourceString("Admin.TaxHome.TaxSettings.TitleDescription")%>">
+                    <a href="taxsettings.aspx" title="<%=GetLocaleResourceString("Admin.TaxHome.TaxSettings.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.TaxHome.TaxSettings.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="TaxProviders.aspx" title="<%=GetLocaleResourceString("Admin.TaxHome.TaxProviders.TitleDescription")%>">
+                    <a href="taxproviders.aspx" title="<%=GetLocaleResourceString("Admin.TaxHome.TaxProviders.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.TaxHome.TaxProviders.Title")%></a>
                 </div>
                 <div class="description">
@@ -36,7 +36,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="TaxCategories.aspx" title="<%=GetLocaleResourceString("Admin.TaxHome.TaxCategories.TitleDescription")%>">
+                    <a href="taxcategories.aspx" title="<%=GetLocaleResourceString("Admin.TaxHome.TaxCategories.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.TaxHome.TaxCategories.Title")%></a>
                 </div>
                 <div class="description">

@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="GlobalSettings.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.GlobalSettings.TitleDescription")%>">
+                    <a href="globalsettings.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.GlobalSettings.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.GlobalSettings.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="PaymentSettingsHome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.PaymentSettingsHome.TitleDescription")%>">
+                    <a href="paymentsettingshome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.PaymentSettingsHome.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.PaymentSettingsHome.Title")%></a>
                 </div>
                 <div class="description">
@@ -36,7 +36,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="TaxSettingsHome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.TaxSettingsHome.TitleDescription")%>">
+                    <a href="taxsettingshome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.TaxSettingsHome.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.TaxSettingsHome.Title")%></a>
                 </div>
                 <div class="description">
@@ -47,7 +47,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="ShippingSettingsHome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.ShippingSettingsHome.TitleDescription")%>">
+                    <a href="shippingsettingshome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.ShippingSettingsHome.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.ShippingSettingsHome.Title")%></a>
                 </div>
                 <div class="description">
@@ -58,7 +58,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="LocationSettingsHome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.LocationSettingsHome.TitleDescription")%>">
+                    <a href="locationsettingshome.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.LocationSettingsHome.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.LocationSettingsHome.Title")%></a>
                 </div>
                 <div class="description">
@@ -69,7 +69,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Measures.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.Measures.TitleDescription")%>">
+                    <a href="measures.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.Measures.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.Measures.Title")%></a>
                 </div>
                 <div class="description">
@@ -80,7 +80,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="ACL.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.ACL.TitleDescription")%>">
+                    <a href="acl.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.ACL.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.ACL.Title")%></a>
                 </div>
                 <div class="description">
@@ -91,7 +91,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Settings.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.Settings.TitleDescription")%>">
+                    <a href="settings.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.Settings.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ConfigurationHome.Settings.Title")%></a>
                 </div>
                 <div class="description">

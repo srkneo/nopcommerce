@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web
                         }
                     
                     }
-                    Response.Redirect("~/CheckoutCompleted.aspx");
+                    Response.Redirect("~/checkoutcompleted.aspx");
                 }
                 else
                 {

@@ -75,7 +75,7 @@ public class GetDownload : IHttpHandler
             bool isAgree = CommonHelper.QueryStringBool("Agree");
             if(!isAgree)
             {
-                context.Response.Redirect(String.Format("{0}UserAgreement.aspx?OrderProductVariantGUID={1}", CommonHelper.GetStoreHost(false), orderProductVariantGUID));
+                context.Response.Redirect(String.Format("{0}useragreement.aspx?orderproductvariantguid={1}", CommonHelper.GetStoreHost(false), orderProductVariantGUID));
             }
         }
 

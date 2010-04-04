@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="CreditCardTypes.aspx" title="<%=GetLocaleResourceString("Admin.PaymentHome.CreditCardTypes.TitleDescription")%>">
+                    <a href="creditcardtypes.aspx" title="<%=GetLocaleResourceString("Admin.PaymentHome.CreditCardTypes.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.PaymentHome.CreditCardTypes.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="PaymentMethods.aspx" title="<%=GetLocaleResourceString("Admin.PaymentHome.PaymentMethods.TitleDescription")%>">
+                    <a href="paymentmethods.aspx" title="<%=GetLocaleResourceString("Admin.PaymentHome.PaymentMethods.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.PaymentHome.PaymentMethods.Title")%></a>
                 </div>
                 <div class="description">

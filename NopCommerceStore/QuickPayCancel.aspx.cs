@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.Web
             if (!Page.IsPostBack)
             {
                 //TODO implement, validate order
-               CommonHelper.SetMetaHttpEquiv(this.Master.Page, "refresh", "5;URL=/Default.aspx");
+               CommonHelper.SetMetaHttpEquiv(this.Master.Page, "refresh", "5;URL=/default.aspx");
             }
         }
         #endregion

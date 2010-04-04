@@ -167,7 +167,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetAdminAreaAccessDeniedURL()
         {
             string url = CommonHelper.GetStoreAdminLocation() + "AccessDenied.aspx";
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 loginUrl = string.Format(CultureInfo.InvariantCulture, "{0}Login.aspx",
                     CommonHelper.GetStoreLocation());
             }
-            return loginUrl;
+            return loginUrl.ToLowerInvariant();
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             {
                 loginUrl = CommonHelper.ModifyQueryString(loginUrl, "CheckoutAsGuest=true", string.Empty);
             }
-            return loginUrl;
+            return loginUrl.ToLowerInvariant();
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         {
             string url = string.Format(CultureInfo.InvariantCulture, "{0}Login.aspx",
                       CommonHelper.GetStoreAdminLocation());
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 seName = GetSEName(product.Name);
             }
             string url = string.Format(SettingManager.GetSettingValue("SEO.Product.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), product.ProductID, seName);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetProductEmailAFriendURL(int ProductID)
         {
             string url = string.Format("{0}ProductEmailAFriend.aspx?ProductID={1}", CommonHelper.GetStoreLocation(), ProductID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 seName = GetSEName(manufacturer.Name);
             } 
             string url = string.Format(SettingManager.GetSettingValue("SEO.Manufacturer.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), manufacturer.ManufacturerID, seName);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 seName = GetSEName(category.Name);
             }
             string url = string.Format(SettingManager.GetSettingValue("SEO.Category.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), category.CategoryID, seName);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 throw new ArgumentNullException("blogPost"); 
             string seName = GetSEName(blogPost.BlogPostTitle);
             string url = string.Format(SettingManager.GetSettingValue("SEO.Blog.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), blogPost.BlogPostID, seName);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 throw new ArgumentNullException("news"); 
             string seName = GetSEName(news.Title);
             string url = string.Format(SettingManager.GetSettingValue("SEO.News.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), news.NewsID, seName);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -416,7 +416,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <returns>News Rss URL</returns>
         public static string GetNewsRssURL(int LanguageID)
         {
-            return CommonHelper.GetStoreLocation() + "NewsRSS.aspx?LanguageID=" + LanguageID.ToString();
+            string url = CommonHelper.GetStoreLocation() + "NewsRSS.aspx?LanguageID=" + LanguageID.ToString();
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -435,7 +436,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <returns>Blog Rss URL</returns>
         public static string GetBlogRssURL(int LanguageID)
         {
-            return CommonHelper.GetStoreLocation() + "BlogRSS.aspx?LanguageID=" + LanguageID.ToString();
+            string url = CommonHelper.GetStoreLocation() + "BlogRSS.aspx?LanguageID=" + LanguageID.ToString();
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -455,7 +457,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetForumActiveDiscussionsURL()
         {
             string url = string.Format("{0}Boards/ActiveDiscussions.aspx", CommonHelper.GetStoreLocation());
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -480,7 +482,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 throw new ArgumentNullException("forumGroup");
 
             string url = string.Format("{0}Boards/ForumGroup.aspx?ForumGroupID={1}", CommonHelper.GetStoreLocation(), forumGroup.ForumGroupID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -505,7 +507,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 throw new ArgumentNullException("forum");
 
             string url = string.Format("{0}Boards/Forum.aspx?ForumID={1}", CommonHelper.GetStoreLocation(), forum.ForumID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -519,7 +521,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                 throw new ArgumentNullException("forumTopic");
 
             string url = string.Format("{0}Boards/MoveTopic.aspx?TopicID={1}", CommonHelper.GetStoreLocation(), forumTopic.ForumTopicID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -530,7 +532,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetForumSearchURL(string SearchTerms)
         {
             string url = string.Format("{0}Boards/Search.aspx?searchTerms={1}", CommonHelper.GetStoreLocation(), HttpUtility.UrlEncode(SearchTerms));
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -576,7 +578,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             {
                 url += string.Format("#{0}", PostID.Value);
             }
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -587,7 +589,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetNewForumTopicURL(int ForumID)
         {
             string url = string.Format("{0}Boards/TopicNew.aspx?ForumID={1}", CommonHelper.GetStoreLocation(), ForumID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -598,7 +600,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetEditForumTopicURL(int TopicID)
         {
             string url = string.Format("{0}Boards/TopicEdit.aspx?TopicID={1}", CommonHelper.GetStoreLocation(), TopicID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -609,7 +611,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetNewForumPostURL(int TopicID)
         {
             string url = string.Format("{0}Boards/PostNew.aspx?TopicID={1}", CommonHelper.GetStoreLocation(), TopicID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -621,7 +623,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetNewForumPostURL(int TopicID, int QuotePostID)
         {
             string url = string.Format("{0}Boards/PostNew.aspx?TopicID={1}&QuotePostID={2}", CommonHelper.GetStoreLocation(), TopicID, QuotePostID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
 
@@ -633,7 +635,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetEditForumPostURL(int ForumPostID)
         {
             string url = string.Format("{0}Boards/PostEdit.aspx?PostID={1}", CommonHelper.GetStoreLocation(), ForumPostID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -644,7 +646,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetUserProfileURL(int UserID)
         {
             string url = string.Format("{0}Profile.aspx?UserID={1}", CommonHelper.GetStoreLocation(), UserID);
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
@@ -656,7 +658,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetTopicUrl(int TopicID, string Title)
         {
             string url = string.Format(SettingManager.GetSettingValue("SEO.Topic.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), TopicID, GetSEName(Title));
-            return url;
+            return url.ToLowerInvariant();
         }
 
         #endregion

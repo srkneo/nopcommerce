@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Dibs
             post.Add("amount", amount.ToString());
             post.Add("md5key", FlexWinHelper.CalcMD5Key(merhcantID, order.OrderID, currency, amount));
             post.Add("accepturl", String.Format("{0}DibsFlexWinReturn.aspx?x={1}", CommonHelper.GetStoreHost(false), order.OrderID));
-            post.Add("cancelurl", String.Format("{0}Checkout.aspx", CommonHelper.GetStoreHost(false)));
+            post.Add("cancelurl", String.Format("{0}shoppingcart.aspx", CommonHelper.GetStoreHost(false)));
             post.Add("delivery1.Name", order.ShippingFullName);
             post.Add("delivery2.Address", order.ShippingAddress1);
 

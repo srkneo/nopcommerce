@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="ShippingSettings.aspx" title="<%=GetLocaleResourceString("Admin.ShippingHome.ShippingSettings.TitleDescription")%>">
+                    <a href="shippingsettings.aspx" title="<%=GetLocaleResourceString("Admin.ShippingHome.ShippingSettings.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ShippingHome.ShippingSettings.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="ShippingMethods.aspx" title="<%=GetLocaleResourceString("Admin.ShippingHome.ShippingMethods.TitleDescription")%>">
+                    <a href="shippingmethods.aspx" title="<%=GetLocaleResourceString("Admin.ShippingHome.ShippingMethods.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ShippingHome.ShippingMethods.Title")%></a>
                 </div>
                 <div class="description">
@@ -36,7 +36,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="ShippingRateComputationMethods.aspx" title="<%=GetLocaleResourceString("Admin.ShippingHome.ShippingRateComputationMethods.TitleDescription")%>">
+                    <a href="shippingratecomputationmethods.aspx" title="<%=GetLocaleResourceString("Admin.ShippingHome.ShippingRateComputationMethods.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ShippingHome.ShippingRateComputationMethods.Title")%></a>
                 </div>
                 <div class="description">

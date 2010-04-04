@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="ActivityTypes.aspx" title="<%=GetLocaleResourceString("Admin.ActivityLogHome.ActivityTypes.TitleDescription")%>">
+                    <a href="activitytypes.aspx" title="<%=GetLocaleResourceString("Admin.ActivityLogHome.ActivityTypes.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ActivityLogHome.ActivityTypes.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="ActivityLog.aspx" title="<%=GetLocaleResourceString("Admin.ActivityLogHome.ActivityLog.TitleDescription")%>">
+                    <a href="activitylog.aspx" title="<%=GetLocaleResourceString("Admin.ActivityLogHome.ActivityLog.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ActivityLogHome.ActivityLog.Title")%></a>
                 </div>
                 <div class="description">

@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.Web
                     OrderManager.MarkOrderAsPaid(order.OrderID);
                 }
 
-                string retURL = CommonHelper.GetStoreLocation() + "CheckoutCompleted.aspx";
+                string retURL = CommonHelper.GetStoreLocation() + "checkoutcompleted.aspx";
 
                 //set meta tag to redirect to checkout complete!
                 CommonHelper.SetMetaHttpEquiv(this.Page, "refresh", "0;URL=" + retURL);
@@ -156,7 +156,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if (!requestIsWorldPay)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/default.aspx");
             }
         }
     }

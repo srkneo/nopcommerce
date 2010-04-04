@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="Categories.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Categories.TitleDescription")%>">
+                    <a href="categories.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Categories.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.CatalogHome.Categories.Title")%></a>
                 </div>
                 <div class="description">
@@ -28,7 +28,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="ProductsHome.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Products.TitleDescription")%>">
+                    <a href="productshome.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Products.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.CatalogHome.Products.Title")%></a>
                 </div>
                 <div class="description">
@@ -39,7 +39,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="AttributesHome.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Attributes.TitleDescription")%>">
+                    <a href="attributeshome.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Attributes.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.CatalogHome.Attributes.Title")%></a>
                 </div>
                 <div class="description">
@@ -50,7 +50,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Manufacturers.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Manufacturers.TitleDescription")%>">
+                    <a href="manufacturers.aspx" title="<%=GetLocaleResourceString("Admin.CatalogHome.Manufacturers.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.CatalogHome.Manufacturers.Title")%></a>
                 </div>
                 <div class="description">

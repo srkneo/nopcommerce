@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             string result = string.Empty;
             string subjectInfo = Server.HtmlEncode(pm.Subject);
-            result = string.Format("<a href=\"{0}ViewPM.aspx?PM={1}\">{2}</a>", CommonHelper.GetStoreLocation(), pm.PrivateMessageID, subjectInfo);
+            result = string.Format("<a href=\"{0}viewpm.aspx?pm={1}\">{2}</a>", CommonHelper.GetStoreLocation(), pm.PrivateMessageID, subjectInfo);
             return result;
         }
 
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         }
                     }
 
-                    Response.Redirect(CommonHelper.GetStoreLocation() + "PrivateMessages.aspx?Tab=sent");
+                    Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx?tab=sent");
                 }
                 catch (Exception exc)
                 {

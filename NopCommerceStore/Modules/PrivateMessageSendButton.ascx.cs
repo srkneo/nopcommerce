@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var customer = CustomerManager.GetCustomerByID(this.CustomerID);
             if (customer != null)
             {
-                string url = string.Format("{0}SendPM.aspx?ToID={1}", CommonHelper.GetStoreLocation(), customer.CustomerID);
+                string url = string.Format("{0}SendPM.aspx?ToID={1}", CommonHelper.GetStoreLocation(), customer.CustomerID).ToLowerInvariant();
                 Response.Redirect(url);
             }
             else

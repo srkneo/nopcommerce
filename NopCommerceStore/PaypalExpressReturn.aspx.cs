@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.Web
                     }
                     else
                         PaymentManager.PostProcessPayment(order);
-                    Response.Redirect("~/CheckoutCompleted.aspx");
+                    Response.Redirect("~/checkoutcompleted.aspx");
                 }
                 catch (Exception exc)
                 {
@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web
 
             ShoppingCart Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
             if (Cart.Count == 0)
-                Response.Redirect("~/ShoppingCart.aspx");
+                Response.Redirect("~/shoppingcart.aspx");
 
             this.btnNextStep.Attributes.Add("onclick", "this.disabled = true;" + Page.ClientScript.GetPostBackEventReference(this.btnNextStep, ""));
         }

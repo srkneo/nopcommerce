@@ -140,7 +140,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     productVariantID, string.Empty, 1);
                 if (addToCartWarnings.Count == 0)
                 {
-                    Response.Redirect("~/ShoppingCart.aspx");
+                    Response.Redirect("~/shoppingcart.aspx");
                 }
                 else
                 {

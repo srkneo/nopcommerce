@@ -287,7 +287,7 @@
                                             <td>
                                                 <p>
                                                     <p>
-                                                        If you need information on how to use nopCommerce, visit <a href="http://www.nopCommerce.com/Documentation.aspx">
+                                                        If you need information on how to use nopCommerce, visit <a href="http://www.nopCommerce.com/documentation.aspx">
                                                             the documentation section on nopCommerce.com</a>.<br />
                                                         <br />
                                                     </p>

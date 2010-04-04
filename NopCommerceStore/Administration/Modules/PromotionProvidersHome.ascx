@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="Froogle.aspx" title="<%=GetLocaleResourceString("Admin.PromotionProvidersHome.Froogle.TitleDescription")%>">
+                    <a href="froogle.aspx" title="<%=GetLocaleResourceString("Admin.PromotionProvidersHome.Froogle.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.PromotionProvidersHome.Froogle.Title")%></a>
                 </div>
                 <div class="description">

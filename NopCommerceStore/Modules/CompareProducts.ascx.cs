@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (e.CommandName == "Remove")
             {
                 ProductManager.RemoveProductFromCompareList(Convert.ToInt32(e.CommandArgument));
-                Page.Response.Redirect("~/CompareProducts.aspx");
+                Page.Response.Redirect("~/compareproducts.aspx");
             }
         }
 

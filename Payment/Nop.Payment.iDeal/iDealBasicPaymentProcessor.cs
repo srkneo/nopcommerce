@@ -61,9 +61,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
                 Url = iDealBasicPaymentSettings.Url
             };
 
-            remotePostHelper.Add("urlCancel", CommonHelper.GetStoreLocation(false) + "IdealReturn.aspx?s=1&o=" + order.OrderID);
-            remotePostHelper.Add("urlSuccess", CommonHelper.GetStoreLocation(false) + "CheckoutCompleted.aspx");
-            remotePostHelper.Add("urlError", CommonHelper.GetStoreLocation(false) + "IdealReturn.aspx?s=2&o=" + order.OrderID);
+            remotePostHelper.Add("urlCancel", CommonHelper.GetStoreLocation(false) + "idealreturn.aspx?s=1&o=" + order.OrderID);
+            remotePostHelper.Add("urlSuccess", CommonHelper.GetStoreLocation(false) + "checkoutcompleted.aspx");
+            remotePostHelper.Add("urlError", CommonHelper.GetStoreLocation(false) + "idealreturn.aspx?s=2&o=" + order.OrderID);
 
             remotePostHelper.Add("merchantID", iDealBasicPaymentSettings.MerchantID);
             remotePostHelper.Add("subID", iDealBasicPaymentSettings.SubID);

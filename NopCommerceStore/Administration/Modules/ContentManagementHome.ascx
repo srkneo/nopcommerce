@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="Polls.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.Polls.TitleDescription")%>">
+                    <a href="polls.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.Polls.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ContentManagementHome.Polls.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="NewsHome.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.NewsHome.TitleDescription")%>">
+                    <a href="newshome.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.NewsHome.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ContentManagementHome.NewsHome.Title")%></a>
                 </div>
                 <div class="description">
@@ -36,7 +36,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="BlogHome.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.BlogHome.TitleDescription")%>">
+                    <a href="bloghome.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.BlogHome.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ContentManagementHome.BlogHome.Title")%></a>
                 </div>
                 <div class="description">
@@ -47,7 +47,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Topics.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.Topics.TitleDescription")%>">
+                    <a href="topics.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.Topics.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ContentManagementHome.Topics.Title")%></a>
                 </div>
                 <div class="description">
@@ -58,7 +58,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Forums.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.Forums.TitleDescription")%>">
+                    <a href="forums.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.Forums.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ContentManagementHome.Forums.Title")%></a>
                 </div>
                 <div class="description">
@@ -69,7 +69,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="TemplatesHome.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.TemplatesHome.TitleDescription")%>">
+                    <a href="templateshome.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.TemplatesHome.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ContentManagementHome.TemplatesHome.Title")%></a>
                 </div>
                 <div class="description">
@@ -80,7 +80,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="LocaleStringResources.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.LocaleStringResources.TitleDescription")%>">
+                    <a href="localestringresources.aspx" title="<%=GetLocaleResourceString("Admin.ContentManagementHome.LocaleStringResources.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ContentManagementHome.LocaleStringResources.Title")%></a>
                 </div>
                 <div class="description">

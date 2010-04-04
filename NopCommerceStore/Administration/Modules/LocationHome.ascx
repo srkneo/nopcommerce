@@ -14,7 +14,7 @@
         <ul>
             <li>
                 <div class="title">
-                    <a href="Countries.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Countries.TitleDescription")%>">
+                    <a href="countries.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Countries.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.LocationHome.Countries.Title")%></a>
                 </div>
                 <div class="description">
@@ -25,7 +25,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="StateProvinces.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.StateProvinces.TitleDescription")%>">
+                    <a href="stateprovinces.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.StateProvinces.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.LocationHome.StateProvinces.Title")%></a>
                 </div>
                 <div class="description">
@@ -36,7 +36,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Languages.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Languages.TitleDescription")%>">
+                    <a href="languages.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Languages.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.LocationHome.Languages.Title")%></a>
                 </div>
                 <div class="description">
@@ -47,7 +47,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Currencies.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Currencies.TitleDescription")%>">
+                    <a href="currencies.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Currencies.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.LocationHome.Currencies.Title")%></a>
                 </div>
                 <div class="description">
@@ -58,7 +58,7 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="Warehouses.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Warehouses.TitleDescription")%>">
+                    <a href="warehouses.aspx" title="<%=GetLocaleResourceString("Admin.LocationHome.Warehouses.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.LocationHome.Warehouses.Title")%></a>
                 </div>
                 <div class="description">

@@ -224,7 +224,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                         pv.ProductVariantID, attributes, quantity);
                     if(addToCartWarnings.Count == 0)
                     {
-                        Response.Redirect("~/ShoppingCart.aspx");
+                        Response.Redirect("~/shoppingcart.aspx");
                     }
                     else
                     {
@@ -247,7 +247,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                         pv.ProductVariantID, attributes, quantity);
                     if(addToCartWarnings.Count == 0)
                     {
-                        Response.Redirect("~/Wishlist.aspx");
+                        Response.Redirect("~/wishlist.aspx");
                     }
                     else
                     {
