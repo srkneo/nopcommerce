@@ -87,5 +87,21 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FisedRateShippingCM
             return GetRate();
         }
         #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets a shipping rate computation method type
+        /// </summary>
+        /// <returns>A shipping rate computation method type</returns>
+        public ShippingRateComputationMethodTypeEnum ShippingRateComputationMethodType
+        {
+            get
+            {
+                return ShippingRateComputationMethodTypeEnum.Offline;
+            }
+        }
+
+        #endregion
     }
 }

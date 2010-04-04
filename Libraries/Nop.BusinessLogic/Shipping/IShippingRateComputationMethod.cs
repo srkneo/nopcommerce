@@ -41,5 +41,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <returns>Fixed shipping rate; or null if shipping rate could not be calculated before checkout</returns>
         decimal? GetFixedRate(ShipmentPackage ShipmentPackage);
         #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets a shipping rate computation method type
+        /// </summary>
+        /// <returns>A shipping rate computation method type</returns>
+        ShippingRateComputationMethodTypeEnum ShippingRateComputationMethodType { get; }
+
+        #endregion
     }
 }

@@ -72,5 +72,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public int DisplayOrder { get; set; }
 
         #endregion
+
+        #region Custom Properties
+
+        /// <summary>
+        /// Gets a shipping rate computation method type
+        /// </summary>
+        /// <returns>A shipping rate computation method type</returns>
+        public ShippingRateComputationMethodTypeEnum ShippingRateComputationMethodType
+        {
+            get
+            {
+                ShippingRateComputationMethodTypeEnum type = ShippingRateComputationMethodTypeEnum.Unknown;
+                try
+                {
+                    type = ShippingRateComputationMethodManager.GetShippingRateComputationMethodTypeEnum(this.ShippingRateComputationMethodID);
+                }
+                catch { }
+                return type;
+            }
+        }
+
+        #endregion
     }
 }

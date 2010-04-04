@@ -212,6 +212,7 @@
     <Compile Include="SEO\Sitemaps\BaseSitemapGenerator.cs" />
     <Compile Include="SEO\Sitemaps\SitemapGenerator.cs" />
     <Compile Include="SEO\Sitemaps\UpdateFrequency.cs" />
+    <Compile Include="Shipping\ShippingRateComputationMethodTypeEnum.cs" />
     <Compile Include="Shipping\ShippingStatus.cs" />
     <Compile Include="Shipping\ShippingStatusCollection.cs" />
     <Compile Include="Shipping\ShippingStatusEnum.cs" />

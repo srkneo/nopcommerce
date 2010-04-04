@@ -37,6 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         #endregion
 
         #region Utilities
+
         private static ShippingRateComputationMethodCollection DBMapping(DBShippingRateComputationMethodCollection dbCollection)
         {
             if (dbCollection == null)
@@ -68,9 +69,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             return item;
         }
+
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Deletes a shipping rate computation method
         /// </summary>
@@ -194,6 +197,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             }
             return shippingRateComputationMethod;
         }
+        
+        /// <summary>
+        /// Gets a shipping rate computation method type
+        /// </summary>
+        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
+        /// <returns>A shipping rate computation method type</returns>
+        public static ShippingRateComputationMethodTypeEnum GetShippingRateComputationMethodTypeEnum(int ShippingRateComputationMethodID)
+        {
+            var method = GetShippingRateComputationMethodByID(ShippingRateComputationMethodID);
+            if (method == null)
+                return ShippingRateComputationMethodTypeEnum.Unknown;
+            var iMethod = Activator.CreateInstance(Type.GetType(method.ClassName)) as IShippingRateComputationMethod;
+            return iMethod.ShippingRateComputationMethodType;
+        }
+        
         #endregion
 
         #region Property
