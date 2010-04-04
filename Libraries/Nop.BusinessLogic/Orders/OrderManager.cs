@@ -552,6 +552,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 }
             }
 
+            if (order.PaymentStatus == PaymentStatusEnum.Paid && !order.PaidDate.HasValue)
+            {
+                //ensure that paid date is set
+                DateTime paidDate = DateTime.Now;
+                order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                    order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
+                    order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
+                    order.OrderTax, order.OrderTotal, order.OrderDiscount,
+                    order.OrderSubtotalInclTaxInCustomerCurrency, order.OrderSubtotalExclTaxInCustomerCurrency,
+                    order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
+                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
+                    order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                    order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
+                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
+                    order.PaymentMethodID, order.PaymentMethodName,
+                    order.AuthorizationTransactionID,
+                    order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
+                    order.CaptureTransactionID, order.CaptureTransactionResult,
+                    order.SubscriptionTransactionID, order.PurchaseOrderNumber, order.PaymentStatus, paidDate,
+                    order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
+                    order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
+                    order.BillingAddress2, order.BillingCity,
+                    order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
+                    order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                    order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
+                    order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
+                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
+                    order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
+                    order.ShippingCountry, order.ShippingCountryID,
+                    order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                    order.TrackingNumber, order.Deleted, order.CreatedOn);
+            }
+
             return order;
         }
 
