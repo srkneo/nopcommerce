@@ -568,7 +568,7 @@
                         <asp:TextBox runat="server" ID="txtNewOrderNote" TextMode="MultiLine" Height="150px"
                             Width="500px"></asp:TextBox>
                         <br />
-                        <asp:CheckBox runat="server" ID="cbDisplayToCustomer" Checked="false" Text="<% $NopResources:Admin.OrderDetails.OrderNotes.New.DisplayToCustomer.Text %>" />
+                        <asp:CheckBox runat="server" ID="cbNewDisplayToCustomer" Text="<% $NopResources:Admin.OrderDetails.OrderNotes.New.DisplayToCustomer.Text %>" />
                         <br />
                         <asp:Button ID="btnAddNewOrderNote" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.OrderNotes.New.AddNewButton.Text %>"
                             OnClick="btnAddNewOrderNote_Click" ToolTip="<% $NopResources:Admin.OrderDetails.OrderNotes.New.AddNewButton.Tooltip %>" />

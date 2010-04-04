@@ -783,7 +783,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (String.IsNullOrEmpty(note))
                     return;
 
-                OrderNote orderNote = OrderManager.InsertOrderNote(this.OrderID, note, cbDisplayToCustomer.Checked, DateTime.Now);
+                bool displayToCustomer = cbNewDisplayToCustomer.Checked;
+
+                OrderNote orderNote = OrderManager.InsertOrderNote(this.OrderID, note, displayToCustomer, DateTime.Now);
                 BindData();
                 txtNewOrderNote.Text = string.Empty;
             }
