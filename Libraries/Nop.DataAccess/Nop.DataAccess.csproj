@@ -67,6 +67,7 @@
     <Compile Include="BaseDBProvider.cs" />
     <Compile Include="Categories\DBCategory.cs" />
     <Compile Include="Categories\DBCategoryCollection.cs" />
+    <Compile Include="Categories\DBCategoryLocalized.cs" />
     <Compile Include="Categories\DBProductCategory.cs" />
     <Compile Include="Categories\DBProductCategoryCollection.cs" />
     <Compile Include="Configuration\Settings\DBSetting.cs" />

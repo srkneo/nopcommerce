@@ -125,5 +125,19 @@ namespace NopSolutions.NopCommerce.Web
             Language language = NopContext.Current.WorkingLanguage;
             return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageID);
         }
+        
+        protected virtual LanguageCollection GetLocalizableLangugesSupported()
+        {
+            return LanguageManager.GetAllLanguages(false);
+        }
+
+        protected virtual bool HasLocalizableContent
+        {
+            get
+            {
+                var languages = GetLocalizableLangugesSupported();
+                return languages.Count > 1;
+            }
+        }
     }
 }

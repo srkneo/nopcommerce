@@ -6040,6 +6040,7 @@
     <Content Include="Administration\PricelistAdd.aspx" />
     <Content Include="Administration\PricelistDetails.aspx" />
     <Content Include="AmazonSimplePayReturn.aspx" />
+    <Content Include="App_Themes\administration\idTabs.css" />
     <Content Include="App_Themes\administration\styles.css" />
     <Content Include="App_Themes\administration\images\1pix.gif" />
     <Content Include="App_Themes\administration\images\admin-header-bg.gif" />
@@ -6135,11 +6136,14 @@
     <Content Include="BeanstreamHostedPaymentReturn.aspx" />
     <Content Include="ChronoPayIPNHandler.aspx" />
     <Content Include="AssistHostedPaymentReturn.aspx" />
+    <Content Include="images\flags\fr-FR.png" />
+    <Content Include="images\flags\en-US.png" />
     <Content Include="QuickPayCancel.aspx" />
     <Content Include="QuickPayReturn.aspx" />
     <Content Include="Licenses.txt" />
     <Content Include="SagePayFailure.aspx" />
     <Content Include="SagePaySuccess.aspx" />
+    <Content Include="Scripts\jquery.idTabs.min.js" />
     <Content Include="SermepaError.aspx" />
     <Content Include="SermepaReturn.aspx" />
     <Content Include="Google\Index.htm" />

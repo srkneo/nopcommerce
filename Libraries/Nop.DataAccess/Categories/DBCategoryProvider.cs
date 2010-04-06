@@ -39,15 +39,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// </summary>
         /// <param name="ParentCategoryID">Parent category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Category collection</returns>
-        public abstract DBCategoryCollection GetAllCategories(int ParentCategoryID, bool showHidden);
+        public abstract DBCategoryCollection GetAllCategories(int ParentCategoryID, 
+            bool showHidden, int LanguageID);
 
         /// <summary>
         /// Gets a category
         /// </summary>
         /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Category</returns>
-        public abstract DBCategory GetCategoryByID(int CategoryID);
+        public abstract DBCategory GetCategoryByID(int CategoryID, int LanguageID);
         
         /// <summary>
         /// Inserts category identifier
@@ -100,6 +103,56 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             string SEName, int ParentCategoryID, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
             int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
 
+        /// <summary>
+        /// Gets localized category by id
+        /// </summary>
+        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <returns>Category content</returns>
+        public abstract DBCategoryLocalized GetCategoryLocalizedByID(int CategoryLocalizedID);
+
+        /// <summary>
+        /// Gets localized category by category id and language id
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Category content</returns>
+        public abstract DBCategoryLocalized GetCategoryLocalizedByCategoryIDAndLanguageID(int CategoryID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized category
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBCategoryContent</returns>
+        public abstract DBCategoryLocalized InsertCategoryLocalized(int CategoryID, 
+            int LanguageID, string Name, string Description, 
+            string MetaKeywords, string MetaDescription, string MetaTitle, 
+            string SEName);
+
+        /// <summary>
+        /// Update a localized category
+        /// </summary>
+        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBCategoryContent</returns>
+        public abstract DBCategoryLocalized UpdateCategoryLocalized(int CategoryLocalizedID, 
+            int CategoryID, int LanguageID, string Name, string Description, 
+            string MetaKeywords, string MetaDescription, string MetaTitle, 
+            string SEName);
+      
         /// <summary>
         /// Deletes a product category mapping
         /// </summary>

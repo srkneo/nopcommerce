@@ -39,7 +39,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+            Category category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
+
+            if (this.HasLocalizableContent)
+            {
+                var languages = this.GetLocalizableLangugesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
+            }
 
             if (category != null)
             {
@@ -58,6 +67,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
+
+            base.OnPreRender(e);
+        }
+        
         public void SaveInfo()
         {
             SaveInfo(this.CategoryID);
@@ -65,7 +85,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo(int catID)
         {
-            Category category = CategoryManager.GetCategoryByID(catID);
+            Category category = CategoryManager.GetCategoryByID(catID, 0);
 
             if (category != null)
             {
@@ -73,7 +93,88 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                      txtMetaKeywords.Text, txtMetaDescription.Text, txtMetaTitle.Text, txtSEName.Text, category.ParentCategoryID,
                      category.PictureID, txtPageSize.Value, category.PriceRanges, category.Published, category.Deleted, category.DisplayOrder, category.CreatedOn, DateTime.Now);
             }
+
+            saveLocalizableContent(category);
         }
+
+        protected void saveLocalizableContent(Category category)
+        {
+            if (category == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (RepeaterItem item in rptrLanguageDivs.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var txtLocalizedMetaKeywords = (TextBox)item.FindControl("txtLocalizedMetaKeywords");
+                    var txtLocalizedMetaDescription = (TextBox)item.FindControl("txtLocalizedMetaDescription");
+                    var txtLocalizedMetaTitle = (TextBox)item.FindControl("txtLocalizedMetaTitle");
+                    var txtLocalizedSEName = (TextBox)item.FindControl("txtLocalizedSEName");
+                    var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                    int languageID = int.Parse(lblLanguageId.Text);
+                    string metaKeywords = txtLocalizedMetaKeywords.Text;
+                    string metaDescription = txtLocalizedMetaDescription.Text;
+                    string metaTitle = txtLocalizedMetaTitle.Text;
+                    string seName = txtLocalizedSEName.Text;
+
+                    bool allFieldsAreEmpty = (string.IsNullOrEmpty(metaKeywords) && 
+                        string.IsNullOrEmpty(metaDescription) && 
+                        string.IsNullOrEmpty(metaTitle) && 
+                        string.IsNullOrEmpty(seName));
+
+                    CategoryLocalized content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(category.CategoryID, languageID);
+                    if (content == null)
+                    {
+                        if (!allFieldsAreEmpty && languageID > 0)
+                        {
+                            //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                            content = CategoryManager.InsertCategoryLocalized(category.CategoryID,
+                                   languageID, string.Empty, string.Empty, 
+                                   metaKeywords, metaDescription, metaTitle, seName);
+                        }
+                    }
+                    else
+                    {
+                        if (languageID > 0)
+                        {
+                            content = CategoryManager.UpdateCategoryLocalized(content.CategoryLocalizedID, category.CategoryID,
+                                languageID, content.Name, content.Description,
+                                metaKeywords, metaDescription,
+                                metaTitle, seName);
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtLocalizedMetaKeywords = (TextBox)e.Item.FindControl("txtLocalizedMetaKeywords");
+                var txtLocalizedMetaDescription = (TextBox)e.Item.FindControl("txtLocalizedMetaDescription");
+                var txtLocalizedMetaTitle = (TextBox)e.Item.FindControl("txtLocalizedMetaTitle");
+                var txtLocalizedSEName = (TextBox)e.Item.FindControl("txtLocalizedSEName");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+
+                int languageID = int.Parse(lblLanguageId.Text);
+
+                CategoryLocalized content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(this.CategoryID, languageID);
+                if (content != null)
+                {
+                    txtLocalizedMetaKeywords.Text = content.MetaKeywords;
+                    txtLocalizedMetaDescription.Text = content.MetaDescription;
+                    txtLocalizedMetaTitle.Text = content.MetaTitle;
+                    txtLocalizedSEName.Text = content.SEName;
+                }
+
+            }
+        }
+
 
         public int CategoryID
         {

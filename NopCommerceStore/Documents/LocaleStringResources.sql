@@ -2,8 +2,11 @@
 declare @resources xml
 set @resources='
 <Language LanguageID="7">
-  <LocaleResource Name="">
-    <Value></Value>
+  <LocaleResource Name="Admin.Localizable.Standard">
+    <Value>Standard</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Localizable.EmptyFieldNote">
+    <Value>Please note that if a field is left empty, the standard field will be used.</Value>
   </LocaleResource>
 </Language>
 '

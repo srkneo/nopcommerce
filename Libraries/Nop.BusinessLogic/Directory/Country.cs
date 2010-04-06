@@ -88,6 +88,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         #endregion
 
         #region Custom Properties
+
         /// <summary>
         /// Gets the state/provinces
         /// </summary>
@@ -98,6 +99,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return StateProvinceManager.GetStateProvincesByCountryID(CountryID);
             }
         }
+
         #endregion
     }
 

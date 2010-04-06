@@ -571,7 +571,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <param name="cookieName">Cookie name</param>
         /// <param name="cookieValue">Cookie value</param>
         /// <param name="ts">Timespan</param>
-        public static void SetCookie(String cookieName, string cookieValue, TimeSpan ts)
+        public static void SetCookie(string cookieName, string cookieValue, TimeSpan ts)
         {
             try
             {
@@ -593,7 +593,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <param name="cookieName">Cookie name</param>
         /// <param name="decode">Decode cookie</param>
         /// <returns>Cookie string</returns>
-        public static String GetCookieString(String cookieName, bool decode)
+        public static string GetCookieString(string cookieName, bool decode)
         {
             if (HttpContext.Current.Request.Cookies[cookieName] == null)
             {
@@ -617,7 +617,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// </summary>
         /// <param name="cookieName">Cookie name</param>
         /// <returns>Result</returns>
-        public static bool GetCookieBool(String cookieName)
+        public static bool GetCookieBool(string cookieName)
         {
             string str1 = GetCookieString(cookieName, true).ToUpperInvariant();
             return (str1 == "TRUE" || str1 == "YES" || str1 == "1");
@@ -628,7 +628,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// </summary>
         /// <param name="cookieName">Cookie name</param>
         /// <returns>Result</returns>
-        public static int GetCookieInt(String cookieName)
+        public static int GetCookieInt(string cookieName)
         {
             string str1 = GetCookieString(cookieName, true);
             if (!String.IsNullOrEmpty(str1))
@@ -831,7 +831,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
                 List.Items.Add(ddlItem);
             }
         }
-        
+
         #endregion
     }
 }

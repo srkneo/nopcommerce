@@ -57,6 +57,21 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             return category;
         }
 
+        private DBCategoryLocalized GetCategoryLocalizedFromReader(IDataReader dataReader)
+        {
+            DBCategoryLocalized item = new DBCategoryLocalized();
+            item.CategoryLocalizedID = NopSqlDataHelper.GetInt(dataReader, "CategoryLocalizedID");
+            item.CategoryID = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
+            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
+            item.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
+            item.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
+            item.SEName = NopSqlDataHelper.GetString(dataReader, "SEName");
+            return item;
+        }
+
         private DBProductCategory GetProductCategoryFromReader(IDataReader dataReader)
         {
             DBProductCategory productCategory = new DBProductCategory();
@@ -109,15 +124,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// Gets all categories
         /// </summary>
         /// <param name="ParentCategoryID">Parent category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Category collection</returns>
-        public override DBCategoryCollection GetAllCategories(int ParentCategoryID, bool showHidden)
+        public override DBCategoryCollection GetAllCategories(int ParentCategoryID,
+            bool showHidden, int LanguageID)
         {
             var result = new DBCategoryCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             db.AddInParameter(dbCommand, "ParentCategoryID", DbType.Int32, ParentCategoryID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -134,8 +152,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// Gets a category
         /// </summary>
         /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Category</returns>
-        public override DBCategory GetCategoryByID(int CategoryID)
+        public override DBCategory GetCategoryByID(int CategoryID, int LanguageID)
         {
 
             DBCategory category = null;
@@ -144,6 +163,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLoadByPrimaryKey");
             db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -202,7 +222,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
                 int CategoryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryID"));
-                category = GetCategoryByID(CategoryID);
+                category = GetCategoryByID(CategoryID, 0);
             }
             return category;
         }
@@ -254,9 +274,128 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                category = GetCategoryByID(CategoryID);
+                category = GetCategoryByID(CategoryID, 0);
 
             return category;
+        }
+
+        /// <summary>
+        /// Gets localized category by id
+        /// </summary>
+        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <returns>Category content</returns>
+        public override DBCategoryLocalized GetCategoryLocalizedByID(int CategoryLocalizedID)
+        {
+            DBCategoryLocalized item = null;
+            if (CategoryLocalizedID == 0)
+                return item;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedLoadByPrimaryKey");
+            db.AddInParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, CategoryLocalizedID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetCategoryLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized category by category id and language id
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Category content</returns>
+        public override DBCategoryLocalized GetCategoryLocalizedByCategoryIDAndLanguageID(int CategoryID, int LanguageID)
+        {
+            DBCategoryLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedLoadByCategoryIDAndLanguageID");
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetCategoryLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized category
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBCategoryContent</returns>
+        public override DBCategoryLocalized InsertCategoryLocalized(int CategoryID,
+            int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            DBCategoryLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedInsert");
+            db.AddOutParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int CategoryLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryLocalizedID"));
+                item = GetCategoryLocalizedByID(CategoryLocalizedID);
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized category
+        /// </summary>
+        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBCategoryContent</returns>
+        public override DBCategoryLocalized UpdateCategoryLocalized(int CategoryLocalizedID,
+            int CategoryID, int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            DBCategoryLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedUpdate");
+            db.AddInParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, CategoryLocalizedID);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetCategoryLocalizedByID(CategoryID);
+
+            return item;
         }
 
         /// <summary>

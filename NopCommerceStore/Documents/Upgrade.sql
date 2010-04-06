@@ -562,9 +562,9 @@ BEGIN
 		[DownloadURL]=@DownloadURL,
 		[DownloadBinary]=@DownloadBinary,
 		[ContentType] = @ContentType,
-		[Filename]=@Filename,
-		[Extension]=@Extension,
-		[IsNew]=@IsNew
+		[Filename] = @Filename,
+		[Extension] = @Extension,
+		[IsNew] = @IsNew
 	WHERE
 		DownloadID = @DownloadID
 
@@ -629,5 +629,322 @@ BEGIN
 	WHERE
 		PictureID = @PictureID
 
+END
+GO
+
+
+
+--category localization
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[NOP_getnotnullnotempty]') AND xtype in (N'FN', N'IF', N'TF'))
+DROP FUNCTION [dbo].[NOP_getnotnullnotempty]
+GO
+CREATE FUNCTION dbo.NOP_getnotnullnotempty
+(
+    @p1 nvarchar(max) = null, 
+    @p2 nvarchar(max) = null
+)
+RETURNS nvarchar(max)
+AS
+BEGIN
+    IF @p1 IS NULL
+        return @p2
+    IF @p1 =''
+        return @p2
+
+    return @p1
+END
+GO
+
+
+
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_CategoryLocalized]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_CategoryLocalized](
+	[CategoryLocalizedID] [int] IDENTITY(1,1) NOT NULL,
+	[CategoryID] [int] NOT NULL,
+	[LanguageID] [int] NOT NULL,
+	[Name] [nvarchar](400) NOT NULL,
+	[Description] [nvarchar](max) NOT NULL,
+	[MetaKeywords] [nvarchar](400) NOT NULL,
+	[MetaDescription] [nvarchar](4000) NOT NULL,
+	[MetaTitle] [nvarchar](400) NOT NULL,
+	[SEName] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_Nop_CategoryLocalized] PRIMARY KEY CLUSTERED 
+(
+	[CategoryLocalizedID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+ CONSTRAINT [IX_Nop_CategoryLocalized_Unique1] UNIQUE NONCLUSTERED 
+(
+	[CategoryID] ASC,
+	[LanguageID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CategoryLocalized_Nop_Category'
+           AND parent_obj = Object_id('Nop_CategoryLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CategoryLocalized
+DROP CONSTRAINT FK_Nop_CategoryLocalized_Nop_Category
+GO
+ALTER TABLE [dbo].[Nop_CategoryLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CategoryLocalized_Nop_Category] FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Nop_Category] ([CategoryID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CategoryLocalized_Nop_Language'
+           AND parent_obj = Object_id('Nop_CategoryLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CategoryLocalized
+DROP CONSTRAINT FK_Nop_CategoryLocalized_Nop_Language
+GO
+ALTER TABLE [dbo].[Nop_CategoryLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CategoryLocalized_Nop_Language] FOREIGN KEY([LanguageID])
+REFERENCES [dbo].[Nop_Language] ([LanguageID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedCleanUp]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLocalizedCleanUp]
+
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE FROM
+		[Nop_CategoryLocalized]
+	WHERE
+		([Name] IS NULL OR [Name] = '') AND		
+		([Description] IS NULL OR substring([Description],1,100) = '') AND
+		(MetaKeywords IS NULL or MetaKeywords = '') AND
+		(MetaDescription IS NULL or MetaDescription = '') AND
+		(MetaTitle IS NULL or MetaTitle = '') AND
+		(SEName IS NULL or SEName = '') 
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLocalizedInsert]
+(
+	@CategoryLocalizedID int = NULL output,
+	@CategoryID int,
+	@LanguageID int,
+	@Name nvarchar(400),
+	@Description nvarchar(max),
+	@MetaKeywords nvarchar(400),
+	@MetaDescription nvarchar(4000),
+	@MetaTitle nvarchar(400),
+	@SEName nvarchar(100)
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_CategoryLocalized]
+	(
+		CategoryID,
+		LanguageID,
+		[Name],
+		[Description],		
+		MetaKeywords,
+		MetaDescription,
+		MetaTitle,
+		SEName
+	)
+	VALUES
+	(
+		@CategoryID,
+		@LanguageID,
+		@Name,
+		@Description,
+		@MetaKeywords,
+		@MetaDescription,
+		@MetaTitle,
+		@SEName
+	)
+
+	set @CategoryLocalizedID=@@identity
+
+	EXEC Nop_CategoryLocalizedCleanUp
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLocalizedLoadByPrimaryKey]
+	@CategoryLocalizedID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_CategoryLocalized]
+	WHERE CategoryLocalizedID = @CategoryLocalizedID
+	ORDER BY CategoryLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedLoadByCategoryIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedLoadByCategoryIDAndLanguageID]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLocalizedLoadByCategoryIDAndLanguageID]
+	@CategoryID int,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_CategoryLocalized]
+	WHERE CategoryID = @CategoryID AND LanguageID=@LanguageID
+	ORDER BY CategoryLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLocalizedUpdate]
+(
+	@CategoryLocalizedID int,
+	@CategoryID int,
+	@LanguageID int,
+	@Name nvarchar(400),
+	@Description nvarchar(max),
+	@MetaKeywords nvarchar(400),
+	@MetaDescription nvarchar(4000),
+	@MetaTitle nvarchar(400),
+	@SEName nvarchar(100)
+)
+AS
+BEGIN
+	
+	UPDATE [Nop_CategoryLocalized]
+	SET
+		[CategoryID]=@CategoryID,
+		[LanguageID]=@LanguageID,
+		[Name]=@Name,
+		[Description]=@Description,		
+		MetaKeywords=@MetaKeywords,
+		MetaDescription=@MetaDescription,
+		MetaTitle=@MetaTitle,
+		SEName=@SEName		
+	WHERE
+		CategoryLocalizedID = @CategoryLocalizedID
+
+	EXEC Nop_CategoryLocalizedCleanUp
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLoadAll]
+	@ShowHidden bit = 0,
+	@ParentCategoryID int = 0,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT 
+		c.CategoryID, 
+		dbo.NOP_getnotnullnotempty(cl.Name,c.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(cl.Description,c.Description) as [Description],
+		c.TemplateID, 
+		dbo.NOP_getnotnullnotempty(cl.MetaKeywords,c.MetaKeywords) as [MetaKeywords],
+		dbo.NOP_getnotnullnotempty(cl.MetaDescription,c.MetaDescription) as [MetaDescription],
+		dbo.NOP_getnotnullnotempty(cl.MetaTitle,c.MetaTitle) as [MetaTitle],
+		dbo.NOP_getnotnullnotempty(cl.SEName,c.SEName) as [SEName],
+		c.ParentCategoryID, 
+		c.PictureID, 
+		c.PageSize, 
+		c.PriceRanges, 
+		c.Published,
+		c.Deleted, 
+		c.DisplayOrder, 
+		c.CreatedOn, 
+		c.UpdatedOn
+	FROM [Nop_Category] c
+		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
+		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
+	WHERE 
+		(c.Published = 1 or @ShowHidden = 1) AND 
+		c.Deleted=0 AND 
+		c.ParentCategoryID=@ParentCategoryID
+	order by DisplayOrder
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLoadByPrimaryKey]
+(
+	@CategoryID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		c.CategoryID, 
+		dbo.NOP_getnotnullnotempty(cl.Name,c.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(cl.Description,c.Description) as [Description],
+		c.TemplateID, 
+		dbo.NOP_getnotnullnotempty(cl.MetaKeywords,c.MetaKeywords) as [MetaKeywords],
+		dbo.NOP_getnotnullnotempty(cl.MetaDescription,c.MetaDescription) as [MetaDescription],
+		dbo.NOP_getnotnullnotempty(cl.MetaTitle,c.MetaTitle) as [MetaTitle],
+		dbo.NOP_getnotnullnotempty(cl.SEName,c.SEName) as [SEName],
+		c.ParentCategoryID, 
+		c.PictureID, 
+		c.PageSize, 
+		c.PriceRanges, 
+		c.Published,
+		c.Deleted, 
+		c.DisplayOrder,
+		c.CreatedOn, 
+		c.UpdatedOn
+	FROM [Nop_Category] c
+		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
+		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
+	WHERE 
+		(c.CategoryID = @CategoryID) 
 END
 GO

@@ -32,8 +32,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
     public partial class CategoryManager
     {
         #region Constants
-        private const string CATEGORIES_ALL_KEY = "Nop.category.all-{0}-{1}";
-        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}";
+        private const string CATEGORIES_ALL_KEY = "Nop.category.all-{0}-{1}-{2}";
+        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}-{1}";
         private const string PRODUCTCATEGORIES_ALLBYCATEGORYID_KEY = "Nop.productcategory.allbycategoryid-{0}-{1}";
         private const string PRODUCTCATEGORIES_ALLBYPRODUCTID_KEY = "Nop.productcategory.allbyproductid-{0}-{1}";
         private const string PRODUCTCATEGORIES_BY_ID_KEY = "Nop.productcategory.id-{0}";
@@ -81,6 +81,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             item.DisplayOrder = dbItem.DisplayOrder;
             item.CreatedOn = dbItem.CreatedOn;
             item.UpdatedOn = dbItem.UpdatedOn;
+
+            return item;
+        }
+        
+        private static CategoryLocalized DBMapping(DBCategoryLocalized dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new CategoryLocalized();
+            item.CategoryLocalizedID = dbItem.CategoryLocalizedID;
+            item.CategoryID = dbItem.CategoryID;
+            item.LanguageID = dbItem.LanguageID;
+            item.Name = dbItem.Name;
+            item.Description = dbItem.Description;
+            item.MetaKeywords = dbItem.MetaKeywords;
+            item.MetaDescription = dbItem.MetaDescription;
+            item.MetaTitle = dbItem.MetaTitle;
+            item.SEName = dbItem.SEName;
 
             return item;
         }
@@ -170,13 +189,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <returns>Category collection</returns>
         public static CategoryCollection GetAllCategories(int ParentCategoryID, bool showHidden)
         {
-            string key = string.Format(CATEGORIES_ALL_KEY, showHidden, ParentCategoryID);
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+            return GetAllCategories(ParentCategoryID, showHidden, languageId);
+        }
+
+        /// <summary>
+        /// Gets all categories
+        /// </summary>
+        /// <param name="ParentCategoryID">Parent category identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Category collection</returns>
+        public static CategoryCollection GetAllCategories(int ParentCategoryID, 
+            bool showHidden, int LanguageID)
+        {
+            string key = string.Format(CATEGORIES_ALL_KEY, showHidden, ParentCategoryID, LanguageID);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (CategoryCollection)obj2;
             }
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategories(ParentCategoryID, showHidden);
+            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategories(ParentCategoryID, 
+                showHidden, LanguageID);
             var categoryCollection = DBMapping(dbCollection);
 
             if (CategoryManager.CategoriesCacheEnabled)
@@ -193,16 +229,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <returns>Category</returns>
         public static Category GetCategoryByID(int CategoryID)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+            return GetCategoryByID(CategoryID, languageId);
+        }
+        
+        /// <summary>
+        /// Gets a category
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Category</returns>
+        public static Category GetCategoryByID(int CategoryID, int LanguageID)
+        {
             if (CategoryID == 0)
                 return null;
 
-            string key = string.Format(CATEGORIES_BY_ID_KEY, CategoryID);
+            string key = string.Format(CATEGORIES_BY_ID_KEY, CategoryID, LanguageID);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (Category)obj2;
             }
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryByID(CategoryID);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryByID(CategoryID, LanguageID);
             var category = DBMapping(dbItem);
 
             if (CategoryManager.CategoriesCacheEnabled)
@@ -329,6 +379,85 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             return category;
         }
+
+        /// <summary>
+        /// Gets localized category by id
+        /// </summary>
+        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <returns>Category content</returns>
+        public static CategoryLocalized GetCategoryLocalizedByID(int CategoryLocalizedID)
+        {
+            if (CategoryLocalizedID == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedByID(CategoryLocalizedID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized category by category id and language id
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Category content</returns>
+        public static CategoryLocalized GetCategoryLocalizedByCategoryIDAndLanguageID(int CategoryID, int LanguageID)
+        {
+            if (CategoryID == 0 || LanguageID == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedByCategoryIDAndLanguageID(CategoryID, LanguageID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized category
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBCategoryContent</returns>
+        public static CategoryLocalized InsertCategoryLocalized(int CategoryID,
+            int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategoryLocalized(CategoryID,
+            LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized category
+        /// </summary>
+        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBCategoryContent</returns>
+        public static CategoryLocalized UpdateCategoryLocalized(int CategoryLocalizedID,
+            int CategoryID, int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategoryLocalized(CategoryLocalizedID,
+                CategoryID, LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
 
         /// <summary>
         /// Deletes a product category mapping

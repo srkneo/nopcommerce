@@ -25,6 +25,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
@@ -39,7 +40,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+            Category category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
+
+            if (this.HasLocalizableContent)
+            {
+                var languages = this.GetLocalizableLangugesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
+            }
 
             if (category != null)
             {
@@ -89,9 +99,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
+
+            base.OnPreRender(e);
+        }
+        
         public Category SaveInfo()
         {
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+            Category category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
 
             if (category != null)
             {
@@ -131,14 +152,85 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                          string.Empty, string.Empty, string.Empty, string.Empty, ParentCategory.SelectedCategoryId,
                          categoryPictureID, 10, txtPriceRanges.Text, cbPublished.Checked, false, txtDisplayOrder.Value, nowDT, nowDT);
             }
+
+            saveLocalizableContent(category);
+
             return category;
+        }
+
+        protected void saveLocalizableContent(Category category)
+        {
+            if (category == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (RepeaterItem item in rptrLanguageDivs.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var txtLocalizedCategoryName = (TextBox)item.FindControl("txtLocalizedCategoryName");
+                    var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedDescription");
+                    var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                    int languageID = int.Parse(lblLanguageId.Text);
+                    string name = txtLocalizedCategoryName.Text;
+                    string description = txtLocalizedDescription.Content;
+
+                    bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description));
+
+                    CategoryLocalized content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(category.CategoryID, languageID);
+                    if (content == null)
+                    {
+                        if (!allFieldsAreEmpty && languageID > 0)
+                        {
+                            //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                            content = CategoryManager.InsertCategoryLocalized(category.CategoryID,
+                                   languageID, name, description, string.Empty, string.Empty,
+                                   string.Empty, string.Empty);
+                        }
+                    }
+                    else
+                    {
+                        if (languageID > 0)
+                        {
+                            content = CategoryManager.UpdateCategoryLocalized(content.CategoryLocalizedID, category.CategoryID,
+                                languageID, name, description,
+                                content.MetaKeywords, content.MetaDescription,
+                                content.MetaTitle, content.SEName);
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtLocalizedCategoryName = (TextBox)e.Item.FindControl("txtLocalizedCategoryName");
+                var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedDescription");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+
+                int languageID = int.Parse(lblLanguageId.Text);
+
+                CategoryLocalized content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(this.CategoryID, languageID);
+
+                if (content != null)
+                {
+                    txtLocalizedCategoryName.Text = content.Name;
+                    txtLocalizedDescription.Content = content.Description;
+                }
+
+            }
         }
 
         protected void btnRemoveCategoryImage_Click(object sender, EventArgs e)
         {
             try
             {
-                Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+                Category category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
                 if (category != null)
                 {
                     PictureManager.DeletePicture(category.PictureID);

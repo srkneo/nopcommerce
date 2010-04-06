@@ -94,6 +94,7 @@
     <Compile Include="Audit\ActivityLogType.cs" />
     <Compile Include="Audit\ActivityLogTypeCollection.cs" />
     <Compile Include="Audit\CustomerActivityManager.cs" />
+    <Compile Include="Categories\CategoryLocalized.cs" />
     <Compile Include="Content\Forums\ForumSubscription.cs" />
     <Compile Include="Content\Forums\ForumSubscriptionCollection.cs" />
     <Compile Include="Content\Forums\ForumTopicTypeEnum.cs" />

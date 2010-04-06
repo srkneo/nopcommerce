@@ -15,7 +15,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
+using NopSolutions.NopCommerce.Common.Utils;
+using System.IO;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Directory
@@ -70,6 +73,42 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             get
             {
                 return LocaleStringResourceManager.GetAllResourcesByLanguageID(this.LanguageID);
+            }
+        }
+
+        /// <summary>
+        /// Gets an icon URL
+        /// </summary>
+        public string IconFilePath
+        {
+            get
+            {
+                string filepath = string.Empty;
+                if (!String.IsNullOrEmpty(LanguageCulture))
+                {
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                        filepath = string.Format("{0}images\\flags\\{1}.png", HttpContext.Current.Request.PhysicalApplicationPath, LanguageCulture);
+                }
+
+                return filepath;
+            }
+        }
+
+        /// <summary>
+        /// Gets an icon URL
+        /// </summary>
+        public string IconURL
+        {
+            get
+            {
+                string url = string.Empty;
+                if (!String.IsNullOrEmpty(LanguageCulture))
+                {
+                    if (!String.IsNullOrEmpty(this.IconFilePath) && File.Exists(this.IconFilePath))
+                        url = string.Format("{0}images/flags/{1}.png", CommonHelper.GetStoreLocation(), LanguageCulture);
+                }
+
+                return url;
             }
         }
         #endregion
