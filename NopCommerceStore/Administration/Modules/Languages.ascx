@@ -16,7 +16,8 @@
         </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Languages.Name %>" ItemStyle-Width="25%">
             <ItemTemplate>
-                <%#Server.HtmlEncode(Eval("Name").ToString())%>
+                 <%#Server.HtmlEncode(Eval("Name").ToString())%> <asp:Image runat="server" ID="imgCFlag" Visible='<%# !String.IsNullOrEmpty(Eval("IconURL").ToString()) %>'
+                        AlternateText="." ImageUrl='<%#Eval("IconURL").ToString()%>' />
             </ItemTemplate>
         </asp:TemplateField>
         <asp:BoundField DataField="LanguageCulture" HeaderText="<% $NopResources:Admin.Languages.LanguageCulture %>"
