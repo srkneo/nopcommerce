@@ -117,6 +117,7 @@
     <Compile Include="DBProviderSection.cs" />
     <Compile Include="DBProviderSectionNameAttribute.cs" />
     <Compile Include="Maintenance\DBMaintenanceProvider.cs" />
+    <Compile Include="Manufacturers\DBManufacturerLocalized.cs" />
     <Compile Include="Messages\DBNewsLetterSubscription.cs" />
     <Compile Include="Messages\DBNewsLetterSubscriptionCollection.cs" />
     <Compile Include="Orders\DBGiftCard.cs" />

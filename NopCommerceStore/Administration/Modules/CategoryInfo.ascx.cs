@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             if (this.HasLocalizableContent)
             {
-                var languages = this.GetLocalizableLangugesSupported();
+                var languages = this.GetLocalizableLanguagesSupported();
                 rptrLanguageTabs.DataSource = languages;
                 rptrLanguageTabs.DataBind();
                 rptrLanguageDivs.DataSource = languages;
@@ -180,7 +180,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description));
 
-                    CategoryLocalized content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(category.CategoryID, languageID);
+                    var content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(category.CategoryID, languageID);
                     if (content == null)
                     {
                         if (!allFieldsAreEmpty && languageID > 0)
@@ -195,7 +195,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     {
                         if (languageID > 0)
                         {
-                            content = CategoryManager.UpdateCategoryLocalized(content.CategoryLocalizedID, category.CategoryID,
+                            content = CategoryManager.UpdateCategoryLocalized(content.CategoryLocalizedID, content.CategoryID,
                                 languageID, name, description,
                                 content.MetaKeywords, content.MetaDescription,
                                 content.MetaTitle, content.SEName);
@@ -215,7 +215,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 int languageID = int.Parse(lblLanguageId.Text);
 
-                CategoryLocalized content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(this.CategoryID, languageID);
+                var content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(this.CategoryID, languageID);
 
                 if (content != null)
                 {
@@ -230,7 +230,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Category category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
+                var category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
                 if (category != null)
                 {
                     PictureManager.DeletePicture(category.PictureID);

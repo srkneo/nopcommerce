@@ -422,7 +422,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="MetaDescription">Meta descriptions text</param>
         /// <param name="MetaTitle">Metat title text</param>
         /// <param name="SEName">Se Name text</param>
-        /// <returns>DBCategoryContent</returns>
+        /// <returns>CategoryContent</returns>
         public static CategoryLocalized InsertCategoryLocalized(int CategoryID,
             int LanguageID, string Name, string Description,
             string MetaKeywords, string MetaDescription, string MetaTitle,
@@ -446,7 +446,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="MetaDescription">Meta descriptions text</param>
         /// <param name="MetaTitle">Metat title text</param>
         /// <param name="SEName">Se Name text</param>
-        /// <returns>DBCategoryContent</returns>
+        /// <returns>CategoryContent</returns>
         public static CategoryLocalized UpdateCategoryLocalized(int CategoryLocalizedID,
             int CategoryID, int LanguageID, string Name, string Description,
             string MetaKeywords, string MetaDescription, string MetaTitle,
@@ -457,8 +457,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             var item = DBMapping(dbItem);
             return item;
         }
-
-
+        
         /// <summary>
         /// Deletes a product category mapping
         /// </summary>

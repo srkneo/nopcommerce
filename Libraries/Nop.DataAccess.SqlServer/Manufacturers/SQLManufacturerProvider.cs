@@ -56,6 +56,21 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
             return manufacturer;
         }
 
+        private DBManufacturerLocalized GetManufacturerLocalizedFromReader(IDataReader dataReader)
+        {
+            DBManufacturerLocalized item = new DBManufacturerLocalized();
+            item.ManufacturerLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ManufacturerLocalizedID");
+            item.ManufacturerID = NopSqlDataHelper.GetInt(dataReader, "ManufacturerID");
+            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
+            item.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
+            item.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
+            item.SEName = NopSqlDataHelper.GetString(dataReader, "SEName");
+            return item;
+        }
+
         private DBProductManufacturer GetProductManufacturerFromReader(IDataReader dataReader)
         {
             DBProductManufacturer productManufacturer = new DBProductManufacturer();
@@ -108,13 +123,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// Gets all manufacturers
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Manufacturer collection</returns>
-        public override DBManufacturerCollection GetAllManufacturers(bool showHidden)
+        public override DBManufacturerCollection GetAllManufacturers(bool showHidden, int LanguageID)
         {
             var result = new DBManufacturerCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -131,8 +148,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// Gets a manufacturer
         /// </summary>
         /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Manufacturer</returns>
-        public override DBManufacturer GetManufacturerByID(int ManufacturerID)
+        public override DBManufacturer GetManufacturerByID(int ManufacturerID, int LanguageID)
         {
 
             DBManufacturer manufacturer = null;
@@ -141,6 +159,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLoadByPrimaryKey");
             db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -197,7 +216,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
                 int ManufacturerID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerID"));
-                manufacturer = GetManufacturerByID(ManufacturerID);
+                manufacturer = GetManufacturerByID(ManufacturerID, 0);
             }
             return manufacturer;
         }
@@ -247,11 +266,131 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                manufacturer = GetManufacturerByID(ManufacturerID);
+                manufacturer = GetManufacturerByID(ManufacturerID, 0);
 
 
             return manufacturer;
         }
+
+        /// <summary>
+        /// Gets localized manufacturer by id
+        /// </summary>
+        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
+        /// <returns>Manufacturer content</returns>
+        public override DBManufacturerLocalized GetManufacturerLocalizedByID(int ManufacturerLocalizedID)
+        {
+            DBManufacturerLocalized item = null;
+            if (ManufacturerLocalizedID == 0)
+                return item;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedLoadByPrimaryKey");
+            db.AddInParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, ManufacturerLocalizedID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetManufacturerLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized manufacturer by manufacturer id and language id
+        /// </summary>
+        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Manufacturer content</returns>
+        public override DBManufacturerLocalized GetManufacturerLocalizedByManufacturerIDAndLanguageID(int ManufacturerID, int LanguageID)
+        {
+            DBManufacturerLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedLoadByManufacturerIDAndLanguageID");
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetManufacturerLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized manufacturer
+        /// </summary>
+        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBManufacturerContent</returns>
+        public override DBManufacturerLocalized InsertManufacturerLocalized(int ManufacturerID,
+            int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            DBManufacturerLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedInsert");
+            db.AddOutParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int ManufacturerLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerLocalizedID"));
+                item = GetManufacturerLocalizedByID(ManufacturerLocalizedID);
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized manufacturer
+        /// </summary>
+        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
+        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBManufacturerContent</returns>
+        public override DBManufacturerLocalized UpdateManufacturerLocalized(int ManufacturerLocalizedID,
+            int ManufacturerID, int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            DBManufacturerLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedUpdate");
+            db.AddInParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, ManufacturerLocalizedID);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetManufacturerLocalizedByID(ManufacturerID);
+
+            return item;
+        }
+
 
         /// <summary>
         /// Deletes a product manufacturer mapping
@@ -266,11 +405,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         }
 
         /// <summary>
-        /// Gets product category manufacturer collection
+        /// Gets product manufacturer collection
         /// </summary>
         /// <param name="ManufacturerID">Manufacturer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Product category manufacturer collection</returns>
+        /// <returns>Product manufacturer collection</returns>
         public override DBProductManufacturerCollection GetProductManufacturersByManufacturerID(int ManufacturerID, bool showHidden)
         {
             var result = new DBProductManufacturerCollection();

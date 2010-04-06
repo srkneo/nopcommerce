@@ -37,15 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// Gets all manufacturers
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Manufacturer collection</returns>
-        public abstract DBManufacturerCollection GetAllManufacturers(bool showHidden);
+        public abstract DBManufacturerCollection GetAllManufacturers(bool showHidden, int LanguageID);
 
         /// <summary>
         /// Gets a manufacturer
         /// </summary>
         /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Manufacturer</returns>
-        public abstract DBManufacturer GetManufacturerByID(int ManufacturerID);
+        public abstract DBManufacturer GetManufacturerByID(int ManufacturerID, int LanguageID);
 
         /// <summary>
         /// Inserts a manufacturer
@@ -97,17 +99,67 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
             int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
 
         /// <summary>
+        /// Gets localized manufacturer by id
+        /// </summary>
+        /// <param name=ManufacturerLocalizedID">Localized manufacturer identifier</param>
+        /// <returns>Manufacturer content</returns>
+        public abstract DBManufacturerLocalized GetManufacturerLocalizedByID(int ManufacturerLocalizedID);
+
+        /// <summary>
+        /// Gets localized manufacturer by manufacturer id and language id
+        /// </summary>
+        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Manufacturer content</returns>
+        public abstract DBManufacturerLocalized GetManufacturerLocalizedByManufacturerIDAndLanguageID(int ManufacturerID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized manufacturer
+        /// </summary>
+        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBManufacturerContent</returns>
+        public abstract DBManufacturerLocalized InsertManufacturerLocalized(int ManufacturerID,
+            int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName);
+
+        /// <summary>
+        /// Update a localized manufacturer
+        /// </summary>
+        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
+        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBManufacturerContent</returns>
+        public abstract DBManufacturerLocalized UpdateManufacturerLocalized(int ManufacturerLocalizedID,
+            int ManufacturerID, int LanguageID, string Name, string Description,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName);
+      
+        /// <summary>
         /// Deletes a product manufacturer mapping
         /// </summary>
         /// <param name="ProductManufacturerID">Product manufacturer mapping identifer</param>
         public abstract void DeleteProductManufacturer(int ProductManufacturerID);
 
         /// <summary>
-        /// Gets product category manufacturer collection
+        /// Gets product product manufacturer collection
         /// </summary>
         /// <param name="ManufacturerID">Manufacturer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Product category manufacturer collection</returns>
+        /// <returns>Product manufacturer collection</returns>
         public abstract DBProductManufacturerCollection GetProductManufacturersByManufacturerID(int ManufacturerID, bool showHidden);
 
         /// <summary>

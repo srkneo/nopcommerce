@@ -393,7 +393,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
             db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCategoryLocalizedByID(CategoryID);
+                item = GetCategoryLocalizedByID(CategoryLocalizedID);
 
             return item;
         }

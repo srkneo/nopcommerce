@@ -37,14 +37,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Manufacturer manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID);
+            var manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID, 0);
+
+            if (this.HasLocalizableContent)
+            {
+                var languages = this.GetLocalizableLanguagesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
+            }
+            
             if (manufacturer != null)
             {
                 this.txtName.Text = manufacturer.Name;
                 this.txtDescription.Content = manufacturer.Description;
                 CommonHelper.SelectListItem(this.ddlTemplate, manufacturer.TemplateID);
 
-                Picture manufacturerPicture = manufacturer.Picture;
+                var manufacturerPicture = manufacturer.Picture;
                 btnRemoveManufacturerImage.Visible = manufacturerPicture != null;
                 string pictureUrl = PictureManager.GetPictureUrl(manufacturerPicture, 100);
                 this.iManufacturerPicture.Visible = true;
@@ -64,8 +74,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlTemplate.Items.Clear();
-            ManufacturerTemplateCollection manufacturerTemplates = TemplateManager.GetAllManufacturerTemplates();
-            foreach (ManufacturerTemplate manufacturerTemplate in manufacturerTemplates)
+            var manufacturerTemplates = TemplateManager.GetAllManufacturerTemplates();
+            foreach (var manufacturerTemplate in manufacturerTemplates)
             {
                 ListItem item2 = new ListItem(manufacturerTemplate.Name, manufacturerTemplate.ManufacturerTemplateID.ToString());
                 this.ddlTemplate.Items.Add(item2);
@@ -81,9 +91,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
+
+            base.OnPreRender(e);
+        }
+        
         public Manufacturer SaveInfo()
         {
-            Manufacturer manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID);
+            var manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID, 0);
 
             if (manufacturer != null)
             {
@@ -129,14 +150,84 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     manufacturerPictureID, 10, txtPriceRanges.Text, cbPublished.Checked, false, txtDisplayOrder.Value, nowDt, nowDt);
             }
 
+            saveLocalizableContent(manufacturer);
+
             return manufacturer;
+        }
+
+        protected void saveLocalizableContent(Manufacturer manufacturer)
+        {
+            if (manufacturer == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (RepeaterItem item in rptrLanguageDivs.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var txtLocalizedName = (TextBox)item.FindControl("txtLocalizedName");
+                    var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedDescription");
+                    var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                    int languageID = int.Parse(lblLanguageId.Text);
+                    string name = txtLocalizedName.Text;
+                    string description = txtLocalizedDescription.Content;
+
+                    bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description));
+
+                    var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIDAndLanguageID(manufacturer.ManufacturerID, languageID);
+                    if (content == null)
+                    {
+                        if (!allFieldsAreEmpty && languageID > 0)
+                        {
+                            //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                            content = ManufacturerManager.InsertManufacturerLocalized(manufacturer.ManufacturerID,
+                                   languageID, name, description, string.Empty, string.Empty,
+                                   string.Empty, string.Empty);
+                        }
+                    }
+                    else
+                    {
+                        if (languageID > 0)
+                        {
+                            content = ManufacturerManager.UpdateManufacturerLocalized(content.ManufacturerLocalizedID, content.ManufacturerID,
+                                languageID, name, description,
+                                content.MetaKeywords, content.MetaDescription,
+                                content.MetaTitle, content.SEName);
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtLocalizedName = (TextBox)e.Item.FindControl("txtLocalizedName");
+                var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedDescription");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+
+                int languageID = int.Parse(lblLanguageId.Text);
+
+                var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIDAndLanguageID(this.ManufacturerID, languageID);
+
+                if (content != null)
+                {
+                    txtLocalizedName.Text = content.Name;
+                    txtLocalizedDescription.Content = content.Description;
+                }
+
+            }
         }
 
         protected void btnRemoveManufacturerImage_Click(object sender, EventArgs e)
         {
             try
             {
-                Manufacturer manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID);
+                Manufacturer manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID, 0);
                 if (manufacturer != null)
                 {
                     PictureManager.DeletePicture(manufacturer.PictureID);

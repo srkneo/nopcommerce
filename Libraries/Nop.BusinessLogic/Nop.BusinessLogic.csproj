@@ -120,6 +120,7 @@
     <Compile Include="Maintenance\BackupFileCollection.cs" />
     <Compile Include="Maintenance\MaintenanceManager.cs" />
     <Compile Include="Maintenance\DatabaseMaintanceTask.cs" />
+    <Compile Include="Manufacturers\ManufacturerLocalized.cs" />
     <Compile Include="Messages\NewsLetterSubscription.cs" />
     <Compile Include="Messages\NewsLetterSubscriptionCollection.cs" />
     <Compile Include="Messages\SMSManager.cs" />

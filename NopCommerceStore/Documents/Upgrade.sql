@@ -1048,6 +1048,299 @@ BEGIN
 END
 GO
 
+
+
+--manufacturer localization
+
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_ManufacturerLocalized]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_ManufacturerLocalized](
+	[ManufacturerLocalizedID] [int] IDENTITY(1,1) NOT NULL,
+	[ManufacturerID] [int] NOT NULL,
+	[LanguageID] [int] NOT NULL,
+	[Name] [nvarchar](400) NOT NULL,
+	[Description] [nvarchar](max) NOT NULL,
+	[MetaKeywords] [nvarchar](400) NOT NULL,
+	[MetaDescription] [nvarchar](4000) NOT NULL,
+	[MetaTitle] [nvarchar](400) NOT NULL,
+	[SEName] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_Nop_ManufacturerLocalized] PRIMARY KEY CLUSTERED 
+(
+	[ManufacturerLocalizedID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+ CONSTRAINT [IX_Nop_ManufacturerLocalized_Unique1] UNIQUE NONCLUSTERED 
+(
+	[ManufacturerID] ASC,
+	[LanguageID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_ManufacturerLocalized_Nop_Manufacturer'
+           AND parent_obj = Object_id('Nop_ManufacturerLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_ManufacturerLocalized
+DROP CONSTRAINT FK_Nop_ManufacturerLocalized_Nop_Manufacturer
+GO
+ALTER TABLE [dbo].[Nop_ManufacturerLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_ManufacturerLocalized_Nop_Manufacturer] FOREIGN KEY([ManufacturerID])
+REFERENCES [dbo].[Nop_Manufacturer] ([ManufacturerID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_ManufacturerLocalized_Nop_Language'
+           AND parent_obj = Object_id('Nop_ManufacturerLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_ManufacturerLocalized
+DROP CONSTRAINT FK_Nop_ManufacturerLocalized_Nop_Language
+GO
+ALTER TABLE [dbo].[Nop_ManufacturerLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_ManufacturerLocalized_Nop_Language] FOREIGN KEY([LanguageID])
+REFERENCES [dbo].[Nop_Language] ([LanguageID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedCleanUp]
+GO
+CREATE PROCEDURE [dbo].[Nop_ManufacturerLocalizedCleanUp]
+
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE FROM
+		[Nop_ManufacturerLocalized]
+	WHERE
+		([Name] IS NULL OR [Name] = '') AND		
+		([Description] IS NULL OR substring([Description],1,100) = '') AND
+		(MetaKeywords IS NULL or MetaKeywords = '') AND
+		(MetaDescription IS NULL or MetaDescription = '') AND
+		(MetaTitle IS NULL or MetaTitle = '') AND
+		(SEName IS NULL or SEName = '') 
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_ManufacturerLocalizedInsert]
+(
+	@ManufacturerLocalizedID int = NULL output,
+	@ManufacturerID int,
+	@LanguageID int,
+	@Name nvarchar(400),
+	@Description nvarchar(max),
+	@MetaKeywords nvarchar(400),
+	@MetaDescription nvarchar(4000),
+	@MetaTitle nvarchar(400),
+	@SEName nvarchar(100)
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_ManufacturerLocalized]
+	(
+		ManufacturerID,
+		LanguageID,
+		[Name],
+		[Description],		
+		MetaKeywords,
+		MetaDescription,
+		MetaTitle,
+		SEName
+	)
+	VALUES
+	(
+		@ManufacturerID,
+		@LanguageID,
+		@Name,
+		@Description,
+		@MetaKeywords,
+		@MetaDescription,
+		@MetaTitle,
+		@SEName
+	)
+
+	set @ManufacturerLocalizedID=@@identity
+
+	EXEC Nop_ManufacturerLocalizedCleanUp
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_ManufacturerLocalizedLoadByPrimaryKey]
+	@ManufacturerLocalizedID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_ManufacturerLocalized]
+	WHERE ManufacturerLocalizedID = @ManufacturerLocalizedID
+	ORDER BY ManufacturerLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedLoadByManufacturerIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedLoadByManufacturerIDAndLanguageID]
+GO
+CREATE PROCEDURE [dbo].[Nop_ManufacturerLocalizedLoadByManufacturerIDAndLanguageID]
+	@ManufacturerID int,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_ManufacturerLocalized]
+	WHERE ManufacturerID = @ManufacturerID AND LanguageID=@LanguageID
+	ORDER BY ManufacturerLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_ManufacturerLocalizedUpdate]
+(
+	@ManufacturerLocalizedID int,
+	@ManufacturerID int,
+	@LanguageID int,
+	@Name nvarchar(400),
+	@Description nvarchar(max),
+	@MetaKeywords nvarchar(400),
+	@MetaDescription nvarchar(4000),
+	@MetaTitle nvarchar(400),
+	@SEName nvarchar(100)
+)
+AS
+BEGIN
+	
+	UPDATE [Nop_ManufacturerLocalized]
+	SET
+		[ManufacturerID]=@ManufacturerID,
+		[LanguageID]=@LanguageID,
+		[Name]=@Name,
+		[Description]=@Description,		
+		MetaKeywords=@MetaKeywords,
+		MetaDescription=@MetaDescription,
+		MetaTitle=@MetaTitle,
+		SEName=@SEName		
+	WHERE
+		ManufacturerLocalizedID = @ManufacturerLocalizedID
+
+	EXEC Nop_ManufacturerLocalizedCleanUp
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_ManufacturerLoadAll]
+	@ShowHidden bit = 0,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT 
+		m.ManufacturerID, 
+		dbo.NOP_getnotnullnotempty(ml.Name,m.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(ml.Description,m.Description) as [Description],
+		m.TemplateID, 
+		dbo.NOP_getnotnullnotempty(ml.MetaKeywords,m.MetaKeywords) as [MetaKeywords],
+		dbo.NOP_getnotnullnotempty(ml.MetaDescription,m.MetaDescription) as [MetaDescription],
+		dbo.NOP_getnotnullnotempty(ml.MetaTitle,m.MetaTitle) as [MetaTitle],
+		dbo.NOP_getnotnullnotempty(ml.SEName,m.SEName) as [SEName],
+		m.PictureID, 
+		m.PageSize, 
+		m.PriceRanges, 
+		m.Published,
+		m.Deleted, 
+		m.DisplayOrder, 
+		m.CreatedOn, 
+		m.UpdatedOn
+	FROM [Nop_Manufacturer] m
+		LEFT OUTER JOIN [Nop_ManufacturerLocalized] ml 
+		ON m.ManufacturerID = ml.ManufacturerID AND ml.LanguageID = @LanguageID	
+	WHERE 
+		(m.Published = 1 or @ShowHidden = 1) AND 
+		m.Deleted=0
+	order by m.DisplayOrder
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_ManufacturerLoadByPrimaryKey]
+(
+	@ManufacturerID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		m.ManufacturerID, 
+		dbo.NOP_getnotnullnotempty(ml.Name,m.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(ml.Description,m.Description) as [Description],
+		m.TemplateID, 
+		dbo.NOP_getnotnullnotempty(ml.MetaKeywords,m.MetaKeywords) as [MetaKeywords],
+		dbo.NOP_getnotnullnotempty(ml.MetaDescription,m.MetaDescription) as [MetaDescription],
+		dbo.NOP_getnotnullnotempty(ml.MetaTitle,m.MetaTitle) as [MetaTitle],
+		dbo.NOP_getnotnullnotempty(ml.SEName,m.SEName) as [SEName],
+		m.PictureID, 
+		m.PageSize, 
+		m.PriceRanges, 
+		m.Published,
+		m.Deleted, 
+		m.DisplayOrder, 
+		m.CreatedOn, 
+		m.UpdatedOn
+	FROM [Nop_Manufacturer] m
+		LEFT OUTER JOIN [Nop_ManufacturerLocalized] ml 
+		ON m.ManufacturerID = ml.ManufacturerID AND ml.LanguageID = @LanguageID	
+	WHERE 
+		(m.ManufacturerID = @ManufacturerID) 
+END
+GO
+
+
 IF EXISTS (
 		SELECT 1
 		FROM [dbo].[Nop_CustomerAction]
