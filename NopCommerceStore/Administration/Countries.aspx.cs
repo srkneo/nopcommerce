@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
     {
         protected override bool ValidatePageSecurity()
         {
-            return ACLManager.IsActionAllowed("ManageCoutriesStates");
+            return ACLManager.IsActionAllowed("ManageCountriesStates");
         }
     }
 }

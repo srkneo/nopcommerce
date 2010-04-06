@@ -1048,3 +1048,21 @@ BEGIN
 END
 GO
 
+IF EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_CustomerAction]
+		WHERE [SystemKeyword] = N'ManageCoutriesStates')
+BEGIN
+	DELETE FROM [dbo].[Nop_CustomerAction] WHERE [SystemKeyword] = N'ManageCoutriesStates'
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_CustomerAction]
+		WHERE [SystemKeyword] = N'ManageCountriesStates')
+BEGIN
+	INSERT [dbo].[Nop_CustomerAction] ([Name], [SystemKeyword], [Comment], [DisplayOrder])
+	VALUES (N'Manage Countries / States', N'ManageCountriesStates', N'',250)
+END
+GO
