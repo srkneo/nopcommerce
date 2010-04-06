@@ -904,7 +904,7 @@ BEGIN
 		(c.Published = 1 or @ShowHidden = 1) AND 
 		c.Deleted=0 AND 
 		c.ParentCategoryID=@ParentCategoryID
-	order by DisplayOrder
+	order by c.DisplayOrder
 END
 GO
 
@@ -1020,6 +1020,7 @@ BEGIN
 END
 GO
 
+
 IF EXISTS (
 		SELECT *
 		FROM dbo.sysobjects
@@ -1042,6 +1043,8 @@ BEGIN
 	ON 
 		nls.Email=c.Email
 	WHERE
-		nls.Active = 1 AND (c.CustomerID IS NULL OR (c.Active = 1 AND c.Deleted = 0)) OR (@ShowHidden = 1 AND (c.CustomerID IS NULL OR c.Deleted = 0))
+		(nls.Active = 1 OR @ShowHidden = 1) AND 
+		(c.CustomerID IS NULL OR (c.Active = 1 AND c.Deleted = 0))
 END
 GO
+
