@@ -14,6 +14,12 @@ set @resources='
   <LocaleResource Name="Admin.LanguageInfo.FlagImageFileName.Tooltip">
     <Value>The flag image file name. The image should be saved into \images\flags\ directory.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Media.PdfLogo">
+    <Value>PDF logo:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Media.PdfLogo.Tooltip">
+    <Value>Image file what will be displayed in PDF  order invoices.</Value>
+  </LocaleResource>
 </Language>
 '
  		

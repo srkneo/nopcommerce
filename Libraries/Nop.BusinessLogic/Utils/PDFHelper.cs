@@ -40,6 +40,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
     /// </summary>
     public partial class PDFHelper
     {
+        #region Properties
+        /// <summary>
+        /// Gets a file path to PDF logo
+        /// </summary>
+        public static string LogoFilePath
+        {
+            get
+            {
+                return HttpContext.Current.Request.PhysicalApplicationPath + "files/pdflogo.img";
+            }
+        }
+        #endregion
+
         #region Methods
         /// <summary>
         /// Print product collection to PDF
@@ -172,13 +185,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
             Section sec = doc.AddSection();
 
-            Paragraph p1 = sec.AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Order#", LanguageID), order.OrderID));
+            Table table = sec.AddTable();
+            table.Borders.Visible = false;
+
+            bool logoExists = File.Exists(PDFHelper.LogoFilePath);
+
+            table.AddColumn(Unit.FromCentimeter(10));
+            if(logoExists)
+            {
+                table.AddColumn(Unit.FromCentimeter(10));
+            }
+
+            Row ordRow = table.AddRow();
+
+            int rownum = logoExists ? 1 : 0;
+            Paragraph p1 = ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Order#", LanguageID), order.OrderID));
             p1.Format.Font.Bold = true;
             p1.Format.Font.Color = Colors.Black;
+            ordRow[rownum].AddParagraph(SettingManager.StoreURL.Trim(new char[] { '/' })).AddHyperlink(SettingManager.StoreURL, HyperlinkType.Url);
+            ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderDate", LanguageID), order.CreatedOn));
 
-            sec.AddParagraph(SettingManager.StoreURL.Trim(new char[] { '/' })).AddHyperlink(SettingManager.StoreURL, HyperlinkType.Url);
+            if(File.Exists(PDFHelper.LogoFilePath))
+            {
+                ordRow[0].AddImage(PDFHelper.LogoFilePath);
+            }
 
-            sec.AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderDate", LanguageID), order.CreatedOn));
 
             var addressTable = sec.AddTable();
 

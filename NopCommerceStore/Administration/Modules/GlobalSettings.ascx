@@ -461,6 +461,16 @@
                             pixels
                         </td>
                     </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblPdfLogo" Text="<% $NopResources:Admin.GlobalSettings.Media.PdfLogo %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Media.PdfLogo.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:FileUpload runat="server" ID="uplPdfLogo" />
+                        </td>
+                    </tr>
                 </table>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>        

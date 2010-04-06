@@ -40,6 +40,7 @@ using System.IO;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
+using NopSolutions.NopCommerce.BusinessLogic.Utils;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -313,6 +314,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParam("LiveChat.MonCode", txtLiveChatMonCode.Text);
 
 
+                    if(uplPdfLogo.HasFile)
+                    {
+                        HttpPostedFile postedFile = uplPdfLogo.PostedFile;
+                        if(!postedFile.ContentType.Equals("image/jpeg") && !postedFile.ContentType.Equals("image/gif") && !postedFile.ContentType.Equals("image/png"))
+                        {
+                            throw new NopException("Image format not recognized, allowed formats are: .png, .jpg, .jpeg, .gif");
+                        }
+                        postedFile.SaveAs(PDFHelper.LogoFilePath);
+                    }
 
                     CustomerActivityManager.InsertActivity(
                         "EditGlobalSettings",
