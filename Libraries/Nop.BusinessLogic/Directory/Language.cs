@@ -54,6 +54,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public string LanguageCulture { get; set; }
 
         /// <summary>
+        /// Gets or sets the flag image file name
+        /// </summary>
+        public string FlagImageFileName { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the language is published
         /// </summary>
         public bool Published { get; set; }
@@ -79,35 +84,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets an icon URL
         /// </summary>
-        public string IconFilePath
-        {
-            get
-            {
-                string filepath = string.Empty;
-                if (!String.IsNullOrEmpty(LanguageCulture))
-                {
-                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                        filepath = string.Format("{0}images\\flags\\{1}.png", HttpContext.Current.Request.PhysicalApplicationPath, LanguageCulture);
-                }
-
-                return filepath;
-            }
-        }
-
-        /// <summary>
-        /// Gets an icon URL
-        /// </summary>
         public string IconURL
         {
             get
             {
                 string url = string.Empty;
-                if (!String.IsNullOrEmpty(LanguageCulture))
+                if (!String.IsNullOrEmpty(FlagImageFileName))
                 {
-                    if (!String.IsNullOrEmpty(this.IconFilePath) && File.Exists(this.IconFilePath))
-                        url = string.Format("{0}images/flags/{1}.png", CommonHelper.GetStoreLocation(), LanguageCulture);
+                    url = string.Format("{0}images/flags/{1}", CommonHelper.GetStoreLocation(), FlagImageFileName);
                 }
-
                 return url;
             }
         }

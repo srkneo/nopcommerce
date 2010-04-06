@@ -89,6 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (ciItem != null)
                     ciItem.Selected = true;
 
+                this.txtFlagImageFileName.Text = language.FlagImageFileName;
                 this.cbPublished.Checked = language.Published;
                 this.txtDisplayOrder.Value = language.DisplayOrder;
 
@@ -115,18 +116,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             string name = txtName.Text;
             string languageCulture = ddlLanguageCulture.SelectedItem.Value;
+            string flagImageFileName = txtFlagImageFileName.Text;
             bool published = cbPublished.Checked;
             int displayOrder = txtDisplayOrder.Value;
+
             if (language != null)
             {
                 language = LanguageManager.UpdateLanguage(language.LanguageID, name,
-                    languageCulture, published, displayOrder);
+                    languageCulture, flagImageFileName, published, displayOrder);
 
             }
             else
             {
                 language = LanguageManager.InsertLanguage(name, languageCulture,
-                    published, displayOrder);
+                    flagImageFileName, published, displayOrder);
 
             }
 

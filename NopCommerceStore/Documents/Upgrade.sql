@@ -948,3 +948,74 @@ BEGIN
 		(c.CategoryID = @CategoryID) 
 END
 GO
+
+
+-- Add Flag column to Nop_Language
+IF NOT EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_Language]') and NAME='FlagImageFileName')
+BEGIN
+	ALTER TABLE [dbo].[Nop_Language] 
+	ADD FlagImageFileName nvarchar(50) NOT NULL CONSTRAINT [DF_Nop_Language_FlagImageFileName] DEFAULT ((''))
+END
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[Nop_LanguageInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_LanguageInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_LanguageInsert]
+(
+	@LanguageId int = NULL output,
+	@Name nvarchar(100),
+	@LanguageCulture nvarchar(20),
+	@FlagImageFileName nvarchar(50),
+	@Published bit,
+	@DisplayOrder int
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_Language]
+	(
+		[Name],
+		[LanguageCulture],
+		[FlagImageFileName],
+		[Published],
+		[DisplayOrder]
+	)
+	VALUES
+	(
+		@Name,
+		@LanguageCulture,
+		@FlagImageFileName,
+		@Published,
+		@DisplayOrder
+	)
+
+	set @LanguageId=SCOPE_IDENTITY()
+END
+GO
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[Nop_LanguageUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_LanguageUpdate]
+GO
+
+CREATE PROCEDURE [dbo].[Nop_LanguageUpdate]
+(
+	@LanguageId int,
+	@Name nvarchar(100),
+	@LanguageCulture nvarchar(20),
+	@FlagImageFileName nvarchar(50),
+	@Published bit,
+	@DisplayOrder int
+)
+AS
+BEGIN
+	UPDATE [Nop_Language]
+	SET
+		[Name] = @Name,
+		[LanguageCulture] = @LanguageCulture,
+		[FlagImageFileName] = @FlagImageFileName,
+		[Published] = @Published,
+		[DisplayOrder] = @DisplayOrder
+	WHERE
+		[LanguageId] = @LanguageId
+END
+GO

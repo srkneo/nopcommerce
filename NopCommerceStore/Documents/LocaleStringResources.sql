@@ -8,6 +8,12 @@ set @resources='
   <LocaleResource Name="Admin.Localizable.EmptyFieldNote">
     <Value>Please note that if a field is left empty, the standard field will be used.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.LanguageInfo.FlagImageFileName">
+    <Value>Flag image file name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.LanguageInfo.FlagImageFileName.Tooltip">
+    <Value>The flag image file name. The image should be saved into \images\flags\ directory.</Value>
+  </LocaleResource>
 </Language>
 '
  		

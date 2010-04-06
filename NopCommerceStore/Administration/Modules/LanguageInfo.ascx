@@ -25,6 +25,16 @@
     </tr>
     <tr>
         <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblFlagImageFileName" Text="<% $NopResources:Admin.LanguageInfo.FlagImageFileName %>"
+                ToolTip="<% $NopResources:Admin.LanguageInfo.FlagImageFileName.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <asp:TextBox ID="txtFlagImageFileName" runat="server" CssClass="adminInput"></asp:TextBox>
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblPublished" Text="<% $NopResources:Admin.LanguageInfo.Published %>"
                 ToolTip="<% $NopResources:Admin.LanguageInfo.Published.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>

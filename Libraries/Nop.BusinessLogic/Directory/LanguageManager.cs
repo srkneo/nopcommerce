@@ -61,6 +61,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             item.LanguageID = dbItem.LanguageID;
             item.Name = dbItem.Name;
             item.LanguageCulture = dbItem.LanguageCulture;
+            item.FlagImageFileName = dbItem.FlagImageFileName;
             item.Published = dbItem.Published;
             item.DisplayOrder = dbItem.DisplayOrder;
 
@@ -149,12 +150,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// </summary>
         /// <param name="Name">The name</param>
         /// <param name="LanguageCulture">The language culture</param>
+        /// <param name="FlagImageFileName">The flag image file name</param>
         /// <param name="Published">A value indicating whether the language is published</param>
         /// <param name="DisplayOrder">The display order</param>
         /// <returns>Language</returns>
-        public static Language InsertLanguage(string Name, string LanguageCulture, bool Published, int DisplayOrder)
+        public static Language InsertLanguage(string Name, string LanguageCulture,
+            string FlagImageFileName, bool Published, int DisplayOrder)
         {
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.InsertLanguage(Name, LanguageCulture, Published, DisplayOrder);
+            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.InsertLanguage(Name,
+                LanguageCulture, FlagImageFileName, Published, DisplayOrder);
             var language = DBMapping(dbItem);
 
             if (LanguageManager.CacheEnabled)
@@ -170,12 +174,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="LanguageID">Language identifier</param>
         /// <param name="Name">The name</param>
         /// <param name="LanguageCulture">The language culture</param>
+        /// <param name="FlagImageFileName">The flag image file name</param>
         /// <param name="Published">A value indicating whether the language is published</param>
         /// <param name="DisplayOrder">The display order</param>
         /// <returns>Language</returns>
-        public static Language UpdateLanguage(int LanguageID, string Name, string LanguageCulture, bool Published, int DisplayOrder)
+        public static Language UpdateLanguage(int LanguageID, string Name,
+            string LanguageCulture, string FlagImageFileName, bool Published, int DisplayOrder)
         {
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.UpdateLanguage(LanguageID, Name, LanguageCulture, Published, DisplayOrder);
+            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.UpdateLanguage(LanguageID,
+                Name, LanguageCulture, FlagImageFileName, Published, DisplayOrder);
             var language = DBMapping(dbItem);
             if (LanguageManager.CacheEnabled)
             {

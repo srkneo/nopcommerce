@@ -58,10 +58,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// </summary>
         /// <param name="Name">The name</param>
         /// <param name="LanguageCulture">The language culture</param>
+        /// <param name="FlagImageFileName">The flag image file name</param>
         /// <param name="Published">A value indicating whether the language is published</param>
         /// <param name="DisplayOrder">The display order</param>
         /// <returns>Language</returns>
-        public abstract DBLanguage InsertLanguage(string Name, string LanguageCulture, bool Published, int DisplayOrder);
+        public abstract DBLanguage InsertLanguage(string Name, string LanguageCulture,
+            string FlagImageFileName, bool Published, int DisplayOrder);
 
         /// <summary>
         /// Updates a language
@@ -69,10 +71,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <param name="LanguageID">Language identifier</param>
         /// <param name="Name">The name</param>
         /// <param name="LanguageCulture">The language culture</param>
+        /// <param name="FlagImageFileName">The flag image file name</param>
         /// <param name="Published">A value indicating whether the language is published</param>
         /// <param name="DisplayOrder">The display order</param>
         /// <returns>Language</returns>
-        public abstract DBLanguage UpdateLanguage(int LanguageID, string Name, string LanguageCulture, bool Published, int DisplayOrder);
+        public abstract DBLanguage UpdateLanguage(int LanguageID, string Name,
+            string LanguageCulture, string FlagImageFileName, bool Published, int DisplayOrder);
         #endregion
     }
 }

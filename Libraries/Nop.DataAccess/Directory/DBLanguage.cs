@@ -50,6 +50,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         public string LanguageCulture { get; set; }
 
         /// <summary>
+        /// Gets or sets the flag image file name
+        /// </summary>
+        public string FlagImageFileName { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the language is published
         /// </summary>
         public bool Published { get; set; }
