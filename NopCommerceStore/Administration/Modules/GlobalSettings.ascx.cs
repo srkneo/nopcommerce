@@ -158,6 +158,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             txtLiveChatMonCode.Text = SettingManager.GetSettingValue("LiveChat.MonCode");
 
             txtAllowedIPList.Text = SettingManager.GetSettingValue("Security.AdminAreaAllowedIP");
+
+            if(File.Exists(PDFHelper.LogoFilePath))
+            {
+                imgPdfLogoPreview.ImageUrl = "~/files/pdflogo.img";
+                btnPdfLogoRemove.Visible = true;
+            }
+            else
+            {
+                imgPdfLogoPreview.ImageUrl = PictureManager.GetDefaultPictureUrl(100);
+            }
         }
 
         private void FillDropDowns()
@@ -313,7 +323,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParam("LiveChat.BtnCode", txtLiveChatBtnCode.Text);
                     SettingManager.SetParam("LiveChat.MonCode", txtLiveChatMonCode.Text);
 
-
                     if(uplPdfLogo.HasFile)
                     {
                         HttpPostedFile postedFile = uplPdfLogo.PostedFile;
@@ -352,6 +361,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     lblSendTestEmailResult.Text = exc.Message;
                 }
+            }
+        }
+
+        protected void BtnPdfLogoRemove_OnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                File.Delete(PDFHelper.LogoFilePath);
+                imgPdfLogoPreview.ImageUrl = PictureManager.GetDefaultPictureUrl(100);
+                btnPdfLogoRemove.Visible = false;
+            }
+            catch(Exception ex)
+            {
+                ShowError(ex.Message);
             }
         }
 

@@ -18,7 +18,13 @@ set @resources='
     <Value>PDF logo:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.Media.PdfLogo.Tooltip">
-    <Value>Image file what will be displayed in PDF  order invoices.</Value>
+    <Value>Image file what will be displayed in PDF order invoices.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Media.PdfLogoRemove">
+    <Value>Remove</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Media.PdfLogoRemove.Tooltip">
+    <Value>Remove PDF logo image.</Value>
   </LocaleResource>
 </Language>
 '
