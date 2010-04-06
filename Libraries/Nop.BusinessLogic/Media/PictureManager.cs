@@ -366,6 +366,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         }
 
         /// <summary>
+        /// Get a picture local path
+        /// </summary>
+        /// <param name="picture">Picture instance</param>
+        /// <param name="TargetSize">The target picture size (longest side)</param>
+        /// <param name="showDefaultPicture">A value indicating whether the default picture is shown</param>
+        /// <returns></returns>
+        public static string GetPictureLocalPath(Picture picture, int TargetSize, bool showDefaultPicture)
+        {
+            string url = GetPictureUrl(picture, TargetSize, showDefaultPicture);
+            if(String.IsNullOrEmpty(url))
+            {
+                return String.Empty;
+            }
+            else
+            {
+                return Path.Combine(PictureManager.LocalThumbImagePath, Path.GetFileName(url));
+            }
+        }
+
+        /// <summary>
         /// Calculates picture dimensions whilst maintaining aspect
         /// </summary>
         /// <param name="OriginalSize">The original picture size</param>

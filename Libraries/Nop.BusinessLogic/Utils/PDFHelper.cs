@@ -89,17 +89,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
                         if (pic != null && pic.PictureBinary != null && pic.PictureBinary.Length > 0)
                         {
-                            string imgPath = Path.GetTempFileName();
-                            File.WriteAllBytes(imgPath, pic.PictureBinary);
-
-                            Image img = row.Cells[cellNum].AddImage(imgPath);
-
-                            if (img.Width > 200f)
-                            {
-                                double scale = 200f / img.Width;
-                                img.ScaleWidth = scale;
-                                img.ScaleHeight = scale;
-                            }
+                            row.Cells[cellNum].AddImage(PictureManager.GetPictureLocalPath(pic, 200, true));
                         }
 
                         if(i != 0 && i % 2 == 0)
@@ -129,17 +119,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                     var pic = productVariant.Picture;
                     if (pic != null && pic.PictureBinary != null && pic.PictureBinary.Length > 0)
                     {
-                        string imgPath = Path.GetTempFileName();
-                        File.WriteAllBytes(imgPath, pic.PictureBinary);
-
-                        Image img = section.AddImage(imgPath);
-
-                        if (img.Width > 200f)
-                        {
-                            double scale = 200f / img.Width;
-                            img.ScaleWidth = scale;
-                            img.ScaleHeight = scale;
-                        }
+                        section.AddImage(PictureManager.GetPictureLocalPath(pic, 200, true));
                     }
 
                     section.AddParagraph(String.Format("{0}: {1} {2}", LocalizationManager.GetLocaleResourceString("PDFProductCatalog.Price"), productVariant.Price, CurrencyManager.PrimaryStoreCurrency.CurrencyCode));
