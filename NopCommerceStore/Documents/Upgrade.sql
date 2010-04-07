@@ -2449,7 +2449,7 @@ IF NOT EXISTS (
 		WHERE [Name] = N'SEO.ForumGroup.UrlRewriteFormat')
 BEGIN
 	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
-	VALUES (N'SEO.ForumGroup.UrlRewriteFormat', N'{0}ForumGroup/{1}-{2}.aspx', N'')
+	VALUES (N'SEO.ForumGroup.UrlRewriteFormat', N'{0}boards/fg/{1}/{2}.aspx', N'')
 END
 GO
 
@@ -2459,7 +2459,7 @@ IF NOT EXISTS (
 		WHERE [Name] = N'SEO.Forum.UrlRewriteFormat')
 BEGIN
 	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
-	VALUES (N'SEO.Forum.UrlRewriteFormat', N'{0}Forum/{1}-{2}.aspx', N'')
+	VALUES (N'SEO.Forum.UrlRewriteFormat', N'{0}boards/f/{1}/{2}.aspx', N'')
 END
 GO
 
@@ -2469,6 +2469,6 @@ IF NOT EXISTS (
 		WHERE [Name] = N'SEO.ForumTopic.UrlRewriteFormat')
 BEGIN
 	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
-	VALUES (N'SEO.ForumTopic.UrlRewriteFormat', N'{0}ForumTopic/{1}-{2}.aspx', N'')
+	VALUES (N'SEO.ForumTopic.UrlRewriteFormat', N'{0}boards/t/{1}/{2}.aspx', N'')
 END
 GO
