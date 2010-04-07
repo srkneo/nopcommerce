@@ -56,12 +56,22 @@
             $('#pnlSMSAlertsClickatellAPIID').show();
             $('#pnlSMSAlertsClickatellUsername').show();
             $('#pnlSMSAlertsClickatellPassword').show();
+            $('#pnlSMSAlertsTest_0').show();
+            $('#pnlSMSAlertsTest_1').show();
+            $('#pnlSMSAlertsTest_2').show();
+            $('#pnlSMSAlertsTest_3').show();
+            $('#pnlSMSAlertsTest_4').show();
         }
         else {
             $('#pnlSMSAlertsPhoneNumber').hide();
             $('#pnlSMSAlertsClickatellAPIID').hide();
             $('#pnlSMSAlertsClickatellUsername').hide();
             $('#pnlSMSAlertsClickatellPassword').hide();
+            $('#pnlSMSAlertsTest_0').hide();
+            $('#pnlSMSAlertsTest_1').hide();
+            $('#pnlSMSAlertsTest_2').hide();
+            $('#pnlSMSAlertsTest_3').hide();
+            $('#pnlSMSAlertsTest_4').hide();
         }
     }
 
@@ -676,6 +686,47 @@
                         </td>
                         <td class="adminData">
                             <asp:TextBox runat="server" ID="txtSMSAlertsClickatellPassword" />
+                        </td>
+                    </tr>
+                    <tr class="adminSeparator" id="pnlSMSAlertsTest_0">
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr id="pnlSMSAlertsTest_1">
+                        <td colspan="2">
+                            <p>
+                                <strong>
+                                    <%=GetLocaleResourceString("Admin.GlobalSettings.SMSAlerts.SendTestSMS")%>
+                                </strong>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr id="pnlSMSAlertsTest_2">
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblTestPhone" Text="<% $NopResources:Admin.GlobalSettings.SMSAlerts.TestPhone %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.SMSAlerts.TestPhone.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:TextBox runat="server" CssClass="adminInput" ID="txtTestPhone" ValidationGroup="SendTestSMS" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTestPhone" ErrorMessage="*" ValidationGroup="SendTestSMS" />
+                        </td>
+                    </tr>
+                    <tr id="pnlSMSAlertsTest_3">
+                        <td class="adminTitle">
+                        </td>
+                        <td class="adminData">
+                            <asp:Button ID="btnSendTestSMS" runat="server" Text="<% $NopResources:Admin.GlobalSettings.SMSAlerts.SendTestSMSButton %>"
+                                CssClass="adminButton" OnClick="BtnSendTestSMS_OnClick" ValidationGroup="SendTestSMS"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.SMSAlerts.SendTestSMSButton.Tooltip %>" />
+                        </td>
+                    </tr>
+                    <tr id="pnlSMSAlertsTest_4">
+                        <td class="adminTitle">
+                        </td>
+                        <td class="adminData" style="color: red">
+                            <asp:Label ID="lblSendTestSmsResult" runat="server" EnableViewState="false" />
                         </td>
                     </tr>
                 </table>

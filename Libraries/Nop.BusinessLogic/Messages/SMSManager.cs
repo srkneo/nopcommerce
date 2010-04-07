@@ -21,6 +21,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <returns>true if message was sent successfully; otherwise false.</returns>
         public static bool Send(string text)
         {
+            return Send(text, PhoneNumber);
+        }
+        
+        /// <summary>
+        /// Sends SMS message
+        /// </summary>
+        /// <param name="text">The text of message</param>
+        /// <param name="phone">The phone number</param>
+        /// <returns>true if message was sent successfully; otherwise false.</returns>
+        public static bool Send(string text, string phone)
+        {
             try
             {
                 using(var svc = new PushServerWS())
@@ -31,7 +42,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                         throw new NopException(authRsp);
                     }
                     string ssid = authRsp.Substring(4);
-                    string[] sndRsp = svc.sendmsg(ssid, Int32.Parse(ClickatellAPIID), ClickatellUsername, ClickatellPassword, new string[1] { PhoneNumber }, String.Empty, text, 0, 0, 0, 0, 0, 0, 0, 0, 0, String.Empty, 0, String.Empty, String.Empty, String.Empty, 0);
+                    string[] sndRsp = svc.sendmsg(ssid, Int32.Parse(ClickatellAPIID), ClickatellUsername, ClickatellPassword, new string[1] { phone }, String.Empty, text, 0, 0, 0, 0, 0, 0, 0, 0, 0, String.Empty, 0, String.Empty, String.Empty, String.Empty, 0);
                     if(!sndRsp[0].StartsWith("ID"))
                     {
                         throw new NopException(sndRsp[0]);

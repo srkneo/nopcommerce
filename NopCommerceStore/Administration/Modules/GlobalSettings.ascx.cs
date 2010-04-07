@@ -364,6 +364,28 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected void BtnSendTestSMS_OnClick(object sender, EventArgs e)
+        {
+            if(Page.IsValid)
+            {
+                try
+                {
+                    if(SMSManager.Send("Test message", txtTestPhone.Text))
+                    {
+                        lblSendTestSmsResult.Text = GetLocaleResourceString("Admin.GlobalSettings.SMSAlerts.SendTestSMSSuccess");
+                    }
+                    else
+                    {
+                        lblSendTestSmsResult.Text = GetLocaleResourceString("Admin.GlobalSettings.SMSAlerts.SendTestSMSFail");
+                    }
+                }
+                catch(Exception exc)
+                {
+                    lblSendTestSmsResult.Text = exc.Message;
+                }
+            }
+        }
+
         protected void BtnPdfLogoRemove_OnClick(object sender, EventArgs e)
         {
             try

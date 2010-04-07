@@ -29,6 +29,27 @@ set @resources='
   <LocaleResource Name="Admin.ProductInfo.CopyImages">
     <Value>Copy images:</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.SendTestSMS">
+    <Value>Send test SMS(save settings first by clicking "Save" button)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.TestPhone">
+    <Value>Test phone number:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.TestPhone.Tooltip">
+    <Value>Enter the test phone number.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.SendTestSMSButton">
+    <Value>Send</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.SendTestSMSButton.Tooltip">
+    <Value>Click to send a test SMS</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.SendTestSMSSuccess">
+    <Value>SMS has been sent.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.SendTestSMSFail">
+    <Value>SMS has not been sent.</Value>
+  </LocaleResource>
 </Language>
 '
  		
