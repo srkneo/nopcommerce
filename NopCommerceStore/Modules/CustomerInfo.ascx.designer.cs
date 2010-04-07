@@ -86,31 +86,31 @@ namespace NopSolutions.NopCommerce.Web.Modules {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLastName;
         
         /// <summary>
-        /// txtDateOfBirth control.
+        /// lstBirthDateDays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDateOfBirth;
+        protected global::System.Web.UI.WebControls.DropDownList lstBirthDateDays;
         
         /// <summary>
-        /// iDateOfBirth control.
+        /// lstBirthDateMonths control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton iDateOfBirth;
+        protected global::System.Web.UI.WebControls.DropDownList lstBirthDateMonths;
         
         /// <summary>
-        /// cDateOfBirthButtonExtender control.
+        /// lstBirthDateYears control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender cDateOfBirthButtonExtender;
+        protected global::System.Web.UI.WebControls.DropDownList lstBirthDateYears;
         
         /// <summary>
         /// txtEmail control.

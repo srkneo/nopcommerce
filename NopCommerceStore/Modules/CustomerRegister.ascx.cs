@@ -142,6 +142,27 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
+        private void FillBirthDateDropDowns()
+        {
+            DropDownList lstBirthDateDays = CreateUserWizardStep1.ContentTemplateContainer.FindControl("lstBirthDateDays") as DropDownList;
+            DropDownList lstBirthDateMonths = CreateUserWizardStep1.ContentTemplateContainer.FindControl("lstBirthDateMonths") as DropDownList;
+            DropDownList lstBirthDateYears = CreateUserWizardStep1.ContentTemplateContainer.FindControl("lstBirthDateYears") as DropDownList;
+
+            for(int i = 1; i <= 31; i++)
+            {
+                lstBirthDateDays.Items.Add(new ListItem(i.ToString("00"), i.ToString()));
+            }
+            for(int i = 1; i <= 12; i++)
+            {
+                lstBirthDateMonths.Items.Add(new ListItem(i.ToString("00"), i.ToString()));
+            }
+            int startYear = DateTime.Now.Year - 10;
+            for(int i = startYear; i > startYear - 100; i--)
+            {
+                lstBirthDateYears.Items.Add(i.ToString());
+            }
+        }
+
         public void CreatedUser(object sender, EventArgs e)
         {
             var rbGenderM = (RadioButton)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rbGenderM");
@@ -160,6 +181,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var ddlCountry = (DropDownList)CreateUserWizardStep1.ContentTemplateContainer.FindControl("ddlCountry");
             var ddlStateProvince = (DropDownList)CreateUserWizardStep1.ContentTemplateContainer.FindControl("ddlStateProvince");
             var cbNewsletter = (CheckBox)CreateUserWizardStep1.ContentTemplateContainer.FindControl("cbNewsletter");
+            var lstBirthDateDays = CreateUserWizardStep1.ContentTemplateContainer.FindControl("lstBirthDateDays") as DropDownList;
+            var lstBirthDateMonths = CreateUserWizardStep1.ContentTemplateContainer.FindControl("lstBirthDateMonths") as DropDownList;
+            var lstBirthDateYears = CreateUserWizardStep1.ContentTemplateContainer.FindControl("lstBirthDateYears") as DropDownList;
+
+
 
             Customer customer = null;
             if (CustomerManager.UsernamesEnabled)
@@ -180,7 +206,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             customer.LastName = txtLastName.Text;
             try
             {
-                DateTime dateOfBirth = DateTime.Parse(txtDateOfBirth.Text);
+                DateTime dateOfBirth = new DateTime(Int32.Parse(lstBirthDateYears.SelectedValue), Int32.Parse(lstBirthDateMonths.SelectedValue), Int32.Parse(lstBirthDateDays.SelectedValue));
                 customer.DateOfBirth = dateOfBirth;
             }
             catch
@@ -362,6 +388,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 this.FillCountryDropDowns();
                 this.FillStateProvinceDropDowns();
+                this.FillBirthDateDropDowns();
                 this.DataBind();
             }
 

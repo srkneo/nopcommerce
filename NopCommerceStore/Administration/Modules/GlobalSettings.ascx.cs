@@ -161,12 +161,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             if(File.Exists(PDFHelper.LogoFilePath))
             {
-                imgPdfLogoPreview.ImageUrl = "~/files/pdflogo.img";
+                imgPdfLogoPreview.ImageUrl = "~/images/pdflogo.img";
                 btnPdfLogoRemove.Visible = true;
             }
             else
             {
-                imgPdfLogoPreview.ImageUrl = PictureManager.GetDefaultPictureUrl(100);
+                imgPdfLogoPreview.Visible = false;
             }
         }
 
@@ -391,7 +391,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 File.Delete(PDFHelper.LogoFilePath);
-                imgPdfLogoPreview.ImageUrl = PictureManager.GetDefaultPictureUrl(100);
+                imgPdfLogoPreview.Visible = false;
                 btnPdfLogoRemove.Visible = false;
             }
             catch(Exception ex)

@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
         {
             get
             {
-                return HttpContext.Current.Request.PhysicalApplicationPath + "files/pdflogo.img";
+                return HttpContext.Current.Request.PhysicalApplicationPath + "images/pdflogo.img";
             }
         }
         #endregion

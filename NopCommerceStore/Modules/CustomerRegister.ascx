@@ -1,7 +1,7 @@
-<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.CustomerRegisterControl"
-    CodeBehind="CustomerRegister.ascx.cs" %>
+<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.CustomerRegisterControl" CodeBehind="CustomerRegister.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="Captcha" Src="~/Modules/Captcha.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="Topic" Src="~/Modules/Topic.ascx" %>
+
 <div class="registration-page">
     <div class="page-title">
         <h1><%=GetLocaleResourceString("Account.Registration")%></h1>
@@ -9,13 +9,11 @@
     <div class="clear">
     </div>
     <div class="body">
-        <ajaxToolkit:ToolkitScriptManager runat="Server" EnableScriptGlobalization="true"
-            EnableScriptLocalization="true" ID="sm1" ScriptMode="Release" CompositeScript-ScriptMode="Release" />
         <asp:CreateUserWizard ID="CreateUserForm" EmailRegularExpression="[\w\.-]+(\+[\w-]*)?@([\w-]+\.)+[\w-]+"
             RequireEmail="False" runat="server" OnCreatedUser="CreatedUser" OnCreatingUser="CreatingUser"
             OnCreateUserError="CreateUserError" FinishDestinationPageUrl="~/default.aspx"
             ContinueDestinationPageUrl="~/default.aspx" Width="100%" LoginCreatedUser="true">
-            <WizardSteps>
+            <WizardSteps> 
                 <asp:CreateUserWizardStep ID="CreateUserWizardStep1" runat="server" Title="">
                     <ContentTemplate>
                         <div class="message-error">
@@ -76,11 +74,9 @@
                                             <%=GetLocaleResourceString("Account.DateOfBirth")%>:
                                         </td>
                                         <td class="item-value">
-                                            <asp:TextBox runat="server" ID="txtDateOfBirth" />
-                                            <asp:ImageButton runat="Server" ID="iDateOfBirth" ImageUrl="~/images/Calendar_scheduleHS.png"
-                                                AlternateText="Click to show calendar" /><br />
-                                            <ajaxToolkit:CalendarExtender ID="cDateOfBirthButtonExtender" runat="server" TargetControlID="txtDateOfBirth"
-                                                PopupButtonID="iDateOfBirth" />
+                                            <asp:DropDownList runat="server" ID="lstBirthDateDays" AutoPostBack="false" ValidationGroup="CreateUserForm" />
+                                            <asp:DropDownList runat="server" ID="lstBirthDateMonths" AutoPostBack="false" ValidationGroup="CreateUserForm" />
+                                            <asp:DropDownList runat="server" ID="lstBirthDateYears" AutoPostBack="false" ValidationGroup="CreateUserForm" />
                                         </td>
                                     </tr>
                                     <%--pnlEmail is visible only when customers are authenticated by usernames and is used to get an email--%>
@@ -323,7 +319,7 @@
                         </div>
                     </ContentTemplate>
                 </asp:CompleteWizardStep>
-            </WizardSteps>
+            </WizardSteps> 
         </asp:CreateUserWizard>
         <nopCommerce:Topic ID="topicRegistrationNotAllowed" runat="server" TopicName="RegistrationNotAllowed"
             OverrideSEO="false" Visible="false"></nopCommerce:Topic>

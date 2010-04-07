@@ -55,11 +55,9 @@
                         <%=GetLocaleResourceString("Account.DateOfBirth")%>:
                     </td>
                     <td class="item-value">
-                        <asp:TextBox runat="server" ID="txtDateOfBirth" />
-                        <asp:ImageButton runat="Server" ID="iDateOfBirth" ImageUrl="~/images/Calendar_scheduleHS.png"
-                            AlternateText="Click to show calendar" /><br />
-                        <ajaxToolkit:CalendarExtender ID="cDateOfBirthButtonExtender" runat="server" TargetControlID="txtDateOfBirth"
-                            PopupButtonID="iDateOfBirth" />
+                        <asp:DropDownList runat="server" ID="lstBirthDateDays" AutoPostBack="false" ValidationGroup="CustomerInfo" />
+                        <asp:DropDownList runat="server" ID="lstBirthDateMonths" AutoPostBack="false" ValidationGroup="CustomerInfo" />
+                        <asp:DropDownList runat="server" ID="lstBirthDateYears" AutoPostBack="false" ValidationGroup="CustomerInfo" />
                     </td>
                 </tr>
                 <tr class="row">
