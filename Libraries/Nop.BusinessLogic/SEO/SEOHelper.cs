@@ -447,7 +447,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetForumMainURL()
         {
             string url = string.Format("{0}Boards/", CommonHelper.GetStoreLocation());
-            return url;
+            return url.ToLowerInvariant();
         }
 
         /// <summary>
