@@ -248,6 +248,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.CheckBox cbIsProductCopyPublished;
         
         /// <summary>
+        /// cbCopyImages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbCopyImages;
+        
+        /// <summary>
         /// btnDuplicateOk control.
         /// </summary>
         /// <remarks>

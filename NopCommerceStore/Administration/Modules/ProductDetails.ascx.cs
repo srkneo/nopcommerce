@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Product productCopy = ProductManager.DuplicateProduct(ProductID, txtProductCopyName.Text, cbIsProductCopyPublished.Checked);
+                Product productCopy = ProductManager.DuplicateProduct(ProductID, txtProductCopyName.Text, cbIsProductCopyPublished.Checked, cbCopyImages.Checked);
                 if(productCopy != null)
                 {
                     CustomerActivityManager.InsertActivity(

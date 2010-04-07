@@ -26,6 +26,9 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.Media.PdfLogoRemove.Tooltip">
     <Value>Remove PDF logo image.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.CopyImages">
+    <Value>Copy images:</Value>
+  </LocaleResource>
 </Language>
 '
  		

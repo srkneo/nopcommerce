@@ -92,6 +92,14 @@
                     <asp:CheckBox runat="server" ID="cbIsProductCopyPublished" Checked="false" />
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <asp:Label runat="server" Text="<% $NopResources:Admin.ProductInfo.CopyImages %>" />
+                </td>
+                <td>
+                    <asp:CheckBox runat="server" ID="cbCopyImages" Checked="true" />
+                </td>
+            </tr>
         </table>
         <p>
         </p>

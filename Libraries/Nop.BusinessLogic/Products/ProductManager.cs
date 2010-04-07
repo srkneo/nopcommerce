@@ -2317,8 +2317,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="ProductID">The product identifier</param>
         /// <param name="Name">The name of product duplicate</param>
         /// <param name="IsPublished">A value indicating whether the product duplicate should be published</param>
+        /// <param name="CopyImages">A value indicating whether the product images should be copied</param>
         /// <returns>Product entity</returns>
-        public static Product DuplicateProduct(int ProductID, string Name, bool IsPublished)
+        public static Product DuplicateProduct(int ProductID, string Name, bool IsPublished, bool CopyImages)
         {
             var product = GetProductByID(ProductID);
             if (product == null)
@@ -2330,18 +2331,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             //using (var scope = new System.Transactions.TransactionScope())
             {
                 // product
-                productCopy = InsertProduct(Name, product.ShortDescription, product.FullDescription, product.AdminComment, product.ProductTypeID, product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription, product.MetaTitle, product.SEName, product.AllowCustomerReviews, product.AllowCustomerRatings, product.RatingSum, product.TotalRatingVotes, IsPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
+                productCopy = InsertProduct(Name, product.ShortDescription, product.FullDescription, product.AdminComment, product.ProductTypeID, product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription, product.MetaTitle, product.SEName, product.AllowCustomerReviews, product.AllowCustomerRatings, 0, 0, IsPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
                 if (productCopy == null)
                 {
                     return null;
                 }
 
                 // product pictures
-                foreach (var productPicture in product.ProductPictures)
+                if(CopyImages)
                 {
-                    var picture = productPicture.Picture;
-                    var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
-                    InsertProductPicture(productCopy.ProductID, pictureCopy.PictureID, productPicture.DisplayOrder);
+                    foreach(var productPicture in product.ProductPictures)
+                    {
+                        var picture = productPicture.Picture;
+                        var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
+                        InsertProductPicture(productCopy.ProductID, pictureCopy.PictureID, productPicture.DisplayOrder);
+                    }
                 }
 
                 // product <-> categories mappings
@@ -2372,12 +2376,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 foreach (var productVariant in product.ProductVariants)
                 {
                     // product variant picture
-                    int pictureID = productVariant.PictureID;
-                    var picture = productVariant.Picture;
-                    if (picture != null)
+                    int pictureID = 0;
+                    if(CopyImages)
                     {
-                        var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
-                        pictureID = pictureCopy.PictureID;
+                        var picture = productVariant.Picture;
+                        if(picture != null)
+                        {
+                            var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
+                            pictureID = pictureCopy.PictureID;
+                        }
                     }
 
                     // product variant download & sample download
