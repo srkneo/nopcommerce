@@ -4832,6 +4832,13 @@ textarea
 .profile-page .body .userLastPosts .topicBody
 {
 	padding: 10px;
+}
+
+.profile-page .body .userLastPosts .topicBody .quote
+{
+	padding: 5px 5px 5px 5px; 
+	border: dashed 1px black; 
+	background-color: #ffffff;
 }	
 
 .profile-page .body .userLastPosts .topicData

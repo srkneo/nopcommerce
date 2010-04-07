@@ -4948,6 +4948,13 @@ textarea
 	padding: 10px;
 }
 
+.profile-page .body .userLastPosts .topicBody .quote
+{
+	padding: 5px 5px 5px 5px; 
+	border: dashed 1px black; 
+	background-color: #ffffff;
+}
+
 .profile-page .body .userLastPosts .topicData
 {
 	background: #f3f3f3;
