@@ -419,6 +419,60 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtTopicUrlRewriteFormat;
         
         /// <summary>
+        /// lblForumUrlRewriteFormat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblForumUrlRewriteFormat;
+        
+        /// <summary>
+        /// txtForumUrlRewriteFormat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtForumUrlRewriteFormat;
+        
+        /// <summary>
+        /// lblForumGroupUrlRewriteFormat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblForumGroupUrlRewriteFormat;
+        
+        /// <summary>
+        /// txtForumGroupUrlRewriteFormat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtForumGroupUrlRewriteFormat;
+        
+        /// <summary>
+        /// lblForumTopicUrlRewriteFormat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblForumTopicUrlRewriteFormat;
+        
+        /// <summary>
+        /// txtForumTopicUrlRewriteFormat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtForumTopicUrlRewriteFormat;
+        
+        /// <summary>
         /// pnlMedia control.
         /// </summary>
         /// <remarks>

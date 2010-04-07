@@ -59,6 +59,33 @@ set @resources='
   <LocaleResource Name="DatePicker2.Year">
     <Value>Year</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumUrl">
+    <Value>Forum URL rewrite format:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumUrl.Tooltip">
+    <Value>The format for forum urls. Must have 3 arguments i.e. "{0}Forum/{1}-{2}.aspx"</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumUrl.ErrorMessage">
+    <Value>Invalid format for forum urls."</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumGroupUrl">
+    <Value>Forum Group URL rewrite format:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumGroupUrl.Tooltip">
+    <Value>The format for forum group urls. Must have 3 arguments i.e. "{0}ForumGroup/{1}-{2}.aspx"</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumGroupUrl.ErrorMessage">
+    <Value>Invalid format for forum group urls."</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumTopicUrl">
+    <Value>Forum Topic URL rewrite format:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumTopicUrl.Tooltip">
+    <Value>The format for forum topic urls. Must have 3 arguments i.e. "{0}ForumTopic/{1}-{2}.aspx"</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumTopicUrl.ErrorMessage">
+    <Value>Invalid format for forum topic urls."</Value>
+  </LocaleResource>
 </Language>
 '
  		

@@ -85,6 +85,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             txtNewsUrlRewriteFormat.Text = SettingManager.GetSettingValue("SEO.News.UrlRewriteFormat");
             txtBlogUrlRewriteFormat.Text = SettingManager.GetSettingValue("SEO.Blog.UrlRewriteFormat");
             txtTopicUrlRewriteFormat.Text = SettingManager.GetSettingValue("SEO.Topic.UrlRewriteFormat");
+            txtForumUrlRewriteFormat.Text = SettingManager.GetSettingValue("SEO.Forum.UrlRewriteFormat");
+            txtForumGroupUrlRewriteFormat.Text = SettingManager.GetSettingValue("SEO.ForumGroup.UrlRewriteFormat");
+            txtForumTopicUrlRewriteFormat.Text = SettingManager.GetSettingValue("SEO.ForumTopic.UrlRewriteFormat");
 
 
             txtMaxImageSize.Value = SettingManager.GetSettingValueInteger("Media.MaximumImageSize");
@@ -249,6 +252,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParam("SEO.News.UrlRewriteFormat", txtNewsUrlRewriteFormat.Text);
                     SettingManager.SetParam("SEO.Blog.UrlRewriteFormat", txtBlogUrlRewriteFormat.Text);
                     SettingManager.SetParam("SEO.Topic.UrlRewriteFormat", txtTopicUrlRewriteFormat.Text);
+                    SettingManager.SetParam("SEO.Forum.UrlRewriteFormat", txtForumUrlRewriteFormat.Text);
+                    SettingManager.SetParam("SEO.ForumGroup.UrlRewriteFormat", txtForumGroupUrlRewriteFormat.Text);
+                    SettingManager.SetParam("SEO.ForumTopic.UrlRewriteFormat", txtForumTopicUrlRewriteFormat.Text);
 
 
                     SettingManager.SetParam("Media.MaximumImageSize", txtMaxImageSize.Value.ToString());

@@ -347,6 +347,39 @@
                                 ErrorMessage="<% $NopResources:Admin.GlobalSettings.SEODisplay.TopicUrl.ErrorMessage %>" />
                         </td>
                     </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblForumUrlRewriteFormat" Text="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumUrl %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumUrl.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtForumUrlRewriteFormat" CssClass="adminInput"
+                                ErrorMessage="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumUrl.ErrorMessage %>" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblForumGroupUrlRewriteFormat" Text="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumGroupUrl %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumGroupUrl.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtForumGroupUrlRewriteFormat" CssClass="adminInput"
+                                ErrorMessage="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumGroupUrl.ErrorMessage %>" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblForumTopicUrlRewriteFormat" Text="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumTopicUrl %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumTopicUrl.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtForumTopicUrlRewriteFormat" CssClass="adminInput"
+                                ErrorMessage="<% $NopResources:Admin.GlobalSettings.SEODisplay.ForumTopicUrl.ErrorMessage %>" />
+                        </td>
+                    </tr>
                 </table>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>

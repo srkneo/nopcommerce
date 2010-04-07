@@ -478,10 +478,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <returns>Forum group URL</returns>
         public static string GetForumGroupURL(ForumGroup forumGroup)
         {
-            if (forumGroup == null)
+            if(forumGroup == null)
+            {
                 throw new ArgumentNullException("forumGroup");
-
-            string url = string.Format("{0}Boards/ForumGroup.aspx?ForumGroupID={1}", CommonHelper.GetStoreLocation(), forumGroup.ForumGroupID);
+            }
+            string seName = GetSEName(forumGroup.Name);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.ForumGroup.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), forumGroup.ForumGroupID, seName);
             return url.ToLowerInvariant();
         }
 
@@ -503,10 +505,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <returns>Forum URL</returns>
         public static string GetForumURL(Forum forum)
         {
-            if (forum == null)
-                throw new ArgumentNullException("forum");
-
-            string url = string.Format("{0}Boards/Forum.aspx?ForumID={1}", CommonHelper.GetStoreLocation(), forum.ForumID);
+            if(forum == null)
+            {
+                throw new ArgumentNullException("Forum");
+            }
+            string seName = GetSEName(forum.Name);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.Forum.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), forum.ForumID, seName);
             return url.ToLowerInvariant();
         }
 
@@ -568,13 +572,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetForumTopicURL(int TopicID, string QueryStringProperty, 
             int? PageIndex, int? PostID)
         {
-            string url = string.Empty;
-            url = string.Format("{0}Boards/Topic.aspx?TopicID={1}", CommonHelper.GetStoreLocation(), TopicID);
-            if (PageIndex.HasValue && PageIndex.Value > 1)
+            return GetForumTopicURL(ForumManager.GetTopicByID(TopicID), QueryStringProperty, PageIndex, PostID);
+        }
+
+        /// <summary>
+        /// Gets forum topic URL
+        /// </summary>
+        /// <param name="TopicID">Forum topic identifier</param>
+        /// <param name="QueryStringProperty">Query string property</param>
+        /// <param name="PageIndex">Page index</param>
+        /// <param name="PostID">Post identifier (anchor)</param>
+        /// <returns>Forum topic URL</returns>
+        public static string GetForumTopicURL(ForumTopic topic, string QueryStringProperty,
+            int? PageIndex, int? PostID)
+        {
+            if(topic == null)
             {
-                url += string.Format("&{0}={1}", QueryStringProperty, PageIndex.Value);
+                throw new ArgumentNullException("forumTopic");
             }
-            if (PostID.HasValue)
+            string seName = GetSEName(topic.Subject);
+            string url = string.Empty;
+            url = string.Format(SettingManager.GetSettingValue("SEO.ForumTopic.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), topic.ForumTopicID, seName);
+            if(PageIndex.HasValue && PageIndex.Value > 1)
+            {
+                url += string.Format("?{0}={1}", QueryStringProperty, PageIndex.Value);
+            }
+            if(PostID.HasValue)
             {
                 url += string.Format("#{0}", PostID.Value);
             }
