@@ -1,4 +1,5 @@
-<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.ProductVariantInfoControl" CodeBehind="ProductVariantInfo.ascx.cs" %>
+<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.ProductVariantInfoControl"
+    CodeBehind="ProductVariantInfo.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="NumericTextBox" Src="NumericTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="DecimalTextBox" Src="DecimalTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
@@ -143,7 +144,78 @@
     }
 </script>
 
-
+<%if (this.HasLocalizableContent)
+  { %>
+<div id="localizablecontentpanel" class="tabcontainer-usual">
+    <ul class="idTabs">
+        <li class="idTab"><a href="#idTab_Info1" class="selected">
+            <%=GetLocaleResourceString("Admin.Localizable.Standard")%></a></li>
+        <asp:Repeater ID="rptrLanguageTabs" runat="server">
+            <ItemTemplate>
+                <li class="idTab"><a href="#idTab_Info<%# Container.ItemIndex+2 %>">
+                    <asp:Image runat="server" ID="imgCFlag" Visible='<%# !String.IsNullOrEmpty(Eval("IconURL").ToString()) %>'
+                        AlternateText="." ImageUrl='<%#Eval("IconURL").ToString()%>' />
+                    <%#Server.HtmlEncode(Eval("Name").ToString())%></a></li>
+            </ItemTemplate>
+        </asp:Repeater>
+    </ul>
+    <div id="idTab_Info1" class="tab">
+        <%} %>
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblProductVariantName" Text="<% $NopResources:Admin.ProductVariantInfo.ProductVariantName %>"
+                        ToolTip="<% $NopResources:Admin.ProductVariantInfo.ProductVariantName.Tooltip %>"
+                        ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <asp:TextBox ID="txtName" runat="server" CssClass="adminInput"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblDescription" Text="<% $NopResources:Admin.ProductVariantInfo.Description %>"
+                        ToolTip="<% $NopResources:Admin.ProductVariantInfo.Description.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <HTMLEditor:Editor ID="txtDescription" runat="server" Height="350" />
+                </td>
+            </tr>
+        </table>
+        <%if (this.HasLocalizableContent)
+          { %></div>
+    <asp:Repeater ID="rptrLanguageDivs" runat="server" OnItemDataBound="rptrLanguageDivs_ItemDataBound">
+        <ItemTemplate>
+            <div id="idTab_Info<%# Container.ItemIndex+2 %>" class="tab">
+                <i>
+                    <%=GetLocaleResourceString("Admin.Localizable.EmptyFieldNote")%></i>
+                <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                <table class="adminContent">
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblLocalizedProductVariantName" Text="<% $NopResources:Admin.ProductVariantInfo.ProductVariantName %>"
+                                ToolTip="<% $NopResources:Admin.ProductVariantInfo.ProductVariantName.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:TextBox ID="txtLocalizedName" runat="server" CssClass="adminInput"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblLocalizedDescription" Text="<% $NopResources:Admin.ProductVariantInfo.Description %>"
+                                ToolTip="<% $NopResources:Admin.ProductVariantInfo.Description.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <HTMLEditor:Editor ID="txtLocalizedDescription" runat="server" Height="350" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
+</div>
+<%} %>
 <table class="adminContent">
     <tr runat="server" id="pnlProductVariantID">
         <td class="adminTitle">
@@ -152,16 +224,6 @@
         </td>
         <td class="adminData">
             <asp:Label ID="lblProductVariantID" runat="server"></asp:Label>
-        </td>
-    </tr>
-    <tr>
-        <td class="adminTitle">
-            <nopCommerce:ToolTipLabel runat="server" ID="lblProductVariantName" Text="<% $NopResources:Admin.ProductVariantInfo.ProductVariantName %>"
-                ToolTip="<% $NopResources:Admin.ProductVariantInfo.ProductVariantName.Tooltip %>"
-                ToolTipImage="~/Administration/Common/ico-help.gif" />
-        </td>
-        <td class="adminData">
-            <asp:TextBox ID="txtName" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>
@@ -186,15 +248,6 @@
                 OnClick="btnRemoveProductVariantImage_Click" Visible="false" />
             <br />
             <asp:FileUpload ID="fuProductVariantPicture" CssClass="adminInput" runat="server" />
-        </td>
-    </tr>
-    <tr>
-        <td class="adminTitle">
-            <nopCommerce:ToolTipLabel runat="server" ID="lblDescription" Text="<% $NopResources:Admin.ProductVariantInfo.Description %>"
-                ToolTip="<% $NopResources:Admin.ProductVariantInfo.Description.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
-        </td>
-        <td class="adminData">
-            <HTMLEditor:Editor ID="txtDescription" runat="server" Height="350" />
         </td>
     </tr>
     <tr>
@@ -260,7 +313,7 @@
                 MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.ProductVariantInfo.ProductCost.RangeErrorMessage %>">
             </nopCommerce:DecimalTextBox>
         </td>
-    </tr>   
+    </tr>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblDisableBuyButton" Text="<% $NopResources:Admin.ProductVariantInfo.DisableBuyButton %>"
@@ -270,7 +323,7 @@
         <td class="adminData">
             <asp:CheckBox ID="cbDisableBuyButton" runat="server" Checked="False"></asp:CheckBox>
         </td>
-    </tr> 
+    </tr>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblAvailableStartDateTime" Text="<% $NopResources:Admin.ProductVariantInfo.AvailableStartDateTime %>"
@@ -379,7 +432,8 @@
     <tr id="pnlDownloadExpirationDays">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblDownloadExpirationDays" Text="<% $NopResources: Admin.ProductVariantInfo.DownloadExpirationDays %>"
-                ToolTip="<% $NopResources: Admin.ProductVariantInfo.DownloadExpirationDays.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                ToolTip="<% $NopResources: Admin.ProductVariantInfo.DownloadExpirationDays.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
             <asp:TextBox ID="txtDownloadExpirationDays" CssClass="adminInput" runat="server"></asp:TextBox>
@@ -388,7 +442,8 @@
     <tr id="pnlDownloadActivationType">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblDownloadActivationType" Text="<% $NopResources:Admin.ProductVariantInfo.DownloadActivationType %>"
-                ToolTip="<% $NopResources:Admin.ProductVariantInfo.DownloadActivationType.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.DownloadActivationType.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
             <asp:DropDownList ID="ddlDownloadActivationType" CssClass="adminInput" runat="server">
@@ -397,7 +452,10 @@
     </tr>
     <tr id="pnlHasUserAgreement">
         <td class="adminTitle">
-            <nopCommerce:ToolTipLabel ID="lblHasUserAgreement" runat="server" Text="<% $NopResources:Admin.ProductVariantInfo.CbHasUserAgreement.Info %>" ToolTip="<% $NopResources:Admin.ProductVariantInfo.CbHasUserAgreement.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />:
+            <nopCommerce:ToolTipLabel ID="lblHasUserAgreement" runat="server" Text="<% $NopResources:Admin.ProductVariantInfo.CbHasUserAgreement.Info %>"
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.CbHasUserAgreement.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
+            :
         </td>
         <td class="adminData">
             <asp:CheckBox runat="server" ID="cbHasUserAgreement" Checked="false" />
@@ -405,7 +463,10 @@
     </tr>
     <tr id="pnlUserAgreementText">
         <td class="adminTitle">
-            <nopCommerce:ToolTipLabel ID="lblUserAgreementText" runat="server" Text="<% $NopResources:Admin.ProductVariantInfo.TxtUserAgreementText.Info %>" ToolTip="<% $NopResources:Admin.ProductVariantInfo.TxtUserAgreementText.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />:
+            <nopCommerce:ToolTipLabel ID="lblUserAgreementText" runat="server" Text="<% $NopResources:Admin.ProductVariantInfo.TxtUserAgreementText.Info %>"
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.TxtUserAgreementText.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
+            :
         </td>
         <td class="adminData">
             <HTMLEditor:Editor runat="server" ID="txtUserAgreementText" Height="350" />
@@ -496,8 +557,7 @@
     <tr id="pnlTotalCycles">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblTotalCycles" Text="<% $NopResources: Admin.ProductVariantInfo.TotalCycles %>"
-                ToolTip="<% $NopResources:Admin.ProductVariantInfo.TotalCycles.Tooltip %>"
-                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.TotalCycles.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
             <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtTotalCycles"
@@ -505,7 +565,7 @@
                 MinimumValue="1" MaximumValue="999999" Value="10" RangeErrorMessage="<% $NopResources:Admin.ProductVariantInfo.TotalCycles.RangeErrorMessage %>">
             </nopCommerce:NumericTextBox>
         </td>
-    </tr>    
+    </tr>
     <tr class="adminSeparator">
         <td colspan="2">
             <hr />
@@ -542,7 +602,7 @@
                 MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.ProductVariantInfo.AdditionalShippingCharge.RangeErrorMessage %>">
             </nopCommerce:DecimalTextBox>
         </td>
-    </tr>    
+    </tr>
     <tr id="pnlWeight">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblWeight" Text="<% $NopResources:Admin.ProductVariantInfo.Weight %>"
@@ -656,7 +716,8 @@
     <tr id="pnlDisplayStockAvailability">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblDisplayStockAvailability" Text="<% $NopResources:Admin.ProductVariantInfo.DisplayStockAvailability %>"
-                ToolTip="<% $NopResources:Admin.ProductVariantInfo.DisplayStockAvailability.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.DisplayStockAvailability.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
             <asp:CheckBox ID="cbDisplayStockAvailability" runat="server"></asp:CheckBox>
@@ -703,7 +764,8 @@
     <tr id="pnlAllowOutOfStockOrders">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblAllowOutOfStockOrders" Text="<% $NopResources:Admin.ProductVariantInfo.AllowOutOfStockOrders %>"
-                ToolTip="<% $NopResources:Admin.ProductVariantInfo.AllowOutOfStockOrders.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.AllowOutOfStockOrders.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
             <asp:CheckBox ID="cbAllowOutOfStockOrders" runat="server"></asp:CheckBox>

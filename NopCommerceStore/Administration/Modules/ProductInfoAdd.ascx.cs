@@ -23,7 +23,6 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.MobileControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
@@ -42,6 +41,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
     public partial class ProductInfoAddControl : BaseNopAdministrationUserControl
     {
+        private void BindData()
+        {
+            if (this.HasLocalizableContent)
+            {
+                var languages = this.GetLocalizableLanguagesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
+            }
+        }
+
         private void FillDropDowns()
         {
             CommonHelper.FillDropDownWithEnum(this.ddlDownloadActivationType, typeof(DownloadActivationTypeEnum));
@@ -92,6 +103,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!Page.IsPostBack)
             {
                 this.FillDropDowns();
+                this.BindData();
             }
         }
 
@@ -99,6 +111,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
             Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
 
             this.cbIsDownload.Attributes.Add("onclick", "toggleDownloadableProduct();");
             this.cbUseDownloadURL.Attributes.Add("onclick", "toggleDownloadableProduct();");
@@ -253,7 +268,81 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                  width, height, 0, availableStartDateTime, availableEndDateTime,
                  published, false, 1, nowDT, nowDT);
 
+            saveLocalizableContent(product);
+
             return product;
+        }
+
+        protected void saveLocalizableContent(Product product)
+        {
+            if (product == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (RepeaterItem item in rptrLanguageDivs.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var txtLocalizedName = (TextBox)item.FindControl("txtLocalizedName");
+                    var txtLocalizedShortDescription = (TextBox)item.FindControl("txtLocalizedShortDescription");
+                    var txtLocalizedFullDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedFullDescription");
+                    var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                    int languageID = int.Parse(lblLanguageId.Text);
+                    string name = txtLocalizedName.Text;
+                    string shortDescription = txtLocalizedShortDescription.Text;
+                    string fullDescription = txtLocalizedFullDescription.Content;
+
+                    bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) &&
+                        string.IsNullOrEmpty(shortDescription) &&
+                        string.IsNullOrEmpty(fullDescription));
+
+                    var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(product.ProductID, languageID);
+                    if (content == null)
+                    {
+                        if (!allFieldsAreEmpty && languageID > 0)
+                        {
+                            //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                            content = ProductManager.InsertProductLocalized(product.ProductID,
+                                   languageID, name, shortDescription, fullDescription,
+                                   string.Empty, string.Empty, string.Empty, string.Empty);
+                        }
+                    }
+                    else
+                    {
+                        if (languageID > 0)
+                        {
+                            content = ProductManager.UpdateProductLocalized(content.ProductLocalizedID, content.ProductID,
+                                languageID, name, shortDescription, fullDescription,
+                                content.MetaKeywords, content.MetaDescription,
+                                content.MetaTitle, content.SEName);
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtLocalizedName = (TextBox)e.Item.FindControl("txtLocalizedName");
+                var txtLocalizedShortDescription = (TextBox)e.Item.FindControl("txtLocalizedShortDescription");
+                var txtLocalizedFullDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedFullDescription");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+
+                int languageID = int.Parse(lblLanguageId.Text);
+
+                var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(this.ProductID, languageID);
+                if (content != null)
+                {
+                    txtLocalizedName.Text = content.Name;
+                    txtLocalizedShortDescription.Text = content.ShortDescription;
+                    txtLocalizedFullDescription.Content = content.FullDescription;
+                }
+            }
         }
 
         public int ProductID

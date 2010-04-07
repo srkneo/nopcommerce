@@ -1666,7 +1666,7 @@ CREATE PROCEDURE [dbo].[Nop_ProductVariantLocalizedInsert]
 AS
 BEGIN
 	INSERT
-	INTO [NopProductVariantLocalized]
+	INTO [Nop_ProductVariantLocalized]
 	(
 		ProductVariantID,
 		LanguageID,

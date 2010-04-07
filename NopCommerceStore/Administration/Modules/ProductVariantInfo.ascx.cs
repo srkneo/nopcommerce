@@ -42,13 +42,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID, 0);
+
+            if (this.HasLocalizableContent)
+            {
+                var languages = this.GetLocalizableLanguagesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
+            }
+
             if (productVariant != null)
             {
-                Product product = productVariant.Product;
-                if (product == null)
-                    Response.Redirect("Products.aspx");
-                
                 this.pnlProductVariantID.Visible = true;
                 this.lblProductVariantID.Text = productVariant.ProductVariantID.ToString();
 
@@ -193,19 +199,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 btnRemoveProductVariantSampleDownload.Visible = false;
                 hlProductVariantSampleDownload.Visible = false;
-
-                Product product = ProductManager.GetProductByID(this.ProductID);
-                if (product == null)
-                    Response.Redirect("Products.aspx");
             }
         }
 
         private void FillDropDowns()
         {
             CommonHelper.FillDropDownWithEnum(this.ddlDownloadActivationType, typeof(DownloadActivationTypeEnum));
-            
+
             CommonHelper.FillDropDownWithEnum(this.ddlCyclePeriod, typeof(RecurringProductCyclePeriodEnum));
-            
+
             this.ddlTaxCategory.Items.Clear();
             ListItem itemTaxCategory = new ListItem("---", "0");
             this.ddlTaxCategory.Items.Add(itemTaxCategory);
@@ -243,6 +245,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
             Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
 
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
+
             this.cbIsDownload.Attributes.Add("onclick", "toggleDownloadableProduct();");
             this.cbUseDownloadURL.Attributes.Add("onclick", "toggleDownloadableProduct();");
             this.cbUnlimitedDownloads.Attributes.Add("onclick", "toggleDownloadableProduct();");
@@ -277,9 +282,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 downloadExpirationDays = int.Parse(txtDownloadExpirationDays.Text.Trim());
             DownloadActivationTypeEnum downloadActivationType = (DownloadActivationTypeEnum)Enum.ToObject(typeof(DownloadActivationTypeEnum), int.Parse(this.ddlDownloadActivationType.SelectedItem.Value));
             bool hasUserAgreement = cbHasUserAgreement.Checked;
-            string userAgreementText = txtUserAgreementText.Content;            
+            string userAgreementText = txtUserAgreementText.Content;
             bool hasSampleDownload = cbHasSampleDownload.Checked;
-            
+
             bool isRecurring = cbIsRecurring.Checked;
             int cycleLength = txtCycleLength.Value;
             RecurringProductCyclePeriodEnum cyclePeriod = (RecurringProductCyclePeriodEnum)Enum.ToObject(typeof(RecurringProductCyclePeriodEnum), int.Parse(this.ddlCyclePeriod.SelectedItem.Value));
@@ -310,18 +315,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             decimal height = txtHeight.Value;
             DateTime? availableStartDateTime = ctrlAvailableStartDateTimePicker.SelectedDate;
             DateTime? availableEndDateTime = ctrlAvailableEndDateTimePicker.SelectedDate;
-            if(availableStartDateTime.HasValue)
+            if (availableStartDateTime.HasValue)
             {
                 availableStartDateTime = DateTime.SpecifyKind(availableStartDateTime.Value, DateTimeKind.Utc);
             }
-            if(availableEndDateTime.HasValue)
+            if (availableEndDateTime.HasValue)
             {
                 availableEndDateTime = DateTime.SpecifyKind(availableEndDateTime.Value, DateTimeKind.Utc);
             }
             bool published = cbPublished.Checked;
             int displayOrder = txtDisplayOrder.Value;
 
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID, 0);
             if (productVariant != null)
             {
                 #region Update
@@ -368,17 +373,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     if (productVariantDownload != null)
                     {
-                        productVariantDownload = DownloadManager.UpdateDownload(productVariantDownload.DownloadID, 
+                        productVariantDownload = DownloadManager.UpdateDownload(productVariantDownload.DownloadID,
                             useDownloadURL, downloadURL, productVariantDownloadBinary,
                             downloadContentType, downloadFilename, downloadExtension, true);
                     }
                     else
                     {
-                        productVariantDownload = DownloadManager.InsertDownload(useDownloadURL, 
+                        productVariantDownload = DownloadManager.InsertDownload(useDownloadURL,
                             downloadURL, productVariantDownloadBinary, downloadContentType,
                             downloadFilename, downloadExtension, true);
                     }
-                    
+
                     productVariantDownloadID = productVariantDownload.DownloadID;
                 }
 
@@ -411,13 +416,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     if (productVariantSampleDownload != null)
                     {
-                        productVariantSampleDownload = DownloadManager.UpdateDownload(productVariantSampleDownload.DownloadID, 
+                        productVariantSampleDownload = DownloadManager.UpdateDownload(productVariantSampleDownload.DownloadID,
                             useSampleDownloadURL, sampleDownloadURL, productVariantSampleDownloadBinary,
                             sampleDownloadContentType, sampleDownloadFilename, sampleDownloadExtension, true);
                     }
                     else
                     {
-                        productVariantSampleDownload = DownloadManager.InsertDownload(useSampleDownloadURL, 
+                        productVariantSampleDownload = DownloadManager.InsertDownload(useSampleDownloadURL,
                             sampleDownloadURL, productVariantSampleDownloadBinary,
                             sampleDownloadContentType, sampleDownloadFilename, sampleDownloadExtension, true);
                     }
@@ -478,8 +483,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                             downloadExtension = Path.GetExtension(productVariantDownloadFile.FileName);
                         }
 
-                        Download productVariantDownload = DownloadManager.InsertDownload(useDownloadURL, downloadURL, 
-                            productVariantDownloadBinary, downloadContentType, 
+                        Download productVariantDownload = DownloadManager.InsertDownload(useDownloadURL, downloadURL,
+                            productVariantDownloadBinary, downloadContentType,
                             downloadFilename, downloadExtension, true);
                         productVariantDownloadID = productVariantDownload.DownloadID;
                     }
@@ -503,7 +508,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                             sampleDownloadExtension = Path.GetExtension(productVariantSampleDownloadFile.FileName);
                         }
 
-                        Download productVariantSampleDownload = DownloadManager.InsertDownload(useSampleDownloadURL, 
+                        Download productVariantSampleDownload = DownloadManager.InsertDownload(useSampleDownloadURL,
                             sampleDownloadURL, productVariantSampleDownloadBinary,
                             sampleDownloadContentType, sampleDownloadFilename, sampleDownloadExtension, true);
                         productVariantSampleDownloadID = productVariantSampleDownload.DownloadID;
@@ -513,7 +518,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                          name, sku, description, adminComment, manufacturerPartNumber,
                          isGiftCard, isDownload, productVariantDownloadID, unlimitedDownloads,
                          maxNumberOfDownloads, downloadExpirationDays, downloadActivationType,
-                         hasSampleDownload, productVariantSampleDownloadID, 
+                         hasSampleDownload, productVariantSampleDownloadID,
                          hasUserAgreement, userAgreementText,
                          isRecurring, cycleLength, (int)cyclePeriod, totalCycles,
                          isShipEnabled, isFreeShipping, additionalShippingCharge, isTaxExempt, taxCategoryID,
@@ -531,14 +536,81 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
                 #endregion
             }
+
+            saveLocalizableContent(productVariant);
+
             return productVariant;
+        }
+
+        protected void saveLocalizableContent(ProductVariant productVariant)
+        {
+            if (productVariant == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (RepeaterItem item in rptrLanguageDivs.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var txtLocalizedName = (TextBox)item.FindControl("txtLocalizedName");
+                    var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedDescription");
+                    var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                    int languageID = int.Parse(lblLanguageId.Text);
+                    string name = txtLocalizedName.Text;
+                    string description = txtLocalizedDescription.Content;
+
+                    bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description));
+
+                    var content = ProductManager.GetProductVariantLocalizedByProductVariantIDAndLanguageID(productVariant.ProductVariantID, languageID);
+                    if (content == null)
+                    {
+                        if (!allFieldsAreEmpty && languageID > 0)
+                        {
+                            //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                            content = ProductManager.InsertProductVariantLocalized(productVariant.ProductVariantID,
+                                   languageID, name, description);
+                        }
+                    }
+                    else
+                    {
+                        if (languageID > 0)
+                        {
+                            content = ProductManager.UpdateProductVariantLocalized(content.ProductVariantLocalizedID, content.ProductVariantID,
+                                languageID, name, description);
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtLocalizedName = (TextBox)e.Item.FindControl("txtLocalizedName");
+                var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedDescription");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+
+                int languageID = int.Parse(lblLanguageId.Text);
+
+                var content = ProductManager.GetProductVariantLocalizedByProductVariantIDAndLanguageID(this.ProductVariantID, languageID);
+
+                if (content != null)
+                {
+                    txtLocalizedName.Text = content.Name;
+                    txtLocalizedDescription.Content = content.Description;
+                }
+            }
         }
 
         protected void btnRemoveProductVariantImage_Click(object sender, EventArgs e)
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID, 0);
                 if (productVariant != null)
                 {
                     PictureManager.DeletePicture(productVariant.PictureID);
@@ -556,15 +628,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID, 0);
                 if (productVariant != null)
                 {
                     Download download = productVariant.Download;
                     if (download != null)
                     {
                         download = DownloadManager.UpdateDownload(download.DownloadID,
-                            download.UseDownloadURL, download.DownloadURL, null, string.Empty, 
-                            string.Empty, string.Empty, true); 
+                            download.UseDownloadURL, download.DownloadURL, null, string.Empty,
+                            string.Empty, string.Empty, true);
                         //DownloadManager.DeleteDownload(productVariant.DownloadID);
                         //ProductManager.RemoveProductVariantDownload(productVariant.ProductVariantID);
                     }
@@ -581,7 +653,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID, 0);
                 if (productVariant != null)
                 {
                     Download download = productVariant.SampleDownload;
@@ -601,7 +673,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 ProcessException(exc);
             }
         }
-        
+
         public int ProductID
         {
             get

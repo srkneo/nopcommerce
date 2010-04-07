@@ -3,37 +3,99 @@
 <%@ Register TagPrefix="nopCommerce" TagName="NumericTextBox" Src="NumericTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
-
+<%if (this.HasLocalizableContent)
+  { %>
+<div id="localizablecontentpanel" class="tabcontainer-usual">
+    <ul class="idTabs">
+        <li class="idTab"><a href="#idTab_Info1" class="selected">
+            <%=GetLocaleResourceString("Admin.Localizable.Standard")%></a></li>
+        <asp:Repeater ID="rptrLanguageTabs" runat="server">
+            <ItemTemplate>
+                <li class="idTab"><a href="#idTab_Info<%# Container.ItemIndex+2 %>">
+                    <asp:Image runat="server" ID="imgCFlag" Visible='<%# !String.IsNullOrEmpty(Eval("IconURL").ToString()) %>'
+                        AlternateText="." ImageUrl='<%#Eval("IconURL").ToString()%>' />
+                    <%#Server.HtmlEncode(Eval("Name").ToString())%></a></li>
+            </ItemTemplate>
+        </asp:Repeater>
+    </ul>
+    <div id="idTab_Info1" class="tab">
+        <%} %>
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblProductName" Text="<% $NopResources:Admin.ProductInfo.ProductName %>"
+                        ToolTip="<% $NopResources:Admin.ProductInfo.ProductName.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <nopCommerce:SimpleTextBox runat="server" ID="txtName" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ProductInfo.ProductName.ErrorMessage %>">
+                    </nopCommerce:SimpleTextBox>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblShortDescription" Text="<% $NopResources:Admin.ProductInfo.ShortDescription %>"
+                        ToolTip="<% $NopResources:Admin.ProductInfo.ShortDescription.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <asp:TextBox ID="txtShortDescription" runat="server" CssClass="adminInput" TextMode="MultiLine"
+                        Height="100"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblFullDescription" Text="<% $NopResources:Admin.ProductInfo.FullDescription %>"
+                        ToolTip="<% $NopResources: Admin.ProductInfo.FullDescription.Tooltip%>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <HTMLEditor:Editor ID="txtFullDescription" runat="server" Height="350" />
+                </td>
+            </tr>
+        </table>
+        <%if (this.HasLocalizableContent)
+          { %></div>
+    <asp:Repeater ID="rptrLanguageDivs" runat="server" OnItemDataBound="rptrLanguageDivs_ItemDataBound">
+        <ItemTemplate>
+            <div id="idTab_Info<%# Container.ItemIndex+2 %>" class="tab">
+                <i>
+                    <%=GetLocaleResourceString("Admin.Localizable.EmptyFieldNote")%></i>
+                <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                <table class="adminContent">
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblLocalizedProductName" Text="<% $NopResources:Admin.ProductInfo.ProductName %>"
+                                ToolTip="<% $NopResources:Admin.ProductInfo.ProductName.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:TextBox runat="server" ID="txtLocalizedName" CssClass="adminInput">
+                            </asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblLocalizedShortDescription" Text="<% $NopResources:Admin.ProductInfo.ShortDescription %>"
+                                ToolTip="<% $NopResources:Admin.ProductInfo.ShortDescription.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:TextBox ID="txtLocalizedShortDescription" runat="server" CssClass="adminInput"
+                                TextMode="MultiLine" Height="100"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblLocalizedFullDescription" Text="<% $NopResources:Admin.ProductInfo.FullDescription %>"
+                                ToolTip="<% $NopResources: Admin.ProductInfo.FullDescription.Tooltip%>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <HTMLEditor:Editor ID="txtLocalizedFullDescription" runat="server" Height="350" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
+</div>
+<%} %>
 <table class="adminContent">
-    <tr>
-        <td class="adminTitle">
-            <nopCommerce:ToolTipLabel runat="server" ID="lblProductName" Text="<% $NopResources:Admin.ProductInfo.ProductName %>"
-                ToolTip="<% $NopResources:Admin.ProductInfo.ProductName.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
-        </td>
-        <td class="adminData">
-            <nopCommerce:SimpleTextBox runat="server" ID="txtName" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ProductInfo.ProductName.ErrorMessage %>">
-            </nopCommerce:SimpleTextBox>
-        </td>
-    </tr>
-    <tr>
-        <td class="adminTitle">
-            <nopCommerce:ToolTipLabel runat="server" ID="lblShortDescription" Text="<% $NopResources:Admin.ProductInfo.ShortDescription %>"
-                ToolTip="<% $NopResources:Admin.ProductInfo.ShortDescription.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
-        </td>
-        <td class="adminData">
-            <asp:TextBox ID="txtShortDescription" runat="server" CssClass="adminInput" TextMode="MultiLine"
-                Height="100"></asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td class="adminTitle">
-            <nopCommerce:ToolTipLabel runat="server" ID="lblFullDescription" Text="<% $NopResources:Admin.ProductInfo.FullDescription %>"
-                ToolTip="<% $NopResources: Admin.ProductInfo.FullDescription.Tooltip%>" ToolTipImage="~/Administration/Common/ico-help.gif" />
-        </td>
-        <td class="adminData">
-            <HTMLEditor:Editor ID="txtFullDescription" runat="server" Height="350" />
-        </td>
-    </tr>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblAdminComment" Text="<% $NopResources:Admin.ProductInfo.AdminComment %>"

@@ -224,7 +224,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         {
             var item = new DBProductLocalized();
             item.ProductLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ProductLocalizedID");
-            item.ProductID = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
+            item.ProductID = NopSqlDataHelper.GetInt(dataReader, "ProductID");
             item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             item.ShortDescription = NopSqlDataHelper.GetString(dataReader, "ShortDescription");
@@ -695,7 +695,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             if (ProductVariantLocalizedID == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLocalizedInsert");
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLocalizedLoadByPrimaryKey");
             db.AddInParameter(dbCommand, "ProductVariantLocalizedID", DbType.Int32, ProductVariantLocalizedID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
