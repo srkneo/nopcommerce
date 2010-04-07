@@ -143,6 +143,8 @@
     <Compile Include="Products\Attributes\ProductVariantAttributeCombination.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeCombinationCollection.cs" />
     <Compile Include="Products\Attributes\ProductAttributeHelper.cs" />
+    <Compile Include="Products\ProductVariantLocalized.cs" />
+    <Compile Include="Products\ProductLocalized.cs" />
     <Compile Include="Products\ManageInventoryMethodEnum.cs" />
     <Compile Include="Products\RecurringProductCyclePeriodEnum.cs" />
     <Compile Include="Products\DownloadActivationTypeEnum.cs" />

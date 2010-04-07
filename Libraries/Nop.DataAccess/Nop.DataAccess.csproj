@@ -133,6 +133,8 @@
     <Compile Include="Orders\DBOrderProvider.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeCombination.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeCombinationCollection.cs" />
+    <Compile Include="Products\DBProductVariantLocalized.cs" />
+    <Compile Include="Products\DBProductLocalized.cs" />
     <Compile Include="Products\DBTierPriceCollection.cs" />
     <Compile Include="Products\DBTierPrice.cs" />
     <Compile Include="Products\DBPricelist.cs" />

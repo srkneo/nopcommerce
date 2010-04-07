@@ -220,6 +220,33 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             return newTierPrice;
         }
 
+        private DBProductLocalized GetProductLocalizedFromReader(IDataReader dataReader)
+        {
+            var item = new DBProductLocalized();
+            item.ProductLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ProductLocalizedID");
+            item.ProductID = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
+            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.ShortDescription = NopSqlDataHelper.GetString(dataReader, "ShortDescription");
+            item.FullDescription = NopSqlDataHelper.GetString(dataReader, "FullDescription");
+            item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
+            item.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
+            item.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
+            item.SEName = NopSqlDataHelper.GetString(dataReader, "SEName");
+            return item;
+        }
+
+        private DBProductVariantLocalized GetProductVariantLocalizedFromReader(IDataReader dataReader)
+        {
+            var item = new DBProductVariantLocalized();
+            item.ProductVariantLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantLocalizedID");
+            item.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
+            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            return item;
+        }
+
         #endregion
 
         #region Methods
@@ -262,13 +289,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets all products
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product collection</returns>
-        public override DBProductCollection GetAllProducts(bool showHidden)
+        public override DBProductCollection GetAllProducts(bool showHidden, int LanguageID)
         {
             var result = new DBProductCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -294,15 +323,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="PageSize">Page size</param>
         /// <param name="PageIndex">Page index</param>
         /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="TotalRecords">Total records</param>
         /// <returns>Product collection</returns>
         public override DBProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
             bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax, string Keywords,
             bool SearchDescriptions, int PageSize, int PageIndex,
-            List<int> FilteredSpecs, bool showHidden, out int TotalRecords)
+            List<int> FilteredSpecs, int LanguageID, bool showHidden, out int TotalRecords)
         {
-            TotalRecords = 0; 
+            TotalRecords = 0;
             var result = new DBProductCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLoadAllPaged");
@@ -340,6 +370,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
                 }
             }
             db.AddInParameter(dbCommand, "FilteredSpecs", DbType.String, commaSeparatedSpecIDs);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
 
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
@@ -358,13 +389,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets all products displayed on the home page
         /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product collection</returns>
-        public override DBProductCollection GetAllProductsDisplayedOnHomePage(bool showHidden)
+        public override DBProductCollection GetAllProductsDisplayedOnHomePage(bool showHidden,
+            int LanguageID)
         {
             var result = new DBProductCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLoadDisplayedOnHomePage");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -381,8 +416,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets product
         /// </summary>
         /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product</returns>
-        public override DBProduct GetProductByID(int ProductID)
+        public override DBProduct GetProductByID(int ProductID, int LanguageID)
         {
             DBProduct product = null;
             if (ProductID == 0)
@@ -390,6 +426,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLoadByPrimaryKey");
             db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -457,7 +494,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
                 int ProductID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductID"));
-                product = GetProductByID(ProductID);
+                product = GetProductByID(ProductID, 0);
             }
 
             return product;
@@ -519,21 +556,244 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                product = GetProductByID(ProductID);
+                product = GetProductByID(ProductID, 0);
 
             return product;
+        }
+
+        /// <summary>
+        /// Gets localized product by id
+        /// </summary>
+        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <returns>Product content</returns>
+        public override DBProductLocalized GetProductLocalizedByID(int ProductLocalizedID)
+        {
+            DBProductLocalized item = null;
+            if (ProductLocalizedID == 0)
+                return item;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLocalizedLoadByPrimaryKey");
+            db.AddInParameter(dbCommand, "ProductLocalizedID", DbType.Int32, ProductLocalizedID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetProductLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product by product id and language id
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product content</returns>
+        public override DBProductLocalized GetProductLocalizedByProductIDAndLanguageID(int ProductID, int LanguageID)
+        {
+            DBProductLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLocalizedLoadByProductIDAndLanguageID");
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetProductLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized product
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="ShortDescription">The short description</param>
+        /// <param name="FullDescription">The full description</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBProductContent</returns>
+        public override DBProductLocalized InsertProductLocalized(int ProductID,
+            int LanguageID, string Name, string ShortDescription, string FullDescription,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            DBProductLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLocalizedInsert");
+            db.AddOutParameter(dbCommand, "ProductLocalizedID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "ShortDescription", DbType.String, ShortDescription);
+            db.AddInParameter(dbCommand, "FullDescription", DbType.String, FullDescription);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int ProductLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductLocalizedID"));
+                item = GetProductLocalizedByID(ProductLocalizedID);
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized product
+        /// </summary>
+        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="ShortDescription">The short description</param>
+        /// <param name="FullDescription">The full description</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBProductContent</returns>
+        public override DBProductLocalized UpdateProductLocalized(int ProductLocalizedID,
+            int ProductID, int LanguageID, string Name, string ShortDescription, string FullDescription,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            DBProductLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLocalizedUpdate");
+            db.AddInParameter(dbCommand, "ProductLocalizedID", DbType.Int32, ProductLocalizedID);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "ShortDescription", DbType.String, ShortDescription);
+            db.AddInParameter(dbCommand, "FullDescription", DbType.String, FullDescription);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetProductLocalizedByID(ProductLocalizedID);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product variant by id
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <returns>Product variant content</returns>
+        public override DBProductVariantLocalized GetProductVariantLocalizedByID(int ProductVariantLocalizedID)
+        {
+            DBProductVariantLocalized item = null;
+            if (ProductVariantLocalizedID == 0)
+                return item;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLocalizedInsert");
+            db.AddInParameter(dbCommand, "ProductVariantLocalizedID", DbType.Int32, ProductVariantLocalizedID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetProductVariantLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product variant by product variant id and language id
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product variant content</returns>
+        public override DBProductVariantLocalized GetProductVariantLocalizedByProductVariantIDAndLanguageID(int ProductVariantID, int LanguageID)
+        {
+            DBProductVariantLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLocalizedLoadByProductVariantIDAndLanguageID");
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetProductVariantLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductVariantLocalized</returns>
+        public override DBProductVariantLocalized InsertProductVariantLocalized(int ProductVariantID,
+            int LanguageID, string Name, string Description)
+        {
+            DBProductVariantLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLocalizedInsert");
+            db.AddOutParameter(dbCommand, "ProductVariantLocalizedID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int ProductVariantLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantLocalizedID"));
+                item = GetProductVariantLocalizedByID(ProductVariantLocalizedID);
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductVariantContent</returns>
+        public override DBProductVariantLocalized UpdateProductVariantLocalized(int ProductVariantLocalizedID,
+            int ProductVariantID, int LanguageID, string Name, string Description)
+        {
+            DBProductVariantLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLocalizedUpdate");
+            db.AddInParameter(dbCommand, "ProductVariantLocalizedID", DbType.Int32, ProductVariantLocalizedID);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetProductVariantLocalizedByID(ProductVariantLocalizedID);
+
+            return item;
         }
 
         /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
         /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="PageSize">Page size</param>
         /// <param name="PageIndex">Page index</param>
         /// <param name="TotalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public override DBProductCollection GetProductsAlsoPurchasedByID(int ProductID,
+        public override DBProductCollection GetProductsAlsoPurchasedByID(int ProductID, int LanguageID,
             bool showHidden, int PageSize, int PageIndex, out int TotalRecords)
         {
             TotalRecords = 0;
@@ -541,6 +801,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAlsoPurchasedLoadByProductID");
             db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
             db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, PageIndex);
@@ -580,14 +841,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets a recently added products list
         /// </summary>
         /// <param name="Number">Number of products to load</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Recently added products list</returns>
-        public override DBProductCollection GetRecentlyAddedProducts(int Number, bool showHidden)
+        public override DBProductCollection GetRecentlyAddedProducts(int Number,
+            int LanguageID, bool showHidden)
         {
             var result = new DBProductCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLoadRecentlyAdded");
             db.AddInParameter(dbCommand, "Number", DbType.Int32, Number);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -884,8 +1148,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets a product variant
         /// </summary>
         /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product variant</returns>
-        public override DBProductVariant GetProductVariantByID(int ProductVariantID)
+        public override DBProductVariant GetProductVariantByID(int ProductVariantID, int LanguageID)
         {
             DBProductVariant productVariant = null;
             if (ProductVariantID == 0)
@@ -893,6 +1158,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLoadByPrimaryKey");
             db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -1009,7 +1275,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             int CycleLength, int CyclePeriod, int TotalCycles,
             bool IsShipEnabled, bool IsFreeShipping,
             decimal AdditionalShippingCharge, bool IsTaxExempt, int TaxCategoryID,
-            int ManageInventory, int StockQuantity, bool DisplayStockAvailability, 
+            int ManageInventory, int StockQuantity, bool DisplayStockAvailability,
             int MinStockQuantity, int LowStockActivityID,
             int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
             int OrderMinimumQuantity, int OrderMaximumQuantity,
@@ -1052,7 +1318,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
                 db.AddInParameter(dbCommand, "DownloadExpirationDays", DbType.Int32, DownloadExpirationDays.Value);
             else
                 db.AddInParameter(dbCommand, "DownloadExpirationDays", DbType.Int32, DBNull.Value);
-            db.AddInParameter(dbCommand, "DownloadActivationType", DbType.Int32, DownloadActivationType); 
+            db.AddInParameter(dbCommand, "DownloadActivationType", DbType.Int32, DownloadActivationType);
             db.AddInParameter(dbCommand, "HasSampleDownload", DbType.Boolean, HasSampleDownload);
             db.AddInParameter(dbCommand, "SampleDownloadID", DbType.Int32, SampleDownloadID);
             db.AddInParameter(dbCommand, "HasUserAgreement", DbType.Boolean, HasUserAgreement);
@@ -1101,7 +1367,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
                 int ProductVariantID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantID"));
-                productVariant = GetProductVariantByID(ProductVariantID);
+                productVariant = GetProductVariantByID(ProductVariantID, 0);
             }
             return productVariant;
         }
@@ -1214,7 +1480,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
                 db.AddInParameter(dbCommand, "DownloadExpirationDays", DbType.Int32, DownloadExpirationDays.Value);
             else
                 db.AddInParameter(dbCommand, "DownloadExpirationDays", DbType.Int32, DBNull.Value);
-            db.AddInParameter(dbCommand, "DownloadActivationType", DbType.Int32, DownloadActivationType); 
+            db.AddInParameter(dbCommand, "DownloadActivationType", DbType.Int32, DownloadActivationType);
             db.AddInParameter(dbCommand, "HasSampleDownload", DbType.Boolean, HasSampleDownload);
             db.AddInParameter(dbCommand, "SampleDownloadID", DbType.Int32, SampleDownloadID);
             db.AddInParameter(dbCommand, "HasUserAgreement", DbType.Boolean, HasUserAgreement);
@@ -1233,7 +1499,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             db.AddInParameter(dbCommand, "DisplayStockAvailability", DbType.Boolean, DisplayStockAvailability);
             db.AddInParameter(dbCommand, "MinStockQuantity", DbType.Int32, MinStockQuantity);
             db.AddInParameter(dbCommand, "LowStockActivityID", DbType.Int32, LowStockActivityID);
-            db.AddInParameter(dbCommand, "NotifyAdminForQuantityBelow", DbType.Int32, NotifyAdminForQuantityBelow); 
+            db.AddInParameter(dbCommand, "NotifyAdminForQuantityBelow", DbType.Int32, NotifyAdminForQuantityBelow);
             db.AddInParameter(dbCommand, "AllowOutOfStockOrders", DbType.Boolean, AllowOutOfStockOrders);
             db.AddInParameter(dbCommand, "OrderMinimumQuantity", DbType.Int32, OrderMinimumQuantity);
             db.AddInParameter(dbCommand, "OrderMaximumQuantity", DbType.Int32, OrderMaximumQuantity);
@@ -1261,7 +1527,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productVariant = GetProductVariantByID(ProductVariantID);
+                productVariant = GetProductVariantByID(ProductVariantID, 0);
 
             return productVariant;
         }
@@ -1270,15 +1536,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets product variants by product identifier
         /// </summary>
         /// <param name="ProductID">The product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public override DBProductVariantCollection GetProductVariantsByProductID(int ProductID, bool showHidden)
+        public override DBProductVariantCollection GetProductVariantsByProductID(int ProductID,
+            int LanguageID, bool showHidden)
         {
             var result = new DBProductVariantCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLoadByProductID");
-            db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())

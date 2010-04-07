@@ -43,6 +43,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         #endregion
 
         #region Utilities
+
         private static CategoryCollection DBMapping(DBCategoryCollection dbCollection)
         {
             if (dbCollection == null)
@@ -133,6 +134,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             return item;
         }
+
         #endregion
 
         #region Methods

@@ -38,8 +38,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets all products
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product collection</returns>
-        public abstract DBProductCollection GetAllProducts(bool showHidden);
+        public abstract DBProductCollection GetAllProducts(bool showHidden, int LanguageID);
 
         /// <summary>
         /// Gets all products
@@ -54,25 +55,30 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="PageSize">Page size</param>
         /// <param name="PageIndex">Page index</param>
         /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="TotalRecords">Total records</param>
         /// <returns>Product collection</returns>
         public abstract DBProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
             bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax, string Keywords, bool SearchDescriptions,
-            int PageSize, int PageIndex, List<int> FilteredSpecs, bool showHidden, out int TotalRecords);
+            int PageSize, int PageIndex, List<int> FilteredSpecs, int LanguageID, bool showHidden, out int TotalRecords);
 
         /// <summary>
         /// Gets all products displayed on the home page
         /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product collection</returns>
-        public abstract DBProductCollection GetAllProductsDisplayedOnHomePage(bool showHidden);
+        public abstract DBProductCollection GetAllProductsDisplayedOnHomePage(bool showHidden,
+            int LanguageID);
 
         /// <summary>
         /// Gets product
         /// </summary>
         /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product</returns>
-        public abstract DBProduct GetProductByID(int ProductID);
+        public abstract DBProduct GetProductByID(int ProductID, int LanguageID);
 
         /// <summary>
         /// Inserts a product
@@ -135,15 +141,106 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             bool Published, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn);
 
         /// <summary>
+        /// Gets localized product by id
+        /// </summary>
+        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <returns>Product content</returns>
+        public abstract DBProductLocalized GetProductLocalizedByID(int ProductLocalizedID);
+
+        /// <summary>
+        /// Gets localized product by product id and language id
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product content</returns>
+        public abstract DBProductLocalized GetProductLocalizedByProductIDAndLanguageID(int ProductID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized product
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="ShortDescription">The short description</param>
+        /// <param name="FullDescription">The full description</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBProductContent</returns>
+        public abstract DBProductLocalized InsertProductLocalized(int ProductID,
+            int LanguageID, string Name, string ShortDescription, string FullDescription,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName);
+
+        /// <summary>
+        /// Update a localized product
+        /// </summary>
+        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="ShortDescription">The short description</param>
+        /// <param name="FullDescription">The full description</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>DBProductContent</returns>
+        public abstract DBProductLocalized UpdateProductLocalized(int ProductLocalizedID,
+            int ProductID, int LanguageID, string Name, string ShortDescription, string FullDescription,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName);
+
+        /// <summary>
+        /// Gets localized product variant by id
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <returns>Product variant content</returns>
+        public abstract DBProductVariantLocalized GetProductVariantLocalizedByID(int ProductVariantLocalizedID);
+
+        /// <summary>
+        /// Gets localized product variant by product variant id and language id
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product variant content</returns>
+        public abstract DBProductVariantLocalized GetProductVariantLocalizedByProductVariantIDAndLanguageID(int ProductVariantID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductVariantLocalized</returns>
+        public abstract DBProductVariantLocalized InsertProductVariantLocalized(int ProductVariantID,
+            int LanguageID, string Name, string Description);
+
+        /// <summary>
+        /// Update a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductVariantContent</returns>
+        public abstract DBProductVariantLocalized UpdateProductVariantLocalized(int ProductVariantLocalizedID,
+            int ProductVariantID, int LanguageID, string Name, string Description);
+
+        /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
         /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="PageSize">Page size</param>
         /// <param name="PageIndex">Page index</param>
         /// <param name="TotalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public abstract DBProductCollection GetProductsAlsoPurchasedByID(int ProductID,
+        public abstract DBProductCollection GetProductsAlsoPurchasedByID(int ProductID, int LanguageID,
             bool showHidden, int PageSize, int PageIndex, out int TotalRecords);
 
         /// <summary>
@@ -159,9 +256,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets a recently added products list
         /// </summary>
         /// <param name="Number">Number of products to load</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Recently added products list</returns>
-        public abstract DBProductCollection GetRecentlyAddedProducts(int Number, bool showHidden);
+        public abstract DBProductCollection GetRecentlyAddedProducts(int Number,
+            int LanguageID, bool showHidden);
 
         /// <summary>
         /// Deletes a product picture mapping
@@ -279,8 +378,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets a product variant
         /// </summary>
         /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product variant</returns>
-        public abstract DBProductVariant GetProductVariantByID(int ProductVariantID);
+        public abstract DBProductVariant GetProductVariantByID(int ProductVariantID, int LanguageID);
 
         /// <summary>
         /// Gets a product variant by SKU
@@ -446,9 +546,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets product variants by product identifier
         /// </summary>
         /// <param name="ProductID">The product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public abstract DBProductVariantCollection GetProductVariantsByProductID(int ProductID, bool showHidden);
+        public abstract DBProductVariantCollection GetProductVariantsByProductID(int ProductID,
+            int LanguageID, bool showHidden);
 
         /// <summary>
         /// Gets restricted product variants by discount identifier

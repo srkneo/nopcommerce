@@ -49,9 +49,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
     public partial class ProductManager
     {
         #region Constants
-        private const string PRODUCTS_BY_ID_KEY = "Nop.product.id-{0}";
-        private const string PRODUCTVARIANTS_ALL_KEY = "Nop.productvariant.all-{0}-{1}";
-        private const string PRODUCTVARIANTS_BY_ID_KEY = "Nop.productvariant.id-{0}";
+        private const string PRODUCTS_BY_ID_KEY = "Nop.product.id-{0}-{1}";
+        private const string PRODUCTVARIANTS_ALL_KEY = "Nop.productvariant.all-{0}-{1}-{2}";
+        private const string PRODUCTVARIANTS_BY_ID_KEY = "Nop.productvariant.id-{0}-{1}";
         private const string TIERPRICES_ALLBYPRODUCTVARIANTID_KEY = "Nop.tierprice.allbyproductvariantid-{0}";
         private const string PRODUCTS_PATTERN_KEY = "Nop.product.";
         private const string PRODUCTVARIANTS_PATTERN_KEY = "Nop.productvariant.";
@@ -408,6 +408,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
+        private static ProductLocalized DBMapping(DBProductLocalized dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new ProductLocalized();
+            item.ProductLocalizedID = dbItem.ProductLocalizedID;
+            item.ProductID = dbItem.ProductID;
+            item.LanguageID = dbItem.LanguageID;
+            item.Name = dbItem.Name;
+            item.ShortDescription = dbItem.ShortDescription;
+            item.FullDescription = dbItem.FullDescription;
+            item.MetaKeywords = dbItem.MetaKeywords;
+            item.MetaDescription = dbItem.MetaDescription;
+            item.MetaTitle = dbItem.MetaTitle;
+            item.SEName = dbItem.SEName;
+
+            return item;
+        }
+
+        private static ProductVariantLocalized DBMapping(DBProductVariantLocalized dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new ProductVariantLocalized();
+            item.ProductVariantLocalizedID = dbItem.ProductVariantLocalizedID;
+            item.ProductVariantID = dbItem.ProductVariantID;
+            item.LanguageID = dbItem.LanguageID;
+            item.Name = dbItem.Name;
+            item.Description = dbItem.Description;
+
+            return item;
+        }
+
         #endregion
 
         #region Methods
@@ -448,7 +483,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>Product collection</returns>
         public static ProductCollection GetAllProducts(bool showHidden)
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(showHidden);
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetAllProducts(showHidden, languageId);
+        }
+
+        /// <summary>
+        /// Gets all products
+        /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product collection</returns>
+        public static ProductCollection GetAllProducts(bool showHidden, int LanguageID)
+        {
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(showHidden, LanguageID);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -560,6 +610,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax, string Keywords, bool SearchDescriptions,
             int PageSize, int PageIndex, List<int> FilteredSpecs, out int TotalRecords)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetAllProducts(CategoryID, ManufacturerID,
+                FeaturedProducts, PriceMin, PriceMax, Keywords, SearchDescriptions,
+                PageSize, PageIndex, FilteredSpecs, languageId, out TotalRecords);
+        }
+
+        /// <summary>
+        /// Gets all products
+        /// </summary>
+        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="FeaturedProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="PriceMin">Minimum price</param>
+        /// <param name="PriceMax">Maximum price</param>
+        /// <param name="Keywords">Keywords</param>
+        /// <param name="SearchDescriptions">A value indicating whether to search in descriptions</param>
+        /// <param name="PageSize">Page size</param>
+        /// <param name="PageIndex">Page index</param>
+        /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="TotalRecords">Total records</param>
+        /// <returns>Product collection</returns>
+        public static ProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
+            bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax, string Keywords, bool SearchDescriptions,
+            int PageSize, int PageIndex, List<int> FilteredSpecs, int LanguageID, out int TotalRecords)
+        {
             if (PageSize <= 0)
                 PageSize = 10;
             if (PageSize == int.MaxValue)
@@ -573,7 +652,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             bool showHidden = NopContext.Current.IsAdmin;
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(CategoryID,
                ManufacturerID, FeaturedProducts, PriceMin, PriceMax, Keywords, SearchDescriptions,
-               PageSize, PageIndex, FilteredSpecs, showHidden, out TotalRecords);
+               PageSize, PageIndex, FilteredSpecs, LanguageID, showHidden, out TotalRecords);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -585,7 +664,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductCollection GetAllProductsDisplayedOnHomePage()
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductsDisplayedOnHomePage(showHidden);
+
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductsDisplayedOnHomePage(showHidden, languageId);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -597,17 +681,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>Product</returns>
         public static Product GetProductByID(int ProductID)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetProductByID(ProductID, languageId);
+        }
+
+        /// <summary>
+        /// Gets product
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product</returns>
+        public static Product GetProductByID(int ProductID, int LanguageID)
+        {
             if (ProductID == 0)
                 return null;
 
-            string key = string.Format(PRODUCTS_BY_ID_KEY, ProductID);
+            string key = string.Format(PRODUCTS_BY_ID_KEY, ProductID, LanguageID);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (Product)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductByID(ProductID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductByID(ProductID, LanguageID);
             var product = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -616,6 +715,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             }
             return product;
         }
+
 
         /// <summary>
         /// Inserts a product
@@ -721,6 +821,142 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         /// <summary>
+        /// Gets localized product by id
+        /// </summary>
+        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <returns>Product content</returns>
+        public static ProductLocalized GetProductLocalizedByID(int ProductLocalizedID)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductLocalizedByID(ProductLocalizedID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product by product id and language id
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product content</returns>
+        public static ProductLocalized GetProductLocalizedByProductIDAndLanguageID(int ProductID, int LanguageID)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductLocalizedByProductIDAndLanguageID(ProductID, LanguageID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized product
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="ShortDescription">The short description</param>
+        /// <param name="FullDescription">The full description</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>ProductContent</returns>
+        public static ProductLocalized InsertProductLocalized(int ProductID,
+            int LanguageID, string Name, string ShortDescription, string FullDescription,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductLocalized(ProductID,
+                LanguageID, Name, ShortDescription, FullDescription,
+                MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized product
+        /// </summary>
+        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="ShortDescription">The short description</param>
+        /// <param name="FullDescription">The full description</param>
+        /// <param name="MetaKeywords">Meta keywords text</param>
+        /// <param name="MetaDescription">Meta descriptions text</param>
+        /// <param name="MetaTitle">Metat title text</param>
+        /// <param name="SEName">Se Name text</param>
+        /// <returns>ProductContent</returns>
+        public static ProductLocalized UpdateProductLocalized(int ProductLocalizedID,
+            int ProductID, int LanguageID, string Name, string ShortDescription, string FullDescription,
+            string MetaKeywords, string MetaDescription, string MetaTitle,
+            string SEName)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductLocalized(ProductLocalizedID,
+                ProductID, LanguageID, Name, ShortDescription, FullDescription,
+                MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product variant by id
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <returns>Product variant content</returns>
+        public static ProductVariantLocalized GetProductVariantLocalizedByID(int ProductVariantLocalizedID)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByID(ProductVariantLocalizedID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product variant by product variant id and language id
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product variant content</returns>
+        public static ProductVariantLocalized GetProductVariantLocalizedByProductVariantIDAndLanguageID(int ProductVariantID, int LanguageID)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByProductVariantIDAndLanguageID(ProductVariantID, LanguageID);
+            var item = DBMapping(dbItem); 
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>ProductVariantLocalized</returns>
+        public static ProductVariantLocalized InsertProductVariantLocalized(int ProductVariantID,
+            int LanguageID, string Name, string Description)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantLocalized(ProductVariantID,
+                LanguageID, Name, Description);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>ProductVariantContent</returns>
+        public static ProductVariantLocalized UpdateProductVariantLocalized(int ProductVariantLocalizedID,
+            int ProductVariantID, int LanguageID, string Name, string Description)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantLocalized(ProductVariantLocalizedID,
+                ProductVariantID, LanguageID, Name, Description);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
         /// <param name="ProductID">Product identifier</param>
@@ -744,6 +980,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductCollection GetProductsAlsoPurchasedByID(int ProductID,
             int PageSize, int PageIndex, out int TotalRecords)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetProductsAlsoPurchasedByID(ProductID, languageId,
+                PageSize, PageIndex, out  TotalRecords);
+        }
+
+        /// <summary>
+        /// Gets a list of products purchased by other customers who purchased the above
+        /// </summary>
+        /// <param name="ProductID">Product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="PageSize">Page size</param>
+        /// <param name="PageIndex">Page index</param>
+        /// <param name="TotalRecords">Total records</param>
+        /// <returns>Product collection</returns>
+        public static ProductCollection GetProductsAlsoPurchasedByID(int ProductID, 
+            int LanguageID, int PageSize, int PageIndex, out int TotalRecords)
+        {
             if (PageSize <= 0)
                 PageSize = 10;
             if (PageSize == int.MaxValue)
@@ -755,8 +1011,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 PageIndex = int.MaxValue - 1;
 
             bool showHidden = NopContext.Current.IsAdmin;
+
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductsAlsoPurchasedByID(ProductID,
-               showHidden, PageSize, PageIndex, out TotalRecords);
+               LanguageID, showHidden, PageSize, PageIndex, out TotalRecords);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -785,8 +1042,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                string key = string.Format(PRODUCTS_BY_ID_KEY, ProductID);
-                NopCache.Remove(key);
+                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
             }
         }
 
@@ -996,8 +1252,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>"recently added" product list</returns>
         public static ProductCollection GetRecentlyAddedProducts(int Number)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRecentlyAddedProducts(Number, showHidden);
+
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRecentlyAddedProducts(Number,
+                languageId, showHidden);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -1567,17 +1829,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>Product variant</returns>
         public static ProductVariant GetProductVariantByID(int ProductVariantID)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetProductVariantByID(ProductVariantID, languageId);
+        }
+
+        /// <summary>
+        /// Gets a product variant
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <returns>Product variant</returns>
+        public static ProductVariant GetProductVariantByID(int ProductVariantID, int LanguageID)
+        {
             if (ProductVariantID == 0)
                 return null;
 
-            string key = string.Format(PRODUCTVARIANTS_BY_ID_KEY, ProductVariantID);
+            string key = string.Format(PRODUCTVARIANTS_BY_ID_KEY, ProductVariantID, LanguageID);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariant)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantByID(ProductVariantID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantByID(ProductVariantID, LanguageID);
             var productVariant = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -1844,16 +2120,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="ProductID">The product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID, bool showHidden)
+        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
+            bool showHidden)
         {
-            string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, ProductID);
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetProductVariantsByProductID(ProductID,languageId, showHidden);
+        }
+
+
+        /// <summary>
+        /// Gets product variants by product identifier
+        /// </summary>
+        /// <param name="ProductID">The product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Product variant collection</returns>
+        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
+            int LanguageID, bool showHidden)
+        {
+            string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, ProductID, LanguageID);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariantCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByProductID(ProductID, showHidden);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByProductID(ProductID, LanguageID, showHidden);
             var productVariants = DBMapping(dbCollection);
 
             if (ProductManager.CacheEnabled)
