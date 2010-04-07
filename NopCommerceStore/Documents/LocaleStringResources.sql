@@ -50,6 +50,15 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.SMSAlerts.SendTestSMSFail">
     <Value>SMS has not been sent.</Value>
   </LocaleResource>
+  <LocaleResource Name="DatePicker2.Day">
+    <Value>Day</Value>
+  </LocaleResource>
+  <LocaleResource Name="DatePicker2.Month">
+    <Value>Month</Value>
+  </LocaleResource>
+  <LocaleResource Name="DatePicker2.Year">
+    <Value>Year</Value>
+  </LocaleResource>
 </Language>
 '
  		

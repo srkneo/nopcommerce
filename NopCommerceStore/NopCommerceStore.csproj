@@ -3576,6 +3576,13 @@
     <Compile Include="AssistHostedPaymentReturn.aspx.designer.cs">
       <DependentUpon>AssistHostedPaymentReturn.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\DatePicker2.ascx.cs">
+      <DependentUpon>DatePicker2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\DatePicker2.ascx.designer.cs">
+      <DependentUpon>DatePicker2.ascx</DependentUpon>
+    </Compile>
     <Compile Include="QuickPayCancel.aspx.cs">
       <DependentUpon>QuickPayCancel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6383,6 +6390,7 @@
     <Content Include="images\flags\za.png" />
     <Content Include="images\flags\zm.png" />
     <Content Include="images\flags\zw.png" />
+    <Content Include="Modules\DatePicker2.ascx" />
     <Content Include="QuickPayCancel.aspx" />
     <Content Include="QuickPayReturn.aspx" />
     <Content Include="Licenses.txt" />

@@ -1,6 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.CustomerRegisterControl" CodeBehind="CustomerRegister.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="Captcha" Src="~/Modules/Captcha.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="Topic" Src="~/Modules/Topic.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="DatePicker2" Src="~/Modules/DatePicker2.ascx" %>
 
 <div class="registration-page">
     <div class="page-title">
@@ -74,9 +75,7 @@
                                             <%=GetLocaleResourceString("Account.DateOfBirth")%>:
                                         </td>
                                         <td class="item-value">
-                                            <asp:DropDownList runat="server" ID="lstBirthDateDays" AutoPostBack="false" ValidationGroup="CreateUserForm" />
-                                            <asp:DropDownList runat="server" ID="lstBirthDateMonths" AutoPostBack="false" ValidationGroup="CreateUserForm" />
-                                            <asp:DropDownList runat="server" ID="lstBirthDateYears" AutoPostBack="false" ValidationGroup="CreateUserForm" />
+                                            <nopCommerce:DatePicker2 runat="server" ID="dtDateOfBirth" />
                                         </td>
                                     </tr>
                                     <%--pnlEmail is visible only when customers are authenticated by usernames and is used to get an email--%>
