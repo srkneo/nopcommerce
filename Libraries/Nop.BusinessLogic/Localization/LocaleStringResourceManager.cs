@@ -156,6 +156,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         public static void InsertAllLocaleStringResourcesFromXML(int LanguageID, string xml)
         {
             DBProviderManager<DBLocaleStringResourceProvider>.Provider.InsertAllLocaleStringResourcesFromXML(LanguageID, xml);
+            if (LocaleStringResourceManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
+            }
         }
 
 
