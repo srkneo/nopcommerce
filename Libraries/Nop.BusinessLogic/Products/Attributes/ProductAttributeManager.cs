@@ -31,8 +31,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
     public partial class ProductAttributeManager
     {
         #region Constants
-        private const string PRODUCTATTRIBUTES_ALL_KEY = "Nop.productattribute.all";
-        private const string PRODUCTATTRIBUTES_BY_ID_KEY = "Nop.productattribute.id-{0}";
+        private const string PRODUCTATTRIBUTES_ALL_KEY = "Nop.productattribute.all-{0}";
+        private const string PRODUCTATTRIBUTES_BY_ID_KEY = "Nop.productattribute.id-{0}-{1}";
         private const string PRODUCTVARIANTATTRIBUTES_ALL_KEY = "Nop.productvariantattribute.all-{0}";
         private const string PRODUCTVARIANTATTRIBUTES_BY_ID_KEY = "Nop.productvariantattribute.id-{0}";
         private const string PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY = "Nop.productvariantattributevalue.all-{0}";
@@ -65,6 +65,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
 
             var item = new ProductAttribute();
             item.ProductAttributeID = dbItem.ProductAttributeID;
+            item.Name = dbItem.Name;
+            item.Description = dbItem.Description;
+
+            return item;
+        }
+
+        private static ProductAttributeLocalized DBMapping(DBProductAttributeLocalized dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new ProductAttributeLocalized();
+            item.ProductAttributeLocalizedID = dbItem.ProductAttributeLocalizedID;
+            item.ProductAttributeID = dbItem.ProductAttributeID;
+            item.LanguageID = dbItem.LanguageID;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
 
@@ -192,14 +207,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product attribute collection</returns>
         public static ProductAttributeCollection GetAllProductAttributes()
         {
-            string key = PRODUCTATTRIBUTES_ALL_KEY;
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+            return GetAllProductAttributes(languageId);
+        }
+
+        /// <summary>
+        /// Gets all product attributes
+        /// </summary>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product attribute collection</returns>
+        public static ProductAttributeCollection GetAllProductAttributes(int LanguageID)
+        {
+            string key = string.Format(PRODUCTATTRIBUTES_ALL_KEY, LanguageID);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductAttributeCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductAttributes();
+            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductAttributes(LanguageID);
             var productAttributes = DBMapping(dbCollection);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -216,17 +244,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product attribute </returns>
         public static ProductAttribute GetProductAttributeByID(int ProductAttributeID)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+            return GetProductAttributeByID(ProductAttributeID, languageId);
+        }
+
+        /// <summary>
+        /// Gets a product attribute 
+        /// </summary>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product attribute </returns>
+        public static ProductAttribute GetProductAttributeByID(int ProductAttributeID, int LanguageID)
+        {
             if (ProductAttributeID == 0)
                 return null;
 
-            string key = string.Format(PRODUCTATTRIBUTES_BY_ID_KEY, ProductAttributeID);
+            string key = string.Format(PRODUCTATTRIBUTES_BY_ID_KEY, ProductAttributeID, LanguageID);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductAttribute)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeByID(ProductAttributeID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeByID(ProductAttributeID, LanguageID);
             var productAttribute = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -278,6 +320,72 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             return productAttribute;
         }
 
+        /// <summary>
+        /// Gets localized product attribute by id
+        /// </summary>
+        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <returns>Product attribute content</returns>
+        public static ProductAttributeLocalized GetProductAttributeLocalizedByID(int ProductAttributeLocalizedID)
+        {
+            if (ProductAttributeLocalizedID == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedByID(ProductAttributeLocalizedID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product attribute by product attribute id and language id
+        /// </summary>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product attribute content</returns>
+        public static ProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(int ProductAttributeID, int LanguageID)
+        {
+            if (ProductAttributeID == 0 || LanguageID == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(ProductAttributeID, LanguageID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized product attribute
+        /// </summary>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>Localized product attribute</returns>
+        public static ProductAttributeLocalized InsertProductAttributeLocalized(int ProductAttributeID,
+            int LanguageID, string Name, string Description)
+        {
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttributeLocalized(ProductAttributeID,
+            LanguageID, Name, Description);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized product attribute
+        /// </summary>
+        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductAttributeLocalized</returns>
+        public static ProductAttributeLocalized UpdateProductAttributeLocalized(int ProductAttributeLocalizedID,
+            int ProductAttributeID, int LanguageID, string Name, string Description)
+        {
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttributeLocalized(ProductAttributeLocalizedID,
+                ProductAttributeID, LanguageID, Name, Description);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+        
         #endregion
 
         #region Product variant attributes mappings (ProductVariantAttribute)

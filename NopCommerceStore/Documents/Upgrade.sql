@@ -2443,6 +2443,468 @@ BEGIN
 END
 GO
 
+--attribute localization
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_ProductAttributeLocalized]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_ProductAttributeLocalized](
+	[ProductAttributeLocalizedID] [int] IDENTITY(1,1) NOT NULL,
+	[ProductAttributeID] [int] NOT NULL,
+	[LanguageID] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](400) NOT NULL,
+ CONSTRAINT [PK_Nop_ProductAttributeLocalized] PRIMARY KEY CLUSTERED 
+(
+	[ProductAttributeLocalizedID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+ CONSTRAINT [IX_Nop_ProductAttributeLocalized_Unique1] UNIQUE NONCLUSTERED 
+(
+	[ProductAttributeID] ASC,
+	[LanguageID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_ProductAttributeLocalized_Nop_ProductAttribute'
+           AND parent_obj = Object_id('Nop_ProductAttributeLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_ProductAttributeLocalized
+DROP CONSTRAINT FK_Nop_ProductAttributeLocalized_Nop_ProductAttribute
+GO
+ALTER TABLE [dbo].[Nop_ProductAttributeLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_ProductAttributeLocalized_Nop_ProductAttribute] FOREIGN KEY([ProductAttributeID])
+REFERENCES [dbo].[Nop_ProductAttribute] ([ProductAttributeID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_ProductAttributeLocalized_Nop_Language'
+           AND parent_obj = Object_id('Nop_ProductAttributeLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_ProductAttributeLocalized
+DROP CONSTRAINT FK_Nop_ProductAttributeLocalized_Nop_Language
+GO
+ALTER TABLE [dbo].[Nop_ProductAttributeLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_ProductAttributeLocalized_Nop_Language] FOREIGN KEY([LanguageID])
+REFERENCES [dbo].[Nop_Language] ([LanguageID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedCleanUp]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAttributeLocalizedCleanUp]
+
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE FROM
+		[Nop_ProductAttributeLocalized]
+	WHERE
+		([Name] IS NULL OR [Name] = '') AND		
+		([Description] IS NULL OR [Description] = '')
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAttributeLocalizedInsert]
+(
+	@ProductAttributeLocalizedID int = NULL output,
+	@ProductAttributeID int,
+	@LanguageID int,
+	@Name nvarchar(100),
+	@Description nvarchar(400)
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_ProductAttributeLocalized]
+	(
+		ProductAttributeID,
+		LanguageID,
+		[Name],
+		[Description]
+	)
+	VALUES
+	(
+		@ProductAttributeID,
+		@LanguageID,
+		@Name,
+		@Description
+	)
+
+	set @ProductAttributeLocalizedID=@@identity
+
+	EXEC Nop_ProductAttributeLocalizedCleanUp
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAttributeLocalizedLoadByPrimaryKey]
+	@ProductAttributeLocalizedID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_ProductAttributeLocalized]
+	WHERE ProductAttributeLocalizedID = @ProductAttributeLocalizedID
+	ORDER BY ProductAttributeLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedLoadByProductAttributeIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedLoadByProductAttributeIDAndLanguageID]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAttributeLocalizedLoadByProductAttributeIDAndLanguageID]
+	@ProductAttributeID int,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_ProductAttributeLocalized]
+	WHERE ProductAttributeID = @ProductAttributeID AND LanguageID=@LanguageID
+	ORDER BY ProductAttributeLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAttributeLocalizedUpdate]
+(
+	@ProductAttributeLocalizedID int,
+	@ProductAttributeID int,
+	@LanguageID int,
+	@Name nvarchar(100),
+	@Description nvarchar(400)
+)
+AS
+BEGIN
+	
+	UPDATE [Nop_ProductAttributeLocalized]
+	SET
+		[ProductAttributeID]=@ProductAttributeID,
+		[LanguageID]=@LanguageID,
+		[Name]=@Name,
+		[Description]=@Description
+	WHERE
+		ProductAttributeLocalizedID = @ProductAttributeLocalizedID
+
+	EXEC Nop_ProductAttributeLocalizedCleanUp
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAttributeLoadAll]
+(
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT 
+		pa.ProductAttributeID, 
+		dbo.NOP_getnotnullnotempty(pal.Name,pa.Name) as [Name], 
+		dbo.NOP_getnotnullnotempty(pal.Description,pa.Description) as [Description]
+	FROM [Nop_ProductAttribute] pa
+		LEFT OUTER JOIN [Nop_ProductAttributeLocalized] pal
+		ON pa.ProductAttributeID = pal.ProductAttributeID AND pal.LanguageID = @LanguageID	
+	order by pa.[Name]
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAttributeLoadByPrimaryKey]
+(
+	@ProductAttributeID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		pa.ProductAttributeID, 
+		dbo.NOP_getnotnullnotempty(pal.Name,pa.Name) as [Name], 
+		dbo.NOP_getnotnullnotempty(pal.Description,pa.Description) as [Description]
+	FROM [Nop_ProductAttribute] pa
+		LEFT OUTER JOIN [Nop_ProductAttributeLocalized] pal
+		ON pa.ProductAttributeID = pal.ProductAttributeID AND pal.LanguageID = @LanguageID	
+	WHERE
+		pa.ProductAttributeID = @ProductAttributeID
+END
+GO
+
+
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_SpecificationAttributeLocalized]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_SpecificationAttributeLocalized](
+	[SpecificationAttributeLocalizedID] [int] IDENTITY(1,1) NOT NULL,
+	[SpecificationAttributeID] [int] NOT NULL,
+	[LanguageID] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_Nop_SpecificationAttributeLocalized] PRIMARY KEY CLUSTERED 
+(
+	[SpecificationAttributeLocalizedID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+ CONSTRAINT [IX_Nop_SpecificationAttributeLocalized_Unique1] UNIQUE NONCLUSTERED 
+(
+	[SpecificationAttributeID] ASC,
+	[LanguageID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_SpecificationAttributeLocalized_Nop_SpecificationAttribute'
+           AND parent_obj = Object_id('Nop_SpecificationAttributeLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_SpecificationAttributeLocalized
+DROP CONSTRAINT FK_Nop_SpecificationAttributeLocalized_Nop_SpecificationAttribute
+GO
+ALTER TABLE [dbo].[Nop_SpecificationAttributeLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_SpecificationAttributeLocalized_Nop_SpecificationAttribute] FOREIGN KEY([SpecificationAttributeID])
+REFERENCES [dbo].[Nop_SpecificationAttribute] ([SpecificationAttributeID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_SpecificationAttributeLocalized_Nop_Language'
+           AND parent_obj = Object_id('Nop_SpecificationAttributeLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_SpecificationAttributeLocalized
+DROP CONSTRAINT FK_Nop_SpecificationAttributeLocalized_Nop_Language
+GO
+ALTER TABLE [dbo].[Nop_SpecificationAttributeLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_SpecificationAttributeLocalized_Nop_Language] FOREIGN KEY([LanguageID])
+REFERENCES [dbo].[Nop_Language] ([LanguageID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedCleanUp]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedCleanUp]
+
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE FROM
+		[Nop_SpecificationAttributeLocalized]
+	WHERE
+		([Name] IS NULL OR [Name] = '')
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedInsert]
+(
+	@SpecificationAttributeLocalizedID int = NULL output,
+	@SpecificationAttributeID int,
+	@LanguageID int,
+	@Name nvarchar(100)
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_SpecificationAttributeLocalized]
+	(
+		SpecificationAttributeID,
+		LanguageID,
+		[Name]
+	)
+	VALUES
+	(
+		@SpecificationAttributeID,
+		@LanguageID,
+		@Name
+	)
+
+	set @SpecificationAttributeLocalizedID=@@identity
+
+	EXEC Nop_SpecificationAttributeLocalizedCleanUp
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedLoadByPrimaryKey]
+	@SpecificationAttributeLocalizedID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_SpecificationAttributeLocalized]
+	WHERE SpecificationAttributeLocalizedID = @SpecificationAttributeLocalizedID
+	ORDER BY SpecificationAttributeLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedLoadBySpecificationAttributeIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedLoadBySpecificationAttributeIDAndLanguageID]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedLoadBySpecificationAttributeIDAndLanguageID]
+	@SpecificationAttributeID int,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_SpecificationAttributeLocalized]
+	WHERE SpecificationAttributeID = @SpecificationAttributeID AND LanguageID=@LanguageID
+	ORDER BY SpecificationAttributeLocalizedID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedUpdate]
+(
+	@SpecificationAttributeLocalizedID int,
+	@SpecificationAttributeID int,
+	@LanguageID int,
+	@Name nvarchar(100)
+)
+AS
+BEGIN
+	
+	UPDATE [Nop_SpecificationAttributeLocalized]
+	SET
+		[SpecificationAttributeID]=@SpecificationAttributeID,
+		[LanguageID]=@LanguageID,
+		[Name]=@Name		
+	WHERE
+		SpecificationAttributeLocalizedID = @SpecificationAttributeLocalizedID
+
+	EXEC Nop_SpecificationAttributeLocalizedCleanUp
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeLoadAll]
+(
+	@LanguageID int
+)
+AS
+BEGIN
+
+	SET NOCOUNT ON
+	
+	SELECT
+		sa.SpecificationAttributeID, 
+		dbo.NOP_getnotnullnotempty(sal.Name,sa.Name) as [Name],
+		sa.DisplayOrder
+	FROM [Nop_SpecificationAttribute] sa
+		LEFT OUTER JOIN [Nop_SpecificationAttributeLocalized] sal
+		ON sa.SpecificationAttributeID = sal.SpecificationAttributeID AND sal.LanguageID = @LanguageID	
+	ORDER BY sa.DisplayOrder
+	
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeLoadByPrimaryKey]
+(
+	@SpecificationAttributeID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		sa.SpecificationAttributeID, 
+		dbo.NOP_getnotnullnotempty(sal.Name,sa.Name) as [Name],
+		sa.DisplayOrder
+	FROM [Nop_SpecificationAttribute] sa
+		LEFT OUTER JOIN [Nop_SpecificationAttributeLocalized] sal
+		ON sa.SpecificationAttributeID = sal.SpecificationAttributeID AND sal.LanguageID = @LanguageID	
+	WHERE
+		sa.SpecificationAttributeID = @SpecificationAttributeID
+END
+GO
+
+		
+
 IF NOT EXISTS (
 		SELECT 1
 		FROM [dbo].[Nop_Setting]

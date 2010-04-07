@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // The contents of this file are subject to the nopCommerce Public License Version 1.0 ("License"); you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at  http://www.nopCommerce.com/License.aspx. 
 // 
@@ -14,45 +14,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
+namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
 {
     /// <summary>
-    /// Represents a specification attribute option filter
+    /// Represents a localized product attribute
     /// </summary>
-    public class SpecificationAttributeOptionFilter : BaseEntity
+    public partial class DBProductAttributeLocalized : BaseDBEntity
     {
+        #region Ctor
         /// <summary>
-        /// Default constructor
+        /// Creates a new instance of the DBProductAttributeLocalized class
         /// </summary>
-        public SpecificationAttributeOptionFilter()
-        { }
+        public DBProductAttributeLocalized()
+        {
+        }
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Gets or sets the localized product attribute identifier
+        /// </summary>
+        public int ProductAttributeLocalizedID { get; set; }
 
         /// <summary>
-        /// Gets or sets the specification attribute identifier
+        /// Gets or sets the product attribute identifier
         /// </summary>
-        public int SpecificationAttributeID { get; set; }
+        public int ProductAttributeID { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the language identifier
+        /// </summary>
+        public int LanguageID { get; set; }
 
         /// <summary>
-        /// Gets or sets the specification attribute name
+        /// Gets or sets the name
         /// </summary>
-        public string SpecificationAttributeName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the DisplayOrder
+        /// Gets or sets the description
         /// </summary>
-        public int DisplayOrder { get; set; }
-
-        /// <summary>
-        /// Gets or sets the specification attribute option identifier
-        /// </summary>
-        public int SpecificationAttributeOptionID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the specification attribute option name
-        /// </summary>
-        public string SpecificationAttributeOptionName { get; set; }
+        public string Description { get; set; }
+        
+        #endregion
     }
 }

@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
     public partial class SpecificationAttributeManager
     {
         #region Constants
-        private const string SPECIFICATIONATTRIBUTE_BY_ID_KEY = "Nop.specificationattributes.id-{0}";
+        private const string SPECIFICATIONATTRIBUTE_BY_ID_KEY = "Nop.specificationattributes.id-{0}-{1}";
         private const string SPECIFICATIONATTRIBUTEOPTION_BY_ID_KEY = "Nop.specificationattributeoptions.id-{0}";
         private const string PRODUCTSPECIFICATIONATTRIBUTE_ALLBYPRODUCTID_KEY = "Nop.productspecificationattribute.allbyproductid-{0}-{1}-{2}";
         private const string SPECIFICATIONATTRIBUTE_PATTERN_KEY = "Nop.specificationattributes.";
@@ -71,6 +71,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             item.SpecificationAttributeID = dbItem.SpecificationAttributeID;
             item.Name = dbItem.Name;
             item.DisplayOrder = dbItem.DisplayOrder;
+
+            return item;
+        }
+
+        private static SpecificationAttributeLocalized DBMapping(DBSpecificationAttributeLocalized dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new SpecificationAttributeLocalized();
+            item.SpecificationAttributeLocalizedID = dbItem.SpecificationAttributeLocalizedID;
+            item.SpecificationAttributeID = dbItem.SpecificationAttributeID;
+            item.LanguageID = dbItem.LanguageID;
+            item.Name = dbItem.Name;
 
             return item;
         }
@@ -205,17 +219,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <returns>Specification attribute</returns>
         public static SpecificationAttribute GetSpecificationAttributeByID(int SpecificationAttributeID)
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+            return GetSpecificationAttributeByID(SpecificationAttributeID, languageId);
+        }
+
+        /// <summary>
+        /// Gets a specification attribute
+        /// </summary>
+        /// <param name="SpecificationAttributeID">The specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Specification attribute</returns>
+        public static SpecificationAttribute GetSpecificationAttributeByID(int SpecificationAttributeID, int LanguageID)
+        {
             if (SpecificationAttributeID == 0)
                 return null;
 
-            string key = string.Format(SPECIFICATIONATTRIBUTE_BY_ID_KEY, SpecificationAttributeID);
+            string key = string.Format(SPECIFICATIONATTRIBUTE_BY_ID_KEY, SpecificationAttributeID, LanguageID);
             object obj2 = NopCache.Get(key);
             if (SpecificationAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (SpecificationAttribute)obj2;
             }
 
-            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeByID(SpecificationAttributeID);
+            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeByID(SpecificationAttributeID, LanguageID);
             var specificationAttribute = DBMapping(dbItem);
 
             if (SpecificationAttributeManager.CacheEnabled)
@@ -231,7 +259,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <returns>Specification attribute collection</returns>
         public static SpecificationAttributeCollection GetSpecificationAttributes()
         {
-            var dbCollection = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributes();
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+            return GetSpecificationAttributes(languageId);
+        }
+
+        /// <summary>
+        /// Gets specification attribute collection
+        /// </summary>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Specification attribute collection</returns>
+        public static SpecificationAttributeCollection GetSpecificationAttributes(int LanguageID)
+        {
+            var dbCollection = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributes(LanguageID);
             var specificationAttributes = DBMapping(dbCollection);
             return specificationAttributes;
         }
@@ -293,6 +334,70 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             return specificationAttribute;
         }
 
+        /// <summary>
+        /// Gets localized specification attribute by id
+        /// </summary>
+        /// <param name="SpecificationAttributeLocalizedID">Localized specification identifier</param>
+        /// <returns>Specification attribute content</returns>
+        public static SpecificationAttributeLocalized GetSpecificationAttributeLocalizedByID(int SpecificationAttributeLocalizedID)
+        {
+            if (SpecificationAttributeLocalizedID == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeLocalizedByID(SpecificationAttributeLocalizedID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized specification attribute by specification attribute id and language id
+        /// </summary>
+        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Specification attribute content</returns>
+        public static SpecificationAttributeLocalized GetSpecificationAttributeLocalizedBySpecificationAttributeIDAndLanguageID(int SpecificationAttributeID, int LanguageID)
+        {
+            if (SpecificationAttributeID == 0 || LanguageID == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeLocalizedBySpecificationAttributeIDAndLanguageID(SpecificationAttributeID, LanguageID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized specification attribute
+        /// </summary>
+        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Specification attribute content</returns>
+        public static SpecificationAttributeLocalized InsertSpecificationAttributeLocalized(int SpecificationAttributeID,
+            int LanguageID, string Name)
+        {
+            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.InsertSpecificationAttributeLocalized(SpecificationAttributeID,
+                LanguageID, Name);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized specification attribute
+        /// </summary>
+        /// <param name="SpecificationAttributeLocalizedID">Localized specification attribute identifier</param>
+        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Specification attribute content</returns>
+        public static SpecificationAttributeLocalized UpdateSpecificationAttributeLocalized(int SpecificationAttributeLocalizedID,
+            int SpecificationAttributeID, int LanguageID, string Name)
+        {
+            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.UpdateSpecificationAttributeLocalized(SpecificationAttributeLocalizedID,
+                SpecificationAttributeID, LanguageID, Name);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+        
         #endregion
 
         #region SpecificationAttributeOption

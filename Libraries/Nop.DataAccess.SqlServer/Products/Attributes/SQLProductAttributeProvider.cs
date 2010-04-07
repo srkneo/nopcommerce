@@ -42,7 +42,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
             productAttribute.Description = NopSqlDataHelper.GetString(dataReader, "Description");
             return productAttribute;
         }
-        
+
+        private DBProductAttributeLocalized GetProductAttributeLocalizedFromReader(IDataReader dataReader)
+        {
+            var item = new DBProductAttributeLocalized();
+            item.ProductAttributeLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeLocalizedID");
+            item.ProductAttributeID = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeID");
+            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            return item;
+        }
+
         private DBProductVariantAttribute GetProductVariantAttributeFromReader(IDataReader dataReader)
         {
             DBProductVariantAttribute productVariantAttribute = new DBProductVariantAttribute();
@@ -133,12 +144,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets all product attributes
         /// </summary>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product attribute collection</returns>
-        public override DBProductAttributeCollection GetAllProductAttributes()
+        public override DBProductAttributeCollection GetAllProductAttributes(int LanguageID)
         {
             var result = new DBProductAttributeCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLoadAll");
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -154,13 +167,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// Gets a product attribute 
         /// </summary>
         /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product attribute </returns>
-        public override DBProductAttribute GetProductAttributeByID(int ProductAttributeID)
+        public override DBProductAttribute GetProductAttributeByID(int ProductAttributeID, int LanguageID)
         {
             DBProductAttribute productAttribute = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLoadByPrimaryKey");
             db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -188,7 +203,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
                 int ProductAttributeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductAttributeID"));
-                productAttribute = GetProductAttributeByID(ProductAttributeID);
+                productAttribute = GetProductAttributeByID(ProductAttributeID, 0);
             }
             return productAttribute;
         }
@@ -210,8 +225,107 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
             db.AddInParameter(dbCommand, "Name", DbType.String, Name);
             db.AddInParameter(dbCommand, "Description", DbType.String, Description);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productAttribute = GetProductAttributeByID(ProductAttributeID);
+                productAttribute = GetProductAttributeByID(ProductAttributeID, 0);
             return productAttribute;
+        }
+
+        /// <summary>
+        /// Gets localized product attribute by id
+        /// </summary>
+        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <returns>Product attribute content</returns>
+        public override DBProductAttributeLocalized GetProductAttributeLocalizedByID(int ProductAttributeLocalizedID)
+        {
+            DBProductAttributeLocalized item = null;
+            if (ProductAttributeLocalizedID == 0)
+                return item;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedLoadByPrimaryKey");
+            db.AddInParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, ProductAttributeLocalizedID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetProductAttributeLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product attribute by product attribute id and language id
+        /// </summary>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product attribute content</returns>
+        public override DBProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(int ProductAttributeID, int LanguageID)
+        {
+            DBProductAttributeLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedLoadByProductAttributeIDAndLanguageID");
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetProductAttributeLocalizedFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized product attribute
+        /// </summary>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductAttributeLocalized</returns>
+        public override DBProductAttributeLocalized InsertProductAttributeLocalized(int ProductAttributeID,
+            int LanguageID, string Name, string Description)
+        {
+            DBProductAttributeLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedInsert");
+            db.AddOutParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int ProductAttributeLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductAttributeLocalizedID"));
+                item = GetProductAttributeLocalizedByID(ProductAttributeLocalizedID);
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized product attribute
+        /// </summary>
+        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductAttributeLocalized</returns>
+        public override DBProductAttributeLocalized UpdateProductAttributeLocalized(int ProductAttributeLocalizedID,
+            int ProductAttributeID, int LanguageID, string Name, string Description)
+        {
+            DBProductAttributeLocalized item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedUpdate");
+            db.AddInParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, ProductAttributeLocalizedID);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetProductAttributeLocalizedByID(ProductAttributeLocalizedID);
+
+            return item;
         }
 
         /// <summary>

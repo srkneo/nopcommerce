@@ -140,6 +140,7 @@
     <Compile Include="Payment\CancelPaymentResult.cs" />
     <Compile Include="Payment\PaymentMethodTypeEnum.cs" />
     <Compile Include="Payment\RecurringPaymentTypeEnum.cs" />
+    <Compile Include="Products\Attributes\ProductAttributeLocalized.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeCombination.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeCombinationCollection.cs" />
     <Compile Include="Products\Attributes\ProductAttributeHelper.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Products\ManageInventoryMethodEnum.cs" />
     <Compile Include="Products\RecurringProductCyclePeriodEnum.cs" />
     <Compile Include="Products\DownloadActivationTypeEnum.cs" />
+    <Compile Include="Products\Specs\SpecificationAttributeLocalized.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeOption.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeOptionCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeOptionFilter.cs" />

@@ -7,6 +7,6 @@
                                     SettingManager.StoreName)%>
     </div>
     <div class="footer-poweredby">
-        Powered by <a href="http://www.nopCommerce.com/">nopCommerce</a>
+        Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
     </div>
 </div>

@@ -42,15 +42,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets all product attributes
         /// </summary>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product attribute collection</returns>
-        public abstract DBProductAttributeCollection GetAllProductAttributes();
+        public abstract DBProductAttributeCollection GetAllProductAttributes(int LanguageID);
 
         /// <summary>
         /// Gets a product attribute 
         /// </summary>
         /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product attribute </returns>
-        public abstract DBProductAttribute GetProductAttributeByID(int ProductAttributeID);
+        public abstract DBProductAttribute GetProductAttributeByID(int ProductAttributeID, int LanguageID);
 
         /// <summary>
         /// Inserts a product attribute
@@ -69,6 +71,44 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <returns>Product attribute </returns>
         public abstract DBProductAttribute UpdateProductAttribute(int ProductAttributeID, string Name,
             string Description);
+        
+        /// <summary>
+        /// Gets localized product attribute by id
+        /// </summary>
+        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <returns>Product attribute content</returns>
+        public abstract DBProductAttributeLocalized GetProductAttributeLocalizedByID(int ProductAttributeLocalizedID);
+
+        /// <summary>
+        /// Gets localized product attribute by product attribute id and language id
+        /// </summary>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product attribute content</returns>
+        public abstract DBProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(int ProductAttributeID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized product attribute
+        /// </summary>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductAttributeLocalized</returns>
+        public abstract DBProductAttributeLocalized InsertProductAttributeLocalized(int ProductAttributeID,
+            int LanguageID, string Name, string Description);
+
+        /// <summary>
+        /// Update a localized product attribute
+        /// </summary>
+        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>DBProductAttributeLocalized</returns>
+        public abstract DBProductAttributeLocalized UpdateProductAttributeLocalized(int ProductAttributeLocalizedID,
+            int ProductAttributeID, int LanguageID, string Name, string Description);      
 
         /// <summary>
         /// Deletes a product variant attribute mapping

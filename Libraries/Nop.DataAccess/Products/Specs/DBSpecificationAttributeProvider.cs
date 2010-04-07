@@ -32,14 +32,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// Gets a specification attribute
         /// </summary>
         /// <param name="SpecificationAttributeID">The specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Specification attribute</returns>
-        public abstract DBSpecificationAttribute GetSpecificationAttributeByID(int SpecificationAttributeID);
+        public abstract DBSpecificationAttribute GetSpecificationAttributeByID(int SpecificationAttributeID, int LanguageID);
 
         /// <summary>
         /// Gets specification attribute collection
         /// </summary>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Specification attribute collection</returns>
-        public abstract DBSpecificationAttributeCollection GetSpecificationAttributes();
+        public abstract DBSpecificationAttributeCollection GetSpecificationAttributes(int LanguageID);
 
         /// <summary>
         /// Deletes a specification attribute
@@ -63,7 +65,43 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <param name="displayOrder">Display order</param>
         /// <returns>Specification attribute</returns>
         public abstract DBSpecificationAttribute UpdateSpecificationAttribute(int specificationAttributeID, string name, int displayOrder);
+        
+        /// <summary>
+        /// Gets localized specification attribute by id
+        /// </summary>
+        /// <param name="SpecificationAttributeLocalizedID">Localized specification identifier</param>
+        /// <returns>Specification attribute content</returns>
+        public abstract DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedByID(int SpecificationAttributeLocalizedID);
 
+        /// <summary>
+        /// Gets localized specification attribute by specification attribute id and language id
+        /// </summary>
+        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Specification attribute content</returns>
+        public abstract DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedBySpecificationAttributeIDAndLanguageID(int SpecificationAttributeID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized specification attribute
+        /// </summary>
+        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Specification attribute content</returns>
+        public abstract DBSpecificationAttributeLocalized InsertSpecificationAttributeLocalized(int SpecificationAttributeID,
+            int LanguageID, string Name);
+
+        /// <summary>
+        /// Update a localized specification attribute
+        /// </summary>
+        /// <param name="SpecificationAttributeLocalizedID">Localized specification attribute identifier</param>
+        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Specification attribute content</returns>
+        public abstract DBSpecificationAttributeLocalized UpdateSpecificationAttributeLocalized(int SpecificationAttributeLocalizedID,
+            int SpecificationAttributeID, int LanguageID, string Name);
+      
         #endregion
 
         #region Specification attribute option

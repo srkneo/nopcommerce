@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
 
         private DBCategoryLocalized GetCategoryLocalizedFromReader(IDataReader dataReader)
         {
-            DBCategoryLocalized item = new DBCategoryLocalized();
+            var item = new DBCategoryLocalized();
             item.CategoryLocalizedID = NopSqlDataHelper.GetInt(dataReader, "CategoryLocalizedID");
             item.CategoryID = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
             item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");

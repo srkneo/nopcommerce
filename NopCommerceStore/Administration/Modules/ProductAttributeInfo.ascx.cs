@@ -31,7 +31,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeByID(this.ProductAttributeID);
+            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeByID(this.ProductAttributeID, 0);
+
+            if (this.HasLocalizableContent)
+            {
+                var languages = this.GetLocalizableLanguagesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
+            }
+            
             if (productAttribute != null)
             {
                 this.txtName.Text = productAttribute.Name;
@@ -47,9 +57,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
+
+            base.OnPreRender(e);
+        }
+
         public ProductAttribute SaveInfo()
         {
-            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeByID(this.ProductAttributeID);
+            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeByID(this.ProductAttributeID, 0);
 
             if (productAttribute != null)
             {
@@ -60,8 +81,77 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 productAttribute = ProductAttributeManager.InsertProductAttribute(txtName.Text, txtDescription.Text);
             }
+
+            saveLocalizableContent(productAttribute);
+
             return productAttribute;
         }
+
+        protected void saveLocalizableContent(ProductAttribute productAttribute)
+        {
+            if (productAttribute == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (RepeaterItem item in rptrLanguageDivs.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var txtLocalizedName = (TextBox)item.FindControl("txtLocalizedName");
+                    var txtLocalizedDescription = (TextBox)item.FindControl("txtLocalizedDescription");
+                    var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                    int languageID = int.Parse(lblLanguageId.Text);
+                    string name = txtLocalizedName.Text;
+                    string description = txtLocalizedDescription.Text;
+
+                    bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description));
+
+                    var content = ProductAttributeManager.GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(productAttribute.ProductAttributeID, languageID);
+                    if (content == null)
+                    {
+                        if (!allFieldsAreEmpty && languageID > 0)
+                        {
+                            //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                            content = ProductAttributeManager.InsertProductAttributeLocalized(productAttribute.ProductAttributeID,
+                                   languageID, name, description);
+                        }
+                    }
+                    else
+                    {
+                        if (languageID > 0)
+                        {
+                            content = ProductAttributeManager.UpdateProductAttributeLocalized(content.ProductAttributeLocalizedID, content.ProductAttributeID,
+                                languageID, name, description);
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtLocalizedName = (TextBox)e.Item.FindControl("txtLocalizedName");
+                var txtLocalizedDescription = (TextBox)e.Item.FindControl("txtLocalizedDescription");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+
+                int languageID = int.Parse(lblLanguageId.Text);
+
+                var content = ProductAttributeManager.GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(this.ProductAttributeID, languageID);
+
+                if (content != null)
+                {
+                    txtLocalizedName.Text = content.Name;
+                    txtLocalizedDescription.Text = content.Description;
+                }
+
+            }
+        }
+
 
         public int ProductAttributeID
         {
