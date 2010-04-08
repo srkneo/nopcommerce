@@ -128,7 +128,7 @@ namespace NopSolutions.NopCommerce.Web
 
         protected virtual LanguageCollection GetLocalizableLanguagesSupported()
         {
-            return LanguageManager.GetAllLanguages(false);
+            return LanguageManager.GetAllLanguages(true);
         }
 
         protected virtual bool HasLocalizableContent
