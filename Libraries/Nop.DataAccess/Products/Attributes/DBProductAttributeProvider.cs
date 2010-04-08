@@ -167,15 +167,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// Gets product variant attribute values by product identifier
         /// </summary>
         /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public abstract DBProductVariantAttributeValueCollection GetProductVariantAttributeValues(int ProductVariantAttributeID);
+        public abstract DBProductVariantAttributeValueCollection GetProductVariantAttributeValues(int ProductVariantAttributeID, int LanguageID);
 
         /// <summary>
         /// Gets a product variant attribute value
         /// </summary>
         /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValue GetProductVariantAttributeValueByID(int ProductVariantAttributeValueID);
+        public abstract DBProductVariantAttributeValue GetProductVariantAttributeValueByID(int ProductVariantAttributeValueID, int LanguageID);
 
         /// <summary>
         /// Inserts a product variant attribute value
@@ -205,6 +207,42 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         public abstract DBProductVariantAttributeValue UpdateProductVariantAttributeValue(int ProductVariantAttributeValueID,
             int ProductVariantAttributeID, string Name, decimal PriceAdjustment, 
             decimal WeightAdjustment, bool IsPreSelected, int DisplayOrder);
+
+        /// <summary>
+        /// Gets localized product variant attribute value by id
+        /// </summary>
+        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
+        /// <returns>Localized product variant attribute value</returns>
+        public abstract DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByID(int ProductVariantAttributeValueLocalizedID);
+
+        /// <summary>
+        /// Gets localized product variant attribute value by product variant attribute value id and language id
+        /// </summary>
+        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Localized product variant attribute value</returns>
+        public abstract DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(int ProductVariantAttributeValueID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized product variant attribute value
+        /// </summary>
+        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Localized product variant attribute value</returns>
+        public abstract DBProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int ProductVariantAttributeValueID,
+            int LanguageID, string Name);
+
+        /// <summary>
+        /// Update a localized product variant attribute value
+        /// </summary>
+        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
+        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Localized product variant attribute value</returns>
+        public abstract DBProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int ProductVariantAttributeValueLocalizedID,
+            int ProductVariantAttributeValueID, int LanguageID, string Name);
 
         /// <summary>
         /// Deletes a product variant attribute combination
@@ -255,5 +293,5 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
             bool AllowOutOfStockOrders);
 
         #endregion
-    }
+    } 
 }

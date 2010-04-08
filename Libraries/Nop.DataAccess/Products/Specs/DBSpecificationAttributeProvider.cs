@@ -109,22 +109,25 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets a specification attribute option collection
         /// </summary>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Specification attribute option collection</returns>
-        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptions();
+        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptions(int LanguageID);
 
         /// <summary>
         /// Gets a specification attribute option
         /// </summary>
         /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Specification attribute option</returns>
-        public abstract DBSpecificationAttributeOption GetSpecificationAttributeOptionByID(int specificationAttributeOptionID);
+        public abstract DBSpecificationAttributeOption GetSpecificationAttributeOptionByID(int specificationAttributeOptionID, int LanguageID);
 
         /// <summary>
         /// Gets specification attribute option collection
         /// </summary>
         /// <param name="specificationAttributeID">Specification attribute unique identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Specification attribute option collection</returns>
-        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttributeID(int specificationAttributeID);
+        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttributeID(int specificationAttributeID, int LanguageID);
 
         /// <summary>
         /// Inserts a specification attribute option
@@ -151,6 +154,42 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
         public abstract void DeleteSpecificationAttributeOption(int specificationAttributeOptionID);
 
+        /// <summary>
+        /// Gets localized specification attribute option by id
+        /// </summary>
+        /// <param name="SpecificationAttributeOptionLocalizedID">Localized specification attribute option identifier</param>
+        /// <returns>Localized specification attribute option</returns>
+        public abstract DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedByID(int SpecificationAttributeOptionLocalizedID);
+
+        /// <summary>
+        /// Gets localized specification attribute option by specification attribute option id and language id
+        /// </summary>
+        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Localized specification attribute option</returns>
+        public abstract DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIDAndLanguageID(int SpecificationAttributeOptionID, int LanguageID);
+
+        /// <summary>
+        /// Inserts a localized specification attribute option
+        /// </summary>
+        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Localized specification attribute option</returns>
+        public abstract DBSpecificationAttributeOptionLocalized InsertSpecificationAttributeOptionLocalized(int SpecificationAttributeOptionID,
+            int LanguageID, string Name);
+
+        /// <summary>
+        /// Update a localized specification attribute option
+        /// </summary>
+        /// <param name="SpecificationAttributeOptionLocalizedID">Localized specification attribute option identifier</param>
+        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <returns>Localized specification attribute option</returns>
+        public abstract DBSpecificationAttributeOptionLocalized UpdateSpecificationAttributeOptionLocalized(int SpecificationAttributeOptionLocalizedID,
+            int SpecificationAttributeOptionID, int LanguageID, string Name);
+      
         #endregion
 
         #region Product specification attribute
@@ -175,8 +214,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// Gets all specification attribute option filter mapping collection by category id
         /// </summary>
         /// <param name="CategoryID">Product category identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
         /// <returns>Specification attribute option filter mapping collection</returns>
-        public abstract DBSpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilterByCategoryID(int CategoryID);
+        public abstract DBSpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilterByCategoryID(int CategoryID, int LanguageID);
 
         /// <summary>
         /// Inserts a product specification attribute mapping

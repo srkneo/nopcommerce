@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = specificationAttribute.DisplayOrder;
             }
 
-            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(SpecificationAttributeID);
+            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(SpecificationAttributeID, 0);
             grdSpecificationAttributeOptions.DataSource = saoCol;
             grdSpecificationAttributeOptions.DataBind();
         }
@@ -167,7 +167,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int displayOrder = txtDisplayOrder.Value;
                 int saoID = int.Parse(hfSpecificationAttributeOptionID.Value);
 
-                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(saoID);
+                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(saoID, 0);
                 if (sao != null)
                     SpecificationAttributeManager.UpdateSpecificationAttributeOptions(saoID, SpecificationAttributeID, name, displayOrder);
 
@@ -178,7 +178,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void OnSpecificationAttributeOptionsDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int saoID = (int)grdSpecificationAttributeOptions.DataKeys[e.RowIndex]["SpecificationAttributeOptionID"];
-            SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(saoID);
+            SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(saoID, 0);
             if (sao != null)
             {
                 SpecificationAttributeManager.DeleteSpecificationAttributeOption(sao.SpecificationAttributeOptionID);

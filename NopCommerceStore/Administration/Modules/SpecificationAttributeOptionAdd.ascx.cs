@@ -29,19 +29,47 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
     public partial class SpecificationAttributeOptionAddControl : BaseNopAdministrationUserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void BindData()
         {
             hlBack.NavigateUrl = "~/Administration/SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + SpecificationAttributeID;
+
+            if (this.HasLocalizableContent)
+            {
+                var languages = this.GetLocalizableLanguagesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
+            }
+
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                BindData();
+            }
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
+
+            base.OnPreRender(e);
+        }
+        
         protected void AddButton_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
                 try
                 {
-                    SpecificationAttributeOption sao = null;
-                    sao = SpecificationAttributeManager.InsertSpecificationAttributeOption(SpecificationAttributeID, txtNewOptionName.Text, txtNewOptionDisplayOrder.Value);
+                    SpecificationAttributeOption sao = SpecificationAttributeManager.InsertSpecificationAttributeOption(SpecificationAttributeID, txtNewOptionName.Text, txtNewOptionDisplayOrder.Value);
+                    saveLocalizableContent(sao);
                     Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + sao.SpecificationAttributeID.ToString());
                 }
                 catch (Exception exc)
@@ -49,6 +77,53 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     ProcessException(exc);
                 }
             }
+        }
+
+        protected void saveLocalizableContent(SpecificationAttributeOption sao)
+        {
+            if (sao == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (RepeaterItem item in rptrLanguageDivs.Items)
+            {
+                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                {
+                    var txtNewLocalizedOptionName = (TextBox)item.FindControl("txtNewLocalizedOptionName");
+                    var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                    int languageID = int.Parse(lblLanguageId.Text);
+                    string name = txtNewLocalizedOptionName.Text;
+
+                    bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
+
+                    var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIDAndLanguageID(sao.SpecificationAttributeOptionID, languageID);
+                    if (content == null)
+                    {
+                        if (!allFieldsAreEmpty && languageID > 0)
+                        {
+                            //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                            content = SpecificationAttributeManager.InsertSpecificationAttributeOptionLocalized(sao.SpecificationAttributeOptionID,
+                                   languageID, name);
+                        }
+                    }
+                    else
+                    {
+                        if (languageID > 0)
+                        {
+                            content = SpecificationAttributeManager.UpdateSpecificationAttributeOptionLocalized(content.SpecificationAttributeOptionLocalizedID, 
+                                content.SpecificationAttributeOptionID, languageID, name);
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            
         }
 
         public int SpecificationAttributeID
