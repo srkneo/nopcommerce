@@ -40,6 +40,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
@@ -2616,20 +2617,43 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>Product entity</returns>
         public static Product DuplicateProduct(int ProductID, string Name, bool IsPublished, bool CopyImages)
         {
-            var product = GetProductByID(ProductID);
+            var product = GetProductByID(ProductID, 0);
             if (product == null)
-            {
                 return null;
-            }
+
             Product productCopy = null;
             //uncomment this line to support transactions
             //using (var scope = new System.Transactions.TransactionScope())
             {
                 // product
-                productCopy = InsertProduct(Name, product.ShortDescription, product.FullDescription, product.AdminComment, product.ProductTypeID, product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription, product.MetaTitle, product.SEName, product.AllowCustomerReviews, product.AllowCustomerRatings, 0, 0, IsPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
+                productCopy = InsertProduct(Name, product.ShortDescription, 
+                    product.FullDescription, product.AdminComment, product.ProductTypeID, 
+                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, 
+                    product.MetaDescription, product.MetaTitle, product.SEName, 
+                    product.AllowCustomerReviews, product.AllowCustomerRatings, 0, 0, 
+                    IsPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
+                
                 if (productCopy == null)
-                {
                     return null;
+
+                var languages = LanguageManager.GetAllLanguages(true);
+
+                //localization
+                foreach (var lang in languages)
+                {
+                    var productLocalized = GetProductLocalizedByProductIDAndLanguageID(product.ProductID, lang.LanguageID);
+                    if (productLocalized != null)
+                    {
+                        var productLocalizedCopy = InsertProductLocalized(productCopy.ProductID,
+                            productLocalized.LanguageID,
+                            productLocalized.Name,
+                            productLocalized.ShortDescription,
+                            productLocalized.FullDescription,
+                            productLocalized.MetaKeywords,
+                            productLocalized.MetaDescription,
+                            productLocalized.MetaTitle,
+                            productLocalized.SEName);
+                    }
                 }
 
                 // product pictures
@@ -2638,37 +2662,54 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     foreach(var productPicture in product.ProductPictures)
                     {
                         var picture = productPicture.Picture;
-                        var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
-                        InsertProductPicture(productCopy.ProductID, pictureCopy.PictureID, productPicture.DisplayOrder);
+                        var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, 
+                            picture.Extension, 
+                            picture.IsNew);
+                        InsertProductPicture(productCopy.ProductID, 
+                            pictureCopy.PictureID, 
+                            productPicture.DisplayOrder);
                     }
                 }
 
                 // product <-> categories mappings
                 foreach (var productCategory in product.ProductCategories)
                 {
-                    CategoryManager.InsertProductCategory(productCopy.ProductID, productCategory.CategoryID, productCategory.IsFeaturedProduct, productCategory.DisplayOrder);
+                    CategoryManager.InsertProductCategory(productCopy.ProductID, 
+                        productCategory.CategoryID, 
+                        productCategory.IsFeaturedProduct, 
+                        productCategory.DisplayOrder);
                 }
 
                 // product <-> manufacturers mappings
                 foreach (var productManufacturers in product.ProductManufacturers)
                 {
-                    ManufacturerManager.InsertProductManufacturer(productCopy.ProductID, productManufacturers.ManufacturerID, productManufacturers.IsFeaturedProduct, productManufacturers.DisplayOrder);
+                    ManufacturerManager.InsertProductManufacturer(productCopy.ProductID, 
+                        productManufacturers.ManufacturerID, 
+                        productManufacturers.IsFeaturedProduct, 
+                        productManufacturers.DisplayOrder);
                 }
 
                 // product <-> releated products mappings
                 foreach (var relatedProduct in product.RelatedProducts)
                 {
-                    InsertRelatedProduct(productCopy.ProductID, relatedProduct.ProductID2, relatedProduct.DisplayOrder);
+                    InsertRelatedProduct(productCopy.ProductID, 
+                        relatedProduct.ProductID2, 
+                        relatedProduct.DisplayOrder);
                 }
 
                 // product specifications
                 foreach (var productSpecificationAttribute in SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID))
                 {
-                    SpecificationAttributeManager.InsertProductSpecificationAttribute(productCopy.ProductID, productSpecificationAttribute.SpecificationAttributeOptionID, productSpecificationAttribute.AllowFiltering, productSpecificationAttribute.ShowOnProductPage, productSpecificationAttribute.DisplayOrder);
+                    SpecificationAttributeManager.InsertProductSpecificationAttribute(productCopy.ProductID, 
+                        productSpecificationAttribute.SpecificationAttributeOptionID, 
+                        productSpecificationAttribute.AllowFiltering, 
+                        productSpecificationAttribute.ShowOnProductPage, 
+                        productSpecificationAttribute.DisplayOrder);
                 }
 
                 // product variants
-                foreach (var productVariant in product.ProductVariants)
+                var productVariants = GetProductVariantsByProductID(product.ProductID, 0, true);
+                foreach (var productVariant in productVariants)
                 {
                     // product variant picture
                     int pictureID = 0;
@@ -2726,15 +2767,42 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, pictureID,
                         productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                         productVariant.Published, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+                    
+                    //localization
+                    foreach (var lang in languages)
+                    {
+                        var productVariantLocalized = GetProductVariantLocalizedByProductVariantIDAndLanguageID(productVariant.ProductVariantID, lang.LanguageID);
+                        if (productVariantLocalized != null)
+                        {
+                            var productVariantLocalizedCopy = InsertProductVariantLocalized(productVariantCopy.ProductVariantID,
+                                productVariantLocalized.LanguageID,
+                                productVariantLocalized.Name,
+                                productVariantLocalized.Description);
+                        }
+                    }
 
                     // product variant <-> attributes mappings
                     foreach (var productVariantAttribute in productVariant.ProductVariantAttributes)
                     {
                         var productVariantAttributeCopy = ProductAttributeManager.InsertProductVariantAttribute(productVariantCopy.ProductVariantID, productVariantAttribute.ProductAttributeID, productVariantAttribute.TextPrompt, productVariantAttribute.IsRequired, productVariantAttribute.AttributeControlType, productVariantAttribute.DisplayOrder);
+
                         // product variant attribute values
-                        foreach (var productVariantAttributeValue in productVariantAttribute.ProductVariantAttributeValues)
+                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeID, 0);
+                        foreach (var productVariantAttributeValue in productVariantAttributeValues)
                         {
-                            ProductAttributeManager.InsertProductVariantAttributeValue(productVariantAttributeCopy.ProductVariantAttributeID, productVariantAttributeValue.Name, productVariantAttributeValue.PriceAdjustment, productVariantAttributeValue.WeightAdjustment, productVariantAttributeValue.IsPreSelected, productVariantAttributeValue.DisplayOrder);
+                            var pvavCopy = ProductAttributeManager.InsertProductVariantAttributeValue(productVariantAttributeCopy.ProductVariantAttributeID, productVariantAttributeValue.Name, productVariantAttributeValue.PriceAdjustment, productVariantAttributeValue.WeightAdjustment, productVariantAttributeValue.IsPreSelected, productVariantAttributeValue.DisplayOrder);
+                            
+                            //localization
+                            foreach (var lang in languages)
+                            {
+                                var pvavLocalized = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(productVariantAttributeValue.ProductVariantAttributeValueID, lang.LanguageID);
+                                if (pvavLocalized != null)
+                                {
+                                    var pvavLocalizedCopy = ProductAttributeManager.InsertProductVariantAttributeValueLocalized(pvavCopy.ProductVariantAttributeValueID,
+                                        pvavLocalized.LanguageID,
+                                        pvavLocalized.Name);
+                                }
+                            }
                         }
                     }
                     foreach (var combination in ProductAttributeManager.GetAllProductVariantAttributeCombinations(productVariant.ProductVariantID))
