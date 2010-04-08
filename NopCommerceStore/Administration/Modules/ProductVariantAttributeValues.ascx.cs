@@ -160,6 +160,60 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected void saveLocalizableContentGrid(ProductVariantAttributeValue pvav)
+        {
+            if (pvav == null)
+                return;
+
+            if (!this.HasLocalizableContent)
+                return;
+
+            foreach (GridViewRow row in gvProductVariantAttributeValues.Rows)
+            {
+                Repeater rptrLanguageDivs2 = row.FindControl("rptrLanguageDivs2") as Repeater;
+                if (rptrLanguageDivs2 != null)
+                {
+                    HiddenField hfProductVariantAttributeValueID = row.FindControl("hfProductVariantAttributeValueID") as HiddenField;
+                    int pvavID = int.Parse(hfProductVariantAttributeValueID.Value);
+                    if (pvavID == pvav.ProductVariantAttributeValueID)
+                    {
+                        foreach (RepeaterItem item in rptrLanguageDivs2.Items)
+                        {
+                            if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                            {
+                                var txtLocalizedName = (TextBox)item.FindControl("txtLocalizedName");
+                                var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                                int languageID = int.Parse(lblLanguageId.Text);
+                                string name = txtLocalizedName.Text;
+
+                                bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
+
+                                var content = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(pvav.ProductVariantAttributeValueID, languageID);
+                                if (content == null)
+                                {
+                                    if (!allFieldsAreEmpty && languageID > 0)
+                                    {
+                                        //only insert if one of the fields are filled out (avoid too many empty records in db...)
+                                        content = ProductAttributeManager.InsertProductVariantAttributeValueLocalized(pvav.ProductVariantAttributeValueID,
+                                            languageID, name);
+                                    }
+                                }
+                                else
+                                {
+                                    if (languageID > 0)
+                                    {
+                                        content = ProductAttributeManager.UpdateProductVariantAttributeValueLocalized(content.ProductVariantAttributeValueLocalizedID,
+                                            content.ProductVariantAttributeValueID, languageID, name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             
@@ -189,12 +243,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 ProductVariantAttributeValue productVariantAttributeValue = ProductAttributeManager.GetProductVariantAttributeValueByID(productVariantAttributeValueID, 0);
 
                 if (productVariantAttributeValue != null)
-                    ProductAttributeManager.UpdateProductVariantAttributeValue(productVariantAttributeValue.ProductVariantAttributeValueID,
-                       productVariantAttributeValue.ProductVariantAttributeID, name,
-                       priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
+                {
+                    productVariantAttributeValue = ProductAttributeManager.UpdateProductVariantAttributeValue(productVariantAttributeValue.ProductVariantAttributeValueID,
+                        productVariantAttributeValue.ProductVariantAttributeID, name,
+                        priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
 
+                    saveLocalizableContentGrid(productVariantAttributeValue);
+                }
                 BindData();
             }
+        }
+        
+        protected void gvProductVariantAttributeValues_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int productVariantAttributeValueID = (int)gvProductVariantAttributeValues.DataKeys[e.RowIndex]["ProductVariantAttributeValueID"];
+            ProductAttributeManager.DeleteProductVariantAttributeValue(productVariantAttributeValueID);
+            BindData();
         }
 
         protected void gvProductVariantAttributeValues_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -206,16 +270,42 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Button btnUpdate = e.Row.FindControl("btnUpdate") as Button;
                 if (btnUpdate != null)
                     btnUpdate.CommandArgument = e.Row.RowIndex.ToString();
+
+                Repeater rptrLanguageDivs2 = e.Row.FindControl("rptrLanguageDivs2") as Repeater;
+                if (rptrLanguageDivs2 != null)
+                {
+                    if (this.HasLocalizableContent)
+                    {
+                        var languages = this.GetLocalizableLanguagesSupported();
+                        rptrLanguageDivs2.DataSource = languages;
+                        rptrLanguageDivs2.DataBind();
+                    }
+                }
             }
         }
 
-        protected void gvProductVariantAttributeValues_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void rptrLanguageDivs2_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            int productVariantAttributeValueID = (int)gvProductVariantAttributeValues.DataKeys[e.RowIndex]["ProductVariantAttributeValueID"];
-            ProductAttributeManager.DeleteProductVariantAttributeValue(productVariantAttributeValueID);
-            BindData();
-        }
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtLocalizedName = (TextBox)e.Item.FindControl("txtLocalizedName");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+                var hfProductVariantAttributeValueID = (HiddenField)e.Item.Parent.Parent.FindControl("hfProductVariantAttributeValueID");
 
+                int languageID = int.Parse(lblLanguageId.Text);
+                int pvavID = Convert.ToInt32(hfProductVariantAttributeValueID.Value);
+                ProductVariantAttributeValue pvav = ProductAttributeManager.GetProductVariantAttributeValueByID(pvavID, 0);
+                if (pvav != null)
+                {
+                    var content = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(pvavID, languageID);
+                    if (content != null)
+                    {
+                        txtLocalizedName.Text = content.Name;
+                    }
+                }
+            }
+        }
+        
         public int ProductVariantAttributeID
         {
             get

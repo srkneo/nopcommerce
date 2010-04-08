@@ -18,16 +18,42 @@
     Width="100%">
     <Columns>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantAttributeValues.Name %>"
-            ItemStyle-Width="20%">
+            ItemStyle-Width="30%">
             <ItemTemplate>
-                <asp:HiddenField ID="hfProductVariantAttributeValueID" runat="server" Value='<%# Eval("ProductVariantAttributeValueID") %>' />
-                <nopCommerce:SimpleTextBox runat="server" CssClass="adminInput" ID="txtName" ValidationGroup="ProductVariantAttributeValue"
-                    ErrorMessage="<% $NopResources:Admin.ProductVariantAttributeValues.Name.ErrorMessage %>"
-                    Text='<%# Eval("Name") %>'></nopCommerce:SimpleTextBox>
+                <%if (this.HasLocalizableContent)
+                  { %>
+                <div style="clear: both; padding-bottom: 15px;">
+                    <div style="width: 25%; float: left;">
+                        <%=GetLocaleResourceString("Admin.Localizable.Standard")%>:
+                    </div>
+                    <div style="width: 75%; float: left;">
+                        <%} %><nopCommerce:SimpleTextBox runat="server" CssClass="adminInput" ID="txtName"
+                            ValidationGroup="ProductVariantAttributeValue" ErrorMessage="<% $NopResources:Admin.ProductVariantAttributeValues.Name.ErrorMessage %>"
+                            Text='<%# Eval("Name") %>' Width="100%"></nopCommerce:SimpleTextBox>
+                        <asp:HiddenField ID="hfProductVariantAttributeValueID" runat="server" Value='<%# Eval("ProductVariantAttributeValueID") %>' />
+                    </div>
+                </div>
+                <%if (this.HasLocalizableContent)
+                  { %>
+                <asp:Repeater ID="rptrLanguageDivs2" runat="server" OnItemDataBound="rptrLanguageDivs2_ItemDataBound">
+                    <ItemTemplate>
+                        <div style="clear: both; padding-bottom: 15px;">
+                            <div style="width: 25%; float: left;">
+                                <asp:Image runat="server" ID="imgCFlag" Visible='<%# !String.IsNullOrEmpty(Eval("IconURL").ToString()) %>'
+                                    AlternateText='<%#Eval("Name")%>' ImageUrl='<%#Eval("IconURL").ToString()%>' /> <%#Server.HtmlEncode(Eval("Name").ToString())%>:
+                            </div>
+                            <div style="width: 75%; float: left;">
+                                <asp:TextBox runat="server" ID="txtLocalizedName" CssClass="adminInput" Width="100%" />
+                                <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+                <%} %>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantAttributeValues.PriceAdjustment %>"
-            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
+            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="50px" Value='<%# Eval("PriceAdjustment") %>'
                     ID="txtPriceAdjustment" RequiredErrorMessage="<% $NopResources:Admin.ProductVariantAttributeValues.PriceAdjustment.RequiredErrorMessage %>"
@@ -37,7 +63,7 @@
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantAttributeValues.WeightAdjustment %>"
-            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
+            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="50px" Value='<%# Eval("WeightAdjustment") %>'
                     ID="txtWeightAdjustment" RequiredErrorMessage="<% $NopResources:Admin.ProductVariantAttributeValues.WeightAdjustment.RequiredErrorMessage %>"
@@ -47,14 +73,14 @@
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantAttributeValues.IsPreSelected %>"
-            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
+            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="12%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <asp:CheckBox runat="server" Checked='<%# Eval("IsPreSelected") %>' ID="cbIsPreSelected"
                     ValidationGroup="ProductVariantAttributeValue"></asp:CheckBox>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantAttributeValues.DisplayOrder %>"
-            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
+            HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="12%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" Width="50px" ID="txtDisplayOrder"
                     Value='<%# Eval("DisplayOrder") %>' RequiredErrorMessage="<% $NopResources:Admin.ProductVariantAttributeValues.DisplayOrder.RequiredErrorMessage %>"
@@ -95,7 +121,7 @@
             <ItemTemplate>
                 <li class="idTab"><a href="#idTab_Info<%# Container.ItemIndex+2 %>">
                     <asp:Image runat="server" ID="imgCFlag" Visible='<%# !String.IsNullOrEmpty(Eval("IconURL").ToString()) %>'
-                        AlternateText="." ImageUrl='<%#Eval("IconURL").ToString()%>' />
+                        AlternateText='<%#Eval("Name")%>' ImageUrl='<%#Eval("IconURL").ToString()%>' />
                     <%#Server.HtmlEncode(Eval("Name").ToString())%></a></li>
             </ItemTemplate>
         </asp:Repeater>

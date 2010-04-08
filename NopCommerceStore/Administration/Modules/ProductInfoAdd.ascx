@@ -155,7 +155,7 @@
             <ItemTemplate>
                 <li class="idTab"><a href="#idTab_Info<%# Container.ItemIndex+2 %>">
                     <asp:Image runat="server" ID="imgCFlag" Visible='<%# !String.IsNullOrEmpty(Eval("IconURL").ToString()) %>'
-                        AlternateText="." ImageUrl='<%#Eval("IconURL").ToString()%>' />
+                        AlternateText='<%#Eval("Name")%>' ImageUrl='<%#Eval("IconURL").ToString()%>' />
                     <%#Server.HtmlEncode(Eval("Name").ToString())%></a></li>
             </ItemTemplate>
         </asp:Repeater>
