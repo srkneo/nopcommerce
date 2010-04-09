@@ -37,7 +37,8 @@
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblGuestsAllowedToCreatePosts" Text="<% $NopResources:Admin.ForumsSettings.AllowGuestsToCreatePosts %>"
-                ToolTip="<% $NopResources:Admin.ForumsSettings.AllowGuestsToCreatePosts.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                ToolTip="<% $NopResources:Admin.ForumsSettings.AllowGuestsToCreatePosts.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
             <asp:CheckBox ID="cbGuestsAllowedToCreatePosts" runat="server" />
@@ -46,7 +47,8 @@
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblGuestsAllowedToCreateTopics" Text="<% $NopResources:Admin.ForumsSettings.AllowGuestsToCreateTopics %>"
-                ToolTip="<% $NopResources:Admin.ForumsSettings.AllowGuestsToCreateTopics.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                ToolTip="<% $NopResources:Admin.ForumsSettings.AllowGuestsToCreateTopics.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
             <asp:CheckBox ID="cbGuestsAllowedToCreateTopics" runat="server" />
@@ -79,8 +81,8 @@
         <td class="adminData">
             <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtTopicsPageSize"
                 RequiredErrorMessage="<% $NopResources:Admin.ForumsSettings.TopicsPageSize.RequiredErrorMessage %>"
-                MinimumValue="0" MaximumValue="999999" Value="10" RangeErrorMessage="<% $NopResources:Admin.ForumsSettings.TopicsPageSize.RangeErrorMessage %>">
-            </nopCommerce:NumericTextBox>
+                MinimumValue="0" MaximumValue="999999" Value="10" RangeErrorMessage="<% $NopResources:Admin.ForumsSettings.TopicsPageSize.RangeErrorMessage %>"
+                ValidationGroup="ForumSettings"></nopCommerce:NumericTextBox>
         </td>
     </tr>
     <tr>
@@ -91,8 +93,8 @@
         <td class="adminData">
             <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtPostsPageSize"
                 RequiredErrorMessage="<% $NopResources:Admin.ForumsSettings.PostsPageSize.RequiredErrorMessage %>"
-                MinimumValue="0" MaximumValue="999999" Value="10" RangeErrorMessage="<% $NopResources:Admin.ForumsSettings.PostsPageSize.RangeErrorMessage %>">
-            </nopCommerce:NumericTextBox>
+                MinimumValue="0" MaximumValue="999999" Value="10" RangeErrorMessage="<% $NopResources:Admin.ForumsSettings.PostsPageSize.RangeErrorMessage %>"
+                ValidationGroup="ForumSettings"></nopCommerce:NumericTextBox>
         </td>
     </tr>
     <tr>

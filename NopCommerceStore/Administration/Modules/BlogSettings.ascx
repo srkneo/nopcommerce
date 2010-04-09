@@ -50,8 +50,8 @@
         <td class="adminData">
             <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtPostsPageSize"
                 RequiredErrorMessage="<% $NopResources:Admin.BlogSettings.PostsPageSize.RequiredErrorMessage %>"
-                MinimumValue="0" MaximumValue="999999" Value="10" RangeErrorMessage="<% $NopResources:Admin.BlogSettings.PostsPageSize.RangeErrorMessage %>">
-            </nopCommerce:NumericTextBox>
+                MinimumValue="0" MaximumValue="999999" Value="10" RangeErrorMessage="<% $NopResources:Admin.BlogSettings.PostsPageSize.RangeErrorMessage %>"
+                ValidationGroup="BlogSettings"></nopCommerce:NumericTextBox>
         </td>
     </tr>
 </table>
