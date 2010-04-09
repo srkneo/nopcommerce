@@ -110,6 +110,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             item.Name = dbItem.Name;
             item.Subject = dbItem.Subject;
             item.Body = dbItem.Body;
+            item.IsActive = dbItem.IsActive;
 
             return item;
         }
@@ -448,12 +449,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
         /// <param name="Subject">The subject</param>
         /// <param name="Body">The body</param>
+        /// <param name="IsActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
         public static LocalizedMessageTemplate InsertLocalizedMessageTemplate(int MessageTemplateID,
-            int LanguageID, string BCCEmailAddresses, string Subject, string Body)
+            int LanguageID, string BCCEmailAddresses, string Subject, string Body, bool IsActive)
         {
             var dbItem = DBProviderManager<DBMessageProvider>.Provider.InsertLocalizedMessageTemplate(MessageTemplateID,
-                LanguageID, BCCEmailAddresses, Subject, Body);
+                LanguageID, BCCEmailAddresses, Subject, Body, IsActive);
             var localizedMessageTemplate = DBMapping(dbItem);
             return localizedMessageTemplate;
         }
@@ -467,13 +469,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
         /// <param name="Subject">The subject</param>
         /// <param name="Body">The body</param>
+        /// <param name="IsActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
         public static LocalizedMessageTemplate UpdateLocalizedMessageTemplate(int MessageTemplateLocalizedID,
             int MessageTemplateID, int LanguageID, string BCCEmailAddresses,
-            string Subject, string Body)
+            string Subject, string Body, bool IsActive)
         {
             var dbItem = DBProviderManager<DBMessageProvider>.Provider.UpdateLocalizedMessageTemplate(MessageTemplateLocalizedID,
-                MessageTemplateID, LanguageID, BCCEmailAddresses, Subject, Body);
+                MessageTemplateID, LanguageID, BCCEmailAddresses, Subject, Body, IsActive);
             var localizedMessageTemplate = DBMapping(dbItem);
             return localizedMessageTemplate;
         }
@@ -746,7 +749,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "OrderCompleted.CustomerNotification";
             LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -773,7 +776,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "OrderPlaced.StoreOwnerNotification";
             LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -799,7 +802,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "QuantityBelow.StoreOwnerNotification";
             LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -825,7 +828,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "OrderPlaced.CustomerNotification";
             LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -851,7 +854,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "OrderShipped.CustomerNotification";
             LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -877,7 +880,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "OrderCancelled.CustomerNotification";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -904,7 +907,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Customer.WelcomeMessage";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -931,7 +934,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Customer.EmailValidationMessage";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -957,7 +960,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Customer.PasswordRecovery";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -988,7 +991,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Service.EmailAFriend";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -1018,7 +1021,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Forums.NewForumTopic";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -1046,7 +1049,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Forums.NewForumPost";
             LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -1072,7 +1075,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "News.NewsComment";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -1098,7 +1101,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Blog.BlogComment";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -1124,7 +1127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "Product.ProductReview";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 
@@ -1148,7 +1151,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate("NewsLetterSubscription.ActivationMessage", LanguageID);
             var subscription = GetNewsLetterSubscriptionByID(NewsLetterSubscriptionID);
 
-            if(localizedMessageTemplate == null || subscription == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive || subscription == null)
             {
                 return 0;
             }
@@ -1174,7 +1177,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate("NewsLetterSubscription.DeactivationMessage", LanguageID);
             var subscription = GetNewsLetterSubscriptionByID(NewsLetterSubscriptionID);
 
-            if(localizedMessageTemplate == null || subscription == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive || subscription == null)
             {
                 return 0;
             }
@@ -1202,7 +1205,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             string TemplateName = "GiftCard.Notification";
             var localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(TemplateName, LanguageID);
-            if (localizedMessageTemplate == null)
+            if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
             //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageID));
 

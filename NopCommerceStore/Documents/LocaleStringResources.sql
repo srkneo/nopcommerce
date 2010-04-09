@@ -161,6 +161,12 @@ set @resources='
   <LocaleResource Name="Admin.ProductPricesByCustomerRole.NoCustomerRoleDefined">
     <Value>No customer roles defined. Create at least one customer role.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplateDetails.Active">
+    <Value>Is Active:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplateDetails.Active.Tooltip">
+    <Value>Indicating whether the message template is active.</Value>
+  </LocaleResource>
 </Language>
 '
  		

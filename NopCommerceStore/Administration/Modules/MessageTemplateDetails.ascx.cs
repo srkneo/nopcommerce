@@ -54,6 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageID);
                 if (localizedMessageTemplate != null)
                 {
+                    this.cbActive.Checked = localizedMessageTemplate.IsActive;
                     this.txtBCCEmailAddresses.Text = localizedMessageTemplate.BCCEmailAddresses;
                     this.txtSubject.Text = localizedMessageTemplate.Subject;
                     this.txtBody.Content = localizedMessageTemplate.Body;
@@ -90,13 +91,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         {
                             localizedMessageTemplate = MessageManager.UpdateLocalizedMessageTemplate(localizedMessageTemplate.MessageTemplateLocalizedID,
                                 localizedMessageTemplate.MessageTemplateID, localizedMessageTemplate.LanguageID, 
-                                txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content);
+                                txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content, cbActive.Checked);
                             Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + localizedMessageTemplate.MessageTemplateID.ToString() + "&LanguageID=" + localizedMessageTemplate.LanguageID.ToString());
                         }
                         else
                         {
                             localizedMessageTemplate = MessageManager.InsertLocalizedMessageTemplate(this.MessageTemplateID,
-                                this.LanguageID, txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content);
+                                this.LanguageID, txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content, cbActive.Checked);
                             Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + this.MessageTemplateID.ToString() + "&LanguageID=" + this.LanguageID.ToString());
                         }
                     }

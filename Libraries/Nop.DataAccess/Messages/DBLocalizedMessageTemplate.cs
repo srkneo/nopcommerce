@@ -67,6 +67,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// Gets or sets the body
         /// </summary>
         public string Body { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the template is active
+        /// </summary>
+        public bool IsActive { get; set; }
         #endregion
     }
 

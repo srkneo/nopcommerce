@@ -3720,3 +3720,89 @@ BEGIN
 	SET ROWCOUNT 0
 END
 GO
+
+-- localized message templates IsActive
+
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_MessageTemplateLocalized]') and NAME='IsActive')
+BEGIN
+	ALTER TABLE [dbo].[Nop_MessageTemplateLocalized] 
+	ADD IsActive bit NOT NULL CONSTRAINT [DF_Nop_MessageTemplateLocalized_IsActive] DEFAULT ((1))
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_MessageTemplateLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_MessageTemplateLocalizedInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_MessageTemplateLocalizedInsert]
+(
+	@MessageTemplateLocalizedID int = NULL output,
+	@MessageTemplateID int,
+	@LanguageID int,
+	@BCCEmailAddresses nvarchar(200),
+	@Subject nvarchar(200),
+	@Body nvarchar(MAX),
+	@IsActive bit
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_MessageTemplateLocalized]
+	(
+		MessageTemplateID,
+		LanguageID,
+		BCCEmailAddresses,
+		[Subject],
+		Body,
+		IsActive
+	)
+	VALUES
+	(
+		@MessageTemplateID,
+		@LanguageID,
+		@BCCEmailAddresses,
+		@Subject,
+		@Body,
+		@IsActive
+	)
+
+	set @MessageTemplateLocalizedID=SCOPE_IDENTITY()
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_MessageTemplateLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_MessageTemplateLocalizedUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_MessageTemplateLocalizedUpdate]
+(
+	@MessageTemplateLocalizedID int,
+	@MessageTemplateID int,
+	@LanguageID int,
+	@BCCEmailAddresses nvarchar(200),	
+	@Subject nvarchar(200),
+	@Body nvarchar(MAX),
+	@IsActive bit
+)
+AS
+BEGIN
+
+	UPDATE [Nop_MessageTemplateLocalized]
+	SET
+		MessageTemplateID=@MessageTemplateID,
+		LanguageID=@LanguageID,
+		BCCEmailAddresses=@BCCEmailAddresses,
+		[Subject]=@Subject,
+		Body=@Body,
+		IsActive=@IsActive
+	WHERE
+		MessageTemplateLocalizedID = @MessageTemplateLocalizedID
+
+END
+GO

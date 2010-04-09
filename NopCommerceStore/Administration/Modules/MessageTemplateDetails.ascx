@@ -38,6 +38,15 @@
     </tr>
     <tr>
         <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblActive" Text="<% $NopResources:Admin.MessageTemplateDetails.Active %>"
+                ToolTip="<% $NopResources:Admin.MessageTemplateDetails.Active.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <asp:CheckBox ID="cbActive" runat="server" Checked="true" />
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblLanguageTitle" Text="<% $NopResources:Admin.MessageTemplateDetails.Language %>"
                 ToolTip="<% $NopResources:Admin.MessageTemplateDetails.Language.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>

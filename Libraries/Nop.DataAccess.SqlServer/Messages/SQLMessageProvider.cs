@@ -51,6 +51,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
             localizedMessageTemplate.BCCEmailAddresses = NopSqlDataHelper.GetString(dataReader, "BCCEmailAddresses");
             localizedMessageTemplate.Subject = NopSqlDataHelper.GetString(dataReader, "Subject");
             localizedMessageTemplate.Body = NopSqlDataHelper.GetString(dataReader, "Body");
+            localizedMessageTemplate.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
             return localizedMessageTemplate;
         }
 
@@ -254,9 +255,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
         /// <param name="Subject">The subject</param>
         /// <param name="Body">The body</param>
+        /// <param name="IsActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
         public override DBLocalizedMessageTemplate InsertLocalizedMessageTemplate(int MessageTemplateID,
-            int LanguageID, string BCCEmailAddresses, string Subject, string Body)
+            int LanguageID, string BCCEmailAddresses, string Subject, string Body, bool IsActive)
         {
             DBLocalizedMessageTemplate localizedMessageTemplate = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
@@ -267,6 +269,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
             db.AddInParameter(dbCommand, "BCCEmailAddresses", DbType.String, BCCEmailAddresses);
             db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
             db.AddInParameter(dbCommand, "Body", DbType.String, Body);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
                 int MessageTemplateLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@MessageTemplateLocalizedID"));
@@ -284,10 +287,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
         /// <param name="Subject">The subject</param>
         /// <param name="Body">The body</param>
+        /// <param name="IsActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
         public override DBLocalizedMessageTemplate UpdateLocalizedMessageTemplate(int MessageTemplateLocalizedID,
             int MessageTemplateID, int LanguageID, string BCCEmailAddresses,
-            string Subject, string Body)
+            string Subject, string Body, bool IsActive)
         {
             DBLocalizedMessageTemplate localizedMessageTemplate = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
@@ -298,6 +302,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
             db.AddInParameter(dbCommand, "BCCEmailAddresses", DbType.String, BCCEmailAddresses);
             db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
             db.AddInParameter(dbCommand, "Body", DbType.String, Body);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
             if (db.ExecuteNonQuery(dbCommand) > 0)
                 localizedMessageTemplate = GetLocalizedMessageTemplateByID(MessageTemplateLocalizedID);
 

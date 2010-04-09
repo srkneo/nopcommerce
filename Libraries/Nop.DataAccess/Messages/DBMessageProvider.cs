@@ -83,9 +83,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
         /// <param name="Subject">The subject</param>
         /// <param name="Body">The body</param>
+        /// <param name="IsActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
         public abstract DBLocalizedMessageTemplate InsertLocalizedMessageTemplate(int MessageTemplateID,
-            int LanguageID, string BCCEmailAddresses, string Subject, string Body);
+            int LanguageID, string BCCEmailAddresses, string Subject, string Body, bool IsActive);
 
         /// <summary>
         /// Updates the localized message template
@@ -96,10 +97,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
         /// <param name="Subject">The subject</param>
         /// <param name="Body">The body</param>
+        /// <param name="IsActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
         public abstract DBLocalizedMessageTemplate UpdateLocalizedMessageTemplate(int MessageTemplateLocalizedID,
             int MessageTemplateID, int LanguageID, string BCCEmailAddresses,
-            string Subject, string Body);
+            string Subject, string Body, bool IsActive);
 
         /// <summary>
         /// Gets a queued email by identifier
