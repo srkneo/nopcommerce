@@ -235,8 +235,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     decimal Width = Convert.ToDecimal(dr["Width"]);
                     decimal Height = Convert.ToDecimal(dr["Height"]);
                     DateTime CreatedOn = DateTime.FromOADate(Convert.ToDouble(dr["CreatedOn"]));
-
-
+                    
                     var productVariant = ProductManager.GetProductVariantBySKU(SKU);
                     if (productVariant != null)
                     {

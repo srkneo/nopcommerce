@@ -73,13 +73,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected ProductCollection GetProducts()
         {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+            return GetProducts(languageId);
+        }
+
+
+        protected ProductCollection GetProducts(int languageId)
+        {
             string productName = txtProductName.Text;
             int categoryID = ParentCategory.SelectedCategoryId;
             int manufacturerID = int.Parse(this.ddlManufacturer.SelectedItem.Value);
 
-            int totalRecords = 0;            
+            int totalRecords = 0;
             ProductCollection products = ProductManager.GetAllProducts(categoryID, manufacturerID, null,
-                null, null, productName, false, int.MaxValue, 0, null, out totalRecords);
+                null, null, productName, false, int.MaxValue, 0, null,languageId, out totalRecords);
             return products;
         }
 
@@ -143,7 +152,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = String.Format("products_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
                     
-                    ProductCollection products = GetProducts();
+                    ProductCollection products = GetProducts(0);
                     string xml = ExportManager.ExportProductsToXML(products);
                     CommonHelper.WriteResponseXML(xml, fileName);
                 }
@@ -162,7 +171,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = string.Format("products_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
-                    ProductCollection products = GetProducts();
+                    ProductCollection products = GetProducts(0);
 
                     ExportManager.ExportProductsToXLS(filePath, products);
                     CommonHelper.WriteResponseXLS(filePath, fileName);
