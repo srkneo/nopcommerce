@@ -24,7 +24,7 @@
 </table>
 <br />
 <asp:GridView ID="gvLocaleStringResources" runat="server" AutoGenerateColumns="False"
-    Width="100%">
+    Width="100%" OnPageIndexChanging="gvLocaleStringResources_PageIndexChanging" AllowPaging="true" PageSize="30">
     <Columns>
         <asp:BoundField DataField="LocaleStringResourceID" HeaderText="LocaleStringResource ID"
             Visible="False"></asp:BoundField>

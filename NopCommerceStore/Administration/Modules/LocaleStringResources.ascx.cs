@@ -102,6 +102,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected void gvLocaleStringResources_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvLocaleStringResources.PageIndex = e.NewPageIndex;
+            BindGrid();
+        }
+
         public int LanguageID
         {
             get
