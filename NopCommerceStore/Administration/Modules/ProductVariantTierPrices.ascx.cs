@@ -23,16 +23,12 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
-using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
-using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
-using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Warehouses;
 using NopSolutions.NopCommerce.Web.Administration.Modules;
-using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
