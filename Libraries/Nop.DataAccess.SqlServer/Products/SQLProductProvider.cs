@@ -247,6 +247,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             return item;
         }
 
+        private DBCustomerRoleProductPrice GetCustomerRoleProductPriceFromReader(IDataReader dataReader)
+        {
+            var item = new DBCustomerRoleProductPrice();
+            item.CustomerRoleProductPriceID = NopSqlDataHelper.GetInt(dataReader, "CustomerRoleProductPriceID");
+            item.CustomerRoleID = NopSqlDataHelper.GetInt(dataReader, "CustomerRoleID");
+            item.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
+            item.Price = NopSqlDataHelper.GetDecimal(dataReader, "Price");
+            return item;
+        }
+
         #endregion
 
         #region Methods
@@ -2202,6 +2212,112 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
                 tierPrice = GetTierPriceByID(TierPriceID);
 
             return tierPrice;
+        }
+
+        /// <summary>
+        /// Deletes a product price by customer role by identifier 
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        public override void DeleteCustomerRoleProductPrice(int CustomerRoleProductPriceID)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_ProductPriceDelete");
+            db.AddInParameter(dbCommand, "CustomerRoleProductPriceID", DbType.Int32, CustomerRoleProductPriceID);
+            int retValue = db.ExecuteNonQuery(dbCommand);
+        }
+
+        /// <summary>
+        /// Gets a product price by customer role by identifier 
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <returns>Product price by customer role by identifier </returns>
+        public override DBCustomerRoleProductPrice GetCustomerRoleProductPriceByID(int CustomerRoleProductPriceID)
+        {
+            DBCustomerRoleProductPrice item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_ProductPriceLoadByPrimaryKey");
+            db.AddInParameter(dbCommand, "CustomerRoleProductPriceID", DbType.Int32, CustomerRoleProductPriceID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetCustomerRoleProductPriceFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Gets a collection of product prices by customer role
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <returns>A collection of product prices by customer role</returns>
+        public override DBCustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int ProductVariantID)
+        {
+            var result = new DBCustomerRoleProductPriceCollection();
+            if (ProductVariantID == 0)
+                return result;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_ProductPriceLoadAll");
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                while (dataReader.Read())
+                {
+                    var item = GetCustomerRoleProductPriceFromReader(dataReader);
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Inserts a product price by customer role
+        /// </summary>
+        /// <param name="CustomerRoleID">The customer role identifier</param>
+        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="Price">The price</param>
+        /// <returns>A product price by customer role</returns>
+        public override DBCustomerRoleProductPrice InsertCustomerRoleProductPrice(int CustomerRoleID,
+            int ProductVariantID, decimal Price)
+        {
+            DBCustomerRoleProductPrice result = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_ProductPriceInsert");
+            db.AddOutParameter(dbCommand, "CustomerRoleProductPriceID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "Price", DbType.Decimal, Price);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int CustomerRoleProductPriceID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerRoleProductPriceID"));
+                result = GetCustomerRoleProductPriceByID(CustomerRoleProductPriceID);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Updates a product price by customer role
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <param name="CustomerRoleID">The customer role identifier</param>
+        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="Price">The price</param>
+        /// <returns>A product price by customer role</returns>
+        public override DBCustomerRoleProductPrice UpdateCustomerRoleProductPrice(int CustomerRoleProductPriceID,
+            int CustomerRoleID, int ProductVariantID, decimal Price)
+        {
+            DBCustomerRoleProductPrice item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_ProductPriceUpdate");
+            db.AddInParameter(dbCommand, "CustomerRoleProductPriceID", DbType.Int32, CustomerRoleProductPriceID);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "Price", DbType.String, Price);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetCustomerRoleProductPriceByID(CustomerRoleProductPriceID);
+
+            return item;
         }
 
         #endregion

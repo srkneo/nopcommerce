@@ -385,6 +385,13 @@
     <Compile Include="Administration\Maintenance.aspx.designer.cs">
       <DependentUpon>Maintenance.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Modules\ProductPricesByCustomerRole.ascx.cs">
+      <DependentUpon>ProductPricesByCustomerRole.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\ProductPricesByCustomerRole.ascx.designer.cs">
+      <DependentUpon>ProductPricesByCustomerRole.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Modules\GiftCardInfo.ascx.cs">
       <DependentUpon>GiftCardInfo.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5739,6 +5746,7 @@
     <Content Include="Administration\AccessDenied.aspx" />
     <Content Include="Administration\GiftCardDetails.aspx" />
     <Content Include="Administration\Maintenance.aspx" />
+    <Content Include="Administration\Modules\ProductPricesByCustomerRole.ascx" />
     <Content Include="Administration\Modules\GiftCardInfo.ascx" />
     <Content Include="Administration\Modules\GiftCardDetails.ascx" />
     <Content Include="Administration\Modules\Maintenance.ascx" />

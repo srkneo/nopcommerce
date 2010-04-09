@@ -66,7 +66,7 @@ set @resources='
     <Value>The format for forum urls. Must have 3 arguments i.e. "{0}boards/f/{1}/{2}.aspx"</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumUrl.ErrorMessage">
-    <Value>Invalid format for forum urls."</Value>
+    <Value>Invalid format for forum urls.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumGroupUrl">
     <Value>Forum Group URL rewrite format:</Value>
@@ -75,7 +75,7 @@ set @resources='
     <Value>The format for forum group urls. Must have 3 arguments i.e. "{0}boards/fg/{1}/{2}.aspx"</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumGroupUrl.ErrorMessage">
-    <Value>Invalid format for forum group urls."</Value>
+    <Value>Invalid format for forum group urls.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumTopicUrl">
     <Value>Forum Topic URL rewrite format:</Value>
@@ -97,6 +97,69 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="Admin.BlogSettings.PostsPageSize.RangeErrorMessage">
     <Value>Post page size is out of range.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantAdd.CustomerRolePrices">
+    <Value>Prices By Customer Roles</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantDetails.CustomerRolePrices">
+    <Value>Prices By Customer Roles</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.CustomerRole">
+    <Value>Customer role</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.Price.RequiredErrorMessage">
+    <Value>Price is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.Price.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.Update">
+    <Value>Update</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.Update.Tooltip">
+    <Value>Update price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.Delete">
+    <Value>Delete</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.Delete.Tooltip">
+    <Value>Delete price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.AddNew">
+    <Value>Add new price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.CustomerRole">
+    <Value>Customer role:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.CustomerRole.Tooltip">
+    <Value>Select a customer role</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.Price">
+    <Value>Price:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.Price.Tooltip">
+    <Value>Price for a selected customer role</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.Price.RequiredErrorMessage">
+    <Value>Price is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.Price.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.AddNewButton.Text">
+    <Value>Add price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.New.AddNewButton.Tooltip">
+    <Value>Add price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.AvailableAfterSaving">
+    <Value>You need to save the product variant before you can enable this pricing feature for this product variant page.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductPricesByCustomerRole.NoCustomerRoleDefined">
+    <Value>No customer roles defined. Create at least one customer role.</Value>
   </LocaleResource>
 </Language>
 '

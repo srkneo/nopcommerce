@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                gvTierPrices.Columns[1].HeaderText = string.Format("Price [{0}]", CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
+                gvTierPrices.Columns[1].HeaderText = string.Format("{0} [{1}]", GetLocaleResourceString("Admin.ProductVariantTierPrices.Price"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
                 this.BindData();
             }
         }

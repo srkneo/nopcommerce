@@ -144,6 +144,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return  previousPrice;
         }
 
+        /// <summary>
+        /// Gets a price by customer role (if defined)
+        /// </summary>
+        /// <param name="productVariant">Product variant</param>
+        /// <param name="customer">Customer</param>
+        /// <returns>Price</returns>
+        protected static decimal? GetCustomPriceByCustomerRole(ProductVariant productVariant, Customer customer)
+        {
+            if (productVariant == null)
+                return null;
+            if (customer == null)
+                return null;
+
+            decimal? result = null;
+            var customerRoles = customer.CustomerRoles;
+            var crppCollection = productVariant.CustomerRoleProductPrices;
+            foreach (var crpp in crppCollection)
+            {
+                foreach (var cr in customerRoles)
+                {
+                    if (cr.CustomerRoleID == crpp.CustomerRoleID)
+                    {
+                        if (result.HasValue)
+                        {
+                            if (result.Value > crpp.Price)
+                            {
+                                result = crpp.Price;
+                            }
+                        }
+                        else
+                        {
+                            result = crpp.Price;
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
         #endregion
 
         #region Methods
@@ -156,7 +195,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productVariant">Product variant</param>
         /// <param name="includeDiscounts">A value indicating whether include discounts or not for final price computation</param>
         /// <returns>Final price</returns>
-        public static decimal GetFinalPrice(ProductVariant productVariant, bool includeDiscounts)
+        public static decimal GetFinalPrice(ProductVariant productVariant, 
+            bool includeDiscounts)
         {
             var customer = NopContext.Current.User;
             return GetFinalPrice(productVariant, customer, includeDiscounts);
@@ -187,14 +227,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             decimal AdditionalCharge, bool includeDiscounts)
         {
             decimal result = decimal.Zero;
+
+            decimal initialPrice = productVariant.Price;
+
+            //price by customer role
+            decimal? cpcc = GetCustomPriceByCustomerRole(productVariant, customer);            
+            if (cpcc.HasValue)
+            {
+                initialPrice = cpcc.Value;
+            }
+            
             if (includeDiscounts)
             {
                 decimal discountAmount = GetDiscountAmount(productVariant, customer, AdditionalCharge);
-                result = productVariant.Price + AdditionalCharge - discountAmount;
+                result = initialPrice + AdditionalCharge - discountAmount;
             }
             else
             {
-                result = productVariant.Price + AdditionalCharge;
+                result = initialPrice + AdditionalCharge;
             }
             if (result < decimal.Zero)
                 result = decimal.Zero;

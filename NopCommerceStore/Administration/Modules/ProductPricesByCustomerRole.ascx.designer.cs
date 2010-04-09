@@ -11,132 +11,123 @@
 namespace NopSolutions.NopCommerce.Web.Administration.Modules {
     
     
-    public partial class ProductVariantAddControl {
+    public partial class ProductPricesByCustomerRoleControl {
         
         /// <summary>
-        /// lblProductName control.
+        /// pnlData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductName;
+        protected global::System.Web.UI.WebControls.Panel pnlData;
         
         /// <summary>
-        /// hlProductURL control.
+        /// upPrices control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlProductURL;
+        protected global::System.Web.UI.UpdatePanel upPrices;
         
         /// <summary>
-        /// SaveButton control.
+        /// pnlError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SaveButton;
+        protected global::System.Web.UI.WebControls.Panel pnlError;
         
         /// <summary>
-        /// ProductVariantTabs control.
+        /// lErrorTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TabContainer ProductVariantTabs;
+        protected global::System.Web.UI.WebControls.Literal lErrorTitle;
         
         /// <summary>
-        /// pnlProductVariantInfo control.
+        /// gvPrices control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TabPanel pnlProductVariantInfo;
+        protected global::System.Web.UI.WebControls.GridView gvPrices;
         
         /// <summary>
-        /// ctrlProductVariantInfo control.
+        /// lblNewCustomerRole control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ProductVariantInfoControl ctrlProductVariantInfo;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblNewCustomerRole;
         
         /// <summary>
-        /// pnlTierPrices control.
+        /// ddlNewCustomerRole control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TabPanel pnlTierPrices;
+        protected global::System.Web.UI.WebControls.DropDownList ddlNewCustomerRole;
         
         /// <summary>
-        /// ctrlProductVariantTierPrices control.
+        /// lblNewPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ProductVariantTierPricesControl ctrlProductVariantTierPrices;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblNewPrice;
         
         /// <summary>
-        /// pnlCustomerRolePrices control.
+        /// txtNewPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TabPanel pnlCustomerRolePrices;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.DecimalTextBox txtNewPrice;
         
         /// <summary>
-        /// ctrlProductPricesByCustomerRole control.
+        /// btnNewPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ProductPricesByCustomerRoleControl ctrlProductPricesByCustomerRole;
+        protected global::System.Web.UI.WebControls.Button btnNewPrice;
         
         /// <summary>
-        /// pnlProductAttributes control.
+        /// up1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TabPanel pnlProductAttributes;
+        protected global::System.Web.UI.UpdateProgress up1;
         
         /// <summary>
-        /// ctrlProductVariantAttributes control.
+        /// pnlMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ProductVariantAttributesControl ctrlProductVariantAttributes;
+        protected global::System.Web.UI.WebControls.Panel pnlMessage;
         
         /// <summary>
-        /// pnlDiscountMappings control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.TabPanel pnlDiscountMappings;
-        
-        /// <summary>
-        /// ctrlProductVariantDiscounts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ProductVariantDiscountsControl ctrlProductVariantDiscounts;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
     }
 }

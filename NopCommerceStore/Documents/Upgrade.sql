@@ -3487,6 +3487,177 @@ BEGIN
 END
 GO
 
+
+--prices depending on customer role
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_CustomerRole_ProductPrice]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_CustomerRole_ProductPrice](
+	[CustomerRoleProductPriceID] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerRoleID] [int] NOT NULL,
+	[ProductVariantID] [int] NOT NULL,
+	[Price] [money] NOT NULL
+ CONSTRAINT [PK_Nop_CustomerRole_ProductPrice] PRIMARY KEY CLUSTERED 
+(
+	[CustomerRoleProductPriceID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+) ON [PRIMARY]
+END
+GO
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole'
+           AND parent_obj = Object_id('Nop_CustomerRole_ProductPrice')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CustomerRole_ProductPrice
+DROP CONSTRAINT FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole
+GO
+ALTER TABLE [dbo].[Nop_CustomerRole_ProductPrice]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole] FOREIGN KEY([CustomerRoleID])
+REFERENCES [dbo].[Nop_CustomerRole] ([CustomerRoleID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant'
+           AND parent_obj = Object_id('Nop_CustomerRole_ProductPrice')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CustomerRole_ProductPrice
+DROP CONSTRAINT FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant
+GO
+ALTER TABLE [dbo].[Nop_CustomerRole_ProductPrice]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant] FOREIGN KEY([ProductVariantID])
+REFERENCES [dbo].[Nop_ProductVariant] ([ProductVariantID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerRole_ProductPriceDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceDelete]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceDelete]
+(
+	@CustomerRoleProductPriceID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE
+	FROM [Nop_CustomerRole_ProductPrice]
+	WHERE
+		[CustomerRoleProductPriceID] = @CustomerRoleProductPriceID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerRole_ProductPriceInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceInsert]
+(
+	@CustomerRoleProductPriceID int = NULL output,
+	@CustomerRoleID int,
+	@ProductVariantID int,
+	@Price money
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_CustomerRole_ProductPrice]
+	(
+		[CustomerRoleID],
+		[ProductVariantID],
+		[Price]
+	)
+	VALUES
+	(
+		@CustomerRoleID,
+		@ProductVariantID,
+		@Price
+	)
+
+	set @CustomerRoleProductPriceID=SCOPE_IDENTITY()
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerRole_ProductPriceLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceLoadAll]
+(
+	@ProductVariantID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		*
+	FROM [Nop_CustomerRole_ProductPrice]
+	WHERE
+		ProductVariantID= @ProductVariantID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerRole_ProductPriceLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceLoadByPrimaryKey]
+(
+	@CustomerRoleProductPriceID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		*
+	FROM [Nop_CustomerRole_ProductPrice]
+	WHERE
+		[CustomerRoleProductPriceID] = @CustomerRoleProductPriceID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerRole_ProductPriceUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerRole_ProductPriceUpdate]
+(
+	@CustomerRoleProductPriceID int,
+	@CustomerRoleID int,
+	@ProductVariantID int,
+	@Price money
+)
+AS
+BEGIN
+	UPDATE [Nop_CustomerRole_ProductPrice]
+	SET
+		[CustomerRoleID] = @CustomerRoleID,
+		[ProductVariantID] = @ProductVariantID,
+		[Price] = @Price
+	WHERE
+		CustomerRoleProductPriceID = @CustomerRoleProductPriceID
+END
+GO
+
 -- blog paging
 IF EXISTS (
 		SELECT *

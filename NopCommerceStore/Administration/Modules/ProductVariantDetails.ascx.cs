@@ -70,6 +70,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     ProductVariant productVariant = ctrlProductVariantInfo.SaveInfo();
                     ctrlProductVariantTierPrices.SaveInfo();
+                    ctrlProductPricesByCustomerRole.SaveInfo();
                     ctrlProductVariantAttributes.SaveInfo();
                     ctrlProductVariantDiscounts.SaveInfo();
 

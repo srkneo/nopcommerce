@@ -792,6 +792,47 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <returns>Tier price</returns>
         public abstract DBTierPrice UpdateTierPrice(int TierPriceID, int ProductVariantID, int Quantity, decimal Price);
 
+        /// <summary>
+        /// Deletes a product price by customer role by identifier 
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        public abstract void DeleteCustomerRoleProductPrice(int CustomerRoleProductPriceID);
+
+        /// <summary>
+        /// Gets a product price by customer role by identifier 
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <returns>Product price by customer role by identifier </returns>
+        public abstract DBCustomerRoleProductPrice GetCustomerRoleProductPriceByID(int CustomerRoleProductPriceID);
+
+        /// <summary>
+        /// Gets a collection of product prices by customer role
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <returns>A collection of product prices by customer role</returns>
+        public abstract DBCustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int ProductVariantID);
+
+        /// <summary>
+        /// Inserts a product price by customer role
+        /// </summary>
+        /// <param name="CustomerRoleID">The customer role identifier</param>
+        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="Price">The price</param>
+        /// <returns>A product price by customer role</returns>
+        public abstract DBCustomerRoleProductPrice InsertCustomerRoleProductPrice(int CustomerRoleID, 
+            int ProductVariantID, decimal Price);
+
+        /// <summary>
+        /// Updates a product price by customer role
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <param name="CustomerRoleID">The customer role identifier</param>
+        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="Price">The price</param>
+        /// <returns>A product price by customer role</returns>
+        public abstract DBCustomerRoleProductPrice UpdateCustomerRoleProductPrice(int CustomerRoleProductPriceID,
+            int CustomerRoleID, int ProductVariantID, decimal Price);
+
         #endregion
     }
 }

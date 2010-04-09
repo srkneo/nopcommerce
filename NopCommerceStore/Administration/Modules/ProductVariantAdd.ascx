@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantInfo" Src="ProductVariantInfo.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantDiscounts" Src="ProductVariantDiscounts.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantTierPrices" Src="ProductVariantTierPrices.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="ProductPricesByCustomerRole" Src="ProductPricesByCustomerRole.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantAttributes" Src="ProductVariantAttributes.ascx" %>
 <div class="section-header">
     <div class="title">
@@ -25,6 +26,11 @@
     <ajaxToolkit:TabPanel runat="server" ID="pnlTierPrices" HeaderText="<% $NopResources:Admin.ProductVariantAdd.TierPrices %>">
         <ContentTemplate>
             <nopCommerce:ProductVariantTierPrices runat="server" ID="ctrlProductVariantTierPrices" />
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerRolePrices" HeaderText="<% $NopResources:Admin.ProductVariantAdd.CustomerRolePrices %>">
+        <ContentTemplate>
+            <nopCommerce:ProductPricesByCustomerRole runat="server" ID="ctrlProductPricesByCustomerRole" />
         </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlProductAttributes" HeaderText="<% $NopResources:Admin.ProductVariantAdd.Attributes %>">

@@ -40,6 +40,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         #region Fields
         private CustomerAttributeCollection customerAttributesCache = null;
         private CustomerRoleCollection customerRolesCache = null;
+        private Address billingAddressCache = null;
+        private Address shippingAddressCache = null;
         #endregion
 
         #region Ctor
@@ -56,6 +58,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             customerAttributesCache = null;
             customerRolesCache = null;
+            billingAddressCache = null;
+            shippingAddressCache = null;
         }
         #endregion
 
@@ -245,7 +249,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                return CustomerManager.GetAddressByID(BillingAddressID);
+                if (billingAddressCache == null)
+                    billingAddressCache = CustomerManager.GetAddressByID(BillingAddressID);
+
+                return billingAddressCache;
             }
         }
 
@@ -256,7 +263,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                return CustomerManager.GetAddressByID(ShippingAddressID);
+                if (shippingAddressCache == null)
+                    shippingAddressCache = CustomerManager.GetAddressByID(ShippingAddressID);
+
+                return shippingAddressCache;
             }
         }
 

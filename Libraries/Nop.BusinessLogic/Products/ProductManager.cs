@@ -60,6 +60,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         #endregion
 
         #region Utilities
+
         private static ProductCollection DBMapping(DBProductCollection dbCollection)
         {
             if (dbCollection == null)
@@ -444,9 +445,40 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
+        private static CustomerRoleProductPriceCollection DBMapping(DBCustomerRoleProductPriceCollection dbCollection)
+        {
+            if (dbCollection == null)
+                return null;
+
+            var collection = new CustomerRoleProductPriceCollection();
+            foreach (var dbItem in dbCollection)
+            {
+                var item = DBMapping(dbItem);
+                collection.Add(item);
+            }
+
+            return collection;
+        }
+
+        private static CustomerRoleProductPrice DBMapping(DBCustomerRoleProductPrice dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new CustomerRoleProductPrice();
+            item.CustomerRoleProductPriceID = dbItem.CustomerRoleProductPriceID;
+            item.CustomerRoleID = dbItem.CustomerRoleID;
+            item.ProductVariantID = dbItem.ProductVariantID;
+            item.Price = dbItem.Price;
+
+            return item;
+        }
+
         #endregion
 
         #region Methods
+
+        #region Products
         /// <summary>
         /// Marks a product as deleted
         /// </summary>
@@ -898,66 +930,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         /// <summary>
-        /// Gets localized product variant by id
-        /// </summary>
-        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
-        /// <returns>Product variant content</returns>
-        public static ProductVariantLocalized GetProductVariantLocalizedByID(int ProductVariantLocalizedID)
-        {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByID(ProductVariantLocalizedID);
-            var item = DBMapping(dbItem);
-            return item;
-        }
-
-        /// <summary>
-        /// Gets localized product variant by product variant id and language id
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <returns>Product variant content</returns>
-        public static ProductVariantLocalized GetProductVariantLocalizedByProductVariantIDAndLanguageID(int ProductVariantID, int LanguageID)
-        {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByProductVariantIDAndLanguageID(ProductVariantID, LanguageID);
-            var item = DBMapping(dbItem); 
-            return item;
-        }
-
-        /// <summary>
-        /// Inserts a localized product variant
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>ProductVariantLocalized</returns>
-        public static ProductVariantLocalized InsertProductVariantLocalized(int ProductVariantID,
-            int LanguageID, string Name, string Description)
-        {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantLocalized(ProductVariantID,
-                LanguageID, Name, Description);
-            var item = DBMapping(dbItem);
-            return item;
-        }
-
-        /// <summary>
-        /// Update a localized product variant
-        /// </summary>
-        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>ProductVariantContent</returns>
-        public static ProductVariantLocalized UpdateProductVariantLocalized(int ProductVariantLocalizedID,
-            int ProductVariantID, int LanguageID, string Name, string Description)
-        {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantLocalized(ProductVariantLocalizedID,
-                ProductVariantID, LanguageID, Name, Description);
-            var item = DBMapping(dbItem);
-            return item;
-        }
-
-        /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
         /// <param name="ProductID">Product identifier</param>
@@ -998,7 +970,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="PageIndex">Page index</param>
         /// <param name="TotalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetProductsAlsoPurchasedByID(int ProductID, 
+        public static ProductCollection GetProductsAlsoPurchasedByID(int ProductID,
             int LanguageID, int PageSize, int PageIndex, out int TotalRecords)
         {
             if (PageSize <= 0)
@@ -1297,6 +1269,920 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         /// <summary>
+        /// Creates a copy of product with all depended data
+        /// </summary>
+        /// <param name="ProductID">The product identifier</param>
+        /// <param name="Name">The name of product duplicate</param>
+        /// <param name="IsPublished">A value indicating whether the product duplicate should be published</param>
+        /// <param name="CopyImages">A value indicating whether the product images should be copied</param>
+        /// <returns>Product entity</returns>
+        public static Product DuplicateProduct(int ProductID, string Name, bool IsPublished, bool CopyImages)
+        {
+            var product = GetProductByID(ProductID, 0);
+            if (product == null)
+                return null;
+
+            Product productCopy = null;
+            //uncomment this line to support transactions
+            //using (var scope = new System.Transactions.TransactionScope())
+            {
+                // product
+                productCopy = InsertProduct(Name, product.ShortDescription,
+                    product.FullDescription, product.AdminComment, product.ProductTypeID,
+                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords,
+                    product.MetaDescription, product.MetaTitle, product.SEName,
+                    product.AllowCustomerReviews, product.AllowCustomerRatings, 0, 0,
+                    IsPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
+
+                if (productCopy == null)
+                    return null;
+
+                var languages = LanguageManager.GetAllLanguages(true);
+
+                //localization
+                foreach (var lang in languages)
+                {
+                    var productLocalized = GetProductLocalizedByProductIDAndLanguageID(product.ProductID, lang.LanguageID);
+                    if (productLocalized != null)
+                    {
+                        var productLocalizedCopy = InsertProductLocalized(productCopy.ProductID,
+                            productLocalized.LanguageID,
+                            productLocalized.Name,
+                            productLocalized.ShortDescription,
+                            productLocalized.FullDescription,
+                            productLocalized.MetaKeywords,
+                            productLocalized.MetaDescription,
+                            productLocalized.MetaTitle,
+                            productLocalized.SEName);
+                    }
+                }
+
+                // product pictures
+                if (CopyImages)
+                {
+                    foreach (var productPicture in product.ProductPictures)
+                    {
+                        var picture = productPicture.Picture;
+                        var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary,
+                            picture.Extension,
+                            picture.IsNew);
+                        InsertProductPicture(productCopy.ProductID,
+                            pictureCopy.PictureID,
+                            productPicture.DisplayOrder);
+                    }
+                }
+
+                // product <-> categories mappings
+                foreach (var productCategory in product.ProductCategories)
+                {
+                    CategoryManager.InsertProductCategory(productCopy.ProductID,
+                        productCategory.CategoryID,
+                        productCategory.IsFeaturedProduct,
+                        productCategory.DisplayOrder);
+                }
+
+                // product <-> manufacturers mappings
+                foreach (var productManufacturers in product.ProductManufacturers)
+                {
+                    ManufacturerManager.InsertProductManufacturer(productCopy.ProductID,
+                        productManufacturers.ManufacturerID,
+                        productManufacturers.IsFeaturedProduct,
+                        productManufacturers.DisplayOrder);
+                }
+
+                // product <-> releated products mappings
+                foreach (var relatedProduct in product.RelatedProducts)
+                {
+                    InsertRelatedProduct(productCopy.ProductID,
+                        relatedProduct.ProductID2,
+                        relatedProduct.DisplayOrder);
+                }
+
+                // product specifications
+                foreach (var productSpecificationAttribute in SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID))
+                {
+                    SpecificationAttributeManager.InsertProductSpecificationAttribute(productCopy.ProductID,
+                        productSpecificationAttribute.SpecificationAttributeOptionID,
+                        productSpecificationAttribute.AllowFiltering,
+                        productSpecificationAttribute.ShowOnProductPage,
+                        productSpecificationAttribute.DisplayOrder);
+                }
+
+                // product variants
+                var productVariants = GetProductVariantsByProductID(product.ProductID, 0, true);
+                foreach (var productVariant in productVariants)
+                {
+                    // product variant picture
+                    int pictureID = 0;
+                    if (CopyImages)
+                    {
+                        var picture = productVariant.Picture;
+                        if (picture != null)
+                        {
+                            var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
+                            pictureID = pictureCopy.PictureID;
+                        }
+                    }
+
+                    // product variant download & sample download
+                    int downloadID = productVariant.DownloadID;
+                    int sampleDownloadID = productVariant.SampleDownloadID;
+                    if (productVariant.IsDownload)
+                    {
+                        var download = productVariant.Download;
+                        if (download != null)
+                        {
+                            var downloadCopy = DownloadManager.InsertDownload(download.UseDownloadURL, download.DownloadURL, download.DownloadBinary, download.ContentType, download.Filename, download.Extension, download.IsNew);
+                            downloadID = downloadCopy.DownloadID;
+                        }
+
+                        if (productVariant.HasSampleDownload)
+                        {
+                            var sampleDownload = productVariant.SampleDownload;
+                            if (sampleDownload != null)
+                            {
+                                var sampleDownloadCopy = DownloadManager.InsertDownload(sampleDownload.UseDownloadURL, sampleDownload.DownloadURL, sampleDownload.DownloadBinary, sampleDownload.ContentType, sampleDownload.Filename, sampleDownload.Extension, sampleDownload.IsNew);
+                                sampleDownloadID = sampleDownloadCopy.DownloadID;
+                            }
+                        }
+                    }
+
+                    // product variant
+                    var productVariantCopy = InsertProductVariant(productCopy.ProductID, productVariant.Name,
+                        productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
+                        productVariant.IsGiftCard, productVariant.IsDownload, downloadID,
+                        productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
+                        productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
+                        productVariant.HasSampleDownload, sampleDownloadID,
+                        productVariant.HasUserAgreement, productVariant.UserAgreementText,
+                        productVariant.IsRecurring, productVariant.CycleLength,
+                        productVariant.CyclePeriod, productVariant.TotalCycles,
+                        productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
+                        productVariant.IsTaxExempt, productVariant.TaxCategoryID,
+                        productVariant.ManageInventory, productVariant.StockQuantity,
+                        productVariant.DisplayStockAvailability, productVariant.MinStockQuantity, productVariant.LowStockActivity,
+                        productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
+                        productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
+                        productVariant.WarehouseId, productVariant.DisableBuyButton,
+                        productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
+                        productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, pictureID,
+                        productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                        productVariant.Published, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+
+                    //localization
+                    foreach (var lang in languages)
+                    {
+                        var productVariantLocalized = GetProductVariantLocalizedByProductVariantIDAndLanguageID(productVariant.ProductVariantID, lang.LanguageID);
+                        if (productVariantLocalized != null)
+                        {
+                            var productVariantLocalizedCopy = InsertProductVariantLocalized(productVariantCopy.ProductVariantID,
+                                productVariantLocalized.LanguageID,
+                                productVariantLocalized.Name,
+                                productVariantLocalized.Description);
+                        }
+                    }
+
+                    // product variant <-> attributes mappings
+                    foreach (var productVariantAttribute in productVariant.ProductVariantAttributes)
+                    {
+                        var productVariantAttributeCopy = ProductAttributeManager.InsertProductVariantAttribute(productVariantCopy.ProductVariantID, productVariantAttribute.ProductAttributeID, productVariantAttribute.TextPrompt, productVariantAttribute.IsRequired, productVariantAttribute.AttributeControlType, productVariantAttribute.DisplayOrder);
+
+                        // product variant attribute values
+                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeID, 0);
+                        foreach (var productVariantAttributeValue in productVariantAttributeValues)
+                        {
+                            var pvavCopy = ProductAttributeManager.InsertProductVariantAttributeValue(productVariantAttributeCopy.ProductVariantAttributeID, productVariantAttributeValue.Name, productVariantAttributeValue.PriceAdjustment, productVariantAttributeValue.WeightAdjustment, productVariantAttributeValue.IsPreSelected, productVariantAttributeValue.DisplayOrder);
+
+                            //localization
+                            foreach (var lang in languages)
+                            {
+                                var pvavLocalized = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(productVariantAttributeValue.ProductVariantAttributeValueID, lang.LanguageID);
+                                if (pvavLocalized != null)
+                                {
+                                    var pvavLocalizedCopy = ProductAttributeManager.InsertProductVariantAttributeValueLocalized(pvavCopy.ProductVariantAttributeValueID,
+                                        pvavLocalized.LanguageID,
+                                        pvavLocalized.Name);
+                                }
+                            }
+                        }
+                    }
+                    foreach (var combination in ProductAttributeManager.GetAllProductVariantAttributeCombinations(productVariant.ProductVariantID))
+                    {
+                        ProductAttributeManager.InsertProductVariantAttributeCombination(productVariant.ProductVariantID,
+                              combination.AttributesXML,
+                              combination.StockQuantity,
+                              combination.AllowOutOfStockOrders);
+                    }
+
+                    // product variant <-> discounts mapping
+                    foreach (var discount in productVariant.AllDiscounts)
+                    {
+                        DiscountManager.AddDiscountToProductVariant(productVariantCopy.ProductVariantID, discount.DiscountID);
+                    }
+
+                    // product variant tier prices
+                    foreach (var tierPrice in productVariant.TierPrices)
+                    {
+                        InsertTierPrice(productVariantCopy.ProductVariantID, tierPrice.Quantity, tierPrice.Price);
+                    }
+                }
+
+                //uncomment this line to support transactions
+                //scope.Complete();
+            }
+
+            return productCopy;
+        }
+
+        #endregion
+
+        #region Product Variants
+
+        /// <summary>
+        /// Remove a product variant picture
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        public static void RemoveProductVariantPicture(int ProductVariantID)
+        {
+            var productVariant = GetProductVariantByID(ProductVariantID);
+            if (productVariant != null)
+            {
+                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                    productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
+                    productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
+                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
+                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
+                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
+                    productVariant.IsRecurring, productVariant.CycleLength,
+                    productVariant.CyclePeriod, productVariant.TotalCycles,
+                    productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
+                    productVariant.IsTaxExempt, productVariant.TaxCategoryID, productVariant.ManageInventory,
+                    productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
+                    productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
+                    productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
+                    productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
+                    productVariant.DisableBuyButton, productVariant.Price,
+                    productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, 0,
+                    productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                    productVariant.Published, productVariant.Deleted,
+                    productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+            }
+        }
+
+        /// <summary>
+        /// Get low stock product variants
+        /// </summary>
+        /// <returns>Result</returns>
+        public static ProductVariantCollection GetLowStockProductVariants()
+        {
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetLowStockProductVariants();
+            var productVariants = DBMapping(dbCollection);
+            return productVariants;
+        }
+
+        /// <summary>
+        /// Remove a product variant download
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        public static void RemoveProductVariantDownload(int ProductVariantID)
+        {
+            var productVariant = GetProductVariantByID(ProductVariantID);
+            if (productVariant != null)
+            {
+                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                    productVariant.SKU, productVariant.Description, productVariant.AdminComment,
+                    productVariant.ManufacturerPartNumber, productVariant.IsGiftCard,
+                    productVariant.IsDownload, 0,
+                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
+                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
+                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
+                    productVariant.IsRecurring, productVariant.CycleLength,
+                    productVariant.CyclePeriod, productVariant.TotalCycles,
+                    productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
+                    productVariant.IsTaxExempt, productVariant.TaxCategoryID, productVariant.ManageInventory,
+                    productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
+                    productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
+                    productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
+                    productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
+                    productVariant.DisableBuyButton, productVariant.Price,
+                    productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
+                    productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                    productVariant.Published, productVariant.Deleted,
+                    productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+            }
+        }
+
+        /// <summary>
+        /// Remove a product variant sample download
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        public static void RemoveProductVariantSampleDownload(int ProductVariantID)
+        {
+            var productVariant = GetProductVariantByID(ProductVariantID);
+            if (productVariant != null)
+            {
+                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                    productVariant.SKU, productVariant.Description, productVariant.AdminComment,
+                    productVariant.ManufacturerPartNumber, productVariant.IsGiftCard,
+                    productVariant.IsDownload, productVariant.DownloadID,
+                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
+                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
+                    productVariant.HasSampleDownload, 0,
+                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
+                    productVariant.IsRecurring, productVariant.CycleLength,
+                    productVariant.CyclePeriod, productVariant.TotalCycles,
+                    productVariant.IsShipEnabled, productVariant.IsFreeShipping,
+                    productVariant.AdditionalShippingCharge, productVariant.IsTaxExempt,
+                    productVariant.TaxCategoryID, productVariant.ManageInventory,
+                    productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
+                    productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
+                    productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
+                    productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
+                    productVariant.DisableBuyButton, productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
+                    productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                    productVariant.Published, productVariant.Deleted,
+                    productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+            }
+        }
+
+        /// <summary>
+        /// Gets a product variant
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <returns>Product variant</returns>
+        public static ProductVariant GetProductVariantByID(int ProductVariantID)
+        {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetProductVariantByID(ProductVariantID, languageId);
+        }
+
+        /// <summary>
+        /// Gets a product variant
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <returns>Product variant</returns>
+        public static ProductVariant GetProductVariantByID(int ProductVariantID, int LanguageID)
+        {
+            if (ProductVariantID == 0)
+                return null;
+
+            string key = string.Format(PRODUCTVARIANTS_BY_ID_KEY, ProductVariantID, LanguageID);
+            object obj2 = NopCache.Get(key);
+            if (ProductManager.CacheEnabled && (obj2 != null))
+            {
+                return (ProductVariant)obj2;
+            }
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantByID(ProductVariantID, LanguageID);
+            var productVariant = DBMapping(dbItem);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.Max(key, productVariant);
+            }
+            return productVariant;
+        }
+
+        /// <summary>
+        /// Gets a product variant by SKU
+        /// </summary>
+        /// <param name="SKU">SKU</param>
+        /// <returns>Product variant</returns>
+        public static ProductVariant GetProductVariantBySKU(string SKU)
+        {
+            if (String.IsNullOrEmpty(SKU))
+                return null;
+
+            SKU = SKU.Trim();
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantBySKU(SKU);
+            var productVariant = DBMapping(dbItem);
+            return productVariant;
+        }
+
+        /// <summary>
+        /// Inserts a product variant
+        /// </summary>
+        /// <param name="ProductID">The product identifier</param>
+        /// <param name="Name">The name</param>
+        /// <param name="SKU">The SKU</param>
+        /// <param name="Description">The description</param>
+        /// <param name="AdminComment">The admin comment</param>
+        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
+        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
+        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
+        /// <param name="DownloadID">The download identifier</param>
+        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
+        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
+        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
+        /// <param name="DownloadActivationType">The download activation type</param>
+        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
+        /// <param name="SampleDownloadID">The sample download identifier</param>
+        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
+        /// <param name="UserAgreementText">The text of user agreement</param>
+        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
+        /// <param name="CycleLength">The cycle length</param>
+        /// <param name="CyclePeriod">The cycle period</param>
+        /// <param name="TotalCycles">The total cycles</param>
+        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
+        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
+        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
+        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
+        /// <param name="TaxCategoryID">The tax category identifier</param>
+        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
+        /// <param name="StockQuantity">The stock quantity</param>
+        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
+        /// <param name="MinStockQuantity">The minimum stock quantity</param>
+        /// <param name="LowStockActivity">The low stock activity</param>
+        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
+        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
+        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
+        /// <param name="WarehouseId">The warehouse identifier</param>
+        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
+        /// <param name="Price">The price</param>
+        /// <param name="OldPrice">The old price</param>
+        /// <param name="ProductCost">The product cost</param>
+        /// <param name="Weight">The weight</param>
+        /// <param name="Length">The length</param>
+        /// <param name="Width">The width</param>
+        /// <param name="Height">The height</param>
+        /// <param name="PictureID">The picture identifier</param>
+        /// <param name="AvailableStartDateTime">The available start date and time</param>
+        /// <param name="AvailableEndDateTime">The available end date and time</param>
+        /// <param name="Published">A value indicating whether the entity is published</param>
+        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <returns>Product variant</returns>
+        public static ProductVariant InsertProductVariant(int ProductID, string Name,
+            string SKU, string Description, string AdminComment,
+            string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
+            bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
+            DownloadActivationTypeEnum DownloadActivationType, bool HasSampleDownload,
+            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring, int CycleLength,
+            int CyclePeriod, int TotalCycles, bool IsShipEnabled,
+            bool IsFreeShipping, decimal AdditionalShippingCharge,
+            bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
+            int StockQuantity, bool DisplayStockAvailability,
+            int MinStockQuantity, LowStockActivityEnum LowStockActivity,
+            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
+            int OrderMinimumQuantity, int OrderMaximumQuantity,
+            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice, decimal ProductCost,
+            decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
+            DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
+           bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        {
+            if (AvailableStartDateTime.HasValue)
+                AvailableStartDateTime = DateTimeHelper.ConvertToUtcTime(AvailableStartDateTime.Value);
+            if (AvailableEndDateTime.HasValue)
+                AvailableEndDateTime = DateTimeHelper.ConvertToUtcTime(AvailableEndDateTime.Value);
+
+            SKU = SKU.Trim();
+
+            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariant(ProductID,
+                Name, SKU, Description, AdminComment, ManufacturerPartNumber, IsGiftCard, IsDownload,
+                DownloadID, UnlimitedDownloads, MaxNumberOfDownloads,
+                DownloadExpirationDays, (int)DownloadActivationType,
+                HasSampleDownload, SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength,
+                CyclePeriod, TotalCycles, IsShipEnabled, IsFreeShipping,
+                AdditionalShippingCharge, IsTaxExempt, TaxCategoryID, ManageInventory,
+                StockQuantity, DisplayStockAvailability, MinStockQuantity, (int)LowStockActivity,
+                NotifyAdminForQuantityBelow, AllowOutOfStockOrders, OrderMinimumQuantity,
+                OrderMaximumQuantity, WarehouseId, DisableBuyButton,
+                Price, OldPrice, ProductCost,
+                Weight, Length, Width, Height, PictureID,
+                AvailableStartDateTime, AvailableEndDateTime,
+                Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
+            var productVariant = DBMapping(dbItem);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+            }
+
+            return productVariant;
+        }
+
+        /// <summary>
+        /// Updates the product variant
+        /// </summary>
+        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="ProductID">The product identifier</param>
+        /// <param name="Name">The name</param>
+        /// <param name="SKU">The SKU</param>
+        /// <param name="Description">The description</param>
+        /// <param name="AdminComment">The admin comment</param>
+        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
+        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
+        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
+        /// <param name="DownloadID">The download identifier</param>
+        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
+        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
+        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
+        /// <param name="DownloadActivationType">The download activation type</param>
+        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
+        /// <param name="SampleDownloadID">The sample download identifier</param>
+        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
+        /// <param name="UserAgreementText">The text of user agreement</param>
+        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
+        /// <param name="CycleLength">The cycle length</param>
+        /// <param name="CyclePeriod">The cycle period</param>
+        /// <param name="TotalCycles">The total cycles</param>
+        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
+        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
+        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
+        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
+        /// <param name="TaxCategoryID">The tax category identifier</param>
+        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
+        /// <param name="StockQuantity">The stock quantity</param>
+        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
+        /// <param name="MinStockQuantity">The minimum stock quantity</param>
+        /// <param name="LowStockActivity">The low stock activity</param>
+        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
+        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
+        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
+        /// <param name="WarehouseId">The warehouse identifier</param>
+        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
+        /// <param name="Price">The price</param>
+        /// <param name="OldPrice">The old price</param>
+        /// <param name="ProductCost">The product cost</param>
+        /// <param name="Weight">The weight</param>
+        /// <param name="Length">The length</param>
+        /// <param name="Width">The width</param>
+        /// <param name="Height">The height</param>
+        /// <param name="PictureID">The picture identifier</param>
+        /// <param name="AvailableStartDateTime">The available start date and time</param>
+        /// <param name="AvailableEndDateTime">The available end date and time</param>
+        /// <param name="Published">A value indicating whether the entity is published</param>
+        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <returns>Product variant</returns>
+        public static ProductVariant UpdateProductVariant(int ProductVariantID, int ProductID, string Name, string SKU, string Description, string AdminComment,
+            string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
+            bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
+            DownloadActivationTypeEnum DownloadActivationType, bool HasSampleDownload,
+            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring, int CycleLength,
+            int CyclePeriod, int TotalCycles, bool IsShipEnabled,
+            bool IsFreeShipping, decimal AdditionalShippingCharge,
+            bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
+            int StockQuantity, bool DisplayStockAvailability,
+            int MinStockQuantity, LowStockActivityEnum LowStockActivity,
+            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
+            int OrderMinimumQuantity, int OrderMaximumQuantity,
+            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice,
+            decimal ProductCost, decimal Weight, decimal Length, decimal Width,
+            decimal Height, int PictureID, DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
+            bool Published, bool Deleted, int DisplayOrder,
+            DateTime CreatedOn, DateTime UpdatedOn)
+        {
+            if (AvailableStartDateTime.HasValue)
+                AvailableStartDateTime = DateTimeHelper.ConvertToUtcTime(AvailableStartDateTime.Value);
+            if (AvailableEndDateTime.HasValue)
+                AvailableEndDateTime = DateTimeHelper.ConvertToUtcTime(AvailableEndDateTime.Value);
+
+            SKU = SKU.Trim();
+
+            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariant(ProductVariantID,
+                ProductID, Name, SKU, Description, AdminComment, ManufacturerPartNumber,
+                IsGiftCard, IsDownload, DownloadID, UnlimitedDownloads, MaxNumberOfDownloads,
+                DownloadExpirationDays, (int)DownloadActivationType, HasSampleDownload,
+                SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength,
+                CyclePeriod, TotalCycles, IsShipEnabled, IsFreeShipping,
+                AdditionalShippingCharge, IsTaxExempt, TaxCategoryID,
+                ManageInventory, StockQuantity, DisplayStockAvailability,
+                MinStockQuantity, (int)LowStockActivity,
+                NotifyAdminForQuantityBelow, AllowOutOfStockOrders,
+                OrderMinimumQuantity, OrderMaximumQuantity, WarehouseId, DisableBuyButton,
+                Price, OldPrice, ProductCost,
+                Weight, Length, Width, Height, PictureID,
+                AvailableStartDateTime, AvailableEndDateTime,
+                Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
+
+            var productVariant = DBMapping(dbItem);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+            }
+
+            return productVariant;
+        }
+
+        /// <summary>
+        /// Gets product variants by product identifier
+        /// </summary>
+        /// <param name="ProductID">The product identifier</param>
+        /// <returns>Product variant collection</returns>
+        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID)
+        {
+            bool showHidden = NopContext.Current.IsAdmin;
+            return GetProductVariantsByProductID(ProductID, showHidden);
+        }
+
+        /// <summary>
+        /// Gets product variants by product identifier
+        /// </summary>
+        /// <param name="ProductID">The product identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Product variant collection</returns>
+        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
+            bool showHidden)
+        {
+            int languageId = 0;
+            if (NopContext.Current != null)
+                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+
+            return GetProductVariantsByProductID(ProductID, languageId, showHidden);
+        }
+
+
+        /// <summary>
+        /// Gets product variants by product identifier
+        /// </summary>
+        /// <param name="ProductID">The product identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Product variant collection</returns>
+        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
+            int LanguageID, bool showHidden)
+        {
+            string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, ProductID, LanguageID);
+            object obj2 = NopCache.Get(key);
+            if (ProductManager.CacheEnabled && (obj2 != null))
+            {
+                return (ProductVariantCollection)obj2;
+            }
+
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByProductID(ProductID, LanguageID, showHidden);
+            var productVariants = DBMapping(dbCollection);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.Max(key, productVariants);
+            }
+            return productVariants;
+        }
+
+        /// <summary>
+        /// Gets restricted product variants by discount identifier
+        /// </summary>
+        /// <param name="DiscountID">The discount identifier</param>
+        /// <returns>Product variant collection</returns>
+        public static ProductVariantCollection GetProductVariantsRestrictedByDiscountID(int DiscountID)
+        {
+            if (DiscountID == 0)
+                return new ProductVariantCollection();
+
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsRestrictedByDiscountID(DiscountID);
+            var productVariants = DBMapping(dbCollection);
+            return productVariants;
+        }
+
+        /// <summary>
+        /// Gets localized product variant by id
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <returns>Product variant content</returns>
+        public static ProductVariantLocalized GetProductVariantLocalizedByID(int ProductVariantLocalizedID)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByID(ProductVariantLocalizedID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets localized product variant by product variant id and language id
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <returns>Product variant content</returns>
+        public static ProductVariantLocalized GetProductVariantLocalizedByProductVariantIDAndLanguageID(int ProductVariantID, int LanguageID)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByProductVariantIDAndLanguageID(ProductVariantID, LanguageID);
+            var item = DBMapping(dbItem); 
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>ProductVariantLocalized</returns>
+        public static ProductVariantLocalized InsertProductVariantLocalized(int ProductVariantID,
+            int LanguageID, string Name, string Description)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantLocalized(ProductVariantID,
+                LanguageID, Name, Description);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Update a localized product variant
+        /// </summary>
+        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="Name">Name text</param>
+        /// <param name="Description">Description text</param>
+        /// <returns>ProductVariantContent</returns>
+        public static ProductVariantLocalized UpdateProductVariantLocalized(int ProductVariantLocalizedID,
+            int ProductVariantID, int LanguageID, string Name, string Description)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantLocalized(ProductVariantLocalizedID,
+                ProductVariantID, LanguageID, Name, Description);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Marks a product variant as deleted
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        public static void MarkProductVariantAsDeleted(int ProductVariantID)
+        {
+            var productVariant = GetProductVariantByID(ProductVariantID);
+            if (productVariant != null)
+            {
+                productVariant = UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                    productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
+                    productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
+                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
+                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
+                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
+                    productVariant.IsRecurring, productVariant.CycleLength,
+                    productVariant.CyclePeriod, productVariant.TotalCycles,
+                    productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
+                    productVariant.IsTaxExempt, productVariant.TaxCategoryID,
+                    productVariant.ManageInventory, productVariant.StockQuantity,
+                    productVariant.DisplayStockAvailability,
+                    productVariant.MinStockQuantity, productVariant.LowStockActivity,
+                    productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
+                    productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
+                    productVariant.WarehouseId, productVariant.DisableBuyButton,
+                    productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, productVariant.PictureID,
+                    productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                    productVariant.Published, true, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+            }
+        }
+
+        /// <summary>
+        /// Adjusts inventory
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="decrease">A value indicating whether to increase or descrease product variant stock quantity</param>
+        /// <param name="Quantity">Quantity</param>
+        /// <param name="AttributesXML">Attributes in XML format</param>
+        public static void AdjustInventory(int ProductVariantID, bool decrease,
+            int Quantity, string AttributesXML)
+        {
+            var productVariant = GetProductVariantByID(ProductVariantID);
+            if (productVariant == null)
+                return;
+
+            switch ((ManageInventoryMethodEnum)productVariant.ManageInventory)
+            {
+                case ManageInventoryMethodEnum.DontManageStock:
+                    {
+                        //do nothing
+                        return;
+                    }
+                    break;
+                case ManageInventoryMethodEnum.ManageStock:
+                    {
+                        int newStockQuantity = 0;
+                        if (decrease)
+                            newStockQuantity = productVariant.StockQuantity - Quantity;
+                        else
+                            newStockQuantity = productVariant.StockQuantity + Quantity;
+
+                        bool newPublished = productVariant.Published;
+                        bool newDisableBuyButton = productVariant.DisableBuyButton;
+
+                        //check if minimum quantity is reached
+                        if (decrease)
+                        {
+                            if (productVariant.MinStockQuantity >= newStockQuantity)
+                            {
+                                switch (productVariant.LowStockActivity)
+                                {
+                                    case LowStockActivityEnum.DisableBuyButton:
+                                        newDisableBuyButton = true;
+                                        break;
+                                    case LowStockActivityEnum.Unpublish:
+                                        newPublished = false;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        if (decrease && productVariant.NotifyAdminForQuantityBelow > newStockQuantity)
+                        {
+                            MessageManager.SendQuantityBelowStoreOwnerNotification(productVariant, LocalizationManager.DefaultAdminLanguage.LanguageID);
+                        }
+
+                        productVariant = UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                             productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
+                             productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
+                             productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
+                             productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
+                             productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                             productVariant.HasUserAgreement, productVariant.UserAgreementText,
+                             productVariant.IsRecurring, productVariant.CycleLength,
+                             productVariant.CyclePeriod, productVariant.TotalCycles,
+                             productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
+                             productVariant.IsTaxExempt, productVariant.TaxCategoryID,
+                             productVariant.ManageInventory, newStockQuantity, productVariant.DisplayStockAvailability,
+                             productVariant.MinStockQuantity, productVariant.LowStockActivity,
+                             productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
+                             productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
+                             productVariant.WarehouseId, newDisableBuyButton, productVariant.Price,
+                             productVariant.OldPrice, productVariant.ProductCost,
+                             productVariant.Weight, productVariant.Length, productVariant.Width,
+                             productVariant.Height, productVariant.PictureID,
+                             productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                             newPublished, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+
+                        if (decrease)
+                        {
+                            var product = productVariant.Product;
+                            bool allProductVariantsUnpublished = true;
+                            foreach (var pv2 in product.ProductVariants)
+                            {
+                                if (pv2.Published)
+                                {
+                                    allProductVariantsUnpublished = false;
+                                    break;
+                                }
+                            }
+
+                            if (allProductVariantsUnpublished)
+                            {
+                                UpdateProduct(product.ProductID, product.Name, product.ShortDescription,
+                                    product.FullDescription, product.AdminComment, product.ProductTypeID,
+                                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription,
+                                    product.MetaTitle, product.SEName, product.AllowCustomerReviews, product.AllowCustomerRatings, product.RatingSum,
+                                    product.TotalRatingVotes, false, product.Deleted, product.CreatedOn, product.UpdatedOn);
+                            }
+                        }
+                    }
+                    break;
+                case ManageInventoryMethodEnum.ManageStockByAttributes:
+                    {
+                        var combination = ProductAttributeManager.FindProductVariantAttributeCombination(productVariant.ProductVariantID, AttributesXML);
+                        if (combination != null)
+                        {
+                            int newStockQuantity = 0;
+                            if (decrease)
+                                newStockQuantity = combination.StockQuantity - Quantity;
+                            else
+                                newStockQuantity = combination.StockQuantity + Quantity;
+
+                            combination = ProductAttributeManager.UpdateProductVariantAttributeCombination(combination.ProductVariantAttributeCombinationID,
+                                combination.ProductVariantID, combination.AttributesXML, newStockQuantity, combination.AllowOutOfStockOrders);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+        
+        #region Product pictures
+
+        /// <summary>
         /// Deletes a product picture mapping
         /// </summary>
         /// <param name="ProductPictureID">Product picture mapping identifier</param>
@@ -1364,6 +2250,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             var productPictures = DBMapping(dbCollection);
             return productPictures;
         }
+
+        #endregion
+
+        #region Product reviews
 
         /// <summary>
         /// Gets a product review
@@ -1527,6 +2417,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             DBProviderManager<DBProductProvider>.Provider.SetProductRatingHelpfulness(ProductReviewID,
                 NopContext.Current.User.CustomerID, WasHelpful);
         }
+        
+        #endregion
+
+        #region Product types
 
         /// <summary>
         /// Gets all product types
@@ -1554,625 +2448,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return productType;
         }
 
-        /// <summary>
-        /// Marks a product variant as deleted
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void MarkProductVariantAsDeleted(int ProductVariantID)
-        {
-            var productVariant = GetProductVariantByID(ProductVariantID);
-            if (productVariant != null)
-            {
-                productVariant = UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
-                    productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                    productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
-                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
-                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum) productVariant.DownloadActivationType,
-                    productVariant.HasSampleDownload,productVariant.SampleDownloadID,
-                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
-                    productVariant.IsRecurring, productVariant.CycleLength,
-                    productVariant.CyclePeriod, productVariant.TotalCycles,
-                    productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                    productVariant.IsTaxExempt, productVariant.TaxCategoryID,
-                    productVariant.ManageInventory, productVariant.StockQuantity,
-                    productVariant.DisplayStockAvailability,
-                    productVariant.MinStockQuantity, productVariant.LowStockActivity,
-                    productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
-                    productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
-                    productVariant.WarehouseId, productVariant.DisableBuyButton,
-                    productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
-                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, productVariant.PictureID,
-                    productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
-                    productVariant.Published, true, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
-            }
-        }
+        #endregion
 
-        /// <summary>
-        /// Adjusts inventory
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="decrease">A value indicating whether to increase or descrease product variant stock quantity</param>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="AttributesXML">Attributes in XML format</param>
-        public static void AdjustInventory(int ProductVariantID, bool decrease,
-            int Quantity, string AttributesXML)
-        {
-            var productVariant = GetProductVariantByID(ProductVariantID);
-            if (productVariant == null)
-                return;
-
-            switch ((ManageInventoryMethodEnum)productVariant.ManageInventory)
-            {
-                case ManageInventoryMethodEnum.DontManageStock:
-                    {
-                        //do nothing
-                        return;
-                    } 
-                    break;
-                case ManageInventoryMethodEnum.ManageStock:
-                    {
-                        int newStockQuantity = 0;
-                        if (decrease)
-                            newStockQuantity = productVariant.StockQuantity - Quantity;
-                        else
-                            newStockQuantity = productVariant.StockQuantity + Quantity;
-
-                        bool newPublished = productVariant.Published;
-                        bool newDisableBuyButton = productVariant.DisableBuyButton;
-
-                        //check if minimum quantity is reached
-                        if (decrease)
-                        {
-                            if (productVariant.MinStockQuantity >= newStockQuantity)
-                            {
-                                switch (productVariant.LowStockActivity)
-                                {
-                                    case LowStockActivityEnum.DisableBuyButton:
-                                        newDisableBuyButton = true;
-                                        break;
-                                    case LowStockActivityEnum.Unpublish:
-                                        newPublished = false;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-
-                        if (decrease && productVariant.NotifyAdminForQuantityBelow > newStockQuantity)
-                        {
-                            MessageManager.SendQuantityBelowStoreOwnerNotification(productVariant, LocalizationManager.DefaultAdminLanguage.LanguageID);
-                        }
-
-                        productVariant = UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
-                             productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                             productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
-                             productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
-                             productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
-                             productVariant.HasSampleDownload, productVariant.SampleDownloadID,
-                             productVariant.HasUserAgreement, productVariant.UserAgreementText,
-                             productVariant.IsRecurring, productVariant.CycleLength,
-                             productVariant.CyclePeriod, productVariant.TotalCycles,
-                             productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                             productVariant.IsTaxExempt, productVariant.TaxCategoryID,
-                             productVariant.ManageInventory, newStockQuantity, productVariant.DisplayStockAvailability,
-                             productVariant.MinStockQuantity, productVariant.LowStockActivity,
-                             productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
-                             productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
-                             productVariant.WarehouseId, newDisableBuyButton, productVariant.Price,
-                             productVariant.OldPrice, productVariant.ProductCost,
-                             productVariant.Weight, productVariant.Length, productVariant.Width,
-                             productVariant.Height, productVariant.PictureID,
-                             productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
-                             newPublished, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
-
-                        if (decrease)
-                        {
-                            var product = productVariant.Product;
-                            bool allProductVariantsUnpublished = true;
-                            foreach (var pv2 in product.ProductVariants)
-                            {
-                                if (pv2.Published)
-                                {
-                                    allProductVariantsUnpublished = false;
-                                    break;
-                                }
-                            }
-
-                            if (allProductVariantsUnpublished)
-                            {
-                                UpdateProduct(product.ProductID, product.Name, product.ShortDescription,
-                                    product.FullDescription, product.AdminComment, product.ProductTypeID,
-                                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription,
-                                    product.MetaTitle, product.SEName, product.AllowCustomerReviews, product.AllowCustomerRatings, product.RatingSum,
-                                    product.TotalRatingVotes, false, product.Deleted, product.CreatedOn, product.UpdatedOn);
-                            }
-                        }
-                    }
-                    break;
-                case ManageInventoryMethodEnum.ManageStockByAttributes:
-                    {
-                        var combination = ProductAttributeManager.FindProductVariantAttributeCombination(productVariant.ProductVariantID, AttributesXML);
-                        if (combination != null)
-                        {
-                            int newStockQuantity = 0;
-                            if (decrease)
-                                newStockQuantity = combination.StockQuantity - Quantity;
-                            else
-                                newStockQuantity = combination.StockQuantity + Quantity;
-
-                            combination = ProductAttributeManager.UpdateProductVariantAttributeCombination(combination.ProductVariantAttributeCombinationID,
-                                combination.ProductVariantID, combination.AttributesXML, newStockQuantity, combination.AllowOutOfStockOrders);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Remove a product variant picture
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void RemoveProductVariantPicture(int ProductVariantID)
-        {
-            var productVariant = GetProductVariantByID(ProductVariantID);
-            if (productVariant != null)
-            {
-                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
-                    productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                    productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
-                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
-                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType, 
-                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
-                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
-                    productVariant.IsRecurring, productVariant.CycleLength,
-                    productVariant.CyclePeriod, productVariant.TotalCycles,
-                    productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                    productVariant.IsTaxExempt, productVariant.TaxCategoryID, productVariant.ManageInventory,
-                    productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
-                    productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
-                    productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
-                    productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
-                    productVariant.DisableBuyButton, productVariant.Price, 
-                    productVariant.OldPrice, productVariant.ProductCost,
-                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, 0,
-                    productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
-                    productVariant.Published, productVariant.Deleted, 
-                    productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
-            }
-        }
-
-        /// <summary>
-        /// Get low stock product variants
-        /// </summary>
-        /// <returns>Result</returns>
-        public static ProductVariantCollection GetLowStockProductVariants()
-        {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetLowStockProductVariants();
-            var productVariants = DBMapping(dbCollection);
-            return productVariants;
-        }
-
-        /// <summary>
-        /// Remove a product variant download
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void RemoveProductVariantDownload(int ProductVariantID)
-        {
-            var productVariant = GetProductVariantByID(ProductVariantID);
-            if (productVariant != null)
-            {
-                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
-                    productVariant.SKU, productVariant.Description, productVariant.AdminComment,
-                    productVariant.ManufacturerPartNumber, productVariant.IsGiftCard, 
-                    productVariant.IsDownload, 0,
-                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
-                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType, 
-                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
-                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
-                    productVariant.IsRecurring, productVariant.CycleLength,
-                    productVariant.CyclePeriod, productVariant.TotalCycles, 
-                    productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                    productVariant.IsTaxExempt, productVariant.TaxCategoryID, productVariant.ManageInventory,
-                    productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
-                    productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
-                    productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity, 
-                    productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
-                    productVariant.DisableBuyButton, productVariant.Price, 
-                    productVariant.OldPrice, productVariant.ProductCost,
-                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
-                    productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
-                    productVariant.Published, productVariant.Deleted,
-                    productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
-            }
-        }
-
-        /// <summary>
-        /// Remove a product variant sample download
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void RemoveProductVariantSampleDownload(int ProductVariantID)
-        {
-            var productVariant = GetProductVariantByID(ProductVariantID);
-            if (productVariant != null)
-            {
-                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
-                    productVariant.SKU, productVariant.Description, productVariant.AdminComment,
-                    productVariant.ManufacturerPartNumber, productVariant.IsGiftCard, 
-                    productVariant.IsDownload, productVariant.DownloadID,
-                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
-                    productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType, 
-                    productVariant.HasSampleDownload, 0,
-                    productVariant.HasUserAgreement, productVariant.UserAgreementText,
-                    productVariant.IsRecurring, productVariant.CycleLength,
-                    productVariant.CyclePeriod, productVariant.TotalCycles,
-                    productVariant.IsShipEnabled, productVariant.IsFreeShipping, 
-                    productVariant.AdditionalShippingCharge, productVariant.IsTaxExempt, 
-                    productVariant.TaxCategoryID, productVariant.ManageInventory,
-                    productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
-                    productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
-                    productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
-                    productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
-                    productVariant.DisableBuyButton, productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
-                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
-                    productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
-                    productVariant.Published, productVariant.Deleted,
-                    productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
-            }
-        }
-
-        /// <summary>
-        /// Gets a product variant
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <returns>Product variant</returns>
-        public static ProductVariant GetProductVariantByID(int ProductVariantID)
-        {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-
-            return GetProductVariantByID(ProductVariantID, languageId);
-        }
-
-        /// <summary>
-        /// Gets a product variant
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <returns>Product variant</returns>
-        public static ProductVariant GetProductVariantByID(int ProductVariantID, int LanguageID)
-        {
-            if (ProductVariantID == 0)
-                return null;
-
-            string key = string.Format(PRODUCTVARIANTS_BY_ID_KEY, ProductVariantID, LanguageID);
-            object obj2 = NopCache.Get(key);
-            if (ProductManager.CacheEnabled && (obj2 != null))
-            {
-                return (ProductVariant)obj2;
-            }
-
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantByID(ProductVariantID, LanguageID);
-            var productVariant = DBMapping(dbItem);
-
-            if (ProductManager.CacheEnabled)
-            {
-                NopCache.Max(key, productVariant);
-            }
-            return productVariant;
-        }
-
-        /// <summary>
-        /// Gets a product variant by SKU
-        /// </summary>
-        /// <param name="SKU">SKU</param>
-        /// <returns>Product variant</returns>
-        public static ProductVariant GetProductVariantBySKU(string SKU)
-        {
-            if (String.IsNullOrEmpty(SKU))
-                return null;
-
-            SKU = SKU.Trim();
-
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantBySKU(SKU);
-            var productVariant = DBMapping(dbItem);
-            return productVariant;
-        }
-
-        /// <summary>
-        /// Inserts a product variant
-        /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SKU">The SKU</param>
-        /// <param name="Description">The description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
-        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
-        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
-        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
-        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
-        /// <param name="DownloadActivationType">The download activation type</param>
-        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
-        /// <param name="SampleDownloadID">The sample download identifier</param>
-        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
-        /// <param name="UserAgreementText">The text of user agreement</param>
-        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
-        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
-        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
-        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
-        /// <param name="MinStockQuantity">The minimum stock quantity</param>
-        /// <param name="LowStockActivity">The low stock activity</param>
-        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
-        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
-        /// <param name="WarehouseId">The warehouse identifier</param>
-        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
-        /// <param name="Price">The price</param>
-        /// <param name="OldPrice">The old price</param>
-        /// <param name="ProductCost">The product cost</param>
-        /// <param name="Weight">The weight</param>
-        /// <param name="Length">The length</param>
-        /// <param name="Width">The width</param>
-        /// <param name="Height">The height</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="AvailableStartDateTime">The available start date and time</param>
-        /// <param name="AvailableEndDateTime">The available end date and time</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <returns>Product variant</returns>
-        public static ProductVariant InsertProductVariant(int ProductID, string Name,
-            string SKU, string Description, string AdminComment,
-            string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
-            bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
-            DownloadActivationTypeEnum DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring, int CycleLength, 
-            int CyclePeriod, int TotalCycles, bool IsShipEnabled,
-            bool IsFreeShipping, decimal AdditionalShippingCharge,
-            bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
-            int StockQuantity, bool DisplayStockAvailability,
-            int MinStockQuantity, LowStockActivityEnum LowStockActivity,
-            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders, 
-            int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice, decimal ProductCost,
-            decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
-            DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
-           bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
-        {
-            if (AvailableStartDateTime.HasValue)
-                AvailableStartDateTime = DateTimeHelper.ConvertToUtcTime(AvailableStartDateTime.Value);
-            if (AvailableEndDateTime.HasValue)
-                AvailableEndDateTime = DateTimeHelper.ConvertToUtcTime(AvailableEndDateTime.Value);
-
-            SKU = SKU.Trim();
-
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
-
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariant(ProductID,
-                Name, SKU, Description, AdminComment, ManufacturerPartNumber, IsGiftCard, IsDownload, 
-                DownloadID, UnlimitedDownloads, MaxNumberOfDownloads,
-                DownloadExpirationDays, (int)DownloadActivationType,
-                HasSampleDownload, SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength,
-                CyclePeriod, TotalCycles, IsShipEnabled, IsFreeShipping, 
-                AdditionalShippingCharge, IsTaxExempt, TaxCategoryID, ManageInventory,
-                StockQuantity, DisplayStockAvailability, MinStockQuantity, (int)LowStockActivity, 
-                NotifyAdminForQuantityBelow, AllowOutOfStockOrders, OrderMinimumQuantity,
-                OrderMaximumQuantity, WarehouseId, DisableBuyButton,
-                Price, OldPrice, ProductCost,
-                Weight, Length, Width, Height, PictureID,
-                AvailableStartDateTime, AvailableEndDateTime,
-                Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
-            var productVariant = DBMapping(dbItem);
-
-            if (ProductManager.CacheEnabled)
-            {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
-            }
-
-            return productVariant;
-        }
-
-        /// <summary>
-        /// Updates the product variant
-        /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SKU">The SKU</param>
-        /// <param name="Description">The description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
-        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
-        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
-        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
-        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
-        /// <param name="DownloadActivationType">The download activation type</param>
-        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
-        /// <param name="SampleDownloadID">The sample download identifier</param>
-        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
-        /// <param name="UserAgreementText">The text of user agreement</param>
-        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
-        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
-        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
-        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
-        /// <param name="MinStockQuantity">The minimum stock quantity</param>
-        /// <param name="LowStockActivity">The low stock activity</param>
-        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
-        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
-        /// <param name="WarehouseId">The warehouse identifier</param>
-        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
-        /// <param name="Price">The price</param>
-        /// <param name="OldPrice">The old price</param>
-        /// <param name="ProductCost">The product cost</param>
-        /// <param name="Weight">The weight</param>
-        /// <param name="Length">The length</param>
-        /// <param name="Width">The width</param>
-        /// <param name="Height">The height</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="AvailableStartDateTime">The available start date and time</param>
-        /// <param name="AvailableEndDateTime">The available end date and time</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <returns>Product variant</returns>
-        public static ProductVariant UpdateProductVariant(int ProductVariantID, int ProductID, string Name, string SKU, string Description, string AdminComment,
-            string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
-            bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
-            DownloadActivationTypeEnum DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring, int CycleLength,
-            int CyclePeriod, int TotalCycles, bool IsShipEnabled,
-            bool IsFreeShipping, decimal AdditionalShippingCharge,
-            bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
-            int StockQuantity, bool DisplayStockAvailability, 
-            int MinStockQuantity, LowStockActivityEnum LowStockActivity,
-            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders, 
-            int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice,
-            decimal ProductCost, decimal Weight, decimal Length, decimal Width,
-            decimal Height, int PictureID, DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
-            bool Published, bool Deleted, int DisplayOrder,
-            DateTime CreatedOn, DateTime UpdatedOn)
-        {
-            if (AvailableStartDateTime.HasValue)
-                AvailableStartDateTime = DateTimeHelper.ConvertToUtcTime(AvailableStartDateTime.Value);
-            if (AvailableEndDateTime.HasValue)
-                AvailableEndDateTime = DateTimeHelper.ConvertToUtcTime(AvailableEndDateTime.Value);
-
-            SKU = SKU.Trim();
-
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
-
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariant(ProductVariantID,
-                ProductID, Name, SKU, Description, AdminComment, ManufacturerPartNumber,
-                IsGiftCard, IsDownload, DownloadID, UnlimitedDownloads, MaxNumberOfDownloads,
-                DownloadExpirationDays, (int)DownloadActivationType, HasSampleDownload,
-                SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength,
-                CyclePeriod, TotalCycles, IsShipEnabled, IsFreeShipping, 
-                AdditionalShippingCharge, IsTaxExempt, TaxCategoryID,
-                ManageInventory, StockQuantity, DisplayStockAvailability, 
-                MinStockQuantity, (int)LowStockActivity,
-                NotifyAdminForQuantityBelow, AllowOutOfStockOrders,
-                OrderMinimumQuantity, OrderMaximumQuantity, WarehouseId, DisableBuyButton,
-                Price, OldPrice, ProductCost,
-                Weight, Length, Width, Height, PictureID,
-                AvailableStartDateTime, AvailableEndDateTime,
-                Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
-
-            var productVariant = DBMapping(dbItem);
-
-            if (ProductManager.CacheEnabled)
-            {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
-            }
-
-            return productVariant;
-        }
-
-        /// <summary>
-        /// Gets product variants by product identifier
-        /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID)
-        {
-            bool showHidden = NopContext.Current.IsAdmin;
-            return GetProductVariantsByProductID(ProductID, showHidden);
-        }
-
-        /// <summary>
-        /// Gets product variants by product identifier
-        /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
-            bool showHidden)
-        {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-
-            return GetProductVariantsByProductID(ProductID,languageId, showHidden);
-        }
-
-
-        /// <summary>
-        /// Gets product variants by product identifier
-        /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
-            int LanguageID, bool showHidden)
-        {
-            string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, ProductID, LanguageID);
-            object obj2 = NopCache.Get(key);
-            if (ProductManager.CacheEnabled && (obj2 != null))
-            {
-                return (ProductVariantCollection)obj2;
-            }
-
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByProductID(ProductID, LanguageID, showHidden);
-            var productVariants = DBMapping(dbCollection);
-
-            if (ProductManager.CacheEnabled)
-            {
-                NopCache.Max(key, productVariants);
-            }
-            return productVariants;
-        }
-
-        /// <summary>
-        /// Gets restricted product variants by discount identifier
-        /// </summary>
-        /// <param name="DiscountID">The discount identifier</param>
-        /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsRestrictedByDiscountID(int DiscountID)
-        {
-            if (DiscountID == 0)
-                return new ProductVariantCollection();
-
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsRestrictedByDiscountID(DiscountID);
-            var productVariants = DBMapping(dbCollection);
-            return productVariants;
-        }
+        #region Related products
 
         /// <summary>
         /// Deletes a related product
@@ -2240,6 +2518,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             var relatedProduct = DBMapping(dbItem);
             return relatedProduct;
         }
+
+        #endregion
+
+        #region Pricelists
 
         /// <summary>
         /// Gets all product variants directly assigned to a pricelist
@@ -2476,6 +2758,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return newProductVariantPricelist;
         }
 
+        #endregion
+
+        #region Tier prices
+
         /// <summary>
         /// Gets a tier price
         /// </summary>
@@ -2578,6 +2864,81 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return tierPrice;
         }
 
+        #endregion
+
+        #region Product prices by customer role
+
+        /// <summary>
+        /// Deletes a product price by customer role by identifier 
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        public static void DeleteCustomerRoleProductPrice(int CustomerRoleProductPriceID)
+        {
+            DBProviderManager<DBProductProvider>.Provider.DeleteCustomerRoleProductPrice(CustomerRoleProductPriceID);
+        }
+
+        /// <summary>
+        /// Gets a product price by customer role by identifier 
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <returns>Product price by customer role by identifier </returns>
+        public static CustomerRoleProductPrice GetCustomerRoleProductPriceByID(int CustomerRoleProductPriceID)
+        {
+            if (CustomerRoleProductPriceID == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetCustomerRoleProductPriceByID(CustomerRoleProductPriceID);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets a collection of product prices by customer role
+        /// </summary>
+        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <returns>A collection of product prices by customer role</returns>
+        public static CustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int ProductVariantID)
+        {
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllCustomerRoleProductPrices(ProductVariantID);
+            var collection = DBMapping(dbCollection);
+            return collection;
+        }
+
+        /// <summary>
+        /// Inserts a product price by customer role
+        /// </summary>
+        /// <param name="CustomerRoleID">The customer role identifier</param>
+        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="Price">The price</param>
+        /// <returns>A product price by customer role</returns>
+        public static CustomerRoleProductPrice InsertCustomerRoleProductPrice(int CustomerRoleID,
+            int ProductVariantID, decimal Price)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertCustomerRoleProductPrice(CustomerRoleID,
+                ProductVariantID, Price);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Updates a product price by customer role
+        /// </summary>
+        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <param name="CustomerRoleID">The customer role identifier</param>
+        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="Price">The price</param>
+        /// <returns>A product price by customer role</returns>
+        public static CustomerRoleProductPrice UpdateCustomerRoleProductPrice(int CustomerRoleProductPriceID,
+            int CustomerRoleID, int ProductVariantID, decimal Price)
+        {
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateCustomerRoleProductPrice(CustomerRoleProductPriceID,
+                CustomerRoleID, ProductVariantID, Price);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        #endregion
+
         /// <summary>
         /// Formats the text
         /// </summary>
@@ -2607,231 +2968,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return Text;
         }
 
-        /// <summary>
-        /// Creates a copy of product with all depended data
-        /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name of product duplicate</param>
-        /// <param name="IsPublished">A value indicating whether the product duplicate should be published</param>
-        /// <param name="CopyImages">A value indicating whether the product images should be copied</param>
-        /// <returns>Product entity</returns>
-        public static Product DuplicateProduct(int ProductID, string Name, bool IsPublished, bool CopyImages)
-        {
-            var product = GetProductByID(ProductID, 0);
-            if (product == null)
-                return null;
-
-            Product productCopy = null;
-            //uncomment this line to support transactions
-            //using (var scope = new System.Transactions.TransactionScope())
-            {
-                // product
-                productCopy = InsertProduct(Name, product.ShortDescription, 
-                    product.FullDescription, product.AdminComment, product.ProductTypeID, 
-                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, 
-                    product.MetaDescription, product.MetaTitle, product.SEName, 
-                    product.AllowCustomerReviews, product.AllowCustomerRatings, 0, 0, 
-                    IsPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
-                
-                if (productCopy == null)
-                    return null;
-
-                var languages = LanguageManager.GetAllLanguages(true);
-
-                //localization
-                foreach (var lang in languages)
-                {
-                    var productLocalized = GetProductLocalizedByProductIDAndLanguageID(product.ProductID, lang.LanguageID);
-                    if (productLocalized != null)
-                    {
-                        var productLocalizedCopy = InsertProductLocalized(productCopy.ProductID,
-                            productLocalized.LanguageID,
-                            productLocalized.Name,
-                            productLocalized.ShortDescription,
-                            productLocalized.FullDescription,
-                            productLocalized.MetaKeywords,
-                            productLocalized.MetaDescription,
-                            productLocalized.MetaTitle,
-                            productLocalized.SEName);
-                    }
-                }
-
-                // product pictures
-                if(CopyImages)
-                {
-                    foreach(var productPicture in product.ProductPictures)
-                    {
-                        var picture = productPicture.Picture;
-                        var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, 
-                            picture.Extension, 
-                            picture.IsNew);
-                        InsertProductPicture(productCopy.ProductID, 
-                            pictureCopy.PictureID, 
-                            productPicture.DisplayOrder);
-                    }
-                }
-
-                // product <-> categories mappings
-                foreach (var productCategory in product.ProductCategories)
-                {
-                    CategoryManager.InsertProductCategory(productCopy.ProductID, 
-                        productCategory.CategoryID, 
-                        productCategory.IsFeaturedProduct, 
-                        productCategory.DisplayOrder);
-                }
-
-                // product <-> manufacturers mappings
-                foreach (var productManufacturers in product.ProductManufacturers)
-                {
-                    ManufacturerManager.InsertProductManufacturer(productCopy.ProductID, 
-                        productManufacturers.ManufacturerID, 
-                        productManufacturers.IsFeaturedProduct, 
-                        productManufacturers.DisplayOrder);
-                }
-
-                // product <-> releated products mappings
-                foreach (var relatedProduct in product.RelatedProducts)
-                {
-                    InsertRelatedProduct(productCopy.ProductID, 
-                        relatedProduct.ProductID2, 
-                        relatedProduct.DisplayOrder);
-                }
-
-                // product specifications
-                foreach (var productSpecificationAttribute in SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID))
-                {
-                    SpecificationAttributeManager.InsertProductSpecificationAttribute(productCopy.ProductID, 
-                        productSpecificationAttribute.SpecificationAttributeOptionID, 
-                        productSpecificationAttribute.AllowFiltering, 
-                        productSpecificationAttribute.ShowOnProductPage, 
-                        productSpecificationAttribute.DisplayOrder);
-                }
-
-                // product variants
-                var productVariants = GetProductVariantsByProductID(product.ProductID, 0, true);
-                foreach (var productVariant in productVariants)
-                {
-                    // product variant picture
-                    int pictureID = 0;
-                    if(CopyImages)
-                    {
-                        var picture = productVariant.Picture;
-                        if(picture != null)
-                        {
-                            var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
-                            pictureID = pictureCopy.PictureID;
-                        }
-                    }
-
-                    // product variant download & sample download
-                    int downloadID = productVariant.DownloadID;
-                    int sampleDownloadID = productVariant.SampleDownloadID;
-                    if (productVariant.IsDownload)
-                    {
-                        var download = productVariant.Download;
-                        if (download != null)
-                        {
-                            var downloadCopy = DownloadManager.InsertDownload(download.UseDownloadURL, download.DownloadURL, download.DownloadBinary, download.ContentType, download.Filename, download.Extension, download.IsNew);
-                            downloadID = downloadCopy.DownloadID;
-                        }
-
-                        if (productVariant.HasSampleDownload)
-                        {
-                            var sampleDownload = productVariant.SampleDownload;
-                            if (sampleDownload != null)
-                            {
-                                var sampleDownloadCopy = DownloadManager.InsertDownload(sampleDownload.UseDownloadURL, sampleDownload.DownloadURL, sampleDownload.DownloadBinary, sampleDownload.ContentType, sampleDownload.Filename, sampleDownload.Extension, sampleDownload.IsNew);
-                                sampleDownloadID = sampleDownloadCopy.DownloadID;
-                            }
-                        }
-                    }
-
-                    // product variant
-                    var productVariantCopy = InsertProductVariant(productCopy.ProductID, productVariant.Name,
-                        productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                        productVariant.IsGiftCard, productVariant.IsDownload, downloadID,
-                        productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
-                        productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
-                        productVariant.HasSampleDownload, sampleDownloadID,
-                        productVariant.HasUserAgreement, productVariant.UserAgreementText,
-                        productVariant.IsRecurring, productVariant.CycleLength,
-                        productVariant.CyclePeriod, productVariant.TotalCycles,
-                        productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                        productVariant.IsTaxExempt, productVariant.TaxCategoryID,
-                        productVariant.ManageInventory, productVariant.StockQuantity,
-                        productVariant.DisplayStockAvailability, productVariant.MinStockQuantity, productVariant.LowStockActivity,
-                        productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
-                        productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
-                        productVariant.WarehouseId, productVariant.DisableBuyButton,
-                        productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
-                        productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, pictureID,
-                        productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
-                        productVariant.Published, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
-                    
-                    //localization
-                    foreach (var lang in languages)
-                    {
-                        var productVariantLocalized = GetProductVariantLocalizedByProductVariantIDAndLanguageID(productVariant.ProductVariantID, lang.LanguageID);
-                        if (productVariantLocalized != null)
-                        {
-                            var productVariantLocalizedCopy = InsertProductVariantLocalized(productVariantCopy.ProductVariantID,
-                                productVariantLocalized.LanguageID,
-                                productVariantLocalized.Name,
-                                productVariantLocalized.Description);
-                        }
-                    }
-
-                    // product variant <-> attributes mappings
-                    foreach (var productVariantAttribute in productVariant.ProductVariantAttributes)
-                    {
-                        var productVariantAttributeCopy = ProductAttributeManager.InsertProductVariantAttribute(productVariantCopy.ProductVariantID, productVariantAttribute.ProductAttributeID, productVariantAttribute.TextPrompt, productVariantAttribute.IsRequired, productVariantAttribute.AttributeControlType, productVariantAttribute.DisplayOrder);
-
-                        // product variant attribute values
-                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeID, 0);
-                        foreach (var productVariantAttributeValue in productVariantAttributeValues)
-                        {
-                            var pvavCopy = ProductAttributeManager.InsertProductVariantAttributeValue(productVariantAttributeCopy.ProductVariantAttributeID, productVariantAttributeValue.Name, productVariantAttributeValue.PriceAdjustment, productVariantAttributeValue.WeightAdjustment, productVariantAttributeValue.IsPreSelected, productVariantAttributeValue.DisplayOrder);
-                            
-                            //localization
-                            foreach (var lang in languages)
-                            {
-                                var pvavLocalized = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(productVariantAttributeValue.ProductVariantAttributeValueID, lang.LanguageID);
-                                if (pvavLocalized != null)
-                                {
-                                    var pvavLocalizedCopy = ProductAttributeManager.InsertProductVariantAttributeValueLocalized(pvavCopy.ProductVariantAttributeValueID,
-                                        pvavLocalized.LanguageID,
-                                        pvavLocalized.Name);
-                                }
-                            }
-                        }
-                    }
-                    foreach (var combination in ProductAttributeManager.GetAllProductVariantAttributeCombinations(productVariant.ProductVariantID))
-                    {
-                        ProductAttributeManager.InsertProductVariantAttributeCombination(productVariant.ProductVariantID,
-                              combination.AttributesXML,
-                              combination.StockQuantity,
-                              combination.AllowOutOfStockOrders);
-                    }
-
-                    // product variant <-> discounts mapping
-                    foreach (var discount in productVariant.AllDiscounts)
-                    {
-                        DiscountManager.AddDiscountToProductVariant(productVariantCopy.ProductVariantID, discount.DiscountID);
-                    }
-
-                    // product variant tier prices
-                    foreach (var tierPrice in productVariant.TierPrices)
-                    {
-                        InsertTierPrice(productVariantCopy.ProductVariantID, tierPrice.Quantity, tierPrice.Price);
-                    }
-                }
-
-                //uncomment this line to support transactions
-                //scope.Complete();
-            }
-
-            return productCopy;
-        }
         #endregion
 
         #region Property

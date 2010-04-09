@@ -2,6 +2,7 @@
     CodeBehind="ProductVariantDetails.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantInfo" Src="ProductVariantInfo.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantTierPrices" Src="ProductVariantTierPrices.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="ProductPricesByCustomerRole" Src="ProductPricesByCustomerRole.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantAttributes" Src="ProductVariantAttributes.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductVariantDiscounts" Src="ProductVariantDiscounts.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ConfirmationBox" Src="ConfirmationBox.ascx" %>
@@ -30,6 +31,11 @@
             <nopCommerce:ProductVariantTierPrices runat="server" ID="ctrlProductVariantTierPrices" />
         </ContentTemplate>
     </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerRolePrices" HeaderText="<% $NopResources:Admin.ProductVariantDetails.CustomerRolePrices %>">
+        <ContentTemplate>
+            <nopCommerce:ProductPricesByCustomerRole runat="server" ID="ctrlProductPricesByCustomerRole" />
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>    
     <ajaxToolkit:TabPanel runat="server" ID="pnlProductAttributes" HeaderText="<% $NopResources:Admin.ProductVariantDetails.Attributes %>">
         <ContentTemplate>
             <nopCommerce:ProductVariantAttributes runat="server" ID="ctrlProductVariantAttributes" />

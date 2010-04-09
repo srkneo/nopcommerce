@@ -440,6 +440,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             }
         }
 
+        /// <summary>
+        /// Gets the tier prices of the product variant
+        /// </summary>
+        public CustomerRoleProductPriceCollection CustomerRoleProductPrices
+        {
+            get
+            {
+                return ProductManager.GetAllCustomerRoleProductPrices(this.ProductVariantID);
+            }
+        }
+
         #endregion
     }
 }
