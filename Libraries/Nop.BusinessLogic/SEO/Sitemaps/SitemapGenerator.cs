@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
             bool IncludeManufacturers = SettingManager.GetSettingValueBoolean("SEO.Sitemaps.IncludeManufacturers", false);
             bool IncludeProducts = SettingManager.GetSettingValueBoolean("SEO.Sitemaps.IncludeProducts", false);
             bool IncludeTopics = SettingManager.GetSettingValueBoolean("SEO.Sitemaps.IncludeTopics", false);
-            string OtherPages = SettingManager.GetSettingValue("SEO.Sitemaps.OtherPages");
+            string OtherPages = SettingManager.GetSettingValue("SEO.Sitemaps.OtherPages").ToLowerInvariant();
             
             if (IncludeCategories)
             {
