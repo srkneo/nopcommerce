@@ -50,24 +50,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Label lblAllowedTokens;
         
         /// <summary>
-        /// lblActive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblActive;
-        
-        /// <summary>
-        /// cbActive control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbActive;
-        
-        /// <summary>
         /// lblLanguageTitle control.
         /// </summary>
         /// <remarks>
@@ -156,6 +138,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.HTMLEditor.Editor txtBody;
+        
+        /// <summary>
+        /// lblActive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblActive;
+        
+        /// <summary>
+        /// cbActive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbActive;
         
         /// <summary>
         /// cbDelete control.

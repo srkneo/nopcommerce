@@ -96,7 +96,7 @@ set @resources='
     <Value>Post page size is required.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.BlogSettings.PostsPageSize.RangeErrorMessage">
-    <Value>Post page size is out of range.</Value>
+    <Value>The value must be from 0 to 999999.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ProductVariantAdd.CustomerRolePrices">
     <Value>Prices By Customer Roles</Value>
