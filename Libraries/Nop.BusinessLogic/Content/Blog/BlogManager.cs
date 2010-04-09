@@ -154,9 +154,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <returns>Blog posts</returns>
         public static BlogPostCollection GetAllBlogPosts(int LanguageID)
         {
-            var dbCollection = DBProviderManager<DBBlogProvider>.Provider.GetAllBlogPosts(LanguageID);
-            var collection = DBMapping(dbCollection);
-            return collection;
+            int TotalRecords;
+            return GetAllBlogPosts(LanguageID, Int32.MaxValue, 0, out TotalRecords);
+        }
+
+        /// <summary>
+        /// Gets all blog posts
+        /// </summary>
+        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
+        /// <param name="PageSize">Page size</param>
+        /// <param name="PageIndex">Page index</param>
+        /// <param name="TotalRecords">Total records</param>
+        /// <returns>Blog posts</returns>
+        public static BlogPostCollection GetAllBlogPosts(int LanguageID, int PageSize, int PageIndex, out int TotalRecords)
+        {
+            if(PageSize <= 0)
+            {
+                PageSize = 10;
+            }
+            if(PageSize == Int32.MaxValue)
+            {
+                PageSize = Int32.MaxValue - 1;
+            }
+            if(PageIndex < 0)
+            {
+                PageIndex = 0;
+            }
+            if(PageIndex == Int32.MaxValue)
+            {
+                PageIndex = Int32.MaxValue - 1;
+            }
+            return DBMapping(DBProviderManager<DBBlogProvider>.Provider.GetAllBlogPosts(LanguageID, PageSize, PageIndex, out TotalRecords));
         }
 
         /// <summary>
@@ -360,6 +388,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             set
             {
                 SettingManager.SetParam("Common.EnableBlog", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the page size for posts
+        /// </summary>
+        public static int PostsPageSize
+        {
+            get
+            {
+                return SettingManager.GetSettingValueInteger("Blog.PostsPageSize", 10);
+            }
+            set
+            {
+                SettingManager.SetParam("Blog.PostsPageSize", value.ToString());
             }
         }
 

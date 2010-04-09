@@ -84,7 +84,19 @@ set @resources='
     <Value>The format for forum topic urls. Must have 3 arguments i.e. "{0}boards/t/{1}/{2}.aspx"</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.SEODisplay.ForumTopicUrl.ErrorMessage">
-    <Value>Invalid format for forum topic urls."</Value>
+    <Value>Invalid format for forum topic urls.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BlogSettings.PostsPageSize">
+    <Value>Posts page size:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BlogSettings.PostsPageSize.Tooltip">
+    <Value>Set the page size for posts</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BlogSettings.PostsPageSize.RequiredErrorMessage">
+    <Value>Post page size is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BlogSettings.PostsPageSize.RangeErrorMessage">
+    <Value>Post page size is out of range.</Value>
   </LocaleResource>
 </Language>
 '

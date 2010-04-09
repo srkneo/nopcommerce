@@ -44,9 +44,31 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         private void BindData()
         {
-            var blogPosts = BlogManager.GetAllBlogPosts(NopContext.Current.WorkingLanguage.LanguageID);
-            rptrBlogPosts.DataSource = blogPosts;
-            rptrBlogPosts.DataBind();
+            int totalRecords = 0;
+            int pageSize = BlogManager.PostsPageSize;
+
+            var blogPosts = BlogManager.GetAllBlogPosts(NopContext.Current.WorkingLanguage.LanguageID, pageSize, CurrentPageIndex, out totalRecords);
+            if(blogPosts.Count > 0)
+            {
+                this.postsPager.PageSize = pageSize;
+                this.postsPager.TotalRecords = totalRecords;
+                this.postsPager.PageIndex = this.CurrentPageIndex;
+
+                rptrBlogPosts.DataSource = blogPosts;
+                rptrBlogPosts.DataBind();
+            }
+        }
+
+        public int CurrentPageIndex
+        {
+            get
+            {
+                int _pageIndex = CommonHelper.QueryStringInt(postsPager.QueryStringProperty);
+                _pageIndex--;
+                if(_pageIndex < 0)
+                    _pageIndex = 0;
+                return _pageIndex;
+            }
         }
 
         protected string GetBlogRSSUrl()

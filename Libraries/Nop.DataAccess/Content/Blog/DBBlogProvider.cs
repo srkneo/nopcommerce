@@ -51,8 +51,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// Gets all blog posts
         /// </summary>
         /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
+        /// <param name="PageSize">Page size</param>
+        /// <param name="PageIndex">Page index</param>
+        /// <param name="TotalRecords">Total records</param>
         /// <returns>Blog posts</returns>
-        public abstract DBBlogPostCollection GetAllBlogPosts(int LanguageID);
+        public abstract DBBlogPostCollection GetAllBlogPosts(int LanguageID, int PageSize, int PageIndex, out int TotalRecords);
 
         /// <summary>
         /// Inserts an blog post

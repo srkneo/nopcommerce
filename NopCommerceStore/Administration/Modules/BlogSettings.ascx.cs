@@ -50,6 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbEnableBlog.Checked = BlogManager.BlogEnabled;
             cbAllowNotRegisteredUsersToLeaveComments.Checked = BlogManager.AllowNotRegisteredUsersToLeaveComments;
             cbNotifyAboutNewBlogComments.Checked = BlogManager.NotifyAboutNewBlogComments;
+            txtPostsPageSize.Value = BlogManager.PostsPageSize;
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -61,6 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     BlogManager.BlogEnabled = cbEnableBlog.Checked;
                     BlogManager.AllowNotRegisteredUsersToLeaveComments = cbAllowNotRegisteredUsersToLeaveComments.Checked;
                     BlogManager.NotifyAboutNewBlogComments = cbNotifyAboutNewBlogComments.Checked;
+                    BlogManager.PostsPageSize = txtPostsPageSize.Value;
 
                     Response.Redirect("BlogSettings.aspx");
                 }

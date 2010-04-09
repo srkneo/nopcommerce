@@ -132,13 +132,20 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// Gets all blog posts
         /// </summary>
         /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
+        /// <param name="PageSize">Page size</param>
+        /// <param name="PageIndex">Page index</param>
+        /// <param name="TotalRecords">Total records</param>
         /// <returns>Blog posts</returns>
-        public override DBBlogPostCollection GetAllBlogPosts(int LanguageID)
+        public override DBBlogPostCollection GetAllBlogPosts(int LanguageID, int PageSize, int PageIndex, out int TotalRecords)
         {
+            TotalRecords = 0;
             var result = new DBBlogPostCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogPostLoadAll");
             db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, PageIndex);
+            db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -147,6 +154,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
                     result.Add(item);
                 }
             }
+            TotalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
 
             return result;
         }

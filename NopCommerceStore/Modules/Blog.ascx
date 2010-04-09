@@ -36,4 +36,9 @@
             </ItemTemplate>
         </asp:Repeater>
     </div>
+    <div class="pager">
+        <nopCommerce:Pager runat="server" ID="postsPager" QueryStringProperty="p" FirstButtonText="<% $NopResources:Pager.First %>"
+            LastButtonText="<% $NopResources:Pager.Last %>" NextButtonText="<% $NopResources:Pager.Next %>"
+            PreviousButtonText="<% $NopResources:Pager.Previous %>" CurrentPageText="Pager.CurrentPage" />
+    </div>
 </div>
