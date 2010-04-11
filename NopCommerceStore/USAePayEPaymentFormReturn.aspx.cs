@@ -23,12 +23,10 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect(loginURL);
             }
 
+            CommonHelper.SetResponseNoCache(Response);
+
             if(!Page.IsPostBack)
             {
-                Response.CacheControl = "private";
-                Response.Expires = 0;
-                Response.AddHeader("pragma", "no-cache");
-
                 if(EPaymentFormSettings.UsePIN && !EPaymentFormHelper.ValidateResponseSign(Request.Form))
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());

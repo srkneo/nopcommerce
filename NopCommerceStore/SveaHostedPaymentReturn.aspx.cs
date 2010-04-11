@@ -19,11 +19,10 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect(SEOHelper.GetLoginPageURL(true));
             }
 
+            CommonHelper.SetResponseNoCache(Response);
+
             if(!Page.IsPostBack)
             {
-                Response.CacheControl = "private";
-                Response.Expires = 0;
-                Response.AddHeader("pragma", "no-cache");
 
                 Order order = OrderManager.GetOrderByID(CommonHelper.QueryStringInt("OrderID"));
                 if(order == null)

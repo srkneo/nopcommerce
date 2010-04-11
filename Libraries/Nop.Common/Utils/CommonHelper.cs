@@ -832,6 +832,22 @@ namespace NopSolutions.NopCommerce.Common.Utils
             }
         }
 
+        /// <summary>
+        /// Set response NoCache
+        /// </summary>
+        /// <param name="response">Response</param>
+        public static void SetResponseNoCache(HttpResponse response)
+        {
+            if (response == null)
+                throw new ArgumentNullException("response");
+
+            //response.Cache.SetCacheability(HttpCacheability.NoCache) 
+
+            response.CacheControl = "private";
+            response.Expires = 0;
+            response.AddHeader("pragma", "no-cache");
+        }
+
         #endregion
     }
 }

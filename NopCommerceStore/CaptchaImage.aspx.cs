@@ -23,9 +23,7 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             if (this.Session["CaptchaImageText"] == null)
                 this.Session["CaptchaImageText"] = CommonHelper.GenerateRandomDigitCode(6);

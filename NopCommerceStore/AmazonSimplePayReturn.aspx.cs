@@ -23,12 +23,10 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect(loginURL);
             }
 
+            CommonHelper.SetResponseNoCache(Response);
+
             if(!Page.IsPostBack)
             {
-                Response.CacheControl = "private";
-                Response.Expires = 0;
-                Response.AddHeader("pragma", "no-cache");
-
                 if(!AmazonHelper.ValidateRequest(Request.QueryString, String.Format("{0}AmazonSimplePayReturn.aspx", CommonHelper.GetStoreLocation()), "GET"))
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());

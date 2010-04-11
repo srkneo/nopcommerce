@@ -33,9 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             CustomerManager.Logout();
 

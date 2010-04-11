@@ -71,9 +71,7 @@ namespace NopSolutions.NopCommerce.Web
             string title = GetLocaleResourceString("PageTitle.AddressEdit");
             SEOHelper.RenderTitle(this, title, true);
 
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             if (NopContext.Current.User == null)
             {

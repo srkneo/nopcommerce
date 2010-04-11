@@ -35,9 +35,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if(!Page.IsPostBack)
             {
-                Response.CacheControl = "private";
-                Response.Expires = 0;
-                Response.AddHeader("pragma", "no-cache");
+                CommonHelper.SetResponseNoCache(Response);
 
                 string rspCode = CommonHelper.QueryString("response_code");
                 if(String.IsNullOrEmpty(rspCode) || rspCode.ToUpperInvariant().Equals("NULL") || CommonHelper.QueryStringInt("response_code") >= 50)

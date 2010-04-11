@@ -18,12 +18,10 @@ namespace NopSolutions.NopCommerce.Web
         #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
+            CommonHelper.SetResponseNoCache(Response);
+
             if(!Page.IsPostBack)
             {
-                Response.CacheControl = "private";
-                Response.Expires = 0;
-                Response.AddHeader("pragma", "no-cache");
-
                 if(HostedPaymentHelper.ValidateResponseSign(Request.Form))
                 {
                     int OrderID = 0;

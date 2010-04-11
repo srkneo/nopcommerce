@@ -20,9 +20,7 @@ namespace NopSolutions.NopCommerce.Web
             //comment this line to process return
             Response.Redirect(CommonHelper.GetStoreLocation());
 
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             if(NopContext.Current.User == null)
             {

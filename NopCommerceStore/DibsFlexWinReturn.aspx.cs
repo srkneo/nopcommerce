@@ -25,12 +25,10 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect(loginURL);
             }
 
+            CommonHelper.SetResponseNoCache(Response);
+
             if(!Page.IsPostBack)
             {
-                Response.CacheControl = "private";
-                Response.Expires = 0;
-                Response.AddHeader("pragma", "no-cache");
-
                 int OrderID = Convert.ToInt32(Request.Form["x"]);
                 Order order = OrderManager.GetOrderByID(OrderID);
                 if(order == null)

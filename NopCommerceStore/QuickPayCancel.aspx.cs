@@ -20,9 +20,7 @@ namespace NopSolutions.NopCommerce.Web
         #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             if (!Page.IsPostBack)
             {

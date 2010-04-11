@@ -37,9 +37,7 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             string title = GetLocaleResourceString("PageTitle.CheckoutCompleted");
             SEOHelper.RenderTitle(this, title, true);

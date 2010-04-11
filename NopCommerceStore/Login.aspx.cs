@@ -38,9 +38,7 @@ namespace NopSolutions.NopCommerce.Web
                 CommonHelper.EnsureSSL();
             }
 
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             string title = GetLocaleResourceString("PageTitle.Login");
             SEOHelper.RenderTitle(this, title, true);

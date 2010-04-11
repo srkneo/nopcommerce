@@ -332,9 +332,7 @@ namespace NopSolutions.NopCommerce.Web.Install
         #region Handlers
         protected void Page_Load(Object sender, EventArgs e)
         {
-            Response.CacheControl = "private";
-            Response.Expires = 0;
-            Response.AddHeader("pragma", "no-cache");
+            CommonHelper.SetResponseNoCache(Response);
 
             lblVersion.Text = string.Format("nopCommerce {0}", GetNewVersion());
 
