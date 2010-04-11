@@ -167,6 +167,21 @@ set @resources='
   <LocaleResource Name="Admin.MessageTemplateDetails.Active.Tooltip">
     <Value>Indicating whether the message template is active.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProvidersHome.Froogle.TitleDescription">
+    <Value>Manage froogle (Google Base).</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProvidersHome.Froogle.Title">
+    <Value>Froogle (Google Base)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.Title">
+    <Value>Froogle (Google Base)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.FroogleTitle">
+    <Value>Froogle (Google Base)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.FroogleDescription">
+    <Value>Manage Froogle (Google Base) Provider</Value>
+  </LocaleResource>
 </Language>
 '
  		

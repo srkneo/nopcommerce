@@ -47,7 +47,7 @@
       <siteMapNode title="Discounts" url="~/administration/discounts.aspx" description="Manage Discounts" nopResourceTitle="Admin.Sitemap.DiscountsTitle" nopResourceDescription="Admin.Sitemap.DiscountsDescription" />
       <siteMapNode title="Price Lists" url="~/administration/pricelist.aspx" description="Manage Price Lists" nopResourceTitle="Admin.Sitemap.PricelistTitle" nopResourceDescription="Admin.Sitemap.PricelistDescription" />
       <siteMapNode title="Providers" url="~/administration/promotionprovidershome.aspx" description="Promotion Providers Home" nopResourceTitle="Admin.Sitemap.PromotionProvidersHomeTitle" nopResourceDescription="Admin.Sitemap.PromotionProvidersHomeDescription" >
-        <siteMapNode title="Froogle" url="~/administration/froogle.aspx" description="Manage Froogle Provider" nopResourceTitle="Admin.Sitemap.FroogleTitle" nopResourceDescription="Admin.Sitemap.FroogleDescription" />
+        <siteMapNode title="Froogle (Google Base)" url="~/administration/froogle.aspx" description="Manage Froogle (Google Base) Provider" nopResourceTitle="Admin.Sitemap.FroogleTitle" nopResourceDescription="Admin.Sitemap.FroogleDescription" />
       </siteMapNode>
     </siteMapNode>
     <!-- End Promotions -->
