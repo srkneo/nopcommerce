@@ -21,9 +21,9 @@ using System.Text;
 namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
 {
     /// <summary>
-    /// Represents a setting collection
+    /// Represents a setting dictionary
     /// </summary>
-    public partial class SettingCollection : BaseEntityCollection<Setting>
+    public partial class SettingDictionary : BaseEntityDictionary<string, Setting>
     {
         
     }

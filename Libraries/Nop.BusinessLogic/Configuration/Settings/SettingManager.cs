@@ -35,19 +35,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         #endregion
 
         #region Utilities
-        private static SettingCollection DBMapping(DBSettingCollection dbCollection)
+        private static SettingDictionary DBMapping(DBSettingCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new SettingCollection();
+            var dictionary = new SettingDictionary();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
-                collection.Add(item);
+                dictionary.Add(item.Name.ToLowerInvariant(), item);
             }
 
-            return collection;
+            return dictionary;
         }
 
         private static Setting DBMapping(DBSetting dbItem)
@@ -99,23 +99,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// Gets all settings
         /// </summary>
         /// <returns>Setting collection</returns>
-        public static SettingCollection GetAllSettings()
+        public static SettingDictionary GetAllSettings()
         {
             string key = SETTINGS_ALL_KEY;
             object obj2 = NopCache.Get(key);
             if (SettingManager.CacheEnabled && (obj2 != null))
             {
-                return (SettingCollection)obj2;
+                return (SettingDictionary)obj2;
             }
 
             var dbCollection = DBProviderManager<DBSettingProvider>.Provider.GetAllSettings();
-            var settingCollection = DBMapping(dbCollection);
+            var settings = DBMapping(dbCollection);
 
             if (SettingManager.CacheEnabled)
             {
-                NopCache.Max(key, settingCollection);
+                NopCache.Max(key, settings);
             }
-            return settingCollection;
+            return settings;
         }
 
          /// <summary>
@@ -335,10 +335,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
             if (String.IsNullOrEmpty(Name))
                 return null;
 
-            var settingCollection = GetAllSettings();
-            foreach (var setting in settingCollection)
-                if (setting.Name.ToLower() == Name.ToLower())
-                    return setting;
+            Name = Name.Trim().ToLowerInvariant();
+
+            var settings = GetAllSettings();
+            if (settings.ContainsKey(Name))
+            {
+                var setting = settings[Name];
+                return setting;
+            }
             return null;
         }
         #endregion
