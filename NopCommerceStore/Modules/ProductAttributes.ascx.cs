@@ -106,6 +106,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         ddlAttributes.Items.Add(new ListItem("---", "0"));
                                     }
                                     var pvaValues = attribute.ProductVariantAttributeValues;
+
+                                    bool preSelectedSet = false;
                                     foreach (var pvaValue in pvaValues)
                                     {
                                         string pvaValueName = pvaValue.Name;
@@ -117,7 +119,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
                                         }
                                         var pvaValueItem = new ListItem(pvaValueName, pvaValue.ProductVariantAttributeValueID.ToString());
-                                        pvaValueItem.Selected = pvaValue.IsPreSelected;
+                                        if (!preSelectedSet && pvaValue.IsPreSelected)
+                                        {
+                                            pvaValueItem.Selected = pvaValue.IsPreSelected;
+                                            preSelectedSet = true;
+                                        }
                                         ddlAttributes.Items.Add(pvaValueItem);
                                     }
                                     divAttribute.Controls.Add(ddlAttributes);
@@ -128,6 +134,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     var rblAttributes = new RadioButtonList();
                                     rblAttributes.ID = controlID;
                                     var pvaValues = attribute.ProductVariantAttributeValues;
+
+                                    bool preSelectedSet = false;
                                     foreach (var pvaValue in pvaValues)
                                     {
                                         string pvaValueName = pvaValue.Name;
@@ -139,7 +147,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
                                         }
                                         var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueID.ToString());
-                                        pvaValueItem.Selected = pvaValue.IsPreSelected;
+                                        if (!preSelectedSet && pvaValue.IsPreSelected)
+                                        {
+                                            pvaValueItem.Selected = pvaValue.IsPreSelected;
+                                            preSelectedSet = true;
+                                        }
                                         rblAttributes.Items.Add(pvaValueItem);
                                     }
                                     divAttribute.Controls.Add(rblAttributes);
