@@ -81,8 +81,12 @@ namespace NopSolutions.NopCommerce.Web
             {
                 foreach (ShoppingCartItem sci in Cart)
                 {
-                    var sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(sci.ShoppingCartType,
-                            sci.ProductVariantID, sci.AttributesXML, sci.Quantity);
+                    var sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(
+                        sci.ShoppingCartType,
+                            sci.ProductVariantID, 
+                            sci.AttributesXML, 
+                            sci.CustomerEnteredPrice, 
+                            sci.Quantity);
                     if (sciWarnings.Count > 0)
                     {
                         Response.Redirect("~/shoppingcart.aspx");

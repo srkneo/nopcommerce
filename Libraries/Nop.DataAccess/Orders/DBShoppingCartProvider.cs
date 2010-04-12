@@ -68,13 +68,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="CustomerSessionGUID">The customer session identifier</param>
         /// <param name="ProductVariantID">The product variant identifier</param>
         /// <param name="AttributesXML">The product variant attributes</param>
+        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
         /// <param name="Quantity">The quantity</param>
         /// <param name="CreatedOn">The date and time of instance creation</param>
         /// <param name="UpdatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public abstract DBShoppingCartItem InsertShoppingCartItem(int ShoppingCartTypeID, Guid CustomerSessionGUID,
-          int ProductVariantID, string AttributesXML, int Quantity,
-           DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBShoppingCartItem InsertShoppingCartItem(int ShoppingCartTypeID, 
+            Guid CustomerSessionGUID, int ProductVariantID, string AttributesXML, 
+            decimal CustomerEnteredPrice, int Quantity,DateTime CreatedOn, DateTime UpdatedOn);
 
         /// <summary>
         /// Updates the shopping cart item
@@ -84,13 +85,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="CustomerSessionGUID">The customer session identifier</param>
         /// <param name="ProductVariantID">The product variant identifier</param>
         /// <param name="AttributesXML">The product variant attributes</param>
+        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
         /// <param name="Quantity">The quantity</param>
         /// <param name="CreatedOn">The date and time of instance creation</param>
         /// <param name="UpdatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public abstract DBShoppingCartItem UpdateShoppingCartItem(int ShoppingCartItemID, int ShoppingCartTypeID, Guid CustomerSessionGUID,
-          int ProductVariantID, string AttributesXML, int Quantity,
-           DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBShoppingCartItem UpdateShoppingCartItem(int ShoppingCartItemID, 
+            int ShoppingCartTypeID, Guid CustomerSessionGUID, int ProductVariantID, 
+            string AttributesXML, decimal CustomerEnteredPrice, int Quantity,
+            DateTime CreatedOn, DateTime UpdatedOn);
         #endregion
     }
 }

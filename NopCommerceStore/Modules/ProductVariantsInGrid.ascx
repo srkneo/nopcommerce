@@ -84,6 +84,9 @@
                 <div class="price">
                     <nopCommerce:ProductPrice ID="ctrlProductPrice" runat="server" ProductVariantID='<%#Eval("ProductVariantID") %>'>
                     </nopCommerce:ProductPrice>
+                    <nopCommerce:NumericTextBox runat="server" ID="txtCustomerEnteredPrice" Value="1"
+                        RequiredErrorMessage="<% $NopResources:Products.CustomerEnteredPrice.EnterPrice %>"
+                        MinimumValue="0" MaximumValue="999999" Width="100"></nopCommerce:NumericTextBox>
                 </div>
                 <div class="add-info">
                     <nopCommerce:NumericTextBox runat="server" ID="txtQuantity" Value="1" RequiredErrorMessage="<% $NopResources:Products.EnterQuantity %>"

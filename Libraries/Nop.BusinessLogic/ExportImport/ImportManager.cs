@@ -230,6 +230,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     decimal Price = Convert.ToDecimal(dr["Price"]);
                     decimal OldPrice = Convert.ToDecimal(dr["OldPrice"]);
                     decimal ProductCost = Convert.ToDecimal(dr["ProductCost"]);
+                    bool CustomerEntersPrice = Convert.ToBoolean(dr["CustomerEntersPrice"]);
+                    decimal MinimumCustomerEnteredPrice = Convert.ToDecimal(dr["MinimumCustomerEnteredPrice"]);
+                    decimal MaximumCustomerEnteredPrice = Convert.ToDecimal(dr["MaximumCustomerEnteredPrice"]);
                     decimal Weight = Convert.ToDecimal(dr["Weight"]);
                     decimal Length = Convert.ToDecimal(dr["Length"]);
                     decimal Width = Convert.ToDecimal(dr["Width"]);
@@ -261,7 +264,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             (LowStockActivityEnum)LowStockActivityID, NotifyAdminForQuantityBelow,
                             AllowOutOfStockOrders, OrderMinimumQuantity,
                             OrderMaximumQuantity, productVariant.WarehouseId, DisableBuyButton,
-                            Price, OldPrice, ProductCost, Weight, Length, Width, Height,
+                            Price, OldPrice, ProductCost, CustomerEntersPrice, 
+                            MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice,
+                            Weight, Length, Width, Height,
                             productVariant.PictureID, productVariant.AvailableStartDateTime,
                             productVariant.AvailableEndDateTime, productVariant.Published,
                             productVariant.Deleted, productVariant.DisplayOrder, CreatedOn, DateTime.Now);
@@ -283,7 +288,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             (LowStockActivityEnum)LowStockActivityID, NotifyAdminForQuantityBelow,
                             AllowOutOfStockOrders, OrderMinimumQuantity,
                             OrderMaximumQuantity, 0, DisableBuyButton,
-                            Price, OldPrice, ProductCost, Weight, Length, Width, Height, 0, null, null,
+                            Price, OldPrice, ProductCost, CustomerEntersPrice,
+                            MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice, 
+                            Weight, Length, Width, Height, 0, null, null,
                             true, false, 1, CreatedOn, DateTime.Now);
                     }
                 }

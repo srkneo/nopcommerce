@@ -26,6 +26,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                 BindData();
             }
         }
+
         protected void BindData()
         {
             var product = ProductManager.GetProductByID(ProductID);
@@ -68,8 +69,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                 lvProductPictures.Visible = false;
             }
         }
-
-
+        
         protected void BindProductVariantInfo(ProductVariant productVariant)
         {
             btnAddToWishlist.Visible = SettingManager.GetSettingValueBoolean("Common.EnableWishlist");
@@ -117,7 +117,23 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                     pnlGiftCardInfo.Visible = false;
                 }
             }
+            
+            //price entered by a customer
+            if (productVariant.CustomerEntersPrice)
+            {
+                txtCustomerEnteredPrice.Visible = true;
+                txtCustomerEnteredPrice.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
+                txtCustomerEnteredPrice.Value = (int)productVariant.MinimumCustomerEnteredPrice;
+                txtCustomerEnteredPrice.MinimumValue = ((int)productVariant.MinimumCustomerEnteredPrice).ToString();
+                txtCustomerEnteredPrice.MaximumValue = ((int)productVariant.MaximumCustomerEnteredPrice).ToString();
+                txtCustomerEnteredPrice.RangeErrorMessage = string.Format(GetLocaleResourceString("Products.CustomerEnteredPrice.Range"), (int)productVariant.MinimumCustomerEnteredPrice, (int)productVariant.MaximumCustomerEnteredPrice);
+            }
+            else
+            {
+                txtCustomerEnteredPrice.Visible = false;
+            }
 
+            //buttons
             if(!productVariant.DisableBuyButton)
             {
                 txtQuantity.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
@@ -133,6 +149,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                 btnAddToWishlist.Visible = false;
             }
 
+            //samle downlaods
             if(pnlDownloadSample != null && hlDownloadSample != null)
             {
                 if(productVariant.IsDownload && productVariant.HasSampleDownload)
@@ -202,6 +219,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             }
 
             string attributes = ctrlProductAttributes.SelectedAttributes;
+            decimal customerEnteredPrice = txtCustomerEnteredPrice.Value;
             int quantity = txtQuantity.Value;
 
             //gift cards
@@ -220,8 +238,12 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             {
                 if(e.CommandName == "AddToCart")
                 {
-                    var addToCartWarnings = ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart,
-                        pv.ProductVariantID, attributes, quantity);
+                    var addToCartWarnings = ShoppingCartManager.AddToCart(
+                        ShoppingCartTypeEnum.ShoppingCart,
+                        pv.ProductVariantID, 
+                        attributes,
+                        customerEnteredPrice,
+                        quantity);
                     if(addToCartWarnings.Count == 0)
                     {
                         Response.Redirect("~/shoppingcart.aspx");
@@ -243,8 +265,12 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
 
                 if(e.CommandName == "AddToWishlist")
                 {
-                    var addToCartWarnings = ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.Wishlist,
-                        pv.ProductVariantID, attributes, quantity);
+                    var addToCartWarnings = ShoppingCartManager.AddToCart(
+                        ShoppingCartTypeEnum.Wishlist,
+                        pv.ProductVariantID, 
+                        attributes,
+                        customerEnteredPrice,
+                        quantity);
                     if(addToCartWarnings.Count == 0)
                     {
                         Response.Redirect("~/wishlist.aspx");

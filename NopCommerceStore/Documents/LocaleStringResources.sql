@@ -218,6 +218,78 @@ set @resources='
   <LocaleResource Name="Admin.PurchasedGiftCards.PurchasedTo.Tooltip">
     <Value>The purchased to date for the search.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.CustomerEntersPrice">
+    <Value>Customer enters price:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.CustomerEntersPrice.Tooltip">
+    <Value>An option indicating whether customer should enter price.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MinimumCustomerEnteredPrice">
+    <Value>Minimum amount:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MinimumCustomerEnteredPrice.Tooltip">
+    <Value>Enter a minimum amount.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MinimumCustomerEnteredPrice.RequiredErrorMessage">
+    <Value>Minimum amount is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MinimumCustomerEnteredPrice.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MaximumCustomerEnteredPrice">
+    <Value>Maximum amount:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MaximumCustomerEnteredPrice.Tooltip">
+    <Value>Enter a maximum amount.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MaximumCustomerEnteredPrice.RequiredErrorMessage">
+    <Value>Maximum amount is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.MaximumCustomerEnteredPrice.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.CustomerEntersPrice">
+    <Value>Customer enters price:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.CustomerEntersPrice.Tooltip">
+    <Value>An option indicating whether customer should enter price.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MinimumCustomerEnteredPrice">
+    <Value>Minimum amount:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MinimumCustomerEnteredPrice.Tooltip">
+    <Value>Enter a minimum amount.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MinimumCustomerEnteredPrice.RequiredErrorMessage">
+    <Value>Minimum amount is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MinimumCustomerEnteredPrice.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MaximumCustomerEnteredPrice">
+    <Value>Maximum amount:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MaximumCustomerEnteredPrice.Tooltip">
+    <Value>Enter a maximum amount.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MaximumCustomerEnteredPrice.RequiredErrorMessage">
+    <Value>Maximum amount is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantInfo.MaximumCustomerEnteredPrice.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.EnterProductPrice">
+    <Value>Please enter your price:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.CustomerEnteredPrice.EnterPrice">
+    <Value>Enter price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.CustomerEnteredPrice.Range">
+    <Value>The price must be from {0} to {1}</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShoppingCart.CustomerEnteredPrice.RangeError">
+    <Value>The price must be from {0} to {1}</Value>
+  </LocaleResource>
 </Language>
 '
  		

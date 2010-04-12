@@ -4212,3 +4212,609 @@ BEGIN
 	SET ROWCOUNT 0
 END
 GO
+
+
+-- allow customer to enter price
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_ProductVariant]') and NAME='CustomerEntersPrice')
+BEGIN
+	ALTER TABLE [dbo].[Nop_ProductVariant] 
+	ADD CustomerEntersPrice bit NOT NULL CONSTRAINT [DF_Nop_ProductVariant_CustomerEntersPrice] DEFAULT ((0))
+END
+GO
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_ProductVariant]') and NAME='MinimumCustomerEnteredPrice')
+BEGIN
+	ALTER TABLE [dbo].[Nop_ProductVariant] 
+	ADD MinimumCustomerEnteredPrice money NOT NULL CONSTRAINT [DF_Nop_ProductVariant_MinimumCustomerEnteredPrice] DEFAULT ((0))
+END
+GO
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_ProductVariant]') and NAME='MaximumCustomerEnteredPrice')
+BEGIN
+	ALTER TABLE [dbo].[Nop_ProductVariant] 
+	ADD MaximumCustomerEnteredPrice money NOT NULL CONSTRAINT [DF_Nop_ProductVariant_MaximumCustomerEnteredPrice] DEFAULT ((1000))
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductVariantLoadByPrimaryKey]
+(
+	@ProductVariantID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT	 
+		pv.ProductVariantId, 
+		pv.ProductID, 
+		dbo.NOP_getnotnullnotempty(pvl.[Name],pv.[Name]) as [Name], 
+		pv.SKU, 
+		dbo.NOP_getnotnullnotempty(pvl.[Description],pv.[Description]) as [Description], 
+		pv.AdminComment, 
+		pv.ManufacturerPartNumber, 
+		pv.IsGiftCard, 
+		pv.IsDownload, 
+		pv.DownloadID,                      
+		pv.UnlimitedDownloads, 
+		pv.MaxNumberOfDownloads, 
+		pv.DownloadExpirationDays, 
+		pv.DownloadActivationType, 
+		pv.HasSampleDownload, 
+		pv.SampleDownloadID,                       
+		pv.HasUserAgreement, 
+		pv.UserAgreementText, 
+		pv.IsRecurring, 
+		pv.CycleLength, 
+		pv.CyclePeriod,
+		pv.TotalCycles, 
+		pv.IsShipEnabled, 
+		pv.IsFreeShipping, 
+		pv.AdditionalShippingCharge, 
+		pv.IsTaxExempt, 
+		pv.TaxCategoryID, 
+		pv.ManageInventory, 
+		pv.StockQuantity, 
+		pv.DisplayStockAvailability, 
+		pv.MinStockQuantity,                       
+		pv.LowStockActivityID, 
+		pv.NotifyAdminForQuantityBelow, 
+		pv.AllowOutOfStockOrders, 
+		pv.OrderMinimumQuantity, 
+		pv.OrderMaximumQuantity, 
+		pv.WarehouseID, 
+		pv.DisableBuyButton, 
+		pv.Price, 
+		pv.OldPrice, 
+		pv.ProductCost,
+		pv.CustomerEntersPrice,
+		pv.MinimumCustomerEnteredPrice,
+		pv.MaximumCustomerEnteredPrice,
+		pv.Weight, 
+		pv.Length, 
+		pv.Width, 
+		pv.Height, 
+		pv.PictureID, 
+		pv.AvailableStartDateTime, 
+		pv.AvailableEndDateTime, 
+		pv.Published,                      
+		pv.Deleted, 
+		pv.DisplayOrder, 
+		pv.CreatedOn, 
+		pv.UpdatedOn
+	FROM [Nop_ProductVariant] pv
+		LEFT OUTER JOIN [Nop_ProductVariantLocalized] pvl 
+		ON pvl.ProductVariantId = pv.ProductVariantId AND pvl.LanguageID = @LanguageID
+	WHERE
+		(pv.ProductVariantID = @ProductVariantID)
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLoadByProductID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLoadByProductID]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductVariantLoadByProductID]
+(
+	@ProductID int,
+	@LanguageID int,
+	@ShowHidden bit = 0
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		pv.ProductVariantId, 
+		pv.ProductID, 
+		dbo.NOP_getnotnullnotempty(pvl.[Name],pv.[Name]) as [Name], 
+		pv.SKU, 
+		dbo.NOP_getnotnullnotempty(pvl.[Description],pv.[Description]) as [Description], 
+		pv.AdminComment, 
+		pv.ManufacturerPartNumber, 
+		pv.IsGiftCard, 
+		pv.IsDownload, 
+		pv.DownloadID,                      
+		pv.UnlimitedDownloads, 
+		pv.MaxNumberOfDownloads, 
+		pv.DownloadExpirationDays, 
+		pv.DownloadActivationType, 
+		pv.HasSampleDownload, 
+		pv.SampleDownloadID,                       
+		pv.HasUserAgreement, 
+		pv.UserAgreementText, 
+		pv.IsRecurring, 
+		pv.CycleLength, 
+		pv.CyclePeriod,
+		pv.TotalCycles, 
+		pv.IsShipEnabled, 
+		pv.IsFreeShipping, 
+		pv.AdditionalShippingCharge, 
+		pv.IsTaxExempt, 
+		pv.TaxCategoryID, 
+		pv.ManageInventory, 
+		pv.StockQuantity, 
+		pv.DisplayStockAvailability, 
+		pv.MinStockQuantity,                       
+		pv.LowStockActivityID, 
+		pv.NotifyAdminForQuantityBelow, 
+		pv.AllowOutOfStockOrders, 
+		pv.OrderMinimumQuantity, 
+		pv.OrderMaximumQuantity, 
+		pv.WarehouseID, 
+		pv.DisableBuyButton, 
+		pv.Price, 
+		pv.OldPrice, 
+		pv.ProductCost, 
+		pv.CustomerEntersPrice,
+		pv.MinimumCustomerEnteredPrice,
+		pv.MaximumCustomerEnteredPrice,
+		pv.Weight, 
+		pv.Length, 
+		pv.Width, 
+		pv.Height, 
+		pv.PictureID, 
+		pv.AvailableStartDateTime, 
+		pv.AvailableEndDateTime, 
+		pv.Published,                      
+		pv.Deleted, 
+		pv.DisplayOrder, 
+		pv.CreatedOn, 
+		pv.UpdatedOn
+	FROM [Nop_ProductVariant] pv
+		LEFT OUTER JOIN [Nop_ProductVariantLocalized] pvl 
+		ON pvl.ProductVariantId = pv.ProductVariantId AND pvl.LanguageID = @LanguageID
+	WHERE 
+			(@ShowHidden = 1 OR pv.Published = 1) 
+		AND 
+			pv.Deleted=0
+		AND 
+			pv.ProductID = @ProductID
+		AND 
+			(
+				@ShowHidden = 1
+				OR
+				(getutcdate() between isnull(pv.AvailableStartDateTime, '1/1/1900') and isnull(pv.AvailableEndDateTime, '1/1/2999'))
+			)
+	order by pv.DisplayOrder
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductVariantInsert]
+(
+    @ProductVariantID int = NULL output,
+    @ProductId int,
+    @Name nvarchar(400),
+    @SKU nvarchar (400),
+    @Description nvarchar(4000),
+    @AdminComment nvarchar(4000),
+    @ManufacturerPartNumber nvarchar(100),
+	@IsGiftCard bit,
+    @IsDownload bit,
+    @DownloadID int,
+	@UnlimitedDownloads bit,
+	@MaxNumberOfDownloads int,
+	@DownloadExpirationDays int,
+	@DownloadActivationType int,
+	@HasSampleDownload bit,
+	@SampleDownloadID int,
+	@HasUserAgreement bit,
+	@UserAgreementText nvarchar(MAX),
+    @IsRecurring bit,
+    @CycleLength int,
+    @CyclePeriod int,
+    @TotalCycles int,
+    @IsShipEnabled bit,
+    @IsFreeShipping bit,
+	@AdditionalShippingCharge money,
+    @IsTaxExempt bit,
+    @TaxCategoryID int,
+	@ManageInventory int,
+    @StockQuantity int,
+	@DisplayStockAvailability bit,
+    @MinStockQuantity int,
+    @LowStockActivityID int,
+	@NotifyAdminForQuantityBelow int,
+	@AllowOutOfStockOrders bit,
+	@OrderMinimumQuantity int,
+	@OrderMaximumQuantity int,
+    @WarehouseId int,
+    @DisableBuyButton int,
+    @Price money,
+    @OldPrice money,
+	@ProductCost money,
+	@CustomerEntersPrice bit,
+	@MinimumCustomerEnteredPrice money,
+	@MaximumCustomerEnteredPrice money,
+    @Weight float,
+    @Length decimal(18, 4),
+    @Width decimal(18, 4),
+    @Height decimal(18, 4),
+    @PictureID int,
+	@AvailableStartDateTime datetime,
+	@AvailableEndDateTime datetime,
+    @Published bit,
+    @Deleted bit,
+    @DisplayOrder int,
+	@CreatedOn datetime,
+    @UpdatedOn datetime
+)
+AS
+BEGIN
+    INSERT
+    INTO [Nop_ProductVariant]
+    (
+        ProductId,
+        [Name],
+        SKU,
+        [Description],
+        AdminComment,
+        ManufacturerPartNumber,
+		IsGiftCard,
+        IsDownload,
+        DownloadID,
+		UnlimitedDownloads,
+		MaxNumberOfDownloads,
+		DownloadExpirationDays,
+		DownloadActivationType,
+		HasSampleDownload,
+		SampleDownloadID,
+		HasUserAgreement,
+		UserAgreementText,
+		IsRecurring,
+		CycleLength,
+		CyclePeriod,
+		TotalCycles,
+        IsShipEnabled,
+        IsFreeShipping,
+		AdditionalShippingCharge,
+        IsTaxExempt,
+        TaxCategoryID,
+		ManageInventory,
+		DisplayStockAvailability,
+        StockQuantity,
+        MinStockQuantity,
+        LowStockActivityID,
+		NotifyAdminForQuantityBelow,
+		AllowOutOfStockOrders,
+		OrderMinimumQuantity,
+		OrderMaximumQuantity,
+        WarehouseId,
+        DisableBuyButton,
+        Price,
+        OldPrice,
+		ProductCost,
+		CustomerEntersPrice,
+		MinimumCustomerEnteredPrice,
+		MaximumCustomerEnteredPrice,
+        Weight,
+        [Length],
+        Width,
+        Height,
+        PictureID,
+		AvailableStartDateTime,
+		AvailableEndDateTime,
+        Published,
+        Deleted,
+        DisplayOrder,
+        CreatedOn,
+        UpdatedOn
+    )
+    VALUES
+    (
+        @ProductId,
+        @Name,
+        @SKU,
+        @Description,
+        @AdminComment,
+        @ManufacturerPartNumber,
+		@IsGiftCard,
+        @IsDownload,
+        @DownloadID,
+		@UnlimitedDownloads,
+		@MaxNumberOfDownloads,
+		@DownloadExpirationDays,
+		@DownloadActivationType,
+		@HasSampleDownload,
+		@SampleDownloadID,
+		@HasUserAgreement,
+		@UserAgreementText,
+		@IsRecurring,
+		@CycleLength,
+		@CyclePeriod,
+		@TotalCycles,
+        @IsShipEnabled,
+        @IsFreeShipping,
+		@AdditionalShippingCharge,
+        @IsTaxExempt,
+        @TaxCategoryID,
+		@ManageInventory,
+		@DisplayStockAvailability,
+        @StockQuantity,
+        @MinStockQuantity,
+        @LowStockActivityID,
+		@NotifyAdminForQuantityBelow,
+		@AllowOutOfStockOrders,
+		@OrderMinimumQuantity,
+		@OrderMaximumQuantity,
+        @WarehouseId,
+        @DisableBuyButton,
+        @Price,
+        @OldPrice,
+		@ProductCost,
+		@CustomerEntersPrice,
+		@MinimumCustomerEnteredPrice,
+		@MaximumCustomerEnteredPrice,
+        @Weight,
+        @Length,
+        @Width,
+        @Height,
+        @PictureID,
+		@AvailableStartDateTime,
+		@AvailableEndDateTime,
+        @Published,
+        @Deleted,
+        @DisplayOrder,
+        @CreatedOn,
+        @UpdatedOn
+    )
+
+    set @ProductVariantID=SCOPE_IDENTITY()
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductVariantUpdate]
+(
+	@ProductVariantID int,
+	@ProductId int,
+	@Name nvarchar(400),
+	@SKU nvarchar (400),
+	@Description nvarchar(4000),
+	@AdminComment nvarchar(4000),
+	@ManufacturerPartNumber nvarchar(100),
+	@IsGiftCard bit,
+	@IsDownload bit,
+	@DownloadID int,
+	@UnlimitedDownloads bit,
+	@MaxNumberOfDownloads int,
+	@DownloadExpirationDays int,
+	@DownloadActivationType int,
+	@HasSampleDownload bit,
+	@SampleDownloadID int,
+	@HasUserAgreement bit,
+	@UserAgreementText nvarchar(MAX),
+    @IsRecurring bit,
+    @CycleLength int,
+    @CyclePeriod int,
+    @TotalCycles int,
+	@IsShipEnabled bit,
+	@IsFreeShipping bit,
+	@AdditionalShippingCharge money,
+	@IsTaxExempt bit,
+	@TaxCategoryID int,
+	@ManageInventory int,
+	@StockQuantity int,
+	@DisplayStockAvailability bit,
+	@MinStockQuantity int,
+	@LowStockActivityID int,
+	@NotifyAdminForQuantityBelow int,
+	@AllowOutOfStockOrders bit,
+	@OrderMinimumQuantity int,
+	@OrderMaximumQuantity int,
+	@WarehouseId int,
+	@DisableBuyButton bit,
+	@Price money,
+	@OldPrice money,
+	@ProductCost money,
+	@CustomerEntersPrice bit,
+	@MinimumCustomerEnteredPrice money,
+	@MaximumCustomerEnteredPrice money,
+	@Weight float,
+	@Length decimal(18, 4),
+	@Width decimal(18, 4),
+	@Height decimal(18, 4),
+	@PictureID int,
+	@AvailableStartDateTime datetime,
+	@AvailableEndDateTime datetime,
+	@Published bit,
+	@Deleted bit,
+	@DisplayOrder int,
+	@CreatedOn datetime,
+	@UpdatedOn datetime
+)
+AS
+BEGIN
+	UPDATE [Nop_ProductVariant]
+	SET
+		ProductId=@ProductId,
+		[Name]=@Name,
+		[SKU]=@SKU,
+		[Description]=@Description,
+		AdminComment=@AdminComment,
+		ManufacturerPartNumber=@ManufacturerPartNumber,		
+		IsGiftCard=@IsGiftCard,
+		IsDownload=@IsDownload,
+		DownloadID=@DownloadID,
+		UnlimitedDownloads=@UnlimitedDownloads,
+		MaxNumberOfDownloads=@MaxNumberOfDownloads,
+		DownloadExpirationDays=@DownloadExpirationDays,
+		DownloadActivationType=@DownloadActivationType,
+		HasSampleDownload=@HasSampleDownload,
+		SampleDownloadID=@SampleDownloadID,
+		HasUserAgreement=@HasUserAgreement,
+		UserAgreementText=@UserAgreementText,
+		IsRecurring=@IsRecurring,
+		CycleLength=@CycleLength,
+		CyclePeriod=@CyclePeriod,
+		TotalCycles=@TotalCycles,
+		IsShipEnabled=@IsShipEnabled,
+		IsFreeShipping=@IsFreeShipping,
+		AdditionalShippingCharge=@AdditionalShippingCharge,
+		IsTaxExempt=@IsTaxExempt,
+		TaxCategoryID=@TaxCategoryID,
+		ManageInventory=@ManageInventory,
+		StockQuantity=@StockQuantity,
+		DisplayStockAvailability=@DisplayStockAvailability,
+		MinStockQuantity=@MinStockQuantity,
+		LowStockActivityID=@LowStockActivityID,
+		NotifyAdminForQuantityBelow=@NotifyAdminForQuantityBelow,
+		AllowOutOfStockOrders=@AllowOutOfStockOrders,
+		OrderMinimumQuantity=@OrderMinimumQuantity,
+		OrderMaximumQuantity=@OrderMaximumQuantity,
+		WarehouseId=@WarehouseId,
+		DisableBuyButton=@DisableBuyButton,
+		Price=@Price,
+		OldPrice=@OldPrice,
+		ProductCost=@ProductCost,
+		CustomerEntersPrice=@CustomerEntersPrice,
+		MinimumCustomerEnteredPrice=@MinimumCustomerEnteredPrice,
+		MaximumCustomerEnteredPrice=@MaximumCustomerEnteredPrice,
+		Weight=@Weight,
+		[Length]=@Length,
+		Width=@Width,
+		Height=@Height,
+		PictureID=@PictureID,
+		AvailableStartDateTime=@AvailableStartDateTime,
+		AvailableEndDateTime=@AvailableEndDateTime,
+		Published=@Published,
+		Deleted=@Deleted,
+		DisplayOrder=@DisplayOrder,
+		CreatedOn=@CreatedOn,
+		UpdatedOn=@UpdatedOn
+	WHERE
+		ProductVariantID = @ProductVariantID
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_ShoppingCartItem]') and NAME='CustomerEnteredPrice')
+BEGIN
+	ALTER TABLE [dbo].[Nop_ShoppingCartItem] 
+	ADD CustomerEnteredPrice money NOT NULL CONSTRAINT [DF_Nop_ShoppingCartItem_CustomerEnteredPrice] DEFAULT ((0))
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ShoppingCartItemInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ShoppingCartItemInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_ShoppingCartItemInsert]
+(
+	@ShoppingCartItemID int = NULL output,
+	@ShoppingCartTypeID int,
+	@CustomerSessionGUID uniqueidentifier,
+	@ProductVariantID int,
+	@AttributesXML XML,
+	@CustomerEnteredPrice money,
+	@Quantity int,
+	@CreatedOn datetime,
+	@UpdatedOn datetime
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_ShoppingCartItem]
+	(
+		ShoppingCartTypeID,
+		CustomerSessionGUID,
+		ProductVariantID,
+		AttributesXML,
+		CustomerEnteredPrice,
+		Quantity,
+		CreatedOn,
+		UpdatedOn
+	)
+	VALUES
+	(
+		@ShoppingCartTypeID,
+		@CustomerSessionGUID,
+		@ProductVariantID,
+		@AttributesXML,
+		@CustomerEnteredPrice,
+		@Quantity,
+		@CreatedOn,
+		@UpdatedOn
+	)
+
+	set @ShoppingCartItemID=SCOPE_IDENTITY()
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ShoppingCartItemUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ShoppingCartItemUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_ShoppingCartItemUpdate]
+(
+	@ShoppingCartItemID int,
+	@ShoppingCartTypeID int,
+	@CustomerSessionGUID uniqueidentifier,
+	@ProductVariantID int,
+	@AttributesXML XML,
+	@CustomerEnteredPrice money,
+	@Quantity int,
+	@CreatedOn datetime,
+	@UpdatedOn datetime
+)
+AS
+BEGIN
+	UPDATE [Nop_ShoppingCartItem]
+	SET
+			ShoppingCartTypeID=@ShoppingCartTypeID,
+			CustomerSessionGUID=@CustomerSessionGUID,
+			ProductVariantID=@ProductVariantID,	
+			AttributesXML=@AttributesXML,
+			CustomerEnteredPrice=@CustomerEnteredPrice,
+			Quantity=@Quantity,
+			CreatedOn=@CreatedOn,
+			UpdatedOn=@UpdatedOn
+	WHERE
+		ShoppingCartItemID = @ShoppingCartItemID
+END
+GO

@@ -51,52 +51,67 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
             if (productVariant != null)
             {
-                decimal oldPriceBase = TaxManager.GetPrice(productVariant, productVariant.OldPrice);
-                decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
-                decimal finalPriceWithDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, true));
-
-                decimal oldPrice = CurrencyManager.ConvertCurrency(oldPriceBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                decimal finalPriceWithDiscount = CurrencyManager.ConvertCurrency(finalPriceWithDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-
-                if (finalPriceWithoutDiscountBase != oldPriceBase && oldPriceBase > decimal.Zero)
+                if (productVariant.CustomerEntersPrice)
                 {
-                    lblOldPrice.Text = PriceHelper.FormatPrice(oldPrice);
-                    lblPriceValue.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
-                    phOldPrice.Visible = true;
-                }
-                else
-                {
-                    lblPriceValue.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
                     phOldPrice.Visible = false;
-                }
-
-                if (finalPriceWithoutDiscountBase != finalPriceWithDiscountBase)
-                {
-                    lblFinalPriceWithDiscount.Text = PriceHelper.FormatPrice(finalPriceWithDiscount);
-                    phDiscount.Visible = true;
-                }
-                else
-                {
+                    lblPrice.Visible = false;
+                    lblPriceValue.Visible = false;
                     phDiscount.Visible = false;
-                }
 
-                if (phDiscount.Visible)
-                {
-                    lblPriceValue.CssClass = string.Empty;
+                    lblCustomerEnterPrise.Visible = true;
+                    lblCustomerEnterPrise.Text = GetLocaleResourceString("Products.EnterProductPrice");
                 }
                 else
                 {
-                    lblPriceValue.CssClass = "productPrice";
-                }
+                    decimal oldPriceBase = TaxManager.GetPrice(productVariant, productVariant.OldPrice);
+                    decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
+                    decimal finalPriceWithDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, true));
 
-                if (phDiscount.Visible || phOldPrice.Visible)
-                {
-                    lblPrice.Text = GetLocaleResourceString("Products.FinalPriceWithoutDiscount");
+                    decimal oldPrice = CurrencyManager.ConvertCurrency(oldPriceBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                    decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                    decimal finalPriceWithDiscount = CurrencyManager.ConvertCurrency(finalPriceWithDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+
+                    if (finalPriceWithoutDiscountBase != oldPriceBase && oldPriceBase > decimal.Zero)
+                    {
+                        lblOldPrice.Text = PriceHelper.FormatPrice(oldPrice);
+                        lblPriceValue.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
+                        phOldPrice.Visible = true;
+                    }
+                    else
+                    {
+                        lblPriceValue.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
+                        phOldPrice.Visible = false;
+                    }
+
+                    if (finalPriceWithoutDiscountBase != finalPriceWithDiscountBase)
+                    {
+                        lblFinalPriceWithDiscount.Text = PriceHelper.FormatPrice(finalPriceWithDiscount);
+                        phDiscount.Visible = true;
+                    }
+                    else
+                    {
+                        phDiscount.Visible = false;
+                    }
+
+                    if (phDiscount.Visible)
+                    {
+                        lblPriceValue.CssClass = string.Empty;
+                    }
+                    else
+                    {
+                        lblPriceValue.CssClass = "productPrice";
+                    }
+
+                    if (phDiscount.Visible || phOldPrice.Visible)
+                    {
+                        lblPrice.Text = GetLocaleResourceString("Products.FinalPriceWithoutDiscount");
+                    }
                 }
             }
             else
+            {
                 this.Visible = false;
+            }
         }
 
         public int ProductVariantID

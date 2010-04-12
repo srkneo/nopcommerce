@@ -1510,12 +1510,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
                         foreach (ShoppingCartItem item in cart1)
                         {
-                            ShoppingCartManager.AddToCart(item.ShoppingCartType, item.ProductVariantID, item.AttributesXML, item.Quantity);
+                            ShoppingCartManager.AddToCart(
+                                item.ShoppingCartType, 
+                                item.ProductVariantID, 
+                                item.AttributesXML,
+                                item.CustomerEnteredPrice, 
+                                item.Quantity);
                             ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemID, true);
                         }
                         foreach (ShoppingCartItem item in cart2)
                         {
-                            ShoppingCartManager.AddToCart(item.ShoppingCartType, item.ProductVariantID, item.AttributesXML, item.Quantity);
+                            ShoppingCartManager.AddToCart(
+                                item.ShoppingCartType, 
+                                item.ProductVariantID, 
+                                item.AttributesXML, 
+                                item.CustomerEnteredPrice, 
+                                item.Quantity);
                             ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemID, true);
                         }
                     }

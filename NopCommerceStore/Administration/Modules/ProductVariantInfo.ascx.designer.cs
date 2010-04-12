@@ -257,6 +257,60 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.CheckBox cbDisableBuyButton;
         
         /// <summary>
+        /// lblCustomerEntersPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblCustomerEntersPrice;
+        
+        /// <summary>
+        /// cbCustomerEntersPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbCustomerEntersPrice;
+        
+        /// <summary>
+        /// lblMinimumCustomerEnteredPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblMinimumCustomerEnteredPrice;
+        
+        /// <summary>
+        /// txtMinimumCustomerEnteredPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.NumericTextBox txtMinimumCustomerEnteredPrice;
+        
+        /// <summary>
+        /// lblMaximumCustomerEnteredPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblMaximumCustomerEnteredPrice;
+        
+        /// <summary>
+        /// txtMaximumCustomerEnteredPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.NumericTextBox txtMaximumCustomerEnteredPrice;
+        
+        /// <summary>
         /// lblAvailableStartDateTime control.
         /// </summary>
         /// <remarks>

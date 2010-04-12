@@ -81,34 +81,50 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if (!product.HasMultipleVariants)
                     {
                         var productVariant = productVariantCollection[0];
-
-                        decimal oldPriceBase = TaxManager.GetPrice(productVariant, productVariant.OldPrice);
-                        decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
-
-                        decimal oldPrice = CurrencyManager.ConvertCurrency(oldPriceBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                        decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-
-                        if (finalPriceWithoutDiscountBase != oldPriceBase && oldPriceBase != decimal.Zero)
+                        if (productVariant.CustomerEntersPrice)
                         {
-                            lblOldPrice.Text = PriceHelper.FormatPrice(oldPrice);
-                            lblPrice.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
+                            lblOldPrice.Visible = false;
+                            lblPrice.Visible = false;
+                            btnAddToCart.Visible = false;
                         }
                         else
                         {
-                            lblOldPrice.Visible = false;
-                            lblPrice.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
-                        }
+                            decimal oldPriceBase = TaxManager.GetPrice(productVariant, productVariant.OldPrice);
+                            decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
 
-                        btnAddToCart.Visible = (!productVariant.DisableBuyButton);
+                            decimal oldPrice = CurrencyManager.ConvertCurrency(oldPriceBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                            decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+
+                            if (finalPriceWithoutDiscountBase != oldPriceBase && oldPriceBase != decimal.Zero)
+                            {
+                                lblOldPrice.Text = PriceHelper.FormatPrice(oldPrice);
+                                lblPrice.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
+                            }
+                            else
+                            {
+                                lblOldPrice.Visible = false;
+                                lblPrice.Text = PriceHelper.FormatPrice(finalPriceWithoutDiscount);
+                            }
+
+                            btnAddToCart.Visible = (!productVariant.DisableBuyButton);
+                        }
                     }
                     else
                     {
                         var productVariant = product.MinimalPriceProductVariant;
                         if (productVariant != null)
                         {
-                            decimal fromPriceBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
-                            decimal fromPrice = CurrencyManager.ConvertCurrency(fromPriceBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                            lblPrice.Text = String.Format(GetLocaleResourceString("Products.PriceRangeFromText"), PriceHelper.FormatPrice(fromPrice));
+                            if (productVariant.CustomerEntersPrice)
+                            {
+                                lblOldPrice.Visible = false;
+                                lblPrice.Visible = false;
+                            }
+                            else
+                            {
+                                decimal fromPriceBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
+                                decimal fromPrice = CurrencyManager.ConvertCurrency(fromPriceBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                                lblPrice.Text = String.Format(GetLocaleResourceString("Products.PriceRangeFromText"), PriceHelper.FormatPrice(fromPrice));
+                            }
                         }
 
                         btnAddToCart.Visible = false;
@@ -137,7 +153,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (ProductManager.DirectAddToCartAllowed(productID, out productVariantID))
             {
                 var addToCartWarnings = ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart, 
-                    productVariantID, string.Empty, 1);
+                    productVariantID, string.Empty, decimal.Zero, 1);
                 if (addToCartWarnings.Count == 0)
                 {
                     Response.Redirect("~/shoppingcart.aspx");

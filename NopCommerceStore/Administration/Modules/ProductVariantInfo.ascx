@@ -7,11 +7,23 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        toggleCustomerEntersPrice();
         toggleDownloadableProduct();
         toggleRecurring();
         toggleShipping();
         toggleManageStock();
     });
+
+    function toggleCustomerEntersPrice() {
+        if (getE('<%=cbCustomerEntersPrice.ClientID %>').checked) {
+            $('#pnlMinimumCustomerEnteredPrice').show();
+            $('#pnlMaximumCustomerEnteredPrice').show();
+        }
+        else {
+            $('#pnlMinimumCustomerEnteredPrice').hide();
+            $('#pnlMaximumCustomerEnteredPrice').hide();
+        }
+    }
 
     function toggleDownloadableProduct() {
         if (getE('<%=cbIsDownload.ClientID %>').checked) {
@@ -322,6 +334,44 @@
         </td>
         <td class="adminData">
             <asp:CheckBox ID="cbDisableBuyButton" runat="server" Checked="False"></asp:CheckBox>
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblCustomerEntersPrice" Text="<% $NopResources:Admin.ProductVariantInfo.CustomerEntersPrice %>"
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.CustomerEntersPrice.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <asp:CheckBox ID="cbCustomerEntersPrice" runat="server" Checked="False"></asp:CheckBox>
+        </td>
+    </tr>
+    <tr id="pnlMinimumCustomerEnteredPrice">
+        <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblMinimumCustomerEnteredPrice" Text="<% $NopResources:Admin.ProductVariantInfo.MinimumCustomerEnteredPrice %>"
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.MinimumCustomerEnteredPrice.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
+            [<%=CurrencyManager.PrimaryStoreCurrency.CurrencyCode%>]:
+        </td>
+        <td class="adminData">
+            <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtMinimumCustomerEnteredPrice"
+                Value="0" RequiredErrorMessage="<% $NopResources:Admin.ProductVariantInfo.MinimumCustomerEnteredPrice.RequiredErrorMessage%>"
+                MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.ProductVariantInfo.MinimumCustomerEnteredPrice.RangeErrorMessage %>">
+            </nopCommerce:NumericTextBox>
+        </td>
+    </tr>
+    <tr id="pnlMaximumCustomerEnteredPrice">
+        <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblMaximumCustomerEnteredPrice" Text="<% $NopResources:Admin.ProductVariantInfo.MaximumCustomerEnteredPrice %>"
+                ToolTip="<% $NopResources:Admin.ProductVariantInfo.MaximumCustomerEnteredPrice.Tooltip %>"
+                ToolTipImage="~/Administration/Common/ico-help.gif" />
+            [<%=CurrencyManager.PrimaryStoreCurrency.CurrencyCode%>]:
+        </td>
+        <td class="adminData">
+            <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtMaximumCustomerEnteredPrice"
+                Value="1000" RequiredErrorMessage="<% $NopResources:Admin.ProductVariantInfo.MaximumCustomerEnteredPrice.RequiredErrorMessage%>"
+                MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.ProductVariantInfo.MaximumCustomerEnteredPrice.RangeErrorMessage %>">
+            </nopCommerce:NumericTextBox>
         </td>
     </tr>
     <tr>

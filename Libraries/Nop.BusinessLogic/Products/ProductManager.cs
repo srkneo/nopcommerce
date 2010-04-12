@@ -262,6 +262,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.Price = dbItem.Price;
             item.OldPrice = dbItem.OldPrice;
             item.ProductCost = dbItem.ProductCost;
+            item.CustomerEntersPrice = dbItem.CustomerEntersPrice;
+            item.MinimumCustomerEnteredPrice = dbItem.MinimumCustomerEnteredPrice;
+            item.MaximumCustomerEnteredPrice = dbItem.MaximumCustomerEnteredPrice;
             item.Weight = dbItem.Weight;
             item.Length = dbItem.Length;
             item.Width = dbItem.Width;
@@ -1254,14 +1257,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 if (productVariants.Count == 1)
                 {
                     var defaultProductVariant = productVariants[0];
-
-                    var addToCartWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(ShoppingCartTypeEnum.ShoppingCart,
-                        defaultProductVariant.ProductVariantID, string.Empty, 1);
-
-                    if (addToCartWarnings.Count == 0)
+                    if (!defaultProductVariant.CustomerEntersPrice)
                     {
-                        ProductVariantID = defaultProductVariant.ProductVariantID;
-                        result = true;
+                        var addToCartWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(ShoppingCartTypeEnum.ShoppingCart,
+                            defaultProductVariant.ProductVariantID, string.Empty, decimal.Zero, 1);
+
+                        if (addToCartWarnings.Count == 0)
+                        {
+                            ProductVariantID = defaultProductVariant.ProductVariantID;
+                            result = true;
+                        }
                     }
                 }
             }
@@ -1424,7 +1429,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
                         productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
                         productVariant.WarehouseId, productVariant.DisableBuyButton,
-                        productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
+                        productVariant.Price, productVariant.OldPrice, 
+                        productVariant.ProductCost, productVariant.CustomerEntersPrice,
+                        productVariant.MinimumCustomerEnteredPrice, productVariant.MaximumCustomerEnteredPrice,
                         productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, pictureID,
                         productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                         productVariant.Published, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
@@ -1524,6 +1531,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
                     productVariant.DisableBuyButton, productVariant.Price,
                     productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.CustomerEntersPrice,
+                    productVariant.MinimumCustomerEnteredPrice, 
+                    productVariant.MaximumCustomerEnteredPrice,
                     productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, 0,
                     productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                     productVariant.Published, productVariant.Deleted,
@@ -1569,6 +1579,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
                     productVariant.DisableBuyButton, productVariant.Price,
                     productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.CustomerEntersPrice,
+                    productVariant.MinimumCustomerEnteredPrice, 
+                    productVariant.MaximumCustomerEnteredPrice,
                     productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
                     productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                     productVariant.Published, productVariant.Deleted,
@@ -1602,7 +1615,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
                     productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
                     productVariant.OrderMaximumQuantity, productVariant.WarehouseId,
-                    productVariant.DisableBuyButton, productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.DisableBuyButton, productVariant.Price, productVariant.OldPrice,
+                    productVariant.ProductCost, productVariant.CustomerEntersPrice,
+                    productVariant.MinimumCustomerEnteredPrice, productVariant.MaximumCustomerEnteredPrice,
                     productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
                     productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                     productVariant.Published, productVariant.Deleted,
@@ -1711,6 +1726,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="Price">The price</param>
         /// <param name="OldPrice">The old price</param>
         /// <param name="ProductCost">The product cost</param>
+        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
         /// <param name="Weight">The weight</param>
         /// <param name="Length">The length</param>
         /// <param name="Width">The width</param>
@@ -1737,7 +1755,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int MinStockQuantity, LowStockActivityEnum LowStockActivity,
             int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
             int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice, decimal ProductCost,
+            int WarehouseId, bool DisableBuyButton, decimal Price,
+            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice,
+            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
             decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
             DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
            bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
@@ -1762,7 +1782,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 StockQuantity, DisplayStockAvailability, MinStockQuantity, (int)LowStockActivity,
                 NotifyAdminForQuantityBelow, AllowOutOfStockOrders, OrderMinimumQuantity,
                 OrderMaximumQuantity, WarehouseId, DisableBuyButton,
-                Price, OldPrice, ProductCost,
+                Price, OldPrice, ProductCost, CustomerEntersPrice,
+                MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice,
                 Weight, Length, Width, Height, PictureID,
                 AvailableStartDateTime, AvailableEndDateTime,
                 Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
@@ -1822,6 +1843,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="Price">The price</param>
         /// <param name="OldPrice">The old price</param>
         /// <param name="ProductCost">The product cost</param>
+        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
         /// <param name="Weight">The weight</param>
         /// <param name="Length">The length</param>
         /// <param name="Width">The width</param>
@@ -1847,8 +1871,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int MinStockQuantity, LowStockActivityEnum LowStockActivity,
             int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
             int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice,
-            decimal ProductCost, decimal Weight, decimal Length, decimal Width,
+            int WarehouseId, bool DisableBuyButton, decimal Price, 
+            decimal OldPrice, decimal ProductCost,  bool CustomerEntersPrice,
+            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
+            decimal Weight, decimal Length, decimal Width,
             decimal Height, int PictureID, DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
             bool Published, bool Deleted, int DisplayOrder,
             DateTime CreatedOn, DateTime UpdatedOn)
@@ -1874,7 +1900,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 MinStockQuantity, (int)LowStockActivity,
                 NotifyAdminForQuantityBelow, AllowOutOfStockOrders,
                 OrderMinimumQuantity, OrderMaximumQuantity, WarehouseId, DisableBuyButton,
-                Price, OldPrice, ProductCost,
+                Price, OldPrice, ProductCost, CustomerEntersPrice,
+                MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice,
                 Weight, Length, Width, Height, PictureID,
                 AvailableStartDateTime, AvailableEndDateTime,
                 Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
@@ -2047,7 +2074,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
                     productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
                     productVariant.WarehouseId, productVariant.DisableBuyButton,
-                    productVariant.Price, productVariant.OldPrice, productVariant.ProductCost,
+                    productVariant.Price, productVariant.OldPrice,
+                    productVariant.ProductCost, productVariant.CustomerEntersPrice,
+                    productVariant.MinimumCustomerEnteredPrice, productVariant.MaximumCustomerEnteredPrice,
                     productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, productVariant.PictureID,
                     productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                     productVariant.Published, true, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
@@ -2127,7 +2156,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                              productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
                              productVariant.OrderMinimumQuantity, productVariant.OrderMaximumQuantity,
                              productVariant.WarehouseId, newDisableBuyButton, productVariant.Price,
-                             productVariant.OldPrice, productVariant.ProductCost,
+                             productVariant.OldPrice, productVariant.ProductCost, 
+                             productVariant.CustomerEntersPrice,
+                             productVariant.MinimumCustomerEnteredPrice, 
+                             productVariant.MaximumCustomerEnteredPrice,
                              productVariant.Weight, productVariant.Length, productVariant.Width,
                              productVariant.Height, productVariant.PictureID,
                              productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,

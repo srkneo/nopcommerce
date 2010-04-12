@@ -196,7 +196,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 foreach (ShoppingCartItem sci in Cart)
                 {
-                    List<String> sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(sci.ShoppingCartType, sci.ProductVariantID, sci.AttributesXML, sci.Quantity);
+                    List<String> sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(
+                        sci.ShoppingCartType, 
+                        sci.ProductVariantID, 
+                        sci.AttributesXML, 
+                        sci.CustomerEnteredPrice,
+                        sci.Quantity);
                     if (sciWarnings.Count > 0)
                     {
                         Response.Redirect("~/shoppingcart.aspx");

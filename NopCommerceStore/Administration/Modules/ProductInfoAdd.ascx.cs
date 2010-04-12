@@ -115,6 +115,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
             Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
 
+            this.cbCustomerEntersPrice.Attributes.Add("onclick", "toggleCustomerEntersPrice();");
+
             this.cbIsDownload.Attributes.Add("onclick", "toggleDownloadableProduct();");
             this.cbUseDownloadURL.Attributes.Add("onclick", "toggleDownloadableProduct();");
             this.cbUnlimitedDownloads.Attributes.Add("onclick", "toggleDownloadableProduct();");
@@ -233,6 +235,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             decimal price = txtPrice.Value;
             decimal oldPrice = txtOldPrice.Value;
             decimal productCost = txtProductCost.Value;
+            bool customerEntersPrice = cbCustomerEntersPrice.Checked;
+            decimal minimumCustomerEnteredPrice = txtMinimumCustomerEnteredPrice.Value;
+            decimal maximumCustomerEnteredPrice = txtMaximumCustomerEnteredPrice.Value;
             decimal weight = txtWeight.Value;
             decimal length = txtLength.Value;
             decimal width = txtWidth.Value;
@@ -264,8 +269,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                  taxCategoryID, manageStock, stockQuantity, displayStockAvailability,
                  minStockQuantity, lowStockActivity, notifyForQuantityBelow, allowOutOfStockOrders,
                  orderMinimumQuantity, orderMaximumQuantity, warehouseID, disableBuyButton,
-                 price, oldPrice, productCost, weight, length,
-                 width, height, 0, availableStartDateTime, availableEndDateTime,
+                 price, oldPrice, productCost, customerEntersPrice,
+                 minimumCustomerEnteredPrice, maximumCustomerEnteredPrice,
+                 weight, length, width, height, 0, availableStartDateTime, availableEndDateTime,
                  published, false, 1, nowDT, nowDT);
 
             saveLocalizableContent(product);

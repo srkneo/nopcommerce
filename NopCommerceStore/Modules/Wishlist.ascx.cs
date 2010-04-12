@@ -134,8 +134,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         int.TryParse(txtQuantity.Text, out quantity);
                         var sci = ShoppingCartManager.GetShoppingCartItemByID(shoppingCartItemID);
 
-                        var warnings = ShoppingCartManager.GetShoppingCartItemWarnings(sci.ShoppingCartType, 
-                            sci.ProductVariantID, sci.AttributesXML, quantity);
+                        var warnings = ShoppingCartManager.GetShoppingCartItemWarnings(
+                            sci.ShoppingCartType, 
+                            sci.ProductVariantID, 
+                            sci.AttributesXML, 
+                            sci.CustomerEnteredPrice,
+                            quantity);
 
                         if (warnings.Count > 0)
                         {
@@ -307,8 +311,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         var sci  = ShoppingCartManager.GetShoppingCartItemByID(shoppingCartItemID);
                         if (sci != null)
                         {
-                            ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart,
-                            sci.ProductVariantID, sci.AttributesXML, sci.Quantity);
+                            ShoppingCartManager.AddToCart(
+                                ShoppingCartTypeEnum.ShoppingCart,
+                                sci.ProductVariantID, 
+                                sci.AttributesXML,
+                                sci.CustomerEnteredPrice,
+                                sci.Quantity);
                         }
                     }
                 }

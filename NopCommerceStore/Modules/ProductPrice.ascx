@@ -5,6 +5,7 @@
     <asp:Label ID="lblOldPrice" runat="server" CssClass="oldProductPrice" />
 </asp:PlaceHolder>
 <br />
+<asp:Label ID="lblCustomerEnterPrise" runat="server" Visible="false" />
 <asp:Label ID="lblPrice" runat="server" Visible="false" />
 <asp:Label ID="lblPriceValue" runat="server" CssClass="productPrice" />
 <asp:PlaceHolder runat="server" ID="phDiscount">

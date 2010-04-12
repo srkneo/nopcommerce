@@ -141,8 +141,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         int.TryParse(txtQuantity.Text, out quantity);
                         var sci = ShoppingCartManager.GetShoppingCartItemByID(shoppingCartItemID);
 
-                        var warnings = ShoppingCartManager.GetShoppingCartItemWarnings(sci.ShoppingCartType,
-                            sci.ProductVariantID, sci.AttributesXML, quantity);
+                        var warnings = ShoppingCartManager.GetShoppingCartItemWarnings(
+                            sci.ShoppingCartType,
+                            sci.ProductVariantID,
+                            sci.AttributesXML,
+                            sci.CustomerEnteredPrice,
+                            quantity);
 
                         if (warnings.Count > 0)
                         {

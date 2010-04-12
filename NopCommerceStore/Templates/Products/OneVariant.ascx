@@ -64,6 +64,9 @@
                 <br />
                 <div class="one-variant-price">
                     <nopCommerce:ProductPrice ID="ctrlProductPrice2" runat="server" />
+                    <nopCommerce:NumericTextBox runat="server" ID="txtCustomerEnteredPrice" Value="1"
+                        RequiredErrorMessage="<% $NopResources:Products.CustomerEnteredPrice.EnterPrice %>"
+                        MinimumValue="0" MaximumValue="999999" Width="100"></nopCommerce:NumericTextBox>
                 </div>
                 <div class="add-info">
                     <nopCommerce:NumericTextBox runat="server" ID="txtQuantity" Value="1" RequiredErrorMessage="<% $NopResources:Products.EnterQuantity %>"

@@ -42,6 +42,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             shoppingCartItem.CustomerSessionGUID = NopSqlDataHelper.GetGuid(dataReader, "CustomerSessionGUID");
             shoppingCartItem.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
             shoppingCartItem.AttributesXML = NopSqlDataHelper.GetString(dataReader, "AttributesXML");
+            shoppingCartItem.CustomerEnteredPrice = NopSqlDataHelper.GetDecimal(dataReader, "CustomerEnteredPrice");
             shoppingCartItem.Quantity = NopSqlDataHelper.GetInt(dataReader, "Quantity");
             shoppingCartItem.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
             shoppingCartItem.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
@@ -164,13 +165,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="CustomerSessionGUID">The customer session identifier</param>
         /// <param name="ProductVariantID">The product variant identifier</param>
         /// <param name="AttributesXML">The product variant attributes</param>
+        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
         /// <param name="Quantity">The quantity</param>
         /// <param name="CreatedOn">The date and time of instance creation</param>
         /// <param name="UpdatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public override DBShoppingCartItem InsertShoppingCartItem(int ShoppingCartTypeID, Guid CustomerSessionGUID,
-          int ProductVariantID, string AttributesXML, int Quantity,
-           DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBShoppingCartItem InsertShoppingCartItem(int ShoppingCartTypeID, 
+            Guid CustomerSessionGUID, int ProductVariantID, string AttributesXML,
+            decimal CustomerEnteredPrice, int Quantity, DateTime CreatedOn, DateTime UpdatedOn)
         {
             DBShoppingCartItem shoppingCartItem = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
@@ -180,6 +182,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
             db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
             db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
+            db.AddInParameter(dbCommand, "CustomerEnteredPrice", DbType.Decimal, CustomerEnteredPrice);
             db.AddInParameter(dbCommand, "Quantity", DbType.Int32, Quantity);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
@@ -199,13 +202,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="CustomerSessionGUID">The customer session identifier</param>
         /// <param name="ProductVariantID">The product variant identifier</param>
         /// <param name="AttributesXML">The product variant attributes</param>
+        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
         /// <param name="Quantity">The quantity</param>
         /// <param name="CreatedOn">The date and time of instance creation</param>
         /// <param name="UpdatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public override DBShoppingCartItem UpdateShoppingCartItem(int ShoppingCartItemID, int ShoppingCartTypeID, Guid CustomerSessionGUID,
-          int ProductVariantID, string AttributesXML, int Quantity,
-           DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBShoppingCartItem UpdateShoppingCartItem(int ShoppingCartItemID, 
+            int ShoppingCartTypeID, Guid CustomerSessionGUID, int ProductVariantID,
+            string AttributesXML, decimal CustomerEnteredPrice, int Quantity,
+            DateTime CreatedOn, DateTime UpdatedOn)
         {
             DBShoppingCartItem shoppingCartItem = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
@@ -215,6 +220,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
             db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
             db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
+            db.AddInParameter(dbCommand, "CustomerEnteredPrice", DbType.Decimal, CustomerEnteredPrice);
             db.AddInParameter(dbCommand, "Quantity", DbType.Int32, Quantity);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);

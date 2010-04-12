@@ -142,6 +142,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             productVariant.Price = NopSqlDataHelper.GetDecimal(dataReader, "Price");
             productVariant.OldPrice = NopSqlDataHelper.GetDecimal(dataReader, "OldPrice");
             productVariant.ProductCost = NopSqlDataHelper.GetDecimal(dataReader, "ProductCost");
+            productVariant.CustomerEntersPrice = NopSqlDataHelper.GetBoolean(dataReader, "CustomerEntersPrice");
+            productVariant.MinimumCustomerEnteredPrice = NopSqlDataHelper.GetDecimal(dataReader, "MinimumCustomerEnteredPrice");
+            productVariant.MaximumCustomerEnteredPrice = NopSqlDataHelper.GetDecimal(dataReader, "MaximumCustomerEnteredPrice");
             productVariant.Weight = NopSqlDataHelper.GetDecimal(dataReader, "Weight");
             productVariant.Length = NopSqlDataHelper.GetDecimal(dataReader, "Length");
             productVariant.Width = NopSqlDataHelper.GetDecimal(dataReader, "Width");
@@ -1264,6 +1267,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="Price">The price</param>
         /// <param name="OldPrice">The old price</param>
         /// <param name="ProductCost">The product cost</param>
+        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
         /// <param name="Weight">The weight</param>
         /// <param name="Length">The length</param>
         /// <param name="Width">The width</param>
@@ -1289,7 +1295,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             int MinStockQuantity, int LowStockActivityID,
             int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
             int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice, decimal ProductCost,
+            int WarehouseId, bool DisableBuyButton, decimal Price,
+            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice,
+            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
             decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
             DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
             bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
@@ -1356,6 +1364,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             db.AddInParameter(dbCommand, "Price", DbType.Decimal, Price);
             db.AddInParameter(dbCommand, "OldPrice", DbType.Decimal, OldPrice);
             db.AddInParameter(dbCommand, "ProductCost", DbType.Decimal, ProductCost);
+            db.AddInParameter(dbCommand, "CustomerEntersPrice", DbType.Boolean, CustomerEntersPrice);
+            db.AddInParameter(dbCommand, "MinimumCustomerEnteredPrice", DbType.Decimal, MinimumCustomerEnteredPrice);
+            db.AddInParameter(dbCommand, "MaximumCustomerEnteredPrice", DbType.Decimal, MaximumCustomerEnteredPrice);
             db.AddInParameter(dbCommand, "Weight", DbType.Decimal, Weight);
             db.AddInParameter(dbCommand, "Length", DbType.Decimal, Length);
             db.AddInParameter(dbCommand, "Width", DbType.Decimal, Width);
@@ -1426,6 +1437,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="Price">The price</param>
         /// <param name="OldPrice">The old price</param>
         /// <param name="ProductCost">The product cost</param>
+        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
         /// <param name="Weight">The weight</param>
         /// <param name="Length">The length</param>
         /// <param name="Width">The width</param>
@@ -1451,7 +1465,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             int StockQuantity, bool DisplayStockAvailability, int MinStockQuantity, int LowStockActivityID,
             int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
             int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice, decimal ProductCost,
+            int WarehouseId, bool DisableBuyButton, decimal Price,
+            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice,
+            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
             decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
             DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
             bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
@@ -1518,6 +1534,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             db.AddInParameter(dbCommand, "Price", DbType.Decimal, Price);
             db.AddInParameter(dbCommand, "OldPrice", DbType.Decimal, OldPrice);
             db.AddInParameter(dbCommand, "ProductCost", DbType.Decimal, ProductCost);
+            db.AddInParameter(dbCommand, "CustomerEntersPrice", DbType.Boolean, CustomerEntersPrice);
+            db.AddInParameter(dbCommand, "MinimumCustomerEnteredPrice", DbType.Decimal, MinimumCustomerEnteredPrice);
+            db.AddInParameter(dbCommand, "MaximumCustomerEnteredPrice", DbType.Decimal, MaximumCustomerEnteredPrice);
             db.AddInParameter(dbCommand, "Weight", DbType.Decimal, Weight);
             db.AddInParameter(dbCommand, "Length", DbType.Decimal, Length);
             db.AddInParameter(dbCommand, "Width", DbType.Decimal, Width);

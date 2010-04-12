@@ -68,6 +68,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (e.CommandName == "AddToCart" || e.CommandName == "AddToWishlist")
             {
                 var txtQuantity = e.Item.FindControl("txtQuantity") as NumericTextBox;
+                var txtCustomerEnteredPrice = e.Item.FindControl("txtCustomerEnteredPrice") as NumericTextBox;
                 var productVariantID = e.Item.FindControl("ProductVariantID") as Label;
                 var ctrlProductAttributes = e.Item.FindControl("ctrlProductAttributes") as ProductAttributesControl;
                 var txtRecipientName = e.Item.FindControl("txtRecipientName") as TextBox;
@@ -82,6 +83,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     return;
 
                 string attributes = ctrlProductAttributes.SelectedAttributes;
+                decimal customerEnteredPrice = txtCustomerEnteredPrice.Value;
                 int quantity = txtQuantity.Value;
 
                 //gift cards
@@ -101,8 +103,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     if (e.CommandName == "AddToCart")
                     {
-                        List<string> addToCartWarnings = ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart,
-                            pv.ProductVariantID, attributes, quantity);
+                        List<string> addToCartWarnings = ShoppingCartManager.AddToCart(
+                            ShoppingCartTypeEnum.ShoppingCart,
+                            pv.ProductVariantID, 
+                            attributes, 
+                            customerEnteredPrice,
+                            quantity);
                         if (addToCartWarnings.Count == 0)
                         {
                             Response.Redirect("~/shoppingcart.aspx");
@@ -124,8 +130,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                     if (e.CommandName == "AddToWishlist")
                     {
-                        var addToCartWarnings = ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.Wishlist,
-                            pv.ProductVariantID, attributes, quantity);
+                        var addToCartWarnings = ShoppingCartManager.AddToCart(
+                            ShoppingCartTypeEnum.Wishlist,
+                            pv.ProductVariantID, 
+                            attributes, 
+                            customerEnteredPrice,
+                            quantity);
                         if (addToCartWarnings.Count == 0)
                         {
                             Response.Redirect("~/wishlist.aspx");
@@ -166,6 +176,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var pnlGiftCardInfo = e.Item.FindControl("pnlGiftCardInfo") as Panel;
                 var txtSenderName = e.Item.FindControl("txtSenderName") as TextBox;
                 var txtSenderEmail = e.Item.FindControl("txtSenderEmail") as TextBox;
+                var txtCustomerEnteredPrice = e.Item.FindControl("txtCustomerEnteredPrice") as NumericTextBox;
                 var txtQuantity = e.Item.FindControl("txtQuantity") as NumericTextBox;
                 var btnAddToCart = e.Item.FindControl("btnAddToCart") as Button;
                 var btnAddToWishlist = e.Item.FindControl("btnAddToWishlist") as Button;
@@ -223,6 +234,22 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                 }
 
+                //price entered by a customer
+                if (productVariant.CustomerEntersPrice)
+                {
+                    txtCustomerEnteredPrice.Visible = true;
+                    txtCustomerEnteredPrice.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
+                    txtCustomerEnteredPrice.Value = (int)productVariant.MinimumCustomerEnteredPrice;
+                    txtCustomerEnteredPrice.MinimumValue = ((int)productVariant.MinimumCustomerEnteredPrice).ToString();
+                    txtCustomerEnteredPrice.MaximumValue = ((int)productVariant.MaximumCustomerEnteredPrice).ToString();
+                    txtCustomerEnteredPrice.RangeErrorMessage = string.Format(GetLocaleResourceString("Products.CustomerEnteredPrice.Range"), (int)productVariant.MinimumCustomerEnteredPrice, (int)productVariant.MaximumCustomerEnteredPrice);
+                }
+                else
+                {
+                    txtCustomerEnteredPrice.Visible = false;
+                }
+
+                //buttons
                 if (!productVariant.DisableBuyButton)
                 {
                     txtQuantity.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
@@ -238,6 +265,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     btnAddToWishlist.Visible = false;
                 }
 
+                //sample downloads
                 if (pnlDownloadSample != null && hlDownloadSample != null)
                 {
                     if (productVariant.IsDownload && productVariant.HasSampleDownload)

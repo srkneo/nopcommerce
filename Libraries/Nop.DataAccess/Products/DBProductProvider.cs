@@ -438,6 +438,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="Price">The price</param>
         /// <param name="OldPrice">The old price</param>
         /// <param name="ProductCost">The product cost</param>
+        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
         /// <param name="Weight">The weight</param>
         /// <param name="Length">The length</param>
         /// <param name="Width">The width</param>
@@ -451,22 +454,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="CreatedOn">The date and time of instance creation</param>
         /// <param name="UpdatedOn">The date and time of instance update</param>
         /// <returns>Product variant</returns>
-        public abstract DBProductVariant InsertProductVariant(int ProductID, string Name, string SKU,
-            string Description, string AdminComment, string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload,
-            int DownloadID, bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
+        public abstract DBProductVariant InsertProductVariant(int ProductID,
+            string Name, string SKU,
+            string Description, string AdminComment, string ManufacturerPartNumber, 
+            bool IsGiftCard, bool IsDownload, int DownloadID, bool UnlimitedDownloads, 
+            int MaxNumberOfDownloads, int? DownloadExpirationDays,
             int DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring,
+            int SampleDownloadID, bool HasUserAgreement, 
+            string UserAgreementText, bool IsRecurring,
             int CycleLength, int CyclePeriod, int TotalCycles,
             bool IsShipEnabled, bool IsFreeShipping,
             decimal AdditionalShippingCharge, bool IsTaxExempt, int TaxCategoryID,
-            int ManageInventory, int StockQuantity, bool DisplayStockAvailability, 
+            int ManageInventory, int StockQuantity, bool DisplayStockAvailability,
             int MinStockQuantity, int LowStockActivityID,
             int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
             int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice, decimal ProductCost,
+            int WarehouseId, bool DisableBuyButton, decimal Price, 
+            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice, 
+            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
             decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
             DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
-            bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+            bool Published, bool Deleted, int DisplayOrder, 
+            DateTime CreatedOn, DateTime UpdatedOn);
 
         /// <summary>
         /// Updates the product variant
@@ -512,6 +521,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="Price">The price</param>
         /// <param name="OldPrice">The old price</param>
         /// <param name="ProductCost">The product cost</param>
+        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
         /// <param name="Weight">The weight</param>
         /// <param name="Length">The length</param>
         /// <param name="Width">The width</param>
@@ -525,19 +537,21 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="CreatedOn">The date and time of instance creation</param>
         /// <param name="UpdatedOn">The date and time of instance update</param>
         /// <returns>Product variant</returns>
-        public abstract DBProductVariant UpdateProductVariant(int ProductVariantID, int ProductID,
-            string Name, string SKU, string Description, string AdminComment,
+        public abstract DBProductVariant UpdateProductVariant(int ProductVariantID, 
+            int ProductID, string Name, string SKU, string Description, string AdminComment,
             string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
             bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
             int DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring,
-            int CycleLength, int CyclePeriod, int TotalCycles, bool IsShipEnabled,
-            bool IsFreeShipping, decimal AdditionalShippingCharge,
+            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, 
+            bool IsRecurring,  int CycleLength, int CyclePeriod, int TotalCycles, 
+            bool IsShipEnabled, bool IsFreeShipping, decimal AdditionalShippingCharge,
             bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
             int StockQuantity, bool DisplayStockAvailability, int MinStockQuantity, int LowStockActivityID,
             int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
             int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, decimal OldPrice, decimal ProductCost,
+            int WarehouseId, bool DisableBuyButton, decimal Price,
+            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice,
+            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
             decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
             DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
             bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);

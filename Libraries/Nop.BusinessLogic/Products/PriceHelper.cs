@@ -309,12 +309,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 {
                     attributesTotalPrice += pvaValue.PriceAdjustment;
                 }
-                finalPrice = GetFinalPrice(productVariant, customer, attributesTotalPrice, includeDiscounts);
 
-                if (productVariant.TierPrices.Count > 0)
+                if (productVariant.CustomerEntersPrice)
                 {
-                    decimal tierPrice = GetTierPrice(productVariant, shoppingCartItem.Quantity);
-                    finalPrice = Math.Min(finalPrice, tierPrice);
+                    finalPrice = shoppingCartItem.CustomerEnteredPrice;
+                }
+                else
+                {
+                    finalPrice = GetFinalPrice(productVariant, customer, attributesTotalPrice, includeDiscounts);
+
+                    if (productVariant.TierPrices.Count > 0)
+                    {
+                        decimal tierPrice = GetTierPrice(productVariant, shoppingCartItem.Quantity);
+                        finalPrice = Math.Min(finalPrice, tierPrice);
+                    }
                 }
             }
 
@@ -373,12 +381,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             decimal AdditionalCharge, out Discount appliedDiscount)
         {
             decimal appliedDiscountAmount = decimal.Zero;
+
+            //we don't apply discounts to products with price entered by a customer
+            if (productVariant.CustomerEntersPrice)
+            {
+                appliedDiscount = null;
+                return appliedDiscountAmount;
+            }
+
             appliedDiscount = GetPreferredDiscount(productVariant, customer, AdditionalCharge);
             if (appliedDiscount != null)
             {
                 decimal finalPriceWithoutDiscount = GetFinalPrice(productVariant, customer, AdditionalCharge, false);
                 appliedDiscountAmount = appliedDiscount.GetDiscountAmount(finalPriceWithoutDiscount);
             }
+
             return appliedDiscountAmount;
         }
 

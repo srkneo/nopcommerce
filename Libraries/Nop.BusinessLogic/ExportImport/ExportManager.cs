@@ -502,6 +502,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     xmlWriter.WriteElementString("Price", null, productVariant.Price.ToString());
                     xmlWriter.WriteElementString("OldPrice", null, productVariant.OldPrice.ToString());
                     xmlWriter.WriteElementString("ProductCost", null, productVariant.ProductCost.ToString());
+                    xmlWriter.WriteElementString("CustomerEntersPrice", null, productVariant.CustomerEntersPrice.ToString());
+                    xmlWriter.WriteElementString("MinimumCustomerEnteredPrice", null, productVariant.MinimumCustomerEnteredPrice.ToString());
+                    xmlWriter.WriteElementString("MaximumCustomerEnteredPrice", null, productVariant.MaximumCustomerEnteredPrice.ToString());
                     xmlWriter.WriteElementString("Weight", null, productVariant.Weight.ToString());
                     xmlWriter.WriteElementString("Length", null, productVariant.Length.ToString());
                     xmlWriter.WriteElementString("Width", null, productVariant.Width.ToString());
@@ -706,6 +709,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("Price", "decimal");
                 tableDefinition.Add("OldPrice", "decimal");
                 tableDefinition.Add("ProductCost", "decimal");
+                tableDefinition.Add("CustomerEntersPrice", "nvarchar(5)");
+                tableDefinition.Add("MinimumCustomerEnteredPrice", "decimal");
+                tableDefinition.Add("MaximumCustomerEnteredPrice", "decimal");
                 tableDefinition.Add("Weight", "decimal");
                 tableDefinition.Add("Length", "decimal");
                 tableDefinition.Add("Width", "decimal");
@@ -722,7 +728,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     foreach (var pv in productVariants)
                     {
                         StringBuilder sb = new StringBuilder();
-                        sb.Append("INSERT INTO [Products] (Name, ShortDescription,FullDescription,ProductTypeID,TemplateID,ShowOnHomePage,MetaKeywords,MetaDescription,MetaTitle,AllowCustomerReviews,AllowCustomerRatings,Published,SKU,ManufacturerPartNumber,IsGiftCard,IsDownload,DownloadID,UnlimitedDownloads,MaxNumberOfDownloads,DownloadActivationType,HasSampleDownload,SampleDownloadID,HasUserAgreement,UserAgreementText,IsRecurring,CycleLength,CyclePeriod,TotalCycles,IsShipEnabled,IsFreeShipping,AdditionalShippingCharge,IsTaxExempt,TaxCategoryID,ManageInventory,StockQuantity,DisplayStockAvailability,MinStockQuantity,LowStockActivityID,NotifyAdminForQuantityBelow,AllowOutOfStockOrders,OrderMinimumQuantity,OrderMaximumQuantity,DisableBuyButton,Price,OldPrice,ProductCost,Weight, Length, Width, Height, CreatedOn) VALUES (");
+                        sb.Append("INSERT INTO [Products] (Name, ShortDescription,FullDescription,ProductTypeID,TemplateID,ShowOnHomePage,MetaKeywords,MetaDescription,MetaTitle,AllowCustomerReviews,AllowCustomerRatings,Published,SKU,ManufacturerPartNumber,IsGiftCard,IsDownload,DownloadID,UnlimitedDownloads,MaxNumberOfDownloads,DownloadActivationType,HasSampleDownload,SampleDownloadID,HasUserAgreement,UserAgreementText,IsRecurring,CycleLength,CyclePeriod,TotalCycles,IsShipEnabled,IsFreeShipping,AdditionalShippingCharge,IsTaxExempt,TaxCategoryID,ManageInventory,StockQuantity,DisplayStockAvailability,MinStockQuantity,LowStockActivityID,NotifyAdminForQuantityBelow,AllowOutOfStockOrders,OrderMinimumQuantity,OrderMaximumQuantity,DisableBuyButton,Price,OldPrice,ProductCost,CustomerEntersPrice,MinimumCustomerEnteredPrice,MaximumCustomerEnteredPrice,Weight, Length, Width, Height, CreatedOn) VALUES (");
                         string name = p.Name;
                         if (name.Length > maxStringLength)
                             name = name.Substring(0, maxStringLength);
@@ -796,6 +802,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         sb.Append(decimalQuoter); sb.Append(pv.Price); sb.Append(decimalQuoter); sb.Append(',');//decimal
                         sb.Append(decimalQuoter); sb.Append(pv.OldPrice); sb.Append(decimalQuoter); sb.Append(',');//decimal
                         sb.Append(decimalQuoter); sb.Append(pv.ProductCost); sb.Append(decimalQuoter); sb.Append(',');//decimal
+                        sb.Append('"'); sb.Append(pv.CustomerEntersPrice); sb.Append("\",");
+                        sb.Append(decimalQuoter); sb.Append(pv.MinimumCustomerEnteredPrice); sb.Append(decimalQuoter); sb.Append(',');//decimal
+                        sb.Append(decimalQuoter); sb.Append(pv.MaximumCustomerEnteredPrice); sb.Append(decimalQuoter); sb.Append(',');//decimal                        
                         sb.Append(decimalQuoter); sb.Append(pv.Weight); sb.Append(decimalQuoter); sb.Append(',');//decimal
                         sb.Append(decimalQuoter); sb.Append(pv.Length); sb.Append(decimalQuoter); sb.Append(',');//decimal
                         sb.Append(decimalQuoter); sb.Append(pv.Width); sb.Append(decimalQuoter); sb.Append(',');//decimal

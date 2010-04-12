@@ -2297,7 +2297,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     foreach (var sci in cart)
                     {
                         var sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(sci.ShoppingCartType,
-                            sci.ProductVariantID, sci.AttributesXML, sci.Quantity);
+                            sci.ProductVariantID, sci.AttributesXML, 
+                            sci.CustomerEnteredPrice, sci.Quantity);
 
                         if (sciWarnings.Count > 0)
                         {
@@ -3063,7 +3064,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             {
                 foreach (var orderProductVariant in order.OrderProductVariants)
                 {
-                    ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart, orderProductVariant.ProductVariantID, orderProductVariant.AttributesXML, orderProductVariant.Quantity);
+                    ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart, 
+                        orderProductVariant.ProductVariantID, 
+                        orderProductVariant.AttributesXML, 
+                        orderProductVariant.UnitPriceExclTax,
+                        orderProductVariant.Quantity);
                 }
             }
         }
