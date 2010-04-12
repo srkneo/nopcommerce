@@ -272,16 +272,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new OrderAverageReportLine();
-            item.SumTodayOrders = dbItem.SumTodayOrders;
-            item.CountTodayOrders = dbItem.CountTodayOrders;
-            item.SumThisWeekOrders = dbItem.SumThisWeekOrders;
-            item.CountThisWeekOrders = dbItem.CountThisWeekOrders;
-            item.SumThisMonthOrders = dbItem.SumThisMonthOrders;
-            item.CountThisMonthOrders = dbItem.CountThisMonthOrders;
-            item.SumThisYearOrders = dbItem.SumThisYearOrders;
-            item.CountThisYearOrders = dbItem.CountThisYearOrders;
-            item.SumAllTimeOrders = dbItem.SumAllTimeOrders;
-            item.CountAllTimeOrders = dbItem.CountAllTimeOrders;
+            item.SumOrders = dbItem.SumOrders;
+            item.CountOrders = dbItem.CountOrders;
 
             return item;
         }
@@ -1591,15 +1583,66 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Get order average report
         /// </summary>
-        /// <param name="OS">Order status; null to load all orders</param>
+        /// <param name="OS">Order status;</param>
+        /// <param name="startTime">Start date</param>
+        /// <param name="endTime">End date</param>
         /// <returns>Result</returns>
-        public static OrderAverageReportLine OrderAverageReport(OrderStatusEnum OS)
+        public static OrderAverageReportLine GetOrderAverageReportLine(OrderStatusEnum OS, DateTime? startTime, DateTime? endTime)
         {
             int orderStatusID = (int)OS;
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.OrderAverageReport(orderStatusID);
-            var orderAverageReportLine = DBMapping(dbItem);
-            orderAverageReportLine.OrderStatus = OS;
-            return orderAverageReportLine;
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.OrderAverageReport(orderStatusID, startTime, endTime);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+        
+        /// <summary>
+        /// Get order average report
+        /// </summary>
+        /// <param name="OS">Order status</param>
+        /// <returns>Result</returns>
+        public static OrderAverageReportLineSummary OrderAverageReport(OrderStatusEnum OS)
+        {
+            int orderStatusID = (int)OS;
+
+            DateTime nowDT = DateTimeHelper.ConvertToUserTime(DateTime.Now);
+
+            //today
+            DateTime? startTime = DateTimeHelper.ConvertToUtcTime(new DateTime(nowDT.Year, nowDT.Month, nowDT.Day), DateTimeHelper.CurrentTimeZone);
+            DateTime? endTime = null;
+            var todayResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            //week
+            DayOfWeek fdow = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            DateTime today = new DateTime(nowDT.Year, nowDT.Month, nowDT.Day);
+            startTime = DateTimeHelper.ConvertToUtcTime(today.AddDays(-(today.DayOfWeek - fdow)), DateTimeHelper.CurrentTimeZone);
+            endTime = null;
+            var weekResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            //month
+            startTime = DateTimeHelper.ConvertToUtcTime(new DateTime(nowDT.Year, nowDT.Month, 1), DateTimeHelper.CurrentTimeZone);
+            endTime = null;
+            var monthResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            //year
+            startTime = DateTimeHelper.ConvertToUtcTime(new DateTime(nowDT.Year, 1, 1), DateTimeHelper.CurrentTimeZone);
+            endTime = null;
+            var yearResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            //all time
+            startTime = null;
+            endTime = null;
+            var allTimeResult = GetOrderAverageReportLine(OS, startTime, endTime);
+
+            var item = new OrderAverageReportLineSummary();
+            item.SumTodayOrders = todayResult.SumOrders;
+            item.CountTodayOrders = todayResult.CountOrders;
+            item.SumThisWeekOrders = weekResult.SumOrders;
+            item.CountThisWeekOrders = weekResult.CountOrders;
+            item.SumThisMonthOrders = monthResult.SumOrders;
+            item.CountThisMonthOrders = monthResult.CountOrders;
+            item.SumThisYearOrders = yearResult.SumOrders;
+            item.CountThisYearOrders = yearResult.CountOrders;
+            item.SumAllTimeOrders = allTimeResult.SumOrders;
+            item.CountAllTimeOrders = allTimeResult.CountOrders;
+            item.OrderStatus = OS;
+
+            return item;
         }
 
         /// <summary>

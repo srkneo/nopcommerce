@@ -126,6 +126,7 @@
     <Compile Include="Messages\SMSManager.cs" />
     <Compile Include="Orders\BestSellersReportLine.cs" />
     <Compile Include="Orders\AppliedGiftCard.cs" />
+    <Compile Include="Orders\OrderAverageReportLineSummary.cs" />
     <Compile Include="Orders\GiftCard.cs" />
     <Compile Include="Orders\GiftCardCollection.cs" />
     <Compile Include="Orders\GiftCardUsageHistory.cs" />

@@ -82,8 +82,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// Get order average report
         /// </summary>
         /// <param name="OrderStatusID">Order status identifier</param>
+        /// <param name="startTime">Start date</param>
+        /// <param name="endTime">End date</param>
         /// <returns>Result</returns>
-        public abstract DBOrderAverageReportLine OrderAverageReport(int OrderStatusID);
+        public abstract DBOrderAverageReportLine OrderAverageReport(int OrderStatusID, DateTime? startTime, DateTime? endTime);
 
         /// <summary>
         /// Gets all orders by customer identifier

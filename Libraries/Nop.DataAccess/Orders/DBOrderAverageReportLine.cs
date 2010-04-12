@@ -35,54 +35,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
 
         #region Properties
         /// <summary>
-        /// Gets or sets the sum today total
+        /// Gets or sets the sum total
         /// </summary>
-        public decimal SumTodayOrders { get; set; }
+        public decimal SumOrders { get; set; }
 
         /// <summary>
-        /// Gets or sets the today count
+        /// Gets or sets the count
         /// </summary>
-        public decimal CountTodayOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sum this week total
-        /// </summary>
-        public decimal SumThisWeekOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the this week count
-        /// </summary>
-        public decimal CountThisWeekOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sum this month total
-        /// </summary>
-        public decimal SumThisMonthOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the this month count
-        /// </summary>
-        public decimal CountThisMonthOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sum this year total
-        /// </summary>
-        public decimal SumThisYearOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the this year count
-        /// </summary>
-        public decimal CountThisYearOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sum all time total
-        /// </summary>
-        public decimal SumAllTimeOrders { get; set; }
-
-        /// <summary>
-        /// Gets or sets the all time count
-        /// </summary>
-        public decimal CountAllTimeOrders { get; set; }
+        public decimal CountOrders { get; set; }
 
         #endregion
     }

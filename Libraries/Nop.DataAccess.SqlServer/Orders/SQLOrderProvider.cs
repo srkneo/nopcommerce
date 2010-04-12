@@ -170,16 +170,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         private DBOrderAverageReportLine GetOrderAverageReportLineFromReader(IDataReader dataReader)
         {
             DBOrderAverageReportLine orderAverageReportLine = new DBOrderAverageReportLine();
-            orderAverageReportLine.SumTodayOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumTodayOrders");
-            orderAverageReportLine.CountTodayOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountTodayOrders");
-            orderAverageReportLine.SumThisWeekOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumThisWeekOrders");
-            orderAverageReportLine.CountThisWeekOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountThisWeekOrders");
-            orderAverageReportLine.SumThisMonthOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumThisMonthOrders");
-            orderAverageReportLine.CountThisMonthOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountThisMonthOrders");
-            orderAverageReportLine.SumThisYearOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumThisYearOrders");
-            orderAverageReportLine.CountThisYearOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountThisYearOrders");
-            orderAverageReportLine.SumAllTimeOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumAllTimeOrders");
-            orderAverageReportLine.CountAllTimeOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountAllTimeOrders");
+            orderAverageReportLine.SumOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumOrders");
+            orderAverageReportLine.CountOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountOrders");
             return orderAverageReportLine;
         }
 
@@ -441,21 +433,31 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// Get order average report
         /// </summary>
         /// <param name="OrderStatusID">Order status identifier</param>
+        /// <param name="startTime">Start date</param>
+        /// <param name="endTime">End date</param>
         /// <returns>Result</returns>
-        public override DBOrderAverageReportLine OrderAverageReport(int OrderStatusID)
+        public override DBOrderAverageReportLine OrderAverageReport(int OrderStatusID, DateTime? startTime, DateTime? endTime)
         {
-            DBOrderAverageReportLine orderAverageReportLine = null;
+            DBOrderAverageReportLine item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderAverageReport");
             db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID);
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
+            else
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
+            else
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    orderAverageReportLine = GetOrderAverageReportLineFromReader(dataReader);
+                    item = GetOrderAverageReportLineFromReader(dataReader);
                 }
             }
-            return orderAverageReportLine;
+            return item;
         }
 
         /// <summary>

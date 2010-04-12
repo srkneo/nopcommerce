@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindData()
         {
-            List<OrderAverageReportLine> report = new List<OrderAverageReportLine>();
+            var report = new List<OrderAverageReportLineSummary>();
             report.Add(OrderManager.OrderAverageReport(OrderStatusEnum.Pending));
             report.Add(OrderManager.OrderAverageReport(OrderStatusEnum.Processing));
             report.Add(OrderManager.OrderAverageReport(OrderStatusEnum.Complete));
