@@ -22,12 +22,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             get
             {
-                DateTime inptDate;
-                if(!DateTime.TryParse(txtDateTime.Text, out inptDate))
+                DateTime inputDate;
+                if (!DateTime.TryParse(txtDateTime.Text, out inputDate))
                 {
                     return null;
                 }
-                return inptDate;
+                return inputDate;
             }
             set
             {

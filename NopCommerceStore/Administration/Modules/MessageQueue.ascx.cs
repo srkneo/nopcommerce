@@ -51,11 +51,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             DateTime startDateTmp = DateTime.Now;
             if(startDate.HasValue)
             {
-                startDate = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
+                startDate = DateTimeHelper.ConvertToUtcTime(startDate.Value, DateTimeHelper.CurrentTimeZone);
             }
             if(endDate.HasValue)
             {
-                endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
+                endDate = DateTimeHelper.ConvertToUtcTime(endDate.Value, DateTimeHelper.CurrentTimeZone).AddDays(1);
             }
 
             string fromEmail = txtFromEmail.Text;

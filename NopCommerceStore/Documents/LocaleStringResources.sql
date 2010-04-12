@@ -182,6 +182,42 @@ set @resources='
   <LocaleResource Name="Admin.Sitemap.FroogleDescription">
     <Value>Manage Froogle (Google Base) Provider</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Orders.StartDate.Tooltip">
+    <Value>The start date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Orders.EndDate.Tooltip">
+    <Value>The end date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.SalesReport.StartDate.Tooltip">
+    <Value>The start date for the report.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.SalesReport.EndDate.Tooltip">
+    <Value>The end date for the report.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.RegistrationFrom.Tooltip">
+    <Value>The registration from date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.RegistrationTo.Tooltip">
+    <Value>The registration to date for the search.</Value>
+  </LocaleResource>  
+  <LocaleResource Name="Admin.MessageQueue.StartDate.Tooltip">
+    <Value>The start date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageQueue.EndDate.Tooltip">
+    <Value>The end date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ActivityLog.CreatedOnFrom.Tooltip">
+    <Value>The creation from date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ActivityLog.CreatedOnTo.Tooltip">
+    <Value>The creation to date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PurchasedGiftCards.PurchasedFrom.Tooltip">
+    <Value>The purchased from date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PurchasedGiftCards.PurchasedTo.Tooltip">
+    <Value>The purchased to date for the search.</Value>
+  </LocaleResource>
 </Language>
 '
  		

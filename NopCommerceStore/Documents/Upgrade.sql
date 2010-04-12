@@ -3838,3 +3838,377 @@ BEGIN
 		o.Deleted=0	
 END
 GO
+
+--further report bug fixes (exact datetime)
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ActivityLogLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ActivityLogLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_ActivityLogLoadAll]
+(
+	@CreatedOnFrom datetime = NULL,
+	@CreatedOnTo datetime = NULL,
+	@Email nvarchar(200),
+	@Username nvarchar(200),
+	@ActivityLogTypeID int,
+	@PageIndex int = 0, 
+	@PageSize int = 2147483644,
+	@TotalRecords int = null OUTPUT
+)
+AS
+BEGIN
+	SET @Email = isnull(@Email, '')
+	SET @Email = '%' + rtrim(ltrim(@Email)) + '%'
+
+	SET @Username = isnull(@Username, '')
+	SET @Username = '%' + rtrim(ltrim(@Username)) + '%'
+
+
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		ActivityLogID int NOT NULL,
+		CreatedOn datetime NOT NULL
+	)
+
+	INSERT INTO #PageIndex (ActivityLogID, CreatedOn)
+	SELECT DISTINCT
+		al.ActivityLogID,
+		al.CreatedOn
+	FROM [Nop_ActivityLog] al with (NOLOCK)
+	INNER JOIN [Nop_Customer] c on c.CustomerID = al.CustomerID
+	WHERE 
+		(@CreatedOnFrom is NULL or @CreatedOnFrom <= al.CreatedOn) and
+		(@CreatedOnTo is NULL or @CreatedOnTo >= al.CreatedOn) and 
+		(patindex(@Email, isnull(c.Email, '')) > 0) and
+		(patindex(@Username, isnull(c.Username, '')) > 0) and
+		(c.IsGuest=0) and (c.deleted=0) and
+		(@ActivityLogTypeID is null or (al.ActivityLogTypeID=@ActivityLogTypeID)) 
+	ORDER BY al.CreatedOn DESC
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT
+		al.*
+	FROM
+		#PageIndex [pi]
+		INNER JOIN [Nop_ActivityLog] al on al.ActivityLogID = [pi].ActivityLogID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex	
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerLoadAll]
+(
+	@StartTime				datetime = NULL,
+	@EndTime				datetime = NULL,
+	@Email					nvarchar(200),
+	@Username				nvarchar(200),
+	@DontLoadGuestCustomers	bit = 0,
+	@PageIndex				int = 0, 
+	@PageSize				int = 2147483644,
+	@TotalRecords			int = null OUTPUT
+)
+AS
+BEGIN
+
+	SET @Email = isnull(@Email, '')
+	SET @Email = '%' + rtrim(ltrim(@Email)) + '%'
+
+	SET @Username = isnull(@Username, '')
+	SET @Username = '%' + rtrim(ltrim(@Username)) + '%'
+
+
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	DECLARE @TotalThreads int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		CustomerID int NOT NULL,
+		RegistrationDate datetime NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (CustomerID, RegistrationDate)
+	SELECT DISTINCT
+		c.CustomerID, c.RegistrationDate
+	FROM [Nop_Customer] c with (NOLOCK)
+	WHERE 
+		(@StartTime is NULL or @StartTime <= c.RegistrationDate) and
+		(@EndTime is NULL or @EndTime >= c.RegistrationDate) and 
+		(patindex(@Email, isnull(c.Email, '')) > 0) and
+		(patindex(@Username, isnull(c.Username, '')) > 0) and
+		(@DontLoadGuestCustomers = 0 or (c.IsGuest=0)) and 
+		c.deleted=0
+	order by c.RegistrationDate desc 
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		c.*
+	FROM
+		#PageIndex [pi]
+		INNER JOIN [Nop_Customer] c on c.CustomerID = [pi].CustomerID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex
+	
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_GiftCardLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_GiftCardLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_GiftCardLoadAll]
+(
+	@OrderID int,
+	@CustomerID int,
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@OrderStatusID int,
+	@PaymentStatusID int,
+	@ShippingStatusID int,
+	@IsGiftCardActivated bit = null, --0 not activated records, 1 activated records, null - load all records
+	@GiftCardCouponCode nvarchar(100)
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		*
+	FROM [Nop_GiftCard]
+	WHERE GiftCardID IN
+	(
+		SELECT DISTINCT gc.GiftCardID
+		FROM [Nop_GiftCard] gc
+		INNER JOIN [Nop_OrderProductVariant] opv ON gc.PurchasedOrderProductVariantID=opv.OrderProductVariantID
+		INNER JOIN [Nop_Order] o ON opv.OrderID=o.OrderID
+		WHERE
+			(@OrderID IS NULL OR @OrderID=0 or o.OrderID = @OrderID) and
+			(@CustomerID IS NULL OR @CustomerID=0 or o.CustomerID = @CustomerID) and
+			(@StartTime is NULL or @StartTime <= gc.CreatedOn) and
+			(@EndTime is NULL or @EndTime >= gc.CreatedOn) and 
+			(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) and
+			(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) and
+			(@ShippingStatusID IS NULL OR @ShippingStatusID = 0 OR o.ShippingStatusID = @ShippingStatusID) and
+			(@IsGiftCardActivated IS NULL OR gc.IsGiftCardActivated = @IsGiftCardActivated) and
+			(@GiftCardCouponCode IS NULL OR @GiftCardCouponCode ='' OR gc.GiftCardCouponCode = @GiftCardCouponCode)		
+	)
+	ORDER BY CreatedOn desc, GiftCardID 
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderProductVariantLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_OrderProductVariantLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_OrderProductVariantLoadAll]
+(
+	@OrderID int,
+	@CustomerID int,
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@OrderStatusID int,
+	@PaymentStatusID int,
+	@ShippingStatusID int,
+	@LoadDownloableProductsOnly bit = NULL
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		opv.*
+	FROM [Nop_OrderProductVariant] opv
+	INNER JOIN [Nop_Order] o ON opv.OrderID=o.OrderID
+	INNER JOIN [Nop_ProductVariant] pv ON opv.ProductVariantID=pv.ProductVariantID
+	WHERE
+		(@OrderID IS NULL OR @OrderID=0 or o.OrderID = @OrderID) and
+		(@CustomerID IS NULL OR @CustomerID=0 or o.CustomerID = @CustomerID) and
+		(@StartTime is NULL or @StartTime <= o.CreatedOn) and
+		(@EndTime is NULL or @EndTime >= o.CreatedOn) and 
+		(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) and
+		(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) and
+		(@ShippingStatusID IS NULL OR @ShippingStatusID = 0 OR o.ShippingStatusID = @ShippingStatusID) and
+		((@LoadDownloableProductsOnly IS NULL OR @LoadDownloableProductsOnly = 0) OR (pv.IsDownload=1)) and
+		(o.Deleted=0)		
+	ORDER BY o.CreatedOn desc, [opv].OrderProductVariantID 
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderProductVariantReport]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_OrderProductVariantReport]
+GO
+CREATE PROCEDURE [dbo].[Nop_OrderProductVariantReport]
+(
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@OrderStatusID int,
+	@PaymentStatusID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT DISTINCT opv.ProductVariantID,
+		(	
+			select sum(opv2.PriceExclTax)
+			from Nop_OrderProductVariant opv2
+			INNER JOIN [Nop_Order] o2 
+			on o2.OrderId = opv2.OrderID 
+			where
+				(@StartTime is NULL or @StartTime <= o2.CreatedOn) and
+				(@EndTime is NULL or @EndTime >= o2.CreatedOn) and 
+				(@OrderStatusID IS NULL or @OrderStatusID=0 or o2.OrderStatusID = @OrderStatusID) and
+				(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o2.PaymentStatusID = @PaymentStatusID) and
+				(o2.Deleted=0) and 
+				(opv2.ProductVariantID = opv.ProductVariantID)) PriceExclTax, 
+		(
+			select sum(opv2.Quantity)  
+			from Nop_OrderProductVariant opv2 
+			INNER JOIN [Nop_Order] o2 
+			on o2.OrderId = opv2.OrderID 
+			where
+				(@StartTime is NULL or @StartTime <= o2.CreatedOn) and
+				(@EndTime is NULL or @EndTime >= o2.CreatedOn) and 
+				(@OrderStatusID IS NULL or @OrderStatusID=0 or o2.OrderStatusID = @OrderStatusID) and
+				(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o2.PaymentStatusID = @PaymentStatusID) and
+				(o2.Deleted=0) and 
+				(opv2.ProductVariantID = opv.ProductVariantID)) Total 
+	FROM Nop_OrderProductVariant opv 
+	INNER JOIN [Nop_Order] o 
+	on o.OrderId = opv.OrderID
+	WHERE
+		(@StartTime is NULL or @StartTime <= o.CreatedOn) and
+		(@EndTime is NULL or @EndTime >= o.CreatedOn) and 
+		(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) and
+		(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) and
+		(o.Deleted=0)
+
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderSearch]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_OrderSearch]
+GO
+CREATE PROCEDURE [dbo].[Nop_OrderSearch]
+(
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@CustomerEmail nvarchar(255) = NULL,
+	@OrderStatusID int,
+	@PaymentStatusID int,
+	@ShippingStatusID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT
+		o.*
+	FROM [Nop_Order] o
+	LEFT OUTER JOIN [Nop_Customer] c ON o.CustomerID = c.CustomerID
+	WHERE
+		(@CustomerEmail IS NULL or LEN(@CustomerEmail)=0 or (c.Email like '%' + COALESCE(@CustomerEmail,c.Email) + '%')) and
+		(@StartTime is NULL or @StartTime <= o.CreatedOn) and
+		(@EndTime is NULL or @EndTime >= o.CreatedOn) and 
+		(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) and
+		(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) and
+		(@ShippingStatusID IS NULL OR @ShippingStatusID = 0 OR o.ShippingStatusID = @ShippingStatusID) and
+		(o.Deleted=0)
+	ORDER BY o.CreatedOn desc
+END
+GO
+
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_QueuedEmailLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_QueuedEmailLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_QueuedEmailLoadAll]
+(	
+	@FromEmail nvarchar(255) = NULL,
+	@ToEmail nvarchar(255) = NULL,
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@QueuedEmailCount int,
+	@LoadNotSentItemsOnly bit,
+	@MaxSendTries int
+)
+AS
+BEGIN
+	IF (@QueuedEmailCount > 0)
+	SET ROWCOUNT @QueuedEmailCount
+
+	SELECT qu.*
+	FROM [Nop_QueuedEmail] qu
+	WHERE 
+		(@FromEmail IS NULL or LEN(@FromEmail)=0 or (qu.[From] like '%' + COALESCE(@FromEmail,qu.[From]) + '%')) AND
+		(@ToEmail IS NULL or LEN(@ToEmail)=0 or (qu.[To] like '%' + COALESCE(@ToEmail,qu.[To]) + '%')) AND
+		(@StartTime is NULL or @StartTime <= qu.CreatedOn) AND
+		(@EndTime is NULL or @EndTime >= qu.CreatedOn) AND 
+		((@LoadNotSentItemsOnly IS NULL OR @LoadNotSentItemsOnly=0) OR (qu.SentOn IS NULL)) AND
+		(qu.SendTries < @MaxSendTries)
+	ORDER BY qu.Priority desc, qu.CreatedOn ASC
+	
+	SET ROWCOUNT 0
+END
+GO

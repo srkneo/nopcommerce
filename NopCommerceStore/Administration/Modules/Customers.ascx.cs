@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -25,8 +26,8 @@ using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
+using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common.Utils;
-using System.IO;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -57,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             DateTime? endDate = ctrlEndDatePicker.SelectedDate;
             if(startDate.HasValue)
             {
-                startDate = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
+                startDate = DateTimeHelper.ConvertToUtcTime(startDate.Value, DateTimeHelper.CurrentTimeZone);
             }
             if(endDate.HasValue)
             {
-                endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
+                endDate = DateTimeHelper.ConvertToUtcTime(endDate.Value, DateTimeHelper.CurrentTimeZone).AddDays(1);
             }
 
             string email = txtEmail.Text.Trim();

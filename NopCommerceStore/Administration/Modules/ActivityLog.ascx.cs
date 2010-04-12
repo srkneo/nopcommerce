@@ -115,10 +115,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             DateTime? startDate = ctrlCreatedOnFromDatePicker.SelectedDate;
             DateTime? endDate = ctrlCreatedOnToDatePicker.SelectedDate;
-            if(startDate.HasValue)
-                startDate = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
-            if(endDate.HasValue)
-                endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
+            if (startDate.HasValue)
+            {
+                startDate = DateTimeHelper.ConvertToUtcTime(startDate.Value, DateTimeHelper.CurrentTimeZone);
+            }
+            if (endDate.HasValue)
+            {
+                endDate = DateTimeHelper.ConvertToUtcTime(endDate.Value, DateTimeHelper.CurrentTimeZone).AddDays(1);
+            }
 
             string customerEmail = txtCustomerEmail.Text.Trim();
             string customerName = txtCustomerName.Text.Trim();

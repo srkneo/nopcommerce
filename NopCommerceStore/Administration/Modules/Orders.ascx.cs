@@ -27,9 +27,10 @@ using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
-using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -54,11 +55,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             DateTime? endDate = ctrlEndDatePicker.SelectedDate;
             if(startDate.HasValue)
             {
-                startDate = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
+                startDate = DateTimeHelper.ConvertToUtcTime(startDate.Value, DateTimeHelper.CurrentTimeZone);
             }
             if(endDate.HasValue)
             {
-                endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
+                endDate = DateTimeHelper.ConvertToUtcTime(endDate.Value, DateTimeHelper.CurrentTimeZone).AddDays(1);
             }
 
             OrderStatusEnum? orderStatus = null;
