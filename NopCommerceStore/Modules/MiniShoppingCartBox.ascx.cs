@@ -86,15 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BtnCheckout_OnClick(object sender, EventArgs e)
         {
-            if(NopContext.Current.User == null || NopContext.Current.User.IsGuest)
-            {
-                string loginURL = SEOHelper.GetLoginPageURL(true, true);
-                Response.Redirect(loginURL);
-            }
-            else
-            {
-                Response.Redirect("~/checkout.aspx");
-            }
+            Response.Redirect("~/shoppingcart.aspx");
         }
 
         protected string GetOrderSubtotal(ShoppingCart shoppingCart)
