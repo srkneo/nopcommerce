@@ -1108,6 +1108,22 @@ textarea
 	padding-left: 5px;
 }
 
+.order-summary-content .terms-of-service
+{
+	margin: 0px;
+	padding: 10px 10px 10px 10px;
+}
+
+.order-summary-content .terms-of-service .read
+{
+	text-decoration: underline;
+}
+
+.order-summary-content .terms-of-service .read:hover
+{
+	cursor: pointer;
+}
+
 .order-summary-content .buttons
 {
 	margin: 0px;

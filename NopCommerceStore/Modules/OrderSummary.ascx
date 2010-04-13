@@ -6,7 +6,7 @@
     <%=GetLocaleResourceString("ShoppingCart.CartIsEmpty")%>
 </asp:Panel>
 <asp:Panel class="order-summary-content" runat="server" ID="pnlCart">
-    <%if (IsShoppingCart)
+    <%if (this.IsShoppingCart)
       { %>
     <asp:Panel runat="server" ID="phCoupon" CssClass="coupon-box">
         <b>
@@ -131,11 +131,36 @@
     <div class="clear">
     </div>
     <div class="cart-footer">
-        <%if (IsShoppingCart)
+        <%if (this.IsShoppingCart)
           { %>
         <div class="clear">
         </div>
         <div class="buttons">
+            <%if (SettingManager.GetSettingValueBoolean("Checkout.TermsOfServiceEnabled"))
+              { %>
+
+            <script language="javascript" type="text/javascript">
+                function accepttermsofservice(msg) {
+                    if (!document.getElementById('<%=cbTermsOfService.ClientID%>').checked) {
+                        alert(msg);
+                        return false;
+                    }
+                    else
+                        return true;
+                }
+                function OpenWindow(query, w, h, scroll) {
+                    var l = (screen.width - w) / 2;
+                    var t = (screen.height - h) / 2;
+
+                    winprops = 'resizable=0, height=' + h + ',width=' + w + ',top=' + t + ',left=' + l + 'w';
+                    if (scroll) winprops += ',scrollbars=1';
+                    var f = window.open(query, "_blank", winprops);
+                }
+            </script>
+            <div class="terms-of-service">
+                <asp:CheckBox runat="server" ID="cbTermsOfService" /> <asp:Literal runat="server" ID="lTermsOfService" />
+            </div>
+            <%} %>
             <div class="common-buttons">
                 <asp:Button ID="btnUpdate" OnClick="btnUpdate_Click" runat="server" Text="<% $NopResources:ShoppingCart.UpdateCart %>"
                     CssClass="updatecartbutton" />

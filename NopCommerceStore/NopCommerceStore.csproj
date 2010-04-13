@@ -3583,6 +3583,13 @@
     <Compile Include="AssistHostedPaymentReturn.aspx.designer.cs">
       <DependentUpon>AssistHostedPaymentReturn.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ConditionsInfoPopup.aspx.cs">
+      <DependentUpon>ConditionsInfoPopup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConditionsInfoPopup.aspx.designer.cs">
+      <DependentUpon>ConditionsInfoPopup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\DatePicker2.ascx.cs">
       <DependentUpon>DatePicker2.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6151,6 +6158,7 @@
     <Content Include="BeanstreamHostedPaymentReturn.aspx" />
     <Content Include="ChronoPayIPNHandler.aspx" />
     <Content Include="AssistHostedPaymentReturn.aspx" />
+    <Content Include="ConditionsInfoPopup.aspx" />
     <Content Include="images\flags\ad.png" />
     <Content Include="images\flags\ae.png" />
     <Content Include="images\flags\af.png" />

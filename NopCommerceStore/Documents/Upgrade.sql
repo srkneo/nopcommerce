@@ -4818,3 +4818,15 @@ BEGIN
 		ShoppingCartItemID = @ShoppingCartItemID
 END
 GO
+
+
+-- Terms and conditions
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Checkout.TermsOfServiceEnabled')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'Checkout.TermsOfServiceEnabled', N'false', N'')
+END
+GO

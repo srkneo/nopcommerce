@@ -52,6 +52,20 @@ namespace NopSolutions.NopCommerce.Web.Modules
             this.BindData();
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            if (SettingManager.GetSettingValueBoolean("Checkout.TermsOfServiceEnabled"))
+            {
+                string onclickTerms = string.Format(" return accepttermsofservice('{0}') && " + Page.ClientScript.GetPostBackEventReference(this.btnCheckout, ""), GetLocaleResourceString("Checkout.PleaseAcceptTermsOfService"));
+                this.btnCheckout.Attributes.Add("onclick", onclickTerms);
+
+                string termsLink = string.Format("{0}conditionsinfopopup.aspx", CommonHelper.GetStoreLocation());
+                this.lTermsOfService.Text = string.Format(GetLocaleResourceString("Checkout.IAcceptTermsOfService"), string.Format("<span class=\"read\" onclick=\"javascript:OpenWindow('{0}', 450, 500, true)\">{1}</span>", termsLink, GetLocaleResourceString("Checkout.AcceptTermsOfService.Read")));
+            }
+
+            base.OnPreRender(e);
+        }
+
         public void BindData()
         {
             var Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);

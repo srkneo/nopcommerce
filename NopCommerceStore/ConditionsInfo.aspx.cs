@@ -29,6 +29,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.SEO;
 using NopSolutions.NopCommerce.Common.Utils;
+
 namespace NopSolutions.NopCommerce.Web
 {
     public partial class ConditionsInfoPage : BaseNopPage

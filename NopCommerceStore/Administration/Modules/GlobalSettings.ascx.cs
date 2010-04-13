@@ -63,6 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbStoreClosed.Checked = SettingManager.GetSettingValueBoolean("Common.StoreClosed");
             cbAnonymousCheckoutAllowed.Checked = CustomerManager.AnonymousCheckoutAllowed;
             cbUseOnePageCheckout.Checked = SettingManager.GetSettingValueBoolean("Checkout.UseOnePageCheckout");
+            cbCheckoutTermsOfService.Checked = SettingManager.GetSettingValueBoolean("Checkout.TermsOfServiceEnabled");
 
             cbStoreNameInTitle.Checked = SettingManager.GetSettingValueBoolean("SEO.IncludeStoreNameInTitle");
             txtDefaulSEOTitle.Text = SettingManager.GetSettingValue("SEO.DefaultTitle");
@@ -228,6 +229,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParam("Common.StoreClosed", cbStoreClosed.Checked.ToString());
                     CustomerManager.AnonymousCheckoutAllowed = cbAnonymousCheckoutAllowed.Checked;
                     SettingManager.SetParam("Checkout.UseOnePageCheckout", cbUseOnePageCheckout.Checked.ToString());
+                    SettingManager.SetParam("Checkout.TermsOfServiceEnabled", cbCheckoutTermsOfService.Checked.ToString());
 
                     SettingManager.SetParam("SEO.IncludeStoreNameInTitle", cbStoreNameInTitle.Checked.ToString());
                     SettingManager.SetParam("SEO.DefaultTitle", txtDefaulSEOTitle.Text);

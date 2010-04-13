@@ -290,6 +290,21 @@ set @resources='
   <LocaleResource Name="ShoppingCart.CustomerEnteredPrice.RangeError">
     <Value>The price must be from {0} to {1}</Value>
   </LocaleResource>
+  <LocaleResource Name="Checkout.IAcceptTermsOfService">
+    <Value>I agree with the terms of service and I adhere to them unconditionally {0}.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Checkout.PleaseAcceptTermsOfService">
+    <Value>Please accept the terms of service before the next step.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.General.TermsOfService">
+    <Value>Terms of service</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.General.TermsOfService.Tooltip">
+    <Value>Require customers to accept or decline terms of service before processing the order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Checkout.AcceptTermsOfService.Read">
+    <Value>(read)</Value>
+  </LocaleResource>
 </Language>
 '
  		

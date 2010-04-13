@@ -169,6 +169,16 @@
                             <asp:CheckBox runat="server" ID="cbUseOnePageCheckout"></asp:CheckBox>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblCheckoutTermsOfService" Text="<% $NopResources:Admin.GlobalSettings.General.TermsOfService %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.General.TermsOfService.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbCheckoutTermsOfService"></asp:CheckBox>
+                        </td>
+                    </tr>
                 </table>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>
