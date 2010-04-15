@@ -4830,3 +4830,781 @@ BEGIN
 	VALUES (N'Checkout.TermsOfServiceEnabled', N'false', N'')
 END
 GO
+
+
+
+--customizable checkout attributes
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_CheckoutAttribute]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_CheckoutAttribute](
+	[CheckoutAttributeID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[TextPrompt] [nvarchar](300) NOT NULL,
+	[IsRequired] bit NOT NULL,
+	[ShippableProductRequired] bit NOT NULL,
+	[IsTaxExempt] bit NOT NULL,
+	[TaxCategoryID] int NOT NULL,
+	[AttributeControlTypeID] int NOT NULL,
+	[DisplayOrder] int NOT NULL,
+ CONSTRAINT [PK_Nop_CheckoutAttribute] PRIMARY KEY CLUSTERED 
+(
+	[CheckoutAttributeID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+) ON [PRIMARY]
+END
+GO
+
+
+
+
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_CheckoutAttributeLocalized]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_CheckoutAttributeLocalized](
+	[CheckoutAttributeLocalizedID] [int] IDENTITY(1,1) NOT NULL,
+	[CheckoutAttributeID] [int] NOT NULL,
+	[LanguageID] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[TextPrompt] [nvarchar](300) NOT NULL,
+ CONSTRAINT [PK_Nop_CheckoutAttributeLocalized] PRIMARY KEY CLUSTERED 
+(
+	[CheckoutAttributeLocalizedID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+ CONSTRAINT [IX_Nop_CheckoutAttributeLocalized_Unique1] UNIQUE NONCLUSTERED 
+(
+	[CheckoutAttributeID] ASC,
+	[LanguageID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CheckoutAttributeLocalized_Nop_CheckoutAttribute'
+           AND parent_obj = Object_id('Nop_CheckoutAttributeLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CheckoutAttributeLocalized
+DROP CONSTRAINT FK_Nop_CheckoutAttributeLocalized_Nop_CheckoutAttribute
+GO
+ALTER TABLE [dbo].[Nop_CheckoutAttributeLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CheckoutAttributeLocalized_Nop_CheckoutAttribute] FOREIGN KEY([CheckoutAttributeID])
+REFERENCES [dbo].[Nop_CheckoutAttribute] ([CheckoutAttributeID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CheckoutAttributeLocalized_Nop_Language'
+           AND parent_obj = Object_id('Nop_CheckoutAttributeLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CheckoutAttributeLocalized
+DROP CONSTRAINT FK_Nop_CheckoutAttributeLocalized_Nop_Language
+GO
+ALTER TABLE [dbo].[Nop_CheckoutAttributeLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CheckoutAttributeLocalized_Nop_Language] FOREIGN KEY([LanguageID])
+REFERENCES [dbo].[Nop_Language] ([LanguageID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_CheckoutAttributeValue]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_CheckoutAttributeValue](
+	[CheckoutAttributeValueID] [int] IDENTITY(1,1) NOT NULL,
+	[CheckoutAttributeID] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[PriceAdjustment] money NOT NULL,
+	[WeightAdjustment] decimal(18, 4) NOT NULL,
+	[IsPreSelected] bit NOT NULL,
+	[DisplayOrder] int NOT NULL,
+ CONSTRAINT [PK_Nop_CheckoutAttributeValue] PRIMARY KEY CLUSTERED 
+(
+	[CheckoutAttributeValueID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+) ON [PRIMARY]
+END
+GO
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CheckoutAttributeValue_Nop_CheckoutAttribute'
+           AND parent_obj = Object_id('Nop_CheckoutAttributeValue')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CheckoutAttributeValue
+DROP CONSTRAINT FK_Nop_CheckoutAttributeValue_Nop_CheckoutAttribute
+GO
+ALTER TABLE [dbo].[Nop_CheckoutAttributeValue]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CheckoutAttributeValue_Nop_CheckoutAttribute] FOREIGN KEY([CheckoutAttributeID])
+REFERENCES [dbo].[Nop_CheckoutAttribute] ([CheckoutAttributeID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_CheckoutAttributeValueLocalized]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_CheckoutAttributeValueLocalized](
+	[CheckoutAttributeValueLocalizedID] [int] IDENTITY(1,1) NOT NULL,
+	[CheckoutAttributeValueID] [int] NOT NULL,
+	[LanguageID] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_Nop_CheckoutAttributeValueLocalized] PRIMARY KEY CLUSTERED 
+(
+	[CheckoutAttributeValueLocalizedID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON, FILLFACTOR = 80) ON [PRIMARY],
+ CONSTRAINT [IX_Nop_CheckoutAttributeValueLocalized_Unique1] UNIQUE NONCLUSTERED 
+(
+	[CheckoutAttributeValueID] ASC,
+	[LanguageID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CheckoutAttributeValueLocalized_Nop_CheckoutAttributeValue'
+           AND parent_obj = Object_id('Nop_CheckoutAttributeValueLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CheckoutAttributeValueLocalized
+DROP CONSTRAINT FK_Nop_CheckoutAttributeValueLocalized_Nop_CheckoutAttributeValue
+GO
+ALTER TABLE [dbo].[Nop_CheckoutAttributeValueLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CheckoutAttributeValueLocalized_Nop_CheckoutAttributeValue] FOREIGN KEY([CheckoutAttributeValueID])
+REFERENCES [dbo].[Nop_CheckoutAttributeValue] ([CheckoutAttributeValueID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_CheckoutAttributeValueLocalized_Nop_Language'
+           AND parent_obj = Object_id('Nop_CheckoutAttributeValueLocalized')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_CheckoutAttributeValueLocalized
+DROP CONSTRAINT FK_Nop_CheckoutAttributeValueLocalized_Nop_Language
+GO
+ALTER TABLE [dbo].[Nop_CheckoutAttributeValueLocalized]  WITH CHECK ADD  CONSTRAINT [FK_Nop_CheckoutAttributeValueLocalized_Nop_Language] FOREIGN KEY([LanguageID])
+REFERENCES [dbo].[Nop_Language] ([LanguageID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeDelete]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeDelete]
+(
+	@CheckoutAttributeID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE
+	FROM [Nop_CheckoutAttribute]
+	WHERE
+		CheckoutAttributeID = @CheckoutAttributeID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeInsert]
+(
+	@CheckoutAttributeID int = NULL output,
+	@Name nvarchar(100),
+	@TextPrompt nvarchar(300),
+	@IsRequired bit,
+	@ShippableProductRequired bit,
+	@IsTaxExempt bit,
+	@TaxCategoryID int,
+	@AttributeControlTypeID int,
+	@DisplayOrder int
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_CheckoutAttribute]
+	(
+		[Name],
+		[TextPrompt],
+		[IsRequired],
+		[ShippableProductRequired],
+		[IsTaxExempt],
+		[TaxCategoryID],
+		[AttributeControlTypeID],
+		[DisplayOrder]
+	)
+	VALUES
+	(
+		@Name,
+		@TextPrompt,
+		@IsRequired,
+		@ShippableProductRequired,
+		@IsTaxExempt,
+		@TaxCategoryID,
+		@AttributeControlTypeID,
+		@DisplayOrder
+	)
+
+	set @CheckoutAttributeID=SCOPE_IDENTITY()
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeLoadAll]
+(
+	@LanguageID int,
+	@DontLoadShippableProductRequired bit
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT 
+		ca.[CheckoutAttributeID],
+		dbo.NOP_getnotnullnotempty(cal.Name,ca.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(cal.TextPrompt,ca.TextPrompt) as [TextPrompt],
+		ca.[IsRequired],
+		ca.[ShippableProductRequired],
+		ca.[IsTaxExempt],
+		ca.[TaxCategoryID],
+		ca.[AttributeControlTypeID],
+		ca.[DisplayOrder]		
+	FROM [Nop_CheckoutAttribute] ca
+		LEFT OUTER JOIN [Nop_CheckoutAttributeLocalized] cal
+		ON ca.CheckoutAttributeID = cal.CheckoutAttributeID AND cal.LanguageID = @LanguageID	
+	WHERE (@DontLoadShippableProductRequired=0 OR ca.[ShippableProductRequired]=0)
+	order by ca.[DisplayOrder]
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeLoadByPrimaryKey]
+(
+	@CheckoutAttributeID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		ca.[CheckoutAttributeID],
+		dbo.NOP_getnotnullnotempty(cal.Name,ca.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(cal.TextPrompt,ca.TextPrompt) as [TextPrompt],
+		ca.[IsRequired],
+		ca.[ShippableProductRequired],
+		ca.[IsTaxExempt],
+		ca.[TaxCategoryID],
+		ca.[AttributeControlTypeID],
+		ca.[DisplayOrder]		
+	FROM [Nop_CheckoutAttribute] ca
+		LEFT OUTER JOIN [Nop_CheckoutAttributeLocalized] cal
+		ON ca.CheckoutAttributeID = cal.CheckoutAttributeID AND cal.LanguageID = @LanguageID
+	WHERE
+		ca.CheckoutAttributeID = @CheckoutAttributeID
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeUpdate]
+(
+	@CheckoutAttributeID int,
+	@Name nvarchar(100),
+	@TextPrompt nvarchar(300),
+	@IsRequired bit,
+	@ShippableProductRequired bit,
+	@IsTaxExempt bit,
+	@TaxCategoryID int,
+	@AttributeControlTypeID int,
+	@DisplayOrder int
+)
+AS
+BEGIN
+
+	UPDATE [Nop_CheckoutAttribute]
+	SET
+		[Name]=@Name,
+		[TextPrompt]=@TextPrompt,
+		[IsRequired]=@IsRequired,
+		[ShippableProductRequired]=@ShippableProductRequired,
+		[IsTaxExempt]=@IsTaxExempt,
+		[TaxCategoryID]=@TaxCategoryID,
+		[AttributeControlTypeID]=@AttributeControlTypeID,
+		[DisplayOrder]=@DisplayOrder
+	WHERE
+		CheckoutAttributeID = @CheckoutAttributeID
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedCleanUp]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedCleanUp]
+
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE FROM
+		[Nop_CheckoutAttributeLocalized]
+	WHERE
+		([Name] IS NULL OR [Name] = '') AND		
+		([TextPrompt] IS NULL OR [TextPrompt] = '')
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedInsert]
+(
+	@CheckoutAttributeLocalizedID int = NULL output,
+	@CheckoutAttributeID int,
+	@LanguageID int,
+	@Name nvarchar(100),
+	@TextPrompt nvarchar(300)
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_CheckoutAttributeLocalized]
+	(
+		CheckoutAttributeID,
+		LanguageID,
+		[Name],
+		[TextPrompt]
+	)
+	VALUES
+	(
+		@CheckoutAttributeID,
+		@LanguageID,
+		@Name,
+		@TextPrompt
+	)
+
+	set @CheckoutAttributeLocalizedID=@@identity
+
+	EXEC Nop_CheckoutAttributeLocalizedCleanUp
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedLoadByPrimaryKey]
+	@CheckoutAttributeLocalizedID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_CheckoutAttributeLocalized]
+	WHERE CheckoutAttributeLocalizedID = @CheckoutAttributeLocalizedID
+	ORDER BY CheckoutAttributeLocalizedID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedLoadByCheckoutAttributeIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedLoadByCheckoutAttributeIDAndLanguageID]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedLoadByCheckoutAttributeIDAndLanguageID]
+	@CheckoutAttributeID int,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_CheckoutAttributeLocalized]
+	WHERE CheckoutAttributeID = @CheckoutAttributeID AND LanguageID=@LanguageID
+	ORDER BY CheckoutAttributeLocalizedID
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedUpdate]
+(
+	@CheckoutAttributeLocalizedID int,
+	@CheckoutAttributeID int,
+	@LanguageID int,
+	@Name nvarchar(100),
+	@TextPrompt nvarchar(300)
+)
+AS
+BEGIN
+	
+	UPDATE [Nop_CheckoutAttributeLocalized]
+	SET
+		[CheckoutAttributeID]=@CheckoutAttributeID,
+		[LanguageID]=@LanguageID,
+		[Name]=@Name,
+		[TextPrompt]=@TextPrompt
+	WHERE
+		CheckoutAttributeLocalizedID = @CheckoutAttributeLocalizedID
+
+	EXEC Nop_CheckoutAttributeLocalizedCleanUp
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueDelete]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueDelete]
+(
+	@CheckoutAttributeValueID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE
+	FROM [Nop_CheckoutAttributeValue]
+	WHERE
+		CheckoutAttributeValueID = @CheckoutAttributeValueID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueInsert]
+(
+	@CheckoutAttributeValueID int = NULL output,
+	@CheckoutAttributeID int,
+	@Name nvarchar (100),
+	@PriceAdjustment money,
+	@WeightAdjustment decimal(18, 4),
+	@IsPreSelected bit,
+	@DisplayOrder int
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_CheckoutAttributeValue]
+	(
+		[CheckoutAttributeID],
+		[Name],
+		[PriceAdjustment],
+		[WeightAdjustment],
+		[IsPreSelected],
+		[DisplayOrder]
+	)
+	VALUES
+	(
+		@CheckoutAttributeID,
+		@Name,
+		@PriceAdjustment,
+		@WeightAdjustment,
+		@IsPreSelected,
+		@DisplayOrder
+	)
+
+	set @CheckoutAttributeValueID=SCOPE_IDENTITY()
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueLoadByPrimaryKey]
+(
+	@CheckoutAttributeValueID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		cav.CheckoutAttributeValueID, 
+		cav.CheckoutAttributeID, 
+		dbo.NOP_getnotnullnotempty(cavl.Name,cav.Name) as [Name],
+		cav.PriceAdjustment, 
+		cav.WeightAdjustment, 
+		cav.IsPreSelected, 
+		cav.DisplayOrder
+	FROM [Nop_CheckoutAttributeValue] cav
+		LEFT OUTER JOIN [Nop_CheckoutAttributeValueLocalized] cavl 
+		ON cav.CheckoutAttributeValueID = cavl.CheckoutAttributeValueID AND cavl.LanguageID = @LanguageID	
+	WHERE
+		cav.CheckoutAttributeValueID = @CheckoutAttributeValueID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLoadByCheckoutAttributeID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLoadByCheckoutAttributeID]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueLoadByCheckoutAttributeID]
+(
+	@CheckoutAttributeID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		cav.CheckoutAttributeValueID, 
+		cav.CheckoutAttributeID, 
+		dbo.NOP_getnotnullnotempty(cavl.Name,cav.Name) as [Name],
+		cav.PriceAdjustment, 
+		cav.WeightAdjustment, 
+		cav.IsPreSelected, 
+		cav.DisplayOrder
+	FROM [Nop_CheckoutAttributeValue] cav
+		LEFT OUTER JOIN [Nop_CheckoutAttributeValueLocalized] cavl 
+		ON cav.CheckoutAttributeValueID = cavl.CheckoutAttributeValueID AND cavl.LanguageID = @LanguageID	
+	WHERE 
+		cav.CheckoutAttributeID=@CheckoutAttributeID
+	ORDER BY cav.[DisplayOrder]
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueUpdate]
+(
+	@CheckoutAttributeValueID int,
+	@CheckoutAttributeID int,
+	@Name nvarchar (100),
+	@PriceAdjustment money,
+	@WeightAdjustment decimal(18, 4),
+	@IsPreSelected bit,
+	@DisplayOrder int
+)
+AS
+BEGIN
+
+	UPDATE [Nop_CheckoutAttributeValue]
+	SET
+		CheckoutAttributeID=@CheckoutAttributeID,
+		[Name]=@Name,
+		PriceAdjustment=@PriceAdjustment,
+		WeightAdjustment=@WeightAdjustment,
+		IsPreSelected=@IsPreSelected,
+		DisplayOrder=@DisplayOrder
+	WHERE
+		CheckoutAttributeValueID = @CheckoutAttributeValueID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedCleanUp]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedCleanUp]
+
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE FROM
+		[Nop_CheckoutAttributeValueLocalized]
+	WHERE
+		([Name] IS NULL OR [Name] = '')
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedInsert]
+(
+	@CheckoutAttributeValueLocalizedID int = NULL output,
+	@CheckoutAttributeValueID int,
+	@LanguageID int,
+	@Name nvarchar(100)
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_CheckoutAttributeValueLocalized]
+	(
+		CheckoutAttributeValueID,
+		LanguageID,
+		[Name]
+	)
+	VALUES
+	(
+		@CheckoutAttributeValueID,
+		@LanguageID,
+		@Name
+	)
+
+	set @CheckoutAttributeValueLocalizedID=@@identity
+
+	EXEC Nop_CheckoutAttributeValueLocalizedCleanUp
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedLoadByPrimaryKey]
+	@CheckoutAttributeValueLocalizedID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_CheckoutAttributeValueLocalized]
+	WHERE CheckoutAttributeValueLocalizedID = @CheckoutAttributeValueLocalizedID
+	ORDER BY CheckoutAttributeValueLocalizedID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedLoadByCheckoutAttributeValueIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedLoadByCheckoutAttributeValueIDAndLanguageID]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedLoadByCheckoutAttributeValueIDAndLanguageID]
+	@CheckoutAttributeValueID int,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT * 
+	FROM [Nop_CheckoutAttributeValueLocalized]
+	WHERE CheckoutAttributeValueID = @CheckoutAttributeValueID AND LanguageID=@LanguageID
+	ORDER BY CheckoutAttributeValueLocalizedID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedUpdate]
+(
+	@CheckoutAttributeValueLocalizedID int,
+	@CheckoutAttributeValueID int,
+	@LanguageID int,
+	@Name nvarchar(100)
+)
+AS
+BEGIN
+	
+	UPDATE [Nop_CheckoutAttributeValueLocalized]
+	SET
+		[CheckoutAttributeValueID]=@CheckoutAttributeValueID,
+		[LanguageID]=@LanguageID,
+		[Name]=@Name	
+	WHERE
+		CheckoutAttributeValueLocalizedID = @CheckoutAttributeValueLocalizedID
+
+	EXEC Nop_CheckoutAttributeValueLocalizedCleanUp
+END
+GO
+
+
+IF (NOT EXISTS(SELECT 1 FROM [Nop_ActivityLogType] WHERE [SystemKeyword] = N'DeleteCheckoutAttribute'))
+BEGIN
+	INSERT INTO [Nop_ActivityLogType] ([SystemKeyword], [Name], [Enabled]) VALUES (N'DeleteCheckoutAttribute', N'Delete a checkout attribute', 1)
+END
+GO
+
+IF (NOT EXISTS(SELECT 1 FROM [Nop_ActivityLogType] WHERE [SystemKeyword] = N'EditCheckoutAttribute'))
+BEGIN
+	INSERT INTO [Nop_ActivityLogType] ([SystemKeyword], [Name], [Enabled]) VALUES (N'EditCheckoutAttribute', N'Edit a checkout attribute', 1)
+END
+GO
+
+IF (NOT EXISTS(SELECT 1 FROM [Nop_ActivityLogType] WHERE [SystemKeyword] = N'AddNewCheckoutAttribute'))
+BEGIN
+	INSERT INTO [Nop_ActivityLogType] ([SystemKeyword], [Name], [Enabled]) VALUES (N'AddNewCheckoutAttribute', N'Add a new checkout attribute', 1)
+END
+GO

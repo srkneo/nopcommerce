@@ -131,6 +131,13 @@
     <Compile Include="Orders\DBBestSellersReportLine.cs" />
     <Compile Include="Orders\DBOrderAverageReportLine.cs" />
     <Compile Include="Orders\DBOrderProvider.cs" />
+    <Compile Include="Products\Attributes\DBCheckoutAttribute.cs" />
+    <Compile Include="Products\Attributes\DBCheckoutAttributeCollection.cs" />
+    <Compile Include="Products\Attributes\DBCheckoutAttributeLocalized.cs" />
+    <Compile Include="Products\Attributes\DBCheckoutAttributeProvider.cs" />
+    <Compile Include="Products\Attributes\DBCheckoutAttributeValue.cs" />
+    <Compile Include="Products\Attributes\DBCheckoutAttributeValueCollection.cs" />
+    <Compile Include="Products\Attributes\DBCheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\DBProductAttributeLocalized.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeCombination.cs" />

@@ -379,6 +379,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttributeLocalized(ProductAttributeID,
             LanguageID, Name, Description);
             var item = DBMapping(dbItem);
+
+            if (ProductAttributeManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
+            }
+
             return item;
         }
 
@@ -397,6 +405,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttributeLocalized(ProductAttributeLocalizedID,
                 ProductAttributeID, LanguageID, Name, Description);
             var item = DBMapping(dbItem);
+
+            if (ProductAttributeManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
+            }
+
             return item;
         }
         
@@ -721,8 +737,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             int LanguageID, string Name)
         {
             var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeValueLocalized(ProductVariantAttributeValueID,
-            LanguageID, Name);
+                LanguageID, Name);
             var item = DBMapping(dbItem);
+            
+            if (ProductAttributeManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
+            }
+
             return item;
         }
 
@@ -740,6 +764,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeValueLocalized(ProductVariantAttributeValueLocalizedID,
                 ProductVariantAttributeValueID, LanguageID, Name);
             var item = DBMapping(dbItem);
+
+            if (ProductAttributeManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTES_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
+            }
+
             return item;
         }
         

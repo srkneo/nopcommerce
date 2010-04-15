@@ -395,6 +395,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertManufacturerLocalized(ManufacturerID,
             LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
             var item = DBMapping(dbItem);
+
+            if (ManufacturerManager.ManufacturersCacheEnabled)
+            {
+                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            }
+
             return item;
         }
 
@@ -419,6 +425,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateManufacturerLocalized(ManufacturerLocalizedID,
                 ManufacturerID, LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
             var item = DBMapping(dbItem);
+
+            if (ManufacturerManager.ManufacturersCacheEnabled)
+            {
+                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+            }
+
             return item;
         }
 

@@ -8,216 +8,171 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NopSolutions.NopCommerce.Web.Modules {
+namespace NopSolutions.NopCommerce.Web.Administration.Modules {
     
     
-    public partial class OrderSummaryControl {
+    public partial class CheckoutAttributeInfoControl {
         
         /// <summary>
-        /// pnlEmptyCart control.
+        /// rptrLanguageTabs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlEmptyCart;
+        protected global::System.Web.UI.WebControls.Repeater rptrLanguageTabs;
         
         /// <summary>
-        /// pnlCart control.
+        /// lblName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCart;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblName;
         
         /// <summary>
-        /// phCoupon control.
+        /// txtName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel phCoupon;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtName;
         
         /// <summary>
-        /// txtDiscountCouponCode control.
+        /// lblTextPrompt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDiscountCouponCode;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblTextPrompt;
         
         /// <summary>
-        /// btnApplyDiscountCouponCode control.
+        /// txtTextPrompt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnApplyDiscountCouponCode;
+        protected global::System.Web.UI.WebControls.TextBox txtTextPrompt;
         
         /// <summary>
-        /// pnlDiscountWarnings control.
+        /// rptrLanguageDivs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDiscountWarnings;
+        protected global::System.Web.UI.WebControls.Repeater rptrLanguageDivs;
         
         /// <summary>
-        /// lblDiscountWarning control.
+        /// lblAttributeRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDiscountWarning;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblAttributeRequired;
         
         /// <summary>
-        /// phGiftCards control.
+        /// cbAttributeRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel phGiftCards;
+        protected global::System.Web.UI.WebControls.CheckBox cbAttributeRequired;
         
         /// <summary>
-        /// txtGiftCardCouponCode control.
+        /// lblShippableProductRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGiftCardCouponCode;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblShippableProductRequired;
         
         /// <summary>
-        /// btnApplyGiftCardsCouponCode control.
+        /// cbShippableProductRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnApplyGiftCardsCouponCode;
+        protected global::System.Web.UI.WebControls.CheckBox cbShippableProductRequired;
         
         /// <summary>
-        /// pnlGiftCardWarnings control.
+        /// lblTaxExempt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlGiftCardWarnings;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblTaxExempt;
         
         /// <summary>
-        /// lblGiftCardWarning control.
+        /// cbIsTaxExempt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGiftCardWarning;
+        protected global::System.Web.UI.WebControls.CheckBox cbIsTaxExempt;
         
         /// <summary>
-        /// pnlCommonWarnings control.
+        /// lblTaxCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCommonWarnings;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblTaxCategory;
         
         /// <summary>
-        /// lblCommonWarning control.
+        /// ddlTaxCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCommonWarning;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTaxCategory;
         
         /// <summary>
-        /// rptShoppingCart control.
+        /// lblAttributeControlType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptShoppingCart;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblAttributeControlType;
         
         /// <summary>
-        /// ctrlCheckoutAttributes control.
+        /// ddlAttributeControlType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Modules.CheckoutAttributesControl ctrlCheckoutAttributes;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAttributeControlType;
         
         /// <summary>
-        /// cbTermsOfService control.
+        /// lblDisplayOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbTermsOfService;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblDisplayOrder;
         
         /// <summary>
-        /// lTermsOfService control.
+        /// txtDisplayOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lTermsOfService;
-        
-        /// <summary>
-        /// btnUpdate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpdate;
-        
-        /// <summary>
-        /// btnContinueShopping control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnContinueShopping;
-        
-        /// <summary>
-        /// btnCheckout control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCheckout;
-        
-        /// <summary>
-        /// btnGoogleCheckoutButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Modules.GoogleCheckoutButton btnGoogleCheckoutButton;
-        
-        /// <summary>
-        /// ctrlOrderTotals control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Modules.OrderTotalsControl ctrlOrderTotals;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.NumericTextBox txtDisplayOrder;
     }
 }

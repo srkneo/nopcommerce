@@ -18,12 +18,18 @@ using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
+using NopSolutions.NopCommerce.BusinessLogic.SEO;
 
 public class GetDownloadAdmin : IHttpHandler
 {
-
     public void ProcessRequest(HttpContext context)
     {
+        if (NopContext.Current.User == null || !NopContext.Current.User.IsAdmin)
+        {
+            string loginURL = SEOHelper.GetAdminAreaLoginPageURL();
+            context.Response.Redirect(loginURL);
+        }
+        
         int downloadID = CommonHelper.QueryStringInt("DownloadID");
         Download download = DownloadManager.GetDownloadByID(downloadID);
         if (download == null)

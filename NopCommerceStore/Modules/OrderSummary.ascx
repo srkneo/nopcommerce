@@ -2,6 +2,7 @@
     CodeBehind="OrderSummary.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="GoogleCheckoutButton" Src="~/Modules/GoogleCheckoutButton.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="OrderTotals" Src="~/Modules/OrderTotals.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="CheckoutAttributes" Src="~/Modules/CheckoutAttributes.ascx" %>
 <asp:Panel class="order-summary-content" runat="server" ID="pnlEmptyCart">
     <%=GetLocaleResourceString("ShoppingCart.CartIsEmpty")%>
 </asp:Panel>
@@ -133,6 +134,10 @@
     <div class="cart-footer">
         <%if (this.IsShoppingCart)
           { %>
+        <div class="clear">
+        </div>
+            <nopCommerce:CheckoutAttributes ID="ctrlCheckoutAttributes" runat="server">
+            </nopCommerce:CheckoutAttributes>
         <div class="clear">
         </div>
         <div class="buttons">

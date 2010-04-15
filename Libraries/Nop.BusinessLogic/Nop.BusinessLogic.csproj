@@ -141,6 +141,14 @@
     <Compile Include="Payment\CancelPaymentResult.cs" />
     <Compile Include="Payment\PaymentMethodTypeEnum.cs" />
     <Compile Include="Payment\RecurringPaymentTypeEnum.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttribute.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttributeCollection.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttributeLocalized.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttributeManager.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttributeValue.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttributeValueCollection.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttributeValueLocalized.cs" />
+    <Compile Include="Products\Attributes\CheckoutAttributeHelper.cs" />
     <Compile Include="Products\CustomerRoleProductPriceCollection.cs" />
     <Compile Include="Products\CustomerRoleProductPrice.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeValueLocalized.cs" />

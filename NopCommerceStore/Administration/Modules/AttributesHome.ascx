@@ -34,6 +34,17 @@
                     </p>
                 </div>
             </li>
+            <li>
+                <div class="title">
+                    <a href="checkoutattributes.aspx" title="<%=GetLocaleResourceString("Admin.AttributesHome.CheckoutAttributes.TitleDescription")%>">
+                        <%=GetLocaleResourceString("Admin.AttributesHome.CheckoutAttributes.Title")%></a>
+                </div>
+                <div class="description">
+                    <p>
+                        <%=GetLocaleResourceString("Admin.AttributesHome.CheckoutAttributes.Description")%>
+                    </p>
+                </div>
+            </li>
         </ul>
     </div>
 </div>

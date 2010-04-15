@@ -1108,6 +1108,14 @@ textarea
 	padding-left: 5px;
 }
 
+.order-summary-content .checkout-attributes
+{
+	margin: 10px 0px 10px 0px;
+	padding: 10px 20px 10px 20px;
+	background:none repeat scroll 0 0 #F7F5E8;
+    border:1px dotted #D3D3D3;
+}
+
 .order-summary-content .terms-of-service
 {
 	margin: 0px;

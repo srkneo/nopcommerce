@@ -221,11 +221,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         }
 
         /// <summary>
-        /// Are attrbiutes qual
+        /// Are attributes equal
         /// </summary>
         /// <param name="Attributes1">The attributes of the first product variant</param>
         /// <param name="Attributes2">The attributes of the second product variant</param>
-        /// <returns></returns>
+        /// <returns>Result</returns>
         public static bool AreProductAttributesEqual(string Attributes1, string Attributes2)
         {
             bool attributesEqual = true;

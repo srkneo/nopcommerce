@@ -18,6 +18,7 @@
       <siteMapNode title="Attributes" url="~/administration/attributeshome.aspx" description="Attributes Home" nopResourceTitle="Admin.Sitemap.AttributesHomeTitle" nopResourceDescription="Admin.Sitemap.AttributesHomeDescription" >
         <siteMapNode title="Product Attributes" url="~/administration/productattributes.aspx" description="Manage Product Attributes" nopResourceTitle="Admin.Sitemap.ProductAttributesTitle" nopResourceDescription="Admin.Sitemap.ProductAttributesDescription" />
         <siteMapNode title="Product Specifications" url="~/administration/specificationattributes.aspx" description="Manage Specification Attributes" nopResourceTitle="Admin.Sitemap.SpecificationAttributesTitle" nopResourceDescription="Admin.Sitemap.SpecificationAttributesDescription" />
+        <siteMapNode title="Checkout Attributes" url="~/administration/checkoutattributes.aspx" description="Manage Checkout Attributes" nopResourceTitle="Admin.Sitemap.CheckoutAttributesTitle" nopResourceDescription="Admin.Sitemap.CheckoutAttributesDescription" />
       </siteMapNode>
 
       <siteMapNode title="Manufacturers" url="~/administration/manufacturers.aspx" description="Manage Product Manufacturers" nopResourceTitle="Admin.Sitemap.ManufacturersTitle" nopResourceDescription="Admin.Sitemap.ManufacturersDescription" />

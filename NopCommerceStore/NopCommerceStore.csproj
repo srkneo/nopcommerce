@@ -371,6 +371,27 @@
     <Compile Include="Administration\AccessDenied.aspx.designer.cs">
       <DependentUpon>AccessDenied.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\CheckoutAttributes.aspx.cs">
+      <DependentUpon>CheckoutAttributes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\CheckoutAttributes.aspx.designer.cs">
+      <DependentUpon>CheckoutAttributes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\CheckoutAttributeAdd.aspx.cs">
+      <DependentUpon>CheckoutAttributeAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\CheckoutAttributeAdd.aspx.designer.cs">
+      <DependentUpon>CheckoutAttributeAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\CheckoutAttributeDetails.aspx.cs">
+      <DependentUpon>CheckoutAttributeDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\CheckoutAttributeDetails.aspx.designer.cs">
+      <DependentUpon>CheckoutAttributeDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\GiftCardDetails.aspx.cs">
       <DependentUpon>GiftCardDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -384,6 +405,41 @@
     </Compile>
     <Compile Include="Administration\Maintenance.aspx.designer.cs">
       <DependentUpon>Maintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributes.ascx.cs">
+      <DependentUpon>CheckoutAttributes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributes.ascx.designer.cs">
+      <DependentUpon>CheckoutAttributes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeInfo.ascx.cs">
+      <DependentUpon>CheckoutAttributeInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeInfo.ascx.designer.cs">
+      <DependentUpon>CheckoutAttributeInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeAdd.ascx.cs">
+      <DependentUpon>CheckoutAttributeAdd.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeAdd.ascx.designer.cs">
+      <DependentUpon>CheckoutAttributeAdd.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeDetails.ascx.cs">
+      <DependentUpon>CheckoutAttributeDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeDetails.ascx.designer.cs">
+      <DependentUpon>CheckoutAttributeDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeValues.ascx.cs">
+      <DependentUpon>CheckoutAttributeValues.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CheckoutAttributeValues.ascx.designer.cs">
+      <DependentUpon>CheckoutAttributeValues.ascx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Modules\ProductPricesByCustomerRole.ascx.cs">
       <DependentUpon>ProductPricesByCustomerRole.ascx</DependentUpon>
@@ -3590,6 +3646,13 @@
     <Compile Include="ConditionsInfoPopup.aspx.designer.cs">
       <DependentUpon>ConditionsInfoPopup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\CheckoutAttributes.ascx.cs">
+      <DependentUpon>CheckoutAttributes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\CheckoutAttributes.ascx.designer.cs">
+      <DependentUpon>CheckoutAttributes.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\DatePicker2.ascx.cs">
       <DependentUpon>DatePicker2.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5751,8 +5814,16 @@
     <Content Include="Administration\CategoryProductAdd.aspx" />
     <Content Include="Administration\ACL.aspx" />
     <Content Include="Administration\AccessDenied.aspx" />
+    <Content Include="Administration\CheckoutAttributes.aspx" />
+    <Content Include="Administration\CheckoutAttributeAdd.aspx" />
+    <Content Include="Administration\CheckoutAttributeDetails.aspx" />
     <Content Include="Administration\GiftCardDetails.aspx" />
     <Content Include="Administration\Maintenance.aspx" />
+    <Content Include="Administration\Modules\CheckoutAttributes.ascx" />
+    <Content Include="Administration\Modules\CheckoutAttributeInfo.ascx" />
+    <Content Include="Administration\Modules\CheckoutAttributeAdd.ascx" />
+    <Content Include="Administration\Modules\CheckoutAttributeDetails.ascx" />
+    <Content Include="Administration\Modules\CheckoutAttributeValues.ascx" />
     <Content Include="Administration\Modules\ProductPricesByCustomerRole.ascx" />
     <Content Include="Administration\Modules\GiftCardInfo.ascx" />
     <Content Include="Administration\Modules\GiftCardDetails.ascx" />
@@ -6406,6 +6477,7 @@
     <Content Include="images\flags\za.png" />
     <Content Include="images\flags\zm.png" />
     <Content Include="images\flags\zw.png" />
+    <Content Include="Modules\CheckoutAttributes.ascx" />
     <Content Include="Modules\DatePicker2.ascx" />
     <Content Include="QuickPayCancel.aspx" />
     <Content Include="QuickPayReturn.aspx" />

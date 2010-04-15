@@ -433,6 +433,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategoryLocalized(CategoryID,
             LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
             var item = DBMapping(dbItem);
+
+            if (CategoryManager.CategoriesCacheEnabled)
+            {
+                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+            }
+
             return item;
         }
 
@@ -457,6 +463,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategoryLocalized(CategoryLocalizedID,
                 CategoryID, LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
             var item = DBMapping(dbItem);
+
+            if (CategoryManager.CategoriesCacheEnabled)
+            {
+                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+            }
+
             return item;
         }
         

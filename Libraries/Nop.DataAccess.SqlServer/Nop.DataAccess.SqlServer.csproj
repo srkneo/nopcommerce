@@ -104,6 +104,7 @@
     <Compile Include="Payment\SQLCreditCardTypeProvider.cs" />
     <Compile Include="Payment\SQLPaymentMethodProvider.cs" />
     <Compile Include="Payment\SQLPaymentStatusProvider.cs" />
+    <Compile Include="Products\Attributes\SQLCheckoutAttributeProvider.cs" />
     <Compile Include="Products\Attributes\SQLProductAttributeProvider.cs" />
     <Compile Include="Products\SQLProductProvider.cs" />
     <Compile Include="Products\Specs\SQLSpecificationAttributeProvider.cs" />

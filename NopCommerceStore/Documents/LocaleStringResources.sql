@@ -305,6 +305,258 @@ set @resources='
   <LocaleResource Name="Checkout.AcceptTermsOfService.Read">
     <Value>(read)</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.CheckoutAttributesTitle">
+    <Value>Checkout Attributes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.CheckoutAttributesDescription">
+    <Value>Manage Checkout Attributes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.AttributesHome.CheckoutAttributes.TitleDescription">
+    <Value>Manage checkout attributes.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.AttributesHome.CheckoutAttributes.Title">
+    <Value>Checkout Attributes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.AttributesHome.CheckoutAttributes.Description">
+    <Value>You can create checkout attributes to provide your customers with more options during checkout (e.g. Offer gift wrapping or messaging options)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.Title">
+    <Value>Checkout Attributes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.AddButton.Text">
+    <Value>Add new</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.AddButton.Tooltip">
+    <Value>Add a new checkout attribute</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.Name">
+    <Value>Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.IsRequired">
+    <Value>Is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.AttributeControlType">
+    <Value>Control type</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.DisplayOrder">
+    <Value>Display order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributes.Edit">
+    <Value>Edit</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Name.Text">
+    <Value>Name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Name.Tooltip">
+    <Value>The name of the checkout attribute.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Name.ErrorMessage">
+    <Value>Name is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.TextPrompt.Text">
+    <Value>Text prompt:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.TextPrompt.Tooltip">
+    <Value>Enter text prompt.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Required">
+    <Value>Required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Required.Tooltip">
+    <Value>When an attribute is required, the customer must choose an appropriate attribute value before they can continue.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.ShippableProductRequired">
+    <Value>Shippable product required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.ShippableProductRequired.Tooltip">
+    <Value>An option indicating whether shippable products are required in order to display this attribute.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.TaxExempt">
+    <Value>Tax exempt:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.TaxExempt.Tooltip">
+    <Value>Determines whether this option is tax exempt (tax will not be applied to this option at checkout).</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.TaxCategory">
+    <Value>Tax category:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.TaxCategory.Tooltip">
+    <Value>The tax classification for this option. You can manage tax classifications from Configuration : Tax : Tax Classes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.ControlType">
+    <Value>Control Type:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.ControlType.Tooltip">
+    <Value>Choose how to display your attribute values.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.DisplayOrder">
+    <Value>Display order:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.DisplayOrder.Tooltip">
+    <Value>The product attribute display order. 1 represents the first item in the list.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.DisplayOrder.RequiredErrorMessage">
+    <Value>Display order is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.DisplayOrder.RangeErrorMessage">
+    <Value>The value must be from -99999 to 99999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeAdd.AddNew">
+    <Value>Add a new checkout attribute</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GetLocaleResourceString.BackToList">
+    <Value>back to checkout attributes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeAdd.SaveButton.Text">
+    <Value>Save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeAdd.SaveButton.Tooltip">
+    <Value>Save attribute</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeAdd.AttributeInfo">
+    <Value>Attribute Info</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeAdd.Values">
+    <Value>Attribute Values</Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.AddNewCheckoutAttribute">
+    <Value>Added a new checkout attribute (''{0}'')</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.Edit">
+    <Value>Edit</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.BackToList">
+    <Value>back to checkout attributes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.SaveButton.Text">
+    <Value>Save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.SaveButton.Tooltip">
+    <Value>Save attribute</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.DeleteButton.Text">
+    <Value>Delete</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.DeleteButton.Tooltip">
+    <Value>Delete attribute</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.AttributeInfo">
+    <Value>Attribute Info</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeDetails.Values">
+    <Value>Attribute Values</Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.EditCheckoutAttribute">
+    <Value>Edited a checkout attribute (''{0}'')</Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.DeleteCheckoutAttribute">
+    <Value>Deleted a checkout attribute (''{0}'')</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.AvailableAfterSaving">
+    <Value>You need to save the checkout attribute before you can add values for this checkout attribute page.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.Name">
+    <Value>Name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.Name.Tooltip">
+    <Value>The attribute value name e.g. ''Yes'' or ''No'' for Gift Wrapping checkout attribute</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.PriceAdjustment">
+    <Value>Price adjustment:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.PriceAdjustment.Tooltip">
+    <Value>The price adjustment applied when choosing this attribute value e.g. ''10'' to add 10 euros.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.PriceAdjustment.RequiredErrorMessage">
+    <Value>Price adjustment is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.PriceAdjustment.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.WeightAdjustment">
+    <Value>Weight adjustment:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.WeightAdjustment.Tooltip">
+    <Value>The weight adjustment applied when choosing this attribute value</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.WeightAdjustment.RequiredErrorMessage">
+    <Value>Weight adjustment is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.WeightAdjustment.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.PreSelected">
+    <Value>Pre-selected:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.PreSelected.Tooltip">
+    <Value>Determines whether this attribute value is pre selected for the customer.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.DisplayOrder">
+    <Value>Display order:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.DisplayOrder.Tooltip">
+    <Value>The display order of the attribute value. 1 represents the first item in attribute value list.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.DisplayOrder.RequiredErrorMessage">
+    <Value>Display order is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.DisplayOrder.RangeErrorMessage">
+    <Value>The value must be from -99999 to 99999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.AddNewButton.Text">
+    <Value>Add</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeValues.New.AddNewButton.Tooltip">
+    <Value>Add attribute value</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfoValues.AddNew">
+    <Value>Add new values</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Name">
+    <Value>Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Name.ErrorMessage">
+    <Value>Name is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.PriceAdjustment">
+    <Value>Price adjustment</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.PriceAdjustment.RequiredErrorMessage">
+    <Value>Price adjustment is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.PriceAdjustment.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.WeightAdjustment">
+    <Value>Weight adjustment:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.WeightAdjustment.RequiredErrorMessage">
+    <Value>Weight adjustment is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.WeightAdjustment.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.IsPreSelected">
+    <Value>Is pre-selected</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.DisplayOrder">
+    <Value>Display order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.DisplayOrder.RequiredErrorMessage">
+    <Value>Display order is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.DisplayOrder.RangeErrorMessage">
+    <Value>The value must be from -99999 to 99999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Update">
+    <Value>Update</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.Delete">
+    <Value>Delete</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CheckoutAttributeInfo.ValuesNotRequiredForThisControlType">
+    <Value>Values are not required for this attribute control type</Value>
+  </LocaleResource>
 </Language>
 '
  		

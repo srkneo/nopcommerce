@@ -903,6 +903,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 LanguageID, Name, ShortDescription, FullDescription,
                 MetaKeywords, MetaDescription, MetaTitle, SEName);
             var item = DBMapping(dbItem);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+            }
+
             return item;
         }
 
@@ -929,6 +937,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 ProductID, LanguageID, Name, ShortDescription, FullDescription,
                 MetaKeywords, MetaDescription, MetaTitle, SEName);
             var item = DBMapping(dbItem);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+            }
+
             return item;
         }
 
@@ -2027,6 +2043,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantLocalized(ProductVariantID,
                 LanguageID, Name, Description);
             var item = DBMapping(dbItem);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+            }
+
             return item;
         }
 
@@ -2045,6 +2069,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantLocalized(ProductVariantLocalizedID,
                 ProductVariantID, LanguageID, Name, Description);
             var item = DBMapping(dbItem);
+
+            if (ProductManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+            }
+
             return item;
         }
 
