@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.Web
 
 
             //validation
-            var scWarnings = ShoppingCartManager.GetShoppingCartWarnings(Cart);
+            var scWarnings = ShoppingCartManager.GetShoppingCartWarnings(Cart, NopContext.Current.User.CheckoutAttributes, true);
             if (scWarnings.Count > 0)
             {
                 Response.Redirect("~/shoppingcart.aspx");

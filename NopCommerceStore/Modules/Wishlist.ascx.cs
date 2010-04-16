@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
             //shopping cart
             var Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.Wishlist);
-            var warnings = ShoppingCartManager.GetShoppingCartWarnings(Cart);
+            var warnings = ShoppingCartManager.GetShoppingCartWarnings(Cart, string.Empty, false);
             if (warnings.Count > 0)
             {
                 hasErrors = true;

@@ -112,7 +112,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         //no customers found
                         customer = CustomerManager.AddCustomerForced(customerGUID, email, username,
                             passwordHash, saltKey, affiliateID, billingAddressID, shippingAddressID, lastPaymentMethodID,
-                            lastAppliedCouponCode, string.Empty, languageID, currencyID, (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt,
+                            lastAppliedCouponCode, string.Empty, string.Empty,
+                            languageID, currencyID, (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt,
                             isAdmin, isGuest, isForumModerator, totalForumPosts, signature,
                             adminComment, active, deleted, registrationDate, timeZoneID, avatarID);
                     }
@@ -124,7 +125,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
                                 email, username, passwordHash, saltKey, affiliateID, billingAddressID,
                                 shippingAddressID, lastPaymentMethodID, lastAppliedCouponCode,
-                                string.Empty, languageID, currencyID,
+                                string.Empty, string.Empty, languageID, currencyID,
                                 (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt, isAdmin, isGuest,
                                 isForumModerator, totalForumPosts, signature, adminComment,
                                 active, deleted, registrationDate, timeZoneID, avatarID);
@@ -137,7 +138,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             {
                                 customer = CustomerManager.AddCustomerForced(customerGUID, email, username,
                                     passwordHash, saltKey, affiliateID, billingAddressID, shippingAddressID, lastPaymentMethodID,
-                                    lastAppliedCouponCode, string.Empty, languageID, currencyID, (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt,
+                                    lastAppliedCouponCode, string.Empty,
+                                    string.Empty, languageID, currencyID, 
+                                    (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt,
                                     isAdmin, isGuest, isForumModerator, totalForumPosts, signature,
                                     adminComment, active, deleted, registrationDate, timeZoneID, avatarID);
                             }
@@ -146,7 +149,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                                 customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
                                     email, username, passwordHash, saltKey, affiliateID, billingAddressID,
                                     shippingAddressID, lastPaymentMethodID, lastAppliedCouponCode,
-                                    string.Empty, languageID, currencyID,
+                                    string.Empty, string.Empty, languageID, currencyID,
                                     (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt, isAdmin, isGuest,
                                     isForumModerator, totalForumPosts, signature, adminComment,
                                     active, deleted, registrationDate, timeZoneID, avatarID);

@@ -223,6 +223,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
             gvOrderProductVariants.DataSource = orderProductVariants;
             gvOrderProductVariants.DataBind();
 
+            //checkout attributes
+            lCheckoutAttributes.Text = order.CheckoutAttributeDescription;
+
             var orderNoteCollection = order.OrderNotes;
             if(orderNoteCollection.Count > 0)
             {

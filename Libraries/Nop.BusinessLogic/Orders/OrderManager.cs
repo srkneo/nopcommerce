@@ -102,6 +102,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.OrderTaxInCustomerCurrency = dbItem.OrderTaxInCustomerCurrency;
             item.OrderTotalInCustomerCurrency = dbItem.OrderTotalInCustomerCurrency;
             item.OrderDiscountInCustomerCurrency = dbItem.OrderDiscountInCustomerCurrency;
+            item.CheckoutAttributeDescription = dbItem.CheckoutAttributeDescription;
+            item.CheckoutAttributesXML = dbItem.CheckoutAttributesXML;
             item.CustomerCurrencyCode = dbItem.CustomerCurrencyCode;
             item.OrderWeight = dbItem.OrderWeight;
             item.AffiliateID = dbItem.AffiliateID;
@@ -461,7 +463,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                     order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                     order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                    order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                    order.OrderDiscountInCustomerCurrency,
+                    order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                    order.CustomerCurrencyCode, order.OrderWeight,
                     order.AffiliateID, OS, order.AllowStoringCreditCardNumber, order.CardType,
                     order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                     order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -556,7 +560,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                     order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                     order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                    order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                    order.OrderDiscountInCustomerCurrency,
+                    order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                    order.CustomerCurrencyCode, order.OrderWeight,
                     order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                     order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                     order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -637,7 +643,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                   order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                   order.OrderDiscountInCustomerCurrency,
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                   order.CustomerCurrencyCode, order.OrderWeight,
                    order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                     order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -763,6 +771,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
         /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
         /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
         /// <param name="CustomerCurrencyCode">The customer currency code</param>
         /// <param name="OrderWeight">The order weight</param>
         /// <param name="AffiliateID">The affiliate identifier</param>
@@ -831,7 +841,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
             decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
             decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency, string CustomerCurrencyCode, decimal OrderWeight,
+            decimal OrderDiscountInCustomerCurrency,
+            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
+            string CustomerCurrencyCode, decimal OrderWeight,
             int AffiliateID, OrderStatusEnum OrderStatus, bool AllowStoringCreditCardNumber, string CardType,
             string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
             string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
@@ -852,8 +864,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             if (CustomerIP == null)
                 CustomerIP = string.Empty;
-            if (CustomerCurrencyCode == null)
-                CustomerCurrencyCode = string.Empty;
+            if (CheckoutAttributeDescription == null)
+                CheckoutAttributeDescription = string.Empty;
+            if (CheckoutAttributesXML == null)
+                CheckoutAttributesXML = string.Empty;
             if (CardType == null)
                 CardType = string.Empty;
             if (CardName == null)
@@ -939,7 +953,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
              OrderShippingInclTaxInCustomerCurrency, OrderShippingExclTaxInCustomerCurrency,
              PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
              OrderTaxInCustomerCurrency, OrderTotalInCustomerCurrency, 
-             OrderDiscountInCustomerCurrency, CustomerCurrencyCode, OrderWeight,
+             OrderDiscountInCustomerCurrency,
+             CheckoutAttributeDescription, CheckoutAttributesXML,
+             CustomerCurrencyCode, OrderWeight,
              AffiliateID, (int)OrderStatus, AllowStoringCreditCardNumber,
              CardType, CardName, CardNumber, MaskedCreditCardNumber, CardCVV2,
              CardExpirationMonth, CardExpirationYear, PaymentMethodID,
@@ -987,6 +1003,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
         /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
         /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
         /// <param name="CustomerCurrencyCode">The customer currency code</param>
         /// <param name="OrderWeight">The order weight</param>
         /// <param name="AffiliateID">The affiliate identifier</param>
@@ -1055,7 +1073,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
             decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
             decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency, string CustomerCurrencyCode, decimal OrderWeight,
+            decimal OrderDiscountInCustomerCurrency,
+            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
+            string CustomerCurrencyCode, decimal OrderWeight,
             int AffiliateID, OrderStatusEnum OrderStatus, bool AllowStoringCreditCardNumber,
             string CardType, string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
             string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
@@ -1090,8 +1110,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 OrderSubtotalInclTaxInCustomerCurrency, OrderSubtotalExclTaxInCustomerCurrency,
                 OrderShippingInclTaxInCustomerCurrency, OrderShippingExclTaxInCustomerCurrency,
                 PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-                OrderTaxInCustomerCurrency, OrderTotalInCustomerCurrency, 
-                OrderDiscountInCustomerCurrency, CustomerCurrencyCode, OrderWeight,
+                OrderTaxInCustomerCurrency, OrderTotalInCustomerCurrency,
+                OrderDiscountInCustomerCurrency, CheckoutAttributeDescription, 
+                CheckoutAttributesXML, CustomerCurrencyCode, OrderWeight,
                 AffiliateID, (int)OrderStatus, AllowStoringCreditCardNumber,
                 CardType, CardName, CardNumber, MaskedCreditCardNumber, CardCVV2,
                 CardExpirationMonth, CardExpirationYear, PaymentMethodID,
@@ -1131,7 +1152,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                   order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                   order.OrderDiscountInCustomerCurrency,
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                   order.CustomerCurrencyCode, order.OrderWeight,
                    order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -2281,7 +2304,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerID, ShoppingCartTypeEnum.ShoppingCart);
 
                     //validate cart
-                    var warnings = ShoppingCartManager.GetShoppingCartWarnings(cart);
+                    var warnings = ShoppingCartManager.GetShoppingCartWarnings(cart, customer.CheckoutAttributes, true);
                     if (warnings.Count > 0)
                     {
                         StringBuilder warningsSb = new StringBuilder();
@@ -2330,6 +2353,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 //discount usage history
                 var appliedDiscounts = new DiscountCollection();
 
+                //checkout attributes
+                string checkoutAttributeDescription = CheckoutAttributeHelper.FormatAttributes(customer.CheckoutAttributes, customer, "<br />");
+                string checkoutAttributesXML = customer.CheckoutAttributes;
 
                 //sub total
                 decimal orderSubTotalInclTax = decimal.Zero;
@@ -2387,7 +2413,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 bool shoppingCartRequiresShipping = false;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    orderWeight = ShippingManager.GetShoppingCartTotalWeigth(cart);
+                    orderWeight = ShippingManager.GetShoppingCartTotalWeigth(cart, customer);
                     shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
                     if (shoppingCartRequiresShipping)
                     {
@@ -2784,6 +2810,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                              orderTaxInCustomerCurrency,
                              orderTotalInCustomerCurrency,
                              orderSubtotalDiscountInCustomerCurrency,
+                             checkoutAttributeDescription,
+                             checkoutAttributesXML,
                              customerCurrencyCode,
                              orderWeight,
                              customer.AffiliateID,
@@ -2871,7 +2899,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     appliedDiscounts.Add(scDiscount);
 
                                 //attributes
-                                string attributeDescription = ProductAttributeHelper.FormatAttributes(sc.ProductVariant, sc.AttributesXML);
+                                string attributeDescription = ProductAttributeHelper.FormatAttributes(sc.ProductVariant, sc.AttributesXML, customer, "<br />");
 
                                 //save item
                                 var opv = InsertOrderProductVariant(Guid.NewGuid(), order.OrderID,
@@ -3265,7 +3293,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                 order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                 order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                order.OrderDiscountInCustomerCurrency,
+                order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                order.CustomerCurrencyCode, order.OrderWeight,
                 order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                 order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                 order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -3388,7 +3418,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                   order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                   order.OrderDiscountInCustomerCurrency,
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                   order.CustomerCurrencyCode, order.OrderWeight,
                    order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
                    order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -3482,7 +3514,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                         order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                         order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                        order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                        order.OrderDiscountInCustomerCurrency,
+                        order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                        order.CustomerCurrencyCode, order.OrderWeight,
                         order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
                         order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                         order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -3574,7 +3608,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                     order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                     order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                    order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                    order.OrderDiscountInCustomerCurrency,
+                    order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                    order.CustomerCurrencyCode, order.OrderWeight,
                     order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                     order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                     order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -3660,7 +3696,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                         order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                         order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                        order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                        order.OrderDiscountInCustomerCurrency,
+                        order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                        order.CustomerCurrencyCode, order.OrderWeight,
                         order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
                         order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                         order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -3749,7 +3787,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                   order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                   order.OrderDiscountInCustomerCurrency,
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                   order.CustomerCurrencyCode, order.OrderWeight,
                    order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -3834,7 +3874,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                         order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                         order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                        order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
+                        order.OrderDiscountInCustomerCurrency,
+                        order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                        order.CustomerCurrencyCode, order.OrderWeight,
                         order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
                         order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
                         order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
@@ -3924,10 +3966,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
-                   order.OrderDiscountInCustomerCurrency, order.CustomerCurrencyCode, order.OrderWeight,
-                   order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
-                   order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                   order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
+                   order.OrderDiscountInCustomerCurrency,
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                   order.CustomerCurrencyCode, order.OrderWeight,
+                   order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, 
+                   order.CardType, order.CardName, order.CardNumber, 
+                   order.MaskedCreditCardNumber, order.CardCVV2, 
+                   order.CardExpirationMonth, order.CardExpirationYear,
                    order.PaymentMethodID, order.PaymentMethodName,
                    order.AuthorizationTransactionID,
                    order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,

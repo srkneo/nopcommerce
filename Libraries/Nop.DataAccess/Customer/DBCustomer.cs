@@ -96,6 +96,11 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// Gets or sets the applied gift card coupon code
         /// </summary>
         public string GiftCardCouponCodes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected checkout attributes
+        /// </summary>
+        public string CheckoutAttributes { get; set; }
         
         /// <summary>
         /// Gets or sets the language identifier

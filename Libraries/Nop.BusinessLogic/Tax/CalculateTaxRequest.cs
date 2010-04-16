@@ -35,17 +35,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public Customer Customer { get; set; }
 
         /// <summary>
-        /// Gets or sets a product variant
-        /// </summary>
-        public ProductVariant Item { get; set; }
-
-        /// <summary>
         /// Gets or sets an address
         /// </summary>
         public Address Address { get; set; }
 
         /// <summary>
-        /// Gets or sets a tax class identifier
+        /// Gets or sets a product variant (only one of them is used - TaxClassID or Item)
+        /// </summary>
+        public ProductVariant Item { get; set; }
+
+        /// <summary>
+        /// Gets or sets a tax class identifier (only one of them is used - TaxClassID or Item)
         /// </summary>
         public int TaxClassID { get; set; }
 

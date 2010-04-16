@@ -83,6 +83,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
         #region Methods
 
+        #region Repository methods
+
         /// <summary>
         /// Deletes expired shopping cart items
         /// </summary>
@@ -209,7 +211,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <returns>Shopping cart item</returns>
         internal static ShoppingCartItem UpdateShoppingCartItem(int ShoppingCartItemID,
             ShoppingCartTypeEnum ShoppingCartType, Guid CustomerSessionGUID,
-            int ProductVariantID, string AttributesXML, decimal CustomerEnteredPrice, 
+            int ProductVariantID, string AttributesXML, decimal CustomerEnteredPrice,
             int Quantity, DateTime CreatedOn, DateTime UpdatedOn)
         {
             if (ShoppingCartItemID == 0)
@@ -221,7 +223,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
             UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
 
-            var dbItem = DBProviderManager<DBShoppingCartProvider>.Provider.UpdateShoppingCartItem(ShoppingCartItemID, 
+            var dbItem = DBProviderManager<DBShoppingCartProvider>.Provider.UpdateShoppingCartItem(ShoppingCartItemID,
                 (int)ShoppingCartType, CustomerSessionGUID, ProductVariantID, AttributesXML,
                 CustomerEnteredPrice, Quantity, CreatedOn, UpdatedOn);
 
@@ -256,6 +258,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             var CustomerSessionGUID = customerSession.CustomerSessionGUID;
             return GetShoppingCartByCustomerSessionGUID(ShoppingCartType, CustomerSessionGUID);
         }
+        
+        #endregion
+
+        #region Workflow/helper methods
 
         /// <summary>
         /// Gets shopping cart total
@@ -263,7 +269,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="Cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <returns>Shopping cart total;Null if shopping cart total couldn't be calculated now</returns>
-        public static decimal? GetShoppingCartTotal(ShoppingCart Cart, Customer customer)
+        public static decimal? GetShoppingCartTotal(ShoppingCart Cart, 
+            Customer customer)
         {
             return GetShoppingCartTotal(Cart, 0, customer);
         }
@@ -275,7 +282,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="PaymentMethodID">Payment method identifier</param>
         /// <param name="customer">Customer</param>
         /// <returns>Shopping cart total;Null if shopping cart total couldn't be calculated now</returns>
-        public static decimal? GetShoppingCartTotal(ShoppingCart Cart, int PaymentMethodID, Customer customer)
+        public static decimal? GetShoppingCartTotal(ShoppingCart Cart, 
+            int PaymentMethodID, Customer customer)
         {
             string SubTotalError = string.Empty;
             string ShippingError = string.Empty;
@@ -387,6 +395,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     Error = Error2;
                 }
             }
+
+            //checkout attributes
+            if (customer != null)
+            {
+                var caValues = CheckoutAttributeHelper.ParseCheckoutAttributeValues(customer.CheckoutAttributes);
+                foreach (var caValue in caValues)
+                {
+                    string Error3 = string.Empty;
+                    subTotalExclTaxWithoutDiscount += TaxManager.GetCheckoutAttributePrice(caValue, false, customer, ref Error3);
+                    if (!String.IsNullOrEmpty(Error3))
+                    {
+                        Error = Error3;
+                    }
+                    subTotalInclTaxWithoutDiscount += TaxManager.GetCheckoutAttributePrice(caValue, true, customer, ref Error3);
+                    if (!String.IsNullOrEmpty(Error3))
+                    {
+                        Error = Error3;
+                    }
+                }
+            }
+
             if (includingTax)
                 subtotalWithoutPromo = subTotalInclTaxWithoutDiscount;
             else
@@ -460,7 +489,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="orderSubTotal">Order subtotal</param>
         /// <param name="appliedDiscount">Applied discount</param>
         /// <returns>Order discount</returns>
-        public static decimal GetOrderDiscount(Customer customer, decimal orderSubTotal, out Discount appliedDiscount)
+        public static decimal GetOrderDiscount(Customer customer, 
+            decimal orderSubTotal, out Discount appliedDiscount)
         {
             decimal subTotalDiscountAmount = decimal.Zero;
 
@@ -779,8 +809,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Validates whether this shopping cart is valid
         /// </summary>
         /// <param name="shoppingCart">Shopping cart</param>
+        /// <param name="checkoutAttributes">Checkout attributes</param>
+        /// <param name="validateCheckoutAttributes">A value indicating whether to validate checkout attributes</param>
         /// <returns>Warnings</returns>
-        public static List<string> GetShoppingCartWarnings(ShoppingCart shoppingCart)
+        public static List<string> GetShoppingCartWarnings(ShoppingCart shoppingCart, string checkoutAttributes, bool validateCheckoutAttributes)
         {
             var warnings = new List<string>();
 
@@ -821,6 +853,53 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 {
                     warnings.Add(cyclesError);
                     return warnings;
+                }
+            }
+
+            //validate checkout attributes
+            if (validateCheckoutAttributes)
+            {
+                //selected attributes
+                var ca1Collection = CheckoutAttributeHelper.ParseCheckoutAttributes(checkoutAttributes);
+
+                //existing checkout attributes
+                bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(shoppingCart);
+                var ca2Collection = CheckoutAttributeManager.GetAllCheckoutAttributes(!shoppingCartRequiresShipping);
+                foreach (var ca2 in ca2Collection)
+                {
+                    if (ca2.IsRequired)
+                    {
+                        bool found = false;
+                        //selected checkout attributes
+                        foreach (var ca1 in ca1Collection)
+                        {
+                            if (ca1.CheckoutAttributeID == ca2.CheckoutAttributeID)
+                            {
+                                var caValuesStr = CheckoutAttributeHelper.ParseValues(checkoutAttributes, ca1.CheckoutAttributeID);
+                                foreach (string str1 in caValuesStr)
+                                {
+                                    if (!String.IsNullOrEmpty(str1.Trim()))
+                                    {
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        //if not found
+                        if (!found)
+                        {
+                            if (!string.IsNullOrEmpty(ca2.TextPrompt))
+                            {
+                                warnings.Add(ca2.TextPrompt);
+                            }
+                            else
+                            {
+                                warnings.Add(string.Format(LocalizationManager.GetLocaleResourceString("ShoppingCart.SelectAttribute"), ca2.Name));
+                            }
+                        }
+                    }
                 }
             }
 
@@ -916,8 +995,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
         /// <param name="Quantity">Quantity</param>
         /// <returns>Warnings</returns>
-        public static List<string> AddToCart(ShoppingCartTypeEnum ShoppingCartType, int ProductVariantID,
-            string SelectedAttributes, decimal CustomerEnteredPrice, int Quantity)
+        public static List<string> AddToCart(ShoppingCartTypeEnum ShoppingCartType,
+            int ProductVariantID, string SelectedAttributes, 
+            decimal CustomerEnteredPrice, int Quantity)
         {
             var warnings = new List<string>();
             if (ShoppingCartType == ShoppingCartTypeEnum.Wishlist && !SettingManager.GetSettingValueBoolean("Common.EnableWishlist"))
@@ -1084,6 +1164,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             return warnings;
         }
+
+        #endregion
 
         #endregion
     }

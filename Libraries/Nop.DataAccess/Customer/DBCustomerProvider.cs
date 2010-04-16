@@ -180,6 +180,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <param name="LastPaymentMethodID">The last payment method identifier</param>
         /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
         /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
         /// <param name="LanguageID">The language identifier</param>
         /// <param name="CurrencyID">The currency identifier</param>
         /// <param name="TaxDisplayTypeID">The tax display type identifier</param>
@@ -201,7 +202,8 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             int AffiliateID, int BillingAddressID,
             int ShippingAddressID, int LastPaymentMethodID,
             string LastAppliedCouponCode, string GiftCardCouponCodes, 
-            int LanguageID, int CurrencyID, int TaxDisplayTypeID,
+            string CheckoutAttributes, int LanguageID, 
+            int CurrencyID, int TaxDisplayTypeID,
             bool IsTaxExempt, bool IsAdmin, bool IsGuest, bool IsForumModerator,
             int TotalForumPosts, string Signature, string AdminComment, bool Active, bool Deleted, 
             DateTime RegistrationDate, string TimeZoneID, int AvatarID);
@@ -221,6 +223,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <param name="LastPaymentMethodID">The last payment method identifier</param>
         /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
         /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
         /// <param name="LanguageID">The language identifier</param>
         /// <param name="CurrencyID">The currency identifier</param>
         /// <param name="TaxDisplayTypeID">The tax display type identifier</param>
@@ -241,7 +244,8 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             string Username, string PasswordHash, string SaltKey,
             int AffiliateID, int BillingAddressID,
             int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes, int LanguageID,
+            string LastAppliedCouponCode, string GiftCardCouponCodes,
+            string CheckoutAttributes, int LanguageID,
             int CurrencyID, int TaxDisplayTypeID, bool IsTaxExempt, 
             bool IsAdmin, bool IsGuest, bool IsForumModerator,
             int TotalForumPosts, string Signature, string AdminComment, bool Active,

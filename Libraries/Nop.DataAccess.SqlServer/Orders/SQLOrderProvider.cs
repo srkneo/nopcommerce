@@ -61,6 +61,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             order.OrderTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderTaxInCustomerCurrency");
             order.OrderTotalInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderTotalInCustomerCurrency");
             order.OrderDiscountInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderDiscountInCustomerCurrency");
+            order.CheckoutAttributeDescription = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributeDescription");
+            order.CheckoutAttributesXML = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributesXML");
             order.CustomerCurrencyCode = NopSqlDataHelper.GetString(dataReader, "CustomerCurrencyCode");
             order.OrderWeight = NopSqlDataHelper.GetDecimal(dataReader, "OrderWeight");
             order.AffiliateID = NopSqlDataHelper.GetInt(dataReader, "AffiliateID");
@@ -557,6 +559,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
         /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
         /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
         /// <param name="CustomerCurrencyCode">The customer currency code</param>
         /// <param name="OrderWeight">The order weight</param>
         /// <param name="AffiliateID">The affiliate identifier</param>
@@ -625,7 +629,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
             decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
             decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency, string CustomerCurrencyCode, decimal OrderWeight,
+            decimal OrderDiscountInCustomerCurrency,
+            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
+            string CustomerCurrencyCode, decimal OrderWeight,
             int AffiliateID, int OrderStatusID, bool AllowStoringCreditCardNumber, string CardType,
             string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
             string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
@@ -671,6 +677,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             db.AddInParameter(dbCommand, "OrderTaxInCustomerCurrency", DbType.Decimal, OrderTaxInCustomerCurrency);
             db.AddInParameter(dbCommand, "OrderTotalInCustomerCurrency", DbType.Decimal, OrderTotalInCustomerCurrency);
             db.AddInParameter(dbCommand, "OrderDiscountInCustomerCurrency", DbType.Decimal, OrderDiscountInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CheckoutAttributeDescription", DbType.String, CheckoutAttributeDescription);
+            db.AddInParameter(dbCommand, "CheckoutAttributesXML", DbType.Xml, CheckoutAttributesXML);
             db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, CustomerCurrencyCode);
             db.AddInParameter(dbCommand, "OrderWeight", DbType.Decimal, OrderWeight);
             db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
@@ -770,6 +778,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
         /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
         /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
         /// <param name="CustomerCurrencyCode">The customer currency code</param>
         /// <param name="OrderWeight">The order weight</param>
         /// <param name="AffiliateID">The affiliate identifier</param>
@@ -838,7 +848,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
             decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
             decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency, string CustomerCurrencyCode, decimal OrderWeight,
+            decimal OrderDiscountInCustomerCurrency,
+            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
+            string CustomerCurrencyCode, decimal OrderWeight,
             int AffiliateID, int OrderStatusID, bool AllowStoringCreditCardNumber, string CardType,
             string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
             string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
@@ -884,6 +896,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             db.AddInParameter(dbCommand, "OrderTaxInCustomerCurrency", DbType.Decimal, OrderTaxInCustomerCurrency);
             db.AddInParameter(dbCommand, "OrderTotalInCustomerCurrency", DbType.Decimal, OrderTotalInCustomerCurrency);
             db.AddInParameter(dbCommand, "OrderDiscountInCustomerCurrency", DbType.Decimal, OrderDiscountInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CheckoutAttributeDescription", DbType.String, CheckoutAttributeDescription);
+            db.AddInParameter(dbCommand, "CheckoutAttributesXML", DbType.Xml, CheckoutAttributesXML);
             db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, CustomerCurrencyCode);
             db.AddInParameter(dbCommand, "OrderWeight", DbType.Decimal, OrderWeight);
             db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);

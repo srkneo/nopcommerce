@@ -319,6 +319,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.gvOrderProductVariants.DataSource = orderProductVariants;
             this.gvOrderProductVariants.DataBind();
 
+            this.lCheckoutAttributes.Text = order.CheckoutAttributeDescription;
         }
 
         private void BindOrderTotals(Order order)

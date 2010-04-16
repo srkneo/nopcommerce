@@ -104,7 +104,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.ShippingByWeightCM
                 subTotal += PriceHelper.GetSubTotal(shoppingCartItem, ShipmentPackage.Customer, true);
             }
 
-            decimal weight = ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items);
+            decimal weight = ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items, ShipmentPackage.Customer);
 
             var shippingMethods = ShippingMethodManager.GetAllShippingMethods(ShipmentPackage.ShippingAddress.CountryID);
             foreach (var shippingMethod in shippingMethods)

@@ -256,7 +256,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             }
             #endregion
 
+            #region Checkout Attributes
+
+            if (!String.IsNullOrEmpty(order.CheckoutAttributeDescription))
+            {
+                sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"1\"></td><td colspan=\"3\">");
+                sb.AppendLine(order.CheckoutAttributeDescription);
+                sb.AppendLine("</td></tr>");
+            }
+
+            #endregion
+
             #region Totals
+
             string CusSubTotal = string.Empty;
             string CusShipTotal = string.Empty;
             string CusDiscount = string.Empty;

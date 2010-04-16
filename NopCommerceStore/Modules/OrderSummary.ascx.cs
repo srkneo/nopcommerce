@@ -99,7 +99,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
             //shopping cart
             var Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
-            var warnings = ShoppingCartManager.GetShoppingCartWarnings(Cart);
+
+            var warnings = ShoppingCartManager.GetShoppingCartWarnings(Cart, string.Empty, false);
             if (warnings.Count > 0)
             {
                 hasErrors = true;
@@ -194,6 +195,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (!IsShoppingCart)
                 return;
 
+            ApplyCheckoutAttributes();
             bool hasErrors = ValidateCartItems();
 
             if (!hasErrors)
@@ -235,6 +237,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void Checkout()
         {
+            ApplyCheckoutAttributes();
             if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
             {
                 string loginURL = SEOHelper.GetLoginPageURL(true, true);
@@ -293,6 +296,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 pnlGiftCardWarnings.Visible = true;
                 lblGiftCardWarning.Visible = true;
                 lblGiftCardWarning.Text = GetLocaleResourceString("ShoppingCart.GiftCards.WrongGiftCard");
+            }
+        }
+
+        protected void ApplyCheckoutAttributes()
+        {
+            if (ctrlCheckoutAttributes.HasAttributes)
+            {
+                string checkoutAttributes = ctrlCheckoutAttributes.SelectedAttributes;
+                CustomerManager.ApplyCheckoutAttributes(checkoutAttributes);
             }
         }
         
@@ -382,6 +394,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             return sb.ToString();
         }
+
+        public string GetCheckoutAttributeDescription()
+        {
+            string result = string.Empty;
+            if (NopContext.Current.User != null)
+            {
+                string checkoutAttributes = NopContext.Current.User.CheckoutAttributes;
+                result = CheckoutAttributeHelper.FormatAttributes(checkoutAttributes);
+            }
+            
+            return result;
+        }        
         
         protected void btnUpdate_Click(object sender, EventArgs e)
         {

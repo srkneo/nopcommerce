@@ -225,6 +225,111 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
 
         #region Formatting
 
+        /// <summary>
+        /// Formats attributes
+        /// </summary>
+        /// <param name="Attributes">Attributes</param>
+        /// <returns>Attributes</returns>
+        public static string FormatAttributes(string Attributes)
+        {
+            var customer = NopContext.Current.User;
+            return FormatAttributes(Attributes, customer, "<br />");
+        }
+
+        /// <summary>
+        /// Formats attributes
+        /// </summary>
+        /// <param name="Attributes">Attributes</param>
+        /// <param name="customer">Customer</param>
+        /// <param name="Serapator">Serapator</param>
+        /// <returns>Attributes</returns>
+        public static string FormatAttributes(string Attributes, Customer customer, string Serapator)
+        {
+            return FormatAttributes(Attributes, customer, Serapator, true);
+        }
+
+        /// <summary>
+        /// Formats attributes
+        /// </summary>
+        /// <param name="Attributes">Attributes</param>
+        /// <param name="customer">Customer</param>
+        /// <param name="Serapator">Serapator</param>
+        /// <param name="HTMLEncode">A value indicating whether to encode (HTML) values</param>
+        /// <returns>Attributes</returns>
+        public static string FormatAttributes(string Attributes,
+            Customer customer, string Serapator, bool HTMLEncode)
+        {
+            return FormatAttributes(Attributes, customer, Serapator, HTMLEncode, true);
+        }
+
+        /// <summary>
+        /// Formats attributes
+        /// </summary>
+        /// <param name="Attributes">Attributes</param>
+        /// <param name="customer">Customer</param>
+        /// <param name="Serapator">Serapator</param>
+        /// <param name="HTMLEncode">A value indicating whether to encode (HTML) values</param>
+        /// <param name="RenderPrices">A value indicating whether to render prices</param>
+        /// <returns>Attributes</returns>
+        public static string FormatAttributes(string Attributes,
+            Customer customer, string Serapator, bool HTMLEncode, bool RenderPrices)
+        {
+            var result = new StringBuilder();
+
+            var caCollection = ParseCheckoutAttributes(Attributes);
+            for (int i = 0; i < caCollection.Count; i++)
+            {
+                var ca = caCollection[i];
+                var valuesStr = ParseValues(Attributes, ca.CheckoutAttributeID);
+                for (int j = 0; j < valuesStr.Count; j++)
+                {
+                    string valueStr = valuesStr[j];
+                    string caAttribute = string.Empty;
+                    if (!ca.ShouldHaveValues)
+                    {
+                        caAttribute = string.Format("{0}: {1}", ca.Name, valueStr);
+                    }
+                    else
+                    {
+                        var caValue = CheckoutAttributeManager.GetCheckoutAttributeValueByID(Convert.ToInt32(valueStr));
+                        if (caValue != null)
+                        {
+                            caAttribute = string.Format("{0}: {1}", ca.Name, caValue.Name);
+                            if (RenderPrices)
+                            {
+                                decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue, customer);
+                                decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                                if (priceAdjustmentBase > 0)
+                                {
+                                    string priceAdjustmentStr = PriceHelper.FormatPrice(priceAdjustment);
+                                    caAttribute += string.Format(" [+{0}]", priceAdjustmentStr);
+                                }
+                            }
+                        }
+                    }
+
+                    if (!String.IsNullOrEmpty(caAttribute))
+                    {
+                        if (i != 0 || j != 0)
+                        {
+                            result.Append(Serapator);
+                        }
+
+                        if (HTMLEncode)
+                        {
+                            result.Append(HttpUtility.HtmlEncode(caAttribute));
+                        }
+                        else
+                        {
+                            result.Append(caAttribute);
+                        }
+                    }
+                }
+            }
+
+            return result.ToString();
+        }
+
         #endregion
     }
 }

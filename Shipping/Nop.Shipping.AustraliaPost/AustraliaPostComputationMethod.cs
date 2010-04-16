@@ -129,7 +129,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
         #region Utilities
         private static int GetWeight(ShipmentPackage ShipmentPackage)
         {
-            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items), MeasureManager.BaseWeightIn, AustraliaPostSettings.MeasureWeight)));
+            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items, ShipmentPackage.Customer), MeasureManager.BaseWeightIn, AustraliaPostSettings.MeasureWeight)));
             return (value < 1 ? 1 : value);
         }
 

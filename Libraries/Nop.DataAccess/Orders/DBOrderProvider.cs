@@ -135,6 +135,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
         /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
         /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
         /// <param name="CustomerCurrencyCode">The customer currency code</param>
         /// <param name="OrderWeight">The order weight</param>
         /// <param name="AffiliateID">The affiliate identifier</param>
@@ -203,7 +205,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
             decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
             decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency, string CustomerCurrencyCode, decimal OrderWeight,
+            decimal OrderDiscountInCustomerCurrency, 
+            string CheckoutAttributeDescription, string CheckoutAttributesXML,
+            string CustomerCurrencyCode, decimal OrderWeight,
             int AffiliateID, int OrderStatusID, bool AllowStoringCreditCardNumber, string CardType, 
             string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
             string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
@@ -249,6 +253,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
         /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
         /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
         /// <param name="CustomerCurrencyCode">The customer currency code</param>
         /// <param name="OrderWeight">The order weight</param>
         /// <param name="AffiliateID">The affiliate identifier</param>
@@ -317,7 +323,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
             decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
             decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency, string CustomerCurrencyCode, decimal OrderWeight,
+            decimal OrderDiscountInCustomerCurrency,
+            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
+            string CustomerCurrencyCode, decimal OrderWeight,
             int AffiliateID, int OrderStatusID, bool AllowStoringCreditCardNumber, string CardType,
             string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
             string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,

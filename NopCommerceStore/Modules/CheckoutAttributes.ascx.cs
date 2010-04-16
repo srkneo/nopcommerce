@@ -39,29 +39,33 @@ namespace NopSolutions.NopCommerce.Web.Modules
 {
     public partial class CheckoutAttributesControl : BaseNopUserControl
     {
-        protected ShoppingCart getCart()
+        protected ShoppingCart GetCart()
         {
             return ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
         }
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected CheckoutAttributeCollection GetCheckoutAttributes()
         {
-            CreateAttributeControls(getCart());
-        }
-
-        public void CreateAttributeControls(ShoppingCart cart)
-        {
+            ShoppingCart cart = GetCart();
             if (cart == null || cart.Count == 0)
-            {
-                this.Visible = false;
-                return;
-            }
-            
-            this.phAttributes.Controls.Clear();
-            
-            
+                return new CheckoutAttributeCollection();
+
             bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
             var checkoutAttributes = CheckoutAttributeManager.GetAllCheckoutAttributes(!shoppingCartRequiresShipping);
+            return checkoutAttributes;
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            CreateAttributeControls();
+            base.OnInit(e);
+        }
+
+        public void CreateAttributeControls()
+        {
+            this.phAttributes.Controls.Clear();
+
+            var checkoutAttributes = GetCheckoutAttributes();
             if (checkoutAttributes.Count > 0)
             {
                 this.Visible = true;
@@ -108,6 +112,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         case AttributeControlTypeEnum.DropdownList:
                             {
+                                //add control items
                                 var ddlAttributes = new DropDownList();
                                 ddlAttributes.ID = controlID;
                                 if (!attribute.IsRequired)
@@ -122,10 +127,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     string caValueName = caValue.Name;
                                     if (!this.HidePrices)
                                     {
-                                        //decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
-                                        //decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                                        //if (priceAdjustmentBase > decimal.Zero)
-                                        //    caValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
+                                        decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue);
+                                        decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                                        if (priceAdjustmentBase > decimal.Zero)
+                                            caValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment));
                                     }
                                     var caValueItem = new ListItem(caValueName, caValue.CheckoutAttributeValueID.ToString());
                                     if (!preSelectedSet && caValue.IsPreSelected)
@@ -134,6 +139,32 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         preSelectedSet = true;
                                     }
                                     ddlAttributes.Items.Add(caValueItem);
+                                }
+
+                                //set already selected attributes
+                                if (NopContext.Current.User != null)
+                                {
+                                    string selectedCheckoutAttributes = NopContext.Current.User.CheckoutAttributes;
+                                    if (!String.IsNullOrEmpty(selectedCheckoutAttributes))
+                                    {
+                                        //clear default selection
+                                        foreach (ListItem item in ddlAttributes.Items)
+                                        {
+                                            item.Selected = false;
+                                        }
+                                        //select new values
+                                        var selectedCaValues = CheckoutAttributeHelper.ParseCheckoutAttributeValues(selectedCheckoutAttributes);
+                                        foreach (var caValue in selectedCaValues)
+                                        {
+                                            foreach (ListItem item in ddlAttributes.Items)
+                                            {
+                                                if (caValue.CheckoutAttributeValueID == Convert.ToInt32(item.Value))
+                                                {
+                                                    item.Selected = true;
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 divAttribute.Controls.Add(ddlAttributes);
                             }
@@ -150,10 +181,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     string caValueName = caValue.Name;
                                     if (!this.HidePrices)
                                     {
-                                        //decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
-                                        //decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                                        //if (priceAdjustmentBase > decimal.Zero)
-                                        //    pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
+                                        decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue);
+                                        decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                                        if (priceAdjustmentBase > decimal.Zero)
+                                            caValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment));
                                     }
                                     var caValueItem = new ListItem(Server.HtmlEncode(caValueName), caValue.CheckoutAttributeValueID.ToString());
                                     if (!preSelectedSet && caValue.IsPreSelected)
@@ -162,6 +193,32 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         preSelectedSet = true;
                                     }
                                     rblAttributes.Items.Add(caValueItem);
+                                }
+
+                                //set already selected attributes
+                                if (NopContext.Current.User != null)
+                                {
+                                    string selectedCheckoutAttributes = NopContext.Current.User.CheckoutAttributes;
+                                    if (!String.IsNullOrEmpty(selectedCheckoutAttributes))
+                                    {
+                                        //clear default selection
+                                        foreach (ListItem item in rblAttributes.Items)
+                                        {
+                                            item.Selected = false;
+                                        }
+                                        //select new values
+                                        var selectedCaValues = CheckoutAttributeHelper.ParseCheckoutAttributeValues(selectedCheckoutAttributes);
+                                        foreach (var caValue in selectedCaValues)
+                                        {
+                                            foreach (ListItem item in rblAttributes.Items)
+                                            {
+                                                if (caValue.CheckoutAttributeValueID == Convert.ToInt32(item.Value))
+                                                {
+                                                    item.Selected = true;
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 divAttribute.Controls.Add(rblAttributes);
                             }
@@ -176,14 +233,40 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     string caValueName = caValue.Name;
                                     if (!this.HidePrices)
                                     {
-                                        //decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
-                                        //decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                                        //if (priceAdjustmentBase > decimal.Zero)
-                                        //    pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
+                                        decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue);
+                                        decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                                        if (priceAdjustmentBase > decimal.Zero)
+                                            caValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment));
                                     }
                                     var caValueItem = new ListItem(Server.HtmlEncode(caValueName), caValue.CheckoutAttributeValueID.ToString());
                                     caValueItem.Selected = caValue.IsPreSelected;
                                     cblAttributes.Items.Add(caValueItem);
+                                }
+
+                                //set already selected attributes
+                                if (NopContext.Current.User != null)
+                                {
+                                    string selectedCheckoutAttributes = NopContext.Current.User.CheckoutAttributes;
+                                    if (!String.IsNullOrEmpty(selectedCheckoutAttributes))
+                                    {
+                                        //clear default selection
+                                        foreach (ListItem item in cblAttributes.Items)
+                                        {
+                                            item.Selected = false;
+                                        }
+                                        //select new values
+                                        var selectedCaValues = CheckoutAttributeHelper.ParseCheckoutAttributeValues(selectedCheckoutAttributes);
+                                        foreach (var caValue in selectedCaValues)
+                                        {
+                                            foreach (ListItem item in cblAttributes.Items)
+                                            {
+                                                if (caValue.CheckoutAttributeValueID == Convert.ToInt32(item.Value))
+                                                {
+                                                    item.Selected = true;
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 divAttribute.Controls.Add(cblAttributes);
                             }
@@ -192,6 +275,24 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             {
                                 var txtAttribute = new TextBox();
                                 txtAttribute.ID = controlID;
+
+                                //set already selected attributes
+                                if (NopContext.Current.User != null)
+                                {
+                                    string selectedCheckoutAttributes = NopContext.Current.User.CheckoutAttributes;
+                                    if (!String.IsNullOrEmpty(selectedCheckoutAttributes))
+                                    {
+                                        //clear default selection
+                                        txtAttribute.Text = string.Empty;
+
+                                        //select new values
+                                        var enteredText = CheckoutAttributeHelper.ParseValues(selectedCheckoutAttributes,attribute.CheckoutAttributeID);
+                                        if (enteredText.Count > 0)
+                                        {
+                                            txtAttribute.Text = enteredText[0];
+                                        }
+                                    }
+                                }
                                 divAttribute.Controls.Add(txtAttribute);
                             }
                             break;
@@ -212,10 +313,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             get
             {
                 string selectedAttributes = string.Empty;
-
-                ShoppingCart cart = getCart();
-                bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
-                var checkoutAttributes = CheckoutAttributeManager.GetAllCheckoutAttributes(!shoppingCartRequiresShipping);
+                var checkoutAttributes = GetCheckoutAttributes();
 
                 foreach (var attribute in checkoutAttributes)
                 {
@@ -302,6 +400,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                 }
                 return selectedAttributes;
+            }
+        }
+
+        public bool HasAttributes
+        {
+            get
+            {
+                var checkoutAttributes = GetCheckoutAttributes();
+                bool result = checkoutAttributes.Count > 0;
+                return result;
             }
         }
 

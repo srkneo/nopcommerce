@@ -353,6 +353,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 prodRow.Cells[3].AddParagraph(subTotal);
             }
 
+            //checkout attributes
+            if (!String.IsNullOrEmpty(order.CheckoutAttributeDescription))
+            {
+                sec.AddParagraph();
+                Paragraph pCheckoutAttributes = null;
+                string attributes = HtmlHelper.ConvertHtmlToPlainText(order.CheckoutAttributeDescription, true);
+                pCheckoutAttributes = sec.AddParagraph(attributes);
+                if (pCheckoutAttributes != null)
+                {
+                    pCheckoutAttributes.Format.Alignment = ParagraphAlignment.Right;
+                }
+            }
 
             //subtotal
             sec.AddParagraph();

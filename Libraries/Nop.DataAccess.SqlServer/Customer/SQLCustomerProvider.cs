@@ -71,7 +71,8 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             customer.ShippingAddressID = NopSqlDataHelper.GetInt(dataReader, "ShippingAddressID");
             customer.LastPaymentMethodID = NopSqlDataHelper.GetInt(dataReader, "LastPaymentMethodID");
             customer.LastAppliedCouponCode = NopSqlDataHelper.GetString(dataReader, "LastAppliedCouponCode");
-            customer.GiftCardCouponCodes = NopSqlDataHelper.GetString(dataReader, "GiftCardCouponCodes"); 
+            customer.GiftCardCouponCodes = NopSqlDataHelper.GetString(dataReader, "GiftCardCouponCodes");
+            customer.CheckoutAttributes = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributes");
             customer.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             customer.CurrencyID = NopSqlDataHelper.GetInt(dataReader, "CurrencyID");
             customer.TaxDisplayTypeID = NopSqlDataHelper.GetInt(dataReader, "TaxDisplayTypeID");
@@ -526,6 +527,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <param name="LastPaymentMethodID">The last payment method identifier</param>
         /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
         /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
         /// <param name="LanguageID">The language identifier</param>
         /// <param name="CurrencyID">The currency identifier</param>
         /// <param name="TaxDisplayTypeID">The tax display type identifier</param>
@@ -546,7 +548,8 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             string Username, string passwordHash, string saltKey,
             int AffiliateID, int BillingAddressID,
             int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes, int LanguageID, int CurrencyID,
+            string LastAppliedCouponCode, string GiftCardCouponCodes,
+            string CheckoutAttributes, int LanguageID, int CurrencyID,
             int TaxDisplayTypeID, bool IsTaxExempt, bool IsAdmin,
             bool IsGuest, bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment,
             bool Active, bool Deleted, DateTime RegistrationDate, string TimeZoneID, int AvatarID)
@@ -566,6 +569,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             db.AddInParameter(dbCommand, "LastPaymentMethodID", DbType.Int32, LastPaymentMethodID);
             db.AddInParameter(dbCommand, "LastAppliedCouponCode", DbType.String, LastAppliedCouponCode);
             db.AddInParameter(dbCommand, "GiftCardCouponCodes", DbType.Xml, GiftCardCouponCodes);
+            db.AddInParameter(dbCommand, "CheckoutAttributes", DbType.Xml, CheckoutAttributes);
             db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, CurrencyID);
             db.AddInParameter(dbCommand, "TaxDisplayTypeID", DbType.Int32, TaxDisplayTypeID);
@@ -606,6 +610,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <param name="LastPaymentMethodID">The last payment method identifier</param>
         /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
         /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
         /// <param name="LanguageID">The language identifier</param>
         /// <param name="CurrencyID">The currency identifier</param>
         /// <param name="TaxDisplayTypeID">The tax display type identifier</param>
@@ -626,7 +631,8 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             string Username, string PasswordHash, string SaltKey,
             int AffiliateID, int BillingAddressID,
             int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes, int LanguageID,
+            string LastAppliedCouponCode, string GiftCardCouponCodes,
+            string CheckoutAttributes, int LanguageID,
             int CurrencyID, int TaxDisplayTypeID, bool IsTaxExempt, 
             bool IsAdmin, bool IsGuest, bool IsForumModerator,
             int TotalForumPosts, string Signature, string AdminComment, bool Active,
@@ -647,6 +653,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             db.AddInParameter(dbCommand, "LastPaymentMethodID", DbType.Int32, LastPaymentMethodID);
             db.AddInParameter(dbCommand, "LastAppliedCouponCode", DbType.String, LastAppliedCouponCode);
             db.AddInParameter(dbCommand, "GiftCardCouponCodes", DbType.Xml, GiftCardCouponCodes);
+            db.AddInParameter(dbCommand, "CheckoutAttributes", DbType.Xml, CheckoutAttributes);
             db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
             db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, CurrencyID);
             db.AddInParameter(dbCommand, "TaxDisplayTypeID", DbType.Int32, TaxDisplayTypeID);

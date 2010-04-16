@@ -509,6 +509,11 @@
                         </asp:GridView>
                     </td>
                 </tr>
+                <tr>
+                    <td class="adminData">
+                        <asp:Literal runat="server" ID="lCheckoutAttributes"></asp:Literal>
+                    </td>
+                </tr>
             </table>
         </contenttemplate>
     </ajaxToolkit:TabPanel>

@@ -203,7 +203,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     customer.SaltKey, affiliateID,
                     customer.BillingAddressID, customer.ShippingAddressID,
                     customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
-                    customer.GiftCardCouponCodes, customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
+                    customer.GiftCardCouponCodes, customer.CheckoutAttributes,
+                    customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
                     isTaxExempt, isAdmin, customer.IsGuest, isForumModerator,
                     customer.TotalForumPosts, customer.Signature, adminComment, active,
                     customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
@@ -217,7 +218,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 MembershipCreateStatus createStatus = MembershipCreateStatus.Success;
                 customer = CustomerManager.AddCustomer(Guid.NewGuid(), email, username,
                     password, affiliateID,
-                    0, 0, 0, string.Empty, string.Empty,
+                    0, 0, 0, string.Empty, string.Empty, string.Empty,
                     NopContext.Current.WorkingLanguage.LanguageID,
                     NopContext.Current.WorkingCurrency.CurrencyID, 
                     NopContext.Current.TaxDisplayType,

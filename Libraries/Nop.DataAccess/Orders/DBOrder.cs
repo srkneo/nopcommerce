@@ -158,6 +158,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public decimal OrderDiscountInCustomerCurrency { get; set; }
 
         /// <summary>
+        /// Gets or sets the checkout attribute description
+        /// </summary>
+        public string CheckoutAttributeDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the checkout attributes in XML format
+        /// </summary>
+        public string CheckoutAttributesXML { get; set; }
+
+        /// <summary>
         /// Gets or sets the customer currency code
         /// </summary>
         public string CustomerCurrencyCode { get; set; }

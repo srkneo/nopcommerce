@@ -61,6 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 decimal subTotalDiscountBase = decimal.Zero;
                 Discount appliedDiscount = null;
                 List<AppliedGiftCard> appliedGiftCards = null;
+                //don't include checkout attributes on shopping cart page
                 decimal subtotalBaseWithoutPromo = decimal.Zero;
                 decimal subtotalBaseWithPromo = decimal.Zero;
                 string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(Cart,

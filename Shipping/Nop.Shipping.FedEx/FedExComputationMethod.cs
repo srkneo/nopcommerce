@@ -83,8 +83,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
             decimal subtotalWithoutPromo = decimal.Zero;
             decimal subtotalWithPromo = decimal.Zero;
             ShoppingCartManager.GetShoppingCartSubTotal(ShipmentPackage.Items,
-                ShipmentPackage.Customer, out discountAmount, out appliedDiscount,
-                out appliedGiftCards, out subtotalWithoutPromo, out subtotalWithPromo);
+                ShipmentPackage.Customer, out discountAmount, 
+                out appliedDiscount, out appliedGiftCards,
+                out subtotalWithoutPromo, out subtotalWithPromo);
             SetShipmentDetails(request, ShipmentPackage, subtotalWithPromo);
             SetOrigin(request);
             SetDestination(request, ShipmentPackage);
@@ -170,7 +171,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
             int length = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalLength(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
             int height = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalHeight(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
             int width = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalWidth(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
-            int weight = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items), MeasureManager.BaseWeightIn, usedMeasureWeight)));
+            int weight = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items, ShipmentPackage.Customer), MeasureManager.BaseWeightIn, usedMeasureWeight)));
             if (length < 1)
                 length = 1;
             if (height < 1)

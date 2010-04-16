@@ -350,6 +350,13 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
+            <div class="clear">
+            </div>
+            <div class="checkout-attributes">
+                <asp:Literal runat="server" ID="lCheckoutAttributes"></asp:Literal>
+            </div>
+            <div class="clear">
+            </div>
             <%if (!this.IsInvoice)
               { %>
             <br />

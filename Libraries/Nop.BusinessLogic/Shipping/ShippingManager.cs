@@ -18,6 +18,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
+using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.Common;
@@ -112,12 +113,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// Gets shopping cart weight
         /// </summary>
         /// <param name="Cart">Cart</param>
+        /// <param name="customer">Customer</param>
         /// <returns>Shopping cart weight</returns>
-        public static decimal GetShoppingCartTotalWeigth(ShoppingCart Cart)
+        public static decimal GetShoppingCartTotalWeigth(ShoppingCart Cart, Customer customer)
         {
             decimal totalWeight = decimal.Zero;
+            //shopping cart items
             foreach (var shoppingCartItem in Cart)
                 totalWeight += shoppingCartItem.TotalWeigth;
+
+            //checkout attributes
+            if (customer != null)
+            {
+                var caValues = CheckoutAttributeHelper.ParseCheckoutAttributeValues(customer.CheckoutAttributes);
+                foreach (var caValue in caValues)
+                    totalWeight += caValue.WeightAdjustment;
+            }
             return totalWeight;
         }
 

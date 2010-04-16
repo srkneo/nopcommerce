@@ -127,6 +127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             item.LastPaymentMethodID = dbItem.LastPaymentMethodID;
             item.LastAppliedCouponCode = dbItem.LastAppliedCouponCode;
             item.GiftCardCouponCodes = dbItem.GiftCardCouponCodes;
+            item.CheckoutAttributes = dbItem.CheckoutAttributes;
             item.LanguageID = dbItem.LanguageID;
             item.CurrencyID = dbItem.CurrencyID;
             item.TaxDisplayTypeID = dbItem.TaxDisplayTypeID;
@@ -468,8 +469,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// Reset data required for checkout
         /// </summary>
         /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="ClearCouponCode">A value indicating whether to clear coupon code</param>
-        public static void ResetCheckoutData(int CustomerID, bool ClearCouponCode)
+        /// <param name="ClearCouponCodes">A value indicating whether to clear coupon code</param>
+        public static void ResetCheckoutData(int CustomerID, bool ClearCouponCodes)
         {
             var customer = GetCustomerByID(CustomerID);
             if (customer != null)
@@ -478,10 +479,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = SetDefaultBillingAddress(customer.CustomerID, 0);
                 customer.LastShippingOption = null;
                 customer = SetLastPaymentMethodID(customer.CustomerID, 0);
-                if (ClearCouponCode)
+                if (ClearCouponCodes)
                 {
                     customer = ApplyDiscountCouponCode(customer.CustomerID, string.Empty);
                     customer = ApplyGiftCardCouponCode(customer.CustomerID, string.Empty);
+                    customer = ApplyCheckoutAttributes(customer.CustomerID, string.Empty);
                 }
             }
         }
@@ -500,7 +502,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, BillingAddressID,
                     customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType, 
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
@@ -525,7 +528,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
                     customer.BillingAddressID,
                     ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType, 
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
@@ -550,7 +554,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
                     customer.ShippingAddressID, PaymentMethodID, customer.LastAppliedCouponCode,
-                    customer.GiftCardCouponCodes, customer.LanguageID, customer.CurrencyID, 
+                    customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
+                    customer.LanguageID, customer.CurrencyID, 
                     customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
@@ -573,7 +578,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                      customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
                      customer.ShippingAddressID, customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
-                     customer.GiftCardCouponCodes, customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
+                     customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
+                     customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
                      customer.IsTaxExempt, customer.IsAdmin,
                      customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
                      customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, customer.RegistrationDate, TimeZoneID, customer.AvatarID);
@@ -615,7 +621,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, NewEmail,
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, 
                     customer.BillingAddressID,  customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
@@ -647,7 +654,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
                     customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType, 
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
@@ -671,7 +679,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                     customer.Username, customer.PasswordHash, customer.SaltKey, AffiliateID,
                     customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
@@ -695,7 +704,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                      customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
                      customer.ShippingAddressID, customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
-                     customer.GiftCardCouponCodes, customer.LanguageID, customer.CurrencyID,
+                     customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
+                     customer.LanguageID, customer.CurrencyID,
                      customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin,
                      customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
                      customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
@@ -759,7 +769,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
                     customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    CouponCode, customer.GiftCardCouponCodes, customer.LanguageID, customer.CurrencyID,
+                    CouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID, customer.CurrencyID,
                     customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts, 
                     customer.Signature, customer.AdminComment, customer.Active,
@@ -796,7 +807,48 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
                     customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, CouponCodesXML, customer.LanguageID, customer.CurrencyID,
+                    customer.LastAppliedCouponCode, CouponCodesXML,
+                    customer.CheckoutAttributes, customer.LanguageID, customer.CurrencyID,
+                    customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
+                    customer.IsForumModerator, customer.TotalForumPosts,
+                    customer.Signature, customer.AdminComment, customer.Active,
+                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+            }
+            return customer;
+        }
+
+        /// <summary>
+        /// Applies selected checkout attibutes to a current customer
+        /// </summary>
+        /// <param name="AttributesXML">Checkout attibutes (XML)</param>
+        public static void ApplyCheckoutAttributes(string AttributesXML)
+        {
+            if (NopContext.Current.User == null)
+            {
+                //create anonymous record
+                CreateAnonymousUser();
+            }
+            NopContext.Current.User = ApplyCheckoutAttributes(NopContext.Current.User.CustomerID, AttributesXML);
+        }
+
+        /// <summary>
+        /// Applies selected checkout attibutes to a current customer
+        /// </summary>
+        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="AttributesXML">Checkout attibutes (XML)</param>
+        /// <returns>Customer</returns>
+        public static Customer ApplyCheckoutAttributes(int CustomerID, string AttributesXML)
+        {
+            if (AttributesXML == null)
+                AttributesXML = string.Empty;
+            var customer = GetCustomerByID(CustomerID);
+            if (customer != null)
+            {
+                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
+                    customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    AttributesXML, customer.LanguageID, customer.CurrencyID,
                     customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, customer.Active,
@@ -891,7 +943,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.Username, customer.PasswordHash, customer.SaltKey, 
                     customer.AffiliateID, customer.BillingAddressID,
                     customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
@@ -984,7 +1037,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
 
             var customer = AddCustomer(Guid.NewGuid(), Email, Username, Password, affiliateID,
-                0, 0, 0, string.Empty, string.Empty,
+                0, 0, 0, string.Empty, string.Empty, string.Empty,
                 NopContext.Current.WorkingLanguage.LanguageID,
                 NopContext.Current.WorkingCurrency.CurrencyID,
                 NopContext.Current.TaxDisplayType, false, IsAdmin, IsGuest,
@@ -1022,7 +1075,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             bool IsAdmin, bool IsGuest, bool Active, out MembershipCreateStatus status)
         {
             return AddCustomer(Guid.NewGuid(), Email, Username, Password,
-                AffiliateID, 0, 0, 0, string.Empty, string.Empty,
+                AffiliateID, 0, 0, 0, string.Empty, string.Empty, string.Empty,
                 NopContext.Current.WorkingLanguage.LanguageID,
                 NopContext.Current.WorkingCurrency.CurrencyID,
                 NopContext.Current.TaxDisplayType, false,
@@ -1043,6 +1096,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="LastPaymentMethodID">The last payment method identifier</param>
         /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
         /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
         /// <param name="LanguageID">The language identifier</param>
         /// <param name="CurrencyID">The currency identifier</param>
         /// <param name="TaxDisplayType">The tax display type</param>
@@ -1063,7 +1117,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static Customer AddCustomer(Guid CustomerGUID, string Email, string Username,
             string Password, int AffiliateID, int BillingAddressID,
             int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes, int LanguageID, int CurrencyID, 
+            string LastAppliedCouponCode, string GiftCardCouponCodes,
+            string CheckoutAttributes, int LanguageID, int CurrencyID, 
             TaxDisplayTypeEnum TaxDisplayType, bool IsTaxExempt, bool IsAdmin, bool IsGuest,
             bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment,
             bool Active, bool Deleted, DateTime RegistrationDate,
@@ -1147,7 +1202,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             customer = AddCustomerForced(CustomerGUID, Email, Username,
                 passwordHash, saltKey, AffiliateID, BillingAddressID,
                 ShippingAddressID, LastPaymentMethodID,
-                LastAppliedCouponCode, GiftCardCouponCodes, LanguageID, CurrencyID, TaxDisplayType,
+                LastAppliedCouponCode, GiftCardCouponCodes,
+                CheckoutAttributes, LanguageID, CurrencyID, TaxDisplayType,
                 IsTaxExempt, IsAdmin, IsGuest, IsForumModerator, 
                 TotalForumPosts, Signature, AdminComment, Active, 
                 Deleted, RegistrationDate, TimeZoneID, AvatarID);
@@ -1194,6 +1250,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="LastPaymentMethodID">The last payment method identifier</param>
         /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
         /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
         /// <param name="LanguageID">The language identifier</param>
         /// <param name="CurrencyID">The currency identifier</param>
         /// <param name="TaxDisplayType">The tax display type</param>
@@ -1213,7 +1270,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static Customer AddCustomerForced(Guid CustomerGUID, string Email, string Username,
             string PasswordHash, string SaltKey, int AffiliateID, int BillingAddressID,
             int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes, int LanguageID, int CurrencyID,
+            string LastAppliedCouponCode, string GiftCardCouponCodes,
+            string CheckoutAttributes, int LanguageID, int CurrencyID,
             TaxDisplayTypeEnum TaxDisplayType, bool IsTaxExempt, bool IsAdmin, bool IsGuest,
             bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment,
             bool Active, bool Deleted, DateTime RegistrationDate,
@@ -1232,7 +1290,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var dbItem = DBProviderManager<DBCustomerProvider>.Provider.AddCustomer(CustomerGUID, Email, Username,
                   PasswordHash, SaltKey, AffiliateID, BillingAddressID,
                   ShippingAddressID, LastPaymentMethodID,
-                  LastAppliedCouponCode, GiftCardCouponCodes, LanguageID, CurrencyID, (int)TaxDisplayType,
+                  LastAppliedCouponCode, GiftCardCouponCodes,
+                  CheckoutAttributes, LanguageID, CurrencyID, (int)TaxDisplayType,
                   IsTaxExempt, IsAdmin, IsGuest, IsForumModerator,
                   TotalForumPosts, Signature, AdminComment, Active,
                   Deleted, RegistrationDate, TimeZoneID, AvatarID);
@@ -1256,6 +1315,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="LastPaymentMethodID">The last payment method identifier</param>
         /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
         /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
         /// <param name="LanguageID">The language identifier</param>
         /// <param name="CurrencyID">The currency identifier</param>
         /// <param name="TaxDisplayType">The tax display type</param>
@@ -1275,7 +1335,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static Customer UpdateCustomer(int CustomerID, Guid CustomerGUID, string Email,
             string Username, string PasswordHash, string SaltKey, int AffiliateID, int BillingAddressID,
             int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes, int LanguageID, int CurrencyID,
+            string LastAppliedCouponCode, string GiftCardCouponCodes,
+            string CheckoutAttributes, int LanguageID, int CurrencyID,
             TaxDisplayTypeEnum TaxDisplayType, bool IsTaxExempt, bool IsAdmin, bool IsGuest,
             bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment, bool Active,
             bool Deleted, DateTime RegistrationDate, string TimeZoneID, int AvatarID)
@@ -1303,7 +1364,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomer(CustomerID, CustomerGUID, Email,
                 Username, PasswordHash, SaltKey, AffiliateID, BillingAddressID,
                 ShippingAddressID, LastPaymentMethodID,
-                LastAppliedCouponCode, GiftCardCouponCodes, LanguageID,
+                LastAppliedCouponCode, GiftCardCouponCodes, 
+                CheckoutAttributes, LanguageID,
                 CurrencyID, (int)TaxDisplayType, IsTaxExempt, IsAdmin, IsGuest, IsForumModerator,
                 TotalForumPosts, Signature, AdminComment, Active, Deleted, RegistrationDate, TimeZoneID, AvatarID);
             customer = DBMapping(dbItem);
@@ -1367,7 +1429,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.Username, newPasswordHash, newPasswordSalt,
                     customer.AffiliateID, customer.BillingAddressID,
                     customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts,
@@ -1412,7 +1475,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.Email, customer.Username, 
                     customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
                     customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes, customer.LanguageID,
+                    customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageID,
                     customer.CurrencyID, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts,
@@ -1452,7 +1516,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
                     customer.BillingAddressID, customer.ShippingAddressID,
                     customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
-                    customer.GiftCardCouponCodes, customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
+                    customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
+                    customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin, 
                     customer.IsGuest, customer.IsForumModerator,
                     customer.TotalForumPosts, customer.Signature, 
