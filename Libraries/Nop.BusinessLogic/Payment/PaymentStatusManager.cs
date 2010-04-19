@@ -20,6 +20,7 @@ using System.Globalization;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Payment;
 
@@ -76,9 +77,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             var paymentStatus = GetPaymentStatusByID(PaymentStatusID);
             if (paymentStatus != null)
-                return paymentStatus.Name;
+            {
+                string name = string.Empty;
+                if (NopContext.Current != null)
+                {
+                    name = LocalizationManager.GetLocaleResourceString(string.Format("PaymentStatus.{0}", (PaymentStatusEnum)paymentStatus.PaymentStatusID), NopContext.Current.WorkingLanguage.LanguageID, true, paymentStatus.Name);
+                }
+                else
+                {
+                    name = paymentStatus.Name;
+                }
+                return name;
+            }
             else
+            {
                 return ((PaymentStatusEnum)PaymentStatusID).ToString();
+            }
         }
 
         /// <summary>

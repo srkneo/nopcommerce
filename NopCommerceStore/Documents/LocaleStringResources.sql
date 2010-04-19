@@ -557,6 +557,42 @@ set @resources='
   <LocaleResource Name="Admin.CheckoutAttributeInfo.ValuesNotRequiredForThisControlType">
     <Value>Values are not required for this attribute control type</Value>
   </LocaleResource>
+  <LocaleResource Name="OrderStatus.Pending">
+    <Value>Pending</Value>
+  </LocaleResource>
+  <LocaleResource Name="OrderStatus.Processing">
+    <Value>Processing</Value>
+  </LocaleResource>
+  <LocaleResource Name="OrderStatus.Complete">
+    <Value>Complete</Value>
+  </LocaleResource>
+  <LocaleResource Name="OrderStatus.Cancelled">
+    <Value>Cancelled</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShippingStatus.ShippingNotRequired">
+    <Value>Shipping not required</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShippingStatus.NotYetShipped">
+    <Value>Not yet shipped</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShippingStatus.Shipped">
+    <Value>Shipped</Value>
+  </LocaleResource>
+  <LocaleResource Name="PaymentStatus.Pending">
+    <Value>Pending</Value>
+  </LocaleResource>
+  <LocaleResource Name="PaymentStatus.Authorized">
+    <Value>Authorized</Value>
+  </LocaleResource>
+  <LocaleResource Name="PaymentStatus.Paid">
+    <Value>Paid</Value>
+  </LocaleResource>
+  <LocaleResource Name="PaymentStatus.Refunded">
+    <Value>Refunded</Value>
+  </LocaleResource>
+  <LocaleResource Name="PaymentStatus.Voided">
+    <Value>Voided</Value>
+  </LocaleResource>
 </Language>
 '
  		

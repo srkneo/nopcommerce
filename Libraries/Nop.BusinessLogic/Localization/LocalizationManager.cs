@@ -108,6 +108,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <returns>A string representing the requested resource string.</returns>
         public static string GetLocaleResourceString(string ResourceKey, int LanguageID, bool LogIfNotFound)
         {
+            return GetLocaleResourceString(ResourceKey, LanguageID, LogIfNotFound, string.Empty);
+        }
+
+        /// <summary>
+        /// Gets a resource string based on the specified ResourceKey property.
+        /// </summary>
+        /// <param name="ResourceKey">A string representing a ResourceKey.</param>
+        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="LogIfNotFound">A value indicating whether to log error if locale string resource is not found</param>
+        /// <param name="defaultValue">Default value</param>
+        /// <returns>A string representing the requested resource string.</returns>
+        public static string GetLocaleResourceString(string ResourceKey, int LanguageID,
+            bool LogIfNotFound, string defaultValue)
+        {
             string result = string.Empty;
             if (ResourceKey == null)
                 ResourceKey = string.Empty;
@@ -122,10 +136,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
             }
             if (String.IsNullOrEmpty(result))
             {
-                result = ResourceKey;
                 if (LogIfNotFound)
                 {
                     LogManager.InsertLog(LogTypeEnum.CommonError, "Resource string is not found", string.Format("Resource string ({0}) is not found. Language ID ={1}", ResourceKey, LanguageID));
+                }
+
+                if (!String.IsNullOrEmpty(defaultValue))
+                {
+                    result = defaultValue;
+                }
+                else
+                {
+                    result = ResourceKey;
                 }
             }
             return result;

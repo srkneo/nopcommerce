@@ -90,7 +90,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses)
             {
-                ListItem item2 = new ListItem(orderStatus.Name, orderStatus.OrderStatusID.ToString());
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusID), orderStatus.OrderStatusID.ToString());
                 this.ddlOrderStatus.Items.Add(item2);
             }
 
@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             PaymentStatusCollection paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
             foreach (PaymentStatus paymentStatus in paymentStatuses)
             {
-                ListItem item2 = new ListItem(paymentStatus.Name, paymentStatus.PaymentStatusID.ToString());
+                ListItem item2 = new ListItem(PaymentStatusManager.GetPaymentStatusName(paymentStatus.PaymentStatusID), paymentStatus.PaymentStatusID.ToString());
                 this.ddlPaymentStatus.Items.Add(item2);
             }
 
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ShippingStatusCollection shippingStatuses = ShippingStatusManager.GetAllShippingStatuses();
             foreach (ShippingStatus shippingStatus in shippingStatuses)
             {
-                ListItem item2 = new ListItem(shippingStatus.Name, shippingStatus.ShippingStatusID.ToString());
+                ListItem item2 = new ListItem(ShippingStatusManager.GetShippingStatusName(shippingStatus.ShippingStatusID), shippingStatus.ShippingStatusID.ToString());
                 this.ddlShippingStatus.Items.Add(item2);
             }
         }

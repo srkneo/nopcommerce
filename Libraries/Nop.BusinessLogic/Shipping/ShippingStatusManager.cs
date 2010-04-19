@@ -20,6 +20,7 @@ using System.Globalization;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Shipping;
 
@@ -76,9 +77,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             var shippingStatus = GetShippingStatusByID(ShippingStatusID);
             if (shippingStatus != null)
-                return shippingStatus.Name;
+            {
+                string name = string.Empty;
+                if (NopContext.Current != null)
+                {
+                    name = LocalizationManager.GetLocaleResourceString(string.Format("ShippingStatus.{0}", (ShippingStatusEnum)shippingStatus.ShippingStatusID), NopContext.Current.WorkingLanguage.LanguageID, true, shippingStatus.Name);
+                }
+                else
+                {
+                    name = shippingStatus.Name;
+                }
+                return name;
+            }
             else
+            {
                 return ((ShippingStatusEnum)ShippingStatusID).ToString();
+            }
         }
 
         /// <summary>

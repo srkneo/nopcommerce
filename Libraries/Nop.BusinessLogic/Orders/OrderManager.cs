@@ -1508,9 +1508,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             var orderStatus = GetOrderStatusByID(OrderStatusID);
             if (orderStatus != null)
-                return orderStatus.Name;
+            {
+                string name = string.Empty;
+                if (NopContext.Current != null)
+                {
+                    name = LocalizationManager.GetLocaleResourceString(string.Format("OrderStatus.{0}", (OrderStatusEnum)orderStatus.OrderStatusID), NopContext.Current.WorkingLanguage.LanguageID, true, orderStatus.Name);
+                }
+                else
+                {
+                    name = orderStatus.Name;
+                }
+                return name;
+            }
             else
+            {
                 return ((OrderStatusEnum)OrderStatusID).ToString();
+            }
         }
 
         /// <summary>

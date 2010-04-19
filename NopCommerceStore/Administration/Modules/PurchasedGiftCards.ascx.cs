@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses)
             {
-                ListItem item2 = new ListItem(orderStatus.Name, orderStatus.OrderStatusID.ToString());
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusID), orderStatus.OrderStatusID.ToString());
                 this.ddlOrderStatus.Items.Add(item2);
             }
         }
