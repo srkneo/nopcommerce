@@ -48,9 +48,8 @@
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantTierPrices.Delete %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Button ID="btnDelete" runat="server" CssClass="adminButton"
-                                Text="Delete" CausesValidation="false" CommandName="<% $NopResources:Admin.ProductVariantTierPrices.Delete %>"
-                                ToolTip="<% $NopResources:Admin.ProductVariantTierPrices.Delete.Tooltip %>" />
+                            <asp:Button ID="btnDelete" runat="server" CssClass="adminButton" Text="<% $NopResources:Admin.ProductVariantTierPrices.Delete %>"
+                                CausesValidation="false" CommandName="Delete" ToolTip="<% $NopResources:Admin.ProductVariantTierPrices.Delete.Tooltip %>" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
