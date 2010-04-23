@@ -2587,7 +2587,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 {
                     Discount subTotalAppliedDiscountInclTax = null;
                     decimal subtotalBaseWithPromoInclTax = decimal.Zero;
-                    string SubTotalError1 = ShoppingCartManager.GetShoppingCartSubTotal(cart, customer,
+                    string subTotalError1 = ShoppingCartManager.GetShoppingCartSubTotal(cart, customer,
                         out orderSubTotalDiscountAmount, out subTotalAppliedDiscountInclTax,
                         out appliedGiftCards, true,
                         out orderSubTotalInclTax, out subtotalBaseWithPromoInclTax);
@@ -2595,12 +2595,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
                     Discount subTotalAppliedDiscountExclTax = null;
                     decimal subtotalBaseWithPromoExclTax = decimal.Zero;
-                    string SubTotalError2 = ShoppingCartManager.GetShoppingCartSubTotal(cart, customer,
+                    string subTotalError2 = ShoppingCartManager.GetShoppingCartSubTotal(cart, customer,
                         out orderSubTotalDiscountAmount, out subTotalAppliedDiscountExclTax,
                         out appliedGiftCards, false,
                         out orderSubTotalExclTax, out subtotalBaseWithPromoExclTax);
                     
-                    if (!String.IsNullOrEmpty(SubTotalError1) || !String.IsNullOrEmpty(SubTotalError2))
+                    if (!String.IsNullOrEmpty(subTotalError1) || !String.IsNullOrEmpty(subTotalError2))
                         throw new NopException("Sub total couldn't be calculated");
 
                     if (subTotalAppliedDiscountInclTax != null && !appliedDiscounts.ContainsDiscount(subTotalAppliedDiscountInclTax.Name))
@@ -2659,11 +2659,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 decimal orderShippingExclTaxInCustomerCurrency = decimal.Zero;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    string ShippingTotalError1 = string.Empty;
-                    string ShippingTotalError2 = string.Empty;
+                    string shippingTotalError1 = string.Empty;
+                    string shippingTotalError2 = string.Empty;
                     Discount shippingTotalDiscount = null;
-                    orderShippingTotalInclTax = ShippingManager.GetShoppingCartShippingTotal(cart, customer, true, out shippingTotalDiscount, ref ShippingTotalError1);
-                    orderShippingTotalExclTax = ShippingManager.GetShoppingCartShippingTotal(cart, customer, false, ref ShippingTotalError2);
+                    orderShippingTotalInclTax = ShippingManager.GetShoppingCartShippingTotal(cart, customer, true, out shippingTotalDiscount, ref shippingTotalError1);
+                    orderShippingTotalExclTax = ShippingManager.GetShoppingCartShippingTotal(cart, customer, false, ref shippingTotalError2);
                     if (!orderShippingTotalInclTax.HasValue || !orderShippingTotalExclTax.HasValue)
                         throw new NopException("Shipping total couldn't be calculated");
                     if (shippingTotalDiscount != null && !appliedDiscounts.ContainsDiscount(shippingTotalDiscount.Name))
@@ -2690,14 +2690,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 decimal paymentAdditionalFeeExclTaxInCustomerCurrency = decimal.Zero;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    string PaymentAdditionalFeeError1 = string.Empty;
-                    string PaymentAdditionalFeeError2 = string.Empty;
+                    string paymentAdditionalFeeError1 = string.Empty;
+                    string paymentAdditionalFeeError2 = string.Empty;
                     decimal paymentAdditionalFee = PaymentManager.GetAdditionalHandlingFee(paymentInfo.PaymentMethodId);
-                    paymentAdditionalFeeInclTax = TaxManager.GetPaymentMethodAdditionalFee(paymentAdditionalFee, true, customer, ref PaymentAdditionalFeeError1);
-                    paymentAdditionalFeeExclTax = TaxManager.GetPaymentMethodAdditionalFee(paymentAdditionalFee, false, customer, ref PaymentAdditionalFeeError2);
-                    if (!String.IsNullOrEmpty(PaymentAdditionalFeeError1))
+                    paymentAdditionalFeeInclTax = TaxManager.GetPaymentMethodAdditionalFee(paymentAdditionalFee, true, customer, ref paymentAdditionalFeeError1);
+                    paymentAdditionalFeeExclTax = TaxManager.GetPaymentMethodAdditionalFee(paymentAdditionalFee, false, customer, ref paymentAdditionalFeeError2);
+                    if (!String.IsNullOrEmpty(paymentAdditionalFeeError1))
                         throw new NopException("Payment method fee couldn't be calculated");
-                    if (!String.IsNullOrEmpty(PaymentAdditionalFeeError2))
+                    if (!String.IsNullOrEmpty(paymentAdditionalFeeError2))
                         throw new NopException("Payment method fee couldn't be calculated");
 
                     //in customer currency
@@ -2718,9 +2718,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 decimal orderTaxInCustomerCurrency = decimal.Zero;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    string TaxError = string.Empty;
-                    orderTaxTotal = TaxManager.GetTaxTotal(cart, paymentInfo.PaymentMethodId, customer, ref TaxError);
-                    if (!String.IsNullOrEmpty(TaxError))
+                    string taxError = string.Empty;
+                    orderTaxTotal = TaxManager.GetTaxTotal(cart, 
+                        paymentInfo.PaymentMethodId, customer, ref taxError);
+                    if (!String.IsNullOrEmpty(taxError))
                         throw new NopException("Tax total couldn't be calculated");
 
                     //in customer currency

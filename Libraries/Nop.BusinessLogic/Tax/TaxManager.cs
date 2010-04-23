@@ -338,8 +338,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <returns>Price</returns>
         public static decimal GetPrice(ProductVariant productVariant, decimal price)
         {
-            string Error = string.Empty;
-            return GetPrice(productVariant, price, ref Error);
+            string error = string.Empty;
+            return GetPrice(productVariant, price, ref error);
         }
 
         /// <summary>
@@ -365,8 +365,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <returns>Price</returns>
         public static decimal GetPrice(ProductVariant productVariant, decimal price, Customer customer)
         {
-            string Error = string.Empty;
-            return GetPrice(productVariant, price, customer, ref Error);
+            string error = string.Empty;
+            return GetPrice(productVariant, price, customer, ref error);
         }
 
         /// <summary>
@@ -404,8 +404,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static decimal GetPrice(ProductVariant productVariant, decimal price,
             bool includingTax, Customer customer)
         {
-            string Error = string.Empty;
-            return GetPrice(productVariant, price, includingTax, customer, ref Error);
+            string error = string.Empty;
+            return GetPrice(productVariant, price, includingTax, customer, ref error);
         }
 
         /// <summary>
@@ -487,8 +487,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <returns>Price</returns>
         public static decimal GetShippingPrice(decimal price, Customer customer)
         {
-            string Error = string.Empty;
-            return GetShippingPrice(price, customer, ref Error);
+            string error = string.Empty;
+            return GetShippingPrice(price, customer, ref error);
         }
 
         /// <summary>
@@ -523,8 +523,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <returns>Price</returns>
         public static decimal GetShippingPrice(decimal price, bool includingTax, Customer customer)
         {
-            string Error = string.Empty;
-            return GetShippingPrice(price, includingTax, customer, ref Error);
+            string error = string.Empty;
+            return GetShippingPrice(price, includingTax, customer, ref error);
         }
 
         /// <summary>
@@ -555,8 +555,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <returns>Price</returns>
         public static decimal GetPaymentMethodAdditionalFee(decimal price, Customer customer)
         {
-            string Error = string.Empty;
-            return GetPaymentMethodAdditionalFee(price, customer, ref Error);
+            string error = string.Empty;
+            return GetPaymentMethodAdditionalFee(price, customer, ref error);
         }
 
         /// <summary>
@@ -591,8 +591,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <returns>Price</returns>
         public static decimal GetPaymentMethodAdditionalFee(decimal price, bool includingTax, Customer customer)
         {
-            string Error = string.Empty;
-            return GetPaymentMethodAdditionalFee(price, includingTax, customer, ref Error);
+            string error = string.Empty;
+            return GetPaymentMethodAdditionalFee(price, includingTax, customer, ref error);
         }
 
         /// <summary>
