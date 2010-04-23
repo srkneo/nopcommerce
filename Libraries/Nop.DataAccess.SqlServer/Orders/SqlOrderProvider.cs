@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
     /// <summary>
     /// Order provider for SQL Server
     /// </summary>
-    public partial class SQLOrderProvider : DBOrderProvider
+    public partial class SqlOrderProvider : DBOrderProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,210 +36,210 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         #region Utilities
         private DBOrder GetOrderFromReader(IDataReader dataReader)
         {
-            DBOrder order = new DBOrder();
-            order.OrderID = NopSqlDataHelper.GetInt(dataReader, "OrderID");
-            order.OrderGUID = NopSqlDataHelper.GetGuid(dataReader, "OrderGUID");
-            order.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            order.CustomerLanguageID = NopSqlDataHelper.GetInt(dataReader, "CustomerLanguageID");
-            order.CustomerTaxDisplayTypeID = NopSqlDataHelper.GetInt(dataReader, "CustomerTaxDisplayTypeID");
-            order.CustomerIP = NopSqlDataHelper.GetString(dataReader, "CustomerIP");
-            order.OrderSubtotalInclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalInclTax");
-            order.OrderSubtotalExclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalExclTax");
-            order.OrderShippingInclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingInclTax");
-            order.OrderShippingExclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingExclTax");
-            order.PaymentMethodAdditionalFeeInclTax = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeInclTax");
-            order.PaymentMethodAdditionalFeeExclTax = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeExclTax");
-            order.OrderTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderTax");
-            order.OrderTotal = NopSqlDataHelper.GetDecimal(dataReader, "OrderTotal");
-            order.OrderDiscount = NopSqlDataHelper.GetDecimal(dataReader, "OrderDiscount");
-            order.OrderSubtotalInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalInclTaxInCustomerCurrency");
-            order.OrderSubtotalExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalExclTaxInCustomerCurrency");
-            order.OrderShippingInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingInclTaxInCustomerCurrency");
-            order.OrderShippingExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingExclTaxInCustomerCurrency");
-            order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeInclTaxInCustomerCurrency");
-            order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeExclTaxInCustomerCurrency");
-            order.OrderTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderTaxInCustomerCurrency");
-            order.OrderTotalInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderTotalInCustomerCurrency");
-            order.OrderDiscountInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderDiscountInCustomerCurrency");
-            order.CheckoutAttributeDescription = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributeDescription");
-            order.CheckoutAttributesXML = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributesXML");
-            order.CustomerCurrencyCode = NopSqlDataHelper.GetString(dataReader, "CustomerCurrencyCode");
-            order.OrderWeight = NopSqlDataHelper.GetDecimal(dataReader, "OrderWeight");
-            order.AffiliateID = NopSqlDataHelper.GetInt(dataReader, "AffiliateID");
-            order.OrderStatusID = NopSqlDataHelper.GetInt(dataReader, "OrderStatusID");
-            order.AllowStoringCreditCardNumber = NopSqlDataHelper.GetBoolean(dataReader, "AllowStoringCreditCardNumber");
-            order.CardType = NopSqlDataHelper.GetString(dataReader, "CardType");
-            order.CardName = NopSqlDataHelper.GetString(dataReader, "CardName");
-            order.CardNumber = NopSqlDataHelper.GetString(dataReader, "CardNumber");
-            order.MaskedCreditCardNumber = NopSqlDataHelper.GetString(dataReader, "MaskedCreditCardNumber");
-            order.CardCVV2 = NopSqlDataHelper.GetString(dataReader, "CardCVV2");
-            order.CardExpirationMonth = NopSqlDataHelper.GetString(dataReader, "CardExpirationMonth");
-            order.CardExpirationYear = NopSqlDataHelper.GetString(dataReader, "CardExpirationYear");
-            order.PaymentMethodID = NopSqlDataHelper.GetInt(dataReader, "PaymentMethodID");
-            order.PaymentMethodName = NopSqlDataHelper.GetString(dataReader, "PaymentMethodName");
-            order.AuthorizationTransactionID = NopSqlDataHelper.GetString(dataReader, "AuthorizationTransactionID");
-            order.AuthorizationTransactionCode = NopSqlDataHelper.GetString(dataReader, "AuthorizationTransactionCode");
-            order.AuthorizationTransactionResult = NopSqlDataHelper.GetString(dataReader, "AuthorizationTransactionResult");
-            order.CaptureTransactionID = NopSqlDataHelper.GetString(dataReader, "CaptureTransactionID");
-            order.CaptureTransactionResult = NopSqlDataHelper.GetString(dataReader, "CaptureTransactionResult");
-            order.SubscriptionTransactionID = NopSqlDataHelper.GetString(dataReader, "SubscriptionTransactionID");
-            order.PurchaseOrderNumber = NopSqlDataHelper.GetString(dataReader, "PurchaseOrderNumber");
-            order.PaymentStatusID = NopSqlDataHelper.GetInt(dataReader, "PaymentStatusID");
-            order.PaidDate = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "PaidDate");
-            order.BillingFirstName = NopSqlDataHelper.GetString(dataReader, "BillingFirstName");
-            order.BillingLastName = NopSqlDataHelper.GetString(dataReader, "BillingLastName");
-            order.BillingPhoneNumber = NopSqlDataHelper.GetString(dataReader, "BillingPhoneNumber");
-            order.BillingEmail = NopSqlDataHelper.GetString(dataReader, "BillingEmail");
-            order.BillingFaxNumber = NopSqlDataHelper.GetString(dataReader, "BillingFaxNumber");
-            order.BillingCompany = NopSqlDataHelper.GetString(dataReader, "BillingCompany");
-            order.BillingAddress1 = NopSqlDataHelper.GetString(dataReader, "BillingAddress1");
-            order.BillingAddress2 = NopSqlDataHelper.GetString(dataReader, "BillingAddress2");
-            order.BillingCity = NopSqlDataHelper.GetString(dataReader, "BillingCity");
-            order.BillingStateProvince = NopSqlDataHelper.GetString(dataReader, "BillingStateProvince");
-            order.BillingStateProvinceID = NopSqlDataHelper.GetInt(dataReader, "BillingStateProvinceID");
-            order.BillingZipPostalCode = NopSqlDataHelper.GetString(dataReader, "BillingZipPostalCode");
-            order.BillingCountry = NopSqlDataHelper.GetString(dataReader, "BillingCountry");
-            order.BillingCountryID = NopSqlDataHelper.GetInt(dataReader, "BillingCountryID");
-            order.ShippingStatusID = NopSqlDataHelper.GetInt(dataReader, "ShippingStatusID");
-            order.ShippingFirstName = NopSqlDataHelper.GetString(dataReader, "ShippingFirstName");
-            order.ShippingLastName = NopSqlDataHelper.GetString(dataReader, "ShippingLastName");
-            order.ShippingPhoneNumber = NopSqlDataHelper.GetString(dataReader, "ShippingPhoneNumber");
-            order.ShippingEmail = NopSqlDataHelper.GetString(dataReader, "ShippingEmail");
-            order.ShippingFaxNumber = NopSqlDataHelper.GetString(dataReader, "ShippingFaxNumber");
-            order.ShippingCompany = NopSqlDataHelper.GetString(dataReader, "ShippingCompany");
-            order.ShippingAddress1 = NopSqlDataHelper.GetString(dataReader, "ShippingAddress1");
-            order.ShippingAddress2 = NopSqlDataHelper.GetString(dataReader, "ShippingAddress2");
-            order.ShippingCity = NopSqlDataHelper.GetString(dataReader, "ShippingCity");
-            order.ShippingStateProvince = NopSqlDataHelper.GetString(dataReader, "ShippingStateProvince");
-            order.ShippingStateProvinceID = NopSqlDataHelper.GetInt(dataReader, "ShippingStateProvinceID");
-            order.ShippingZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ShippingZipPostalCode");
-            order.ShippingCountry = NopSqlDataHelper.GetString(dataReader, "ShippingCountry");
-            order.ShippingCountryID = NopSqlDataHelper.GetInt(dataReader, "ShippingCountryID");
-            order.ShippingMethod = NopSqlDataHelper.GetString(dataReader, "ShippingMethod");
-            order.ShippingRateComputationMethodID = NopSqlDataHelper.GetInt(dataReader, "ShippingRateComputationMethodID");
-            order.ShippedDate = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "ShippedDate");
-            order.TrackingNumber = NopSqlDataHelper.GetString(dataReader, "TrackingNumber");
-            order.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            order.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return order;
+            var item = new DBOrder();
+            item.OrderId = NopSqlDataHelper.GetInt(dataReader, "OrderID");
+            item.OrderGuid = NopSqlDataHelper.GetGuid(dataReader, "OrderGUID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.CustomerLanguageId = NopSqlDataHelper.GetInt(dataReader, "CustomerLanguageID");
+            item.CustomerTaxDisplayTypeId = NopSqlDataHelper.GetInt(dataReader, "CustomerTaxDisplayTypeID");
+            item.CustomerIP = NopSqlDataHelper.GetString(dataReader, "CustomerIP");
+            item.OrderSubtotalInclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalInclTax");
+            item.OrderSubtotalExclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalExclTax");
+            item.OrderShippingInclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingInclTax");
+            item.OrderShippingExclTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingExclTax");
+            item.PaymentMethodAdditionalFeeInclTax = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeInclTax");
+            item.PaymentMethodAdditionalFeeExclTax = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeExclTax");
+            item.OrderTax = NopSqlDataHelper.GetDecimal(dataReader, "OrderTax");
+            item.OrderTotal = NopSqlDataHelper.GetDecimal(dataReader, "OrderTotal");
+            item.OrderDiscount = NopSqlDataHelper.GetDecimal(dataReader, "OrderDiscount");
+            item.OrderSubtotalInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalInclTaxInCustomerCurrency");
+            item.OrderSubtotalExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderSubtotalExclTaxInCustomerCurrency");
+            item.OrderShippingInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingInclTaxInCustomerCurrency");
+            item.OrderShippingExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderShippingExclTaxInCustomerCurrency");
+            item.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeInclTaxInCustomerCurrency");
+            item.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PaymentMethodAdditionalFeeExclTaxInCustomerCurrency");
+            item.OrderTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderTaxInCustomerCurrency");
+            item.OrderTotalInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderTotalInCustomerCurrency");
+            item.OrderDiscountInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "OrderDiscountInCustomerCurrency");
+            item.CheckoutAttributeDescription = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributeDescription");
+            item.CheckoutAttributesXml = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributesXML");
+            item.CustomerCurrencyCode = NopSqlDataHelper.GetString(dataReader, "CustomerCurrencyCode");
+            item.OrderWeight = NopSqlDataHelper.GetDecimal(dataReader, "OrderWeight");
+            item.AffiliateId = NopSqlDataHelper.GetInt(dataReader, "AffiliateID");
+            item.OrderStatusId = NopSqlDataHelper.GetInt(dataReader, "OrderStatusID");
+            item.AllowStoringCreditCardNumber = NopSqlDataHelper.GetBoolean(dataReader, "AllowStoringCreditCardNumber");
+            item.CardType = NopSqlDataHelper.GetString(dataReader, "CardType");
+            item.CardName = NopSqlDataHelper.GetString(dataReader, "CardName");
+            item.CardNumber = NopSqlDataHelper.GetString(dataReader, "CardNumber");
+            item.MaskedCreditCardNumber = NopSqlDataHelper.GetString(dataReader, "MaskedCreditCardNumber");
+            item.CardCvv2 = NopSqlDataHelper.GetString(dataReader, "CardCVV2");
+            item.CardExpirationMonth = NopSqlDataHelper.GetString(dataReader, "CardExpirationMonth");
+            item.CardExpirationYear = NopSqlDataHelper.GetString(dataReader, "CardExpirationYear");
+            item.PaymentMethodId = NopSqlDataHelper.GetInt(dataReader, "PaymentMethodID");
+            item.PaymentMethodName = NopSqlDataHelper.GetString(dataReader, "PaymentMethodName");
+            item.AuthorizationTransactionId = NopSqlDataHelper.GetString(dataReader, "AuthorizationTransactionID");
+            item.AuthorizationTransactionCode = NopSqlDataHelper.GetString(dataReader, "AuthorizationTransactionCode");
+            item.AuthorizationTransactionResult = NopSqlDataHelper.GetString(dataReader, "AuthorizationTransactionResult");
+            item.CaptureTransactionId = NopSqlDataHelper.GetString(dataReader, "CaptureTransactionID");
+            item.CaptureTransactionResult = NopSqlDataHelper.GetString(dataReader, "CaptureTransactionResult");
+            item.SubscriptionTransactionId = NopSqlDataHelper.GetString(dataReader, "SubscriptionTransactionID");
+            item.PurchaseOrderNumber = NopSqlDataHelper.GetString(dataReader, "PurchaseOrderNumber");
+            item.PaymentStatusId = NopSqlDataHelper.GetInt(dataReader, "PaymentStatusID");
+            item.PaidDate = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "PaidDate");
+            item.BillingFirstName = NopSqlDataHelper.GetString(dataReader, "BillingFirstName");
+            item.BillingLastName = NopSqlDataHelper.GetString(dataReader, "BillingLastName");
+            item.BillingPhoneNumber = NopSqlDataHelper.GetString(dataReader, "BillingPhoneNumber");
+            item.BillingEmail = NopSqlDataHelper.GetString(dataReader, "BillingEmail");
+            item.BillingFaxNumber = NopSqlDataHelper.GetString(dataReader, "BillingFaxNumber");
+            item.BillingCompany = NopSqlDataHelper.GetString(dataReader, "BillingCompany");
+            item.BillingAddress1 = NopSqlDataHelper.GetString(dataReader, "BillingAddress1");
+            item.BillingAddress2 = NopSqlDataHelper.GetString(dataReader, "BillingAddress2");
+            item.BillingCity = NopSqlDataHelper.GetString(dataReader, "BillingCity");
+            item.BillingStateProvince = NopSqlDataHelper.GetString(dataReader, "BillingStateProvince");
+            item.BillingStateProvinceId = NopSqlDataHelper.GetInt(dataReader, "BillingStateProvinceID");
+            item.BillingZipPostalCode = NopSqlDataHelper.GetString(dataReader, "BillingZipPostalCode");
+            item.BillingCountry = NopSqlDataHelper.GetString(dataReader, "BillingCountry");
+            item.BillingCountryId = NopSqlDataHelper.GetInt(dataReader, "BillingCountryID");
+            item.ShippingStatusId = NopSqlDataHelper.GetInt(dataReader, "ShippingStatusID");
+            item.ShippingFirstName = NopSqlDataHelper.GetString(dataReader, "ShippingFirstName");
+            item.ShippingLastName = NopSqlDataHelper.GetString(dataReader, "ShippingLastName");
+            item.ShippingPhoneNumber = NopSqlDataHelper.GetString(dataReader, "ShippingPhoneNumber");
+            item.ShippingEmail = NopSqlDataHelper.GetString(dataReader, "ShippingEmail");
+            item.ShippingFaxNumber = NopSqlDataHelper.GetString(dataReader, "ShippingFaxNumber");
+            item.ShippingCompany = NopSqlDataHelper.GetString(dataReader, "ShippingCompany");
+            item.ShippingAddress1 = NopSqlDataHelper.GetString(dataReader, "ShippingAddress1");
+            item.ShippingAddress2 = NopSqlDataHelper.GetString(dataReader, "ShippingAddress2");
+            item.ShippingCity = NopSqlDataHelper.GetString(dataReader, "ShippingCity");
+            item.ShippingStateProvince = NopSqlDataHelper.GetString(dataReader, "ShippingStateProvince");
+            item.ShippingStateProvinceId = NopSqlDataHelper.GetInt(dataReader, "ShippingStateProvinceID");
+            item.ShippingZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ShippingZipPostalCode");
+            item.ShippingCountry = NopSqlDataHelper.GetString(dataReader, "ShippingCountry");
+            item.ShippingCountryId = NopSqlDataHelper.GetInt(dataReader, "ShippingCountryID");
+            item.ShippingMethod = NopSqlDataHelper.GetString(dataReader, "ShippingMethod");
+            item.ShippingRateComputationMethodId = NopSqlDataHelper.GetInt(dataReader, "ShippingRateComputationMethodID");
+            item.ShippedDate = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "ShippedDate");
+            item.TrackingNumber = NopSqlDataHelper.GetString(dataReader, "TrackingNumber");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         private DBOrderNote GetOrderNoteFromReader(IDataReader dataReader)
         {
-            DBOrderNote orderNote = new DBOrderNote();
-            orderNote.OrderNoteID = NopSqlDataHelper.GetInt(dataReader, "OrderNoteID");
-            orderNote.OrderID = NopSqlDataHelper.GetInt(dataReader, "OrderID");
-            orderNote.Note = NopSqlDataHelper.GetString(dataReader, "Note");
-            orderNote.DisplayToCustomer = NopSqlDataHelper.GetBoolean(dataReader, "DisplayToCustomer");
-            orderNote.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return orderNote;
+            var item = new DBOrderNote();
+            item.OrderNoteId = NopSqlDataHelper.GetInt(dataReader, "OrderNoteID");
+            item.OrderId = NopSqlDataHelper.GetInt(dataReader, "OrderID");
+            item.Note = NopSqlDataHelper.GetString(dataReader, "Note");
+            item.DisplayToCustomer = NopSqlDataHelper.GetBoolean(dataReader, "DisplayToCustomer");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         private DBOrderProductVariant GetOrderProductVariantFromReader(IDataReader dataReader)
         {
-            DBOrderProductVariant orderProductVariant = new DBOrderProductVariant();
-            orderProductVariant.OrderProductVariantID = NopSqlDataHelper.GetInt(dataReader, "OrderProductVariantID");
-            orderProductVariant.OrderProductVariantGUID = NopSqlDataHelper.GetGuid(dataReader, "OrderProductVariantGUID");
-            orderProductVariant.OrderID = NopSqlDataHelper.GetInt(dataReader, "OrderID");
-            orderProductVariant.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
-            orderProductVariant.UnitPriceInclTax = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceInclTax");
-            orderProductVariant.UnitPriceExclTax = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceExclTax");
-            orderProductVariant.PriceInclTax = NopSqlDataHelper.GetDecimal(dataReader, "PriceInclTax");
-            orderProductVariant.PriceExclTax = NopSqlDataHelper.GetDecimal(dataReader, "PriceExclTax");
-            orderProductVariant.UnitPriceInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceInclTaxInCustomerCurrency");
-            orderProductVariant.UnitPriceExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceExclTaxInCustomerCurrency");
-            orderProductVariant.PriceInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PriceInclTaxInCustomerCurrency");
-            orderProductVariant.PriceExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PriceExclTaxInCustomerCurrency");
-            orderProductVariant.AttributeDescription = NopSqlDataHelper.GetString(dataReader, "AttributeDescription");
-            orderProductVariant.AttributesXML = NopSqlDataHelper.GetString(dataReader, "AttributesXML");
-            orderProductVariant.Quantity = NopSqlDataHelper.GetInt(dataReader, "Quantity");
-            orderProductVariant.DiscountAmountInclTax = NopSqlDataHelper.GetDecimal(dataReader, "DiscountAmountInclTax");
-            orderProductVariant.DiscountAmountExclTax = NopSqlDataHelper.GetDecimal(dataReader, "DiscountAmountExclTax");
-            orderProductVariant.DownloadCount = NopSqlDataHelper.GetInt(dataReader, "DownloadCount");
-            orderProductVariant.IsDownloadActivated = NopSqlDataHelper.GetBoolean(dataReader, "IsDownloadActivated");
-            orderProductVariant.LicenseDownloadID = NopSqlDataHelper.GetInt(dataReader, "LicenseDownloadID");
-            return orderProductVariant;
+            var item = new DBOrderProductVariant();
+            item.OrderProductVariantId = NopSqlDataHelper.GetInt(dataReader, "OrderProductVariantID");
+            item.OrderProductVariantGuid = NopSqlDataHelper.GetGuid(dataReader, "OrderProductVariantGUID");
+            item.OrderId = NopSqlDataHelper.GetInt(dataReader, "OrderID");
+            item.ProductVariantId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
+            item.UnitPriceInclTax = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceInclTax");
+            item.UnitPriceExclTax = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceExclTax");
+            item.PriceInclTax = NopSqlDataHelper.GetDecimal(dataReader, "PriceInclTax");
+            item.PriceExclTax = NopSqlDataHelper.GetDecimal(dataReader, "PriceExclTax");
+            item.UnitPriceInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceInclTaxInCustomerCurrency");
+            item.UnitPriceExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "UnitPriceExclTaxInCustomerCurrency");
+            item.PriceInclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PriceInclTaxInCustomerCurrency");
+            item.PriceExclTaxInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "PriceExclTaxInCustomerCurrency");
+            item.AttributeDescription = NopSqlDataHelper.GetString(dataReader, "AttributeDescription");
+            item.AttributesXml = NopSqlDataHelper.GetString(dataReader, "AttributesXML");
+            item.Quantity = NopSqlDataHelper.GetInt(dataReader, "Quantity");
+            item.DiscountAmountInclTax = NopSqlDataHelper.GetDecimal(dataReader, "DiscountAmountInclTax");
+            item.DiscountAmountExclTax = NopSqlDataHelper.GetDecimal(dataReader, "DiscountAmountExclTax");
+            item.DownloadCount = NopSqlDataHelper.GetInt(dataReader, "DownloadCount");
+            item.IsDownloadActivated = NopSqlDataHelper.GetBoolean(dataReader, "IsDownloadActivated");
+            item.LicenseDownloadId = NopSqlDataHelper.GetInt(dataReader, "LicenseDownloadID");
+            return item;
         }
 
         private DBOrderStatus GetOrderStatusFromReader(IDataReader dataReader)
         {
-            DBOrderStatus orderStatus = new DBOrderStatus();
-            orderStatus.OrderStatusID = NopSqlDataHelper.GetInt(dataReader, "OrderStatusID");
-            orderStatus.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return orderStatus;
+            var item = new DBOrderStatus();
+            item.OrderStatusId = NopSqlDataHelper.GetInt(dataReader, "OrderStatusID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
 
         private DBOrderAverageReportLine GetOrderAverageReportLineFromReader(IDataReader dataReader)
         {
-            DBOrderAverageReportLine orderAverageReportLine = new DBOrderAverageReportLine();
-            orderAverageReportLine.SumOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumOrders");
-            orderAverageReportLine.CountOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountOrders");
-            return orderAverageReportLine;
+            var item = new DBOrderAverageReportLine();
+            item.SumOrders = NopSqlDataHelper.GetDecimal(dataReader, "SumOrders");
+            item.CountOrders = NopSqlDataHelper.GetDecimal(dataReader, "CountOrders");
+            return item;
         }
 
         private DBBestSellersReportLine GetBestSellersReportLineFromReader(IDataReader dataReader)
         {
-            DBBestSellersReportLine bestSellersReportLine = new DBBestSellersReportLine();
-            bestSellersReportLine.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
-            bestSellersReportLine.SalesTotalCount = NopSqlDataHelper.GetDecimal(dataReader, "SalesTotalCount");
-            bestSellersReportLine.SalesTotalAmount = NopSqlDataHelper.GetDecimal(dataReader, "SalesTotalAmount");
-            return bestSellersReportLine;
+            var item = new DBBestSellersReportLine();
+            item.ProductVariantId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
+            item.SalesTotalCount = NopSqlDataHelper.GetDecimal(dataReader, "SalesTotalCount");
+            item.SalesTotalAmount = NopSqlDataHelper.GetDecimal(dataReader, "SalesTotalAmount");
+            return item;
         }
 
         private DBRecurringPayment GetRecurringPaymentFromReader(IDataReader dataReader)
         {
-            DBRecurringPayment recurringPayment = new DBRecurringPayment();
-            recurringPayment.RecurringPaymentID = NopSqlDataHelper.GetInt(dataReader, "RecurringPaymentID");
-            recurringPayment.InitialOrderID = NopSqlDataHelper.GetInt(dataReader, "InitialOrderID");
-            recurringPayment.CycleLength = NopSqlDataHelper.GetInt(dataReader, "CycleLength");
-            recurringPayment.CyclePeriod = NopSqlDataHelper.GetInt(dataReader, "CyclePeriod");
-            recurringPayment.TotalCycles = NopSqlDataHelper.GetInt(dataReader, "TotalCycles");
-            recurringPayment.StartDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "StartDate");
-            recurringPayment.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
-            recurringPayment.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            recurringPayment.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return recurringPayment;
+            var item = new DBRecurringPayment();
+            item.RecurringPaymentId = NopSqlDataHelper.GetInt(dataReader, "RecurringPaymentID");
+            item.InitialOrderId = NopSqlDataHelper.GetInt(dataReader, "InitialOrderID");
+            item.CycleLength = NopSqlDataHelper.GetInt(dataReader, "CycleLength");
+            item.CyclePeriod = NopSqlDataHelper.GetInt(dataReader, "CyclePeriod");
+            item.TotalCycles = NopSqlDataHelper.GetInt(dataReader, "TotalCycles");
+            item.StartDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "StartDate");
+            item.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         private DBRecurringPaymentHistory GetRecurringPaymentHistoryFromReader(IDataReader dataReader)
         {
-            DBRecurringPaymentHistory recurringPaymentHistory = new DBRecurringPaymentHistory();
-            recurringPaymentHistory.RecurringPaymentHistoryID = NopSqlDataHelper.GetInt(dataReader, "RecurringPaymentHistoryID");
-            recurringPaymentHistory.RecurringPaymentID = NopSqlDataHelper.GetInt(dataReader, "RecurringPaymentID");
-            recurringPaymentHistory.OrderID = NopSqlDataHelper.GetInt(dataReader, "OrderID");
-            recurringPaymentHistory.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return recurringPaymentHistory;
+            var item = new DBRecurringPaymentHistory();
+            item.RecurringPaymentHistoryId = NopSqlDataHelper.GetInt(dataReader, "RecurringPaymentHistoryID");
+            item.RecurringPaymentId = NopSqlDataHelper.GetInt(dataReader, "RecurringPaymentID");
+            item.OrderId = NopSqlDataHelper.GetInt(dataReader, "OrderID");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         private DBGiftCard GetGiftCardFromReader(IDataReader dataReader)
         {
-            DBGiftCard giftCard = new DBGiftCard();
-            giftCard.GiftCardID = NopSqlDataHelper.GetInt(dataReader, "GiftCardID");
-            giftCard.PurchasedOrderProductVariantID = NopSqlDataHelper.GetInt(dataReader, "PurchasedOrderProductVariantID");
-            giftCard.Amount = NopSqlDataHelper.GetDecimal(dataReader, "Amount");
-            giftCard.IsGiftCardActivated = NopSqlDataHelper.GetBoolean(dataReader, "IsGiftCardActivated");
-            giftCard.GiftCardCouponCode = NopSqlDataHelper.GetString(dataReader, "GiftCardCouponCode");
-            giftCard.RecipientName = NopSqlDataHelper.GetString(dataReader, "RecipientName");
-            giftCard.RecipientEmail = NopSqlDataHelper.GetString(dataReader, "RecipientEmail");
-            giftCard.SenderName = NopSqlDataHelper.GetString(dataReader, "SenderName");
-            giftCard.SenderEmail = NopSqlDataHelper.GetString(dataReader, "SenderEmail");
-            giftCard.Message = NopSqlDataHelper.GetString(dataReader, "Message");
-            giftCard.IsSenderNotified = NopSqlDataHelper.GetBoolean(dataReader, "IsSenderNotified");
-            giftCard.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return giftCard;
+            var item = new DBGiftCard();
+            item.GiftCardId = NopSqlDataHelper.GetInt(dataReader, "GiftCardID");
+            item.PurchasedOrderProductVariantId = NopSqlDataHelper.GetInt(dataReader, "PurchasedOrderProductVariantID");
+            item.Amount = NopSqlDataHelper.GetDecimal(dataReader, "Amount");
+            item.IsGiftCardActivated = NopSqlDataHelper.GetBoolean(dataReader, "IsGiftCardActivated");
+            item.GiftCardCouponCode = NopSqlDataHelper.GetString(dataReader, "GiftCardCouponCode");
+            item.RecipientName = NopSqlDataHelper.GetString(dataReader, "RecipientName");
+            item.RecipientEmail = NopSqlDataHelper.GetString(dataReader, "RecipientEmail");
+            item.SenderName = NopSqlDataHelper.GetString(dataReader, "SenderName");
+            item.SenderEmail = NopSqlDataHelper.GetString(dataReader, "SenderEmail");
+            item.Message = NopSqlDataHelper.GetString(dataReader, "Message");
+            item.IsSenderNotified = NopSqlDataHelper.GetBoolean(dataReader, "IsSenderNotified");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         private DBGiftCardUsageHistory GetGiftCardUsageHistoryFromReader(IDataReader dataReader)
         {
-            DBGiftCardUsageHistory giftCardUsageHistory = new DBGiftCardUsageHistory();
-            giftCardUsageHistory.GiftCardUsageHistoryID = NopSqlDataHelper.GetInt(dataReader, "GiftCardUsageHistoryID");
-            giftCardUsageHistory.GiftCardID = NopSqlDataHelper.GetInt(dataReader, "GiftCardID");
-            giftCardUsageHistory.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            giftCardUsageHistory.OrderID = NopSqlDataHelper.GetInt(dataReader, "OrderID");
-            giftCardUsageHistory.UsedValue = NopSqlDataHelper.GetDecimal(dataReader, "UsedValue");
-            giftCardUsageHistory.UsedValueInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "UsedValueInCustomerCurrency");
-            giftCardUsageHistory.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return giftCardUsageHistory;
+            var item = new DBGiftCardUsageHistory();
+            item.GiftCardUsageHistoryId = NopSqlDataHelper.GetInt(dataReader, "GiftCardUsageHistoryID");
+            item.GiftCardId = NopSqlDataHelper.GetInt(dataReader, "GiftCardID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.OrderId = NopSqlDataHelper.GetInt(dataReader, "OrderID");
+            item.UsedValue = NopSqlDataHelper.GetDecimal(dataReader, "UsedValue");
+            item.UsedValueInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "UsedValueInCustomerCurrency");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         #endregion
@@ -283,83 +283,84 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets an order
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
+        /// <param name="orderId">The order identifier</param>
         /// <returns>Order</returns>
-        public override DBOrder GetOrderByID(int OrderID)
+        public override DBOrder GetOrderById(int orderId)
         {
-            DBOrder order = null;
-            if (OrderID == 0)
-                return order;
+            DBOrder item = null;
+            if (orderId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    order = GetOrderFromReader(dataReader);
+                    item = GetOrderFromReader(dataReader);
                 }
             }
-            return order;
+            return item;
         }
 
         /// <summary>
         /// Gets an order
         /// </summary>
-        /// <param name="OrderGUID">The order identifier</param>
+        /// <param name="orderGuid">The order identifier</param>
         /// <returns>Order</returns>
-        public override DBOrder GetOrderByGUID(Guid OrderGUID)
+        public override DBOrder GetOrderByGuid(Guid orderGuid)
         {
-            DBOrder order = null;
+            DBOrder item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderLoadByGuid");
-            db.AddInParameter(dbCommand, "OrderGUID", DbType.Guid, OrderGUID);
+            db.AddInParameter(dbCommand, "OrderGUID", DbType.Guid, orderGuid);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    order = GetOrderFromReader(dataReader);
+                    item = GetOrderFromReader(dataReader);
                 }
             }
-            return order;
+            return item;
         }
 
         /// <summary>
         /// Search orders
         /// </summary>
-        /// <param name="StartTime">Order start time; null to load all orders</param>
-        /// <param name="EndTime">Order end time; null to load all orders</param>
-        /// <param name="CustomerEmail">Customer email</param>
-        /// <param name="OrderStatusID">Order status identifier; null to load all orders</param>
-        /// <param name="PaymentStatusID">Order payment status identifier; null to load all orders</param>
-        /// <param name="ShippingStatusID">Order shipping status identifier; null to load all orders</param>
+        /// <param name="startTime">Order start time; null to load all orders</param>
+        /// <param name="endTime">Order end time; null to load all orders</param>
+        /// <param name="customerEmail">Customer email</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
+        /// <param name="shippingStatusId">Order shipping status identifier; null to load all orders</param>
         /// <returns>Order collection</returns>
-        public override DBOrderCollection SearchOrders(DateTime? StartTime, DateTime? EndTime, string CustomerEmail, int? OrderStatusID, int? PaymentStatusID, int? ShippingStatusID)
+        public override DBOrderCollection SearchOrders(DateTime? startTime,
+            DateTime? endTime, string customerEmail, int? orderStatusId,
+            int? paymentStatusId, int? shippingStatusId)
         {
             var result = new DBOrderCollection();
 
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderSearch");
-            if (StartTime.HasValue)
-                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, StartTime.Value);
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
             else
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
-            if (EndTime.HasValue)
-                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, EndTime.Value);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
             else
                 db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);
-            db.AddInParameter(dbCommand, "CustomerEmail", DbType.String, CustomerEmail);
-            if (OrderStatusID.HasValue)
-                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID.Value);
+            db.AddInParameter(dbCommand, "CustomerEmail", DbType.String, customerEmail);
+            if (orderStatusId.HasValue)
+                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, null);
-            if (PaymentStatusID.HasValue)
-                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID.Value);
+            if (paymentStatusId.HasValue)
+                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, null);
-
-            if (ShippingStatusID.HasValue)
-                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, ShippingStatusID);
+            if (shippingStatusId.HasValue)
+                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
             else
                 db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, null);
 
@@ -377,29 +378,30 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Get order product variant sales report
         /// </summary>
-        /// <param name="StartTime">Order start time; null to load all</param>
-        /// <param name="EndTime">Order end time; null to load all</param>
-        /// <param name="OrderStatusID">Order status identifier; null to load all orders</param>
-        /// <param name="PaymentStatusID">Order payment status identifier; null to load all orders</param>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
         /// <returns>Result</returns>
-        public override IDataReader OrderProductVariantReport(DateTime? StartTime, DateTime? EndTime, int? OrderStatusID, int? PaymentStatusID)
+        public override IDataReader OrderProductVariantReport(DateTime? startTime,
+            DateTime? endTime, int? orderStatusId, int? paymentStatusId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantReport");
-            if (StartTime.HasValue)
-                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, StartTime.Value);
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
             else
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
-            if (EndTime.HasValue)
-                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, EndTime.Value);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
             else
                 db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);
-            if (OrderStatusID.HasValue)
-                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID.Value);
+            if (orderStatusId.HasValue)
+                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, null);
-            if (PaymentStatusID.HasValue)
-                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID.Value);
+            if (paymentStatusId.HasValue)
+                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, null);
             return db.ExecuteReader(dbCommand);
@@ -408,18 +410,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Get the bests sellers report
         /// </summary>
-        /// <param name="LastDays">Last number of days</param>
-        /// <param name="RecordsToReturn">Number of products to return</param>
-        /// <param name="OrderBy">1 - order by total count, 2 - Order by total amount</param>
+        /// <param name="lastDays">Last number of days</param>
+        /// <param name="recordsToReturn">Number of products to return</param>
+        /// <param name="orderBy">1 - order by total count, 2 - Order by total amount</param>
         /// <returns>Result</returns>
-        public override List<DBBestSellersReportLine> BestSellersReport(int LastDays, int RecordsToReturn, int OrderBy)
+        public override List<DBBestSellersReportLine> BestSellersReport(int lastDays,
+            int recordsToReturn, int orderBy)
         {
-            List<DBBestSellersReportLine> result = new List<DBBestSellersReportLine>();
+            var result = new List<DBBestSellersReportLine>();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SalesBestSellersReport");
-            db.AddInParameter(dbCommand, "LastDays", DbType.Int32, LastDays);
-            db.AddInParameter(dbCommand, "RecordsToReturn", DbType.Int32, RecordsToReturn);
-            db.AddInParameter(dbCommand, "OrderBy", DbType.Int32, OrderBy);
+            db.AddInParameter(dbCommand, "LastDays", DbType.Int32, lastDays);
+            db.AddInParameter(dbCommand, "RecordsToReturn", DbType.Int32, recordsToReturn);
+            db.AddInParameter(dbCommand, "OrderBy", DbType.Int32, orderBy);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -434,16 +437,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Get order average report
         /// </summary>
-        /// <param name="OrderStatusID">Order status identifier</param>
+        /// <param name="orderStatusId">Order status identifier</param>
         /// <param name="startTime">Start date</param>
         /// <param name="endTime">End date</param>
         /// <returns>Result</returns>
-        public override DBOrderAverageReportLine OrderAverageReport(int OrderStatusID, DateTime? startTime, DateTime? endTime)
+        public override DBOrderAverageReportLine OrderAverageReport(int orderStatusId,
+            DateTime? startTime, DateTime? endTime)
         {
             DBOrderAverageReportLine item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderAverageReport");
-            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID);
+            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId);
             if (startTime.HasValue)
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
             else
@@ -465,16 +469,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets all orders by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Order collection</returns>
-        public override DBOrderCollection GetOrdersByCustomerID(int CustomerID)
+        public override DBOrderCollection GetOrdersByCustomerId(int customerId)
         {
             var result = new DBOrderCollection();
-            if (CustomerID == 0)
+            if (customerId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderLoadByCustomerID");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -489,39 +493,39 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets an order by authorization transaction identifier
         /// </summary>
-        /// <param name="AuthorizationTransactionID">Authorization transaction identifier</param>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="authorizationTransactionId">Authorization transaction identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>Order</returns>
-        public override DBOrder GetOrderByAuthorizationTransactionIDAndPaymentMethodID(string AuthorizationTransactionID, int PaymentMethodID)
+        public override DBOrder GetOrderByAuthorizationTransactionIdAndPaymentMethodId(string authorizationTransactionId, int paymentMethodId)
         {
-            DBOrder order = null;
+            DBOrder item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderLoadByAuthorizationTransactionIDAndPaymentMethodID");
-            db.AddInParameter(dbCommand, "AuthorizationTransactionID", DbType.String, AuthorizationTransactionID);
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
+            db.AddInParameter(dbCommand, "AuthorizationTransactionID", DbType.String, authorizationTransactionId);
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    order = GetOrderFromReader(dataReader);
+                    item = GetOrderFromReader(dataReader);
                 }
             }
-            return order;
+            return item;
         }
 
         /// <summary>
         /// Gets all orders by affiliate identifier
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Order collection</returns>
-        public override DBOrderCollection GetOrdersByAffiliateID(int AffiliateID)
+        public override DBOrderCollection GetOrdersByAffiliateId(int affiliateId)
         {
             var result = new DBOrderCollection();
-            if (AffiliateID == 0)
+            if (affiliateId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderLoadByAffiliateID");
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -536,473 +540,582 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Inserts an order
         /// </summary>
-        /// <param name="OrderGUID">The order identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CustomerLanguageID">The customer language identifier</param>
-        /// <param name="CustomerTaxDisplayTypeID">The customer tax display type identifier</param>
-        /// <param name="CustomerIP">The customer IP address</param>
-        /// <param name="OrderSubtotalInclTax">The order subtotal (incl tax)</param>
-        /// <param name="OrderSubtotalExclTax">The order subtotal (excl tax)</param>
-        /// <param name="OrderShippingInclTax">The order shipping (incl tax)</param>
-        /// <param name="OrderShippingExclTax">The order shipping (excl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
-        /// <param name="OrderTax">The order tax</param>
-        /// <param name="OrderTotal">The order total</param>
-        /// <param name="OrderDiscount">The order discount</param>
-        /// <param name="OrderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
-        /// <param name="OrderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
-        /// <param name="OrderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
-        /// <param name="OrderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
-        /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
-        /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
-        /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
-        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
-        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
-        /// <param name="CustomerCurrencyCode">The customer currency code</param>
-        /// <param name="OrderWeight">The order weight</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="OrderStatusID">The order status identifier</param>
-        /// <param name="AllowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
-        /// <param name="CardType">The card type</param>
-        /// <param name="CardName">The card name</param>
-        /// <param name="CardNumber">The card number</param>
-        /// <param name="MaskedCreditCardNumber">The masked credit card number</param>
-        /// <param name="CardCVV2">The card CVV2</param>
-        /// <param name="CardExpirationMonth">The card expiration month</param>
-        /// <param name="CardExpirationYear">The card expiration year</param>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="PaymentMethodName">The payment method name</param>
-        /// <param name="AuthorizationTransactionID">The authorization transaction ID</param>
-        /// <param name="AuthorizationTransactionCode">The authorization transaction code</param>
-        /// <param name="AuthorizationTransactionResult">The authorization transaction result</param>
-        /// <param name="CaptureTransactionID">The capture transaction ID</param>
-        /// <param name="CaptureTransactionResult">The capture transaction result</param>
-        /// <param name="SubscriptionTransactionID">The subscription transaction ID</param>
-        /// <param name="PurchaseOrderNumber">The purchase order number</param>
-        /// <param name="PaymentStatusID">The payment status identifier</param>
-        /// <param name="PaidDate">The paid date and time</param>
-        /// <param name="BillingFirstName">The billing first name</param>
-        /// <param name="BillingLastName">The billing last name</param>
-        /// <param name="BillingPhoneNumber">he billing phone number</param>
-        /// <param name="BillingEmail">The billing email</param>
-        /// <param name="BillingFaxNumber">The billing fax number</param>
-        /// <param name="BillingCompany">The billing company</param>
-        /// <param name="BillingAddress1">The billing address 1</param>
-        /// <param name="BillingAddress2">The billing address 2</param>
-        /// <param name="BillingCity">The billing city</param>
-        /// <param name="BillingStateProvince">The billing state/province</param>
-        /// <param name="BillingStateProvinceID">The billing state/province identifier</param>
-        /// <param name="BillingZipPostalCode">The billing zip/postal code</param>
-        /// <param name="BillingCountry">The billing country</param>
-        /// <param name="BillingCountryID">The billing country identifier</param>
-        /// <param name="ShippingStatusID">The shipping status identifier</param>
-        /// <param name="ShippingFirstName">The shipping first name</param>
-        /// <param name="ShippingLastName">The shipping last name</param>
-        /// <param name="ShippingPhoneNumber">The shipping phone number</param>
-        /// <param name="ShippingEmail">The shipping email</param>
-        /// <param name="ShippingFaxNumber">The shipping fax number</param>
-        /// <param name="ShippingCompany">The shipping  company</param>
-        /// <param name="ShippingAddress1">The shipping address 1</param>
-        /// <param name="ShippingAddress2">The shipping address 2</param>
-        /// <param name="ShippingCity">The shipping city</param>
-        /// <param name="ShippingStateProvince">The shipping state/province</param>
-        /// <param name="ShippingStateProvinceID">The shipping state/province identifier</param>
-        /// <param name="ShippingZipPostalCode">The shipping zip/postal code</param>
-        /// <param name="ShippingCountry">The shipping country</param>
-        /// <param name="ShippingCountryID">The shipping country identifier</param>
-        /// <param name="ShippingMethod">The shipping method</param>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
-        /// <param name="ShippedDate">The shipped date and time</param>
-        /// <param name="TrackingNumber">The tracking number of order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of order creation</param>
+        /// <param name="orderGuid">The order identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="customerLanguageId">The customer language identifier</param>
+        /// <param name="customerTaxDisplayTypeId">The customer tax display type identifier</param>
+        /// <param name="customerIP">The customer IP address</param>
+        /// <param name="orderSubtotalInclTax">The order subtotal (incl tax)</param>
+        /// <param name="orderSubtotalExclTax">The order subtotal (excl tax)</param>
+        /// <param name="orderShippingInclTax">The order shipping (incl tax)</param>
+        /// <param name="orderShippingExclTax">The order shipping (excl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
+        /// <param name="orderTax">The order tax</param>
+        /// <param name="orderTotal">The order total</param>
+        /// <param name="orderDiscount">The order discount</param>
+        /// <param name="orderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
+        /// <param name="orderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
+        /// <param name="orderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
+        /// <param name="orderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
+        /// <param name="orderTaxInCustomerCurrency">The order tax (customer currency)</param>
+        /// <param name="orderTotalInCustomerCurrency">The order total (customer currency)</param>
+        /// <param name="orderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="checkoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="checkoutAttributesXml">The checkout attributes in XML format</param>
+        /// <param name="customerCurrencyCode">The customer currency code</param>
+        /// <param name="orderWeight">The order weight</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="orderStatusId">The order status identifier</param>
+        /// <param name="allowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
+        /// <param name="cardType">The card type</param>
+        /// <param name="cardName">The card name</param>
+        /// <param name="cardNumber">The card number</param>
+        /// <param name="maskedCreditCardNumber">The masked credit card number</param>
+        /// <param name="cardCvv2">The card CVV2</param>
+        /// <param name="cardExpirationMonth">The card expiration month</param>
+        /// <param name="cardExpirationYear">The card expiration year</param>
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="paymentMethodName">The payment method name</param>
+        /// <param name="authorizationTransactionId">The authorization transaction identifier</param>
+        /// <param name="authorizationTransactionCode">The authorization transaction code</param>
+        /// <param name="authorizationTransactionResult">The authorization transaction result</param>
+        /// <param name="captureTransactionId">The capture transaction identifier</param>
+        /// <param name="captureTransactionResult">The capture transaction result</param>
+        /// <param name="subscriptionTransactionId">The subscription transaction identifier</param>
+        /// <param name="purchaseOrderNumber">The purchase order number</param>
+        /// <param name="paymentStatusId">The payment status identifier</param>
+        /// <param name="paidDate">The paid date and time</param>
+        /// <param name="billingFirstName">The billing first name</param>
+        /// <param name="billingLastName">The billing last name</param>
+        /// <param name="billingPhoneNumber">he billing phone number</param>
+        /// <param name="billingEmail">The billing email</param>
+        /// <param name="billingFaxNumber">The billing fax number</param>
+        /// <param name="billingCompany">The billing company</param>
+        /// <param name="billingAddress1">The billing address 1</param>
+        /// <param name="billingAddress2">The billing address 2</param>
+        /// <param name="billingCity">The billing city</param>
+        /// <param name="billingStateProvince">The billing state/province</param>
+        /// <param name="billingStateProvinceId">The billing state/province identifier</param>
+        /// <param name="billingZipPostalCode">The billing zip/postal code</param>
+        /// <param name="billingCountry">The billing country</param>
+        /// <param name="billingCountryId">The billing country identifier</param>
+        /// <param name="shippingStatusId">The shipping status identifier</param>
+        /// <param name="shippingFirstName">The shipping first name</param>
+        /// <param name="shippingLastName">The shipping last name</param>
+        /// <param name="shippingPhoneNumber">The shipping phone number</param>
+        /// <param name="shippingEmail">The shipping email</param>
+        /// <param name="shippingFaxNumber">The shipping fax number</param>
+        /// <param name="shippingCompany">The shipping  company</param>
+        /// <param name="shippingAddress1">The shipping address 1</param>
+        /// <param name="shippingAddress2">The shipping address 2</param>
+        /// <param name="shippingCity">The shipping city</param>
+        /// <param name="shippingStateProvince">The shipping state/province</param>
+        /// <param name="shippingStateProvinceId">The shipping state/province identifier</param>
+        /// <param name="shippingZipPostalCode">The shipping zip/postal code</param>
+        /// <param name="shippingCountry">The shipping country</param>
+        /// <param name="shippingCountryId">The shipping country identifier</param>
+        /// <param name="shippingMethod">The shipping method</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
+        /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="trackingNumber">The tracking number of order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of order creation</param>
         /// <returns>Order</returns>
-        public override DBOrder InsertOrder(Guid OrderGUID, int CustomerID, int CustomerLanguageID,
-            int CustomerTaxDisplayTypeID, string CustomerIP, decimal OrderSubtotalInclTax, decimal OrderSubtotalExclTax,
-            decimal OrderShippingInclTax, decimal OrderShippingExclTax,
-            decimal PaymentMethodAdditionalFeeInclTax, decimal PaymentMethodAdditionalFeeExclTax,
-            decimal OrderTax, decimal OrderTotal, decimal OrderDiscount,
-            decimal OrderSubtotalInclTaxInCustomerCurrency, decimal OrderSubtotalExclTaxInCustomerCurrency,
-            decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
-            decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-            decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency,
-            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
-            string CustomerCurrencyCode, decimal OrderWeight,
-            int AffiliateID, int OrderStatusID, bool AllowStoringCreditCardNumber, string CardType,
-            string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
-            string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
-            string PaymentMethodName, string AuthorizationTransactionID, string AuthorizationTransactionCode,
-            string AuthorizationTransactionResult, string CaptureTransactionID, string CaptureTransactionResult,
-            string SubscriptionTransactionID, string PurchaseOrderNumber, int PaymentStatusID, DateTime? PaidDate,
-            string BillingFirstName, string BillingLastName,
-            string BillingPhoneNumber, string BillingEmail, string BillingFaxNumber, string BillingCompany,
-            string BillingAddress1, string BillingAddress2, string BillingCity, string BillingStateProvince,
-            int BillingStateProvinceID, string BillingZipPostalCode, string BillingCountry,
-            int BillingCountryID, int ShippingStatusID, string ShippingFirstName,
-            string ShippingLastName, string ShippingPhoneNumber, string ShippingEmail,
-            string ShippingFaxNumber, string ShippingCompany, string ShippingAddress1,
-            string ShippingAddress2, string ShippingCity, string ShippingStateProvince,
-            int ShippingStateProvinceID, string ShippingZipPostalCode,
-            string ShippingCountry, int ShippingCountryID, string ShippingMethod, int ShippingRateComputationMethodID, DateTime? ShippedDate,
-            string TrackingNumber, bool Deleted, DateTime CreatedOn)
+        public override DBOrder InsertOrder(Guid orderGuid,
+            int customerId,
+            int customerLanguageId,
+            int customerTaxDisplayTypeId,
+            string customerIP,
+            decimal orderSubtotalInclTax,
+            decimal orderSubtotalExclTax,
+            decimal orderShippingInclTax,
+            decimal orderShippingExclTax,
+            decimal paymentMethodAdditionalFeeInclTax,
+            decimal paymentMethodAdditionalFeeExclTax,
+            decimal orderTax,
+            decimal orderTotal,
+            decimal orderDiscount,
+            decimal orderSubtotalInclTaxInCustomerCurrency,
+            decimal orderSubtotalExclTaxInCustomerCurrency,
+            decimal orderShippingInclTaxInCustomerCurrency,
+            decimal orderShippingExclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeInclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+            decimal orderTaxInCustomerCurrency,
+            decimal orderTotalInCustomerCurrency,
+            decimal orderDiscountInCustomerCurrency,
+            string checkoutAttributeDescription,
+            string checkoutAttributesXml,
+            string customerCurrencyCode,
+            decimal orderWeight,
+            int affiliateId,
+            int orderStatusId,
+            bool allowStoringCreditCardNumber,
+            string cardType,
+            string cardName,
+            string cardNumber,
+            string maskedCreditCardNumber,
+            string cardCvv2,
+            string cardExpirationMonth,
+            string cardExpirationYear,
+            int paymentMethodId,
+            string paymentMethodName,
+            string authorizationTransactionId,
+            string authorizationTransactionCode,
+            string authorizationTransactionResult,
+            string captureTransactionId,
+            string captureTransactionResult,
+            string subscriptionTransactionId,
+            string purchaseOrderNumber,
+            int paymentStatusId,
+            DateTime? paidDate,
+            string billingFirstName,
+            string billingLastName,
+            string billingPhoneNumber,
+            string billingEmail,
+            string billingFaxNumber,
+            string billingCompany,
+            string billingAddress1,
+            string billingAddress2,
+            string billingCity,
+            string billingStateProvince,
+            int billingStateProvinceId,
+            string billingZipPostalCode,
+            string billingCountry,
+            int billingCountryId,
+            int shippingStatusId,
+            string shippingFirstName,
+            string shippingLastName,
+            string shippingPhoneNumber,
+            string shippingEmail,
+            string shippingFaxNumber,
+            string shippingCompany,
+            string shippingAddress1,
+            string shippingAddress2,
+            string shippingCity,
+            string shippingStateProvince,
+            int shippingStateProvinceId,
+            string shippingZipPostalCode,
+            string shippingCountry,
+            int shippingCountryId,
+            string shippingMethod,
+            int shippingRateComputationMethodId,
+            DateTime? shippedDate,
+            string trackingNumber,
+            bool deleted,
+            DateTime createdOn)
         {
-            DBOrder order = null;
+            DBOrder item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderInsert");
             db.AddOutParameter(dbCommand, "OrderID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "OrderGUID", DbType.Guid, OrderGUID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CustomerLanguageID", DbType.Int32, CustomerLanguageID);
-            db.AddInParameter(dbCommand, "CustomerTaxDisplayTypeID", DbType.Int32, CustomerTaxDisplayTypeID);
-            db.AddInParameter(dbCommand, "CustomerIP", DbType.String, CustomerIP);
-            db.AddInParameter(dbCommand, "OrderSubtotalInclTax", DbType.Decimal, OrderSubtotalInclTax);
-            db.AddInParameter(dbCommand, "OrderSubtotalExclTax", DbType.Decimal, OrderSubtotalExclTax);
-            db.AddInParameter(dbCommand, "OrderShippingInclTax", DbType.Decimal, OrderShippingInclTax);
-            db.AddInParameter(dbCommand, "OrderShippingExclTax", DbType.Decimal, OrderShippingExclTax);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTax", DbType.Decimal, PaymentMethodAdditionalFeeInclTax);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTax", DbType.Decimal, PaymentMethodAdditionalFeeExclTax);
-            db.AddInParameter(dbCommand, "OrderTax", DbType.Decimal, OrderTax);
-            db.AddInParameter(dbCommand, "OrderTotal", DbType.Decimal, OrderTotal);
-            db.AddInParameter(dbCommand, "OrderDiscount", DbType.Decimal, OrderDiscount);
-            db.AddInParameter(dbCommand, "OrderSubtotalInclTaxInCustomerCurrency", DbType.Decimal, OrderSubtotalInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderSubtotalExclTaxInCustomerCurrency", DbType.Decimal, OrderSubtotalExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderShippingInclTaxInCustomerCurrency", DbType.Decimal, OrderShippingInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderShippingExclTaxInCustomerCurrency", DbType.Decimal, OrderShippingExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTaxInCustomerCurrency", DbType.Decimal, PaymentMethodAdditionalFeeInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTaxInCustomerCurrency", DbType.Decimal, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderTaxInCustomerCurrency", DbType.Decimal, OrderTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderTotalInCustomerCurrency", DbType.Decimal, OrderTotalInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderDiscountInCustomerCurrency", DbType.Decimal, OrderDiscountInCustomerCurrency);
-            db.AddInParameter(dbCommand, "CheckoutAttributeDescription", DbType.String, CheckoutAttributeDescription);
-            db.AddInParameter(dbCommand, "CheckoutAttributesXML", DbType.Xml, CheckoutAttributesXML);
-            db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, CustomerCurrencyCode);
-            db.AddInParameter(dbCommand, "OrderWeight", DbType.Decimal, OrderWeight);
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
-            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID);
-            db.AddInParameter(dbCommand, "AllowStoringCreditCardNumber", DbType.Boolean, AllowStoringCreditCardNumber);
-            db.AddInParameter(dbCommand, "CardType", DbType.String, CardType);
-            db.AddInParameter(dbCommand, "CardName", DbType.String, CardName);
-            db.AddInParameter(dbCommand, "CardNumber", DbType.String, CardNumber);
-            db.AddInParameter(dbCommand, "MaskedCreditCardNumber", DbType.String, MaskedCreditCardNumber);
-            db.AddInParameter(dbCommand, "CardCVV2", DbType.String, CardCVV2);
-            db.AddInParameter(dbCommand, "CardExpirationMonth", DbType.String, CardExpirationMonth);
-            db.AddInParameter(dbCommand, "CardExpirationYear", DbType.String, CardExpirationYear);
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
-            db.AddInParameter(dbCommand, "PaymentMethodName", DbType.String, PaymentMethodName);
-            db.AddInParameter(dbCommand, "AuthorizationTransactionID", DbType.String, AuthorizationTransactionID);
-            db.AddInParameter(dbCommand, "AuthorizationTransactionCode", DbType.String, AuthorizationTransactionCode);
-            db.AddInParameter(dbCommand, "AuthorizationTransactionResult", DbType.String, AuthorizationTransactionResult);
-            db.AddInParameter(dbCommand, "CaptureTransactionID", DbType.String, CaptureTransactionID);
-            db.AddInParameter(dbCommand, "CaptureTransactionResult", DbType.String, CaptureTransactionResult);
-            db.AddInParameter(dbCommand, "SubscriptionTransactionID", DbType.String, SubscriptionTransactionID);
-            db.AddInParameter(dbCommand, "PurchaseOrderNumber", DbType.String, PurchaseOrderNumber);
-            db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID);
-            if (PaidDate.HasValue)
-                db.AddInParameter(dbCommand, "PaidDate", DbType.DateTime, PaidDate.Value);
+            db.AddInParameter(dbCommand, "OrderGUID", DbType.Guid, orderGuid);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CustomerLanguageID", DbType.Int32, customerLanguageId);
+            db.AddInParameter(dbCommand, "CustomerTaxDisplayTypeID", DbType.Int32, customerTaxDisplayTypeId);
+            db.AddInParameter(dbCommand, "CustomerIP", DbType.String, customerIP);
+            db.AddInParameter(dbCommand, "OrderSubtotalInclTax", DbType.Decimal, orderSubtotalInclTax);
+            db.AddInParameter(dbCommand, "OrderSubtotalExclTax", DbType.Decimal, orderSubtotalExclTax);
+            db.AddInParameter(dbCommand, "OrderShippingInclTax", DbType.Decimal, orderShippingInclTax);
+            db.AddInParameter(dbCommand, "OrderShippingExclTax", DbType.Decimal, orderShippingExclTax);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTax", DbType.Decimal, paymentMethodAdditionalFeeInclTax);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTax", DbType.Decimal, paymentMethodAdditionalFeeExclTax);
+            db.AddInParameter(dbCommand, "OrderTax", DbType.Decimal, orderTax);
+            db.AddInParameter(dbCommand, "OrderTotal", DbType.Decimal, orderTotal);
+            db.AddInParameter(dbCommand, "OrderDiscount", DbType.Decimal, orderDiscount);
+            db.AddInParameter(dbCommand, "OrderSubtotalInclTaxInCustomerCurrency", DbType.Decimal, orderSubtotalInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderSubtotalExclTaxInCustomerCurrency", DbType.Decimal, orderSubtotalExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderShippingInclTaxInCustomerCurrency", DbType.Decimal, orderShippingInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderShippingExclTaxInCustomerCurrency", DbType.Decimal, orderShippingExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTaxInCustomerCurrency", DbType.Decimal, paymentMethodAdditionalFeeInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTaxInCustomerCurrency", DbType.Decimal, paymentMethodAdditionalFeeExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderTaxInCustomerCurrency", DbType.Decimal, orderTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderTotalInCustomerCurrency", DbType.Decimal, orderTotalInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderDiscountInCustomerCurrency", DbType.Decimal, orderDiscountInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CheckoutAttributeDescription", DbType.String, checkoutAttributeDescription);
+            db.AddInParameter(dbCommand, "CheckoutAttributesXML", DbType.Xml, checkoutAttributesXml);
+            db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, customerCurrencyCode);
+            db.AddInParameter(dbCommand, "OrderWeight", DbType.Decimal, orderWeight);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
+            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId);
+            db.AddInParameter(dbCommand, "AllowStoringCreditCardNumber", DbType.Boolean, allowStoringCreditCardNumber);
+            db.AddInParameter(dbCommand, "CardType", DbType.String, cardType);
+            db.AddInParameter(dbCommand, "CardName", DbType.String, cardName);
+            db.AddInParameter(dbCommand, "CardNumber", DbType.String, cardNumber);
+            db.AddInParameter(dbCommand, "MaskedCreditCardNumber", DbType.String, maskedCreditCardNumber);
+            db.AddInParameter(dbCommand, "CardCVV2", DbType.String, cardCvv2);
+            db.AddInParameter(dbCommand, "CardExpirationMonth", DbType.String, cardExpirationMonth);
+            db.AddInParameter(dbCommand, "CardExpirationYear", DbType.String, cardExpirationYear);
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
+            db.AddInParameter(dbCommand, "PaymentMethodName", DbType.String, paymentMethodName);
+            db.AddInParameter(dbCommand, "AuthorizationTransactionID", DbType.String, authorizationTransactionId);
+            db.AddInParameter(dbCommand, "AuthorizationTransactionCode", DbType.String, authorizationTransactionCode);
+            db.AddInParameter(dbCommand, "AuthorizationTransactionResult", DbType.String, authorizationTransactionResult);
+            db.AddInParameter(dbCommand, "CaptureTransactionID", DbType.String, captureTransactionId);
+            db.AddInParameter(dbCommand, "CaptureTransactionResult", DbType.String, captureTransactionResult);
+            db.AddInParameter(dbCommand, "SubscriptionTransactionID", DbType.String, subscriptionTransactionId);
+            db.AddInParameter(dbCommand, "PurchaseOrderNumber", DbType.String, purchaseOrderNumber);
+            db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId);
+            if (paidDate.HasValue)
+                db.AddInParameter(dbCommand, "PaidDate", DbType.DateTime, paidDate.Value);
             else
                 db.AddInParameter(dbCommand, "PaidDate", DbType.DateTime, DBNull.Value);
-            db.AddInParameter(dbCommand, "BillingFirstName", DbType.String, BillingFirstName);
-            db.AddInParameter(dbCommand, "BillingLastName", DbType.String, BillingLastName);
-            db.AddInParameter(dbCommand, "BillingPhoneNumber", DbType.String, BillingPhoneNumber);
-            db.AddInParameter(dbCommand, "BillingEmail", DbType.String, BillingEmail);
-            db.AddInParameter(dbCommand, "BillingFaxNumber", DbType.String, BillingFaxNumber);
-            db.AddInParameter(dbCommand, "BillingCompany", DbType.String, BillingCompany);
-            db.AddInParameter(dbCommand, "BillingAddress1", DbType.String, BillingAddress1);
-            db.AddInParameter(dbCommand, "BillingAddress2", DbType.String, BillingAddress2);
-            db.AddInParameter(dbCommand, "BillingCity", DbType.String, BillingCity);
-            db.AddInParameter(dbCommand, "BillingStateProvince", DbType.String, BillingStateProvince);
-            db.AddInParameter(dbCommand, "BillingStateProvinceID", DbType.Int32, BillingStateProvinceID);
-            db.AddInParameter(dbCommand, "BillingZipPostalCode", DbType.String, BillingZipPostalCode);
-            db.AddInParameter(dbCommand, "BillingCountry", DbType.String, BillingCountry);
-            db.AddInParameter(dbCommand, "BillingCountryID", DbType.Int32, BillingCountryID);
-            db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, ShippingStatusID);
-            db.AddInParameter(dbCommand, "ShippingFirstName", DbType.String, ShippingFirstName);
-            db.AddInParameter(dbCommand, "ShippingLastName", DbType.String, ShippingLastName);
-            db.AddInParameter(dbCommand, "ShippingPhoneNumber", DbType.String, ShippingPhoneNumber);
-            db.AddInParameter(dbCommand, "ShippingEmail", DbType.String, ShippingEmail);
-            db.AddInParameter(dbCommand, "ShippingFaxNumber", DbType.String, ShippingFaxNumber);
-            db.AddInParameter(dbCommand, "ShippingCompany", DbType.String, ShippingCompany);
-            db.AddInParameter(dbCommand, "ShippingAddress1", DbType.String, ShippingAddress1);
-            db.AddInParameter(dbCommand, "ShippingAddress2", DbType.String, ShippingAddress2);
-            db.AddInParameter(dbCommand, "ShippingCity", DbType.String, ShippingCity);
-            db.AddInParameter(dbCommand, "ShippingStateProvince", DbType.String, ShippingStateProvince);
-            db.AddInParameter(dbCommand, "ShippingStateProvinceID", DbType.Int32, ShippingStateProvinceID);
-            db.AddInParameter(dbCommand, "ShippingZipPostalCode", DbType.String, ShippingZipPostalCode);
-            db.AddInParameter(dbCommand, "ShippingCountry", DbType.String, ShippingCountry);
-            db.AddInParameter(dbCommand, "ShippingCountryID", DbType.Int32, ShippingCountryID);
-            db.AddInParameter(dbCommand, "ShippingMethod", DbType.String, ShippingMethod);
-            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, ShippingRateComputationMethodID);
-            if (ShippedDate.HasValue)
-                db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, ShippedDate.Value);
+            db.AddInParameter(dbCommand, "BillingFirstName", DbType.String, billingFirstName);
+            db.AddInParameter(dbCommand, "BillingLastName", DbType.String, billingLastName);
+            db.AddInParameter(dbCommand, "BillingPhoneNumber", DbType.String, billingPhoneNumber);
+            db.AddInParameter(dbCommand, "BillingEmail", DbType.String, billingEmail);
+            db.AddInParameter(dbCommand, "BillingFaxNumber", DbType.String, billingFaxNumber);
+            db.AddInParameter(dbCommand, "BillingCompany", DbType.String, billingCompany);
+            db.AddInParameter(dbCommand, "BillingAddress1", DbType.String, billingAddress1);
+            db.AddInParameter(dbCommand, "BillingAddress2", DbType.String, billingAddress2);
+            db.AddInParameter(dbCommand, "BillingCity", DbType.String, billingCity);
+            db.AddInParameter(dbCommand, "BillingStateProvince", DbType.String, billingStateProvince);
+            db.AddInParameter(dbCommand, "BillingStateProvinceID", DbType.Int32, billingStateProvinceId);
+            db.AddInParameter(dbCommand, "BillingZipPostalCode", DbType.String, billingZipPostalCode);
+            db.AddInParameter(dbCommand, "BillingCountry", DbType.String, billingCountry);
+            db.AddInParameter(dbCommand, "BillingCountryID", DbType.Int32, billingCountryId);
+            db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
+            db.AddInParameter(dbCommand, "ShippingFirstName", DbType.String, shippingFirstName);
+            db.AddInParameter(dbCommand, "ShippingLastName", DbType.String, shippingLastName);
+            db.AddInParameter(dbCommand, "ShippingPhoneNumber", DbType.String, shippingPhoneNumber);
+            db.AddInParameter(dbCommand, "ShippingEmail", DbType.String, shippingEmail);
+            db.AddInParameter(dbCommand, "ShippingFaxNumber", DbType.String, shippingFaxNumber);
+            db.AddInParameter(dbCommand, "ShippingCompany", DbType.String, shippingCompany);
+            db.AddInParameter(dbCommand, "ShippingAddress1", DbType.String, shippingAddress1);
+            db.AddInParameter(dbCommand, "ShippingAddress2", DbType.String, shippingAddress2);
+            db.AddInParameter(dbCommand, "ShippingCity", DbType.String, shippingCity);
+            db.AddInParameter(dbCommand, "ShippingStateProvince", DbType.String, shippingStateProvince);
+            db.AddInParameter(dbCommand, "ShippingStateProvinceID", DbType.Int32, shippingStateProvinceId);
+            db.AddInParameter(dbCommand, "ShippingZipPostalCode", DbType.String, shippingZipPostalCode);
+            db.AddInParameter(dbCommand, "ShippingCountry", DbType.String, shippingCountry);
+            db.AddInParameter(dbCommand, "ShippingCountryID", DbType.Int32, shippingCountryId);
+            db.AddInParameter(dbCommand, "ShippingMethod", DbType.String, shippingMethod);
+            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, shippingRateComputationMethodId);
+            if (shippedDate.HasValue)
+                db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, shippedDate.Value);
             else
                 db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, DBNull.Value);
-            db.AddInParameter(dbCommand, "TrackingNumber", DbType.String, TrackingNumber);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "TrackingNumber", DbType.String, trackingNumber);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int OrderID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@OrderID"));
-                order = GetOrderByID(OrderID);
+                int orderId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@OrderID"));
+                item = GetOrderById(orderId);
             }
-            return order;
+            return item;
         }
 
         /// <summary>
         /// Updates the order
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="OrderGUID">The order identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CustomerLanguageID">The customer language identifier</param>
-        /// <param name="CustomerTaxDisplayTypeID">The customer tax display type identifier</param>
-        /// <param name="CustomerIP">The customer IP address</param>
-        /// <param name="OrderSubtotalInclTax">The order subtotal (incl tax)</param>
-        /// <param name="OrderSubtotalExclTax">The order subtotal (excl tax)</param>
-        /// <param name="OrderShippingInclTax">The order shipping (incl tax)</param>
-        /// <param name="OrderShippingExclTax">The order shipping (excl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
-        /// <param name="OrderTax">The order tax</param>
-        /// <param name="OrderTotal">The order total</param>
-        /// <param name="OrderDiscount">The order discount</param>
-        /// <param name="OrderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
-        /// <param name="OrderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
-        /// <param name="OrderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
-        /// <param name="OrderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
-        /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
-        /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
-        /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
-        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
-        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
-        /// <param name="CustomerCurrencyCode">The customer currency code</param>
-        /// <param name="OrderWeight">The order weight</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="OrderStatusID">The order status identifier</param>
-        /// <param name="AllowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
-        /// <param name="CardType">The card type</param>
-        /// <param name="CardName">The card name</param>
-        /// <param name="CardNumber">The card number</param>
-        /// <param name="MaskedCreditCardNumber">The masked credit card number</param>
-        /// <param name="CardCVV2">The card CVV2</param>
-        /// <param name="CardExpirationMonth">The card expiration month</param>
-        /// <param name="CardExpirationYear">The card expiration year</param>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="PaymentMethodName">The payment method name</param>
-        /// <param name="AuthorizationTransactionID">The authorization transaction ID</param>
-        /// <param name="AuthorizationTransactionCode">The authorization transaction code</param>
-        /// <param name="AuthorizationTransactionResult">The authorization transaction result</param>
-        /// <param name="CaptureTransactionID">The capture transaction ID</param>
-        /// <param name="CaptureTransactionResult">The capture transaction result</param>
-        /// <param name="SubscriptionTransactionID">The subscription transaction ID</param>
-        /// <param name="PurchaseOrderNumber">The purchase order number</param>
-        /// <param name="PaymentStatusID">The payment status identifier</param>
-        /// <param name="PaidDate">The paid date and time</param>
-        /// <param name="BillingFirstName">The billing first name</param>
-        /// <param name="BillingLastName">The billing last name</param>
-        /// <param name="BillingPhoneNumber">he billing phone number</param>
-        /// <param name="BillingEmail">The billing email</param>
-        /// <param name="BillingFaxNumber">The billing fax number</param>
-        /// <param name="BillingCompany">The billing company</param>
-        /// <param name="BillingAddress1">The billing address 1</param>
-        /// <param name="BillingAddress2">The billing address 2</param>
-        /// <param name="BillingCity">The billing city</param>
-        /// <param name="BillingStateProvince">The billing state/province</param>
-        /// <param name="BillingStateProvinceID">The billing state/province identifier</param>
-        /// <param name="BillingZipPostalCode">The billing zip/postal code</param>
-        /// <param name="BillingCountry">The billing country</param>
-        /// <param name="BillingCountryID">The billing country identifier</param>
-        /// <param name="ShippingStatusID">The shipping status identifier</param>
-        /// <param name="ShippingFirstName">The shipping first name</param>
-        /// <param name="ShippingLastName">The shipping last name</param>
-        /// <param name="ShippingPhoneNumber">The shipping phone number</param>
-        /// <param name="ShippingEmail">The shipping email</param>
-        /// <param name="ShippingFaxNumber">The shipping fax number</param>
-        /// <param name="ShippingCompany">The shipping  company</param>
-        /// <param name="ShippingAddress1">The shipping address 1</param>
-        /// <param name="ShippingAddress2">The shipping address 2</param>
-        /// <param name="ShippingCity">The shipping city</param>
-        /// <param name="ShippingStateProvince">The shipping state/province</param>
-        /// <param name="ShippingStateProvinceID">The shipping state/province identifier</param>
-        /// <param name="ShippingZipPostalCode">The shipping zip/postal code</param>
-        /// <param name="ShippingCountry">The shipping country</param>
-        /// <param name="ShippingCountryID">The shipping country identifier</param>
-        /// <param name="ShippingMethod">The shipping method</param>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
-        /// <param name="ShippedDate">The shipped date and time</param>
-        /// <param name="TrackingNumber">The tracking number of order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of order creation</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="orderGuid">The order identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="customerLanguageId">The customer language identifier</param>
+        /// <param name="customerTaxDisplayTypeId">The customer tax display type identifier</param>
+        /// <param name="customerIP">The customer IP address</param>
+        /// <param name="orderSubtotalInclTax">The order subtotal (incl tax)</param>
+        /// <param name="orderSubtotalExclTax">The order subtotal (excl tax)</param>
+        /// <param name="orderShippingInclTax">The order shipping (incl tax)</param>
+        /// <param name="orderShippingExclTax">The order shipping (excl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
+        /// <param name="orderTax">The order tax</param>
+        /// <param name="orderTotal">The order total</param>
+        /// <param name="orderDiscount">The order discount</param>
+        /// <param name="orderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
+        /// <param name="orderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
+        /// <param name="orderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
+        /// <param name="orderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
+        /// <param name="orderTaxInCustomerCurrency">The order tax (customer currency)</param>
+        /// <param name="orderTotalInCustomerCurrency">The order total (customer currency)</param>
+        /// <param name="orderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="checkoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="checkoutAttributesXml">The checkout attributes in XML format</param>
+        /// <param name="customerCurrencyCode">The customer currency code</param>
+        /// <param name="orderWeight">The order weight</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="orderStatusId">The order status identifier</param>
+        /// <param name="allowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
+        /// <param name="cardType">The card type</param>
+        /// <param name="cardName">The card name</param>
+        /// <param name="cardNumber">The card number</param>
+        /// <param name="maskedCreditCardNumber">The masked credit card number</param>
+        /// <param name="cardCvv2">The card CVV2</param>
+        /// <param name="cardExpirationMonth">The card expiration month</param>
+        /// <param name="cardExpirationYear">The card expiration year</param>
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="paymentMethodName">The payment method name</param>
+        /// <param name="authorizationTransactionId">The authorization transaction identifier</param>
+        /// <param name="authorizationTransactionCode">The authorization transaction code</param>
+        /// <param name="authorizationTransactionResult">The authorization transaction result</param>
+        /// <param name="captureTransactionId">The capture transaction identifier</param>
+        /// <param name="captureTransactionResult">The capture transaction result</param>
+        /// <param name="subscriptionTransactionId">The subscription transaction identifier</param>
+        /// <param name="purchaseOrderNumber">The purchase order number</param>
+        /// <param name="paymentStatusId">The payment status identifier</param>
+        /// <param name="paidDate">The paid date and time</param>
+        /// <param name="billingFirstName">The billing first name</param>
+        /// <param name="billingLastName">The billing last name</param>
+        /// <param name="billingPhoneNumber">he billing phone number</param>
+        /// <param name="billingEmail">The billing email</param>
+        /// <param name="billingFaxNumber">The billing fax number</param>
+        /// <param name="billingCompany">The billing company</param>
+        /// <param name="billingAddress1">The billing address 1</param>
+        /// <param name="billingAddress2">The billing address 2</param>
+        /// <param name="billingCity">The billing city</param>
+        /// <param name="billingStateProvince">The billing state/province</param>
+        /// <param name="billingStateProvinceId">The billing state/province identifier</param>
+        /// <param name="billingZipPostalCode">The billing zip/postal code</param>
+        /// <param name="billingCountry">The billing country</param>
+        /// <param name="billingCountryId">The billing country identifier</param>
+        /// <param name="shippingStatusId">The shipping status identifier</param>
+        /// <param name="shippingFirstName">The shipping first name</param>
+        /// <param name="shippingLastName">The shipping last name</param>
+        /// <param name="shippingPhoneNumber">The shipping phone number</param>
+        /// <param name="shippingEmail">The shipping email</param>
+        /// <param name="shippingFaxNumber">The shipping fax number</param>
+        /// <param name="shippingCompany">The shipping  company</param>
+        /// <param name="shippingAddress1">The shipping address 1</param>
+        /// <param name="shippingAddress2">The shipping address 2</param>
+        /// <param name="shippingCity">The shipping city</param>
+        /// <param name="shippingStateProvince">The shipping state/province</param>
+        /// <param name="shippingStateProvinceId">The shipping state/province identifier</param>
+        /// <param name="shippingZipPostalCode">The shipping zip/postal code</param>
+        /// <param name="shippingCountry">The shipping country</param>
+        /// <param name="shippingCountryId">The shipping country identifier</param>
+        /// <param name="shippingMethod">The shipping method</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
+        /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="trackingNumber">The tracking number of order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of order creation</param>
         /// <returns>Order</returns>
-        public override DBOrder UpdateOrder(int OrderID, Guid OrderGUID, int CustomerID, int CustomerLanguageID,
-            int CustomerTaxDisplayTypeID, string CustomerIP, decimal OrderSubtotalInclTax, decimal OrderSubtotalExclTax,
-            decimal OrderShippingInclTax, decimal OrderShippingExclTax,
-            decimal PaymentMethodAdditionalFeeInclTax, decimal PaymentMethodAdditionalFeeExclTax,
-            decimal OrderTax, decimal OrderTotal, decimal OrderDiscount,
-            decimal OrderSubtotalInclTaxInCustomerCurrency, decimal OrderSubtotalExclTaxInCustomerCurrency,
-            decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
-            decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-            decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency,
-            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
-            string CustomerCurrencyCode, decimal OrderWeight,
-            int AffiliateID, int OrderStatusID, bool AllowStoringCreditCardNumber, string CardType,
-            string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
-            string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
-            string PaymentMethodName, string AuthorizationTransactionID, string AuthorizationTransactionCode,
-            string AuthorizationTransactionResult, string CaptureTransactionID, string CaptureTransactionResult,
-            string SubscriptionTransactionID, string PurchaseOrderNumber, int PaymentStatusID, DateTime? PaidDate, 
-            string BillingFirstName, string BillingLastName,
-            string BillingPhoneNumber, string BillingEmail, string BillingFaxNumber, string BillingCompany,
-            string BillingAddress1, string BillingAddress2, string BillingCity, string BillingStateProvince,
-            int BillingStateProvinceID, string BillingZipPostalCode, string BillingCountry,
-            int BillingCountryID, int ShippingStatusID, string ShippingFirstName,
-            string ShippingLastName, string ShippingPhoneNumber, string ShippingEmail,
-            string ShippingFaxNumber, string ShippingCompany, string ShippingAddress1,
-            string ShippingAddress2, string ShippingCity, string ShippingStateProvince,
-            int ShippingStateProvinceID, string ShippingZipPostalCode,
-            string ShippingCountry, int ShippingCountryID, string ShippingMethod, int ShippingRateComputationMethodID, DateTime? ShippedDate,
-            string TrackingNumber, bool Deleted, DateTime CreatedOn)
+        public override DBOrder UpdateOrder(int orderId,
+            Guid orderGuid,
+            int customerId,
+            int customerLanguageId,
+            int customerTaxDisplayTypeId,
+            string customerIP,
+            decimal orderSubtotalInclTax,
+            decimal orderSubtotalExclTax,
+            decimal orderShippingInclTax,
+            decimal orderShippingExclTax,
+            decimal paymentMethodAdditionalFeeInclTax,
+            decimal paymentMethodAdditionalFeeExclTax,
+            decimal orderTax,
+            decimal orderTotal,
+            decimal orderDiscount,
+            decimal orderSubtotalInclTaxInCustomerCurrency,
+            decimal orderSubtotalExclTaxInCustomerCurrency,
+            decimal orderShippingInclTaxInCustomerCurrency,
+            decimal orderShippingExclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeInclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+            decimal orderTaxInCustomerCurrency,
+            decimal orderTotalInCustomerCurrency,
+            decimal orderDiscountInCustomerCurrency,
+            string checkoutAttributeDescription,
+            string checkoutAttributesXml,
+            string customerCurrencyCode,
+            decimal orderWeight,
+            int affiliateId,
+            int orderStatusId,
+            bool allowStoringCreditCardNumber,
+            string cardType,
+            string cardName,
+            string cardNumber,
+            string maskedCreditCardNumber,
+            string cardCvv2,
+            string cardExpirationMonth,
+            string cardExpirationYear,
+            int paymentMethodId,
+            string paymentMethodName,
+            string authorizationTransactionId,
+            string authorizationTransactionCode,
+            string authorizationTransactionResult,
+            string captureTransactionId,
+            string captureTransactionResult,
+            string subscriptionTransactionId,
+            string purchaseOrderNumber,
+            int paymentStatusId,
+            DateTime? paidDate,
+            string billingFirstName,
+            string billingLastName,
+            string billingPhoneNumber,
+            string billingEmail,
+            string billingFaxNumber,
+            string billingCompany,
+            string billingAddress1,
+            string billingAddress2,
+            string billingCity,
+            string billingStateProvince,
+            int billingStateProvinceId,
+            string billingZipPostalCode,
+            string billingCountry,
+            int billingCountryId,
+            int shippingStatusId,
+            string shippingFirstName,
+            string shippingLastName,
+            string shippingPhoneNumber,
+            string shippingEmail,
+            string shippingFaxNumber,
+            string shippingCompany,
+            string shippingAddress1,
+            string shippingAddress2,
+            string shippingCity,
+            string shippingStateProvince,
+            int shippingStateProvinceId,
+            string shippingZipPostalCode,
+            string shippingCountry,
+            int shippingCountryId,
+            string shippingMethod,
+            int shippingRateComputationMethodId,
+            DateTime? shippedDate,
+            string trackingNumber,
+            bool deleted,
+            DateTime createdOn)
         {
-            DBOrder order = null;
+            DBOrder item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderUpdate");
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "OrderGUID", DbType.Guid, OrderGUID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CustomerLanguageID", DbType.Int32, CustomerLanguageID);
-            db.AddInParameter(dbCommand, "CustomerTaxDisplayTypeID", DbType.Int32, CustomerTaxDisplayTypeID);
-            db.AddInParameter(dbCommand, "CustomerIP", DbType.String, CustomerIP);
-            db.AddInParameter(dbCommand, "OrderSubtotalInclTax", DbType.Decimal, OrderSubtotalInclTax);
-            db.AddInParameter(dbCommand, "OrderSubtotalExclTax", DbType.Decimal, OrderSubtotalExclTax);
-            db.AddInParameter(dbCommand, "OrderShippingInclTax", DbType.Decimal, OrderShippingInclTax);
-            db.AddInParameter(dbCommand, "OrderShippingExclTax", DbType.Decimal, OrderShippingExclTax);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTax", DbType.Decimal, PaymentMethodAdditionalFeeInclTax);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTax", DbType.Decimal, PaymentMethodAdditionalFeeExclTax);
-            db.AddInParameter(dbCommand, "OrderTax", DbType.Decimal, OrderTax);
-            db.AddInParameter(dbCommand, "OrderTotal", DbType.Decimal, OrderTotal);
-            db.AddInParameter(dbCommand, "OrderDiscount", DbType.Decimal, OrderDiscount);
-            db.AddInParameter(dbCommand, "OrderSubtotalInclTaxInCustomerCurrency", DbType.Decimal, OrderSubtotalInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderSubtotalExclTaxInCustomerCurrency", DbType.Decimal, OrderSubtotalExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderShippingInclTaxInCustomerCurrency", DbType.Decimal, OrderShippingInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderShippingExclTaxInCustomerCurrency", DbType.Decimal, OrderShippingExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTaxInCustomerCurrency", DbType.Decimal, PaymentMethodAdditionalFeeInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTaxInCustomerCurrency", DbType.Decimal, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderTaxInCustomerCurrency", DbType.Decimal, OrderTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderTotalInCustomerCurrency", DbType.Decimal, OrderTotalInCustomerCurrency);
-            db.AddInParameter(dbCommand, "OrderDiscountInCustomerCurrency", DbType.Decimal, OrderDiscountInCustomerCurrency);
-            db.AddInParameter(dbCommand, "CheckoutAttributeDescription", DbType.String, CheckoutAttributeDescription);
-            db.AddInParameter(dbCommand, "CheckoutAttributesXML", DbType.Xml, CheckoutAttributesXML);
-            db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, CustomerCurrencyCode);
-            db.AddInParameter(dbCommand, "OrderWeight", DbType.Decimal, OrderWeight);
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
-            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID);
-            db.AddInParameter(dbCommand, "AllowStoringCreditCardNumber", DbType.Boolean, AllowStoringCreditCardNumber);
-            db.AddInParameter(dbCommand, "CardType", DbType.String, CardType);
-            db.AddInParameter(dbCommand, "CardName", DbType.String, CardName);
-            db.AddInParameter(dbCommand, "CardNumber", DbType.String, CardNumber);
-            db.AddInParameter(dbCommand, "MaskedCreditCardNumber", DbType.String, MaskedCreditCardNumber);
-            db.AddInParameter(dbCommand, "CardCVV2", DbType.String, CardCVV2);
-            db.AddInParameter(dbCommand, "CardExpirationMonth", DbType.String, CardExpirationMonth);
-            db.AddInParameter(dbCommand, "CardExpirationYear", DbType.String, CardExpirationYear);
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
-            db.AddInParameter(dbCommand, "PaymentMethodName", DbType.String, PaymentMethodName);
-            db.AddInParameter(dbCommand, "AuthorizationTransactionID", DbType.String, AuthorizationTransactionID);
-            db.AddInParameter(dbCommand, "AuthorizationTransactionCode", DbType.String, AuthorizationTransactionCode);
-            db.AddInParameter(dbCommand, "AuthorizationTransactionResult", DbType.String, AuthorizationTransactionResult);
-            db.AddInParameter(dbCommand, "CaptureTransactionID", DbType.String, CaptureTransactionID);
-            db.AddInParameter(dbCommand, "CaptureTransactionResult", DbType.String, CaptureTransactionResult);
-            db.AddInParameter(dbCommand, "SubscriptionTransactionID", DbType.String, SubscriptionTransactionID);
-            db.AddInParameter(dbCommand, "PurchaseOrderNumber", DbType.String, PurchaseOrderNumber);
-            db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID);
-            if (PaidDate.HasValue)
-                db.AddInParameter(dbCommand, "PaidDate", DbType.DateTime, PaidDate.Value);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "OrderGUID", DbType.Guid, orderGuid);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CustomerLanguageID", DbType.Int32, customerLanguageId);
+            db.AddInParameter(dbCommand, "CustomerTaxDisplayTypeID", DbType.Int32, customerTaxDisplayTypeId);
+            db.AddInParameter(dbCommand, "CustomerIP", DbType.String, customerIP);
+            db.AddInParameter(dbCommand, "OrderSubtotalInclTax", DbType.Decimal, orderSubtotalInclTax);
+            db.AddInParameter(dbCommand, "OrderSubtotalExclTax", DbType.Decimal, orderSubtotalExclTax);
+            db.AddInParameter(dbCommand, "OrderShippingInclTax", DbType.Decimal, orderShippingInclTax);
+            db.AddInParameter(dbCommand, "OrderShippingExclTax", DbType.Decimal, orderShippingExclTax);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTax", DbType.Decimal, paymentMethodAdditionalFeeInclTax);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTax", DbType.Decimal, paymentMethodAdditionalFeeExclTax);
+            db.AddInParameter(dbCommand, "OrderTax", DbType.Decimal, orderTax);
+            db.AddInParameter(dbCommand, "OrderTotal", DbType.Decimal, orderTotal);
+            db.AddInParameter(dbCommand, "OrderDiscount", DbType.Decimal, orderDiscount);
+            db.AddInParameter(dbCommand, "OrderSubtotalInclTaxInCustomerCurrency", DbType.Decimal, orderSubtotalInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderSubtotalExclTaxInCustomerCurrency", DbType.Decimal, orderSubtotalExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderShippingInclTaxInCustomerCurrency", DbType.Decimal, orderShippingInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderShippingExclTaxInCustomerCurrency", DbType.Decimal, orderShippingExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeInclTaxInCustomerCurrency", DbType.Decimal, paymentMethodAdditionalFeeInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PaymentMethodAdditionalFeeExclTaxInCustomerCurrency", DbType.Decimal, paymentMethodAdditionalFeeExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderTaxInCustomerCurrency", DbType.Decimal, orderTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderTotalInCustomerCurrency", DbType.Decimal, orderTotalInCustomerCurrency);
+            db.AddInParameter(dbCommand, "OrderDiscountInCustomerCurrency", DbType.Decimal, orderDiscountInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CheckoutAttributeDescription", DbType.String, checkoutAttributeDescription);
+            db.AddInParameter(dbCommand, "CheckoutAttributesXML", DbType.Xml, checkoutAttributesXml);
+            db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, customerCurrencyCode);
+            db.AddInParameter(dbCommand, "OrderWeight", DbType.Decimal, orderWeight);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
+            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId);
+            db.AddInParameter(dbCommand, "AllowStoringCreditCardNumber", DbType.Boolean, allowStoringCreditCardNumber);
+            db.AddInParameter(dbCommand, "CardType", DbType.String, cardType);
+            db.AddInParameter(dbCommand, "CardName", DbType.String, cardName);
+            db.AddInParameter(dbCommand, "CardNumber", DbType.String, cardNumber);
+            db.AddInParameter(dbCommand, "MaskedCreditCardNumber", DbType.String, maskedCreditCardNumber);
+            db.AddInParameter(dbCommand, "CardCVV2", DbType.String, cardCvv2);
+            db.AddInParameter(dbCommand, "CardExpirationMonth", DbType.String, cardExpirationMonth);
+            db.AddInParameter(dbCommand, "CardExpirationYear", DbType.String, cardExpirationYear);
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
+            db.AddInParameter(dbCommand, "PaymentMethodName", DbType.String, paymentMethodName);
+            db.AddInParameter(dbCommand, "AuthorizationTransactionID", DbType.String, authorizationTransactionId);
+            db.AddInParameter(dbCommand, "AuthorizationTransactionCode", DbType.String, authorizationTransactionCode);
+            db.AddInParameter(dbCommand, "AuthorizationTransactionResult", DbType.String, authorizationTransactionResult);
+            db.AddInParameter(dbCommand, "CaptureTransactionID", DbType.String, captureTransactionId);
+            db.AddInParameter(dbCommand, "CaptureTransactionResult", DbType.String, captureTransactionResult);
+            db.AddInParameter(dbCommand, "SubscriptionTransactionID", DbType.String, subscriptionTransactionId);
+            db.AddInParameter(dbCommand, "PurchaseOrderNumber", DbType.String, purchaseOrderNumber);
+            db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId);
+            if (paidDate.HasValue)
+                db.AddInParameter(dbCommand, "PaidDate", DbType.DateTime, paidDate.Value);
             else
                 db.AddInParameter(dbCommand, "PaidDate", DbType.DateTime, DBNull.Value);
-            db.AddInParameter(dbCommand, "BillingFirstName", DbType.String, BillingFirstName);
-            db.AddInParameter(dbCommand, "BillingLastName", DbType.String, BillingLastName);
-            db.AddInParameter(dbCommand, "BillingPhoneNumber", DbType.String, BillingPhoneNumber);
-            db.AddInParameter(dbCommand, "BillingEmail", DbType.String, BillingEmail);
-            db.AddInParameter(dbCommand, "BillingFaxNumber", DbType.String, BillingFaxNumber);
-            db.AddInParameter(dbCommand, "BillingCompany", DbType.String, BillingCompany);
-            db.AddInParameter(dbCommand, "BillingAddress1", DbType.String, BillingAddress1);
-            db.AddInParameter(dbCommand, "BillingAddress2", DbType.String, BillingAddress2);
-            db.AddInParameter(dbCommand, "BillingCity", DbType.String, BillingCity);
-            db.AddInParameter(dbCommand, "BillingStateProvince", DbType.String, BillingStateProvince);
-            db.AddInParameter(dbCommand, "BillingStateProvinceID", DbType.Int32, BillingStateProvinceID);
-            db.AddInParameter(dbCommand, "BillingZipPostalCode", DbType.String, BillingZipPostalCode);
-            db.AddInParameter(dbCommand, "BillingCountry", DbType.String, BillingCountry);
-            db.AddInParameter(dbCommand, "BillingCountryID", DbType.Int32, BillingCountryID);
-            db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, ShippingStatusID);
-            db.AddInParameter(dbCommand, "ShippingFirstName", DbType.String, ShippingFirstName);
-            db.AddInParameter(dbCommand, "ShippingLastName", DbType.String, ShippingLastName);
-            db.AddInParameter(dbCommand, "ShippingPhoneNumber", DbType.String, ShippingPhoneNumber);
-            db.AddInParameter(dbCommand, "ShippingEmail", DbType.String, ShippingEmail);
-            db.AddInParameter(dbCommand, "ShippingFaxNumber", DbType.String, ShippingFaxNumber);
-            db.AddInParameter(dbCommand, "ShippingCompany", DbType.String, ShippingCompany);
-            db.AddInParameter(dbCommand, "ShippingAddress1", DbType.String, ShippingAddress1);
-            db.AddInParameter(dbCommand, "ShippingAddress2", DbType.String, ShippingAddress2);
-            db.AddInParameter(dbCommand, "ShippingCity", DbType.String, ShippingCity);
-            db.AddInParameter(dbCommand, "ShippingStateProvince", DbType.String, ShippingStateProvince);
-            db.AddInParameter(dbCommand, "ShippingStateProvinceID", DbType.Int32, ShippingStateProvinceID);
-            db.AddInParameter(dbCommand, "ShippingZipPostalCode", DbType.String, ShippingZipPostalCode);
-            db.AddInParameter(dbCommand, "ShippingCountry", DbType.String, ShippingCountry);
-            db.AddInParameter(dbCommand, "ShippingCountryID", DbType.Int32, ShippingCountryID);
-            db.AddInParameter(dbCommand, "ShippingMethod", DbType.String, ShippingMethod);
-            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, ShippingRateComputationMethodID);
-            if (ShippedDate.HasValue)
-                db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, ShippedDate.Value);
+            db.AddInParameter(dbCommand, "BillingFirstName", DbType.String, billingFirstName);
+            db.AddInParameter(dbCommand, "BillingLastName", DbType.String, billingLastName);
+            db.AddInParameter(dbCommand, "BillingPhoneNumber", DbType.String, billingPhoneNumber);
+            db.AddInParameter(dbCommand, "BillingEmail", DbType.String, billingEmail);
+            db.AddInParameter(dbCommand, "BillingFaxNumber", DbType.String, billingFaxNumber);
+            db.AddInParameter(dbCommand, "BillingCompany", DbType.String, billingCompany);
+            db.AddInParameter(dbCommand, "BillingAddress1", DbType.String, billingAddress1);
+            db.AddInParameter(dbCommand, "BillingAddress2", DbType.String, billingAddress2);
+            db.AddInParameter(dbCommand, "BillingCity", DbType.String, billingCity);
+            db.AddInParameter(dbCommand, "BillingStateProvince", DbType.String, billingStateProvince);
+            db.AddInParameter(dbCommand, "BillingStateProvinceID", DbType.Int32, billingStateProvinceId);
+            db.AddInParameter(dbCommand, "BillingZipPostalCode", DbType.String, billingZipPostalCode);
+            db.AddInParameter(dbCommand, "BillingCountry", DbType.String, billingCountry);
+            db.AddInParameter(dbCommand, "BillingCountryID", DbType.Int32, billingCountryId);
+            db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
+            db.AddInParameter(dbCommand, "ShippingFirstName", DbType.String, shippingFirstName);
+            db.AddInParameter(dbCommand, "ShippingLastName", DbType.String, shippingLastName);
+            db.AddInParameter(dbCommand, "ShippingPhoneNumber", DbType.String, shippingPhoneNumber);
+            db.AddInParameter(dbCommand, "ShippingEmail", DbType.String, shippingEmail);
+            db.AddInParameter(dbCommand, "ShippingFaxNumber", DbType.String, shippingFaxNumber);
+            db.AddInParameter(dbCommand, "ShippingCompany", DbType.String, shippingCompany);
+            db.AddInParameter(dbCommand, "ShippingAddress1", DbType.String, shippingAddress1);
+            db.AddInParameter(dbCommand, "ShippingAddress2", DbType.String, shippingAddress2);
+            db.AddInParameter(dbCommand, "ShippingCity", DbType.String, shippingCity);
+            db.AddInParameter(dbCommand, "ShippingStateProvince", DbType.String, shippingStateProvince);
+            db.AddInParameter(dbCommand, "ShippingStateProvinceID", DbType.Int32, shippingStateProvinceId);
+            db.AddInParameter(dbCommand, "ShippingZipPostalCode", DbType.String, shippingZipPostalCode);
+            db.AddInParameter(dbCommand, "ShippingCountry", DbType.String, shippingCountry);
+            db.AddInParameter(dbCommand, "ShippingCountryID", DbType.Int32, shippingCountryId);
+            db.AddInParameter(dbCommand, "ShippingMethod", DbType.String, shippingMethod);
+            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, shippingRateComputationMethodId);
+            if (shippedDate.HasValue)
+                db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, shippedDate.Value);
             else
                 db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, DBNull.Value);
-            db.AddInParameter(dbCommand, "TrackingNumber", DbType.String, TrackingNumber);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "TrackingNumber", DbType.String, trackingNumber);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                order = GetOrderByID(OrderID);
+                item = GetOrderById(orderId);
 
-            return order;
+            return item;
         }
 
         /// <summary>
         /// Gets an order note
         /// </summary>
-        /// <param name="OrderNoteID">Order note identifier</param>
+        /// <param name="orderNoteId">Order note identifier</param>
         /// <returns>Order note</returns>
-        public override DBOrderNote GetOrderNoteByID(int OrderNoteID)
+        public override DBOrderNote GetOrderNoteById(int orderNoteId)
         {
-            DBOrderNote orderNote = null;
-            if (OrderNoteID == 0)
-                return orderNote;
+            DBOrderNote item = null;
+            if (orderNoteId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderNoteLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "OrderNoteID", DbType.Int32, OrderNoteID);
+            db.AddInParameter(dbCommand, "OrderNoteID", DbType.Int32, orderNoteId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    orderNote = GetOrderNoteFromReader(dataReader);
+                    item = GetOrderNoteFromReader(dataReader);
                 }
             }
-            return orderNote;
+            return item;
         }
 
         /// <summary>
         /// Gets an order notes by order identifier
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="showHidden">A value indicating whether all orders should be loaded</param>
         /// <returns>Order note collection</returns>
-        public override DBOrderNoteCollection GetOrderNoteByOrderID(int OrderID, bool showHidden)
+        public override DBOrderNoteCollection GetOrderNoteByOrderId(int orderId, bool showHidden)
         {
             var result = new DBOrderNoteCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderNoteLoadByOrderID");
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -1019,157 +1132,159 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Deletes an order note
         /// </summary>
-        /// <param name="OrderNoteID">Order note identifier</param>
-        public override void DeleteOrderNote(int OrderNoteID)
+        /// <param name="orderNoteId">Order note identifier</param>
+        public override void DeleteOrderNote(int orderNoteId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderNoteDelete");
-            db.AddInParameter(dbCommand, "OrderNoteID", DbType.Int32, OrderNoteID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "OrderNoteID", DbType.Int32, orderNoteId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Inserts an order note
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="Note">The note</param>
-        /// <param name="DisplayToCustomer">Value indicating whether the customer can see a note</param>
-        /// <param name="CreatedOn">The date and time of order note creation</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="note">The note</param>
+        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
+        /// <param name="createdOn">The date and time of order note creation</param>
         /// <returns>Order note</returns>
-        public override DBOrderNote InsertOrderNote(int OrderID, string Note, bool DisplayToCustomer, DateTime CreatedOn)
+        public override DBOrderNote InsertOrderNote(int orderId, string note,
+            bool displayToCustomer, DateTime createdOn)
         {
-            DBOrderNote orderNote = null;
+            DBOrderNote item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderNoteInsert");
             db.AddOutParameter(dbCommand, "OrderNoteID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "Note", DbType.String, Note);
-            db.AddInParameter(dbCommand, "DisplayToCustomer", DbType.Boolean, DisplayToCustomer);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "Note", DbType.String, note);
+            db.AddInParameter(dbCommand, "DisplayToCustomer", DbType.Boolean, displayToCustomer);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int OrderNoteID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@OrderNoteID"));
-                orderNote = GetOrderNoteByID(OrderNoteID);
+                int orderNoteId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@OrderNoteID"));
+                item = GetOrderNoteById(orderNoteId);
             }
-            return orderNote;
+            return item;
         }
 
         /// <summary>
         /// Updates the order note
         /// </summary>
-        /// <param name="OrderNoteID">The order note identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="DisplayToCustomer">Value indicating whether the customer can see a note</param>
-        /// <param name="Note">The note</param>
-        /// <param name="CreatedOn">The date and time of order note creation</param>
+        /// <param name="orderNoteId">The order note identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="note">The note</param>
+        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
+        /// <param name="createdOn">The date and time of order note creation</param>
         /// <returns>Order note</returns>
-        public override DBOrderNote UpdateOrderNote(int OrderNoteID, int OrderID, string Note, bool DisplayToCustomer, DateTime CreatedOn)
+        public override DBOrderNote UpdateOrderNote(int orderNoteId, int orderId,
+            string note, bool displayToCustomer, DateTime createdOn)
         {
-            DBOrderNote orderNote = null;
+            DBOrderNote item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderNoteUpdate");
-            db.AddInParameter(dbCommand, "OrderNoteID", DbType.Int32, OrderNoteID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "Note", DbType.String, Note);
-            db.AddInParameter(dbCommand, "DisplayToCustomer", DbType.Boolean, DisplayToCustomer);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "OrderNoteID", DbType.Int32, orderNoteId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "Note", DbType.String, note);
+            db.AddInParameter(dbCommand, "DisplayToCustomer", DbType.Boolean, displayToCustomer);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                orderNote = GetOrderNoteByID(OrderNoteID);
+                item = GetOrderNoteById(orderNoteId);
 
-            return orderNote;
+            return item;
         }
 
         /// <summary>
         /// Gets an order product variant
         /// </summary>
-        /// <param name="OrderProductVariantID">Order product variant identifier</param>
+        /// <param name="orderProductVariantId">Order product variant identifier</param>
         /// <returns>Order product variant</returns>
-        public override DBOrderProductVariant GetOrderProductVariantByID(int OrderProductVariantID)
+        public override DBOrderProductVariant GetOrderProductVariantById(int orderProductVariantId)
         {
-            DBOrderProductVariant orderProductVariant = null;
+            DBOrderProductVariant item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "OrderProductVariantID", DbType.Int32, OrderProductVariantID);
+            db.AddInParameter(dbCommand, "OrderProductVariantID", DbType.Int32, orderProductVariantId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    orderProductVariant = GetOrderProductVariantFromReader(dataReader);
+                    item = GetOrderProductVariantFromReader(dataReader);
                 }
             }
-            return orderProductVariant;
+            return item;
         }
 
         /// <summary>
         /// Gets an order product variant
         /// </summary>
-        /// <param name="OrderProductVariantGUID">Order product variant identifier</param>
+        /// <param name="orderProductVariantGuid">Order product variant identifier</param>
         /// <returns>Order product variant</returns>
-        public override DBOrderProductVariant GetOrderProductVariantByGUID(Guid OrderProductVariantGUID)
+        public override DBOrderProductVariant GetOrderProductVariantByGuid(Guid orderProductVariantGuid)
         {
-            DBOrderProductVariant orderProductVariant = null;
+            DBOrderProductVariant item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantLoadByGUID");
-            db.AddInParameter(dbCommand, "OrderProductVariantGUID", DbType.Guid, OrderProductVariantGUID);
+            db.AddInParameter(dbCommand, "OrderProductVariantGUID", DbType.Guid, orderProductVariantGuid);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    orderProductVariant = GetOrderProductVariantFromReader(dataReader);
+                    item = GetOrderProductVariantFromReader(dataReader);
                 }
             }
-            return orderProductVariant;
+            return item;
         }
 
         /// <summary>
         /// Gets all order product variants
         /// </summary>
-        /// <param name="OrderID">Order identifier; null to load all records</param>
-        /// <param name="CustomerID">Customer identifier; null to load all records</param>
-        /// <param name="StartTime">Order start time; null to load all records</param>
-        /// <param name="EndTime">Order end time; null to load all records</param>
-        /// <param name="OrderStatusID">Order status identifier; null to load all records</param>
-        /// <param name="PaymentStatusID">Order payment status identifier; null to load all records</param>
-        /// <param name="ShippingStatusID">Order shipping status identifier; null to load all records</param>
-        /// <param name="LoadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="startTime">Order start time; null to load all records</param>
+        /// <param name="endTime">Order end time; null to load all records</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all records</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all records</param>
+        /// <param name="shippingStatusId">Order shipping status identifier; null to load all records</param>
+        /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
         /// <returns>Order collection</returns>
-        public override DBOrderProductVariantCollection GetAllOrderProductVariants(int? OrderID,
-            int? CustomerID, DateTime? StartTime, DateTime? EndTime,
-            int? OrderStatusID, int? PaymentStatusID, int? ShippingStatusID,
-            bool LoadDownloableProductsOnly)
+        public override DBOrderProductVariantCollection GetAllOrderProductVariants(int? orderId,
+            int? customerId, DateTime? startTime, DateTime? endTime,
+            int? orderStatusId, int? paymentStatusId, int? shippingStatusId,
+            bool loadDownloableProductsOnly)
         {
             var result = new DBOrderProductVariantCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantLoadAll");
-            if (OrderID.HasValue)
-                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID.Value);
+            if (orderId.HasValue)
+                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderID", DbType.Int32, null);
-            if (CustomerID.HasValue)
-                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID.Value);
+            if (customerId.HasValue)
+                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId.Value);
             else
                 db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, null);
-            if (StartTime.HasValue)
-                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, StartTime.Value);
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
             else
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
-            if (EndTime.HasValue)
-                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, EndTime.Value);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
             else
                 db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);            
-            if (OrderStatusID.HasValue)
-                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID.Value);
+            if (orderStatusId.HasValue)
+                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, null);
-            if (PaymentStatusID.HasValue)
-                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID.Value);
+            if (paymentStatusId.HasValue)
+                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, null);
-            if (ShippingStatusID.HasValue)
-                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, ShippingStatusID);
+            if (shippingStatusId.HasValue)
+                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
             else
                 db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, null);
-            db.AddInParameter(dbCommand, "LoadDownloableProductsOnly", DbType.Boolean, LoadDownloableProductsOnly);
+            db.AddInParameter(dbCommand, "LoadDownloableProductsOnly", DbType.Boolean, loadDownloableProductsOnly);
             
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -1186,151 +1301,172 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Inserts a order product variant
         /// </summary>
-        /// <param name="OrderProductVariantGUID">The order product variant identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="UnitPriceInclTax">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTax">The unit price in primary store currency (excl tax)</param>
-        /// <param name="PriceInclTax">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTax">The price in primary store currency (excl tax)</param>
-        /// <param name="UnitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
-        /// <param name="PriceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
-        /// <param name="AttributeDescription">The attribute description</param>
-        /// <param name="AttributesXML">The attribute description in XML format</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="DiscountAmountInclTax">The discount amount (incl tax)</param>
-        /// <param name="DiscountAmountExclTax">The discount amount (excl tax)</param>
-        /// <param name="DownloadCount">The download count</param>
-        /// <param name="IsDownloadActivated">The value indicating whether download is activated</param>
-        /// <param name="LicenseDownloadID">A license download identifier (in case this is a downloadable product)</param>
+        /// <param name="orderProductVariantGuid">The order product variant identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="unitPriceInclTax">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTax">The unit price in primary store currency (excl tax)</param>
+        /// <param name="priceInclTax">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTax">The price in primary store currency (excl tax)</param>
+        /// <param name="unitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
+        /// <param name="priceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
+        /// <param name="attributeDescription">The attribute description</param>
+        /// <param name="attributesXml">The attribute description in XML format</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="discountAmountInclTax">The discount amount (incl tax)</param>
+        /// <param name="discountAmountExclTax">The discount amount (excl tax)</param>
+        /// <param name="downloadCount">The download count</param>
+        /// <param name="isDownloadActivated">The value indicating whether download is activated</param>
+        /// <param name="licenseDownloadId">A license download identifier (in case this is a downloadable product)</param>
         /// <returns>Order product variant</returns>
-        public override DBOrderProductVariant InsertOrderProductVariant(Guid OrderProductVariantGUID, 
-            int OrderID, int ProductVariantID, decimal UnitPriceInclTax, 
-            decimal UnitPriceExclTax, decimal PriceInclTax, decimal PriceExclTax,
-            decimal UnitPriceInclTaxInCustomerCurrency, decimal UnitPriceExclTaxInCustomerCurrency,
-            decimal PriceInclTaxInCustomerCurrency, decimal PriceExclTaxInCustomerCurrency,
-            string AttributeDescription, string AttributesXML, int Quantity,
-            decimal DiscountAmountInclTax, decimal DiscountAmountExclTax,
-            int DownloadCount, bool IsDownloadActivated, int LicenseDownloadID)
+        public override DBOrderProductVariant InsertOrderProductVariant(Guid orderProductVariantGuid,
+            int orderId,
+            int productVariantId,
+            decimal unitPriceInclTax,
+            decimal unitPriceExclTax,
+            decimal priceInclTax,
+            decimal priceExclTax,
+            decimal unitPriceInclTaxInCustomerCurrency,
+            decimal unitPriceExclTaxInCustomerCurrency,
+            decimal priceInclTaxInCustomerCurrency,
+            decimal priceExclTaxInCustomerCurrency,
+            string attributeDescription,
+            string attributesXml,
+            int quantity,
+            decimal discountAmountInclTax,
+            decimal discountAmountExclTax,
+            int downloadCount,
+            bool isDownloadActivated,
+            int licenseDownloadId)
         {
-            DBOrderProductVariant orderProductVariant = null;
+            DBOrderProductVariant item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantInsert");
             db.AddOutParameter(dbCommand, "OrderProductVariantID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "OrderProductVariantGUID", DbType.Guid, OrderProductVariantGUID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "UnitPriceInclTax", DbType.Decimal, UnitPriceInclTax);
-            db.AddInParameter(dbCommand, "UnitPriceExclTax", DbType.Decimal, UnitPriceExclTax);
-            db.AddInParameter(dbCommand, "PriceInclTax", DbType.Decimal, PriceInclTax);
-            db.AddInParameter(dbCommand, "PriceExclTax", DbType.Decimal, PriceExclTax);
-            db.AddInParameter(dbCommand, "UnitPriceInclTaxInCustomerCurrency", DbType.Decimal, UnitPriceInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "UnitPriceExclTaxInCustomerCurrency", DbType.Decimal, UnitPriceExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PriceInclTaxInCustomerCurrency", DbType.Decimal, PriceInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PriceExclTaxInCustomerCurrency", DbType.Decimal, PriceExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "AttributeDescription", DbType.String, AttributeDescription);
-            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
-            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, Quantity);
-            db.AddInParameter(dbCommand, "DiscountAmountInclTax", DbType.Decimal, DiscountAmountInclTax);
-            db.AddInParameter(dbCommand, "DiscountAmountExclTax", DbType.Decimal, DiscountAmountExclTax);
-            db.AddInParameter(dbCommand, "DownloadCount", DbType.Int32, DownloadCount);
-            db.AddInParameter(dbCommand, "IsDownloadActivated", DbType.Boolean, IsDownloadActivated);
-            db.AddInParameter(dbCommand, "LicenseDownloadID", DbType.Int32, LicenseDownloadID);
+            db.AddInParameter(dbCommand, "OrderProductVariantGUID", DbType.Guid, orderProductVariantGuid);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "UnitPriceInclTax", DbType.Decimal, unitPriceInclTax);
+            db.AddInParameter(dbCommand, "UnitPriceExclTax", DbType.Decimal, unitPriceExclTax);
+            db.AddInParameter(dbCommand, "PriceInclTax", DbType.Decimal, priceInclTax);
+            db.AddInParameter(dbCommand, "PriceExclTax", DbType.Decimal, priceExclTax);
+            db.AddInParameter(dbCommand, "UnitPriceInclTaxInCustomerCurrency", DbType.Decimal, unitPriceInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "UnitPriceExclTaxInCustomerCurrency", DbType.Decimal, unitPriceExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PriceInclTaxInCustomerCurrency", DbType.Decimal, priceInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PriceExclTaxInCustomerCurrency", DbType.Decimal, priceExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "AttributeDescription", DbType.String, attributeDescription);
+            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, attributesXml);
+            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, quantity);
+            db.AddInParameter(dbCommand, "DiscountAmountInclTax", DbType.Decimal, discountAmountInclTax);
+            db.AddInParameter(dbCommand, "DiscountAmountExclTax", DbType.Decimal, discountAmountExclTax);
+            db.AddInParameter(dbCommand, "DownloadCount", DbType.Int32, downloadCount);
+            db.AddInParameter(dbCommand, "IsDownloadActivated", DbType.Boolean, isDownloadActivated);
+            db.AddInParameter(dbCommand, "LicenseDownloadID", DbType.Int32, licenseDownloadId);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int OrderProductVariantID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@OrderProductVariantID"));
-                orderProductVariant = GetOrderProductVariantByID(OrderProductVariantID);
+                int orderProductVariantId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@OrderProductVariantID"));
+                item = GetOrderProductVariantById(orderProductVariantId);
             }
-            return orderProductVariant;
+            return item;
         }
 
         /// <summary>
         /// Updates the order product variant
         /// </summary>
-        /// <param name="OrderProductVariantID">The order product variant identifier</param>
-        /// <param name="OrderProductVariantGUID">The order product variant identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="UnitPriceInclTax">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTax">The unit price in primary store currency (excl tax)</param>
-        /// <param name="PriceInclTax">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTax">The price in primary store currency (excl tax)</param>
-        /// <param name="UnitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
-        /// <param name="PriceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
-        /// <param name="AttributeDescription">The attribute description</param>
-        /// <param name="AttributesXML">The attribute description in XML format</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="DiscountAmountInclTax">The discount amount (incl tax)</param>
-        /// <param name="DiscountAmountExclTax">The discount amount (excl tax)</param>
-        /// <param name="DownloadCount">The download count</param>
-        /// <param name="IsDownloadActivated">The value indicating whether download is activated</param>
-        /// <param name="LicenseDownloadID">A license download identifier (in case this is a downloadable product)</param>
+        /// <param name="orderProductVariantId">The order product variant identifier</param>
+        /// <param name="orderProductVariantGuid">The order product variant identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="unitPriceInclTax">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTax">The unit price in primary store currency (excl tax)</param>
+        /// <param name="priceInclTax">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTax">The price in primary store currency (excl tax)</param>
+        /// <param name="unitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
+        /// <param name="priceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
+        /// <param name="attributeDescription">The attribute description</param>
+        /// <param name="attributesXml">The attribute description in XML format</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="discountAmountInclTax">The discount amount (incl tax)</param>
+        /// <param name="discountAmountExclTax">The discount amount (excl tax)</param>
+        /// <param name="downloadCount">The download count</param>
+        /// <param name="isDownloadActivated">The value indicating whether download is activated</param>
+        /// <param name="licenseDownloadId">A license download identifier (in case this is a downloadable product)</param>
         /// <returns>Order product variant</returns>
-        public override DBOrderProductVariant UpdateOrderProductVariant(int OrderProductVariantID,
-            Guid OrderProductVariantGUID, int OrderID, int ProductVariantID,
-            decimal UnitPriceInclTax, decimal UnitPriceExclTax, decimal PriceInclTax, decimal PriceExclTax,
-            decimal UnitPriceInclTaxInCustomerCurrency, decimal UnitPriceExclTaxInCustomerCurrency,
-            decimal PriceInclTaxInCustomerCurrency, decimal PriceExclTaxInCustomerCurrency,
-            string AttributeDescription, string AttributesXML, int Quantity,
-            decimal DiscountAmountInclTax, decimal DiscountAmountExclTax,
-            int DownloadCount, bool IsDownloadActivated, int LicenseDownloadID)
+        public override DBOrderProductVariant UpdateOrderProductVariant(int orderProductVariantId,
+            Guid orderProductVariantGuid,
+            int orderId,
+            int productVariantId,
+            decimal unitPriceInclTax,
+            decimal unitPriceExclTax,
+            decimal priceInclTax,
+            decimal priceExclTax,
+            decimal unitPriceInclTaxInCustomerCurrency,
+            decimal unitPriceExclTaxInCustomerCurrency,
+            decimal priceInclTaxInCustomerCurrency,
+            decimal priceExclTaxInCustomerCurrency,
+            string attributeDescription,
+            string attributesXml,
+            int quantity,
+            decimal discountAmountInclTax,
+            decimal discountAmountExclTax,
+            int downloadCount,
+            bool isDownloadActivated,
+            int licenseDownloadId)
         {
-            DBOrderProductVariant orderProductVariant = null;
+            DBOrderProductVariant item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantUpdate");
-            db.AddInParameter(dbCommand, "OrderProductVariantID", DbType.Int32, OrderProductVariantID);
-            db.AddInParameter(dbCommand, "OrderProductVariantGUID", DbType.Guid, OrderProductVariantGUID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "UnitPriceInclTax", DbType.Decimal, UnitPriceInclTax);
-            db.AddInParameter(dbCommand, "UnitPriceExclTax", DbType.Decimal, UnitPriceExclTax);
-            db.AddInParameter(dbCommand, "PriceInclTax", DbType.Decimal, PriceInclTax);
-            db.AddInParameter(dbCommand, "PriceExclTax", DbType.Decimal, PriceExclTax);
-            db.AddInParameter(dbCommand, "UnitPriceInclTaxInCustomerCurrency", DbType.Decimal, UnitPriceInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "UnitPriceExclTaxInCustomerCurrency", DbType.Decimal, UnitPriceExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PriceInclTaxInCustomerCurrency", DbType.Decimal, PriceInclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "PriceExclTaxInCustomerCurrency", DbType.Decimal, PriceExclTaxInCustomerCurrency);
-            db.AddInParameter(dbCommand, "AttributeDescription", DbType.String, AttributeDescription);
-            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
-            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, Quantity);
-            db.AddInParameter(dbCommand, "DiscountAmountInclTax", DbType.Decimal, DiscountAmountInclTax);
-            db.AddInParameter(dbCommand, "DiscountAmountExclTax", DbType.Decimal, DiscountAmountExclTax);
-            db.AddInParameter(dbCommand, "DownloadCount", DbType.Int32, DownloadCount);
-            db.AddInParameter(dbCommand, "IsDownloadActivated", DbType.Boolean, IsDownloadActivated);
-            db.AddInParameter(dbCommand, "LicenseDownloadID", DbType.Int32, LicenseDownloadID); 
+            db.AddInParameter(dbCommand, "OrderProductVariantID", DbType.Int32, orderProductVariantId);
+            db.AddInParameter(dbCommand, "OrderProductVariantGUID", DbType.Guid, orderProductVariantGuid);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "UnitPriceInclTax", DbType.Decimal, unitPriceInclTax);
+            db.AddInParameter(dbCommand, "UnitPriceExclTax", DbType.Decimal, unitPriceExclTax);
+            db.AddInParameter(dbCommand, "PriceInclTax", DbType.Decimal, priceInclTax);
+            db.AddInParameter(dbCommand, "PriceExclTax", DbType.Decimal, priceExclTax);
+            db.AddInParameter(dbCommand, "UnitPriceInclTaxInCustomerCurrency", DbType.Decimal, unitPriceInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "UnitPriceExclTaxInCustomerCurrency", DbType.Decimal, unitPriceExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PriceInclTaxInCustomerCurrency", DbType.Decimal, priceInclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "PriceExclTaxInCustomerCurrency", DbType.Decimal, priceExclTaxInCustomerCurrency);
+            db.AddInParameter(dbCommand, "AttributeDescription", DbType.String, attributeDescription);
+            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, attributesXml);
+            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, quantity);
+            db.AddInParameter(dbCommand, "DiscountAmountInclTax", DbType.Decimal, discountAmountInclTax);
+            db.AddInParameter(dbCommand, "DiscountAmountExclTax", DbType.Decimal, discountAmountExclTax);
+            db.AddInParameter(dbCommand, "DownloadCount", DbType.Int32, downloadCount);
+            db.AddInParameter(dbCommand, "IsDownloadActivated", DbType.Boolean, isDownloadActivated);
+            db.AddInParameter(dbCommand, "LicenseDownloadID", DbType.Int32, licenseDownloadId); 
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                orderProductVariant = GetOrderProductVariantByID(OrderProductVariantID);
+                item = GetOrderProductVariantById(orderProductVariantId);
 
-            return orderProductVariant;
+            return item;
         }
 
         /// <summary>
-        /// Gets an order status by ID
+        /// Gets an order status by Id
         /// </summary>
-        /// <param name="OrderStatusID">Order status identifier</param>
+        /// <param name="orderStatusId">Order status identifier</param>
         /// <returns>Order status</returns>
-        public override DBOrderStatus GetOrderStatusByID(int OrderStatusID)
+        public override DBOrderStatus GetOrderStatusById(int orderStatusId)
         {
-
-            DBOrderStatus orderStatus = null;
-            if (OrderStatusID == 0)
-                return orderStatus;
+            DBOrderStatus item = null;
+            if (orderStatusId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderStatusLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID);
+            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    orderStatus = GetOrderStatusFromReader(dataReader);
-                    orderStatus.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+                    item = GetOrderStatusFromReader(dataReader);
                 }
             }
-            return orderStatus;
+            return item;
         }
 
         /// <summary>
@@ -1357,25 +1493,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets an order report
         /// </summary>
-        /// <param name="OrderStatusID">Order status identifier; null to load all orders</param>
-        /// <param name="PaymentStatusID">Order payment status identifier; null to load all orders</param>
-        /// <param name="ShippingStatusID">Order shipping status identifier; null to load all orders</param>
-        /// <returns>DataTable</returns>
-        public override IDataReader GetOrderReport(int? OrderStatusID, int? PaymentStatusID, int? ShippingStatusID)
+        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
+        /// <param name="shippingStatusId">Order shipping status identifier; null to load all orders</param>
+        /// <returns>IdataReader</returns>
+        public override IDataReader GetOrderReport(int? orderStatusId,
+            int? paymentStatusId, int? shippingStatusId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderIncompleteReport");
-            if (OrderStatusID.HasValue)
-                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID.Value);
+            if (orderStatusId.HasValue)
+                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, null);
-            if (PaymentStatusID.HasValue)
-                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID.Value);
+            if (paymentStatusId.HasValue)
+                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, null);
 
-            if (ShippingStatusID.HasValue)
-                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, ShippingStatusID);
+            if (shippingStatusId.HasValue)
+                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
             else
                 db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, null);
 
@@ -1385,115 +1522,115 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets a recurring payment
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
         /// <returns>Recurring payment</returns>
-        public override DBRecurringPayment GetRecurringPaymentByID(int RecurringPaymentID)
+        public override DBRecurringPayment GetRecurringPaymentById(int recurringPaymentId)
         {
-            DBRecurringPayment recurringPayment = null;
+            DBRecurringPayment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentByPrimaryKey");
-            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, RecurringPaymentID);
+            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, recurringPaymentId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    recurringPayment = GetRecurringPaymentFromReader(dataReader);
+                    item = GetRecurringPaymentFromReader(dataReader);
                 }
             }
-            return recurringPayment;
+            return item;
         }
 
         /// <summary>
         /// Inserts a recurring payment
         /// </summary>
-        /// <param name="InitialOrderID">The initial order identifier</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="StartDate">The start date</param>
-        /// <param name="IsActive">The value indicating whether the payment is active</param>
-        /// <param name="Deleted">The value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="initialOrderId">The initial order identifier</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="startDate">The start date</param>
+        /// <param name="isActive">The value indicating whether the payment is active</param>
+        /// <param name="deleted">The value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment</returns>
-        public override DBRecurringPayment InsertRecurringPayment(int InitialOrderID,
-            int CycleLength, int CyclePeriod, int TotalCycles,
-            DateTime StartDate, bool IsActive, bool Deleted, DateTime CreatedOn)
+        public override DBRecurringPayment InsertRecurringPayment(int initialOrderId,
+            int cycleLength, int cyclePeriod, int totalCycles,
+            DateTime startDate, bool isActive, bool deleted, DateTime createdOn)
         {
-            DBRecurringPayment recurringPayment = null;
+            DBRecurringPayment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentInsert");
             db.AddOutParameter(dbCommand, "RecurringPaymentID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "InitialOrderID", DbType.Int32, InitialOrderID);
-            db.AddInParameter(dbCommand, "CycleLength", DbType.Int32, CycleLength);
-            db.AddInParameter(dbCommand, "CyclePeriod", DbType.Int32, CyclePeriod);
-            db.AddInParameter(dbCommand, "TotalCycles", DbType.Int32, TotalCycles);
-            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, StartDate);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "InitialOrderID", DbType.Int32, initialOrderId);
+            db.AddInParameter(dbCommand, "CycleLength", DbType.Int32, cycleLength);
+            db.AddInParameter(dbCommand, "CyclePeriod", DbType.Int32, cyclePeriod);
+            db.AddInParameter(dbCommand, "TotalCycles", DbType.Int32, totalCycles);
+            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, startDate);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int RecurringPaymentID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@RecurringPaymentID"));
-                recurringPayment = GetRecurringPaymentByID(RecurringPaymentID);
+                int recurringPaymentId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@RecurringPaymentID"));
+                item = GetRecurringPaymentById(recurringPaymentId);
             }
-            return recurringPayment;
+            return item;
         }
 
         /// <summary>
         /// Updates the recurring payment
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
-        /// <param name="InitialOrderID">The initial order identifier</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="StartDate">The start date</param>
-        /// <param name="IsActive">The value indicating whether the payment is active</param>
-        /// <param name="Deleted">The value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
+        /// <param name="initialOrderId">The initial order identifier</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="startDate">The start date</param>
+        /// <param name="isActive">The value indicating whether the payment is active</param>
+        /// <param name="deleted">The value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment</returns>
-        public override DBRecurringPayment UpdateRecurringPayment(int RecurringPaymentID,
-            int InitialOrderID, int CycleLength, int CyclePeriod, int TotalCycles,
-            DateTime StartDate, bool IsActive, bool Deleted, DateTime CreatedOn)
+        public override DBRecurringPayment UpdateRecurringPayment(int recurringPaymentId,
+            int initialOrderId, int cycleLength, int cyclePeriod, int totalCycles,
+            DateTime startDate, bool isActive, bool deleted, DateTime createdOn)
         {
-            DBRecurringPayment recurringPayment = null;
+            DBRecurringPayment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentUpdate");
-            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, RecurringPaymentID);
-            db.AddInParameter(dbCommand, "InitialOrderID", DbType.Int32, InitialOrderID);
-            db.AddInParameter(dbCommand, "CycleLength", DbType.Int32, CycleLength);
-            db.AddInParameter(dbCommand, "CyclePeriod", DbType.Int32, CyclePeriod);
-            db.AddInParameter(dbCommand, "TotalCycles", DbType.Int32, TotalCycles);
-            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, StartDate);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, recurringPaymentId);
+            db.AddInParameter(dbCommand, "InitialOrderID", DbType.Int32, initialOrderId);
+            db.AddInParameter(dbCommand, "CycleLength", DbType.Int32, cycleLength);
+            db.AddInParameter(dbCommand, "CyclePeriod", DbType.Int32, cyclePeriod);
+            db.AddInParameter(dbCommand, "TotalCycles", DbType.Int32, totalCycles);
+            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, startDate);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                recurringPayment = GetRecurringPaymentByID(RecurringPaymentID);
+                item = GetRecurringPaymentById(recurringPaymentId);
 
-            return recurringPayment;
+            return item;
         }
 
         /// <summary>
         /// Search recurring payments
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="CustomerID">The customer identifier; 0 to load all records</param>
-        /// <param name="InitialOrderID">The initial order identifier; 0 to load all records</param>
-        /// <param name="InitialOrderStatusID">Initial order status identifier; null to load all records</param>
+        /// <param name="customerId">The customer identifier; 0 to load all records</param>
+        /// <param name="initialOrderId">The initial order identifier; 0 to load all records</param>
+        /// <param name="initialOrderStatusId">Initial order status identifier; null to load all records</param>
         /// <returns>Recurring payment collection</returns>
         public override DBRecurringPaymentCollection SearchRecurringPayments(bool showHidden,
-            int CustomerID, int InitialOrderID, int? InitialOrderStatusID)
+            int customerId, int initialOrderId, int? initialOrderStatusId)
         {
             var result = new DBRecurringPaymentCollection();
 
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "InitialOrderID", DbType.Int32, InitialOrderID);
-            if (InitialOrderStatusID.HasValue)
-                db.AddInParameter(dbCommand, "InitialOrderStatusID", DbType.Int32, InitialOrderStatusID.Value);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "InitialOrderID", DbType.Int32, initialOrderId);
+            if (initialOrderStatusId.HasValue)
+                db.AddInParameter(dbCommand, "InitialOrderStatusID", DbType.Int32, initialOrderStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "InitialOrderStatusID", DbType.Int32, null);
 
@@ -1511,99 +1648,100 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Deletes a recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentHistoryID">Recurring payment history identifier</param>
-        public override void DeleteRecurringPaymentHistory(int RecurringPaymentHistoryID)
+        /// <param name="recurringPaymentHistoryId">Recurring payment history identifier</param>
+        public override void DeleteRecurringPaymentHistory(int recurringPaymentHistoryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentHistoryDelete");
-            db.AddInParameter(dbCommand, "RecurringPaymentHistoryID", DbType.Int32, RecurringPaymentHistoryID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "RecurringPaymentHistoryID", DbType.Int32, recurringPaymentHistoryId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentHistoryID">The recurring payment history identifier</param>
+        /// <param name="recurringPaymentHistoryId">The recurring payment history identifier</param>
         /// <returns>Recurring payment history</returns>
-        public override DBRecurringPaymentHistory GetRecurringPaymentHistoryByID(int RecurringPaymentHistoryID)
+        public override DBRecurringPaymentHistory GetRecurringPaymentHistoryById(int recurringPaymentHistoryId)
         {
-            DBRecurringPaymentHistory recurringPaymentHistory = null;
+            DBRecurringPaymentHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentHistoryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "RecurringPaymentHistoryID", DbType.Int32, RecurringPaymentHistoryID);
+            db.AddInParameter(dbCommand, "RecurringPaymentHistoryID", DbType.Int32, recurringPaymentHistoryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    recurringPaymentHistory = GetRecurringPaymentHistoryFromReader(dataReader);
+                    item = GetRecurringPaymentHistoryFromReader(dataReader);
                 }
             }
-            return recurringPaymentHistory;
+            return item;
         }
 
         /// <summary>
         /// Inserts a recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment history</returns>
-        public override DBRecurringPaymentHistory InsertRecurringPaymentHistory(int RecurringPaymentID,
-            int OrderID, DateTime CreatedOn)
+        public override DBRecurringPaymentHistory InsertRecurringPaymentHistory(int recurringPaymentId,
+            int orderId, DateTime createdOn)
         {
-            DBRecurringPaymentHistory recurringPaymentHistory = null;
+            DBRecurringPaymentHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentHistoryInsert");
             db.AddOutParameter(dbCommand, "RecurringPaymentHistoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, RecurringPaymentID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, recurringPaymentId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int RecurringPaymentHistoryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@RecurringPaymentHistoryID"));
-                recurringPaymentHistory = GetRecurringPaymentHistoryByID(RecurringPaymentHistoryID);
+                int recurringPaymentHistoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@RecurringPaymentHistoryID"));
+                item = GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
             }
-            return recurringPaymentHistory;
+            return item;
         }
 
         /// <summary>
         /// Updates the recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentHistoryID">The recurring payment history identifier</param>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="recurringPaymentHistoryId">The recurring payment history identifier</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment history</returns>
-        public override DBRecurringPaymentHistory UpdateRecurringPaymentHistory(int RecurringPaymentHistoryID,
-            int RecurringPaymentID, int OrderID, DateTime CreatedOn)
+        public override DBRecurringPaymentHistory UpdateRecurringPaymentHistory(int recurringPaymentHistoryId,
+            int recurringPaymentId, int orderId, DateTime createdOn)
         {
-            DBRecurringPaymentHistory recurringPaymentHistory = null;
+            DBRecurringPaymentHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentHistoryUpdate");
-            db.AddInParameter(dbCommand, "RecurringPaymentHistoryID", DbType.Int32, RecurringPaymentHistoryID);
-            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, RecurringPaymentID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "RecurringPaymentHistoryID", DbType.Int32, recurringPaymentHistoryId);
+            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, recurringPaymentId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                recurringPaymentHistory = GetRecurringPaymentHistoryByID(RecurringPaymentHistoryID);
+                item = GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
 
-            return recurringPaymentHistory;
+            return item;
         }
 
         /// <summary>
         /// Search recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier; 0 to load all records</param>
-        /// <param name="OrderID">The order identifier; 0 to load all records</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier; 0 to load all records</param>
+        /// <param name="orderId">The order identifier; 0 to load all records</param>
         /// <returns>Recurring payment history collection</returns>
-        public override DBRecurringPaymentHistoryCollection SearchRecurringPaymentHistory(int RecurringPaymentID, int OrderID)
+        public override DBRecurringPaymentHistoryCollection SearchRecurringPaymentHistory(int recurringPaymentId,
+            int orderId)
         {
             var result = new DBRecurringPaymentHistoryCollection();
 
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_RecurringPaymentHistoryLoadAll");
-            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, RecurringPaymentID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
+            db.AddInParameter(dbCommand, "RecurringPaymentID", DbType.Int32, recurringPaymentId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
 
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -1619,91 +1757,91 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Deletes a gift card
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        public override void DeleteGiftCard(int GiftCardID)
+        /// <param name="giftCardId">Gift card identifier</param>
+        public override void DeleteGiftCard(int giftCardId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardDelete");
-            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, GiftCardID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, giftCardId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a gift card
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
+        /// <param name="giftCardId">Gift card identifier</param>
         /// <returns>Gift card entry</returns>
-        public override DBGiftCard GetGiftCardByID(int GiftCardID)
+        public override DBGiftCard GetGiftCardById(int giftCardId)
         {
-            DBGiftCard giftCard = null;
+            DBGiftCard item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, GiftCardID);
+            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, giftCardId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    giftCard = GetGiftCardFromReader(dataReader);
+                    item = GetGiftCardFromReader(dataReader);
                 }
             }
-            return giftCard;
+            return item;
         }
 
         /// <summary>
         /// Gets all gift cards
         /// </summary>
-        /// <param name="OrderID">Order identifier; null to load all records</param>
-        /// <param name="CustomerID">Customer identifier; null to load all records</param>
-        /// <param name="StartTime">Order start time; null to load all records</param>
-        /// <param name="EndTime">Order end time; null to load all records</param>
-        /// <param name="OrderStatusID">Order status identifier; null to load all records</param>
-        /// <param name="PaymentStatusID">Order payment status identifier; null to load all records</param>
-        /// <param name="ShippingStatusID">Order shipping status identifier; null to load all records</param>
-        /// <param name="IsGiftCardActivated">Value indicating whether gift card is activated; null to load all records</param>
-        /// <param name="GiftCardCouponCode">Gift card coupon code; null or string.empty to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="startTime">Order start time; null to load all records</param>
+        /// <param name="endTime">Order end time; null to load all records</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all records</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all records</param>
+        /// <param name="shippingStatusId">Order shipping status identifier; null to load all records</param>
+        /// <param name="isGiftCardActivated">Value indicating whether gift card is activated; null to load all records</param>
+        /// <param name="giftCardCouponCode">Gift card coupon code; null or string.empty to load all records</param>
         /// <returns>Gift cards</returns>
-        public override DBGiftCardCollection GetAllGiftCards(int? OrderID,
-            int? CustomerID, DateTime? StartTime, DateTime? EndTime,
-            int? OrderStatusID, int? PaymentStatusID, int? ShippingStatusID,
-            bool? IsGiftCardActivated, string GiftCardCouponCode)
+        public override DBGiftCardCollection GetAllGiftCards(int? orderId,
+            int? customerId, DateTime? startTime, DateTime? endTime,
+            int? orderStatusId, int? paymentStatusId, int? shippingStatusId,
+            bool? isGiftCardActivated, string giftCardCouponCode)
         {
             var result = new DBGiftCardCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardLoadAll");
-            if (OrderID.HasValue)
-                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID.Value);
+            if (orderId.HasValue)
+                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderID", DbType.Int32, null);
-            if (CustomerID.HasValue)
-                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID.Value);
+            if (customerId.HasValue)
+                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId.Value);
             else
                 db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, null);
-            if (StartTime.HasValue)
-                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, StartTime.Value);
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
             else
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
-            if (EndTime.HasValue)
-                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, EndTime.Value);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
             else
                 db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);
-            if (OrderStatusID.HasValue)
-                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, OrderStatusID.Value);
+            if (orderStatusId.HasValue)
+                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, null);
-            if (PaymentStatusID.HasValue)
-                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID.Value);
+            if (paymentStatusId.HasValue)
+                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, null);
-            if (ShippingStatusID.HasValue)
-                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, ShippingStatusID);
+            if (shippingStatusId.HasValue)
+                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
             else
                 db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, null);
-            if (IsGiftCardActivated.HasValue)
-                db.AddInParameter(dbCommand, "IsGiftCardActivated", DbType.Boolean, IsGiftCardActivated);
+            if (isGiftCardActivated.HasValue)
+                db.AddInParameter(dbCommand, "IsGiftCardActivated", DbType.Boolean, isGiftCardActivated);
             else
                 db.AddInParameter(dbCommand, "IsGiftCardActivated", DbType.Boolean, null);
-            if (!String.IsNullOrEmpty(GiftCardCouponCode))
-                db.AddInParameter(dbCommand, "GiftCardCouponCode", DbType.String, GiftCardCouponCode);
+            if (!String.IsNullOrEmpty(giftCardCouponCode))
+                db.AddInParameter(dbCommand, "GiftCardCouponCode", DbType.String, giftCardCouponCode);
             else
                 db.AddInParameter(dbCommand, "GiftCardCouponCode", DbType.String, null);
 
@@ -1722,147 +1860,147 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Inserts a gift card
         /// </summary>
-        /// <param name="PurchasedOrderProductVariantID">Purchased order product variant identifier</param>
-        /// <param name="Amount">Amount</param>
-        /// <param name="IsGiftCardActivated">Value indicating whether gift card is activated</param>
-        /// <param name="GiftCardCouponCode">Gift card coupon code</param>
-        /// <param name="RecipientName">Recipient name</param>
-        /// <param name="RecipientEmail">Recipient email</param>
-        /// <param name="SenderName">Sender name</param>
-        /// <param name="SenderEmail">Sender email</param>
-        /// <param name="Message">Message</param>
-        /// <param name="IsSenderNotified">Value indicating whether sender is notified</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="purchasedOrderProductVariantId">Purchased order product variant identifier</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="isGiftCardActivated">Value indicating whether gift card is activated</param>
+        /// <param name="giftCardCouponCode">Gift card coupon code</param>
+        /// <param name="recipientName">Recipient name</param>
+        /// <param name="recipientEmail">Recipient email</param>
+        /// <param name="senderName">Sender name</param>
+        /// <param name="senderEmail">Sender email</param>
+        /// <param name="message">Message</param>
+        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
-        public override DBGiftCard InsertGiftCard(int PurchasedOrderProductVariantID,
-            decimal Amount, bool IsGiftCardActivated, string GiftCardCouponCode,
-            string RecipientName, string RecipientEmail,
-            string SenderName, string SenderEmail, string Message,
-            bool IsSenderNotified, DateTime CreatedOn)
+        public override DBGiftCard InsertGiftCard(int purchasedOrderProductVariantId,
+            decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
+            string recipientName, string recipientEmail,
+            string senderName, string senderEmail, string message,
+            bool isSenderNotified, DateTime createdOn)
         {
-            DBGiftCard giftCard = null;
+            DBGiftCard item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardInsert");
             db.AddOutParameter(dbCommand, "GiftCardID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "PurchasedOrderProductVariantID", DbType.Int32, PurchasedOrderProductVariantID);
-            db.AddInParameter(dbCommand, "Amount", DbType.Decimal, Amount);
-            db.AddInParameter(dbCommand, "IsGiftCardActivated", DbType.Boolean, IsGiftCardActivated);
-            db.AddInParameter(dbCommand, "GiftCardCouponCode", DbType.String, GiftCardCouponCode);
-            db.AddInParameter(dbCommand, "RecipientName", DbType.String, RecipientName);
-            db.AddInParameter(dbCommand, "RecipientEmail", DbType.String, RecipientEmail);
-            db.AddInParameter(dbCommand, "SenderName", DbType.String, SenderName);
-            db.AddInParameter(dbCommand, "SenderEmail", DbType.String, SenderEmail);
-            db.AddInParameter(dbCommand, "Message", DbType.String, Message);
-            db.AddInParameter(dbCommand, "IsSenderNotified", DbType.Boolean, IsSenderNotified);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "PurchasedOrderProductVariantID", DbType.Int32, purchasedOrderProductVariantId);
+            db.AddInParameter(dbCommand, "Amount", DbType.Decimal, amount);
+            db.AddInParameter(dbCommand, "IsGiftCardActivated", DbType.Boolean, isGiftCardActivated);
+            db.AddInParameter(dbCommand, "GiftCardCouponCode", DbType.String, giftCardCouponCode);
+            db.AddInParameter(dbCommand, "RecipientName", DbType.String, recipientName);
+            db.AddInParameter(dbCommand, "RecipientEmail", DbType.String, recipientEmail);
+            db.AddInParameter(dbCommand, "SenderName", DbType.String, senderName);
+            db.AddInParameter(dbCommand, "SenderEmail", DbType.String, senderEmail);
+            db.AddInParameter(dbCommand, "Message", DbType.String, message);
+            db.AddInParameter(dbCommand, "IsSenderNotified", DbType.Boolean, isSenderNotified);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int GiftCardID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@GiftCardID"));
-                giftCard = GetGiftCardByID(GiftCardID);
+                int giftCardId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@GiftCardID"));
+                item = GetGiftCardById(giftCardId);
             }
-            return giftCard;
+            return item;
         }
 
         /// <summary>
         /// Updates the gift card
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        /// <param name="PurchasedOrderProductVariantID">Purchased order product variant identifier</param>
-        /// <param name="Amount">Amount</param>
-        /// <param name="IsGiftCardActivated">Value indicating whether gift card is activated</param>
-        /// <param name="GiftCardCouponCode">Gift card coupon code</param>
-        /// <param name="RecipientName">Recipient name</param>
-        /// <param name="RecipientEmail">Recipient email</param>
-        /// <param name="SenderName">Sender name</param>
-        /// <param name="SenderEmail">Sender email</param>
-        /// <param name="Message">Message</param>
-        /// <param name="IsSenderNotified">Value indicating whether sender is notified</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="giftCardId">Gift card identifier</param>
+        /// <param name="purchasedOrderProductVariantId">Purchased order product variant identifier</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="isGiftCardActivated">Value indicating whether gift card is activated</param>
+        /// <param name="giftCardCouponCode">Gift card coupon code</param>
+        /// <param name="recipientName">Recipient name</param>
+        /// <param name="recipientEmail">Recipient email</param>
+        /// <param name="senderName">Sender name</param>
+        /// <param name="senderEmail">Sender email</param>
+        /// <param name="message">Message</param>
+        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
-        public override DBGiftCard UpdateGiftCard(int GiftCardID,
-            int PurchasedOrderProductVariantID, decimal Amount,
-            bool IsGiftCardActivated, string GiftCardCouponCode,
-            string RecipientName, string RecipientEmail,
-            string SenderName, string SenderEmail, string Message,
-            bool IsSenderNotified, DateTime CreatedOn)
+        public override DBGiftCard UpdateGiftCard(int giftCardId,
+            int purchasedOrderProductVariantId,
+            decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
+            string recipientName, string recipientEmail,
+            string senderName, string senderEmail, string message,
+            bool isSenderNotified, DateTime createdOn)
         {
-            DBGiftCard giftCard = null;
+            DBGiftCard item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardUpdate");
-            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, GiftCardID);
-            db.AddInParameter(dbCommand, "PurchasedOrderProductVariantID", DbType.Int32, PurchasedOrderProductVariantID);
-            db.AddInParameter(dbCommand, "Amount", DbType.Decimal, Amount);
-            db.AddInParameter(dbCommand, "IsGiftCardActivated", DbType.Boolean, IsGiftCardActivated);
-            db.AddInParameter(dbCommand, "GiftCardCouponCode", DbType.String, GiftCardCouponCode);
-            db.AddInParameter(dbCommand, "RecipientName", DbType.String, RecipientName);
-            db.AddInParameter(dbCommand, "RecipientEmail", DbType.String, RecipientEmail);
-            db.AddInParameter(dbCommand, "SenderName", DbType.String, SenderName);
-            db.AddInParameter(dbCommand, "SenderEmail", DbType.String, SenderEmail);
-            db.AddInParameter(dbCommand, "Message", DbType.String, Message);
-            db.AddInParameter(dbCommand, "IsSenderNotified", DbType.Boolean, IsSenderNotified);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, giftCardId);
+            db.AddInParameter(dbCommand, "PurchasedOrderProductVariantID", DbType.Int32, purchasedOrderProductVariantId);
+            db.AddInParameter(dbCommand, "Amount", DbType.Decimal, amount);
+            db.AddInParameter(dbCommand, "IsGiftCardActivated", DbType.Boolean, isGiftCardActivated);
+            db.AddInParameter(dbCommand, "GiftCardCouponCode", DbType.String, giftCardCouponCode);
+            db.AddInParameter(dbCommand, "RecipientName", DbType.String, recipientName);
+            db.AddInParameter(dbCommand, "RecipientEmail", DbType.String, recipientEmail);
+            db.AddInParameter(dbCommand, "SenderName", DbType.String, senderName);
+            db.AddInParameter(dbCommand, "SenderEmail", DbType.String, senderEmail);
+            db.AddInParameter(dbCommand, "Message", DbType.String, message);
+            db.AddInParameter(dbCommand, "IsSenderNotified", DbType.Boolean, isSenderNotified);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                giftCard = GetGiftCardByID(GiftCardID);
+                item = GetGiftCardById(giftCardId);
 
-            return giftCard;
+            return item;
         }
 
         /// <summary>
         /// Deletes a gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardUsageHistoryID">Gift card usage history entry identifier</param>
-        public override void DeleteGiftCardUsageHistory(int GiftCardUsageHistoryID)
+        /// <param name="giftCardUsageHistoryId">Gift card usage history entry identifier</param>
+        public override void DeleteGiftCardUsageHistory(int giftCardUsageHistoryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardUsageHistoryDelete");
-            db.AddInParameter(dbCommand, "GiftCardUsageHistoryID", DbType.Int32, GiftCardUsageHistoryID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "GiftCardUsageHistoryID", DbType.Int32, giftCardUsageHistoryId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardUsageHistoryID">Gift card usage history entry identifier</param>
+        /// <param name="giftCardUsageHistoryId">Gift card usage history entry identifier</param>
         /// <returns>Gift card usage history entry</returns>
-        public override DBGiftCardUsageHistory GetGiftCardUsageHistoryByID(int GiftCardUsageHistoryID)
+        public override DBGiftCardUsageHistory GetGiftCardUsageHistoryById(int giftCardUsageHistoryId)
         {
-            DBGiftCardUsageHistory giftCardUsageHistory = null;
+            DBGiftCardUsageHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardUsageHistoryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "GiftCardUsageHistoryID", DbType.Int32, GiftCardUsageHistoryID);
+            db.AddInParameter(dbCommand, "GiftCardUsageHistoryID", DbType.Int32, giftCardUsageHistoryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    giftCardUsageHistory = GetGiftCardUsageHistoryFromReader(dataReader);
+                    item = GetGiftCardUsageHistoryFromReader(dataReader);
                 }
             }
-            return giftCardUsageHistory;
+            return item;
         }
 
         /// <summary>
         /// Gets all gift card usage history entries
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier identifier; null to load all records</param>
-        /// <param name="CustomerID">Customer identifier; null to load all records</param>
-        /// <param name="OrderID">Order identifier; null to load all records</param>
+        /// <param name="giftCardId">Gift card identifier identifier; null to load all records</param>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
         /// <returns>Gift card usage history entries</returns>
-        public override DBGiftCardUsageHistoryCollection GetAllGiftCardUsageHistoryEntries(int? GiftCardID,
-            int? CustomerID, int? OrderID)
+        public override DBGiftCardUsageHistoryCollection GetAllGiftCardUsageHistoryEntries(int? giftCardId,
+            int? customerId, int? orderId)
         {
             var result = new DBGiftCardUsageHistoryCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardUsageHistoryLoadAll");
-            if (GiftCardID.HasValue)
-                db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, GiftCardID.Value);
+            if (giftCardId.HasValue)
+                db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, giftCardId.Value);
             else
                 db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, null);
-            if (CustomerID.HasValue)
-                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID.Value);
+            if (customerId.HasValue)
+                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId.Value);
             else
                 db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, null);
-            if (OrderID.HasValue)
-                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID.Value);
+            if (orderId.HasValue)
+                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderID", DbType.Int32, null);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
@@ -1880,64 +2018,64 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Inserts a gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="UsedValue">Used value</param>
-        /// <param name="UsedValueInCustomerCurrency">Used value (customer currency)</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="giftCardId">Gift card identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="usedValue">Used value</param>
+        /// <param name="usedValueInCustomerCurrency">Used value (customer currency)</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card usage history entry</returns>
-        public override DBGiftCardUsageHistory InsertGiftCardUsageHistory(int GiftCardID,
-            int CustomerID, int OrderID, decimal UsedValue,
-            decimal UsedValueInCustomerCurrency, DateTime CreatedOn)
+        public override DBGiftCardUsageHistory InsertGiftCardUsageHistory(int giftCardId,
+            int customerId, int orderId, decimal usedValue,
+            decimal usedValueInCustomerCurrency, DateTime createdOn)
         {
-            DBGiftCardUsageHistory giftCardUsageHistory = null;
+            DBGiftCardUsageHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardUsageHistoryInsert");
             db.AddOutParameter(dbCommand, "GiftCardUsageHistoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, GiftCardID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "UsedValue", DbType.Decimal, UsedValue);
-            db.AddInParameter(dbCommand, "UsedValueInCustomerCurrency", DbType.Decimal, UsedValueInCustomerCurrency);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, giftCardId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "UsedValue", DbType.Decimal, usedValue);
+            db.AddInParameter(dbCommand, "UsedValueInCustomerCurrency", DbType.Decimal, usedValueInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int GiftCardUsageHistoryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@GiftCardUsageHistoryID"));
-                giftCardUsageHistory = GetGiftCardUsageHistoryByID(GiftCardUsageHistoryID);
+                int giftCardUsageHistoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@GiftCardUsageHistoryID"));
+                item = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
             }
-            return giftCardUsageHistory;
+            return item;
         }
 
         /// <summary>
         /// Updates the gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardUsageHistoryID">Gift card usage history entry identifier</param>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="UsedValue">Used value</param>
-        /// <param name="UsedValueInCustomerCurrency">Used value (customer currency)</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="giftCardUsageHistoryId">Gift card usage history entry identifier</param>
+        /// <param name="giftCardId">Gift card identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="usedValue">Used value</param>
+        /// <param name="usedValueInCustomerCurrency">Used value (customer currency)</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card usage history entry</returns>
-        public override DBGiftCardUsageHistory UpdateGiftCardUsageHistory(int GiftCardUsageHistoryID,
-            int GiftCardID, int CustomerID, int OrderID, decimal UsedValue,
-            decimal UsedValueInCustomerCurrency, DateTime CreatedOn)
+        public override DBGiftCardUsageHistory UpdateGiftCardUsageHistory(int giftCardUsageHistoryId,
+            int giftCardId, int customerId, int orderId, decimal usedValue,
+            decimal usedValueInCustomerCurrency, DateTime createdOn)
         {
-            DBGiftCardUsageHistory giftCardUsageHistory = null;
+            DBGiftCardUsageHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_GiftCardUsageHistoryUpdate");
-            db.AddInParameter(dbCommand, "GiftCardUsageHistoryID", DbType.Int32, GiftCardUsageHistoryID);
-            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, GiftCardID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "UsedValue", DbType.Decimal, UsedValue);
-            db.AddInParameter(dbCommand, "UsedValueInCustomerCurrency", DbType.Decimal, UsedValueInCustomerCurrency);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "GiftCardUsageHistoryID", DbType.Int32, giftCardUsageHistoryId);
+            db.AddInParameter(dbCommand, "GiftCardID", DbType.Int32, giftCardId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "UsedValue", DbType.Decimal, usedValue);
+            db.AddInParameter(dbCommand, "UsedValueInCustomerCurrency", DbType.Decimal, usedValueInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                giftCardUsageHistory = GetGiftCardUsageHistoryByID(GiftCardUsageHistoryID);
+                item = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
 
-            return giftCardUsageHistory;
+            return item;
         }
         #endregion
     }

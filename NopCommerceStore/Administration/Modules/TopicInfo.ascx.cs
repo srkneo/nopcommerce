@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Topic topic = TopicManager.GetTopicByID(this.TopicID);
+            Topic topic = TopicManager.GetTopicById(this.TopicId);
             if (topic != null)
             {
                 this.txtName.Text = topic.Name;
@@ -48,10 +48,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Topic SaveInfo()
         {
-            Topic topic = TopicManager.GetTopicByID(this.TopicID);
+            Topic topic = TopicManager.GetTopicById(this.TopicId);
             if (topic != null)
             {
-                topic = TopicManager.UpdateTopic(topic.TopicID, txtName.Text);
+                topic = TopicManager.UpdateTopic(topic.TopicId, txtName.Text);
             }
             else
             {
@@ -61,11 +61,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return topic;
         }
 
-        public int TopicID
+        public int TopicId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TopicID");
+                return CommonHelper.QueryStringInt("TopicId");
             }
         }
     }

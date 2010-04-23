@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets or sets the currency identifier
         /// </summary>
-        public int CurrencyID { get; set; }
+        public int CurrencyId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the date and time of instance creation
         /// </summary>
@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             get
             {
                 Currency activePrimaryExchangeRateCurrency = CurrencyManager.PrimaryExchangeRateCurrency;
-                return ((activePrimaryExchangeRateCurrency != null && activePrimaryExchangeRateCurrency.CurrencyID == CurrencyID));
+                return ((activePrimaryExchangeRateCurrency != null && activePrimaryExchangeRateCurrency.CurrencyId == this.CurrencyId));
             }
         }
 
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             get
             {
                 Currency activePrimaryStoreCurrency = CurrencyManager.PrimaryStoreCurrency;
-                return ((activePrimaryStoreCurrency != null && activePrimaryStoreCurrency.CurrencyID == CurrencyID));
+                return ((activePrimaryStoreCurrency != null && activePrimaryStoreCurrency.CurrencyId == this.CurrencyId));
             }
         }
 

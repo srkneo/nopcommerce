@@ -60,16 +60,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 foreach (DataListItem item in this.dlShippingOptions.Items)
                 {
                     var rdShippingOption = (RadioButton)item.FindControl("rdShippingOption");
-                    var hfShippingRateComputationMethodID = (HiddenField)item.FindControl("hfShippingRateComputationMethodID");
+                    var hfShippingRateComputationMethodId = (HiddenField)item.FindControl("hfShippingRateComputationMethodId");
                     var hfName = (HiddenField)item.FindControl("hfName");
 
                     if (rdShippingOption.Checked)
                     {
-                        int shippingRateComputationMethodID = Convert.ToInt32(hfShippingRateComputationMethodID.Value);
+                        int shippingRateComputationMethodId = Convert.ToInt32(hfShippingRateComputationMethodId.Value);
                         string name = hfName.Value;
 
                         string error = string.Empty;
-                        var shippingOptions = ShippingManager.GetShippingOptions(Cart, NopContext.Current.User, NopContext.Current.User.ShippingAddress, shippingRateComputationMethodID, ref error);
+                        var shippingOptions = ShippingManager.GetShippingOptions(Cart, NopContext.Current.User, NopContext.Current.User.ShippingAddress, shippingRateComputationMethodId, ref error);
                         shippingOption = shippingOptions.Find((so) => so.Name == name);
                         break;
                     }
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var shippingOptions = ShippingManager.GetShippingOptions(Cart, NopContext.Current.User, NopContext.Current.User.ShippingAddress, ref error);
                 if (!String.IsNullOrEmpty(error))
                 {
-                    LogManager.InsertLog(LogTypeEnum.ShippingErrror, error, error);
+                    LogManager.InsertLog(LogTypeEnum.ShippingError, error, error);
                     phSelectShippingMethod.Visible = false;
                     lShippingMethodsError.Text = Server.HtmlEncode(error);
                 }
@@ -144,7 +144,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 

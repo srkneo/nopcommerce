@@ -42,41 +42,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <summary>
         /// Import string resources and message templates from XML
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <param name="content">XML content</param>
-        public static void ImportResources(int LanguageID, string content)
+        public static void ImportResources(int languageId, string content)
         {
-            LocalizationManager.LanguagePackImport(LanguageID, content);
+            LocalizationManager.LanguagePackImport(languageId, content);
         }
 
         /// <summary>
         /// Import customer list from XLS file
         /// </summary>
-        /// <param name="FilePath">Excel file path</param>
-        public static void ImportCustomersFromXLS(string FilePath)
+        /// <param name="filePath">Excel file path</param>
+        public static void ImportCustomersFromXls(string filePath)
         {
-            using (ExcelHelper excelHelper = new ExcelHelper(FilePath))
+            using (ExcelHelper excelHelper = new ExcelHelper(filePath))
             {
-                excelHelper.HDR = "YES";
-                excelHelper.IMEX = "1";
+                excelHelper.Hdr = "YES";
+                excelHelper.Imex = "1";
 
                 DataTable dt = excelHelper.ReadTable("Customers");
                 foreach (DataRow dr in dt.Rows)
                 {
-                    int customerID = Convert.ToInt32(dr["CustomerID"]);
-                    Guid customerGUID = new Guid(dr["CustomerGUID"].ToString());
+                    int customerId = Convert.ToInt32(dr["CustomerId"]);
+                    Guid customerGuid = new Guid(dr["CustomerGuid"].ToString());
                     string email = dr["Email"].ToString();
                     string username = dr["Username"].ToString();
                     string passwordHash = dr["PasswordHash"].ToString();
                     string saltKey = dr["SaltKey"].ToString();
-                    int affiliateID = Convert.ToInt32(dr["AffiliateID"]);
-                    int billingAddressID = 0;
-                    int shippingAddressID = 0;
-                    int lastPaymentMethodID = 0;
+                    int affiliateId = Convert.ToInt32(dr["AffiliateId"]);
+                    int billingAddressId = 0;
+                    int shippingAddressId = 0;
+                    int lastPaymentMethodId = 0;
                     string lastAppliedCouponCode = string.Empty;
-                    int languageID = Convert.ToInt32(dr["LanguageID"]);
-                    int currencyID = Convert.ToInt32(dr["CurrencyID"]);
-                    int taxDisplayTypeID = Convert.ToInt32(dr["TaxDisplayTypeID"]);
+                    int languageId = Convert.ToInt32(dr["LanguageId"]);
+                    int currencyId = Convert.ToInt32(dr["CurrencyId"]);
+                    int taxDisplayTypeId = Convert.ToInt32(dr["TaxDisplayTypeId"]);
                     bool isTaxExempt = Convert.ToBoolean(dr["IsTaxExempt"]);
                     bool isAdmin = Convert.ToBoolean(dr["IsAdmin"]);
                     bool isGuest = Convert.ToBoolean(dr["IsGuest"]);
@@ -87,8 +87,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     bool active = Convert.ToBoolean(dr["Active"]);
                     bool deleted = Convert.ToBoolean(dr["Deleted"]);
                     DateTime registrationDate = DateTime.FromOADate(Convert.ToDouble(dr["RegistrationDate"]));
-                    string timeZoneID = dr["TimeZoneID"].ToString();
-                    int avatarID = Convert.ToInt32(dr["AvatarID"]);
+                    string timeZoneId = dr["TimeZoneId"].ToString();
+                    int avatarId = Convert.ToInt32(dr["AvatarId"]);
 
                     //custom properties
                     string gender = dr["Gender"].ToString();
@@ -101,8 +101,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     string city = dr["City"].ToString();
                     string phoneNumber = dr["PhoneNumber"].ToString();
                     string faxNumber = dr["FaxNumber"].ToString();
-                    int countryID = Convert.ToInt32(dr["CountryID"]);
-                    int stateProvinceID = Convert.ToInt32(dr["StateProvinceID"]);
+                    int countryId = Convert.ToInt32(dr["CountryId"]);
+                    int stateProvinceId = Convert.ToInt32(dr["StateProvinceId"]);
                     bool receiveNewsletter = Convert.ToBoolean(dr["ReceiveNewsletter"]);
 
 
@@ -110,49 +110,49 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     if (customer == null)
                     {
                         //no customers found
-                        customer = CustomerManager.AddCustomerForced(customerGUID, email, username,
-                            passwordHash, saltKey, affiliateID, billingAddressID, shippingAddressID, lastPaymentMethodID,
+                        customer = CustomerManager.AddCustomerForced(customerGuid, email, username,
+                            passwordHash, saltKey, affiliateId, billingAddressId, shippingAddressId, lastPaymentMethodId,
                             lastAppliedCouponCode, string.Empty, string.Empty,
-                            languageID, currencyID, (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt,
+                            languageId, currencyId, (TaxDisplayTypeEnum)taxDisplayTypeId, isTaxExempt,
                             isAdmin, isGuest, isForumModerator, totalForumPosts, signature,
-                            adminComment, active, deleted, registrationDate, timeZoneID, avatarID);
+                            adminComment, active, deleted, registrationDate, timeZoneId, avatarId);
                     }
                     else
                     {
                         if (!customer.IsGuest)
                         {
                             //customer is not a guest
-                            customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
-                                email, username, passwordHash, saltKey, affiliateID, billingAddressID,
-                                shippingAddressID, lastPaymentMethodID, lastAppliedCouponCode,
-                                string.Empty, string.Empty, languageID, currencyID,
-                                (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt, isAdmin, isGuest,
+                            customer = CustomerManager.UpdateCustomer(customer.CustomerId, customer.CustomerGuid,
+                                email, username, passwordHash, saltKey, affiliateId, billingAddressId,
+                                shippingAddressId, lastPaymentMethodId, lastAppliedCouponCode,
+                                string.Empty, string.Empty, languageId, currencyId,
+                                (TaxDisplayTypeEnum)taxDisplayTypeId, isTaxExempt, isAdmin, isGuest,
                                 isForumModerator, totalForumPosts, signature, adminComment,
-                                active, deleted, registrationDate, timeZoneID, avatarID);
+                                active, deleted, registrationDate, timeZoneId, avatarId);
                         }
                         else
                         {
                             //customer is a guest
-                            customer = CustomerManager.GetCustomerByGUID(customerGUID);
+                            customer = CustomerManager.GetCustomerByGuid(customerGuid);
                             if (customer == null)
                             {
-                                customer = CustomerManager.AddCustomerForced(customerGUID, email, username,
-                                    passwordHash, saltKey, affiliateID, billingAddressID, shippingAddressID, lastPaymentMethodID,
+                                customer = CustomerManager.AddCustomerForced(customerGuid, email, username,
+                                    passwordHash, saltKey, affiliateId, billingAddressId, shippingAddressId, lastPaymentMethodId,
                                     lastAppliedCouponCode, string.Empty,
-                                    string.Empty, languageID, currencyID, 
-                                    (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt,
+                                    string.Empty, languageId, currencyId, 
+                                    (TaxDisplayTypeEnum)taxDisplayTypeId, isTaxExempt,
                                     isAdmin, isGuest, isForumModerator, totalForumPosts, signature,
-                                    adminComment, active, deleted, registrationDate, timeZoneID, avatarID);
+                                    adminComment, active, deleted, registrationDate, timeZoneId, avatarId);
                             }
                             else
                             {
-                                customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
-                                    email, username, passwordHash, saltKey, affiliateID, billingAddressID,
-                                    shippingAddressID, lastPaymentMethodID, lastAppliedCouponCode,
-                                    string.Empty, string.Empty, languageID, currencyID,
-                                    (TaxDisplayTypeEnum)taxDisplayTypeID, isTaxExempt, isAdmin, isGuest,
+                                customer = CustomerManager.UpdateCustomer(customer.CustomerId, customer.CustomerGuid,
+                                    email, username, passwordHash, saltKey, affiliateId, billingAddressId,
+                                    shippingAddressId, lastPaymentMethodId, lastAppliedCouponCode,
+                                    string.Empty, string.Empty, languageId, currencyId,
+                                    (TaxDisplayTypeEnum)taxDisplayTypeId, isTaxExempt, isAdmin, isGuest,
                                     isForumModerator, totalForumPosts, signature, adminComment,
-                                    active, deleted, registrationDate, timeZoneID, avatarID);
+                                    active, deleted, registrationDate, timeZoneId, avatarId);
                             }
                         }
                     }
@@ -166,8 +166,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     customer.City = city;
                     customer.PhoneNumber = phoneNumber;
                     customer.FaxNumber = faxNumber;
-                    customer.CountryID = countryID;
-                    customer.StateProvinceID = stateProvinceID;
+                    customer.CountryId = countryId;
+                    customer.StateProvinceId = stateProvinceId;
                     customer.ReceiveNewsletter = receiveNewsletter;
                 }
             }
@@ -176,13 +176,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <summary>
         /// Import products from XLS file
         /// </summary>
-        /// <param name="FilePath">Excel file path</param>
-        public static void ImportProductsFromXLS(string FilePath)
+        /// <param name="filePath">Excel file path</param>
+        public static void ImportProductsFromXls(string filePath)
         {
-            using (ExcelHelper excelHelper = new ExcelHelper(FilePath))
+            using (ExcelHelper excelHelper = new ExcelHelper(filePath))
             {
-                excelHelper.HDR = "YES";
-                excelHelper.IMEX = "1";
+                excelHelper.Hdr = "YES";
+                excelHelper.Imex = "1";
 
                 DataTable dt = excelHelper.ReadTable("Products");
                 foreach (DataRow dr in dt.Rows)
@@ -190,8 +190,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     string Name = dr["Name"].ToString();
                     string ShortDescription = dr["ShortDescription"].ToString();
                     string FullDescription = dr["FullDescription"].ToString();
-                    int ProductTypeID = Convert.ToInt32(dr["ProductTypeID"]);
-                    int TemplateID = Convert.ToInt32(dr["TemplateID"]);
+                    int ProductTypeId = Convert.ToInt32(dr["ProductTypeId"]);
+                    int TemplateId = Convert.ToInt32(dr["TemplateId"]);
                     bool ShowOnHomePage = Convert.ToBoolean(dr["ShowOnHomePage"]);
                     string MetaKeywords = dr["MetaKeywords"].ToString();
                     string MetaDescription = dr["MetaDescription"].ToString();
@@ -203,12 +203,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     string ManufacturerPartNumber = dr["ManufacturerPartNumber"].ToString();
                     bool IsGiftCard = Convert.ToBoolean(dr["IsGiftCard"]);
                     bool IsDownload = Convert.ToBoolean(dr["IsDownload"]);
-                    int DownloadID = Convert.ToInt32(dr["DownloadID"]);
+                    int DownloadId = Convert.ToInt32(dr["DownloadId"]);
                     bool UnlimitedDownloads = Convert.ToBoolean(dr["UnlimitedDownloads"]);
                     int MaxNumberOfDownloads = Convert.ToInt32(dr["MaxNumberOfDownloads"]);
                     bool HasSampleDownload = Convert.ToBoolean(dr["HasSampleDownload"]);
                     int DownloadActivationType = Convert.ToInt32(dr["DownloadActivationType"]);
-                    int SampleDownloadID = Convert.ToInt32(dr["SampleDownloadID"]);
+                    int SampleDownloadId = Convert.ToInt32(dr["SampleDownloadId"]);
                     bool HasUserAgreement = Convert.ToBoolean(dr["HasUserAgreement"]);
                     string UserAgreementText = dr["UserAgreementText"].ToString();
                     bool IsRecurring = Convert.ToBoolean(dr["IsRecurring"]);
@@ -219,12 +219,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     bool IsFreeShipping = Convert.ToBoolean(dr["IsFreeShipping"]);
                     decimal AdditionalShippingCharge = Convert.ToDecimal(dr["AdditionalShippingCharge"]);
                     bool IsTaxExempt = Convert.ToBoolean(dr["IsTaxExempt"]);
-                    int TaxCategoryID = Convert.ToInt32(dr["TaxCategoryID"]);
+                    int TaxCategoryId = Convert.ToInt32(dr["TaxCategoryId"]);
                     int ManageInventory = Convert.ToInt32(dr["ManageInventory"]);
                     int StockQuantity = Convert.ToInt32(dr["StockQuantity"]);
                     bool DisplayStockAvailability = Convert.ToBoolean(dr["DisplayStockAvailability"]);
                     int MinStockQuantity = Convert.ToInt32(dr["MinStockQuantity"]);
-                    int LowStockActivityID = Convert.ToInt32(dr["LowStockActivityID"]);
+                    int LowStockActivityId = Convert.ToInt32(dr["LowStockActivityId"]);
                     int NotifyAdminForQuantityBelow = Convert.ToInt32(dr["NotifyAdminForQuantityBelow"]);
                     bool AllowOutOfStockOrders = Convert.ToBoolean(dr["AllowOutOfStockOrders"]);
                     int OrderMinimumQuantity = Convert.ToInt32(dr["OrderMinimumQuantity"]);
@@ -246,49 +246,49 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     if (productVariant != null)
                     {
                         var product = productVariant.Product;
-                        product = ProductManager.UpdateProduct(product.ProductID, Name, ShortDescription,
-                            FullDescription, product.AdminComment, ProductTypeID,
-                            TemplateID, ShowOnHomePage, MetaKeywords, MetaDescription,
+                        product = ProductManager.UpdateProduct(product.ProductId, Name, ShortDescription,
+                            FullDescription, product.AdminComment, ProductTypeId,
+                            TemplateId, ShowOnHomePage, MetaKeywords, MetaDescription,
                             MetaTitle, product.SEName, AllowCustomerReviews, AllowCustomerRatings,
                             product.RatingSum, product.TotalRatingVotes,
                             Published, product.Deleted, CreatedOn, DateTime.Now);
 
-                        productVariant = ProductManager.UpdateProductVariant(productVariant.ProductVariantID,
-                            productVariant.ProductID, productVariant.Name, SKU,
+                        productVariant = ProductManager.UpdateProductVariant(productVariant.ProductVariantId,
+                            productVariant.ProductId, productVariant.Name, SKU,
                             productVariant.Description, productVariant.AdminComment,
-                            ManufacturerPartNumber, IsGiftCard, IsDownload, DownloadID,
+                            ManufacturerPartNumber, IsGiftCard, IsDownload, DownloadId,
                             UnlimitedDownloads, MaxNumberOfDownloads, productVariant.DownloadExpirationDays,
                             (DownloadActivationTypeEnum)DownloadActivationType, HasSampleDownload,
-                            SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring,
+                            SampleDownloadId, HasUserAgreement, UserAgreementText, IsRecurring,
                             CycleLength, CyclePeriod, TotalCycles, IsShipEnabled,
                             IsFreeShipping, AdditionalShippingCharge, IsTaxExempt,
-                            TaxCategoryID, ManageInventory, StockQuantity,
+                            TaxCategoryId, ManageInventory, StockQuantity,
                             DisplayStockAvailability, MinStockQuantity,
-                            (LowStockActivityEnum)LowStockActivityID, NotifyAdminForQuantityBelow,
+                            (LowStockActivityEnum)LowStockActivityId, NotifyAdminForQuantityBelow,
                             AllowOutOfStockOrders, OrderMinimumQuantity,
                             OrderMaximumQuantity, productVariant.WarehouseId, DisableBuyButton,
                             Price, OldPrice, ProductCost, CustomerEntersPrice, 
                             MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice,
                             Weight, Length, Width, Height,
-                            productVariant.PictureID, productVariant.AvailableStartDateTime,
+                            productVariant.PictureId, productVariant.AvailableStartDateTime,
                             productVariant.AvailableEndDateTime, productVariant.Published,
                             productVariant.Deleted, productVariant.DisplayOrder, CreatedOn, DateTime.Now);
                     }
                     else
                     {
                         var product = ProductManager.InsertProduct(Name, ShortDescription, FullDescription,
-                            string.Empty, ProductTypeID, TemplateID, ShowOnHomePage, MetaKeywords, MetaDescription,
+                            string.Empty, ProductTypeId, TemplateId, ShowOnHomePage, MetaKeywords, MetaDescription,
                             MetaTitle, string.Empty, AllowCustomerReviews, AllowCustomerRatings, 0, 0,
                             Published, false, CreatedOn, DateTime.Now);
 
-                        productVariant = ProductManager.InsertProductVariant(product.ProductID,
+                        productVariant = ProductManager.InsertProductVariant(product.ProductId,
                             string.Empty, SKU, string.Empty, string.Empty, ManufacturerPartNumber,
-                            IsGiftCard, IsDownload, DownloadID,
+                            IsGiftCard, IsDownload, DownloadId,
                             UnlimitedDownloads, MaxNumberOfDownloads, null, (DownloadActivationTypeEnum)DownloadActivationType,
-                            HasSampleDownload, SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength, CyclePeriod, TotalCycles,
+                            HasSampleDownload, SampleDownloadId, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength, CyclePeriod, TotalCycles,
                             IsShipEnabled, IsFreeShipping, AdditionalShippingCharge, IsTaxExempt,
-                            TaxCategoryID, ManageInventory, StockQuantity, DisplayStockAvailability, MinStockQuantity,
-                            (LowStockActivityEnum)LowStockActivityID, NotifyAdminForQuantityBelow,
+                            TaxCategoryId, ManageInventory, StockQuantity, DisplayStockAvailability, MinStockQuantity,
+                            (LowStockActivityEnum)LowStockActivityId, NotifyAdminForQuantityBelow,
                             AllowOutOfStockOrders, OrderMinimumQuantity,
                             OrderMaximumQuantity, 0, DisableBuyButton,
                             Price, OldPrice, ProductCost, CustomerEntersPrice,

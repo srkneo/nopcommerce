@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             var item = new ForumGroup();
-            item.ForumGroupID = dbItem.ForumGroupID;
+            item.ForumGroupId = dbItem.ForumGroupId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -100,15 +100,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             var item = new Forum();
-            item.ForumID = dbItem.ForumID;
-            item.ForumGroupID = dbItem.ForumGroupID;
+            item.ForumId = dbItem.ForumId;
+            item.ForumGroupId = dbItem.ForumGroupId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
             item.NumTopics = dbItem.NumTopics;
             item.NumPosts = dbItem.NumPosts;
-            item.LastTopicID = dbItem.LastTopicID;
-            item.LastPostID = dbItem.LastPostID;
-            item.LastPostUserID = dbItem.LastPostUserID;
+            item.LastTopicId = dbItem.LastTopicId;
+            item.LastPostId = dbItem.LastPostId;
+            item.LastPostUserId = dbItem.LastPostUserId;
             item.LastPostTime = dbItem.LastPostTime;
             item.DisplayOrder = dbItem.DisplayOrder;
             item.CreatedOn = dbItem.CreatedOn;
@@ -138,15 +138,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             var item = new ForumTopic();
-            item.ForumTopicID = dbItem.ForumTopicID;
-            item.ForumID = dbItem.ForumID;
-            item.UserID = dbItem.UserID;
-            item.TopicTypeID = dbItem.TopicTypeID;
+            item.ForumTopicId = dbItem.ForumTopicId;
+            item.ForumId = dbItem.ForumId;
+            item.UserId = dbItem.UserId;
+            item.TopicTypeId = dbItem.TopicTypeId;
             item.Subject = dbItem.Subject;
             item.NumPosts = dbItem.NumPosts;
             item.Views = dbItem.Views;
-            item.LastPostID = dbItem.LastPostID;
-            item.LastPostUserID = dbItem.LastPostUserID;
+            item.LastPostId = dbItem.LastPostId;
+            item.LastPostUserId = dbItem.LastPostUserId;
             item.LastPostTime = dbItem.LastPostTime;
             item.CreatedOn = dbItem.CreatedOn;
             item.UpdatedOn = dbItem.UpdatedOn;
@@ -175,9 +175,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             var item = new ForumPost();
-            item.ForumPostID = dbItem.ForumPostID;
-            item.TopicID = dbItem.TopicID;
-            item.UserID = dbItem.UserID;
+            item.ForumPostId = dbItem.ForumPostId;
+            item.TopicId = dbItem.TopicId;
+            item.UserId = dbItem.UserId;
             item.Text = dbItem.Text;
             item.IPAddress = dbItem.IPAddress;
             item.CreatedOn = dbItem.CreatedOn;
@@ -207,9 +207,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             var item = new PrivateMessage();
-            item.PrivateMessageID = dbItem.PrivateMessageID;
-            item.FromUserID = dbItem.FromUserID;
-            item.ToUserID = dbItem.ToUserID;
+            item.PrivateMessageId = dbItem.PrivateMessageId;
+            item.FromUserId = dbItem.FromUserId;
+            item.ToUserId = dbItem.ToUserId;
             item.Subject = dbItem.Subject;
             item.Text = dbItem.Text;
             item.IsRead = dbItem.IsRead;
@@ -241,11 +241,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             var item = new ForumSubscription();
-            item.ForumSubscriptionID = dbItem.ForumSubscriptionID;
-            item.SubscriptionGUID = dbItem.SubscriptionGUID;
-            item.UserID = dbItem.UserID;
-            item.ForumID = dbItem.ForumID;
-            item.TopicID = dbItem.TopicID;
+            item.ForumSubscriptionId = dbItem.ForumSubscriptionId;
+            item.SubscriptionGuid = dbItem.SubscriptionGuid;
+            item.UserId = dbItem.UserId;
+            item.ForumId = dbItem.ForumId;
+            item.TopicId = dbItem.TopicId;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
@@ -257,10 +257,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Deletes a forum group
         /// </summary>
-        /// <param name="ForumGroupID">The forum group identifier</param>
-        public static void DeleteForumGroup(int ForumGroupID)
+        /// <param name="forumGroupId">The forum group identifier</param>
+        public static void DeleteForumGroup(int forumGroupId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeleteForumGroup(ForumGroupID);
+            DBProviderManager<DBForumProvider>.Provider.DeleteForumGroup(forumGroupId);
 
             if (ForumManager.CacheEnabled)
             {
@@ -272,20 +272,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets a forum group
         /// </summary>
-        /// <param name="ForumGroupID">The forum group identifier</param>
+        /// <param name="forumGroupId">The forum group identifier</param>
         /// <returns>Forum group</returns>
-        public static ForumGroup GetForumGroupByID(int ForumGroupID)
+        public static ForumGroup GetForumGroupById(int forumGroupId)
         {
-            if (ForumGroupID == 0)
+            if (forumGroupId == 0)
                 return null;
 
-            string key = string.Format(FORUMGROUP_BY_ID_KEY, ForumGroupID);
+            string key = string.Format(FORUMGROUP_BY_ID_KEY, forumGroupId);
             object obj2 = NopCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
                 return (ForumGroup)obj2;
             }
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetForumGroupByID(ForumGroupID);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetForumGroupById(forumGroupId);
             var forumGroup = DBMapping(dbItem);
 
             if (ForumManager.CacheEnabled)
@@ -320,20 +320,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Inserts a forum group
         /// </summary>
-        /// <param name="Name">The language name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="DisplayOrder">The display order</param>        
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The language name</param>
+        /// <param name="description">The description</param>
+        /// <param name="displayOrder">The display order</param>        
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Forum group</returns>
-        public static ForumGroup InsertForumGroup(string Name, string Description,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ForumGroup InsertForumGroup(string name, string description,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertForumGroup(Name, Description,
-            DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertForumGroup(name, 
+                description, displayOrder, createdOn, updatedOn);
 
             var forumGroup = DBMapping(dbItem);
 
@@ -349,21 +349,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Updates the forum group
         /// </summary>
-        /// <param name="ForumGroupID">The forum group identifier</param>
-        /// <param name="Name">The language name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="DisplayOrder">The display order</param>        
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="forumGroupId">The forum group identifier</param>
+        /// <param name="name">The language name</param>
+        /// <param name="description">The description</param>
+        /// <param name="displayOrder">The display order</param>        
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Forum group</returns>
-        public static ForumGroup UpdateForumGroup(int ForumGroupID, string Name, string Description,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ForumGroup UpdateForumGroup(int forumGroupId,
+            string name, string description, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateForumGroup(ForumGroupID, 
-                Name, Description, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateForumGroup(forumGroupId, 
+                name, description, displayOrder, createdOn, updatedOn);
 
             var forumGroup = DBMapping(dbItem);
 
@@ -379,10 +380,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Deletes a forum
         /// </summary>
-        /// <param name="ForumID">The forum identifier</param>
-        public static void DeleteForum(int ForumID)
+        /// <param name="forumId">The forum identifier</param>
+        public static void DeleteForum(int forumId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeleteForum(ForumID);
+            DBProviderManager<DBForumProvider>.Provider.DeleteForum(forumId);
 
             if (ForumManager.CacheEnabled)
             {
@@ -394,20 +395,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets a forum
         /// </summary>
-        /// <param name="ForumID">The forum identifier</param>
+        /// <param name="forumId">The forum identifier</param>
         /// <returns>Forum</returns>
-        public static Forum GetForumByID(int ForumID)
+        public static Forum GetForumById(int forumId)
         {
-            if (ForumID == 0)
+            if (forumId == 0)
                 return null;
 
-            string key = string.Format(FORUM_BY_ID_KEY, ForumID);
+            string key = string.Format(FORUM_BY_ID_KEY, forumId);
             object obj2 = NopCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
                 return (Forum)obj2;
             }
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetForumByID(ForumID);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetForumById(forumId);
             var forum = DBMapping(dbItem);
 
             if (ForumManager.CacheEnabled)
@@ -420,18 +421,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets forums by group identifier
         /// </summary>
-        /// <param name="ForumGroupID">The forum group identifier</param>
+        /// <param name="forumGroupId">The forum group identifier</param>
         /// <returns>Forums</returns>
-        public static ForumCollection GetAllForumsByGroupID(int ForumGroupID)
+        public static ForumCollection GetAllForumsByGroupId(int forumGroupId)
         {
-            string key = string.Format(FORUM_ALLBYFORUMGROUPID_KEY, ForumGroupID);
+            string key = string.Format(FORUM_ALLBYFORUMGROUPID_KEY, forumGroupId);
             object obj2 = NopCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
                 return (ForumCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllForumsByGroupID(ForumGroupID);
+            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllForumsByGroupId(forumGroupId);
             var forumCollection = DBMapping(dbCollection);
 
             if (ForumManager.CacheEnabled)
@@ -444,31 +445,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Inserts a forum
         /// </summary>
-        /// <param name="ForumGroupID">The forum group identifier</param>
-        /// <param name="Name">The language name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="NumTopics">The number of topics</param>
-        /// <param name="NumPosts">The number of posts</param>
-        /// <param name="LastTopicID">The last topic identifier</param>
-        /// <param name="LastPostID">The last post identifier</param>
-        /// <param name="LastPostUserID">The last post user identifier</param>
-        /// <param name="LastPostTime">The last post date and time</param>
-        /// <param name="DisplayOrder">The display order</param>        
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="forumGroupId">The forum group identifier</param>
+        /// <param name="name">The language name</param>
+        /// <param name="description">The description</param>
+        /// <param name="numTopics">The number of topics</param>
+        /// <param name="numPosts">The number of posts</param>
+        /// <param name="lastTopicId">The last topic identifier</param>
+        /// <param name="lastPostId">The last post identifier</param>
+        /// <param name="lastPostUserId">The last post user identifier</param>
+        /// <param name="lastPostTime">The last post date and time</param>
+        /// <param name="displayOrder">The display order</param>        
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Forum</returns>
-        public static Forum InsertForum(int ForumGroupID,
-            string Name, string Description,
-            int NumTopics, int NumPosts, int LastTopicID, int LastPostID,
-            int LastPostUserID, DateTime? LastPostTime, int DisplayOrder,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static Forum InsertForum(int forumGroupId,
+            string name, string description,
+            int numTopics, int numPosts, int lastTopicId, int lastPostId,
+            int lastPostUserId, DateTime? lastPostTime, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertForum(ForumGroupID,
-                Name, Description, NumTopics, NumPosts, LastTopicID, LastPostID,
-                LastPostUserID, LastPostTime, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertForum(forumGroupId,
+                name, description, numTopics, numPosts, lastTopicId, lastPostId,
+                lastPostUserId, lastPostTime, displayOrder, createdOn, updatedOn);
 
             var forum = DBMapping(dbItem);
 
@@ -484,32 +485,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Updates the forum
         /// </summary>
-        /// <param name="ForumID">The forum identifier</param>
-        /// <param name="ForumGroupID">The forum group identifier</param>
-        /// <param name="Name">The language name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="NumTopics">The number of topics</param>
-        /// <param name="NumPosts">The number of posts</param>
-        /// <param name="LastTopicID">The last topic identifier</param>
-        /// <param name="LastPostID">The last post identifier</param>
-        /// <param name="LastPostUserID">The last post user identifier</param>
-        /// <param name="LastPostTime">The last post date and time</param>
-        /// <param name="DisplayOrder">The display order</param>        
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="forumId">The forum identifier</param>
+        /// <param name="forumGroupId">The forum group identifier</param>
+        /// <param name="name">The language name</param>
+        /// <param name="description">The description</param>
+        /// <param name="numTopics">The number of topics</param>
+        /// <param name="numPosts">The number of posts</param>
+        /// <param name="lastTopicId">The last topic identifier</param>
+        /// <param name="lastPostId">The last post identifier</param>
+        /// <param name="lastPostUserId">The last post user identifier</param>
+        /// <param name="lastPostTime">The last post date and time</param>
+        /// <param name="displayOrder">The display order</param>        
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Forum</returns>
-        public static Forum UpdateForum(int ForumID, int ForumGroupID,
-            string Name, string Description,
-            int NumTopics, int NumPosts, int LastTopicID, int LastPostID,
-            int LastPostUserID, DateTime? LastPostTime, int DisplayOrder,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static Forum UpdateForum(int forumId,
+            int forumGroupId, string name, string description,
+            int numTopics, int numPosts, int lastTopicId, int lastPostId,
+            int lastPostUserId, DateTime? lastPostTime, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateForum(ForumID, ForumGroupID,
-                Name, Description, NumTopics, NumPosts, LastTopicID, LastPostID,
-                LastPostUserID, LastPostTime, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateForum(forumId, 
+                forumGroupId, name, description, numTopics, numPosts, 
+                lastTopicId, lastPostId, lastPostUserId, lastPostTime, 
+                displayOrder, createdOn, updatedOn);
 
             var forum = DBMapping(dbItem);
 
@@ -525,14 +527,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Update forum stats
         /// </summary>
-        /// <param name="ForumID">The forum identifier</param>
+        /// <param name="forumId">The forum identifier</param>
         /// <returns>Forum</returns>
-        public static void UpdateForumStats(int ForumID)
+        public static void UpdateForumStats(int forumId)
         {
-            if (ForumID == 0)
+            if (forumId == 0)
                 return;
 
-            DBProviderManager<DBForumProvider>.Provider.UpdateForumStats(ForumID);
+            DBProviderManager<DBForumProvider>.Provider.UpdateForumStats(forumId);
 
             if (ForumManager.CacheEnabled)
             {
@@ -544,10 +546,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Deletes a topic
         /// </summary>
-        /// <param name="ForumTopicID">The topic identifier</param>
-        public static void DeleteTopic(int ForumTopicID)
+        /// <param name="forumTopicId">The topic identifier</param>
+        public static void DeleteTopic(int forumTopicId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeleteTopic(ForumTopicID);
+            DBProviderManager<DBForumProvider>.Provider.DeleteTopic(forumTopicId);
 
             if (ForumManager.CacheEnabled)
             {
@@ -559,25 +561,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets a topic
         /// </summary>
-        /// <param name="ForumTopicID">The topic identifier</param>
+        /// <param name="forumTopicId">The topic identifier</param>
         /// <returns>Topic</returns>
-        public static ForumTopic GetTopicByID(int ForumTopicID)
+        public static ForumTopic GetTopicById(int forumTopicId)
         {
-            return GetTopicByID(ForumTopicID, false);
+            return GetTopicById(forumTopicId, false);
         }
 
         /// <summary>
         /// Gets a topic
         /// </summary>
-        /// <param name="ForumTopicID">The topic identifier</param>
-        /// <param name="IncreaseViews">The value indicating whether to increase topic views</param>
+        /// <param name="forumTopicId">The topic identifier</param>
+        /// <param name="increaseViews">The value indicating whether to increase topic views</param>
         /// <returns>Topic</returns>
-        public static ForumTopic GetTopicByID(int ForumTopicID, bool IncreaseViews)
+        public static ForumTopic GetTopicById(int forumTopicId, bool increaseViews)
         {
-            if (ForumTopicID == 0)
+            if (forumTopicId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetTopicByID(ForumTopicID, IncreaseViews);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetTopicById(forumTopicId,
+                increaseViews);
             var forumTopic = DBMapping(dbItem);
 
             return forumTopic;
@@ -586,29 +589,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets all topics
         /// </summary>
-        /// <param name="ForumID">The forum group identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="SearchPosts">A value indicating whether to search in posts</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="forumId">The forum group identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="searchPosts">A value indicating whether to search in posts</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Topics</returns>
-        public static ForumTopicCollection GetAllTopics(int ForumID, int UserID, string Keywords,
-            bool SearchPosts, int PageSize, int PageIndex, out int TotalRecords)
+        public static ForumTopicCollection GetAllTopics(int forumId,
+            int userId, string keywords, bool searchPosts, int pageSize,
+            int pageIndex, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllTopics(ForumID,
-                UserID, Keywords, SearchPosts, PageSize, PageIndex, out  TotalRecords);
+            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllTopics(forumId,
+                userId, keywords, searchPosts, pageSize, pageIndex, out totalRecords);
             var forumTopicCollection = DBMapping(dbCollection);
 
             return forumTopicCollection;
@@ -617,12 +621,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets active topics
         /// </summary>
-        /// <param name="ForumID">The forum group identifier</param>
-        /// <param name="TopicCount">Topic count. 0 if you want to get all topics</param>
+        /// <param name="forumId">The forum group identifier</param>
+        /// <param name="topicCount">Topic count. 0 if you want to get all topics</param>
         /// <returns>Topics</returns>
-        public static ForumTopicCollection GetActiveTopics(int ForumID, int TopicCount)
+        public static ForumTopicCollection GetActiveTopics(int forumId, int topicCount)
         {
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetActiveTopics(ForumID, TopicCount);
+            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetActiveTopics(forumId, topicCount);
             var forumTopicCollection = DBMapping(dbCollection);
 
             return forumTopicCollection;
@@ -631,45 +635,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Inserts a topic
         /// </summary>
-        /// <param name="ForumID">The forum identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="TopicType">The topic type</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="NumPosts">The number of posts</param>
-        /// <param name="Views">The number of views</param>
-        /// <param name="LastPostID">The last post identifier</param>
-        /// <param name="LastPostUserID">The last post user identifier</param>
-        /// <param name="LastPostTime">The last post date and time</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="SendNotifications">A value indicating whether to send notifications to users</param>
+        /// <param name="forumId">The forum identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="topicType">The topic type</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="numPosts">The number of posts</param>
+        /// <param name="views">The number of views</param>
+        /// <param name="lastPostId">The last post identifier</param>
+        /// <param name="lastPostUserId">The last post user identifier</param>
+        /// <param name="lastPostTime">The last post date and time</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="sendNotifications">A value indicating whether to send notifications to users</param>
         /// <returns>Topic</returns>
-        public static ForumTopic InsertTopic(int ForumID, int UserID,
-            ForumTopicTypeEnum TopicType, string Subject,
-            int NumPosts, int Views, int LastPostID,
-            int LastPostUserID, DateTime? LastPostTime,
-            DateTime CreatedOn, DateTime UpdatedOn, bool SendNotifications)
+        public static ForumTopic InsertTopic(int forumId, int userId,
+            ForumTopicTypeEnum topicType, string subject,
+            int numPosts, int views, int lastPostId,
+            int lastPostUserId, DateTime? lastPostTime,
+            DateTime createdOn, DateTime updatedOn, bool sendNotifications)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            if (Subject == null)
-                Subject = string.Empty;
+            if (subject == null)
+                subject = string.Empty;
 
-            Subject = Subject.Trim();
+            subject = subject.Trim();
 
-            if (String.IsNullOrEmpty(Subject))
+            if (String.IsNullOrEmpty(subject))
                 throw new NopException("Topic subject cannot be empty");
 
             if (ForumManager.TopicSubjectMaxLength > 0)
             {
-                if (Subject.Length > ForumManager.TopicSubjectMaxLength)
-                    Subject = Subject.Substring(0, ForumManager.TopicSubjectMaxLength);
+                if (subject.Length > ForumManager.TopicSubjectMaxLength)
+                    subject = subject.Substring(0, ForumManager.TopicSubjectMaxLength);
             }
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertTopic(ForumID, UserID,
-                (int)TopicType, Subject, NumPosts, Views, LastPostID,
-                LastPostUserID, LastPostTime, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertTopic(forumId, 
+                userId, (int)topicType, subject, numPosts, views, lastPostId,
+                lastPostUserId, lastPostTime, createdOn, updatedOn);
 
             var forumTopic = DBMapping(dbItem);
 
@@ -679,17 +683,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
-            if (SendNotifications)
+            if (sendNotifications)
             {
                 var forum = forumTopic.Forum;
-                var subscriptions = GetAllSubscriptions(0, forum.ForumID, 0, int.MaxValue, 0);
+                var subscriptions = GetAllSubscriptions(0, forum.ForumId, 0, int.MaxValue, 0);
 
                 foreach (var subscription in subscriptions)
                 {
-                    if (subscription.UserID == UserID)
+                    if (subscription.UserId == userId)
                         continue;
 
-                    MessageManager.SendNewForumTopicMessage(subscription.User, forumTopic, forum, NopContext.Current.WorkingLanguage.LanguageID);
+                    MessageManager.SendNewForumTopicMessage(subscription.User, 
+                        forumTopic, forum, NopContext.Current.WorkingLanguage.LanguageId);
                 }
             }
 
@@ -699,45 +704,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Updates the topic
         /// </summary>
-        /// <param name="ForumTopicID">The forum topic identifier</param>
-        /// <param name="ForumID">The forum identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="TopicType">The topic type</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="NumPosts">The number of posts</param>
-        /// <param name="Views">The number of views</param>
-        /// <param name="LastPostID">The last post identifier</param>
-        /// <param name="LastPostUserID">The last post user identifier</param>
-        /// <param name="LastPostTime">The last post date and time</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="forumTopicId">The forum topic identifier</param>
+        /// <param name="forumId">The forum identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="topicType">The topic type</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="numPosts">The number of posts</param>
+        /// <param name="views">The number of views</param>
+        /// <param name="lastPostId">The last post identifier</param>
+        /// <param name="lastPostUserId">The last post user identifier</param>
+        /// <param name="lastPostTime">The last post date and time</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Topic</returns>
-        public static ForumTopic UpdateTopic(int ForumTopicID, int ForumID, int UserID,
-            ForumTopicTypeEnum TopicType, string Subject,
-            int NumPosts, int Views, int LastPostID,
-            int LastPostUserID, DateTime? LastPostTime,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static ForumTopic UpdateTopic(int forumTopicId, int forumId, 
+            int userId, ForumTopicTypeEnum topicType, string subject,
+            int numPosts, int views, int lastPostId, int lastPostUserId, 
+            DateTime? lastPostTime, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            if (Subject == null)
-                Subject = string.Empty;
+            if (subject == null)
+                subject = string.Empty;
 
-            Subject = Subject.Trim();
+            subject = subject.Trim();
 
-            if (String.IsNullOrEmpty(Subject))
+            if (String.IsNullOrEmpty(subject))
                 throw new NopException("Topic subject cannot be empty");
 
             if (ForumManager.TopicSubjectMaxLength > 0)
             {
-                if (Subject.Length > ForumManager.TopicSubjectMaxLength)
-                    Subject = Subject.Substring(0, ForumManager.TopicSubjectMaxLength);
+                if (subject.Length > ForumManager.TopicSubjectMaxLength)
+                    subject = subject.Substring(0, ForumManager.TopicSubjectMaxLength);
             }
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateTopic(ForumTopicID, ForumID, UserID,
-                (int)TopicType, Subject, NumPosts, Views, LastPostID,
-                LastPostUserID, LastPostTime, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateTopic(forumTopicId,
+                forumId, userId, (int)topicType, subject,
+                numPosts, views, lastPostId, lastPostUserId, lastPostTime, 
+                createdOn, updatedOn);
 
             var forumTopic = DBMapping(dbItem);
 
@@ -753,32 +758,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Moves the topic
         /// </summary>
-        /// <param name="ForumTopicID">The forum topic identifier</param>
-        /// <param name="NewForumID">New forum identifier</param>
+        /// <param name="forumTopicId">The forum topic identifier</param>
+        /// <param name="newForumId">New forum identifier</param>
         /// <returns>Moved topic</returns>
-        public static ForumTopic MoveTopic(int ForumTopicID, int NewForumID)
+        public static ForumTopic MoveTopic(int forumTopicId, int newForumId)
         {
-            var forumTopic = GetTopicByID(ForumTopicID);
+            var forumTopic = GetTopicById(forumTopicId);
             if (forumTopic == null)
                 return forumTopic;
 
             if (ForumManager.IsUserAllowedToMoveTopic(NopContext.Current.User, forumTopic))
             {
-                int previousForumID = forumTopic.ForumID;
-                var newForum = GetForumByID(NewForumID);
+                int previousForumId = forumTopic.ForumId;
+                var newForum = GetForumById(newForumId);
 
                 if (newForum != null)
                 {
-                    if (previousForumID != NewForumID)
+                    if (previousForumId != newForumId)
                     {
-                        forumTopic = UpdateTopic(forumTopic.ForumTopicID, newForum.ForumID,
-                            forumTopic.UserID, forumTopic.TopicType, forumTopic.Subject, forumTopic.NumPosts,
-                            forumTopic.Views, forumTopic.LastPostID, forumTopic.LastPostUserID,
+                        forumTopic = UpdateTopic(forumTopic.ForumTopicId, newForum.ForumId,
+                            forumTopic.UserId, forumTopic.TopicType, forumTopic.Subject, forumTopic.NumPosts,
+                            forumTopic.Views, forumTopic.LastPostId, forumTopic.LastPostUserId,
                             forumTopic.LastPostTime, forumTopic.CreatedOn, DateTime.Now);
 
                         //update forum stats
-                        UpdateForumStats(previousForumID);
-                        UpdateForumStats(NewForumID);
+                        UpdateForumStats(previousForumId);
+                        UpdateForumStats(newForumId);
                     }
                 }
             }
@@ -788,28 +793,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Deletes a post
         /// </summary>
-        /// <param name="ForumPostID">The post identifier</param>
-        public static void DeletePost(int ForumPostID)
+        /// <param name="forumPostId">The post identifier</param>
+        public static void DeletePost(int forumPostId)
         {
-            var forumPost = ForumManager.GetPostByID(ForumPostID);
-            int ForumTopicID = 0;
+            var forumPost = ForumManager.GetPostById(forumPostId);
+            int forumTopicId = 0;
             if (forumPost != null)
             {
-                ForumTopicID = forumPost.TopicID;
+                forumTopicId = forumPost.TopicId;
             }
              
             //delete topic if it was the first post
-            var forumTopic = ForumManager.GetTopicByID(ForumTopicID);
+            var forumTopic = ForumManager.GetTopicById(forumTopicId);
             if (forumTopic != null)
             {
                 ForumPost firstPost = forumTopic.FirstPost;
-                if (firstPost != null && firstPost.ForumPostID == ForumPostID)
+                if (firstPost != null && firstPost.ForumPostId == forumPostId)
                 {
-                    ForumManager.DeleteTopic(forumTopic.ForumTopicID);
+                    ForumManager.DeleteTopic(forumTopic.ForumTopicId);
                 }
             }
 
-            DBProviderManager<DBForumProvider>.Provider.DeletePost(ForumPostID);
+            DBProviderManager<DBForumProvider>.Provider.DeletePost(forumPostId);
           
 
             if (ForumManager.CacheEnabled)
@@ -822,14 +827,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets a post
         /// </summary>
-        /// <param name="ForumPostID">The post identifier</param>
+        /// <param name="forumPostId">The post identifier</param>
         /// <returns>Post</returns>
-        public static ForumPost GetPostByID(int ForumPostID)
+        public static ForumPost GetPostById(int forumPostId)
         {
-            if (ForumPostID == 0)
+            if (forumPostId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetPostByID(ForumPostID);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetPostById(forumPostId);
             var forumPost = DBMapping(dbItem);
 
             return forumPost;
@@ -838,46 +843,46 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets all posts
         /// </summary>
-        /// <param name="ForumTopicID">The forum topic identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="forumTopicId">The forum topic identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Posts</returns>
-        public static ForumPostCollection GetAllPosts(int ForumTopicID, int UserID, string Keywords,
-            int PageSize, int PageIndex, out int TotalRecords)
+        public static ForumPostCollection GetAllPosts(int forumTopicId,
+            int userId, string keywords, int pageSize, int pageIndex, out int totalRecords)
         {
-            return GetAllPosts(ForumTopicID, UserID, Keywords, true,
-                PageSize, PageIndex, out  TotalRecords);
+            return GetAllPosts(forumTopicId, userId, keywords, true,
+                pageSize, pageIndex, out totalRecords);
         }
 
         /// <summary>
         /// Gets all posts
         /// </summary>
-        /// <param name="ForumTopicID">The forum topic identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="AscSort">Sort order</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="forumTopicId">The forum topic identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="ascSort">Sort order</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Posts</returns>
-        public static ForumPostCollection GetAllPosts(int ForumTopicID, int UserID, string Keywords,
-            bool AscSort, int PageSize, int PageIndex, out int TotalRecords)
+        public static ForumPostCollection GetAllPosts(int forumTopicId, int userId,
+            string keywords, bool ascSort, int pageSize, int pageIndex, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllPosts(ForumTopicID,
-                UserID, Keywords, AscSort, PageSize, PageIndex, out TotalRecords);
+            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllPosts(forumTopicId,
+                userId, keywords, ascSort, pageSize, pageIndex, out totalRecords);
             var forumPostCollection = DBMapping(dbCollection);
 
             return forumPostCollection;
@@ -886,36 +891,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Inserts a post
         /// </summary>
-        /// <param name="ForumTopicID">The forum topic identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="Text">The text</param>
-        /// <param name="IPAddress">The IP address</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="SendNotifications">A value indicating whether to send notifications to users</param>
+        /// <param name="forumTopicId">The forum topic identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="text">The text</param>
+        /// <param name="ipAddress">The IP address</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="sendNotifications">A value indicating whether to send notifications to users</param>
         /// <returns>Post</returns>
-        public static ForumPost InsertPost(int ForumTopicID, int UserID,
-            string Text, string IPAddress, DateTime CreatedOn, DateTime UpdatedOn, bool SendNotifications)
+        public static ForumPost InsertPost(int forumTopicId, int userId,
+            string text, string ipAddress, DateTime createdOn, DateTime updatedOn, 
+            bool sendNotifications)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            if (Text == null)
-                Text = string.Empty;
+            if (text == null)
+                text = string.Empty;
 
-            Text = Text.Trim();
+            text = text.Trim();
 
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 throw new NopException("Text cannot be empty");
 
             if (ForumManager.PostMaxLength > 0)
             {
-                if (Text.Length > ForumManager.PostMaxLength)
-                    Text = Text.Substring(0, ForumManager.PostMaxLength);
+                if (text.Length > ForumManager.PostMaxLength)
+                    text = text.Substring(0, ForumManager.PostMaxLength);
             }
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertPost(ForumTopicID, 
-                UserID, Text, IPAddress, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertPost(forumTopicId,
+                userId, text, ipAddress, createdOn, updatedOn);
 
             var forumPost = DBMapping(dbItem);
 
@@ -925,18 +931,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
-            if (SendNotifications)
+            if (sendNotifications)
             {
                 var forumTopic = forumPost.Topic;
                 var forum = forumTopic.Forum;
-                var subscriptions = GetAllSubscriptions(0, 0, forumTopic.ForumTopicID, int.MaxValue, 0);
+                var subscriptions = GetAllSubscriptions(0, 0, 
+                    forumTopic.ForumTopicId, int.MaxValue, 0);
                 
                 foreach (ForumSubscription subscription in subscriptions)
                 {
-                    if (subscription.UserID == UserID)
+                    if (subscription.UserId == userId)
                         continue;
 
-                    MessageManager.SendNewForumPostMessage(subscription.User, forumTopic, forum, NopContext.Current.WorkingLanguage.LanguageID);
+                    MessageManager.SendNewForumPostMessage(subscription.User,
+                        forumTopic, forum, NopContext.Current.WorkingLanguage.LanguageId);
                 }
             }
 
@@ -946,35 +954,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Updates the post
         /// </summary>
-        /// <param name="ForumPostID">The forum post identifier</param>
-        /// <param name="ForumTopicID">The forum topic identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="Text">The text</param>
-        /// <param name="IPAddress">The IP address</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="forumPostId">The forum post identifier</param>
+        /// <param name="forumTopicId">The forum topic identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="text">The text</param>
+        /// <param name="ipAddress">The IP address</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Post</returns>
-        public static ForumPost UpdatePost(int ForumPostID, int ForumTopicID, int UserID,
-            string Text, string IPAddress, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ForumPost UpdatePost(int forumPostId, int forumTopicId, int userId,
+            string text, string ipAddress, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            if (Text == null)
-                Text = string.Empty;
+            if (text == null)
+                text = string.Empty;
 
-            Text = Text.Trim();
+            text = text.Trim();
 
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 throw new NopException("Text cannot be empty");
 
             if (ForumManager.PostMaxLength > 0)
             {
-                if (Text.Length > ForumManager.PostMaxLength)
-                    Text = Text.Substring(0, ForumManager.PostMaxLength);
+                if (text.Length > ForumManager.PostMaxLength)
+                    text = text.Substring(0, ForumManager.PostMaxLength);
             }
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdatePost(ForumPostID, 
-                ForumTopicID, UserID, Text, IPAddress, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdatePost(forumPostId, 
+                forumTopicId, userId, text, ipAddress, createdOn, updatedOn);
 
             var forumPost = DBMapping(dbItem);
 
@@ -990,23 +998,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Deletes a private message
         /// </summary>
-        /// <param name="ForumPrivateMessageID">The private message identifier</param>
-        public static void DeletePrivateMessage(int ForumPrivateMessageID)
+        /// <param name="forumPrivateMessageId">The private message identifier</param>
+        public static void DeletePrivateMessage(int forumPrivateMessageId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeletePrivateMessage(ForumPrivateMessageID);
+            DBProviderManager<DBForumProvider>.Provider.DeletePrivateMessage(forumPrivateMessageId);
         }
 
         /// <summary>
         /// Gets a private message
         /// </summary>
-        /// <param name="ForumPrivateMessageID">The private message identifier</param>
+        /// <param name="forumPrivateMessageId">The private message identifier</param>
         /// <returns>Private message</returns>
-        public static PrivateMessage GetPrivateMessageByID(int ForumPrivateMessageID)
+        public static PrivateMessage GetPrivateMessageById(int forumPrivateMessageId)
         {
-            if (ForumPrivateMessageID == 0)
+            if (forumPrivateMessageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetPrivateMessageByID(ForumPrivateMessageID);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetPrivateMessageById(forumPrivateMessageId);
             var privateMessage = DBMapping(dbItem);
 
             return privateMessage;
@@ -1015,32 +1023,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets private messages
         /// </summary>
-        /// <param name="FromUserID">The user identifier who sent the message</param>
-        /// <param name="ToUserID">The user identifier who should receive the message</param>
-        /// <param name="IsRead">A value indicating whether loaded messages are read. false - to load not read messages only, true - to load read messages only, null to load all messages</param>
-        /// <param name="IsDeletedByAuthor">A value indicating whether loaded messages are deleted by author. false - messages are not deleted by author, null to load all messages</param>
-        /// <param name="IsDeletedByRecipient">A value indicating whether loaded messages are deleted by recipient. false - messages are not deleted by recipient, null to load all messages</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="fromUserId">The user identifier who sent the message</param>
+        /// <param name="toUserId">The user identifier who should receive the message</param>
+        /// <param name="isRead">A value indicating whether loaded messages are read. false - to load not read messages only, 1 to load read messages only, null to load all messages</param>
+        /// <param name="isDeletedByAuthor">A value indicating whether loaded messages are deleted by author. false - messages are not deleted by author, null to load all messages</param>
+        /// <param name="isDeletedByRecipient">A value indicating whether loaded messages are deleted by recipient. false - messages are not deleted by recipient, null to load all messages</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Private messages</returns>
-        public static PrivateMessageCollection GetAllPrivateMessages(int FromUserID, int ToUserID,
-            bool? IsRead, bool? IsDeletedByAuthor, bool? IsDeletedByRecipient, 
-            string Keywords, int PageSize, int PageIndex, out int TotalRecords)
+        public static PrivateMessageCollection GetAllPrivateMessages(int fromUserId,
+            int toUserId, bool? isRead, bool? isDeletedByAuthor, bool? isDeletedByRecipient,
+            string keywords, int pageSize, int pageIndex, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllPrivateMessages(FromUserID,
-                ToUserID, IsRead, IsDeletedByAuthor, IsDeletedByRecipient, Keywords, PageSize, PageIndex, out TotalRecords);
+            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllPrivateMessages(fromUserId,
+                toUserId, isRead, isDeletedByAuthor, isDeletedByRecipient, 
+                keywords, pageSize, pageIndex, out totalRecords);
             var privateMessageCollection = DBMapping(dbCollection);
 
             return privateMessageCollection;
@@ -1049,45 +1058,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Inserts a private message
         /// </summary>
-        /// <param name="FromUserID">The user identifier who sent the message</param>
-        /// <param name="ToUserID">The user identifier who should receive the message</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Text">The text</param>
-        /// <param name="IsRead">The value indivating whether message is read</param>
-        /// <param name="IsDeletedByAuthor">The value indivating whether message is deleted by author</param>
-        /// <param name="IsDeletedByRecipient">The value indivating whether message is deleted by recipient</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="fromUserId">The user identifier who sent the message</param>
+        /// <param name="toUserId">The user identifier who should receive the message</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="text">The text</param>
+        /// <param name="isRead">The value indivating whether message is read</param>
+        /// <param name="isDeletedByAuthor">The value indivating whether message is deleted by author</param>
+        /// <param name="isDeletedByRecipient">The value indivating whether message is deleted by recipient</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Private message</returns>
-        public static PrivateMessage InsertPrivateMessage(int FromUserID, int ToUserID,
-            string Subject, string Text, bool IsRead,
-            bool IsDeletedByAuthor, bool IsDeletedByRecipient, DateTime CreatedOn)
+        public static PrivateMessage InsertPrivateMessage(int fromUserId,
+            int toUserId, string subject, string text, bool isRead,
+            bool isDeletedByAuthor, bool isDeletedByRecipient, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            if (Subject == null)
-                Subject = string.Empty;
-            Subject = Subject.Trim();
-            if (String.IsNullOrEmpty(Subject))
+            if (subject == null)
+                subject = string.Empty;
+            subject = subject.Trim();
+            if (String.IsNullOrEmpty(subject))
                 throw new NopException("Subject cannot be empty");
             if (ForumManager.PMSubjectMaxLength > 0)
             {
-                if (Subject.Length > ForumManager.PMSubjectMaxLength)
-                    Subject = Subject.Substring(0, ForumManager.PMSubjectMaxLength);
+                if (subject.Length > ForumManager.PMSubjectMaxLength)
+                    subject = subject.Substring(0, ForumManager.PMSubjectMaxLength);
             }
 
-            if (Text == null)
-                Text = string.Empty;
-            Text = Text.Trim();
-            if (String.IsNullOrEmpty(Text))
+            if (text == null)
+                text = string.Empty;
+            text = text.Trim();
+            if (String.IsNullOrEmpty(text))
                 throw new NopException("Text cannot be empty");
             if (ForumManager.PMTextMaxLength > 0)
             {
-                if (Text.Length > ForumManager.PMTextMaxLength)
-                    Text = Text.Substring(0, ForumManager.PMTextMaxLength);
+                if (text.Length > ForumManager.PMTextMaxLength)
+                    text = text.Substring(0, ForumManager.PMTextMaxLength);
             }
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertPrivateMessage(FromUserID, 
-                ToUserID, Subject, Text, IsRead, IsDeletedByAuthor, IsDeletedByRecipient, CreatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertPrivateMessage(fromUserId,
+                toUserId, subject, text, isRead, isDeletedByAuthor, isDeletedByRecipient, createdOn);
 
             var privateMessage = DBMapping(dbItem);
 
@@ -1097,53 +1106,54 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Updates the private message
         /// </summary>
-        /// <param name="PrivateMessageID">The private message identifier</param>
-        /// <param name="FromUserID">The user identifier who sent the message</param>
-        /// <param name="ToUserID">The user identifier who should receive the message</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Text">The text</param>
-        /// <param name="IsRead">The value indivating whether message is read</param>
-        /// <param name="IsDeletedByAuthor">The value indivating whether message is deleted by author</param>
-        /// <param name="IsDeletedByRecipient">The value indivating whether message is deleted by recipient</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="privateMessageId">The private message identifier</param>
+        /// <param name="fromUserId">The user identifier who sent the message</param>
+        /// <param name="toUserId">The user identifier who should receive the message</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="text">The text</param>
+        /// <param name="isRead">The value indivating whether message is read</param>
+        /// <param name="isDeletedByAuthor">The value indivating whether message is deleted by author</param>
+        /// <param name="isDeletedByRecipient">The value indivating whether message is deleted by recipient</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Private message</returns>
-        public static PrivateMessage UpdatePrivateMessage(int PrivateMessageID, int FromUserID, int ToUserID,
-            string Subject, string Text, bool IsRead,
-            bool IsDeletedByAuthor, bool IsDeletedByRecipient, DateTime CreatedOn)
+        public static PrivateMessage UpdatePrivateMessage(int privateMessageId,
+            int fromUserId, int toUserId, string subject, string text, bool isRead,
+            bool isDeletedByAuthor, bool isDeletedByRecipient, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            if (Subject == null)
-                Subject = string.Empty;
-            Subject = Subject.Trim();
-            if (String.IsNullOrEmpty(Subject))
+            if (subject == null)
+                subject = string.Empty;
+            subject = subject.Trim();
+            if (String.IsNullOrEmpty(subject))
                 throw new NopException("Subject cannot be empty");
             if (ForumManager.PMSubjectMaxLength > 0)
             {
-                if (Subject.Length > ForumManager.PMSubjectMaxLength)
-                    Subject = Subject.Substring(0, ForumManager.PMSubjectMaxLength);
+                if (subject.Length > ForumManager.PMSubjectMaxLength)
+                    subject = subject.Substring(0, ForumManager.PMSubjectMaxLength);
             }
 
-            if (Text == null)
-                Text = string.Empty;
-            Text = Text.Trim();
-            if (String.IsNullOrEmpty(Text))
+            if (text == null)
+                text = string.Empty;
+            text = text.Trim();
+            if (String.IsNullOrEmpty(text))
                 throw new NopException("Text cannot be empty");
             if (ForumManager.PMTextMaxLength > 0)
             {
-                if (Text.Length > ForumManager.PMTextMaxLength)
-                    Text = Text.Substring(0, ForumManager.PMTextMaxLength);
+                if (text.Length > ForumManager.PMTextMaxLength)
+                    text = text.Substring(0, ForumManager.PMTextMaxLength);
             }
 
-            if (IsDeletedByAuthor && IsDeletedByRecipient)
+            if (isDeletedByAuthor && isDeletedByRecipient)
             {
-                DeletePrivateMessage(PrivateMessageID);
+                DeletePrivateMessage(privateMessageId);
                 return null;
             }
             else
             {
-                var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdatePrivateMessage(PrivateMessageID,
-                    FromUserID, ToUserID, Subject, Text, IsRead, IsDeletedByAuthor, IsDeletedByRecipient, CreatedOn);
+                var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdatePrivateMessage(privateMessageId,
+                    fromUserId, toUserId, subject, text, isRead,
+                    isDeletedByAuthor, isDeletedByRecipient, createdOn);
                 var privateMessage = DBMapping(dbItem);
                 return privateMessage;
             }
@@ -1152,36 +1162,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Deletes a forum subscription
         /// </summary>
-        /// <param name="ForumSubscriptionID">The forum subscription identifier</param>
-        public static void DeleteSubscription(int ForumSubscriptionID)
+        /// <param name="forumSubscriptionId">The forum subscription identifier</param>
+        public static void DeleteSubscription(int forumSubscriptionId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeleteSubscription(ForumSubscriptionID);
+            DBProviderManager<DBForumProvider>.Provider.DeleteSubscription(forumSubscriptionId);
         }
 
         /// <summary>
         /// Gets a forum subscription
         /// </summary>
-        /// <param name="ForumSubscriptionID">The forum subscription identifier</param>
+        /// <param name="forumSubscriptionId">The forum subscription identifier</param>
         /// <returns>Forum subscription</returns>
-        public static ForumSubscription GetSubscriptionByID(int ForumSubscriptionID)
+        public static ForumSubscription GetSubscriptionById(int forumSubscriptionId)
         {
-            if (ForumSubscriptionID == 0)
+            if (forumSubscriptionId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetSubscriptionByID(ForumSubscriptionID);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetSubscriptionById(forumSubscriptionId);
             var forumSubscription = DBMapping(dbItem);
-
             return forumSubscription;
         }
 
         /// <summary>
         /// Gets a forum subscription
         /// </summary>
-        /// <param name="SubscriptionGUID">The forum subscription identifier</param>
+        /// <param name="subscriptionGuid">The forum subscription identifier</param>
         /// <returns>Forum subscription</returns>
-        public static ForumSubscription GetSubscriptionByGUID(int SubscriptionGUID)
+        public static ForumSubscription GetSubscriptionByGuid(int subscriptionGuid)
         {
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetSubscriptionByGUID(SubscriptionGUID);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetSubscriptionByGuid(subscriptionGuid);
             var forumSubscription = DBMapping(dbItem);
 
             return forumSubscription;
@@ -1190,45 +1199,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets forum subscriptions
         /// </summary>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="ForumID">The forum identifier</param>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="forumId">The forum identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
         /// <returns>Forum subscriptions</returns>
-        public static ForumSubscriptionCollection GetAllSubscriptions(int UserID, int ForumID,
-            int TopicID, int PageSize, int PageIndex)
+        public static ForumSubscriptionCollection GetAllSubscriptions(int userId, 
+            int forumId, int topicId, int pageSize, int pageIndex)
         {
-            int TotalRecords = 0;
-            return GetAllSubscriptions(UserID, ForumID,
-             TopicID, PageSize, PageIndex, out TotalRecords);
+            int totalRecords = 0;
+            return GetAllSubscriptions(userId, forumId, topicId, pageSize, 
+                pageIndex, out totalRecords);
         }
 
         /// <summary>
         /// Gets forum subscriptions
         /// </summary>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="ForumID">The forum identifier</param>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="forumId">The forum identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Forum subscriptions</returns>
-        public static ForumSubscriptionCollection GetAllSubscriptions(int UserID, int ForumID,
-            int TopicID, int PageSize, int PageIndex, out int TotalRecords)
+        public static ForumSubscriptionCollection GetAllSubscriptions(int userId, int forumId,
+            int topicId, int pageSize, int pageIndex, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllSubscriptions(UserID,
-                ForumID, TopicID, PageSize, PageIndex, out TotalRecords);
+            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllSubscriptions(userId,
+                forumId, topicId, pageSize, pageIndex, out totalRecords);
             var forumSubscriptionCollection = DBMapping(dbCollection);
 
             return forumSubscriptionCollection;
@@ -1237,20 +1246,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Inserts a forum subscription
         /// </summary>
-        /// <param name="SubscriptionGUID">The forum subscription identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="ForumID">The forum identifier</param>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="subscriptionGuid">The forum subscription identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="forumId">The forum identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Forum subscription</returns>
-        public static ForumSubscription InsertSubscription(Guid SubscriptionGUID, int UserID,
-            int ForumID, int TopicID, DateTime CreatedOn)
+        public static ForumSubscription InsertSubscription(Guid subscriptionGuid, int userId,
+            int forumId, int topicId, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertSubscription(SubscriptionGUID, 
-                UserID, ForumID, TopicID, CreatedOn);
-
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertSubscription(subscriptionGuid, 
+                userId, forumId, topicId, createdOn);
+            
             var forumSubscription = DBMapping(dbItem);
 
             return forumSubscription;
@@ -1259,20 +1268,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Updates the forum subscription
         /// </summary>
-        /// <param name="SubscriptionID">The forum subscription identifier</param>
-        /// <param name="SubscriptionGUID">The forum subscription identifier</param>
-        /// <param name="UserID">The user identifier</param>
-        /// <param name="ForumID">The forum identifier</param>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="subscriptionId">The forum subscription identifier</param>
+        /// <param name="subscriptionGuid">The forum subscription identifier</param>
+        /// <param name="userId">The user identifier</param>
+        /// <param name="forumId">The forum identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Forum subscription</returns>
-        public static ForumSubscription UpdateSubscription(int SubscriptionID, Guid SubscriptionGUID, 
-            int UserID,  int ForumID, int TopicID, DateTime CreatedOn)
+        public static ForumSubscription UpdateSubscription(int subscriptionId, 
+            Guid subscriptionGuid, int userId, int forumId, int topicId, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateSubscription(SubscriptionID,
-                SubscriptionGUID, UserID, ForumID, TopicID, CreatedOn);
+            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateSubscription(subscriptionId,
+                subscriptionGuid, userId, forumId, topicId, createdOn);
 
             var forumSubscription = DBMapping(dbItem);
 
@@ -1324,7 +1333,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.AllowCustomersToEditPosts)
             {
-                bool ownTopic = customer.CustomerID == topic.UserID;
+                bool ownTopic = customer.CustomerId == topic.UserId;
                 return ownTopic;
             }
 
@@ -1376,7 +1385,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             
             if (ForumManager.AllowCustomersToDeletePosts)
             {
-                bool ownTopic = customer.CustomerID == topic.UserID;
+                bool ownTopic = customer.CustomerId == topic.UserId;
                 return ownTopic;
             }
 
@@ -1428,7 +1437,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             
             if (ForumManager.AllowCustomersToEditPosts)
             {
-                bool ownPost = customer.CustomerID == post.UserID;
+                bool ownPost = customer.CustomerId == post.UserId;
                 return ownPost;
             }
 
@@ -1457,7 +1466,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.AllowCustomersToDeletePosts)
             {
-                bool ownPost = customer.CustomerID == post.UserID;
+                bool ownPost = customer.CustomerId == post.UserId;
                 return ownPost;
             }
 
@@ -1486,11 +1495,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Check whether user is allowed to watch topics
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>True if allowed, otherwise false</returns>
-        public static bool IsUserAllowedToSubscribe(int CustomerID)
+        public static bool IsUserAllowedToSubscribe(int customerId)
         {
-            var customer = CustomerManager.GetCustomerByID(CustomerID);
+            var customer = CustomerManager.GetCustomerById(customerId);
             return IsUserAllowedToSubscribe(customer);
         }
 
@@ -1513,113 +1522,113 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Formats the posts text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatPostText(string Text)
+        public static string FormatPostText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
             switch (ForumManager.ForumEditor)
             {
                 case EditorTypeEnum.SimpleTextBox:
                     {
-                        Text = HtmlHelper.FormatText(Text, false, true, false, false, false, false);
+                        text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
                     }
                     break;
                 case EditorTypeEnum.BBCodeEditor:
                     {
-                        Text = HtmlHelper.FormatText(Text, false, true, false, true, false, false);
+                        text = HtmlHelper.FormatText(text, false, true, false, true, false, false);
                     }
                     break;
                 case EditorTypeEnum.HtmlEditor:
                     {
-                        Text = HtmlHelper.FormatText(Text, false, false, true, false, false, false);
+                        text = HtmlHelper.FormatText(text, false, false, true, false, false, false);
                     }
                     break;
                 default:
                     break;
             }
 
-            return Text;
+            return text;
         }
 
         /// <summary>
         /// Formats the signature text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatSignatureText(string Text)
+        public static string FormatSignatureText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            Text = HtmlHelper.FormatText(Text, false, true, false, false, false, false);
-            return Text;
+            text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
+            return text;
         }
 
         /// <summary>
         /// Formats the private message text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatPrivateMessageText(string Text)
+        public static string FormatPrivateMessageText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            Text = HtmlHelper.FormatText(Text, false, true, false, true, false, false);
+            text = HtmlHelper.FormatText(text, false, true, false, true, false, false);
 
-            return Text;
+            return text;
         }
 
         /// <summary>
         /// Strips topic subject
         /// </summary>
-        /// <param name="Subject">Subject</param>
+        /// <param name="subject">Subject</param>
         /// <returns>Formatted subject</returns>
-        public static string StripTopicSubject(string Subject)
+        public static string StripTopicSubject(string subject)
         {
-            if (String.IsNullOrEmpty(Subject))
-                return Subject;
+            if (String.IsNullOrEmpty(subject))
+                return subject;
             int StrippedTopicMaxLength = SettingManager.GetSettingValueInteger("Forums.StrippedTopicMaxLength", 45);
             if (StrippedTopicMaxLength > 0)
             {
-                if (Subject.Length > StrippedTopicMaxLength)
+                if (subject.Length > StrippedTopicMaxLength)
                 {
-                    int index = Subject.IndexOf(" ", StrippedTopicMaxLength);
+                    int index = subject.IndexOf(" ", StrippedTopicMaxLength);
                     if (index > 0)
                     {
-                        Subject = Subject.Substring(0, index);
-                        Subject += "...";
+                        subject = subject.Substring(0, index);
+                        subject += "...";
                     }
                 }
             }
 
-            return Subject;
+            return subject;
         }
 
         /// <summary>
         /// Calculates topic page index by post identifier
         /// </summary>
-        /// <param name="ForumTopicID">Topic identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PostID">Post identifier</param>
+        /// <param name="forumTopicId">Topic identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="postId">Post identifier</param>
         /// <returns>Page index</returns>
-        public static int CalculateTopicPageIndex(int ForumTopicID, int PageSize, int PostID)
+        public static int CalculateTopicPageIndex(int forumTopicId, int pageSize, int postId)
         {
             int pageIndex = 0;
             int totalRecords = 0;
-            var forumPosts = ForumManager.GetAllPosts(ForumTopicID, 0, 
+            var forumPosts = ForumManager.GetAllPosts(forumTopicId, 0, 
                 string.Empty, true, int.MaxValue, 0, out totalRecords);
 
             for (int i = 0; i < totalRecords; i++)
             {
-                if (forumPosts[i].ForumPostID == PostID)
+                if (forumPosts[i].ForumPostId == postId)
                 {
-                    if (PageSize > 0)
+                    if (pageSize > 0)
                     {
-                        pageIndex = i/PageSize;
+                        pageIndex = i/pageSize;
                     }
                 }
             }
@@ -1839,8 +1848,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                int forumEditorTypeID = SettingManager.GetSettingValueInteger("Forums.EditorType");
-                return (EditorTypeEnum)Enum.ToObject(typeof(EditorTypeEnum), forumEditorTypeID);
+                int forumEditorTypeId = SettingManager.GetSettingValueInteger("Forums.EditorType");
+                return (EditorTypeEnum)Enum.ToObject(typeof(EditorTypeEnum), forumEditorTypeId);
             }
             set
             {

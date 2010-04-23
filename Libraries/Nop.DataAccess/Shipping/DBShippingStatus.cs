@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Gets or sets the shipping status identifier
         /// </summary>
-        public int ShippingStatusID { get; set; }
+        public int ShippingStatusId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var productReview = ProductManager.GetProductReviewByID(this.ProductReviewID);
+            var productReview = ProductManager.GetProductReviewById(this.ProductReviewId);
             if (productReview != null)
             {
                 lblHelpfulYesTotal.Text = productReview.HelpfulYesTotal.ToString();
@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         private void SetHelpful(bool WasHelpful)
         {
-            var productReview = ProductManager.GetProductReviewByID(this.ProductReviewID);
+            var productReview = ProductManager.GetProductReviewById(this.ProductReviewId);
             if (productReview != null)
             {
                 if (NopContext.Current.User == null && CustomerManager.AllowAnonymousUsersToReviewProduct)
@@ -62,11 +62,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 if (NopContext.Current.User == null || (NopContext.Current.User.IsGuest && !CustomerManager.AllowAnonymousUsersToReviewProduct))
                 {
-                    string loginURL = SEOHelper.GetLoginPageURL(true);
+                    string loginURL = SEOHelper.GetLoginPageUrl(true);
                     Response.Redirect(loginURL);
                 }
                 
-                ProductManager.SetProductRatingHelpfulness(productReview.ProductReviewID, WasHelpful);
+                ProductManager.SetProductRatingHelpfulness(productReview.ProductReviewId, WasHelpful);
                 BindData();
             }
             else
@@ -89,11 +89,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
         
-        public int ProductReviewID
+        public int ProductReviewId
         {
             get
             {
-                object obj2 = this.ViewState["ProductReviewID"];
+                object obj2 = this.ViewState["ProductReviewId"];
                 if (obj2 != null)
                     return (int)obj2;
                 else
@@ -101,7 +101,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             set
             {
-                this.ViewState["ProductReviewID"] = value;
+                this.ViewState["ProductReviewId"] = value;
             }
         }
     }

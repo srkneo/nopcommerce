@@ -38,12 +38,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the checkout attribute value identifier
         /// </summary>
-        public int CheckoutAttributeValueID { get; set; }
+        public int CheckoutAttributeValueId { get; set; }
 
         /// <summary>
         /// Gets or sets the checkout attribute mapping identifier
         /// </summary>
-        public int CheckoutAttributeID { get; set; }
+        public int CheckoutAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the checkout attribute name

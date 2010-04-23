@@ -34,12 +34,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            NewsComment newsComment = NewsManager.GetNewsCommentByID(this.NewsCommentID);
+            NewsComment newsComment = NewsManager.GetNewsCommentById(this.NewsCommentId);
             if (newsComment != null)
             {
                 this.txtTitle.Text = newsComment.Title;
-                this.lblNews.Text = GetNewsInfo(newsComment.NewsID);
-                this.lblCustomer.Text = GetCustomerInfo(newsComment.CustomerID);
+                this.lblNews.Text = GetNewsInfo(newsComment.NewsId);
+                this.lblCustomer.Text = GetCustomerInfo(newsComment.CustomerId);
                 this.txtComment.Text = newsComment.Comment;
                 this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(newsComment.CreatedOn).ToString();
             }
@@ -47,30 +47,30 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Response.Redirect("NewsComments.aspx");
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
                 if (customer.IsGuest)
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.NewsCommentDetails.Customer.Guest"));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.NewsCommentDetails.Customer.Guest"));
                 }
                 else
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 }
             }
             return customerInfo;
         }
 
-        protected string GetNewsInfo(int NewsID)
+        protected string GetNewsInfo(int newsId)
         {
-            News news = NewsManager.GetNewsByID(NewsID);
+            News news = NewsManager.GetNewsById(newsId);
             if (news != null)
             {
-                string newsInfo = string.Format("<a href=\"NewsDetails.aspx?NewsID={0}\">{1}</a>", news.NewsID, Server.HtmlEncode(news.Title));
+                string newsInfo = string.Format("<a href=\"NewsDetails.aspx?NewsID={0}\">{1}</a>", news.NewsId, Server.HtmlEncode(news.Title));
                 return newsInfo;
             }
             else
@@ -91,14 +91,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    NewsComment newsComment = NewsManager.GetNewsCommentByID(this.NewsCommentID);
+                    NewsComment newsComment = NewsManager.GetNewsCommentById(this.NewsCommentId);
                     if (newsComment != null)
                     {
                         string title = txtTitle.Text.Trim();
                         string comment = txtComment.Text.Trim();
-                        newsComment = NewsManager.UpdateNewsComment(newsComment.NewsCommentID, newsComment.NewsID,
-                            newsComment.CustomerID, title, comment, newsComment.CreatedOn);
-                        Response.Redirect("NewsCommentDetails.aspx?NewsCommentID=" + newsComment.NewsCommentID.ToString());
+                        newsComment = NewsManager.UpdateNewsComment(newsComment.NewsCommentId, newsComment.NewsId,
+                            newsComment.CustomerId, title, comment, newsComment.CreatedOn);
+                        Response.Redirect("NewsCommentDetails.aspx?NewsCommentID=" + newsComment.NewsCommentId.ToString());
                     }
                     else
                         Response.Redirect("NewsComments.aspx");
@@ -112,15 +112,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            NewsManager.DeleteNewsComment(this.NewsCommentID);
+            NewsManager.DeleteNewsComment(this.NewsCommentId);
             Response.Redirect("NewsComments.aspx");
         }
 
-        public int NewsCommentID
+        public int NewsCommentId
         {
             get
             {
-                return CommonHelper.QueryStringInt("NewsCommentID");
+                return CommonHelper.QueryStringInt("NewsCommentId");
             }
         }
     }

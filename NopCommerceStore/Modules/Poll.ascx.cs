@@ -40,12 +40,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (!Page.IsPostBack)
             {
-                rfvPollAnswers.ValidationGroup = string.Format("Poll.{0}", this.PollID);
-                btnSubmitVoteRecord.ValidationGroup = string.Format("Poll.{0}", this.PollID);
+                rfvPollAnswers.ValidationGroup = string.Format("Poll.{0}", this.PollId);
+                btnSubmitVoteRecord.ValidationGroup = string.Format("Poll.{0}", this.PollId);
                 var customer = NopContext.Current.User;
                 bool showResults = false;
                 if (customer != null)
-                    showResults = PollManager.PollVotingRecordExists(this.PollID, customer.CustomerID);
+                    showResults = PollManager.PollVotingRecordExists(this.PollId, customer.CustomerId);
             
                 BindData(showResults);
             }
@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData(bool showResults)
         {
-            var poll = PollManager.GetPollByID(this.PollID);
+            var poll = PollManager.GetPollById(this.PollId);
             if (poll != null && poll.Published)
             {
                 lblPollName.Text = Server.HtmlEncode(poll.Name);
@@ -85,14 +85,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var customer = NopContext.Current.User;
             if (rblPollAnswers.SelectedItem != null && customer != null && !customer.IsGuest)
             {
-                int pollAnswerID = Convert.ToInt32(rblPollAnswers.SelectedItem.Value);
-                if (!PollManager.PollVotingRecordExists(this.PollID, customer.CustomerID))
-                    PollManager.CreatePollVotingRecord(pollAnswerID, customer.CustomerID);
+                int pollAnswerId = Convert.ToInt32(rblPollAnswers.SelectedItem.Value);
+                if (!PollManager.PollVotingRecordExists(this.PollId, customer.CustomerId))
+                    PollManager.CreatePollVotingRecord(pollAnswerId, customer.CustomerId);
                 BindData(true);
             }
             else
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
         }
@@ -102,7 +102,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var imgPercentage = (Image)e.Item.FindControl("imgPercentage");
             var lblPercentage = (Label)e.Item.FindControl("lblPercentage");
 
-            var poll = PollManager.GetPollByID(this.PollID);
+            var poll = PollManager.GetPollById(this.PollId);
             if (poll != null)
             {
                 int pollAnswerVoteCount = (int)DataBinder.Eval(e.Item.DataItem, "Count");
@@ -121,16 +121,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int PollID
+        public int PollId
         {
             get
             {
-                if (ViewState["PollID"] == null)
+                if (ViewState["PollId"] == null)
                     return -1;
                 else
-                    return (int)ViewState["PollID"];
+                    return (int)ViewState["PollId"];
             }
-            set { ViewState["PollID"] = value; }
+            set { ViewState["PollId"] = value; }
         }
     }
 }

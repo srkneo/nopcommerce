@@ -28,15 +28,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Find records
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
+        /// <param name="countryId">Country identifier</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
         /// <returns>Tax rates</returns>
-        public TaxRateCollection FindTaxRates(int CountryID, int TaxCategoryID)
+        public TaxRateCollection FindTaxRates(int countryId, int taxCategoryId)
         {
             TaxRateCollection result = new TaxRateCollection();
             foreach (TaxRate taxRate in this)
             {
-                if (taxRate.CountryID == CountryID && taxRate.TaxCategoryID == TaxCategoryID)
+                if (taxRate.CountryId == countryId && taxRate.TaxCategoryId == taxCategoryId)
                     result.Add(taxRate);
             }
             return result;

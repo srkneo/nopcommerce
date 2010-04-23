@@ -33,18 +33,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     public abstract partial class DBShippingByWeightProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">ShippingByWeight identifier</param>
+        /// <param name="shippingByWeightId">ShippingByWeight identifier</param>
         /// <returns>ShippingByWeight</returns>
-        public abstract DBShippingByWeight GetByID(int ShippingByWeightID);
+        public abstract DBShippingByWeight GetById(int shippingByWeightId);
 
         /// <summary>
         /// Deletes a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">ShippingByWeight identifier</param>
-        public abstract void DeleteShippingByWeight(int ShippingByWeightID);
+        /// <param name="shippingByWeightId">ShippingByWeight identifier</param>
+        public abstract void DeleteShippingByWeight(int shippingByWeightId);
 
         /// <summary>
         /// Gets all ShippingByWeights
@@ -55,36 +56,39 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Inserts a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeight</returns>
-        public abstract DBShippingByWeight InsertShippingByWeight(int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount);
+        public abstract DBShippingByWeight InsertShippingByWeight(int shippingMethodId, 
+            decimal from, decimal to, bool usePercentage, 
+            decimal shippingChargePercentage, decimal shippingChargeAmount);
         
         /// <summary>
         /// Updates the ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">The ShippingByWeight identifier</param>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingByWeightId">The ShippingByWeight identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeight</returns>
-        public abstract DBShippingByWeight UpdateShippingByWeight(int ShippingByWeightID, int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount);
+        public abstract DBShippingByWeight UpdateShippingByWeight(int shippingByWeightId, 
+            int shippingMethodId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount);
 
         /// <summary>
         /// Gets all ShippingByWeights by shipping method identifier
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <returns>ShippingByWeight collection</returns>
-        public abstract DBShippingByWeightCollection GetAllByShippingMethodID(int ShippingMethodID);
+        public abstract DBShippingByWeightCollection GetAllByShippingMethodId(int shippingMethodId);
+        
         #endregion
     }
 }

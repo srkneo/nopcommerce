@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the order status identifier
         /// </summary>
-        public int OrderStatusID { get; set; }
+        public int OrderStatusId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

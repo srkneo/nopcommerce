@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Gets or sets the news comment identifier
         /// </summary>
-        public int NewsCommentID { get; set; }
+        public int NewsCommentId { get; set; }
 
         /// <summary>
         /// Gets or sets the news identifier
         /// </summary>
-        public int NewsID { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the title

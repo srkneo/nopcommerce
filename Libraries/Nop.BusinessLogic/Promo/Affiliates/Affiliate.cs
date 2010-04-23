@@ -38,8 +38,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         /// <summary>
         /// Gets or sets the affiliate identifier
         /// </summary>
-        public int AffiliateID { get; set; }
-        
+        public int AffiliateId { get; set; }
+
         /// <summary>
         /// Gets or sets the first name
         /// </summary>
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the entity has been deleted
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         {
             get
             {
-                return CountryManager.GetCountryByID(CountryID);
+                return CountryManager.GetCountryById(this.CountryId);
             }
         }
 
@@ -136,10 +136,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         {
             get
             {
-                if (String.IsNullOrEmpty(FirstName))
-                    return LastName;
+                if (String.IsNullOrEmpty(this.FirstName))
+                    return this.LastName;
                 else
-                    return string.Format("{0} {1}", LastName, FirstName);
+                    return string.Format("{0} {1}", this.LastName, this.FirstName);
             }
         }
         #endregion

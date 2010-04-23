@@ -49,10 +49,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #region Utilities
         protected void BindData()
         {
-            this.lnkPrint.NavigateUrl = Page.ResolveUrl("~/PrintOrderDetails.aspx?OrderID=" + this.OrderID).ToLowerInvariant();
-            this.lblOrderID.Text = order.OrderID.ToString();
+            this.lnkPrint.NavigateUrl = Page.ResolveUrl("~/PrintOrderDetails.aspx?OrderID=" + this.OrderId).ToLowerInvariant();
+            this.lblOrderId.Text = order.OrderId.ToString();
             this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(order.CreatedOn).ToString("D");
-            this.lblOrderStatus.Text = OrderManager.GetOrderStatusName(order.OrderStatusID);
+            this.lblOrderStatus.Text = OrderManager.GetOrderStatusName(order.OrderStatusId);
             btnReOrder.Visible = OrderManager.IsReOrderAllowed;
 
             if (order.ShippingStatus != ShippingStatusEnum.ShippingNotRequired)
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 pnlBillingCountry.Visible = false;
 
 
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(order.PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(order.PaymentMethodId);
             if (paymentMethod != null)
                 this.lPaymentMethod.Text = paymentMethod.VisibleName;
             else
@@ -171,7 +171,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             //gift cards
-            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderID);
+            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             if (gcuhC.Count > 0)
             {
                 rptrGiftCards.Visible = true;
@@ -245,13 +245,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
-            order = OrderManager.GetOrderByID(this.OrderID);
-            if (order == null || order.Deleted || NopContext.Current.User.CustomerID != order.CustomerID)
+            order = OrderManager.GetOrderById(this.OrderId);
+            if (order == null || order.Deleted || NopContext.Current.User.CustomerId != order.CustomerId)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -265,7 +265,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             try
             {
-                OrderManager.ReOrder(OrderID);
+                OrderManager.ReOrder(this.OrderId);
                 Response.Redirect("~/shoppingcart.aspx");
             }
             catch(Exception)
@@ -277,11 +277,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             try
             {
-                string fileName = string.Format("order_{0}_{1}.pdf", order.OrderGUID, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+                string fileName = string.Format("order_{0}_{1}.pdf", order.OrderGuid, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
                 string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
 
-                PDFHelper.PrintOrderToPDF(order, NopContext.Current.WorkingLanguage.LanguageID, filePath);
-                CommonHelper.WriteResponsePDF(filePath, fileName);
+                PDFHelper.PrintOrderToPdf(order, NopContext.Current.WorkingLanguage.LanguageId, filePath);
+                CommonHelper.WriteResponsePdf(filePath, fileName);
             }
             catch(Exception ex)
             {
@@ -306,12 +306,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #endregion
 
         #region Methods
-        public string GetProductVariantName(int ProductVariantID)
+        public string GetProductVariantName(int productVariantId)
         {
-            var productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
                 return productVariant.FullProductName;
-            return "Not available. ID=" + ProductVariantID.ToString();
+            return "Not available. ID=" + productVariantId.ToString();
         }
         
         public string GetAttributeDescription(OrderProductVariant opv)
@@ -322,15 +322,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return result;
         }
 
-        public string GetProductURL(int ProductVariantID)
+        public string GetProductUrl(int productVariantId)
         {
-            var productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
-                return SEOHelper.GetProductURL(productVariant.ProductID);
+                return SEOHelper.GetProductUrl(productVariant.ProductId);
             return string.Empty;
         }
 
-        public string GetDownloadURL(OrderProductVariant orderProductVariant)
+        public string GetDownloadUrl(OrderProductVariant orderProductVariant)
         {
             string result = string.Empty;
             if (OrderManager.IsDownloadAllowed(orderProductVariant))
@@ -340,7 +340,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return result;
         }
 
-        public string GetLicenseDownloadURL(OrderProductVariant orderProductVariant)
+        public string GetLicenseDownloadUrl(OrderProductVariant orderProductVariant)
         {
             string result = string.Empty;
             if (OrderManager.IsLicenseDownloadAllowed(orderProductVariant))
@@ -386,11 +386,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         #region Properties
 
-        public int OrderID
+        public int OrderId
         {
             get
             {
-                return CommonHelper.QueryStringInt("OrderID");
+                return CommonHelper.QueryStringInt("OrderId");
             }
         }
 

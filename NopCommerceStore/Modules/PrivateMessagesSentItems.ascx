@@ -1,7 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.PrivateMessagesSentItemsControl"
     CodeBehind="PrivateMessagesSentItems.ascx.cs" %>
 <div class="private-messages-box">
-    <asp:GridView ID="gvSent" DataKeyNames="PrivateMessageID" runat="server" AllowPaging="True"
+    <asp:GridView ID="gvSent" DataKeyNames="PrivateMessageId" runat="server" AllowPaging="True"
         AutoGenerateColumns="False" CellPadding="4" DataSourceID="odsSent" GridLines="None"
         PageSize="10" CssClass="pmgridtablestyle">
         <AlternatingRowStyle CssClass="pmgridaltrowstyle" />
@@ -12,13 +12,13 @@
             <asp:TemplateField HeaderText="" ItemStyle-Width="5%">
                 <ItemTemplate>
                     <asp:CheckBox ID="cbSelect" runat="server" />
-                    <asp:HiddenField ID="hfPrivateMessageID" runat="server" Value='<%# Eval("PrivateMessageID") %>' />
+                    <asp:HiddenField ID="hfPrivateMessageId" runat="server" Value='<%# Eval("PrivateMessageId") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="<% $NopResources:PrivateMessages.Sent.ToColumn %>"
                 ItemStyle-Width="20%">
                 <ItemTemplate>
-                    <%#GetToInfo(Convert.ToInt32(Eval("ToUserID")))%>
+                    <%#GetToInfo(Convert.ToInt32(Eval("ToUserId")))%>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="<% $NopResources:PrivateMessages.Sent.SubjectColumn %>"

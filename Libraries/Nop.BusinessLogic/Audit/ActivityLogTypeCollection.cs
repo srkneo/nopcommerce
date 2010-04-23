@@ -27,12 +27,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Find activity log type by system keyword
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
+        /// <param name="systemKeyword">The system keyword</param>
         /// <returns>Activity log type item</returns>
-        public ActivityLogType FindBySystemKeyword(string SystemKeyword)
+        public ActivityLogType FindBySystemKeyword(string systemKeyword)
         {
             for (int i = 0; i < Count; i++)
-                if (this[i].SystemKeyword.ToLowerInvariant().Equals(SystemKeyword.ToLowerInvariant()))
+                if (this[i].SystemKeyword.ToLowerInvariant().Equals(systemKeyword.ToLowerInvariant()))
                     return this[i];
             return null;
         }

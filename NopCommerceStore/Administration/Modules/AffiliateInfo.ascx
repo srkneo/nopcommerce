@@ -4,13 +4,13 @@
 <%@ Register TagPrefix="nopCommerce" TagName="EmailTextBox" Src="EmailTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <table class="adminContent">
-    <tr runat="server" id="pnlAffiliateID">
+    <tr runat="server" id="pnlAffiliateId">
         <td class="adminTitle">
-            <nopCommerce:ToolTipLabel runat="server" ID="lblAffiliateIDTitle" Text="<% $NopResources:Admin.AffiliateInfo.AffiliateID %>"
+            <nopCommerce:ToolTipLabel runat="server" ID="lblAffiliateIdTitle" Text="<% $NopResources:Admin.AffiliateInfo.AffiliateID %>"
                 ToolTip="<% $NopResources:Admin.AffiliateInfo.AffiliateID.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <asp:Label ID="lblAffiliateID" runat="server"></asp:Label>
+            <asp:Label ID="lblAffiliateId" runat="server"></asp:Label>
         </td>
     </tr>
     <tr>

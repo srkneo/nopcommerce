@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Payment.eWay
             paymentInfo.CreditCardNumber = this.creditCardNumber.Text;
             paymentInfo.CreditCardExpireYear = int.Parse((this.creditCardExpireYear.SelectedValue == null) ? "0" : this.creditCardExpireYear.SelectedValue);
             paymentInfo.CreditCardExpireMonth = int.Parse((this.creditCardExpireMonth.SelectedValue == null) ? "0" : this.creditCardExpireMonth.SelectedValue);
-            paymentInfo.CreditCardCVV2 = this.creditCardCVV2.Text;
+            paymentInfo.CreditCardCvv2 = this.creditCardCVV2.Text;
             return paymentInfo;
         }
 

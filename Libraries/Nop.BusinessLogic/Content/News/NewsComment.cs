@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets or sets the news comment identifier
         /// </summary>
-        public int NewsCommentID { get; set; }
+        public int NewsCommentId { get; set; }
 
         /// <summary>
         /// Gets or sets the news identifier
         /// </summary>
-        public int NewsID { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the title
@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             get
             {
-                return NewsManager.GetNewsByID(NewsID);
+                return NewsManager.GetNewsById(this.NewsId);
             }
         }
 
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             get
             {
-                return CustomerManager.GetCustomerByID(CustomerID);
+                return CustomerManager.GetCustomerById(this.CustomerId);
             }
         }
         #endregion

@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ShippingMethod shippingMethod = ShippingMethodManager.GetShippingMethodByID(this.ShippingMethodID);
+            ShippingMethod shippingMethod = ShippingMethodManager.GetShippingMethodById(this.ShippingMethodId);
             if (shippingMethod != null)
             {
                 this.txtName.Text = shippingMethod.Name;
@@ -50,11 +50,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public ShippingMethod SaveInfo()
         {
-            ShippingMethod shippingMethod = ShippingMethodManager.GetShippingMethodByID(this.ShippingMethodID);
+            ShippingMethod shippingMethod = ShippingMethodManager.GetShippingMethodById(this.ShippingMethodId);
 
             if (shippingMethod != null)
             {
-                shippingMethod = ShippingMethodManager.UpdateShippingMethod(shippingMethod.ShippingMethodID,
+                shippingMethod = ShippingMethodManager.UpdateShippingMethod(shippingMethod.ShippingMethodId,
                     txtName.Text, txtDescription.Text, txtDisplayOrder.Value);
             }
             else
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ShippingMethodManager.DeleteShippingMethod(this.ShippingMethodID);
+                ShippingMethodManager.DeleteShippingMethod(this.ShippingMethodId);
                 Response.Redirect("ShippingMethods.aspx");
             }
             catch (Exception exc)
@@ -79,11 +79,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ShippingMethodID
+        public int ShippingMethodId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ShippingMethodID");
+                return CommonHelper.QueryStringInt("ShippingMethodId");
             }
         }
     }

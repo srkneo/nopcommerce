@@ -73,8 +73,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 return null;
 
             var item = new Address();
-            item.AddressID = dbItem.AddressID;
-            item.CustomerID = dbItem.CustomerID;
+            item.AddressId = dbItem.AddressId;
+            item.CustomerId = dbItem.CustomerId;
             item.IsBillingAddress = dbItem.IsBillingAddress;
             item.FirstName = dbItem.FirstName;
             item.LastName = dbItem.LastName;
@@ -85,9 +85,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             item.Address1 = dbItem.Address1;
             item.Address2 = dbItem.Address2;
             item.City = dbItem.City;
-            item.StateProvinceID = dbItem.StateProvinceID;
+            item.StateProvinceId = dbItem.StateProvinceId;
             item.ZipPostalCode = dbItem.ZipPostalCode;
-            item.CountryID = dbItem.CountryID;
+            item.CountryId = dbItem.CountryId;
             item.CreatedOn = dbItem.CreatedOn;
             item.UpdatedOn = dbItem.UpdatedOn;
 
@@ -115,22 +115,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 return null;
 
             var item = new Customer();
-            item.CustomerID = dbItem.CustomerID;
-            item.CustomerGUID = dbItem.CustomerGUID;
+            item.CustomerId = dbItem.CustomerId;
+            item.CustomerGuid = dbItem.CustomerGuid;
             item.Email = dbItem.Email;
             item.Username = dbItem.Username;
             item.PasswordHash = dbItem.PasswordHash;
             item.SaltKey = dbItem.SaltKey;
-            item.AffiliateID = dbItem.AffiliateID;
-            item.BillingAddressID = dbItem.BillingAddressID;
-            item.ShippingAddressID = dbItem.ShippingAddressID;
-            item.LastPaymentMethodID = dbItem.LastPaymentMethodID;
+            item.AffiliateId = dbItem.AffiliateId;
+            item.BillingAddressId = dbItem.BillingAddressId;
+            item.ShippingAddressId = dbItem.ShippingAddressId;
+            item.LastPaymentMethodId = dbItem.LastPaymentMethodId;
             item.LastAppliedCouponCode = dbItem.LastAppliedCouponCode;
             item.GiftCardCouponCodes = dbItem.GiftCardCouponCodes;
             item.CheckoutAttributes = dbItem.CheckoutAttributes;
-            item.LanguageID = dbItem.LanguageID;
-            item.CurrencyID = dbItem.CurrencyID;
-            item.TaxDisplayTypeID = dbItem.TaxDisplayTypeID;
+            item.LanguageId = dbItem.LanguageId;
+            item.CurrencyId = dbItem.CurrencyId;
+            item.TaxDisplayTypeId = dbItem.TaxDisplayTypeId;
             item.IsTaxExempt = dbItem.IsTaxExempt;
             item.IsAdmin = dbItem.IsAdmin;
             item.IsGuest = dbItem.IsGuest;
@@ -141,8 +141,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             item.Active = dbItem.Active;
             item.Deleted = dbItem.Deleted;
             item.RegistrationDate = dbItem.RegistrationDate;
-            item.TimeZoneID = dbItem.TimeZoneID;
-            item.AvatarID = dbItem.AvatarID;
+            item.TimeZoneId = dbItem.TimeZoneId;
+            item.AvatarId = dbItem.AvatarId;
 
             return item;
         }
@@ -168,8 +168,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 return null;
 
             var item = new CustomerAttribute();
-            item.CustomerAttributeID = dbItem.CustomerAttributeID;
-            item.CustomerID = dbItem.CustomerID;
+            item.CustomerAttributeId = dbItem.CustomerAttributeId;
+            item.CustomerId = dbItem.CustomerId;
             item.Key = dbItem.Key;
             item.Value = dbItem.Value;
 
@@ -197,7 +197,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 return null;
 
             var item = new CustomerRole();
-            item.CustomerRoleID = dbItem.CustomerRoleID;
+            item.CustomerRoleId = dbItem.CustomerRoleId;
             item.Name = dbItem.Name;
             item.FreeShipping = dbItem.FreeShipping;
             item.TaxExempt = dbItem.TaxExempt;
@@ -228,8 +228,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 return null;
 
             var item = new CustomerSession();
-            item.CustomerSessionGUID = dbItem.CustomerSessionGUID;
-            item.CustomerID = dbItem.CustomerID;
+            item.CustomerSessionGuid = dbItem.CustomerSessionGuid;
+            item.CustomerId = dbItem.CustomerId;
             item.LastAccessed = dbItem.LastAccessed;
             item.IsExpired = dbItem.IsExpired;
 
@@ -243,21 +243,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Deletes an address by address identifier 
         /// </summary>
-        /// <param name="AddressID">Address identifier</param>
-        public static void DeleteAddress(int AddressID)
+        /// <param name="addressId">Address identifier</param>
+        public static void DeleteAddress(int addressId)
         {
-            var address = GetAddressByID(AddressID);
+            var address = GetAddressById(addressId);
             if (address != null)
             {
-                DBProviderManager<DBCustomerProvider>.Provider.DeleteAddress(AddressID);
+                DBProviderManager<DBCustomerProvider>.Provider.DeleteAddress(addressId);
                 var customer = address.Customer;
                 if (customer != null)
                 {
-                    if (customer.BillingAddressID == address.AddressID)
-                        customer = SetDefaultBillingAddress(customer.CustomerID, 0);
+                    if (customer.BillingAddressId == address.AddressId)
+                        customer = SetDefaultBillingAddress(customer.CustomerId, 0);
 
-                    if (customer.ShippingAddressID == address.AddressID)
-                        customer = SetDefaultShippingAddress(customer.CustomerID, 0);
+                    if (customer.ShippingAddressId == address.AddressId)
+                        customer = SetDefaultShippingAddress(customer.CustomerId, 0);
                 }
             }
         }
@@ -265,14 +265,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets an address by address identifier
         /// </summary>
-        /// <param name="AddressID">Address identifier</param>
+        /// <param name="addressId">Address identifier</param>
         /// <returns>Address</returns>
-        public static Address GetAddressByID(int AddressID)
+        public static Address GetAddressById(int addressId)
         {
-            if (AddressID == 0)
+            if (addressId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetAddressByID(AddressID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetAddressById(addressId);
             var address = DBMapping(dbItem);
             return address;
         }
@@ -280,12 +280,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a collection of addresses by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="GetBillingAddresses">Gets or sets a value indicating whether the addresses are billing or shipping</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="getBillingAddresses">Gets or sets a value indicating whether the addresses are billing or shipping</param>
         /// <returns>A collection of addresses</returns>
-        public static AddressCollection GetAddressesByCustomerID(int CustomerID, bool GetBillingAddresses)
+        public static AddressCollection GetAddressesByCustomerId(int customerId, bool getBillingAddresses)
         {
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAddressesByCustomerID(CustomerID, GetBillingAddresses);
+            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAddressesByCustomerId(customerId, getBillingAddresses);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -293,67 +293,67 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Inserts an address
         /// </summary>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="IsBillingAddress">A value indicating whether the address is billing or shipping</param>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="isBillingAddress">A value indicating whether the address is billing or shipping</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>An address</returns>
-        public static Address InsertAddress(int CustomerID, bool IsBillingAddress, string FirstName, string LastName,
-            string PhoneNumber, string Email, string FaxNumber, string Company, string Address1,
-            string Address2, string City, int StateProvinceID, string ZipPostalCode,
-            int CountryID, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Address InsertAddress(int customerId, bool isBillingAddress,
+            string firstName, string lastName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, int stateProvinceId, string zipPostalCode,
+            int countryId, DateTime createdOn, DateTime updatedOn)
         {
-            if (FirstName == null)
-                FirstName = string.Empty;
-            if (LastName == null)
-                LastName = string.Empty;
-            if (PhoneNumber == null)
-                PhoneNumber = string.Empty;
-            if (Email == null)
-                Email = string.Empty;
-            if (FaxNumber == null)
-                FaxNumber = string.Empty;
-            if (Company == null)
-                Company = string.Empty;
-            if (Address1 == null)
-                Address1 = string.Empty;
-            if (Address2 == null)
-                Address2 = string.Empty;
-            if (City == null)
-                City = string.Empty;
-            if (ZipPostalCode == null)
-                ZipPostalCode = string.Empty;
-            FirstName = FirstName.Trim();
-            LastName = LastName.Trim();
-            PhoneNumber = PhoneNumber.Trim();
-            Email = Email.Trim();
-            FaxNumber = FaxNumber.Trim();
-            Company = Company.Trim();
-            Address1 = Address1.Trim();
-            Address2 = Address2.Trim();
-            City = City.Trim();
-            ZipPostalCode = ZipPostalCode.Trim();
+            if (firstName == null)
+                firstName = string.Empty;
+            if (lastName == null)
+                lastName = string.Empty;
+            if (phoneNumber == null)
+                phoneNumber = string.Empty;
+            if (email == null)
+                email = string.Empty;
+            if (faxNumber == null)
+                faxNumber = string.Empty;
+            if (company == null)
+                company = string.Empty;
+            if (address1 == null)
+                address1 = string.Empty;
+            if (address2 == null)
+                address2 = string.Empty;
+            if (city == null)
+                city = string.Empty;
+            if (zipPostalCode == null)
+                zipPostalCode = string.Empty;
+            firstName = firstName.Trim();
+            lastName = lastName.Trim();
+            phoneNumber = phoneNumber.Trim();
+            email = email.Trim();
+            faxNumber = faxNumber.Trim();
+            company = company.Trim();
+            address1 = address1.Trim();
+            address2 = address2.Trim();
+            city = city.Trim();
+            zipPostalCode = zipPostalCode.Trim();
 
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertAddress(CustomerID,
-                IsBillingAddress, FirstName, LastName,
-                PhoneNumber, Email, FaxNumber, Company, Address1,
-                Address2, City, StateProvinceID, ZipPostalCode,
-                CountryID, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertAddress(customerId,
+                isBillingAddress, firstName, lastName, phoneNumber, email, 
+                faxNumber, company, address1, address2, city, stateProvinceId, 
+                zipPostalCode, countryId, createdOn, updatedOn);
             var address = DBMapping(dbItem);
             return address;
         }
@@ -361,68 +361,68 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Updates the address
         /// </summary>
-        /// <param name="AddressID">The address identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="IsBillingAddress">A value indicating whether the address is billing or shipping</param>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="addressId">The address identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="isBillingAddress">A value indicating whether the address is billing or shipping</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>An address</returns>
-        public static Address UpdateAddress(int AddressID, int CustomerID, bool IsBillingAddress, string FirstName, string LastName,
-            string PhoneNumber, string Email, string FaxNumber, string Company,
-            string Address1, string Address2, string City, int StateProvinceID,
-            string ZipPostalCode, int CountryID, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Address UpdateAddress(int addressId, int customerId,
+            bool isBillingAddress, string firstName, string lastName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, int stateProvinceId, string zipPostalCode,
+            int countryId, DateTime createdOn, DateTime updatedOn)
         {
-            if (FirstName == null)
-                FirstName = string.Empty;
-            if (LastName == null)
-                LastName = string.Empty;
-            if (PhoneNumber == null)
-                PhoneNumber = string.Empty;
-            if (Email == null)
-                Email = string.Empty;
-            if (FaxNumber == null)
-                FaxNumber = string.Empty;
-            if (Company == null)
-                Company = string.Empty;
-            if (Address1 == null)
-                Address1 = string.Empty;
-            if (Address2 == null)
-                Address2 = string.Empty;
-            if (City == null)
-                City = string.Empty;
-            if (ZipPostalCode == null)
-                ZipPostalCode = string.Empty;
-            FirstName = FirstName.Trim();
-            LastName = LastName.Trim();
-            PhoneNumber = PhoneNumber.Trim();
-            Email = Email.Trim();
-            FaxNumber = FaxNumber.Trim();
-            Company = Company.Trim();
-            Address1 = Address1.Trim();
-            Address2 = Address2.Trim();
-            City = City.Trim();
-            ZipPostalCode = ZipPostalCode.Trim();
+            if (firstName == null)
+                firstName = string.Empty;
+            if (lastName == null)
+                lastName = string.Empty;
+            if (phoneNumber == null)
+                phoneNumber = string.Empty;
+            if (email == null)
+                email = string.Empty;
+            if (faxNumber == null)
+                faxNumber = string.Empty;
+            if (company == null)
+                company = string.Empty;
+            if (address1 == null)
+                address1 = string.Empty;
+            if (address2 == null)
+                address2 = string.Empty;
+            if (city == null)
+                city = string.Empty;
+            if (zipPostalCode == null)
+                zipPostalCode = string.Empty;
+            firstName = firstName.Trim();
+            lastName = lastName.Trim();
+            phoneNumber = phoneNumber.Trim();
+            email = email.Trim();
+            faxNumber = faxNumber.Trim();
+            company = company.Trim();
+            address1 = address1.Trim();
+            address2 = address2.Trim();
+            city = city.Trim();
+            zipPostalCode = zipPostalCode.Trim();
 
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateAddress(AddressID, 
-                CustomerID, IsBillingAddress, FirstName, LastName,
-                PhoneNumber, Email, FaxNumber, Company,
-                Address1, Address2, City, StateProvinceID,
-                ZipPostalCode, CountryID, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateAddress(addressId, 
+                customerId, isBillingAddress, firstName, lastName, phoneNumber, 
+                email, faxNumber, company, address1, address2, city, 
+                stateProvinceId, zipPostalCode, countryId, createdOn, updatedOn);
             var address = DBMapping(dbItem);
             return address;
         }
@@ -468,22 +468,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Reset data required for checkout
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="ClearCouponCodes">A value indicating whether to clear coupon code</param>
-        public static void ResetCheckoutData(int CustomerID, bool ClearCouponCodes)
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="clearCouponCodes">A value indicating whether to clear coupon code</param>
+        public static void ResetCheckoutData(int customerId, bool clearCouponCodes)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = SetDefaultShippingAddress(customer.CustomerID, 0);
-                customer = SetDefaultBillingAddress(customer.CustomerID, 0);
+                customer = SetDefaultShippingAddress(customer.CustomerId, 0);
+                customer = SetDefaultBillingAddress(customer.CustomerId, 0);
                 customer.LastShippingOption = null;
-                customer = SetLastPaymentMethodID(customer.CustomerID, 0);
-                if (ClearCouponCodes)
+                customer = SetLastPaymentMethodId(customer.CustomerId, 0);
+                if (clearCouponCodes)
                 {
-                    customer = ApplyDiscountCouponCode(customer.CustomerID, string.Empty);
-                    customer = ApplyGiftCardCouponCode(customer.CustomerID, string.Empty);
-                    customer = ApplyCheckoutAttributes(customer.CustomerID, string.Empty);
+                    customer = ApplyDiscountCouponCode(customer.CustomerId, string.Empty);
+                    customer = ApplyGiftCardCouponCode(customer.CustomerId, string.Empty);
+                    customer = ApplyCheckoutAttributes(customer.CustomerId, string.Empty);
                 }
             }
         }
@@ -491,24 +491,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Sets a default billing address
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="BillingAddressID">Billing address identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="billingAddressId">Billing address identifier</param>
         /// <returns>Customer</returns>
-        public static Customer SetDefaultBillingAddress(int CustomerID, int BillingAddressID)
+        public static Customer SetDefaultBillingAddress(int customerId, int billingAddressId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, BillingAddressID,
-                    customer.ShippingAddressID, customer.LastPaymentMethodID,
+                customer = UpdateCustomer(customer.CustomerId, 
+                    customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey,
+                    customer.AffiliateId, billingAddressId,
+                    customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType, 
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType, 
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
-                    customer.TotalForumPosts, customer.Signature, customer.AdminComment, customer.Active,
-                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.TotalForumPosts, customer.Signature, 
+                    customer.AdminComment, customer.Active,
+                    customer.Deleted, customer.RegistrationDate, 
+                    customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -516,26 +520,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Sets a default shipping address
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="ShippingAddressID">Shipping address identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="shippingAddressId">Shipping address identifier</param>
         /// <returns>Customer</returns>
-        public static Customer SetDefaultShippingAddress(int CustomerID, int ShippingAddressID)
+        public static Customer SetDefaultShippingAddress(int customerId, int shippingAddressId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                    customer.BillingAddressID,
-                    ShippingAddressID, customer.LastPaymentMethodID,
+                customer = UpdateCustomer(customer.CustomerId, 
+                    customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, 
+                    customer.SaltKey, customer.AffiliateId,
+                    customer.BillingAddressId,
+                    shippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType, 
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType, 
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
-                    customer.TotalForumPosts, customer.Signature, customer.AdminComment, customer.Active,
+                    customer.TotalForumPosts, customer.Signature, 
+                    customer.AdminComment, customer.Active,
                     customer.Deleted, customer.RegistrationDate, 
-                    customer.TimeZoneID, customer.AvatarID);
+                    customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -543,23 +550,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Sets a customer payment method
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>Customer</returns>
-        public static Customer SetLastPaymentMethodID(int CustomerID, int PaymentMethodID)
+        public static Customer SetLastPaymentMethodId(int customerId, int paymentMethodId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-               customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
-                    customer.ShippingAddressID, PaymentMethodID, customer.LastAppliedCouponCode,
+               customer = UpdateCustomer(customer.CustomerId, 
+                   customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, 
+                    customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
+                    customer.ShippingAddressId, paymentMethodId, 
+                    customer.LastAppliedCouponCode,
                     customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
-                    customer.LanguageID, customer.CurrencyID, 
+                    customer.LanguageId, customer.CurrencyId, 
                     customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                    customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
-                    customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.Signature, customer.AdminComment, 
+                    customer.Active, customer.Deleted, 
+                    customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -567,22 +578,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Sets a customer time zone
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="TimeZoneID">Time zone identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="timeZoneId">Time zone identifier</param>
         /// <returns>Customer</returns>
-        public static Customer SetTimeZoneID(int CustomerID, string TimeZoneID)
+        public static Customer SetTimeZoneId(int customerId, string timeZoneId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
-                     customer.ShippingAddressID, customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
+                     customer.ShippingAddressId, customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
                      customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
-                     customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
+                     customer.LanguageId, customer.CurrencyId, customer.TaxDisplayType,
                      customer.IsTaxExempt, customer.IsAdmin,
                      customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, customer.RegistrationDate, TimeZoneID, customer.AvatarID);
+                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
+                     customer.RegistrationDate, timeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -590,44 +602,44 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Sets a customer email
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="NewEmail">New email</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="newEmail">New email</param>
         /// <returns>Customer</returns>
-        public static Customer SetEmail(int CustomerID, string NewEmail)
+        public static Customer SetEmail(int customerId, string newEmail)
         {
-            if (NewEmail == null)
-                NewEmail = string.Empty;
-            NewEmail = NewEmail.Trim();
+            if (newEmail == null)
+                newEmail = string.Empty;
+            newEmail = newEmail.Trim();
 
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                if (!CommonHelper.IsValidEmail(NewEmail))
+                if (!CommonHelper.IsValidEmail(newEmail))
                 {
                     throw new NopException("New email is not valid");
                 }
 
-                var cust2 = GetCustomerByEmail(NewEmail);
-                if (cust2 != null && customer.CustomerID != cust2.CustomerID)
+                var cust2 = GetCustomerByEmail(newEmail);
+                if (cust2 != null && customer.CustomerId != cust2.CustomerId)
                 {
                     throw new NopException("The e-mail address is already in use.");
                 }
 
-                if (NewEmail.Length > 40)
+                if (newEmail.Length > 40)
                 {
                     throw new NopException("E-mail address is too long.");
                 }
 
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, NewEmail,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, 
-                    customer.BillingAddressID,  customer.ShippingAddressID, customer.LastPaymentMethodID,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, newEmail,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId, 
+                    customer.BillingAddressId,  customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType,
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
-                    customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -635,32 +647,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Sets a customer sugnature
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="Signature">Signature</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="signature">Signature</param>
         /// <returns>Customer</returns>
-        public static Customer SetCustomerSignature(int CustomerID, string Signature)
+        public static Customer SetCustomerSignature(int customerId, string signature)
         {
-            if (Signature == null)
-                Signature = string.Empty;
-            Signature = Signature.Trim();
+            if (signature == null)
+                signature = string.Empty;
+            signature = signature.Trim();
 
             int maxLength = 300;
-            if (Signature.Length > maxLength)
-                Signature = Signature.Substring(0, maxLength);
+            if (signature.Length > maxLength)
+                signature = signature.Substring(0, maxLength);
 
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                    customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
+                    customer.BillingAddressId, customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType, 
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType, 
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                    Signature, customer.AdminComment, customer.Active, customer.Deleted,
-                    customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    signature, customer.AdminComment, customer.Active, customer.Deleted,
+                    customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -668,24 +680,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Sets a customer's affiliate
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Customer</returns>
-        public static Customer SetAffiliate(int CustomerID, int AffiliateID)
+        public static Customer SetAffiliate(int customerId, int affiliateId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, AffiliateID,
-                    customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, affiliateId,
+                    customer.BillingAddressId, customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType,
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
-                    customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -693,23 +705,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Removes customer avatar
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="AvatarID">Customer avatar identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="avatarId">Customer avatar identifier</param>
         /// <returns>Customer</returns>
-        public static Customer SetCustomerAvatarID(int CustomerID, int AvatarID)
+        public static Customer SetCustomerAvatarId(int customerId, int avatarId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
-                     customer.ShippingAddressID, customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                     customer.Username, customer.PasswordHash, customer.SaltKey, 
+                     customer.AffiliateId, customer.BillingAddressId,
+                     customer.ShippingAddressId, customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
                      customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
-                     customer.LanguageID, customer.CurrencyID,
+                     customer.LanguageId, customer.CurrencyId,
                      customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin,
                      customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
                      customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
-                     customer.RegistrationDate, customer.TimeZoneID, AvatarID);
+                     customer.RegistrationDate, customer.TimeZoneId, avatarId);
             }
             return customer;
         }
@@ -736,45 +749,47 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
                 DateTime LastAccessed = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
 
-                NopContext.Current.Session = UpdateCustomerSession(NopContext.Current.Session.CustomerSessionGUID,
-                    guestCustomer.CustomerID, LastAccessed, NopContext.Current.Session.IsExpired);
+                NopContext.Current.Session = UpdateCustomerSession(NopContext.Current.Session.CustomerSessionGuid,
+                    guestCustomer.CustomerId, LastAccessed, NopContext.Current.Session.IsExpired);
             }
         }
 
         /// <summary>
         /// Applies a discount coupon code to a current customer
         /// </summary>
-        /// <param name="CouponCode">Coupon code</param>
-        public static void ApplyDiscountCouponCode(string CouponCode)
+        /// <param name="couponCode">Coupon code</param>
+        public static void ApplyDiscountCouponCode(string couponCode)
         {
             if (NopContext.Current.User == null)
             {
                 //create anonymous record
                 CreateAnonymousUser();
             }
-            NopContext.Current.User = ApplyDiscountCouponCode(NopContext.Current.User.CustomerID, CouponCode);
+            NopContext.Current.User = ApplyDiscountCouponCode(NopContext.Current.User.CustomerId, couponCode);
         }
 
         /// <summary>
         /// Applies a discount coupon code
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="CouponCode">Coupon code</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="couponCode">Coupon code</param>
         /// <returns>Customer</returns>
-        public static Customer ApplyDiscountCouponCode(int CustomerID, string CouponCode)
+        public static Customer ApplyDiscountCouponCode(int customerId, string couponCode)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                    customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    CouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID, customer.CurrencyID,
-                    customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
-                    customer.IsForumModerator, customer.TotalForumPosts, 
-                    customer.Signature, customer.AdminComment, customer.Active,
-                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, 
+                    customer.Email, customer.Username, customer.PasswordHash, 
+                    customer.SaltKey, customer.AffiliateId, customer.BillingAddressId, 
+                    customer.ShippingAddressId, customer.LastPaymentMethodId,
+                    couponCode, customer.GiftCardCouponCodes,
+                    customer.CheckoutAttributes, customer.LanguageId, 
+                    customer.CurrencyId, customer.TaxDisplayType, customer.IsTaxExempt, 
+                    customer.IsAdmin, customer.IsGuest, customer.IsForumModerator,
+                    customer.TotalForumPosts, customer.Signature, customer.AdminComment, 
+                    customer.Active, customer.Deleted, customer.RegistrationDate, 
+                    customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -782,37 +797,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Applies a gift card coupon code to a current customer
         /// </summary>
-        /// <param name="CouponCodesXML">Coupon code (XML)</param>
-        public static void ApplyGiftCardCouponCode(string CouponCodesXML)
+        /// <param name="couponCodesXml">Coupon code (XML)</param>
+        public static void ApplyGiftCardCouponCode(string couponCodesXml)
         {
             if (NopContext.Current.User == null)
             {
                 //create anonymous record
                 CreateAnonymousUser();
             }
-            NopContext.Current.User = ApplyGiftCardCouponCode(NopContext.Current.User.CustomerID, CouponCodesXML);
+            NopContext.Current.User = ApplyGiftCardCouponCode(NopContext.Current.User.CustomerId, couponCodesXml);
         }
 
         /// <summary>
         /// Applies a gift card coupon code
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="CouponCodesXML">Coupon code (XML)</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="couponCodesXml">Coupon code (XML)</param>
         /// <returns>Customer</returns>
-        public static Customer ApplyGiftCardCouponCode(int CustomerID, string CouponCodesXML)
+        public static Customer ApplyGiftCardCouponCode(int customerId, string couponCodesXml)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                    customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
-                    customer.LastAppliedCouponCode, CouponCodesXML,
-                    customer.CheckoutAttributes, customer.LanguageID, customer.CurrencyID,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
+                    customer.BillingAddressId, customer.ShippingAddressId, customer.LastPaymentMethodId,
+                    customer.LastAppliedCouponCode, couponCodesXml,
+                    customer.CheckoutAttributes, customer.LanguageId, customer.CurrencyId,
                     customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, customer.Active,
-                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -820,39 +835,39 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Applies selected checkout attibutes to a current customer
         /// </summary>
-        /// <param name="AttributesXML">Checkout attibutes (XML)</param>
-        public static void ApplyCheckoutAttributes(string AttributesXML)
+        /// <param name="attributesXml">Checkout attibutes (XML)</param>
+        public static void ApplyCheckoutAttributes(string attributesXml)
         {
             if (NopContext.Current.User == null)
             {
                 //create anonymous record
                 CreateAnonymousUser();
             }
-            NopContext.Current.User = ApplyCheckoutAttributes(NopContext.Current.User.CustomerID, AttributesXML);
+            NopContext.Current.User = ApplyCheckoutAttributes(NopContext.Current.User.CustomerId, attributesXml);
         }
 
         /// <summary>
         /// Applies selected checkout attibutes to a current customer
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="AttributesXML">Checkout attibutes (XML)</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="attributesXml">Checkout attibutes (XML)</param>
         /// <returns>Customer</returns>
-        public static Customer ApplyCheckoutAttributes(int CustomerID, string AttributesXML)
+        public static Customer ApplyCheckoutAttributes(int customerId, string attributesXml)
         {
-            if (AttributesXML == null)
-                AttributesXML = string.Empty;
-            var customer = GetCustomerByID(CustomerID);
+            if (attributesXml == null)
+                attributesXml = string.Empty;
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                    customer.BillingAddressID, customer.ShippingAddressID, customer.LastPaymentMethodID,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
+                    customer.BillingAddressId, customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    AttributesXML, customer.LanguageID, customer.CurrencyID,
+                    attributesXml, customer.LanguageId, customer.CurrencyId,
                     customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, customer.Active,
-                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -863,44 +878,46 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <returns>Customer collection</returns>
         public static CustomerCollection GetAllCustomers()
         {
-            int TotalRecords = 0;
-            return GetAllCustomers(null, null, null, string.Empty, false, int.MaxValue, 0, out TotalRecords);
+            int totalRecords = 0;
+            return GetAllCustomers(null, null, null, string.Empty, false, 
+                int.MaxValue, 0, out totalRecords);
         }
 
         /// <summary>
         /// Gets all customers
         /// </summary>
-        /// <param name="RegistrationFrom">Customer registration from; null to load all customers</param>
-        /// <param name="RegistrationTo">Customer registration to; null to load all customers</param>
-        /// <param name="Email">Customer Email</param>
-        /// <param name="Username">Customer username</param>
-        /// <param name="DontLoadGuestCustomers">A value indicating whether to don't load guest customers</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="registrationFrom">Customer registration from; null to load all customers</param>
+        /// <param name="registrationTo">Customer registration to; null to load all customers</param>
+        /// <param name="email">Customer Email</param>
+        /// <param name="username">Customer username</param>
+        /// <param name="dontLoadGuestCustomers">A value indicating whether to don't load guest customers</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Customer collection</returns>
-        public static CustomerCollection GetAllCustomers(DateTime? RegistrationFrom, DateTime? RegistrationTo,
-            string Email, string Username, bool DontLoadGuestCustomers, 
-            int PageSize, int PageIndex, out int TotalRecords)
+        public static CustomerCollection GetAllCustomers(DateTime? registrationFrom,
+            DateTime? registrationTo, string email, string username, 
+            bool dontLoadGuestCustomers, int pageSize, int pageIndex, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
-            if (Email == null)
-                Email = string.Empty;
+            if (email == null)
+                email = string.Empty;
 
-            if (Username == null)
-                Username = string.Empty;
+            if (username == null)
+                username = string.Empty;
 
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAllCustomers(RegistrationFrom,
-                RegistrationTo, Email, Username, DontLoadGuestCustomers, PageSize, PageIndex, out TotalRecords);
+            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAllCustomers(registrationFrom,
+                registrationTo, email, username, dontLoadGuestCustomers, pageSize,
+                pageIndex, out totalRecords);
             var customers = DBMapping(dbCollection);
             return customers;
         }
@@ -908,11 +925,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets all customers by affiliate identifier
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Customer collection</returns>
-        public static CustomerCollection GetAffiliatedCustomers(int AffiliateID)
+        public static CustomerCollection GetAffiliatedCustomers(int affiliateId)
         {
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAffiliatedCustomers(AffiliateID);
+            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAffiliatedCustomers(affiliateId);
             var customers = DBMapping(dbCollection);
             return customers;
         }
@@ -920,12 +937,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets all customers by customer role id
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
         /// <returns>Customer collection</returns>
-        public static CustomerCollection GetCustomersByCustomerRoleID(int CustomerRoleID)
+        public static CustomerCollection GetCustomersByCustomerRoleId(int customerRoleId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomersByCustomerRoleID(CustomerRoleID, showHidden);
+            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomersByCustomerRoleId(customerRoleId, showHidden);
             var customers = DBMapping(dbCollection);
             return customers;
         }
@@ -933,38 +950,38 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Marks customer as deleted
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        public static void MarkCustomerAsDeleted(int CustomerID)
+        /// <param name="customerId">Customer identifier</param>
+        public static void MarkCustomerAsDeleted(int customerId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email, 
+                UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email, 
                     customer.Username, customer.PasswordHash, customer.SaltKey, 
-                    customer.AffiliateID, customer.BillingAddressID,
-                    customer.ShippingAddressID, customer.LastPaymentMethodID,
+                    customer.AffiliateId, customer.BillingAddressId,
+                    customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType,
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
                     customer.TotalForumPosts, customer.Signature, 
                     customer.AdminComment, customer.Active,
-                    true, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    true, customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
         }
 
         /// <summary>
         /// Gets a customer by email
         /// </summary>
-        /// <param name="Email">Customer Email</param>
+        /// <param name="email">Customer Email</param>
         /// <returns>A customer</returns>
-        public static Customer GetCustomerByEmail(string Email)
+        public static Customer GetCustomerByEmail(string email)
         {
-            if (string.IsNullOrEmpty(Email))
+            if (string.IsNullOrEmpty(email))
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByEmail(Email);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByEmail(email);
             var customer = DBMapping(dbItem);
             return customer;
         }
@@ -972,14 +989,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a customer by email
         /// </summary>
-        /// <param name="Username">Customer username</param>
+        /// <param name="username">Customer username</param>
         /// <returns>A customer</returns>
-        public static Customer GetCustomerByUsername(string Username)
+        public static Customer GetCustomerByUsername(string username)
         {
-            if (string.IsNullOrEmpty(Username))
+            if (string.IsNullOrEmpty(username))
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByUsername(Username);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByUsername(username);
             var customer = DBMapping(dbItem);
             return customer;
         }
@@ -987,14 +1004,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a customer
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>A customer</returns>
-        public static Customer GetCustomerByID(int CustomerID)
+        public static Customer GetCustomerById(int customerId)
         {
-            if (CustomerID == 0)
+            if (customerId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByID(CustomerID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerById(customerId);
             var customer = DBMapping(dbItem);
             return customer;
         }
@@ -1002,13 +1019,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a customer by GUID
         /// </summary>
-        /// <param name="CustomerGUID">Customer GUID</param>
+        /// <param name="customerGuid">Customer GUID</param>
         /// <returns>A customer</returns>
-        public static Customer GetCustomerByGUID(Guid CustomerGUID)
+        public static Customer GetCustomerByGuid(Guid customerGuid)
         {
-            if (CustomerGUID == Guid.Empty)
+            if (customerGuid == Guid.Empty)
                 return null;
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByGUID(CustomerGUID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByGuid(customerGuid);
             var customer = DBMapping(dbItem);
             return customer;
         }
@@ -1016,32 +1033,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Adds a customer
         /// </summary>
-        /// <param name="Email">The email</param>
-        /// <param name="Username">The username</param>
-        /// <param name="Password">The password</param>
-        /// <param name="IsAdmin">A value indicating whether the customer is administrator</param>
-        /// <param name="IsGuest">A value indicating whether the customer is guest</param>
-        /// <param name="Active">A value indicating whether the customer is active</param>
+        /// <param name="email">The email</param>
+        /// <param name="username">The username</param>
+        /// <param name="password">The password</param>
+        /// <param name="isAdmin">A value indicating whether the customer is administrator</param>
+        /// <param name="isGuest">A value indicating whether the customer is guest</param>
+        /// <param name="active">A value indicating whether the customer is active</param>
         /// <param name="status">Status</param>
         /// <returns>A customer</returns>
-        public static Customer AddCustomer(string Email, string Username, string Password,
-            bool IsAdmin, bool IsGuest,  bool Active, out MembershipCreateStatus status)
+        public static Customer AddCustomer(string email, string username, string password,
+            bool isAdmin, bool isGuest,  bool active, out MembershipCreateStatus status)
         {
-            int affiliateID = 0;
-            HttpCookie affiliateCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.AffiliateID");
+            int affiliateId = 0;
+            HttpCookie affiliateCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.AffiliateId");
             if (affiliateCookie != null)
             {
-                Affiliate affiliate = AffiliateManager.GetAffiliateByID(Convert.ToInt32(affiliateCookie.Value));
+                Affiliate affiliate = AffiliateManager.GetAffiliateById(Convert.ToInt32(affiliateCookie.Value));
                 if (affiliate != null && affiliate.Active)
-                    affiliateID = affiliate.AffiliateID;
+                    affiliateId = affiliate.AffiliateId;
             }
 
-            var customer = AddCustomer(Guid.NewGuid(), Email, Username, Password, affiliateID,
+            var customer = AddCustomer(Guid.NewGuid(), email, username, password, affiliateId,
                 0, 0, 0, string.Empty, string.Empty, string.Empty,
-                NopContext.Current.WorkingLanguage.LanguageID,
-                NopContext.Current.WorkingCurrency.CurrencyID,
-                NopContext.Current.TaxDisplayType, false, IsAdmin, IsGuest,
-                false, 0, string.Empty, string.Empty, Active,
+                NopContext.Current.WorkingLanguage.LanguageId,
+                NopContext.Current.WorkingCurrency.CurrencyId,
+                NopContext.Current.TaxDisplayType, false, isAdmin, isGuest,
+                false, 0, string.Empty, string.Empty, active,
                 false, DateTime.Now, string.Empty, 0, out status);
 
             if (status == MembershipCreateStatus.Success)
@@ -1062,89 +1079,90 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Adds a customer
         /// </summary>
-        /// <param name="Email">The email</param>
-        /// <param name="Username">The username</param>
-        /// <param name="Password">The password</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="IsAdmin">A value indicating whether the customer is administrator</param>
-        /// <param name="IsGuest">A value indicating whether the customer is guest</param>
-        /// <param name="Active">A value indicating whether the customer is active</param>
+        /// <param name="email">The email</param>
+        /// <param name="username">The username</param>
+        /// <param name="password">The password</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="isAdmin">A value indicating whether the customer is administrator</param>
+        /// <param name="isGuest">A value indicating whether the customer is guest</param>
+        /// <param name="active">A value indicating whether the customer is active</param>
         /// <param name="status">Status</param>
         /// <returns>A customer</returns>
-        public static Customer AddCustomer(string Email, string Username, string Password, int AffiliateID, 
-            bool IsAdmin, bool IsGuest, bool Active, out MembershipCreateStatus status)
+        public static Customer AddCustomer(string email, string username, string password, 
+            int affiliateId, bool isAdmin, bool isGuest, bool active, 
+            out MembershipCreateStatus status)
         {
-            return AddCustomer(Guid.NewGuid(), Email, Username, Password,
-                AffiliateID, 0, 0, 0, string.Empty, string.Empty, string.Empty,
-                NopContext.Current.WorkingLanguage.LanguageID,
-                NopContext.Current.WorkingCurrency.CurrencyID,
+            return AddCustomer(Guid.NewGuid(), email, username, password,
+                affiliateId, 0, 0, 0, string.Empty, string.Empty, string.Empty,
+                NopContext.Current.WorkingLanguage.LanguageId,
+                NopContext.Current.WorkingCurrency.CurrencyId,
                 NopContext.Current.TaxDisplayType, false,
-                IsAdmin, IsGuest, false, 0, string.Empty, string.Empty, Active,
+                isAdmin, isGuest, false, 0, string.Empty, string.Empty, active,
                 false, DateTime.Now, string.Empty, 0, out status);
         }
 
         /// <summary>
         /// Adds a customer
         /// </summary>
-        /// <param name="CustomerGUID">The customer identifier</param>
-        /// <param name="Email">The email</param>
-        /// <param name="Username">The username</param>
-        /// <param name="Password">The password</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="BillingAddressID">The billing address identifier</param>
-        /// <param name="ShippingAddressID">The shipping address identifier</param>
-        /// <param name="LastPaymentMethodID">The last payment method identifier</param>
-        /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
-        /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
-        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="CurrencyID">The currency identifier</param>
-        /// <param name="TaxDisplayType">The tax display type</param>
-        /// <param name="IsTaxExempt">A value indicating whether the customer is tax exempt</param>
-        /// <param name="IsAdmin">A value indicating whether the customer is administrator</param>
-        /// <param name="IsGuest">A value indicating whether the customer is guest</param>
-        /// <param name="IsForumModerator">A value indicating whether the customer is forum moderator</param>
-        /// <param name="TotalForumPosts">A forum post count</param>
-        /// <param name="Signature">Signature</param>
-        /// <param name="AdminComment">Admin comment</param>
-        /// <param name="Active">A value indicating whether the customer is active</param>
-        /// <param name="Deleted">A value indicating whether the customer has been deleted</param>
-        /// <param name="RegistrationDate">The date and time of customer registration</param>
-        /// <param name="TimeZoneID">The time zone identifier</param>
-        /// <param name="AvatarID">The avatar identifier</param>
+        /// <param name="customerGuid">The customer identifier</param>
+        /// <param name="email">The email</param>
+        /// <param name="username">The username</param>
+        /// <param name="password">The password</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="billingAddressId">The billing address identifier</param>
+        /// <param name="shippingAddressId">The shipping address identifier</param>
+        /// <param name="lastPaymentMethodId">The last payment method identifier</param>
+        /// <param name="lastAppliedCouponCode">The last applied coupon code</param>
+        /// <param name="giftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="checkoutAttributes">The selected checkout attributes</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="currencyId">The currency identifier</param>
+        /// <param name="taxDisplayType">The tax display type</param>
+        /// <param name="isTaxExempt">A value indicating whether the customer is tax exempt</param>
+        /// <param name="isAdmin">A value indicating whether the customer is administrator</param>
+        /// <param name="isGuest">A value indicating whether the customer is guest</param>
+        /// <param name="isForumModerator">A value indicating whether the customer is forum moderator</param>
+        /// <param name="totalForumPosts">A forum post count</param>
+        /// <param name="signature">Signature</param>
+        /// <param name="adminComment">Admin comment</param>
+        /// <param name="active">A value indicating whether the customer is active</param>
+        /// <param name="deleted">A value indicating whether the customer has been deleted</param>
+        /// <param name="registrationDate">The date and time of customer registration</param>
+        /// <param name="timeZoneId">The time zone identifier</param>
+        /// <param name="avatarId">The avatar identifier</param>
         /// <param name="status">Status</param>
         /// <returns>A customer</returns>
-        public static Customer AddCustomer(Guid CustomerGUID, string Email, string Username,
-            string Password, int AffiliateID, int BillingAddressID,
-            int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes,
-            string CheckoutAttributes, int LanguageID, int CurrencyID, 
-            TaxDisplayTypeEnum TaxDisplayType, bool IsTaxExempt, bool IsAdmin, bool IsGuest,
-            bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment,
-            bool Active, bool Deleted, DateTime RegistrationDate,
-            string TimeZoneID, int AvatarID, out MembershipCreateStatus status)
+        public static Customer AddCustomer(Guid customerGuid, string email, string username,
+            string password, int affiliateId, int billingAddressId,
+            int shippingAddressId, int lastPaymentMethodId,
+            string lastAppliedCouponCode, string giftCardCouponCodes,
+            string checkoutAttributes, int languageId, int currencyId, 
+            TaxDisplayTypeEnum taxDisplayType, bool isTaxExempt, bool isAdmin, bool isGuest,
+            bool isForumModerator, int totalForumPosts, string signature, string adminComment,
+            bool active, bool deleted, DateTime registrationDate,
+            string timeZoneId, int avatarId, out MembershipCreateStatus status)
         {
             Customer customer = null;
 
-            RegistrationDate = DateTimeHelper.ConvertToUtcTime(RegistrationDate);
+            registrationDate = DateTimeHelper.ConvertToUtcTime(registrationDate);
 
-            if (Username == null)
-                Username = string.Empty;
-            Username = Username.Trim();
+            if (username == null)
+                username = string.Empty;
+            username = username.Trim();
 
-            if (Email == null)
-                Email = string.Empty;
-            Email = Email.Trim();
+            if (email == null)
+                email = string.Empty;
+            email = email.Trim();
 
-            if (Signature == null)
-                Signature = string.Empty;
-            Signature = Signature.Trim();
+            if (signature == null)
+                signature = string.Empty;
+            signature = signature.Trim();
 
             string saltKey = string.Empty;
             string passwordHash = string.Empty;
 
             status = MembershipCreateStatus.UserRejected;
-            if (!IsGuest)
+            if (!isGuest)
             {
                 if (!NopContext.Current.IsAdmin)
                 {
@@ -1156,32 +1174,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 }
                 if (CustomerManager.UsernamesEnabled)
                 {
-                    if (GetCustomerByUsername(Username) != null)
+                    if (GetCustomerByUsername(username) != null)
                     {
                         status = MembershipCreateStatus.DuplicateUserName;
                         return customer;
                     }
 
-                    if (Username.Length > 40)
+                    if (username.Length > 40)
                     {
                         status = MembershipCreateStatus.InvalidUserName;
                         return customer;
                     }
                 }
 
-                if (GetCustomerByEmail(Email) != null)
+                if (GetCustomerByEmail(email) != null)
                 {
                     status = MembershipCreateStatus.DuplicateEmail;
                     return customer;
                 }
 
-                if (!CommonHelper.IsValidEmail(Email))
+                if (!CommonHelper.IsValidEmail(email))
                 {
                     status = MembershipCreateStatus.InvalidEmail;
                     return customer;
                 }
 
-                if (Email.Length > 40)
+                if (email.Length > 40)
                 {
                     status = MembershipCreateStatus.InvalidEmail;
                     return customer;
@@ -1192,35 +1210,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     if (CustomerManager.CustomerRegistrationType == CustomerRegistrationTypeEnum.EmailValidation ||
                         CustomerManager.CustomerRegistrationType == CustomerRegistrationTypeEnum.AdminApproval)
                     {
-                        Active = false;
+                        active = false;
                     }
                 }
                 saltKey = CreateSalt(5);
-                passwordHash = CreatePasswordHash(Password, saltKey);
+                passwordHash = CreatePasswordHash(password, saltKey);
             }
 
-            customer = AddCustomerForced(CustomerGUID, Email, Username,
-                passwordHash, saltKey, AffiliateID, BillingAddressID,
-                ShippingAddressID, LastPaymentMethodID,
-                LastAppliedCouponCode, GiftCardCouponCodes,
-                CheckoutAttributes, LanguageID, CurrencyID, TaxDisplayType,
-                IsTaxExempt, IsAdmin, IsGuest, IsForumModerator, 
-                TotalForumPosts, Signature, AdminComment, Active, 
-                Deleted, RegistrationDate, TimeZoneID, AvatarID);
+            customer = AddCustomerForced(customerGuid, email, username,
+                passwordHash, saltKey, affiliateId, billingAddressId,
+                shippingAddressId, lastPaymentMethodId,
+                lastAppliedCouponCode, giftCardCouponCodes,
+                checkoutAttributes, languageId, currencyId, taxDisplayType,
+                isTaxExempt, isAdmin, isGuest, isForumModerator, 
+                totalForumPosts, signature, adminComment, active, 
+                deleted, registrationDate, timeZoneId, avatarId);
 
-            if (!IsGuest)
+            if (!isGuest)
             {
-                DateTime LastAccessed = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-                SaveCustomerSession(Guid.NewGuid(), customer.CustomerID, LastAccessed, false);
+                DateTime lastAccessed = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+                SaveCustomerSession(Guid.NewGuid(), customer.CustomerId, lastAccessed, false);
             }
 
             status = MembershipCreateStatus.Success;
 
-            if (!IsGuest)
+            if (!isGuest)
             {
-                if (Active)
+                if (active)
                 {
-                    MessageManager.SendCustomerWelcomeMessage(customer, NopContext.Current.WorkingLanguage.LanguageID);
+                    MessageManager.SendCustomerWelcomeMessage(customer, NopContext.Current.WorkingLanguage.LanguageId);
                 }
                 else
                 {
@@ -1229,7 +1247,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                         Guid accountActivationToken = Guid.NewGuid();
                         customer.AccountActivationToken = accountActivationToken.ToString();
 
-                        MessageManager.SendCustomerEmailValidationMessage(customer, NopContext.Current.WorkingLanguage.LanguageID);
+                        MessageManager.SendCustomerEmailValidationMessage(customer, NopContext.Current.WorkingLanguage.LanguageId);
                     }
                 }
             }
@@ -1237,64 +1255,64 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         }
 
         /// <summary>
-        /// Adds a customer withour any validations, welcome messages
+        /// Adds a customer without any validations, welcome messages
         /// </summary>
-        /// <param name="CustomerGUID">The customer identifier</param>
-        /// <param name="Email">The email</param>
-        /// <param name="Username">The username</param>
-        /// <param name="PasswordHash">The password hash</param>
-        /// <param name="SaltKey">The salk key</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="BillingAddressID">The billing address identifier</param>
-        /// <param name="ShippingAddressID">The shipping address identifier</param>
-        /// <param name="LastPaymentMethodID">The last payment method identifier</param>
-        /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
-        /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
-        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="CurrencyID">The currency identifier</param>
-        /// <param name="TaxDisplayType">The tax display type</param>
-        /// <param name="IsTaxExempt">A value indicating whether the customer is tax exempt</param>
-        /// <param name="IsAdmin">A value indicating whether the customer is administrator</param>
-        /// <param name="IsGuest">A value indicating whether the customer is guest</param>
-        /// <param name="IsForumModerator">A value indicating whether the customer is forum moderator</param>
-        /// <param name="TotalForumPosts">A forum post count</param>
-        /// <param name="Signature">Signature</param>
-        /// <param name="AdminComment">Admin comment</param>
-        /// <param name="Active">A value indicating whether the customer is active</param>
-        /// <param name="Deleted">A value indicating whether the customer has been deleted</param>
-        /// <param name="RegistrationDate">The date and time of customer registration</param>
-        /// <param name="TimeZoneID">The time zone identifier</param>
-        /// <param name="AvatarID">The avatar identifier</param>
+        /// <param name="customerGuid">The customer identifier</param>
+        /// <param name="email">The email</param>
+        /// <param name="username">The username</param>
+        /// <param name="passwordHash">The password hash</param>
+        /// <param name="saltKey">The salt key</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="billingAddressId">The billing address identifier</param>
+        /// <param name="shippingAddressId">The shipping address identifier</param>
+        /// <param name="lastPaymentMethodId">The last payment method identifier</param>
+        /// <param name="lastAppliedCouponCode">The last applied coupon code</param>
+        /// <param name="giftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="checkoutAttributes">The selected checkout attributes</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="currencyId">The currency identifier</param>
+        /// <param name="taxDisplayType">The tax display type</param>
+        /// <param name="isTaxExempt">A value indicating whether the customer is tax exempt</param>
+        /// <param name="isAdmin">A value indicating whether the customer is administrator</param>
+        /// <param name="isGuest">A value indicating whether the customer is guest</param>
+        /// <param name="isForumModerator">A value indicating whether the customer is forum moderator</param>
+        /// <param name="totalForumPosts">A forum post count</param>
+        /// <param name="signature">Signature</param>
+        /// <param name="adminComment">Admin comment</param>
+        /// <param name="active">A value indicating whether the customer is active</param>
+        /// <param name="deleted">A value indicating whether the customer has been deleted</param>
+        /// <param name="registrationDate">The date and time of customer registration</param>
+        /// <param name="timeZoneId">The time zone identifier</param>
+        /// <param name="avatarId">The avatar identifier</param>
         /// <returns>A customer</returns>
-        public static Customer AddCustomerForced(Guid CustomerGUID, string Email, string Username,
-            string PasswordHash, string SaltKey, int AffiliateID, int BillingAddressID,
-            int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes,
-            string CheckoutAttributes, int LanguageID, int CurrencyID,
-            TaxDisplayTypeEnum TaxDisplayType, bool IsTaxExempt, bool IsAdmin, bool IsGuest,
-            bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment,
-            bool Active, bool Deleted, DateTime RegistrationDate,
-            string TimeZoneID, int AvatarID)
+        public static Customer AddCustomerForced(Guid customerGuid, string email,
+            string username, string passwordHash, string saltKey,
+            int affiliateId, int billingAddressId,
+            int shippingAddressId, int lastPaymentMethodId,
+            string lastAppliedCouponCode, string giftCardCouponCodes,
+            string checkoutAttributes, int languageId,
+            int currencyId, TaxDisplayTypeEnum taxDisplayType, bool isTaxExempt,
+            bool isAdmin, bool isGuest, bool isForumModerator,
+            int totalForumPosts, string signature, string adminComment, bool active,
+            bool deleted, DateTime registrationDate, string timeZoneId, int avatarId)
         {
-            if (Username == null)
-                Username = string.Empty;
-            Username = Username.Trim();
+            if (username == null)
+                username = string.Empty;
+            username = username.Trim();
 
-            if (Email == null)
-                Email = string.Empty;
-            Email = Email.Trim();
+            if (email == null)
+                email = string.Empty;
+            email = email.Trim();
 
-            RegistrationDate = DateTimeHelper.ConvertToUtcTime(RegistrationDate);
+            registrationDate = DateTimeHelper.ConvertToUtcTime(registrationDate);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.AddCustomer(CustomerGUID, Email, Username,
-                  PasswordHash, SaltKey, AffiliateID, BillingAddressID,
-                  ShippingAddressID, LastPaymentMethodID,
-                  LastAppliedCouponCode, GiftCardCouponCodes,
-                  CheckoutAttributes, LanguageID, CurrencyID, (int)TaxDisplayType,
-                  IsTaxExempt, IsAdmin, IsGuest, IsForumModerator,
-                  TotalForumPosts, Signature, AdminComment, Active,
-                  Deleted, RegistrationDate, TimeZoneID, AvatarID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.AddCustomer(customerGuid,
+                email, username, passwordHash, saltKey, affiliateId, billingAddressId,
+                shippingAddressId, lastPaymentMethodId, lastAppliedCouponCode, 
+                giftCardCouponCodes, checkoutAttributes, languageId, 
+                currencyId, (int)taxDisplayType, isTaxExempt, isAdmin, 
+                isGuest, isForumModerator, totalForumPosts, signature, 
+                adminComment, active,  deleted, registrationDate, timeZoneId, avatarId);
             var customer = DBMapping(dbItem);
 
             return customer;
@@ -1303,76 +1321,82 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Updates the customer
         /// </summary>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CustomerGUID">The customer identifier</param>
-        /// <param name="Email">The email</param>
-        /// <param name="Username">The username</param>
-        /// <param name="PasswordHash">The password hash</param>
-        /// <param name="SaltKey">The salk key</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="BillingAddressID">The billing address identifier</param>
-        /// <param name="ShippingAddressID">The shipping address identifier</param>
-        /// <param name="LastPaymentMethodID">The last payment method identifier</param>
-        /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
-        /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
-        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="CurrencyID">The currency identifier</param>
-        /// <param name="TaxDisplayType">The tax display type</param>
-        /// <param name="IsTaxExempt">A value indicating whether the customer is tax exempt</param>
-        /// <param name="IsAdmin">A value indicating whether the customer is administrator</param>
-        /// <param name="IsGuest">A value indicating whether the customer is guest</param>
-        /// <param name="IsForumModerator">A value indicating whether the customer is forum moderator</param>
-        /// <param name="TotalForumPosts">A forum post count</param>
-        /// <param name="Signature">Signature</param>
-        /// <param name="AdminComment">Admin comment</param>
-        /// <param name="Active">A value indicating whether the customer is active</param>
-        /// <param name="Deleted">A value indicating whether the customer has been deleted</param>
-        /// <param name="RegistrationDate">The date and time of customer registration</param>
-        /// <param name="TimeZoneID">The time zone identifier</param>
-        /// <param name="AvatarID">The avatar identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="customerGuid">The customer identifier</param>
+        /// <param name="email">The email</param>
+        /// <param name="username">The username</param>
+        /// <param name="passwordHash">The password hash</param>
+        /// <param name="saltKey">The salt key</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="billingAddressId">The billing address identifier</param>
+        /// <param name="shippingAddressId">The shipping address identifier</param>
+        /// <param name="lastPaymentMethodId">The last payment method identifier</param>
+        /// <param name="lastAppliedCouponCode">The last applied coupon code</param>
+        /// <param name="giftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="checkoutAttributes">The selected checkout attributes</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="currencyId">The currency identifier</param>
+        /// <param name="taxDisplayType">The tax display type</param>
+        /// <param name="isTaxExempt">A value indicating whether the customer is tax exempt</param>
+        /// <param name="isAdmin">A value indicating whether the customer is administrator</param>
+        /// <param name="isGuest">A value indicating whether the customer is guest</param>
+        /// <param name="isForumModerator">A value indicating whether the customer is forum moderator</param>
+        /// <param name="totalForumPosts">A forum post count</param>
+        /// <param name="signature">Signature</param>
+        /// <param name="adminComment">Admin comment</param>
+        /// <param name="active">A value indicating whether the customer is active</param>
+        /// <param name="deleted">A value indicating whether the customer has been deleted</param>
+        /// <param name="registrationDate">The date and time of customer registration</param>
+        /// <param name="timeZoneId">The time zone identifier</param>
+        /// <param name="avatarId">The avatar identifier</param>
         /// <returns>A customer</returns>
-        public static Customer UpdateCustomer(int CustomerID, Guid CustomerGUID, string Email,
-            string Username, string PasswordHash, string SaltKey, int AffiliateID, int BillingAddressID,
-            int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes,
-            string CheckoutAttributes, int LanguageID, int CurrencyID,
-            TaxDisplayTypeEnum TaxDisplayType, bool IsTaxExempt, bool IsAdmin, bool IsGuest,
-            bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment, bool Active,
-            bool Deleted, DateTime RegistrationDate, string TimeZoneID, int AvatarID)
+        public static Customer UpdateCustomer(int customerId,
+            Guid customerGuid, string email,
+            string username, string passwordHash, string saltKey,
+            int affiliateId, int billingAddressId,
+            int shippingAddressId, int lastPaymentMethodId,
+            string lastAppliedCouponCode, string giftCardCouponCodes,
+            string checkoutAttributes, int languageId,
+            int currencyId, TaxDisplayTypeEnum taxDisplayType, 
+            bool isTaxExempt, bool isAdmin, bool isGuest, bool isForumModerator,
+            int totalForumPosts, string signature, string adminComment, bool active,
+            bool deleted, DateTime registrationDate, string timeZoneId, int avatarId)
         {
-            RegistrationDate = DateTimeHelper.ConvertToUtcTime(RegistrationDate);
+            registrationDate = DateTimeHelper.ConvertToUtcTime(registrationDate);
 
-            if (Username == null)
-                Username = string.Empty;
-            Username = Username.Trim();
+            if (username == null)
+                username = string.Empty;
+            username = username.Trim();
 
-            if (Email == null)
-                Email = string.Empty;
-            Email = Email.Trim();
+            if (email == null)
+                email = string.Empty;
+            email = email.Trim();
 
-            if (Signature == null)
-                Signature = string.Empty;
-            Signature = Signature.Trim();
+            if (signature == null)
+                signature = string.Empty;
+            signature = signature.Trim();
 
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer == null)
                 return null;
 
             var subscriptionOld = customer.NewsLetterSubscription;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomer(CustomerID, CustomerGUID, Email,
-                Username, PasswordHash, SaltKey, AffiliateID, BillingAddressID,
-                ShippingAddressID, LastPaymentMethodID,
-                LastAppliedCouponCode, GiftCardCouponCodes, 
-                CheckoutAttributes, LanguageID,
-                CurrencyID, (int)TaxDisplayType, IsTaxExempt, IsAdmin, IsGuest, IsForumModerator,
-                TotalForumPosts, Signature, AdminComment, Active, Deleted, RegistrationDate, TimeZoneID, AvatarID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomer(customerId, 
+                customerGuid, email, username, passwordHash, 
+                saltKey, affiliateId, billingAddressId,
+                shippingAddressId, lastPaymentMethodId,
+                lastAppliedCouponCode, giftCardCouponCodes, 
+                checkoutAttributes, languageId, currencyId, (int)taxDisplayType, 
+                isTaxExempt, isAdmin, isGuest, isForumModerator,
+                totalForumPosts, signature, adminComment, active, 
+                deleted, registrationDate, timeZoneId, avatarId);
             customer = DBMapping(dbItem);
 
-            if (subscriptionOld != null && !Email.ToLower().Equals(subscriptionOld.Email.ToLower()))
+            if (subscriptionOld != null && !email.ToLower().Equals(subscriptionOld.Email.ToLower()))
             {
-                MessageManager.UpdateNewsLetterSubscription(subscriptionOld.NewsLetterSubscriptionID, Email, subscriptionOld.IsActive);
+                MessageManager.UpdateNewsLetterSubscription(subscriptionOld.NewsLetterSubscriptionId,
+                    email, subscriptionOld.IsActive);
             }
 
             return DBMapping(dbItem);
@@ -1381,111 +1405,111 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Modifies password
         /// </summary>
-        /// <param name="Email">Customer email</param>
-        /// <param name="Oldpassword">Old password</param>
-        /// <param name="Password">Password</param>
-        public static void ModifyPassword(string Email, string Oldpassword, string Password)
+        /// <param name="email">Customer email</param>
+        /// <param name="oldPassword">Old password</param>
+        /// <param name="password">Password</param>
+        public static void ModifyPassword(string email, string oldPassword, string password)
         {
-            var customer = GetCustomerByEmail(Email);
+            var customer = GetCustomerByEmail(email);
             if (customer != null)
             {
-                string oldPasswordHash = CreatePasswordHash(Oldpassword, customer.SaltKey);
+                string oldPasswordHash = CreatePasswordHash(oldPassword, customer.SaltKey);
                 if (!customer.PasswordHash.Equals(oldPasswordHash))
                     throw new NopException("Current Password doesn't match.");
 
-                ModifyPassword(customer.CustomerID, Password);
+                ModifyPassword(customer.CustomerId, password);
             }
         }
 
         /// <summary>
         /// Modifies password
         /// </summary>
-        /// <param name="Email">Customer email</param>
-        /// <param name="NewPassword">New password</param>
-        public static void ModifyPassword(string Email, string NewPassword)
+        /// <param name="email">Customer email</param>
+        /// <param name="newPassword">New password</param>
+        public static void ModifyPassword(string email, string newPassword)
         {
-            var customer = GetCustomerByEmail(Email);
+            var customer = GetCustomerByEmail(email);
             if(customer != null)
             {
-                ModifyPassword(customer.CustomerID, NewPassword);
+                ModifyPassword(customer.CustomerId, newPassword);
             }
         }
 
         /// <summary>
         /// Modifies password
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="NewPassword">New password</param>
-        public static void ModifyPassword(int CustomerID, string NewPassword)
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="newPassword">New password</param>
+        public static void ModifyPassword(int customerId, string newPassword)
         {
-            if (String.IsNullOrEmpty(NewPassword))
+            if (String.IsNullOrEmpty(newPassword))
                 throw new NopException(LocalizationManager.GetLocaleResourceString("Customer.PasswordIsRequired"));
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if(customer != null)
             {
                 string newPasswordSalt = CreateSalt(5);
-                string newPasswordHash = CreatePasswordHash(NewPassword, newPasswordSalt);
-                UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
+                string newPasswordHash = CreatePasswordHash(newPassword, newPasswordSalt);
+                UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
                     customer.Username, newPasswordHash, newPasswordSalt,
-                    customer.AffiliateID, customer.BillingAddressID,
-                    customer.ShippingAddressID, customer.LastPaymentMethodID,
+                    customer.AffiliateId, customer.BillingAddressId,
+                    customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType,
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, customer.Active,
-                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
         }
 
         /// <summary>
         /// Activates a customer
         /// </summary>
-        /// <param name="CustomerGUID">Customer identifier</param>
-        public static void Activate(Guid CustomerGUID)
+        /// <param name="customerGuid">Customer identifier</param>
+        public static void Activate(Guid customerGuid)
         {
-            var customer = GetCustomerByGUID(CustomerGUID);
+            var customer = GetCustomerByGuid(customerGuid);
             if (customer != null)
             {
-                Activate(customer.CustomerID);
+                Activate(customer.CustomerId);
             }
         }
 
         /// <summary>
         /// Activates a customer
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        public static void Activate(int CustomerID)
+        /// <param name="customerId">Customer identifier</param>
+        public static void Activate(int customerId)
         {
-            Activate(CustomerID, false);
+            Activate(customerId, false);
         }
 
         /// <summary>
         /// Activates a customer
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="SendCustomerWelcomeMessage">A value indivating whether to send customer welcome message</param>
-        public static void Activate(int CustomerID, bool SendCustomerWelcomeMessage)
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="sendCustomerWelcomeMessage">A value indivating whether to send customer welcome message</param>
+        public static void Activate(int customerId, bool sendCustomerWelcomeMessage)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, 
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, 
                     customer.Email, customer.Username, 
-                    customer.PasswordHash, customer.SaltKey, customer.AffiliateID, customer.BillingAddressID,
-                    customer.ShippingAddressID, customer.LastPaymentMethodID,
+                    customer.PasswordHash, customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
+                    customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageID,
-                    customer.CurrencyID, customer.TaxDisplayType,
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                     customer.IsForumModerator, customer.TotalForumPosts,
                     customer.Signature, customer.AdminComment, true,
-                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
 
-                if (SendCustomerWelcomeMessage)
+                if (sendCustomerWelcomeMessage)
                 {
-                    MessageManager.SendCustomerWelcomeMessage(customer, NopContext.Current.WorkingLanguage.LanguageID);
+                    MessageManager.SendCustomerWelcomeMessage(customer, NopContext.Current.WorkingLanguage.LanguageId);
                 }
             }
         }
@@ -1493,52 +1517,52 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Deactivates a customer
         /// </summary>
-        /// <param name="CustomerGUID">Customer identifier</param>
-        public static void Deactivate(Guid CustomerGUID)
+        /// <param name="customerGuid">Customer identifier</param>
+        public static void Deactivate(Guid customerGuid)
         {
-            var customer = GetCustomerByGUID(CustomerGUID);
+            var customer = GetCustomerByGuid(customerGuid);
             if (customer != null)
             {
-                Deactivate(customer.CustomerID);
+                Deactivate(customer.CustomerId);
             }
         }
 
         /// <summary>
         /// Deactivates a customer
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        public static void Deactivate(int CustomerID)
+        /// <param name="customerId">Customer identifier</param>
+        public static void Deactivate(int customerId)
         {
-            var customer = GetCustomerByID(CustomerID);
+            var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerID, customer.CustomerGUID, customer.Email,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                    customer.BillingAddressID, customer.ShippingAddressID,
-                    customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
+                    customer.BillingAddressId, customer.ShippingAddressId,
+                    customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
                     customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
-                    customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
+                    customer.LanguageId, customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin, 
                     customer.IsGuest, customer.IsForumModerator,
                     customer.TotalForumPosts, customer.Signature, 
                     customer.AdminComment, false, customer.Deleted,
-                    customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
         }
 
         /// <summary>
         /// Login a customer
         /// </summary>
-        /// <param name="Email">A customer email</param>
-        /// <param name="Password">Password</param>
+        /// <param name="email">A customer email</param>
+        /// <param name="password">Password</param>
         /// <returns>Result</returns>
-        public static bool Login(string Email, string Password)
+        public static bool Login(string email, string password)
         {
-            if (Email == null)
-                Email = string.Empty;
-            Email = Email.Trim();
+            if (email == null)
+                email = string.Empty;
+            email = email.Trim();
 
-            var customer = GetCustomerByEmail(Email);
+            var customer = GetCustomerByEmail(email);
 
             if (customer == null)
                 return false;
@@ -1552,11 +1576,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (customer.IsGuest)
                 return false;
 
-            string passwordHash = CreatePasswordHash(Password, customer.SaltKey);
+            string passwordHash = CreatePasswordHash(password, customer.SaltKey);
             bool result = customer.PasswordHash.Equals(passwordHash);
             if (result)
             {
-                var registeredCustomerSession = GetCustomerSessionByCustomerID(customer.CustomerID);
+                var registeredCustomerSession = GetCustomerSessionByCustomerId(customer.CustomerId);
                 if (registeredCustomerSession != null)
                 {
                     registeredCustomerSession.IsExpired = false;
@@ -1565,33 +1589,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     var cart2 = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.Wishlist);
                     NopContext.Current.Session = registeredCustomerSession;
                     
-                    if ((anonCustomerSession != null) && (anonCustomerSession.CustomerSessionGUID != registeredCustomerSession.CustomerSessionGUID))
+                    if ((anonCustomerSession != null) && (anonCustomerSession.CustomerSessionGuid != registeredCustomerSession.CustomerSessionGuid))
                     {
                         if (anonCustomerSession.Customer != null)
                         {
-                            customer = ApplyDiscountCouponCode(customer.CustomerID, anonCustomerSession.Customer.LastAppliedCouponCode);
-                            customer = ApplyGiftCardCouponCode(customer.CustomerID, anonCustomerSession.Customer.GiftCardCouponCodes);
+                            customer = ApplyDiscountCouponCode(customer.CustomerId, anonCustomerSession.Customer.LastAppliedCouponCode);
+                            customer = ApplyGiftCardCouponCode(customer.CustomerId, anonCustomerSession.Customer.GiftCardCouponCodes);
                         }
 
                         foreach (ShoppingCartItem item in cart1)
                         {
                             ShoppingCartManager.AddToCart(
                                 item.ShoppingCartType, 
-                                item.ProductVariantID, 
-                                item.AttributesXML,
+                                item.ProductVariantId, 
+                                item.AttributesXml,
                                 item.CustomerEnteredPrice, 
                                 item.Quantity);
-                            ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemID, true);
+                            ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemId, true);
                         }
                         foreach (ShoppingCartItem item in cart2)
                         {
                             ShoppingCartManager.AddToCart(
                                 item.ShoppingCartType, 
-                                item.ProductVariantID, 
-                                item.AttributesXML, 
+                                item.ProductVariantId, 
+                                item.AttributesXml, 
                                 item.CustomerEnteredPrice, 
                                 item.Quantity);
-                            ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemID, true);
+                            ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemId, true);
                         }
                     }
                 }
@@ -1599,8 +1623,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     NopContext.Current.Session = NopContext.Current.GetSession(true);
                 NopContext.Current.Session.IsExpired = false;
                 NopContext.Current.Session.LastAccessed = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-                NopContext.Current.Session.CustomerID = customer.CustomerID;
-                NopContext.Current.Session = SaveCustomerSession(NopContext.Current.Session.CustomerSessionGUID, NopContext.Current.Session.CustomerID, NopContext.Current.Session.LastAccessed, NopContext.Current.Session.IsExpired);
+                NopContext.Current.Session.CustomerId = customer.CustomerId;
+                NopContext.Current.Session = SaveCustomerSession(NopContext.Current.Session.CustomerSessionGuid, NopContext.Current.Session.CustomerId, NopContext.Current.Session.LastAccessed, NopContext.Current.Session.IsExpired);
             }
             return result;
         }
@@ -1621,17 +1645,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Creates a password hash
         /// </summary>
-        /// <param name="Password">Password</param>
-        /// <param name="Salt">Salt</param>
+        /// <param name="password">Password</param>
+        /// <param name="salt">Salt</param>
         /// <returns>Password hash</returns>
-        private static string CreatePasswordHash(string Password, string Salt)
+        private static string CreatePasswordHash(string password, string salt)
         {
             //MD5, SHA1
             string passwordFormat = SettingManager.GetSettingValue("Security.PasswordFormat");
             if (String.IsNullOrEmpty(passwordFormat))
                 passwordFormat = "SHA1";
 
-            return FormsAuthentication.HashPasswordForStoringInConfigFile(Password + Salt, passwordFormat);
+            return FormsAuthentication.HashPasswordForStoringInConfigFile(password + salt, passwordFormat);
         }
 
         /// <summary>
@@ -1650,23 +1674,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Deletes a customer attribute
         /// </summary>
-        /// <param name="CustomerAttributeID">Customer attribute identifier</param>
-        public static void DeleteCustomerAttribute(int CustomerAttributeID)
+        /// <param name="customerAttributeId">Customer attribute identifier</param>
+        public static void DeleteCustomerAttribute(int customerAttributeId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.DeleteCustomerAttribute(CustomerAttributeID);
+            DBProviderManager<DBCustomerProvider>.Provider.DeleteCustomerAttribute(customerAttributeId);
         }
 
         /// <summary>
         /// Gets a customer attribute
         /// </summary>
-        /// <param name="CustomerAttributeID">Customer attribute identifier</param>
+        /// <param name="customerAttributeId">Customer attribute identifier</param>
         /// <returns>A customer attribute</returns>
-        public static CustomerAttribute GetCustomerAttributeByID(int CustomerAttributeID)
+        public static CustomerAttribute GetCustomerAttributeById(int customerAttributeId)
         {
-            if (CustomerAttributeID == 0)
+            if (customerAttributeId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerAttributeByID(CustomerAttributeID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerAttributeById(customerAttributeId);
             var customerAttribute = DBMapping(dbItem);
             return customerAttribute;
         }
@@ -1674,11 +1698,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a collection of customer attributes by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Customer attributes</returns>
-        public static CustomerAttributeCollection GetCustomerAttributesByCustomerID(int CustomerID)
+        public static CustomerAttributeCollection GetCustomerAttributesByCustomerId(int customerId)
         {
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerAttributesByCustomerID(CustomerID);
+            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerAttributesByCustomerId(customerId);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -1686,19 +1710,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Inserts a customer attribute
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="Key">An attribute key</param>
-        /// <param name="Value">An attribute value</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="key">An attribute key</param>
+        /// <param name="value">An attribute value</param>
         /// <returns>A customer attribute</returns>
-        public static CustomerAttribute InsertCustomerAttribute(int CustomerID, string Key, string Value)
+        public static CustomerAttribute InsertCustomerAttribute(int customerId, 
+            string key, string value)
         {
-            if (CustomerID == 0)
+            if (customerId == 0)
                 throw new NopException("Cannot insert attribute for non existing customer");
 
-            if (Value == null)
-                Value = string.Empty;
+            if (value == null)
+                value = string.Empty;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerAttribute(CustomerID, Key, Value);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerAttribute(customerId, 
+                key, value);
             var customerAttribute = DBMapping(dbItem);
             return customerAttribute;
         }
@@ -1706,20 +1732,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Updates the customer attribute
         /// </summary>
-        /// <param name="CustomerAttributeID">Customer attribute identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="Key">An attribute key</param>
-        /// <param name="Value">An attribute value</param>
+        /// <param name="customerAttributeId">Customer attribute identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="key">An attribute key</param>
+        /// <param name="value">An attribute value</param>
         /// <returns>A customer attribute</returns>
-        public static CustomerAttribute UpdateCustomerAttribute(int CustomerAttributeID, int CustomerID, string Key, string Value)
+        public static CustomerAttribute UpdateCustomerAttribute(int customerAttributeId,
+            int customerId, string key, string value)
         {
-            if (CustomerID == 0)
+            if (customerId == 0)
                 throw new NopException("Cannot update attribute for non existing customer");
 
-            if (Value == null)
-                Value = string.Empty;
+            if (value == null)
+                value = string.Empty;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerAttribute(CustomerAttributeID, CustomerID, Key, Value);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerAttribute(customerAttributeId, 
+                customerId, key, value);
             var customerAttribute = DBMapping(dbItem);
             return customerAttribute;
         }
@@ -1727,13 +1755,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Marks customer role as deleted
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        public static void MarkCustomerRoleAsDeleted(int CustomerRoleID)
+        /// <param name="customerRoleId">Customer role identifier</param>
+        public static void MarkCustomerRoleAsDeleted(int customerRoleId)
         {
-            var customerRole = GetCustomerRoleByID(CustomerRoleID);
+            var customerRole = GetCustomerRoleById(customerRoleId);
             if (customerRole != null)
             {
-                customerRole = UpdateCustomerRole(customerRole.CustomerRoleID, 
+                customerRole = UpdateCustomerRole(customerRole.CustomerRoleId, 
                     customerRole.Name, customerRole.FreeShipping, 
                     customerRole.TaxExempt, customerRole.Active, true);
             }
@@ -1747,21 +1775,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a customer role
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
         /// <returns>Customer role</returns>
-        public static CustomerRole GetCustomerRoleByID(int CustomerRoleID)
+        public static CustomerRole GetCustomerRoleById(int customerRoleId)
         {
-            if (CustomerRoleID == 0)
+            if (customerRoleId == 0)
                 return null;
 
-            string key = string.Format(CUSTOMERROLES_BY_ID_KEY, CustomerRoleID);
+            string key = string.Format(CUSTOMERROLES_BY_ID_KEY, customerRoleId);
             object obj2 = NopCache.Get(key);
             if (CustomerManager.CacheEnabled && (obj2 != null))
             {
                 return (CustomerRole)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRoleByID(CustomerRoleID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRoleById(customerRoleId);
             var customerRole = DBMapping(dbItem);
 
             if (CustomerManager.CacheEnabled)
@@ -1797,26 +1825,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets customer roles by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Customer role collection</returns>
-        public static CustomerRoleCollection GetCustomerRolesByCustomerID(int CustomerID)
+        public static CustomerRoleCollection GetCustomerRolesByCustomerId(int customerId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            return GetCustomerRolesByCustomerID(CustomerID, showHidden);
+            return GetCustomerRolesByCustomerId(customerId, showHidden);
         }
 
         /// <summary>
         /// Gets customer roles by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer role collection</returns>
-        public static CustomerRoleCollection GetCustomerRolesByCustomerID(int CustomerID, bool showHidden)
+        public static CustomerRoleCollection GetCustomerRolesByCustomerId(int customerId, bool showHidden)
         {
-            if (CustomerID == 0)
+            if (customerId == 0)
                 return new CustomerRoleCollection();
 
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRolesByCustomerID(CustomerID, showHidden);
+            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRolesByCustomerId(customerId, showHidden);
             var customerRoleCollection = DBMapping(dbCollection);
             return customerRoleCollection;
         }
@@ -1824,17 +1852,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Inserts a customer role
         /// </summary>
-        /// <param name="Name">The customer role name</param>
-        /// <param name="FreeShipping">A value indicating whether the customer role is marked as free shiping</param>
-        /// <param name="TaxExempt">A value indicating whether the customer role is marked as tax exempt</param>
-        /// <param name="Active">A value indicating whether the customer role is active</param>
-        /// <param name="Deleted">A value indicating whether the customer role has been deleted</param>
+        /// <param name="name">The customer role name</param>
+        /// <param name="freeShipping">A value indicating whether the customer role is marked as free shiping</param>
+        /// <param name="taxExempt">A value indicating whether the customer role is marked as tax exempt</param>
+        /// <param name="active">A value indicating whether the customer role is active</param>
+        /// <param name="deleted">A value indicating whether the customer role has been deleted</param>
         /// <returns>Customer role</returns>
-        public static CustomerRole InsertCustomerRole(string Name, bool FreeShipping, bool TaxExempt,
-            bool Active, bool Deleted)
+        public static CustomerRole InsertCustomerRole(string name,
+            bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerRole(Name,
-                FreeShipping, TaxExempt, Active, Deleted);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerRole(name,
+                freeShipping, taxExempt, active, deleted);
             var customerRole = DBMapping(dbItem);
 
             if (CustomerManager.CacheEnabled)
@@ -1848,18 +1876,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Updates the customer role
         /// </summary>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="Name">The customer role name</param>
-        /// <param name="FreeShipping">A value indicating whether the customer role is marked as free shiping</param>
-        /// <param name="TaxExempt">A value indicating whether the customer role is marked as tax exempt</param>
-        /// <param name="Active">A value indicating whether the customer role is active</param>
-        /// <param name="Deleted">A value indicating whether the customer role has been deleted</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="name">The customer role name</param>
+        /// <param name="freeShipping">A value indicating whether the customer role is marked as free shiping</param>
+        /// <param name="taxExempt">A value indicating whether the customer role is marked as tax exempt</param>
+        /// <param name="active">A value indicating whether the customer role is active</param>
+        /// <param name="deleted">A value indicating whether the customer role has been deleted</param>
         /// <returns>Customer role</returns>
-        public static CustomerRole UpdateCustomerRole(int CustomerRoleID, string Name,
-            bool FreeShipping, bool TaxExempt, bool Active, bool Deleted)
+        public static CustomerRole UpdateCustomerRole(int customerRoleId, string name,
+            bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerRole(CustomerRoleID, Name,
-                FreeShipping, TaxExempt, Active, Deleted);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerRole(customerRoleId, 
+                name, freeShipping, taxExempt, active, deleted);
             var customerRole = DBMapping(dbItem);
 
             if (CustomerManager.CacheEnabled)
@@ -1873,31 +1901,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Adds a customer to role
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        public static void AddCustomerToRole(int CustomerID, int CustomerRoleID)
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
+        public static void AddCustomerToRole(int customerId, int customerRoleId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.AddCustomerToRole(CustomerID, CustomerRoleID);
+            DBProviderManager<DBCustomerProvider>.Provider.AddCustomerToRole(customerId, customerRoleId);
         }
 
         /// <summary>
         /// Removes a customer from role
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        public static void RemoveCustomerFromRole(int CustomerID, int CustomerRoleID)
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
+        public static void RemoveCustomerFromRole(int customerId, int customerRoleId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.RemoveCustomerFromRole(CustomerID, CustomerRoleID);
+            DBProviderManager<DBCustomerProvider>.Provider.RemoveCustomerFromRole(customerId, customerRoleId);
         }
 
         /// <summary>
         /// Adds a discount to a customer role
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void AddDiscountToCustomerRole(int CustomerRoleID, int DiscountID)
+        /// <param name="customerRoleId">Customer role identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void AddDiscountToCustomerRole(int customerRoleId, int discountId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.AddDiscountToCustomerRole(CustomerRoleID, DiscountID);
+            DBProviderManager<DBCustomerProvider>.Provider.AddDiscountToCustomerRole(customerRoleId, discountId);
             if (CustomerManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CUSTOMERROLES_PATTERN_KEY);
@@ -1907,11 +1935,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Removes a discount from a customer role
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void RemoveDiscountFromCustomerRole(int CustomerRoleID, int DiscountID)
+        /// <param name="customerRoleId">Customer role identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void RemoveDiscountFromCustomerRole(int customerRoleId, int discountId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.RemoveDiscountFromCustomerRole(CustomerRoleID, DiscountID);
+            DBProviderManager<DBCustomerProvider>.Provider.RemoveDiscountFromCustomerRole(customerRoleId, discountId);
             if (CustomerManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CUSTOMERROLES_PATTERN_KEY);
@@ -1921,19 +1949,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a customer roles assigned to discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
+        /// <param name="discountId">Discount identifier</param>
         /// <returns>Customer roles</returns>
-        public static CustomerRoleCollection GetCustomerRolesByDiscountID(int DiscountID)
+        public static CustomerRoleCollection GetCustomerRolesByDiscountId(int discountId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(CUSTOMERROLES_BY_DISCOUNTID_KEY, DiscountID, showHidden);
+            string key = string.Format(CUSTOMERROLES_BY_DISCOUNTID_KEY, discountId, showHidden);
             object obj2 = NopCache.Get(key);
             if (CustomerManager.CacheEnabled && (obj2 != null))
             {
                 return (CustomerRoleCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRolesByDiscountID(DiscountID, showHidden);
+            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRolesByDiscountId(discountId, showHidden);
             var customerRoles = DBMapping(dbCollection);
             if (CustomerManager.CacheEnabled)
             {
@@ -1945,14 +1973,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
+        /// <param name="customerSessionGuid">Customer session GUID</param>
         /// <returns>Customer session</returns>
-        public static CustomerSession GetCustomerSessionByGUID(Guid CustomerSessionGUID)
+        public static CustomerSession GetCustomerSessionByGuid(Guid customerSessionGuid)
         {
-            if (CustomerSessionGUID == Guid.Empty)
+            if (customerSessionGuid == Guid.Empty)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerSessionByGUID(CustomerSessionGUID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerSessionByGuid(customerSessionGuid);
             var customerSession = DBMapping(dbItem);
             return customerSession;
         }
@@ -1960,14 +1988,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets a customer session by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Customer session</returns>
-        public static CustomerSession GetCustomerSessionByCustomerID(int CustomerID)
+        public static CustomerSession GetCustomerSessionByCustomerId(int customerId)
         {
-            if (CustomerID == 0)
+            if (customerId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerSessionByCustomerID(CustomerID);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerSessionByCustomerId(customerId);
             var customerSession = DBMapping(dbItem);
             return customerSession;
         }
@@ -1975,10 +2003,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Deletes a customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
-        public static void DeleteCustomerSession(Guid CustomerSessionGUID)
+        /// <param name="customerSessionGuid">Customer session GUID</param>
+        public static void DeleteCustomerSession(Guid customerSessionGuid)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.DeleteCustomerSession(CustomerSessionGUID);
+            DBProviderManager<DBCustomerProvider>.Provider.DeleteCustomerSession(customerSessionGuid);
         }
 
         /// <summary>
@@ -1995,45 +2023,47 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Deletes all expired customer sessions
         /// </summary>
-        /// <param name="OlderThan">Older than date and time</param>
-        public static void DeleteExpiredCustomerSessions(DateTime OlderThan)
+        /// <param name="olderThan">Older than date and time</param>
+        public static void DeleteExpiredCustomerSessions(DateTime olderThan)
         {
-            OlderThan = DateTimeHelper.ConvertToUtcTime(OlderThan);
-
-            DBProviderManager<DBCustomerProvider>.Provider.DeleteExpiredCustomerSessions(OlderThan);
+            olderThan = DateTimeHelper.ConvertToUtcTime(olderThan);
+            DBProviderManager<DBCustomerProvider>.Provider.DeleteExpiredCustomerSessions(olderThan);
         }
 
         /// <summary>
         /// Saves a customer session to the data storage if it exists or creates new one
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="LastAccessed">The last accessed date and time</param>
-        /// <param name="IsExpired">A value indicating whether the customer session is expired</param>
+        /// <param name="customerSessionGuid">Customer session GUID</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="lastAccessed">The last accessed date and time</param>
+        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
         /// <returns>Customer session</returns>
-        public static CustomerSession SaveCustomerSession(Guid CustomerSessionGUID, int CustomerID, DateTime LastAccessed, bool IsExpired)
+        public static CustomerSession SaveCustomerSession(Guid customerSessionGuid,
+            int customerId, DateTime lastAccessed, bool isExpired)
         {
-            LastAccessed = DateTimeHelper.ConvertToUtcTime(LastAccessed);
+            lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
 
-            if (GetCustomerSessionByGUID(CustomerSessionGUID) == null)
-                return InsertCustomerSession(CustomerSessionGUID, CustomerID, LastAccessed, IsExpired);
+            if (GetCustomerSessionByGuid(customerSessionGuid) == null)
+                return InsertCustomerSession(customerSessionGuid, customerId, lastAccessed, isExpired);
             else
-                return UpdateCustomerSession(CustomerSessionGUID, CustomerID, LastAccessed, IsExpired);
+                return UpdateCustomerSession(customerSessionGuid, customerId, lastAccessed, isExpired);
         }
 
         /// <summary>
         /// Inserts a customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="LastAccessed">The last accessed date and time</param>
-        /// <param name="IsExpired">A value indicating whether the customer session is expired</param>
+        /// <param name="customerSessionGuid">Customer session GUID</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="lastAccessed">The last accessed date and time</param>
+        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
         /// <returns>Customer session</returns>
-        protected static CustomerSession InsertCustomerSession(Guid CustomerSessionGUID, int CustomerID, DateTime LastAccessed, bool IsExpired)
+        protected static CustomerSession InsertCustomerSession(Guid customerSessionGuid,
+            int customerId, DateTime lastAccessed, bool isExpired)
         {
-            LastAccessed = DateTimeHelper.ConvertToUtcTime(LastAccessed);
+            lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerSession(CustomerSessionGUID, CustomerID, LastAccessed, IsExpired);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerSession(customerSessionGuid, 
+                customerId, lastAccessed, isExpired);
             var customerSession = DBMapping(dbItem);
             return customerSession;
         }
@@ -2041,16 +2071,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Updates the customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="LastAccessed">The last accessed date and time</param>
-        /// <param name="IsExpired">A value indicating whether the customer session is expired</param>
+        /// <param name="customerSessionGuid">Customer session GUID</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="lastAccessed">The last accessed date and time</param>
+        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
         /// <returns>Customer session</returns>
-        protected static CustomerSession UpdateCustomerSession(Guid CustomerSessionGUID, int CustomerID, DateTime LastAccessed, bool IsExpired)
+        protected static CustomerSession UpdateCustomerSession(Guid customerSessionGuid,
+            int customerId, DateTime lastAccessed, bool isExpired)
         {
-            LastAccessed = DateTimeHelper.ConvertToUtcTime(LastAccessed);
+            lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerSession(CustomerSessionGUID, CustomerID, LastAccessed, IsExpired);
+            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerSession(customerSessionGuid, 
+                customerId, lastAccessed, isExpired);
             var customerSession = DBMapping(dbItem);
             return customerSession;
         }

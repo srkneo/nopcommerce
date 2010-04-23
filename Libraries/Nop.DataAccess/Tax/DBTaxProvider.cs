@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Gets or sets the tax provider identifier
         /// </summary>
-        public int TaxProviderID { get; set; }
+        public int TaxProviderId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

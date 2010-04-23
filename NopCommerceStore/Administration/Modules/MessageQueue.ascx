@@ -78,7 +78,7 @@
                 ToolTip="<% $NopResources:Admin.MessageQueue.GoDirectly.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <nopCommerce:SimpleTextBox runat="server" CssClass="adminInput" ID="txtEmailID" Width="100px"
+            <nopCommerce:SimpleTextBox runat="server" CssClass="adminInput" ID="txtEmailId" Width="100px"
                 ValidationGroup="GoDirectly" ErrorMessage="<% $NopResources:Admin.MessageQueue.EmailID.Required %>">
             </nopCommerce:SimpleTextBox>
             <asp:Button runat="server" Text="<% $NopResources:Admin.MessageQueue.GoButton.Text %>"
@@ -92,7 +92,7 @@
 <asp:GridView ID="gvQueuedEmails" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvQueuedEmails_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="QueuedEmailID" HeaderText="<% $NopResources:Admin.MessageQueue.QueuedEmailIDColumn %>"
+        <asp:BoundField DataField="QueuedEmailId" HeaderText="<% $NopResources:Admin.MessageQueue.QueuedEmailIDColumn %>"
             ItemStyle-Width="12%"></asp:BoundField>
         <asp:BoundField DataField="Priority" HeaderText="<% $NopResources:Admin.MessageQueue.PriorityColumn %>"
             ItemStyle-Width="5%"></asp:BoundField>
@@ -122,7 +122,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.MessageQueue.ViewColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="MessageQueueDetails.aspx?QueuedEmailID=<%#Eval("QueuedEmailID")%>">
+                <a href="MessageQueueDetails.aspx?QueuedEmailID=<%#Eval("QueuedEmailId")%>">
                     <%#GetLocaleResourceString("Admin.MessageQueue.ViewColumn")%></a>
             </ItemTemplate>
         </asp:TemplateField>

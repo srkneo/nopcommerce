@@ -92,13 +92,13 @@ namespace NopSolutions.NopCommerce.Web
                     lblErrorMessage.Text = _ErrorMessage;
 
 
-                    int orderID = Convert.ToInt32(_MerchnatOption1);
-                    Order order = OrderManager.GetOrderByID(orderID);
+                    int orderId = Convert.ToInt32(_MerchnatOption1);
+                    Order order = OrderManager.GetOrderById(orderId);
                     if (String.IsNullOrEmpty(_ErrorMessage) && order != null)
                     {
                         if (OrderManager.CanMarkOrderAsPaid(order))
                         {
-                            OrderManager.MarkOrderAsPaid(order.OrderID);
+                            OrderManager.MarkOrderAsPaid(order.OrderId);
                         }
                         Response.Redirect("~/checkoutcompleted.aspx");
                     }
@@ -126,7 +126,7 @@ namespace NopSolutions.NopCommerce.Web
         protected bool CheckAccessCode(string AccessPaymentCode)
         {
             //POST to Payment gateway the access code returned
-            string strPost = "CustomerID=" + SettingManager.GetSettingValue("PaymentMethod.eWayUK.CustomerID");
+            string strPost = "CustomerID=" + SettingManager.GetSettingValue("PaymentMethod.eWayUK.CustomerId");
             strPost += Format("AccessPaymentCode", AccessPaymentCode);
             strPost += Format("UserName", SettingManager.GetSettingValue("PaymentMethod.eWayUK.Username"));
 
@@ -148,7 +148,7 @@ namespace NopSolutions.NopCommerce.Web
                     sr.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

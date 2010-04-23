@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             LanguageCollection languages = LanguageManager.GetAllLanguages();
             foreach (Language language in languages)
             {
-                ListItem item2 = new ListItem(language.Name, language.LanguageID.ToString());
+                ListItem item2 = new ListItem(language.Name, language.LanguageId.ToString());
                 this.ddlLanguage.Items.Add(item2);
             }
         }
@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             gvTopics.DataBind();
         }
 
-        protected string GetSelectedLanguageID()
+        protected string GetSelectedLanguageId()
         {
             return this.ddlLanguage.SelectedItem.Value;
         }

@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditSetting"),
                         setting.Name);
 
-                    Response.Redirect("SettingDetails.aspx?SettingID=" + setting.SettingID.ToString());
+                    Response.Redirect("SettingDetails.aspx?SettingID=" + setting.SettingId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -56,10 +56,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Setting setting = SettingManager.GetSettingByID(this.SettingID);
+                Setting setting = SettingManager.GetSettingById(this.SettingId);
                 if (setting != null)
                 {
-                    SettingManager.DeleteSetting(setting.SettingID);
+                    SettingManager.DeleteSetting(setting.SettingId);
 
                     CustomerActivityManager.InsertActivity(
                         "DeleteSetting",
@@ -74,11 +74,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int SettingID
+        public int SettingId
         {
             get
             {
-                return CommonHelper.QueryStringInt("SettingID");
+                return CommonHelper.QueryStringInt("SettingId");
             }
         }
     }

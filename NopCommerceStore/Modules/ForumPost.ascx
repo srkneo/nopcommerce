@@ -59,7 +59,7 @@
             <div class="posttext">
                 <asp:Literal ID="lText" runat="server"></asp:Literal>
             </div>
-            <asp:Label ID="lblForumPostID" runat="server" Visible="false"></asp:Label>
+            <asp:Label ID="lblForumPostId" runat="server" Visible="false"></asp:Label>
         </div>
         <asp:Panel runat="server" ID="pnlSignature" CssClass="signature">
             <asp:Label ID="lblSignature" runat="server"></asp:Label>

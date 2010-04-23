@@ -27,13 +27,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Determines whether the collection contains the specified discount.
         /// </summary>
-        /// <param name="DiscountName">Discount name</param>
+        /// <param name="discountName">Discount name</param>
         /// <returns>true if the collection contains a discount with the specified name; otherwise, false.</returns>
-        public bool ContainsDiscount(string DiscountName)
+        public bool ContainsDiscount(string discountName)
         {
             bool result = false;
             foreach (Discount _discount in this)
-                if (_discount.Name == DiscountName)
+                if (_discount.Name == discountName)
                 {
                     result = true;
                     break;

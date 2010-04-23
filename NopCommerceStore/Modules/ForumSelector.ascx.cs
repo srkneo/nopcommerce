@@ -36,9 +36,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var forums = forumGroup.Forums;
                 foreach (var forum in forums)
                 {
-                    var forumItem = new ListItem(prefix + forum.Name, forum.ForumID.ToString());
+                    var forumItem = new ListItem(prefix + forum.Name, forum.ForumId.ToString());
                     this.ddlForums.Items.Add(forumItem);
-                    if (forum.ForumID == this.selectedForumId)
+                    if (forum.ForumId == this.selectedForumId)
                         forumItem.Selected = true;
                 }
             }

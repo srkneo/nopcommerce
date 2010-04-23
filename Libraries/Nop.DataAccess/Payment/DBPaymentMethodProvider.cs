@@ -33,88 +33,95 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
     public abstract partial class DBPaymentMethodProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
-        public abstract void DeletePaymentMethod(int PaymentMethodID);
+        /// <param name="paymentMethodId">Payment method identifier</param>
+        public abstract void DeletePaymentMethod(int paymentMethodId);
 
         /// <summary>
         /// Gets a payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>Payment method</returns>
-        public abstract DBPaymentMethod GetPaymentMethodByID(int PaymentMethodID);
+        public abstract DBPaymentMethod GetPaymentMethodById(int paymentMethodId);
 
         /// <summary>
         /// Gets a payment method
         /// </summary>
-        /// <param name="SystemKeyword">Payment method system keyword</param>
+        /// <param name="systemKeyword">Payment method system keyword</param>
         /// <returns>Payment method</returns>
-        public abstract DBPaymentMethod GetPaymentMethodBySystemKeyword(string SystemKeyword);
+        public abstract DBPaymentMethod GetPaymentMethodBySystemKeyword(string systemKeyword);
 
         /// <summary>
         /// Gets all payment methods
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="FilterByCountryID">The country indentifier</param>
+        /// <param name="filterByCountryId">The country indentifier</param>
         /// <returns>Payment method collection</returns>
-        public abstract DBPaymentMethodCollection GetAllPaymentMethods(bool showHidden, int? FilterByCountryID);
+        public abstract DBPaymentMethodCollection GetAllPaymentMethods(bool showHidden, 
+            int? filterByCountryId);
 
         /// <summary>
         /// Inserts a payment method
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="VisibleName">The visible name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="UserTemplatePath">The user template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="IsActive">A value indicating whether the payment method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="visibleName">The visible name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="userTemplatePath">The user template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="isActive">A value indicating whether the payment method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
-        public abstract DBPaymentMethod InsertPaymentMethod(string Name, string VisibleName, string Description,
-           string ConfigureTemplatePath, string UserTemplatePath, string ClassName, string SystemKeyword, bool IsActive, int DisplayOrder);
+        public abstract DBPaymentMethod InsertPaymentMethod(string name, 
+            string visibleName, string description, string configureTemplatePath, 
+            string userTemplatePath, string className, string systemKeyword,
+            bool isActive, int displayOrder);
 
         /// <summary>
         /// Updates the payment method
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifer</param>
-        /// <param name="Name">The name</param>
-        /// <param name="VisibleName">The visible name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="UserTemplatePath">The user template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="IsActive">A value indicating whether the payment method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="paymentMethodId">The payment method identifer</param>
+        /// <param name="name">The name</param>
+        /// <param name="visibleName">The visible name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="userTemplatePath">The user template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="isActive">A value indicating whether the payment method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
-        public abstract DBPaymentMethod UpdatePaymentMethod(int PaymentMethodID, string Name, string VisibleName, string Description,
-           string ConfigureTemplatePath, string UserTemplatePath, string ClassName, string SystemKeyword, bool IsActive, int DisplayOrder);
+        public abstract DBPaymentMethod UpdatePaymentMethod(int paymentMethodId, 
+            string name, string visibleName, string description, string configureTemplatePath, 
+            string userTemplatePath, string className, string systemKeyword,
+            bool isActive, int displayOrder);
 
         /// <summary>
         /// Inserts payment method country mapping
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        public abstract void InsertPaymentMethodCountryMapping(int PaymentMethodID, int CountryID);
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public abstract void InsertPaymentMethodCountryMapping(int paymentMethodId, int countryId);
 
         /// <summary>
         /// Checking whether the payment method country mapping is exists
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public abstract bool IsPaymentMethodCountryMappingExists(int PaymentMethodID, int CountryID);
+        public abstract bool IsPaymentMethodCountryMappingExists(int paymentMethodId, int countryId);
 
         /// <summary>
         /// Deletes payment method country mapping
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        public abstract void DeletePaymentMethodCountryMapping(int PaymentMethodID, int CountryID);
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public abstract void DeletePaymentMethodCountryMapping(int paymentMethodId, int countryId);
+        
         #endregion
     }
 }

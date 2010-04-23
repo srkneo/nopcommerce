@@ -36,9 +36,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Check
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -97,9 +97,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Check
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

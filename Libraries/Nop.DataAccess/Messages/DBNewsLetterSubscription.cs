@@ -14,7 +14,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Gets or sets the newsletter subscription identifier
         /// </summary>
-        public int NewsLetterSubscriptionID
+        public int NewsLetterSubscriptionId
         {
             get;
             set;

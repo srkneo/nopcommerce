@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     RecurringPayment recurringPayment = ctrlRecurringPaymentInfo.SaveInfo();
-                    Response.Redirect("RecurringPaymentDetails.aspx?RecurringPaymentID=" + recurringPayment.RecurringPaymentID.ToString());
+                    Response.Redirect("RecurringPaymentDetails.aspx?RecurringPaymentID=" + recurringPayment.RecurringPaymentId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.DeleteRecurringPayment(this.RecurringPaymentID);
+                OrderManager.DeleteRecurringPayment(this.RecurringPaymentId);
                 Response.Redirect("RecurringPayments.aspx");
             }
             catch (Exception exc)
@@ -60,11 +60,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int RecurringPaymentID
+        public int RecurringPaymentId
         {
             get
             {
-                return CommonHelper.QueryStringInt("RecurringPaymentID");
+                return CommonHelper.QueryStringInt("RecurringPaymentId");
             }
         }
     }

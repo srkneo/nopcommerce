@@ -87,7 +87,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (ctrl != null)
             {
                 paymentInfo = ctrl.GetPaymentInfo();
-                paymentInfo.PaymentMethodID = NopContext.Current.User.LastPaymentMethodID;
+                paymentInfo.PaymentMethodId = NopContext.Current.User.LastPaymentMethodId;
             }
             return paymentInfo;
         }
@@ -128,7 +128,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 

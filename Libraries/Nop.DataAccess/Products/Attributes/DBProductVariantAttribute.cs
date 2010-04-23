@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the product variant attribute mapping identifier
         /// </summary>
-        public int ProductVariantAttributeID { get; set; }
+        public int ProductVariantAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the product attribute identifier
         /// </summary>
-        public int ProductAttributeID { get; set; }
+        public int ProductAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets a value a text prompt
@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the attribute control type identifier
         /// </summary>
-        public int AttributeControlTypeID { get; set; }
+        public int AttributeControlTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the display order

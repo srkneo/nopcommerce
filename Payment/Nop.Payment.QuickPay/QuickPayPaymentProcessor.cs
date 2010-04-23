@@ -64,9 +64,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
             string ipaddress = System.Web.HttpContext.Current.Request.UserHostAddress;
             string msgtype = "authorize";
             string md5secret = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MD5SECRET);
-            string ordernumber = order.OrderID.ToString();
+            string ordernumber = order.OrderId.ToString();
 
             //order number must be at least 4 digits long.
             if (ordernumber.Length < 4)
@@ -181,9 +181,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

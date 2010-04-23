@@ -10,7 +10,7 @@
         <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True" />
     </Fields>
 </asp:DataPager>
-<asp:ListView ID="lvBlogComments" runat="server" DataKeyNames="BlogCommentID" OnPagePropertiesChanging="lvBlogComments_OnPagePropertiesChanging">
+<asp:ListView ID="lvBlogComments" runat="server" DataKeyNames="BlogCommentId" OnPagePropertiesChanging="lvBlogComments_OnPagePropertiesChanging">
     <LayoutTemplate>
         <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
     </LayoutTemplate>
@@ -21,18 +21,18 @@
         <p>
             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
             -
-            <%#GetCustomerInfo (Convert.ToInt32(Eval("CustomerID")))%>
+            <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
         </p>
         <p>
-            <a href="BlogPostDetails.aspx?BlogPostID=<%#Eval("BlogPostID")%>">
+            <a href="BlogPostDetails.aspx?BlogPostID=<%#Eval("BlogPostId")%>">
                 <%#Server.HtmlEncode(((BlogPost)Eval("BlogPost")).BlogPostTitle)%></a>
         </p>
         <asp:Button runat="server" ID="btnEditBlogComment" CssClass="adminButton" Text="<% $NopResources:Admin.BlogComments.EditButton.Text %>"
             ToolTip="<% $NopResources:Admin.BlogComments.EditButton.Tooltip %>" CommandName="Edit"
-            OnCommand="btnEditBlogComment_Click" CommandArgument='<%#Eval("BlogCommentID")%>' />
+            OnCommand="btnEditBlogComment_Click" CommandArgument='<%#Eval("BlogCommentId")%>' />
         <asp:Button runat="server" ID="btnDeleteBlogComment" CssClass="adminButton" Text="<% $NopResources:Admin.BlogComments.DeleteButton.Text %>"
             ToolTip="<% $NopResources:Admin.BlogComments.DeleteButton.Tooltip %>" CommandName="Delete"
-            OnCommand="btnDeleteBlogComment_Click" CommandArgument='<%#Eval("BlogCommentID")%>' />
+            OnCommand="btnDeleteBlogComment_Click" CommandArgument='<%#Eval("BlogCommentId")%>' />
     </ItemTemplate>
     <ItemSeparatorTemplate>
         <hr />

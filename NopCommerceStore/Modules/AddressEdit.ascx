@@ -10,7 +10,7 @@
         <td>
             <nopCommerce:SimpleTextBox runat="server" ID="txtFirstName" ErrorMessage="<% $NopResources:Address.FirstNameIsRequired %>">
             </nopCommerce:SimpleTextBox>
-            <asp:Label ID="lblShippingAddressID" runat="server" Visible="false"></asp:Label>
+            <asp:Label ID="lblShippingAddressId" runat="server" Visible="false"></asp:Label>
         </td>
     </tr>
     <tr>

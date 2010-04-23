@@ -164,9 +164,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -183,11 +183,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             string cancel_returnURL = CommonHelper.GetStoreLocation(false) + "PaypalCancel.aspx";
             builder.Append(GetPaypalUrl());
             builder.AppendFormat("?cmd=_xclick&business={0}", HttpUtility.UrlEncode(businessEmail));
-            builder.AppendFormat("&item_name=Order Number {0}", order.OrderID);
-            builder.AppendFormat("&custom={0}", order.OrderGUID);
+            builder.AppendFormat("&item_name=Order Number {0}", order.OrderId);
+            builder.AppendFormat("&custom={0}", order.OrderGuid);
             builder.AppendFormat("&amount={0}", order.OrderTotal.ToString("N", new CultureInfo("en-us")));
             builder.Append(string.Format("&no_note=1&currency_code={0}", HttpUtility.UrlEncode(CurrencyManager.PrimaryStoreCurrency.CurrencyCode)));
-            builder.AppendFormat("&invoice={0}", order.OrderID);
+            builder.AppendFormat("&invoice={0}", order.OrderId);
             builder.AppendFormat("&rm=2", new object[0]);
             if (order.ShippingStatus != ShippingStatusEnum.ShippingNotRequired)
                 builder.AppendFormat("&no_shipping=2", new object[0]);
@@ -199,14 +199,14 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             builder.AppendFormat("&address1={0}", HttpUtility.UrlEncode(order.BillingAddress1));
             builder.AppendFormat("&address2={0}", HttpUtility.UrlEncode(order.BillingAddress2));
             builder.AppendFormat("&city={0}", HttpUtility.UrlEncode(order.BillingCity));
-            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
             if (billingStateProvince != null)
                 builder.AppendFormat("&state={0}", HttpUtility.UrlEncode(billingStateProvince.Abbreviation));
             else
                 builder.AppendFormat("&state={0}", HttpUtility.UrlEncode(order.BillingStateProvince));
-            Country billingCountry = CountryManager.GetCountryByID(order.BillingCountryID);
+            Country billingCountry = CountryManager.GetCountryById(order.BillingCountryId);
             if (billingCountry != null)
-                builder.AppendFormat("&country={0}", HttpUtility.UrlEncode(billingCountry.TwoLetterISOCode));
+                builder.AppendFormat("&country={0}", HttpUtility.UrlEncode(billingCountry.TwoLetterIsoCode));
             else
                 builder.AppendFormat("&country={0}", HttpUtility.UrlEncode(order.BillingCountry));
             builder.AppendFormat("&Email={0}", HttpUtility.UrlEncode(order.BillingEmail));
@@ -258,9 +258,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

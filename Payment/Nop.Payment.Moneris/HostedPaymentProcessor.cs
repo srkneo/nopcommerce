@@ -35,9 +35,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneris
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -55,10 +55,10 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneris
             post.Url = HostedPaymentSettings.GatewayUrl;
             post.Method = "POST";
 
-            post.Add("hpp_id", HostedPaymentSettings.HppID);
+            post.Add("hpp_id", HostedPaymentSettings.HppId);
             post.Add("hpp_key", HostedPaymentSettings.HppKey);
             post.Add("amount", String.Format(CultureInfo.InvariantCulture, "{0:0.00}", order.OrderTotal));
-            post.Add("order_no", order.OrderGUID.ToString());
+            post.Add("order_no", order.OrderGuid.ToString());
 
             post.Post();
 
@@ -109,9 +109,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneris
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

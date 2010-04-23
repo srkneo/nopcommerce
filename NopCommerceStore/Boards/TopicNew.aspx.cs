@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Boards
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
             }
 
             string title = GetLocaleResourceString("PageTitle.Boards.TopicNew");

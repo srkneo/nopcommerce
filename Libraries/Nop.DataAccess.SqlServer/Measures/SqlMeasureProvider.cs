@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
     /// <summary>
     /// Measure provider for SQL Server
     /// </summary>
-    public partial class SQLMeasureProvider : DBMeasureProvider
+    public partial class SqlMeasureProvider : DBMeasureProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,24 +36,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
         #region Utilities
         private DBMeasureWeight GetMeasureWeightFromReader(IDataReader dataReader)
         {
-            DBMeasureWeight measureWeight = new DBMeasureWeight();
-            measureWeight.MeasureWeightID = NopSqlDataHelper.GetInt(dataReader, "MeasureWeightID");
-            measureWeight.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            measureWeight.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
-            measureWeight.Ratio = NopSqlDataHelper.GetDecimal(dataReader, "Ratio");
-            measureWeight.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return measureWeight;
+            var item = new DBMeasureWeight();
+            item.MeasureWeightId = NopSqlDataHelper.GetInt(dataReader, "MeasureWeightID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
+            item.Ratio = NopSqlDataHelper.GetDecimal(dataReader, "Ratio");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
 
         private DBMeasureDimension GetMeasureDimensionFromReader(IDataReader dataReader)
         {
-            DBMeasureDimension measureDimension = new DBMeasureDimension();
-            measureDimension.MeasureDimensionID = NopSqlDataHelper.GetInt(dataReader, "MeasureDimensionID");
-            measureDimension.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            measureDimension.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
-            measureDimension.Ratio = NopSqlDataHelper.GetDecimal(dataReader, "Ratio");
-            measureDimension.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return measureDimension;
+            var item = new DBMeasureDimension();
+            item.MeasureDimensionId = NopSqlDataHelper.GetInt(dataReader, "MeasureDimensionID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
+            item.Ratio = NopSqlDataHelper.GetDecimal(dataReader, "Ratio");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -96,26 +96,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
         /// <summary>
         /// Deletes measure dimension
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
-        public override void DeleteMeasureDimension(int MeasureDimensionID)
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
+        public override void DeleteMeasureDimension(int measureDimensionId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureDimensionDelete");
-            db.AddInParameter(dbCommand, "MeasureDimensionID", DbType.Int32, MeasureDimensionID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "MeasureDimensionID", DbType.Int32, measureDimensionId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a measure dimension by identifier
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
         /// <returns>Measure dimension</returns>
-        public override DBMeasureDimension GetMeasureDimensionByID(int MeasureDimensionID)
+        public override DBMeasureDimension GetMeasureDimensionById(int measureDimensionId)
         {
             DBMeasureDimension measureDimension = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureDimensionLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "MeasureDimensionID", DbType.Int32, MeasureDimensionID);
+            db.AddInParameter(dbCommand, "MeasureDimensionID", DbType.Int32, measureDimensionId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -151,87 +151,87 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
         /// <summary>
         /// Inserts a measure dimension
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure dimension</returns>
-        public override DBMeasureDimension InsertMeasureDimension(string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public override DBMeasureDimension InsertMeasureDimension(string name, 
+            string systemKeyword, decimal ratio, int displayOrder)
         {
-            DBMeasureDimension measureDimension = null;
+            DBMeasureDimension item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureDimensionInsert");
             db.AddOutParameter(dbCommand, "MeasureDimensionID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, Ratio);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, ratio);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int MeasureDimensionID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@MeasureDimensionID"));
-                measureDimension = GetMeasureDimensionByID(MeasureDimensionID);
+                int measureDimensionId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@MeasureDimensionID"));
+                item = GetMeasureDimensionById(measureDimensionId);
             }
-            return measureDimension;
+            return item;
         }
 
         /// <summary>
         /// Updates the measure dimension
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure dimension</returns>
-        public override DBMeasureDimension UpdateMeasureDimension(int MeasureDimensionID, string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public override DBMeasureDimension UpdateMeasureDimension(int measureDimensionId, 
+            string name, string systemKeyword, decimal ratio, int displayOrder)
         {
-            DBMeasureDimension measureDimension = null;
+            DBMeasureDimension item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureDimensionUpdate");
-            db.AddInParameter(dbCommand, "MeasureDimensionID", DbType.Int32, MeasureDimensionID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, Ratio);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "MeasureDimensionID", DbType.Int32, measureDimensionId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, ratio);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                measureDimension = GetMeasureDimensionByID(MeasureDimensionID);
+                item = GetMeasureDimensionById(measureDimensionId);
 
-            return measureDimension;
+            return item;
         }
 
         /// <summary>
         /// Deletes measure weight
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
-        public override void DeleteMeasureWeight(int MeasureWeightID)
+        /// <param name="measureWeightId">Measure weight identifier</param>
+        public override void DeleteMeasureWeight(int measureWeightId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureWeightDelete");
-            db.AddInParameter(dbCommand, "MeasureWeightID", DbType.Int32, MeasureWeightID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "MeasureWeightID", DbType.Int32, measureWeightId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a measure weight by identifier
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
+        /// <param name="measureWeightId">Measure weight identifier</param>
         /// <returns>Measure weight</returns>
-        public override DBMeasureWeight GetMeasureWeightByID(int MeasureWeightID)
+        public override DBMeasureWeight GetMeasureWeightById(int measureWeightId)
         {
-            DBMeasureWeight measureWeight = null;
+            DBMeasureWeight item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureWeightLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "MeasureWeightID", DbType.Int32, MeasureWeightID);
+            db.AddInParameter(dbCommand, "MeasureWeightID", DbType.Int32, measureWeightId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    measureWeight = GetMeasureWeightFromReader(dataReader);
+                    item = GetMeasureWeightFromReader(dataReader);
                 }
             }
-            return measureWeight;
+            return item;
         }
 
         /// <summary>
@@ -258,54 +258,54 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
         /// <summary>
         /// Inserts a measure weight
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure weight</returns>
-        public override DBMeasureWeight InsertMeasureWeight(string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public override DBMeasureWeight InsertMeasureWeight(string name,
+            string systemKeyword, decimal ratio, int displayOrder)
         {
-            DBMeasureWeight measureWeight = null;
+            DBMeasureWeight item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureWeightInsert");
             db.AddOutParameter(dbCommand, "MeasureWeightID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, Ratio);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, ratio);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int MeasureWeightID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@MeasureWeightID"));
-                measureWeight = GetMeasureWeightByID(MeasureWeightID);
+                int measureWeightId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@MeasureWeightID"));
+                item = GetMeasureWeightById(measureWeightId);
             }
-            return measureWeight;
+            return item;
         }
 
         /// <summary>
         /// Updates the measure weight
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="measureWeightId">Measure weight identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure weight</returns>
-        public override DBMeasureWeight UpdateMeasureWeight(int MeasureWeightID, string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public override DBMeasureWeight UpdateMeasureWeight(int measureWeightId, string name,
+            string systemKeyword, decimal ratio, int displayOrder)
         {
-            DBMeasureWeight measureWeight = null;
+            DBMeasureWeight item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MeasureWeightUpdate");
-            db.AddInParameter(dbCommand, "MeasureWeightID", DbType.Int32, MeasureWeightID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, Ratio);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "MeasureWeightID", DbType.Int32, measureWeightId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Ratio", DbType.Decimal, ratio);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                measureWeight = GetMeasureWeightByID(MeasureWeightID);
+                item = GetMeasureWeightById(measureWeightId);
 
-            return measureWeight;
+            return item;
         }
 
 

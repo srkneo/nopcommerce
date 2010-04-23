@@ -38,7 +38,7 @@
             <div id="idTab_Info<%# Container.ItemIndex+2 %>" class="tab">
                 <i>
                     <%=GetLocaleResourceString("Admin.Localizable.EmptyFieldNote")%></i>
-                <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                <asp:Label ID="lblLanguageId" runat="server" Text='<%#Eval("LanguageId") %>' Visible="false"></asp:Label>
                 <table class="adminContent">
                     <tr>
                         <td class="adminTitle">
@@ -76,7 +76,7 @@
         <strong>
             <%=GetLocaleResourceString("Admin.SpecificationAttributeInfo.AttributeOptions")%></strong></p>
     <asp:GridView ID="grdSpecificationAttributeOptions" runat="server" AutoGenerateColumns="false"
-        DataKeyNames="SpecificationAttributeOptionID" OnRowDeleting="OnSpecificationAttributeOptionsDeleting"
+        DataKeyNames="SpecificationAttributeOptionId" OnRowDeleting="OnSpecificationAttributeOptionsDeleting"
         OnRowCommand="OnSpecificationAttributeOptionsCommand" OnRowDataBound="OnSpecificationAttributeOptionsDataBound">
         <Columns>
             <asp:TemplateField HeaderText="<% $NopResources:Admin.SpecificationAttributeInfo.AttributeOption %>">
@@ -91,7 +91,7 @@
                             <%} %><nopCommerce:SimpleTextBox runat="server" ID="txtOptionName" ErrorMessage="<% $NopResources:Admin.SpecificationAttributeInfo.AttributeOption.ErrorMessage %>"
                                 Text='<%# Eval("Name") %>' ValidationGroup="SpecificationAttributeOption" CssClass="adminInput"
                                 Width="100%" />
-                            <asp:HiddenField ID="hfSpecificationAttributeOptionID" runat="server" Value='<%# Eval("SpecificationAttributeOptionID") %>' />
+                            <asp:HiddenField ID="hfSpecificationAttributeOptionId" runat="server" Value='<%# Eval("SpecificationAttributeOptionId") %>' />
                         </div>
                     </div>
                     <%if (this.HasLocalizableContent)
@@ -105,7 +105,7 @@
                                 </div>
                                 <div style="width: 85%; float: left;">
                                     <asp:TextBox runat="server" ID="txtLocalizedOptionName" CssClass="adminInput" Width="100%" />
-                                    <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                                    <asp:Label ID="lblLanguageId" runat="server" Text='<%#Eval("LanguageId") %>' Visible="false"></asp:Label>
                                 </div>
                             </div>
                         </ItemTemplate>

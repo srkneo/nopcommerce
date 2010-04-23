@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets or sets the manufacturer identifier
         /// </summary>
-        public int ManufacturerID { get; set; }
+        public int ManufacturerId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets or sets the template identifier
         /// </summary>
-        public int TemplateID { get; set; }
+        public int TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the meta keywords
@@ -80,7 +80,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets or sets the parent picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the page size
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                return TemplateManager.GetManufacturerTemplateByID(TemplateID);
+                return TemplateManager.GetManufacturerTemplateById(this.TemplateId);
             }
         }
 
@@ -138,7 +138,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                return ManufacturerManager.GetProductManufacturersByManufacturerID(ManufacturerID);
+                return ManufacturerManager.GetProductManufacturersByManufacturerId(this.ManufacturerId);
             }
         }
 
@@ -149,7 +149,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                return PictureManager.GetPictureByID(PictureID);
+                return PictureManager.GetPictureById(this.PictureId);
             }
         }
 
@@ -162,7 +162,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             {
                 int totalFeaturedRecords = 0;
                 ProductCollection featuredProducts = ProductManager.GetAllProducts(0,
-                    ManufacturerID, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
+                    this.ManufacturerId, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
                 return featuredProducts;
             }
         }

@@ -41,12 +41,12 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the customer session identifier
         /// </summary>
-        public Guid CustomerSessionGUID { get; set; }
+        public Guid CustomerSessionGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the last accessed date and time

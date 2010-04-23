@@ -38,9 +38,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CyberSource
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CyberSource
             post.Url = HostedPaymentSettings.GatewayUrl;
             post.Method = "POST";
 
-            post.Add("merchantID", HostedPaymentSettings.MerchantID);
+            post.Add("merchantID", HostedPaymentSettings.MerchantId);
             post.Add("orderPage_timestamp", HostedPaymentHelper.OrderPageTimestamp);
             post.Add("orderPage_transactionType", "authorization");
             post.Add("orderPage_version", "4");
@@ -66,17 +66,17 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CyberSource
 
             post.Add("amount", String.Format(CultureInfo.InvariantCulture, "{0:0.00}", order.OrderTotal));
             post.Add("currency", order.CustomerCurrencyCode);
-            post.Add("orderNumber", order.OrderID.ToString());
+            post.Add("orderNumber", order.OrderId.ToString());
 
             post.Add("billTo_firstName", order.BillingFirstName);
             post.Add("billTo_lastName", order.BillingLastName);
             post.Add("billTo_street1", order.BillingAddress1);
-            Country billCountry = CountryManager.GetCountryByID(order.BillingCountryID);
+            Country billCountry = CountryManager.GetCountryById(order.BillingCountryId);
             if(billCountry != null)
             {
-                post.Add("billTo_country", billCountry.TwoLetterISOCode);
+                post.Add("billTo_country", billCountry.TwoLetterIsoCode);
             }
-            StateProvince billState = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+            StateProvince billState = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
             if(billState != null)
             {
                 post.Add("billTo_state", billState.Abbreviation);
@@ -91,12 +91,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CyberSource
                 post.Add("shipTo_firstName", order.ShippingFirstName);
                 post.Add("shipTo_lastName", order.ShippingLastName);
                 post.Add("shipTo_street1", order.ShippingAddress1);
-                Country shipCountry = CountryManager.GetCountryByID(order.ShippingCountryID);
+                Country shipCountry = CountryManager.GetCountryById(order.ShippingCountryId);
                 if (shipCountry != null)
                 {
-                    post.Add("shipTo_country", shipCountry.TwoLetterISOCode);
+                    post.Add("shipTo_country", shipCountry.TwoLetterIsoCode);
                 }
-                StateProvince shipState = StateProvinceManager.GetStateProvinceByID(order.ShippingStateProvinceID);
+                StateProvince shipState = StateProvinceManager.GetStateProvinceById(order.ShippingStateProvinceId);
                 if (shipState != null)
                 {
                     post.Add("shipTo_state", shipState.Abbreviation);
@@ -159,9 +159,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CyberSource
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

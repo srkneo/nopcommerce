@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     hlTopic.Text = Server.HtmlEncode(ForumManager.StripTopicSubject(forumTopic.Subject));
                     hlTopic.ToolTip = Server.HtmlEncode(forumTopic.Subject);
-                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicURL(forumTopic.ForumTopicID);
+                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
                 }
                 var customer = forumPost.User;
                 if(customer != null)
@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if(CustomerManager.AllowViewingProfiles && !customer.IsGuest)
                     {
                         hlUser.Text = Server.HtmlEncode(CustomerManager.FormatUserName(customer));
-                        hlUser.NavigateUrl = SEOHelper.GetUserProfileURL(customer.CustomerID);
+                        hlUser.NavigateUrl = SEOHelper.GetUserProfileUrl(customer.CustomerId);
                         lblUser.Visible = false;
                     }
                     else

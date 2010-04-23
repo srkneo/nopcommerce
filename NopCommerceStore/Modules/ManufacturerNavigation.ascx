@@ -14,7 +14,7 @@
             <ItemTemplate>
                 <li>
                     <asp:HyperLink ID="hlManufacturer" runat="server" Text='<%#Server.HtmlEncode(Eval("Name").ToString()) %>'
-                        CssClass='<%# ((int)Eval("ManufacturerID") == this.ManufacturerID) ? "active" : "inactive" %>' />
+                        CssClass='<%# ((int)Eval("ManufacturerId") == this.ManufacturerId) ? "active" : "inactive" %>' />
                 </li>
             </ItemTemplate>
             <FooterTemplate>

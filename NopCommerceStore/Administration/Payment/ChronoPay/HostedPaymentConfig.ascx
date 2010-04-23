@@ -12,7 +12,7 @@
             Product ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtProductID" CssClass="adminInput" />
+            <asp:TextBox runat="server" ID="txtProductId" CssClass="adminInput" />
         </td>
     </tr>
     <tr>

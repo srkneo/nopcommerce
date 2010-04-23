@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     public partial class GiftCard : BaseEntity
     {
         #region Fields
-        private OrderProductVariant opv = null;
+        private OrderProductVariant _opv = null;
         #endregion
 
         #region Ctor
@@ -44,12 +44,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the gift card identifier
         /// </summary>
-        public int GiftCardID { get; set; }
+        public int GiftCardId { get; set; }
 
         /// <summary>
         /// Gets or sets the purchased order product variant identifier
         /// </summary>
-        public int PurchasedOrderProductVariantID { get; set; }
+        public int PurchasedOrderProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the amount
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Gets or sets a gift card coupon code
         /// </summary>
         public string GiftCardCouponCode { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a recipient name
         /// </summary>
@@ -112,9 +112,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (opv == null)
-                    opv = OrderManager.GetOrderProductVariantByID(PurchasedOrderProductVariantID);
-                return opv;
+                if (_opv == null)
+                    _opv = OrderManager.GetOrderProductVariantById(PurchasedOrderProductVariantId);
+                return _opv;
             }
         }
         #endregion

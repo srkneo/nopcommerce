@@ -70,8 +70,8 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.UPS
 
             string zipPostalCodeFrom = ShipmentPackage.ZipPostalCodeFrom;
             string zipPostalCodeTo = ShipmentPackage.ShippingAddress.ZipPostalCode;
-            string countryCodeFrom = ShipmentPackage.CountryFrom.TwoLetterISOCode;
-            string countryCodeTo = ShipmentPackage.ShippingAddress.Country.TwoLetterISOCode;
+            string countryCodeFrom = ShipmentPackage.CountryFrom.TwoLetterIsoCode;
+            string countryCodeTo = ShipmentPackage.ShippingAddress.Country.TwoLetterIsoCode;
 
             var sb = new StringBuilder();
             sb.Append("<?xml version='1.0'?>");
@@ -414,24 +414,24 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.UPS
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shipmentPackage">Shipment package</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage ShipmentPackage, ref string Error)
+        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
             var shippingOptions = new ShippingOptionCollection();
-            if (ShipmentPackage == null)
+            if (shipmentPackage == null)
                 throw new ArgumentNullException("ShipmentPackage");
-            if (ShipmentPackage.Items == null)
+            if (shipmentPackage.Items == null)
                 throw new NopException("No shipment items");
-            if (ShipmentPackage.ShippingAddress == null)
+            if (shipmentPackage.ShippingAddress == null)
             {
-                Error = "Shipping address is not set";
+                error = "Shipping address is not set";
                 return shippingOptions;
             }
-            if (ShipmentPackage.ShippingAddress.Country == null)
+            if (shipmentPackage.ShippingAddress.Country == null)
             {
-                Error = "Shipping country is not set";
+                error = "Shipping country is not set";
                 return shippingOptions;
             }
 
@@ -443,36 +443,36 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.UPS
             var pickupType = (UPSPickupType)Enum.Parse(typeof(UPSPickupType), SettingManager.GetSettingValue("ShippingRateComputationMethod.UPS.PickupType"));
             var packagingType = (UPSPackagingType)Enum.Parse(typeof(UPSPackagingType), SettingManager.GetSettingValue("ShippingRateComputationMethod.UPS.PackagingType"));
             decimal additionalHandlingCharge = SettingManager.GetSettingValueDecimalNative("ShippingRateComputationMethod.UPS.AdditionalHandlingCharge");
-            if (ShipmentPackage.CountryFrom == null)
+            if (shipmentPackage.CountryFrom == null)
             {
                 int defaultShippedFromCountryID = SettingManager.GetSettingValueInteger("ShippingRateComputationMethod.UPS.DefaultShippedFromCountryID");
-                ShipmentPackage.CountryFrom = CountryManager.GetCountryByID(defaultShippedFromCountryID);
+                shipmentPackage.CountryFrom = CountryManager.GetCountryById(defaultShippedFromCountryID);
             }
-            if (String.IsNullOrEmpty(ShipmentPackage.ZipPostalCodeFrom))
-                ShipmentPackage.ZipPostalCodeFrom = SettingManager.GetSettingValue("ShippingRateComputationMethod.UPS.DefaultShippedFromZipPostalCode");
-            
-            string requestString = CreateRequest(accessKey, username, password, ShipmentPackage,
+            if (String.IsNullOrEmpty(shipmentPackage.ZipPostalCodeFrom))
+                shipmentPackage.ZipPostalCodeFrom = SettingManager.GetSettingValue("ShippingRateComputationMethod.UPS.DefaultShippedFromZipPostalCode");
+
+            string requestString = CreateRequest(accessKey, username, password, shipmentPackage,
                 customerClassification, pickupType, packagingType);
             string responseXML = DoRequest(url, requestString);
-            shippingOptions = ParseResponse(responseXML, ref Error);
+            shippingOptions = ParseResponse(responseXML, ref error);
             foreach (var shippingOption in shippingOptions)
             {
                 if (!shippingOption.Name.ToLower().StartsWith("ups"))
                     shippingOption.Name = string.Format("UPS {0}", shippingOption.Name);
                 shippingOption.Rate += additionalHandlingCharge;
             }
-           
-            if (String.IsNullOrEmpty(Error) && shippingOptions.Count == 0)
-                Error = "Shipping options could not be loaded";
+
+            if (String.IsNullOrEmpty(error) && shippingOptions.Count == 0)
+                error = "Shipping options could not be loaded";
             return shippingOptions;
         }
 
         /// <summary>
         /// Gets fixed shipping rate (if shipping rate computation method allows it and the rate can be calculated before checkout).
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
+        /// <param name="shipmentPackage">Shipment package</param>
         /// <returns>Fixed shipping rate; or null if shipping rate could not be calculated before checkout</returns>
-        public decimal? GetFixedRate(ShipmentPackage ShipmentPackage)
+        public decimal? GetFixedRate(ShipmentPackage shipmentPackage)
         {
             return null;
         }

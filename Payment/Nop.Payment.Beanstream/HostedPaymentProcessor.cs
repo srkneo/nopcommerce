@@ -37,9 +37,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Beanstream
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -60,8 +60,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Beanstream
             post.Method = "POST";
 
             post.Add("requestType", "BACKEND");
-            post.Add("merchant_id", HostedPaymentSettings.MerchantID);
-            post.Add("trnOrderNumber", order.OrderID.ToString());
+            post.Add("merchant_id", HostedPaymentSettings.MerchantId);
+            post.Add("trnOrderNumber", order.OrderId.ToString());
             post.Add("trnAmount", String.Format(CultureInfo.InvariantCulture, "{0:0.00}", order.OrderTotal));
             post.Add("errorPage", String.Format("{0}BeanstreamHostedPaymentReturn.aspx", CommonHelper.GetStoreLocation()));
             post.Add("approvedPage", String.Format("{0}BeanstreamHostedPaymentReturn.aspx", CommonHelper.GetStoreLocation()));
@@ -72,12 +72,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Beanstream
             post.Add("ordAddress1", order.BillingAddress1);
             post.Add("ordPostalCode", order.BillingZipPostalCode);
             post.Add("ordCity", order.BillingCity);
-            Country billCountry = CountryManager.GetCountryByID(order.BillingCountryID);
+            Country billCountry = CountryManager.GetCountryById(order.BillingCountryId);
             if(billCountry != null)
             {
-                post.Add("ordCountry", billCountry.TwoLetterISOCode);
+                post.Add("ordCountry", billCountry.TwoLetterIsoCode);
             }
-            StateProvince billState = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+            StateProvince billState = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
             if(billState != null)
             {
                 post.Add("ordProvince", billState.Abbreviation);
@@ -91,12 +91,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Beanstream
                 post.Add("shipAddress1", order.ShippingAddress1);
                 post.Add("shipPostalCode", order.ShippingZipPostalCode);
                 post.Add("shipCity", order.ShippingCity);
-                Country shipCountry = CountryManager.GetCountryByID(order.ShippingCountryID);
+                Country shipCountry = CountryManager.GetCountryById(order.ShippingCountryId);
                 if(shipCountry != null)
                 {
-                    post.Add("shipCountry", shipCountry.TwoLetterISOCode);
+                    post.Add("shipCountry", shipCountry.TwoLetterIsoCode);
                 }
-                StateProvince shipState = StateProvinceManager.GetStateProvinceByID(order.ShippingStateProvinceID);
+                StateProvince shipState = StateProvinceManager.GetStateProvinceById(order.ShippingStateProvinceId);
                 if(shipState != null)
                 {
                     post.Add("shipProvince", shipState.Abbreviation);
@@ -152,9 +152,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Beanstream
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

@@ -32,10 +32,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceByID(this.LocaleStringResourceID);
+            LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceById(this.LocaleStringResourceId);
             if (localeStringResource != null)
             {
-                Language language = LanguageManager.GetLanguageByID(localeStringResource.LanguageID);
+                Language language = LanguageManager.GetLanguageById(localeStringResource.LanguageId);
                 if (language != null)
                     lblLanguage.Text = Server.HtmlEncode(language.Name);
                 else
@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
             else
             {
-                Language language = LanguageManager.GetLanguageByID(this.LanguageID);
+                Language language = LanguageManager.GetLanguageById(this.LanguageId);
                 if (language != null)
                     lblLanguage.Text = Server.HtmlEncode(language.Name);
                 else
@@ -64,36 +64,36 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public LocaleStringResource SaveInfo()
         {
-            LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceByID(this.LocaleStringResourceID);
+            LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceById(this.LocaleStringResourceId);
 
             if (localeStringResource != null)
             {
-                localeStringResource = LocaleStringResourceManager.UpdateLocaleStringResource(localeStringResource.LocaleStringResourceID,
-                   localeStringResource.LanguageID, txtResourceName.Text, txtResourceValue.Text);
+                localeStringResource = LocaleStringResourceManager.UpdateLocaleStringResource(localeStringResource.LocaleStringResourceId,
+                   localeStringResource.LanguageId, txtResourceName.Text, txtResourceValue.Text);
             }
             else
             {
                 localeStringResource = LocaleStringResourceManager.InsertLocaleStringResource(
-                        this.LanguageID, txtResourceName.Text,
+                        this.LanguageId, txtResourceName.Text,
                         txtResourceValue.Text);
             }
 
             return localeStringResource;
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
 
-        public int LocaleStringResourceID
+        public int LocaleStringResourceId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LocaleStringResourceID");
+                return CommonHelper.QueryStringInt("LocaleStringResourceId");
             }
         }
     }

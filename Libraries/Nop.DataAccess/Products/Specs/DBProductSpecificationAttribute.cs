@@ -34,17 +34,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets or sets the product specification attribute identifier
         /// </summary>
-        public int ProductSpecificationAttributeID { get; set; }
+        public int ProductSpecificationAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the specification attribute identifier
         /// </summary>
-        public int SpecificationAttributeOptionID { get; set; }
+        public int SpecificationAttributeOptionId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the attribute can be filtered by

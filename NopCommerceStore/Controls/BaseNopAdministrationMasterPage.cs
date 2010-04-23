@@ -37,20 +37,20 @@ namespace NopSolutions.NopCommerce.Web
 
         }
 
-        public virtual void ShowMessage(string Message)
+        public virtual void ShowMessage(string message)
         {
 
         }
 
-        public virtual void ShowError(string Message, string CompleteMessage)
+        public virtual void ShowError(string message, string completeMessage)
         {
 
         }
 
-        protected string GetLocaleResourceString(string ResourceName)
+        protected string GetLocaleResourceString(string resourceName)
         {
             Language language = NopContext.Current.WorkingLanguage;
-            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageID);
+            return LocalizationManager.GetLocaleResourceString(resourceName, language.LanguageId);
         }
     }
 }

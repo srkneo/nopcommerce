@@ -25,59 +25,59 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
     public partial class CancelPaymentResult
     {
         #region Fields
-        private string authorizationTransactionID = string.Empty;
-        private string captureTransactionID = string.Empty;
-        private string subscriptionTransactionID = string.Empty;
-        private decimal amount = decimal.Zero;
-        private string error = string.Empty;
-        private string fullError = string.Empty;
-        private PaymentStatusEnum paymentStatus = PaymentStatusEnum.Pending;
+        private string _authorizationTransactionId = string.Empty;
+        private string _captureTransactionId = string.Empty;
+        private string _subscriptionTransactionId = string.Empty;
+        private decimal _amount = decimal.Zero;
+        private string _error = string.Empty;
+        private string _fullError = string.Empty;
+        private PaymentStatusEnum _paymentStatus = PaymentStatusEnum.Pending;
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Gets or sets the authorization transaction ID
+        /// Gets or sets the authorization transaction identifier
         /// </summary>
-        public string AuthorizationTransactionID
+        public string AuthorizationTransactionId
         {
             get
             {
-                return authorizationTransactionID;
+                return _authorizationTransactionId;
             }
             set
             {
-                authorizationTransactionID = value;
+                _authorizationTransactionId = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the capture transaction ID
+        /// Gets or sets the capture transaction identifier
         /// </summary>
-        public string CaptureTransactionID
+        public string CaptureTransactionId
         {
             get
             {
-                return captureTransactionID;
+                return _captureTransactionId;
             }
             set
             {
-                captureTransactionID = value;
+                _captureTransactionId = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the subscription transaction ID
+        /// Gets or sets the subscription transaction identifier
         /// </summary>
-        public string SubscriptionTransactionID
+        public string SubscriptionTransactionId
         {
             get
             {
-                return subscriptionTransactionID;
+                return _subscriptionTransactionId;
             }
             set
             {
-                subscriptionTransactionID = value;
+                _subscriptionTransactionId = value;
             }
         }
 
@@ -88,11 +88,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return amount;
+                return _amount;
             }
             set
             {
-                amount = value;
+                _amount = value;
             }
         }
 
@@ -103,11 +103,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return error;
+                return _error;
             }
             set
             {
-                error = value;
+                _error = value;
             }
         }
 
@@ -118,11 +118,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return fullError;
+                return _fullError;
             }
             set
             {
-                fullError = value;
+                _fullError = value;
             }
         }
 
@@ -133,11 +133,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return paymentStatus;
+                return _paymentStatus;
             }
             set
             {
-                paymentStatus = value;
+                _paymentStatus = value;
             }
         }
         #endregion

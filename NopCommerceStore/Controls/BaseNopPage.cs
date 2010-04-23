@@ -99,14 +99,14 @@ namespace NopSolutions.NopCommerce.Web
                 if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
                 {
                     //it's not login/logout/passwordrecovery/captchaimage/register/accountactivation page
-                    if (!CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/login.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/logout.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/passwordrecovery.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/captchaimage.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/accountactivation.aspx") &&
-                       !CommonHelper.GetThisPageURL(false).ToLowerInvariant().Contains("/register.aspx"))
+                    if (!CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/login.aspx") &&
+                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/logout.aspx") &&
+                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/passwordrecovery.aspx") &&
+                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/captchaimage.aspx") &&
+                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/accountactivation.aspx") &&
+                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/register.aspx"))
                     {
-                        string loginURL = SEOHelper.GetLoginPageURL(false);
+                        string loginURL = SEOHelper.GetLoginPageUrl(false);
                         Response.Redirect(loginURL);
                     }
                 }
@@ -170,7 +170,7 @@ namespace NopSolutions.NopCommerce.Web
         protected string GetLocaleResourceString(string ResourceName)
         {
             Language language = NopContext.Current.WorkingLanguage;
-            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageID);
+            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageId);
         }
         #endregion
     }

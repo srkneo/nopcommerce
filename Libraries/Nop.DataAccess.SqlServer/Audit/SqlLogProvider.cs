@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
     /// <summary>
     /// Log provider for SQL Server
     /// </summary>
-    public partial class SQLLogProvider : DBLogProvider
+    public partial class SqlLogProvider : DBLogProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,18 +36,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         #region Utilities
         private DBLog GetLogFromReader(IDataReader dataReader)
         {
-            DBLog log = new DBLog();
-            log.LogID = NopSqlDataHelper.GetInt(dataReader, "LogID");
-            log.LogTypeID = NopSqlDataHelper.GetInt(dataReader, "LogTypeID");
-            log.Severity = NopSqlDataHelper.GetInt(dataReader, "Severity");
-            log.Message = NopSqlDataHelper.GetString(dataReader, "Message");
-            log.Exception = NopSqlDataHelper.GetString(dataReader, "Exception");
-            log.IPAddress = NopSqlDataHelper.GetString(dataReader, "IPAddress");
-            log.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            log.PageURL = NopSqlDataHelper.GetString(dataReader, "PageURL");
-            log.ReferrerURL = NopSqlDataHelper.GetString(dataReader, "ReferrerURL");
-            log.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return log;
+            var item = new DBLog();
+            item.LogId = NopSqlDataHelper.GetInt(dataReader, "LogID");
+            item.LogTypeId = NopSqlDataHelper.GetInt(dataReader, "LogTypeID");
+            item.Severity = NopSqlDataHelper.GetInt(dataReader, "Severity");
+            item.Message = NopSqlDataHelper.GetString(dataReader, "Message");
+            item.Exception = NopSqlDataHelper.GetString(dataReader, "Exception");
+            item.IPAddress = NopSqlDataHelper.GetString(dataReader, "IPAddress");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.PageUrl = NopSqlDataHelper.GetString(dataReader, "PageURL");
+            item.ReferrerUrl = NopSqlDataHelper.GetString(dataReader, "ReferrerURL");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
         #endregion
 
@@ -90,13 +90,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Deletes a log item
         /// </summary>
-        /// <param name="LogID">Log item identifier</param>
-        public override void DeleteLog(int LogID)
+        /// <param name="logId">Log item identifier</param>
+        public override void DeleteLog(int logId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LogDelete");
-            db.AddInParameter(dbCommand, "LogID", DbType.Int32, LogID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "LogID", DbType.Int32, logId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LogClear");
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -133,60 +133,60 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets a log item
         /// </summary>
-        /// <param name="LogID">Log item identifier</param>
+        /// <param name="logId">Log item identifier</param>
         /// <returns>Log item</returns>
-        public override DBLog GetLogByID(int LogID)
+        public override DBLog GetLogById(int logId)
         {
-            DBLog log = null;
+            DBLog item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LogLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "LogID", DbType.Int32, LogID);
+            db.AddInParameter(dbCommand, "LogID", DbType.Int32, logId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    log = GetLogFromReader(dataReader);
+                    item = GetLogFromReader(dataReader);
                 }
             }
-            return log;
+            return item;
         }
 
         /// <summary>
         /// Inserts a log item
         /// </summary>
-        /// <param name="LogTypeID">Log item type identifier</param>
-        /// <param name="Severity">The severity</param>
-        /// <param name="Message">The short message</param>
-        /// <param name="Exception">The full exception</param>
-        /// <param name="IPAddress">The IP address</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="PageURL">The page URL</param>
-        /// <param name="ReferrerURL">The referrer URL</param>
-        /// <param name="CreatedOn">The date and time of instance creationL</param>
+        /// <param name="logTypeId">Log item type identifier</param>
+        /// <param name="severity">The severity</param>
+        /// <param name="message">The short message</param>
+        /// <param name="exception">The full exception</param>
+        /// <param name="ipAddress">The IP address</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="pageUrl">The page URL</param>
+        /// <param name="referrerUrl">The referrer URL</param>
+        /// <param name="createdOn">The date and time of instance creationL</param>
         /// <returns>Log item</returns>
-        public override DBLog InsertLog(int LogTypeID, int Severity, string Message,
-            string Exception, string IPAddress, int CustomerID, 
-            string PageURL, string ReferrerURL, DateTime CreatedOn)
+        public override DBLog InsertLog(int logTypeId, int severity, string message,
+            string exception, string ipAddress, int customerId,
+            string pageUrl, string referrerUrl, DateTime createdOn)
         {
-            DBLog log = null;
+            DBLog item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LogInsert");
             db.AddOutParameter(dbCommand, "LogID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "LogTypeID", DbType.Int32, LogTypeID);
-            db.AddInParameter(dbCommand, "Severity", DbType.Int32, Severity);
-            db.AddInParameter(dbCommand, "Message", DbType.String, Message);
-            db.AddInParameter(dbCommand, "Exception", DbType.String, Exception);
-            db.AddInParameter(dbCommand, "IPAddress", DbType.String, IPAddress);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "PageURL", DbType.String, PageURL);
-            db.AddInParameter(dbCommand, "ReferrerURL", DbType.String, ReferrerURL);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "LogTypeID", DbType.Int32, logTypeId);
+            db.AddInParameter(dbCommand, "Severity", DbType.Int32, severity);
+            db.AddInParameter(dbCommand, "Message", DbType.String, message);
+            db.AddInParameter(dbCommand, "Exception", DbType.String, exception);
+            db.AddInParameter(dbCommand, "IPAddress", DbType.String, ipAddress);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "PageURL", DbType.String, pageUrl);
+            db.AddInParameter(dbCommand, "ReferrerURL", DbType.String, referrerUrl);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int LogID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@LogID"));
-                log = GetLogByID(LogID);
+                int logId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@LogID"));
+                item = GetLogById(logId);
             }
-            return log;
+            return item;
         }
         #endregion
     }

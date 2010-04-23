@@ -88,10 +88,6 @@ namespace NopSolutions.NopCommerce.Web
                  * 
                  * * */
 
-
-                bool requestIsQuickPay = false;
-
-
                 string msgtype = CommonHelper.GetFormString("msgtype");
                 string ordernumber = CommonHelper.GetFormString("ordernumber");
                 string amount = CommonHelper.GetFormString("amount");
@@ -142,14 +138,14 @@ namespace NopSolutions.NopCommerce.Web
                 if (string.IsNullOrEmpty(merchant))
                     throw new NopException("Quickpay merchant is not set");
 
-                Order order = OrderManager.GetOrderByID(Convert.ToInt32(ordernumber));
+                Order order = OrderManager.GetOrderById(Convert.ToInt32(ordernumber));
 
                 if (order == null)
                     throw new NopException(string.Format("The order ID {0} doesn't exists", ordernumber));
                 
                 if (OrderManager.CanMarkOrderAsPaid(order))
                 {
-                    OrderManager.MarkOrderAsPaid(order.OrderID);
+                    OrderManager.MarkOrderAsPaid(order.OrderId);
                 }
             }
         }

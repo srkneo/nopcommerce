@@ -51,13 +51,13 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     string orderNumber = string.Empty;
                     values.TryGetValue("custom", out orderNumber);
-                    Guid orderNumberGUID = Guid.Empty;
+                    Guid orderNumberGuid = Guid.Empty;
                     try
                     {
-                        orderNumberGUID = new Guid(orderNumber);
+                        orderNumberGuid = new Guid(orderNumber);
                     }
                     catch { }
-                    Order order = OrderManager.GetOrderByGUID(orderNumberGUID);
+                    Order order = OrderManager.GetOrderByGuid(orderNumberGuid);
                     if (order != null)
                     {
                         decimal total = decimal.Zero;
@@ -105,10 +105,10 @@ namespace NopSolutions.NopCommerce.Web
                         sb.AppendLine("invoice: " + invoice);
                         sb.AppendLine("payment_fee: " + payment_fee);
 
-                        OrderManager.InsertOrderNote(order.OrderID, sb.ToString(), false, DateTime.Now);
+                        OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.Now);
                         if (OrderManager.CanMarkOrderAsPaid(order))
                         {
-                            OrderManager.MarkOrderAsPaid(order.OrderID);
+                            OrderManager.MarkOrderAsPaid(order.OrderId);
                         }
                     
                     }
@@ -118,16 +118,16 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     string orderNumber = string.Empty;
                     values.TryGetValue("custom", out orderNumber);
-                    Guid orderNumberGUID = Guid.Empty;
+                    Guid orderNumberGuid = Guid.Empty;
                     try
                     {
-                        orderNumberGUID = new Guid(orderNumber);
+                        orderNumberGuid = new Guid(orderNumber);
                     }
                     catch { }
-                    Order order = OrderManager.GetOrderByGUID(orderNumberGUID);
+                    Order order = OrderManager.GetOrderByGuid(orderNumberGuid);
                     if (order != null)
                     {
-                        OrderManager.InsertOrderNote(order.OrderID, "PayPal PDT failed. " + response, false, DateTime.Now);
+                        OrderManager.InsertOrderNote(order.OrderId, "PayPal PDT failed. " + response, false, DateTime.Now);
                     }
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }

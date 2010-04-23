@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the order note identifier
         /// </summary>
-        public int OrderNoteID { get; set; }
+        public int OrderNoteId { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the note
@@ -52,13 +52,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets a value indicating whether the customer can see a note
         /// </summary>
-        public bool DisplayToCustomer { get; set; }
+        public bool DisplayToCustomer
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the date and time of order note creation
         /// </summary>
         public DateTime CreatedOn { get; set; }
-        
+
         #endregion
     }
 

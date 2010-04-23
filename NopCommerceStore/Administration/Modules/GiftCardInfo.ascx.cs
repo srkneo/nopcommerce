@@ -40,11 +40,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            GiftCard gc = OrderManager.GetGiftCardByID(this.GiftCardID);
+            GiftCard gc = OrderManager.GetGiftCardById(this.GiftCardId);
             if (gc != null)
             {
-                this.lblOrder.Text = string.Format("<a href=\"OrderDetails.aspx?OrderID={0}\">{1}</a>", gc.PurchasedOrderProductVariant.OrderID, GetLocaleResourceString("Admin.GiftCardInfo.Order.View"));
-                this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", gc.PurchasedOrderProductVariant.Order.CustomerID, GetLocaleResourceString("Admin.GiftCardInfo.Customer.View"));
+                this.lblOrder.Text = string.Format("<a href=\"OrderDetails.aspx?OrderID={0}\">{1}</a>", gc.PurchasedOrderProductVariant.OrderId, GetLocaleResourceString("Admin.GiftCardInfo.Order.View"));
+                this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", gc.PurchasedOrderProductVariant.Order.CustomerId, GetLocaleResourceString("Admin.GiftCardInfo.Customer.View"));
                 
                 this.txtInitialValue.Value =  GiftCardHelper.GetGiftCardInitialValue(gc);
                 decimal remainingAmount = GiftCardHelper.GetGiftCardRemainingAmount(gc);
@@ -75,10 +75,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindUsageHistory()
         {
-            GiftCard gc = OrderManager.GetGiftCardByID(this.GiftCardID);
+            GiftCard gc = OrderManager.GetGiftCardById(this.GiftCardId);
             if (gc != null)
             {
-                GiftCardUsageHistoryCollection giftCardUsageHistory = OrderManager.GetAllGiftCardUsageHistoryEntries(gc.GiftCardID, null, null);
+                GiftCardUsageHistoryCollection giftCardUsageHistory = OrderManager.GetAllGiftCardUsageHistoryEntries(gc.GiftCardId, null, null);
                 gvUsageHistory.DataSource = giftCardUsageHistory;
                 gvUsageHistory.DataBind();
             }
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public GiftCard SaveInfo()
         {
-            GiftCard gc = OrderManager.GetGiftCardByID(this.GiftCardID);
+            GiftCard gc = OrderManager.GetGiftCardById(this.GiftCardId);
 
             decimal initialValue = txtInitialValue.Value;
             bool isGiftCardActivated = cbIsGiftCardActivated.Checked;
@@ -99,8 +99,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             if (gc != null)
             {
-                gc = OrderManager.UpdateGiftCard(gc.GiftCardID,
-                    gc.PurchasedOrderProductVariantID, initialValue, isGiftCardActivated,
+                gc = OrderManager.UpdateGiftCard(gc.GiftCardId,
+                    gc.PurchasedOrderProductVariantId, initialValue, isGiftCardActivated,
                     giftCardCouponCode, recipientName, recipientEmail,
                     senderName, senderEmail, message,
                     gc.IsSenderNotified, gc.CreatedOn);
@@ -127,11 +127,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 if (customer.IsGuest)
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.GiftCardInfo.UsageHistory.ByCustomerColumn.Guest"));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.GiftCardInfo.UsageHistory.ByCustomerColumn.Guest"));
                 }
                 else
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 }
             }
             return customerInfo;
@@ -170,14 +170,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 GiftCard gc = SaveInfo();
-                Language customerLang = LanguageManager.GetLanguageByID(gc.PurchasedOrderProductVariant.Order.CustomerLanguageID);
+                Language customerLang = LanguageManager.GetLanguageById(gc.PurchasedOrderProductVariant.Order.CustomerLanguageId);
                 if (customerLang==null)
                     customerLang = NopContext.Current.WorkingLanguage;
-                int queuedEmail = MessageManager.SendGiftCardNotification(gc, customerLang.LanguageID);
+                int queuedEmail = MessageManager.SendGiftCardNotification(gc, customerLang.LanguageId);
                 if (queuedEmail > 0)
                 {
-                    gc = OrderManager.UpdateGiftCard(gc.GiftCardID,
-                        gc.PurchasedOrderProductVariantID, gc.Amount, gc.IsGiftCardActivated,
+                    gc = OrderManager.UpdateGiftCard(gc.GiftCardId,
+                        gc.PurchasedOrderProductVariantId, gc.Amount, gc.IsGiftCardActivated,
                         gc.GiftCardCouponCode, gc.RecipientName, gc.RecipientEmail,
                         gc.SenderName, gc.SenderEmail, gc.Message,
                         true, gc.CreatedOn);
@@ -190,11 +190,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
         
-        public int GiftCardID
+        public int GiftCardId
         {
             get
             {
-                return CommonHelper.QueryStringInt("GiftCardID");
+                return CommonHelper.QueryStringInt("GiftCardId");
             }
         }
     }

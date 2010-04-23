@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Gets or sets the ShippingByWeightAndCountry identifier
         /// </summary>
-        public int ShippingByWeightAndCountryID { get; set; }
+        public int ShippingByWeightAndCountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping method identifier
         /// </summary>
-        public int ShippingMethodID { get; set; }
+        public int ShippingMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the "from" value

@@ -8,11 +8,9 @@
     OnPageIndexChanging="gvProductVariants_PageIndexChanging" AllowPaging="true"
     PageSize="15">
     <Columns>
-        <asp:BoundField DataField="ProductVariantID" HeaderText="Product variant ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantsLowStock.Name %>" ItemStyle-Width="40%">
             <ItemTemplate>
-                <a href="ProductVariantDetails.aspx?ProductVariantID=<%#Eval("ProductVariantID")%>"
+                <a href="ProductVariantDetails.aspx?ProductVariantID=<%#Eval("ProductVariantId")%>"
                     title="<%#GetLocaleResourceString("Admin.ProductVariantsLowStock.Name.Tooltip")%>">
                     <%#Server.HtmlEncode(Eval("FullProductName").ToString())%>
                 </a>
@@ -32,7 +30,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantsLowStock.Edit %>" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%"
             ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="ProductVariantDetails.aspx?ProductVariantID=<%#Eval("ProductVariantID")%>"
+                <a href="ProductVariantDetails.aspx?ProductVariantID=<%#Eval("ProductVariantId")%>"
                     title="<%#GetLocaleResourceString("Admin.ProductVariantsLowStock.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.ProductVariantsLowStock.Edit")%>
                 </a>

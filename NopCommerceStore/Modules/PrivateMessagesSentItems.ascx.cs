@@ -59,15 +59,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
             base.OnPreRender(e);
         }
 
-        protected string GetToInfo(int CustomerID)
+        protected string GetToInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            var customer = CustomerManager.GetCustomerByID(CustomerID);
+            var customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null && !customer.IsGuest)
             {
                 if (CustomerManager.AllowViewingProfiles)
                 {
-                    customerInfo = string.Format("<a href=\"{0}\">{1}</a>", SEOHelper.GetUserProfileURL(customer.CustomerID), Server.HtmlEncode(CustomerManager.FormatUserName(customer)));
+                    customerInfo = string.Format("<a href=\"{0}\">{1}</a>", SEOHelper.GetUserProfileUrl(customer.CustomerId), Server.HtmlEncode(CustomerManager.FormatUserName(customer)));
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             string result = string.Empty;
             string subjectInfo = Server.HtmlEncode(pm.Subject);
-            result = string.Format("<a href=\"{0}viewpm.aspx?pm={1}\">{2}</a>", CommonHelper.GetStoreLocation(), pm.PrivateMessageID, subjectInfo);
+            result = string.Format("<a href=\"{0}viewpm.aspx?pm={1}\">{2}</a>", CommonHelper.GetStoreLocation(), pm.PrivateMessageId, subjectInfo);
             return result;
         }
 
@@ -94,19 +94,19 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     foreach (GridViewRow row in gvSent.Rows)
                     {
                         var cbSelect = row.FindControl("cbSelect") as CheckBox;
-                        var hfPrivateMessageID = row.FindControl("hfPrivateMessageID") as HiddenField;
-                        if (cbSelect != null && hfPrivateMessageID != null)
+                        var hfPrivateMessageId = row.FindControl("hfPrivateMessageId") as HiddenField;
+                        if (cbSelect != null && hfPrivateMessageId != null)
                         {
                             bool selected = cbSelect.Checked;
-                            int pmID = int.Parse(hfPrivateMessageID.Value);
+                            int pmId = int.Parse(hfPrivateMessageId.Value);
                             if (selected)
                             {
-                                var pm = ForumManager.GetPrivateMessageByID(pmID);
+                                var pm = ForumManager.GetPrivateMessageById(pmId);
                                 if (pm != null)
                                 {
-                                    if (pm.FromUserID == NopContext.Current.User.CustomerID)
+                                    if (pm.FromUserId == NopContext.Current.User.CustomerId)
                                     {
-                                        pm = ForumManager.UpdatePrivateMessage(pm.PrivateMessageID, pm.FromUserID, pm.ToUserID,
+                                        pm = ForumManager.UpdatePrivateMessage(pm.PrivateMessageId, pm.FromUserId, pm.ToUserId,
                                             pm.Subject, pm.Text, pm.IsRead, true, pm.IsDeletedByRecipient, pm.CreatedOn);
                                     }
                                 }

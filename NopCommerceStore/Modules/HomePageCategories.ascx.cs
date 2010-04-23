@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var subCategoryCollection = CategoryManager.GetAllCategories(ParentCategoryID);
+            var subCategoryCollection = CategoryManager.GetAllCategories(this.ParentCategoryId);
             if (subCategoryCollection.Count > 0)
             {
                 dlCategories.DataSource = subCategoryCollection;
@@ -61,10 +61,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 var category = e.Item.DataItem as Category;
                 var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
-                string categoryURL = SEOHelper.GetCategoryURL(category.CategoryID);
+                string categoryURL = SEOHelper.GetCategoryUrl(category.CategoryId);
                 if (hlImageLink != null)
                 {
-                    hlImageLink.ImageUrl = PictureManager.GetPictureUrl(category.PictureID, SettingManager.GetSettingValueInteger("Media.Category.ThumbnailImageSize", 125), true);
+                    hlImageLink.ImageUrl = PictureManager.GetPictureUrl(category.PictureId, SettingManager.GetSettingValueInteger("Media.Category.ThumbnailImageSize", 125), true);
                     hlImageLink.NavigateUrl = categoryURL;
                     hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.Name);
                     hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Category.ImageAlternateTextFormat"), category.Name);
@@ -80,16 +80,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
 
         [DefaultValue(0)]
-        public int ParentCategoryID
+        public int ParentCategoryId
         {
             get
             {
-                if (ViewState["ParentCategoryID"] == null)
+                if (ViewState["ParentCategoryId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["ParentCategoryID"];
+                    return (int)ViewState["ParentCategoryId"];
             }
-            set { ViewState["ParentCategoryID"] = value; }
+            set { ViewState["ParentCategoryId"] = value; }
         }
     }
 }

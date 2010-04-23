@@ -34,16 +34,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
     public partial class StoreMembershipProvider : MembershipProvider
     {
         #region Fields
-        private string _AppName;
-        private bool _EnablePasswordReset;
-        private bool _EnablePasswordRetrieval;
-        private int _MaxInvalidPasswordAttempts;
-        private int _MinRequiredNonalphanumericCharacters;
-        private int _MinRequiredPasswordLength;
-        private int _PasswordAttemptWindow;
-        private string _PasswordStrengthRegularExpression;
-        private bool _RequiresQuestionAndAnswer;
-        private bool _RequiresUniqueEmail;
+        private string _appName;
+        private bool _enablePasswordReset;
+        private bool _enablePasswordRetrieval;
+        private int _maxInvalidPasswordAttempts;
+        private int _minRequiredNonalphanumericCharacters;
+        private int _minRequiredPasswordLength;
+        private int _passwordAttemptWindow;
+        private string _passwordStrengthRegularExpression;
+        private bool _requiresQuestionAndAnswer;
+        private bool _requiresUniqueEmail;
         #endregion
 
         #region Methods
@@ -108,7 +108,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
             if (status == MembershipCreateStatus.Success)
             {
                 var dt = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-                user = new MembershipUser(this.Name, _username, customer.CustomerGUID, _email, string.Empty, null, true, false, dt, dt, dt, dt, dt);
+                user = new MembershipUser(this.Name, _username, customer.CustomerGuid, _email, string.Empty, null, true, false, dt, dt, dt, dt, dt);
             }
             return user;
         }
@@ -229,7 +229,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                 return null;
             var dt = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
 
-            return new MembershipUser(this.Name, _username, customer.CustomerGUID, _email, string.Empty, null, true, false, dt, dt, dt, dt, dt);
+            return new MembershipUser(this.Name, _username, customer.CustomerGuid, _email, string.Empty, null, true, false, dt, dt, dt, dt, dt);
         }
 
         /// <summary>
@@ -275,23 +275,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                 config.Add("description", "Membership Provider for NopCommerce");
             }
             base.Initialize(name, config);
-            this._EnablePasswordReset = CommonHelper.ConfigGetBooleanValue(config, "enablePasswordReset", true);
-            this._EnablePasswordRetrieval = CommonHelper.ConfigGetBooleanValue(config, "enablePasswordRetrieval", true);
-            this._RequiresQuestionAndAnswer = CommonHelper.ConfigGetBooleanValue(config, "requiresQuestionAndAnswer", true);
-            this._RequiresUniqueEmail = CommonHelper.ConfigGetBooleanValue(config, "requiresUniqueEmail", true);
-            this._MaxInvalidPasswordAttempts = CommonHelper.ConfigGetIntValue(config, "maxInvalidPasswordAttempts", 5, false, 0);
-            this._PasswordAttemptWindow = CommonHelper.ConfigGetIntValue(config, "passwordAttemptWindow", 10, false, 0);
-            this._MinRequiredPasswordLength = CommonHelper.ConfigGetIntValue(config, "minRequiredPasswordLength", 7, false, 0x80);
-            this._MinRequiredNonalphanumericCharacters = CommonHelper.ConfigGetIntValue(config, "minRequiredNonalphanumericCharacters", 1, true, 0x80);
-            this._PasswordStrengthRegularExpression = config["passwordStrengthRegularExpression"];
-            if (this._PasswordStrengthRegularExpression != null)
+            this._enablePasswordReset = CommonHelper.ConfigGetBooleanValue(config, "enablePasswordReset", true);
+            this._enablePasswordRetrieval = CommonHelper.ConfigGetBooleanValue(config, "enablePasswordRetrieval", true);
+            this._requiresQuestionAndAnswer = CommonHelper.ConfigGetBooleanValue(config, "requiresQuestionAndAnswer", true);
+            this._requiresUniqueEmail = CommonHelper.ConfigGetBooleanValue(config, "requiresUniqueEmail", true);
+            this._maxInvalidPasswordAttempts = CommonHelper.ConfigGetIntValue(config, "maxInvalidPasswordAttempts", 5, false, 0);
+            this._passwordAttemptWindow = CommonHelper.ConfigGetIntValue(config, "passwordAttemptWindow", 10, false, 0);
+            this._minRequiredPasswordLength = CommonHelper.ConfigGetIntValue(config, "minRequiredPasswordLength", 7, false, 0x80);
+            this._minRequiredNonalphanumericCharacters = CommonHelper.ConfigGetIntValue(config, "minRequiredNonalphanumericCharacters", 1, true, 0x80);
+            this._passwordStrengthRegularExpression = config["passwordStrengthRegularExpression"];
+            if (this._passwordStrengthRegularExpression != null)
             {
-                this._PasswordStrengthRegularExpression = this._PasswordStrengthRegularExpression.Trim();
-                if (this._PasswordStrengthRegularExpression.Length != 0)
+                this._passwordStrengthRegularExpression = this._passwordStrengthRegularExpression.Trim();
+                if (this._passwordStrengthRegularExpression.Length != 0)
                 {
                     try
                     {
-                        new Regex(this._PasswordStrengthRegularExpression);
+                        new Regex(this._passwordStrengthRegularExpression);
                     }
                     catch (ArgumentException ex)
                     {
@@ -299,17 +299,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                     }
                 }
             }
-            this._PasswordStrengthRegularExpression = string.Empty;
-            if (this._MinRequiredNonalphanumericCharacters > this._MinRequiredPasswordLength)
+            this._passwordStrengthRegularExpression = string.Empty;
+            if (this._minRequiredNonalphanumericCharacters > this._minRequiredPasswordLength)
             {
                 throw new HttpException("MinRequiredNonalphanumericCharacters can not be more than MinRequiredPasswordLength");
             }
-            this._AppName = config["applicationName"];
-            if (string.IsNullOrEmpty(this._AppName))
+            this._appName = config["applicationName"];
+            if (string.IsNullOrEmpty(this._appName))
             {
-                this._AppName = "NopCommerce";
+                this._appName = "NopCommerce";
             }
-            if (this._AppName.Length > 0x100)
+            if (this._appName.Length > 0x100)
             {
                 throw new ProviderException("Provider application name too long");
             }
@@ -317,7 +317,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
             string connectionStringName = config["connectionStringName"];
             if (string.IsNullOrEmpty(connectionStringName))
             {
-                this._AppName = "NopSqlConnection";
+                this._appName = "NopSqlConnection";
             }
 
             config.Remove("enablePasswordReset");
@@ -414,11 +414,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._AppName;
+                return this._appName;
             }
             set
             {
-                this._AppName = value;
+                this._appName = value;
             }
         }
 
@@ -429,7 +429,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._EnablePasswordReset;
+                return this._enablePasswordReset;
             }
         }
 
@@ -440,7 +440,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._MaxInvalidPasswordAttempts;
+                return this._maxInvalidPasswordAttempts;
             }
         }
 
@@ -451,7 +451,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._MinRequiredNonalphanumericCharacters;
+                return this._minRequiredNonalphanumericCharacters;
             }
         }
 
@@ -462,7 +462,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._MinRequiredPasswordLength;
+                return this._minRequiredPasswordLength;
             }
         }
 
@@ -473,7 +473,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._PasswordAttemptWindow;
+                return this._passwordAttemptWindow;
             }
         }
 
@@ -484,7 +484,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._PasswordStrengthRegularExpression;
+                return this._passwordStrengthRegularExpression;
             }
         }
 
@@ -495,7 +495,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._RequiresQuestionAndAnswer;
+                return this._requiresQuestionAndAnswer;
             }
         }
 
@@ -506,7 +506,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._RequiresUniqueEmail;
+                return this._requiresUniqueEmail;
             }
         }
 
@@ -517,7 +517,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return _EnablePasswordRetrieval;
+                return this._enablePasswordRetrieval;
             }
         }
 

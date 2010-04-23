@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 

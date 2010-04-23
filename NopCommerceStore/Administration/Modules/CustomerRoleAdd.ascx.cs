@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.AddNewCustomerRole"),
                         customerRole.Name);
 
-                    Response.Redirect("CustomerRoleDetails.aspx?CustomerRoleID=" + customerRole.CustomerRoleID.ToString());
+                    Response.Redirect("CustomerRoleDetails.aspx?CustomerRoleID=" + customerRole.CustomerRoleId.ToString());
                 }
                 catch (Exception exc)
                 {

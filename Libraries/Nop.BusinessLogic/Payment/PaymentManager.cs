@@ -35,9 +35,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public static void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public static void ProcessPayment(PaymentInfo paymentInfo, Customer customer, 
+            Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             if (paymentInfo.OrderTotal == decimal.Zero)
             {
@@ -47,11 +48,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             }
             else
             {
-                var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(paymentInfo.PaymentMethodID);
+                var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentInfo.PaymentMethodId);
                 if (paymentMethod == null)
                     throw new NopException("Payment method couldn't be loaded");
                 var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
-                iPaymentMethod.ProcessPayment(paymentInfo, customer, OrderGuid, ref processPaymentResult);
+                iPaymentMethod.ProcessPayment(paymentInfo, customer, orderGuid, ref processPaymentResult);
             }
         }
 
@@ -66,7 +67,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             if (order.PaymentStatus == PaymentStatusEnum.Paid)
                 return string.Empty;
 
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(order.PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(order.PaymentMethodId);
             if (paymentMethod == null)
                 throw new NopException("Payment method couldn't be loaded");
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -76,11 +77,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets additional handling fee
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>Additional handling fee</returns>
-        public static decimal GetAdditionalHandlingFee(int PaymentMethodID)
+        public static decimal GetAdditionalHandlingFee(int paymentMethodId)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
             if (paymentMethod == null)
                 return decimal.Zero;
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -90,11 +91,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a value indicating whether capture is supported by payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>A value indicating whether capture is supported</returns>
-        public static bool CanCapture(int PaymentMethodID)
+        public static bool CanCapture(int paymentMethodId)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
             if (paymentMethod == null)
                 return false;
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -108,7 +109,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="processPaymentResult">Process payment result</param>
         public static void Capture(Order order, ref ProcessPaymentResult processPaymentResult)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(order.PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(order.PaymentMethodId);
             if (paymentMethod == null)
                 throw new NopException("Payment method couldn't be loaded");
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -118,11 +119,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a value indicating whether refund is supported by payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>A value indicating whether refund is supported</returns>
-        public static bool CanRefund(int PaymentMethodID)
+        public static bool CanRefund(int paymentMethodId)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
             if (paymentMethod == null)
                 return false;
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -136,7 +137,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="cancelPaymentResult">Cancel payment result</param>
         public static void Refund(Order order, ref CancelPaymentResult cancelPaymentResult)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(order.PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(order.PaymentMethodId);
             if (paymentMethod == null)
                 throw new NopException("Payment method couldn't be loaded");
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -146,11 +147,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a value indicating whether void is supported by payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>A value indicating whether void is supported</returns>
-        public static bool CanVoid(int PaymentMethodID)
+        public static bool CanVoid(int paymentMethodId)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
             if (paymentMethod == null)
                 return false;
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -164,7 +165,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="cancelPaymentResult">Cancel payment result</param>
         public static void Void(Order order, ref CancelPaymentResult cancelPaymentResult)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(order.PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(order.PaymentMethodId);
             if (paymentMethod == null)
                 throw new NopException("Payment method couldn't be loaded");
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -174,11 +175,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a recurring payment type of payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>A recurring payment type of payment method</returns>
-        public static RecurringPaymentTypeEnum SupportRecurringPayments(int PaymentMethodID)
+        public static RecurringPaymentTypeEnum SupportRecurringPayments(int paymentMethodId)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
             if (paymentMethod == null)
                 return RecurringPaymentTypeEnum.NotSupported;
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -188,11 +189,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a payment method type
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>A payment method type</returns>
-        public static PaymentMethodTypeEnum GetPaymentMethodType(int PaymentMethodID)
+        public static PaymentMethodTypeEnum GetPaymentMethodType(int paymentMethodId)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
             if (paymentMethod == null)
                 return PaymentMethodTypeEnum.Unknown;
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -204,9 +205,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public static void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public static void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer,
+            Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             if (paymentInfo.OrderTotal == decimal.Zero)
             {
@@ -216,11 +218,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             }
             else
             {
-                var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(paymentInfo.PaymentMethodID);
+                var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentInfo.PaymentMethodId);
                 if (paymentMethod == null)
                     throw new NopException("Payment method couldn't be loaded");
                 var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
-                iPaymentMethod.ProcessRecurringPayment(paymentInfo, customer, OrderGuid, ref processPaymentResult);
+                iPaymentMethod.ProcessRecurringPayment(paymentInfo, customer, orderGuid, ref processPaymentResult);
             }
         }
 
@@ -231,7 +233,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="cancelPaymentResult">Cancel payment result</param>
         public static void CancelRecurringPayment(Order order, ref CancelPaymentResult cancelPaymentResult)
         {
-            var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(order.PaymentMethodID);
+            var paymentMethod = PaymentMethodManager.GetPaymentMethodById(order.PaymentMethodId);
             if (paymentMethod == null)
                 throw new NopException("Payment method couldn't be loaded");
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
@@ -241,19 +243,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets masked credit card number
         /// </summary>
-        /// <param name="CreditCardNumber">Credit card number</param>
+        /// <param name="creditCardNumber">Credit card number</param>
         /// <returns>Masked credit card number</returns>
-        public static string GetMaskedCreditCardNumber(string CreditCardNumber)
+        public static string GetMaskedCreditCardNumber(string creditCardNumber)
         {
-            if (String.IsNullOrEmpty(CreditCardNumber))
+            if (String.IsNullOrEmpty(creditCardNumber))
                 return string.Empty;
 
-            if (CreditCardNumber.Length <= 4)
-                return CreditCardNumber;
+            if (creditCardNumber.Length <= 4)
+                return creditCardNumber;
 
-            string last4 = CreditCardNumber.Substring(CreditCardNumber.Length - 4, 4);
+            string last4 = creditCardNumber.Substring(creditCardNumber.Length - 4, 4);
             string maskedChars = string.Empty;
-            for (int i = 0; i < CreditCardNumber.Length - 4; i++)
+            for (int i = 0; i < creditCardNumber.Length - 4; i++)
             {
                 maskedChars += "*";
             }

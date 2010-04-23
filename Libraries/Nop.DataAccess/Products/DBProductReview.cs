@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the product review identifier
         /// </summary>
-        public int ProductReviewID { get; set; }
+        public int ProductReviewId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the title

@@ -25,14 +25,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         protected void BindData()
         {
-            Address address = CustomerManager.GetAddressByID(this.AddressID);
+            Address address = CustomerManager.GetAddressById(this.AddressId);
             if (address != null)
             {
                 Customer customer = address.Customer;
                 if (customer != null)
                 {
                     this.lblCustomer.Text = Server.HtmlEncode(customer.Email);
-                    lnkBack.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "CustomerDetails.aspx?CustomerID=" + customer.CustomerID.ToString();
+                    lnkBack.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "CustomerDetails.aspx?CustomerID=" + customer.CustomerId.ToString();
                 }
                 else
                     Response.Redirect("Customers.aspx");
@@ -48,9 +48,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtAddress1.Text = address.Address1;
                 this.txtAddress2.Text = address.Address2;
                 this.txtCity.Text = address.City;
-                CommonHelper.SelectListItem(this.ddlCountry, address.CountryID);
+                CommonHelper.SelectListItem(this.ddlCountry, address.CountryId);
                 FillStateProvinceDropDowns();
-                CommonHelper.SelectListItem(this.ddlStateProvince, address.StateProvinceID);
+                CommonHelper.SelectListItem(this.ddlStateProvince, address.StateProvinceId);
                 this.txtZipPostalCode.Text = address.ZipPostalCode;
             }
             else
@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 countryCollection = CountryManager.GetAllCountriesForShipping();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -75,12 +75,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void FillStateProvinceDropDowns()
         {
             this.ddlStateProvince.Items.Clear();
-            int countryID = int.Parse(this.ddlCountry.SelectedItem.Value);
+            int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
-                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceID.ToString());
+                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
                 this.ddlStateProvince.Items.Add(ddlStateProviceItem2);
             }
             if (stateProvinceCollection.Count == 0)
@@ -104,18 +104,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    Address address = CustomerManager.GetAddressByID(this.AddressID);
+                    Address address = CustomerManager.GetAddressById(this.AddressId);
 
                     if (address != null)
                     {
-                        address = CustomerManager.UpdateAddress(address.AddressID, address.CustomerID, address.IsBillingAddress,
+                        address = CustomerManager.UpdateAddress(address.AddressId, address.CustomerId, address.IsBillingAddress,
                             txtFirstName.Text, txtLastName.Text,
                             txtPhoneNumber.Text, txtEmail.Text, txtFaxNumber.Text, txtCompany.Text,
                             txtAddress1.Text, txtAddress2.Text, txtCity.Text, 
                             int.Parse(this.ddlStateProvince.SelectedItem.Value), txtZipPostalCode.Text,
                             int.Parse(this.ddlCountry.SelectedItem.Value), address.CreatedOn, DateTime.Now);
 
-                        Response.Redirect("CustomerDetails.aspx?CustomerID=" + address.CustomerID.ToString());
+                        Response.Redirect("CustomerDetails.aspx?CustomerID=" + address.CustomerId.ToString());
                     }
                     else
                         Response.Redirect("Customers.aspx");
@@ -131,10 +131,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Address address = CustomerManager.GetAddressByID(this.AddressID);
-                CustomerManager.DeleteAddress(this.AddressID);
+                Address address = CustomerManager.GetAddressById(this.AddressId);
+                CustomerManager.DeleteAddress(this.AddressId);
                 if (address != null)
-                    Response.Redirect("CustomerDetails.aspx?CustomerID=" + address.CustomerID.ToString());
+                    Response.Redirect("CustomerDetails.aspx?CustomerID=" + address.CustomerId.ToString());
                 else
                     Response.Redirect("Customers.aspx");
             }
@@ -149,11 +149,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             FillStateProvinceDropDowns();
         }
 
-        public int AddressID
+        public int AddressId
         {
             get
             {
-                return CommonHelper.QueryStringInt("AddressID");
+                return CommonHelper.QueryStringInt("AddressId");
             }
         }
     }

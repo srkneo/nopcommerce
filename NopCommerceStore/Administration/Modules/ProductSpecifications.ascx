@@ -10,7 +10,7 @@
                 <asp:Literal runat="server" ID="lErrorTitle" EnableViewState="false" />
             </asp:Panel>
             <asp:GridView ID="gvProductSpecificationAttributes" runat="server" AutoGenerateColumns="false"
-                DataKeyNames="ProductSpecificationAttributeID" OnRowDeleting="gvProductSpecificationAttributes_RowDeleting"
+                DataKeyNames="ProductSpecificationAttributeId" OnRowDeleting="gvProductSpecificationAttributes_RowDeleting"
                 OnRowDataBound="gvProductSpecificationAttributes_RowDataBound" OnRowCommand="gvProductSpecificationAttributes_RowCommand"
                 Width="100%">
                 <Columns>
@@ -18,7 +18,7 @@
                         ItemStyle-Width="20%">
                         <ItemTemplate>
                             <asp:Literal ID="lblSpecificationAttributeName" runat="server" />
-                            <asp:HiddenField ID="hfProductSpecificationAttributeID" runat="server" Value='<%# Eval("ProductSpecificationAttributeID") %>' />
+                            <asp:HiddenField ID="hfProductSpecificationAttributeId" runat="server" Value='<%# Eval("ProductSpecificationAttributeId") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductSpecifications.AttributeOption %>"

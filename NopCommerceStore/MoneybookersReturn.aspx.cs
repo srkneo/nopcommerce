@@ -57,10 +57,10 @@ namespace NopSolutions.NopCommerce.Web
 
                 if (status == "2")
                 {
-                    Order order = OrderManager.GetOrderByID(Convert.ToInt32(mb_transaction_id));
+                    Order order = OrderManager.GetOrderById(Convert.ToInt32(mb_transaction_id));
                     if (OrderManager.CanMarkOrderAsPaid(order))
                     {
-                        OrderManager.MarkOrderAsPaid(order.OrderID);
+                        OrderManager.MarkOrderAsPaid(order.OrderId);
                     }
                     Response.Redirect("~/checkoutcompleted.aspx");
                 }

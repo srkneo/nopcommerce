@@ -95,40 +95,40 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbCancel;
         
         /// <summary>
-        /// lblOrderIDTitle control.
+        /// lblOrderIdTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblOrderIDTitle;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblOrderIdTitle;
         
         /// <summary>
-        /// lblOrderID control.
+        /// lblOrderId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOrderID;
+        protected global::System.Web.UI.WebControls.Label lblOrderId;
         
         /// <summary>
-        /// lblOrderGUIDTitle control.
+        /// lblOrderGuidTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblOrderGUIDTitle;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblOrderGuidTitle;
         
         /// <summary>
-        /// lblOrderGUID control.
+        /// lblOrderGuid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOrderGUID;
+        protected global::System.Web.UI.WebControls.Label lblOrderGuid;
         
         /// <summary>
         /// lblCustomerTitle control.

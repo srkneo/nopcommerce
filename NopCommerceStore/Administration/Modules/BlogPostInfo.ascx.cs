@@ -39,17 +39,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             LanguageCollection languages = LanguageManager.GetAllLanguages();
             foreach (Language language in languages)
             {
-                ListItem item2 = new ListItem(language.Name, language.LanguageID.ToString());
+                ListItem item2 = new ListItem(language.Name, language.LanguageId.ToString());
                 this.ddlLanguage.Items.Add(item2);
             }
         }
 
         private void BindData()
         {
-            BlogPost blogPost = BlogManager.GetBlogPostByID(this.BlogPostID);
+            BlogPost blogPost = BlogManager.GetBlogPostById(this.BlogPostId);
             if (blogPost != null)
             {
-                CommonHelper.SelectListItem(this.ddlLanguage, blogPost.LanguageID);
+                CommonHelper.SelectListItem(this.ddlLanguage, blogPost.LanguageId);
                 this.txtBlogPostTitle.Text = blogPost.BlogPostTitle;
                 this.txtBlogPostBody.Content = blogPost.BlogPostBody;
                 this.cbBlogPostAllowComments.Checked = blogPost.BlogPostAllowComments;
@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     this.hlViewComments.Visible = true;
                     this.hlViewComments.Text = string.Format(GetLocaleResourceString("Admin.BlogPostInfo.ViewComments"), blogComments.Count);
-                    this.hlViewComments.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "BlogComments.aspx?BlogPostID=" + blogPost.BlogPostID;
+                    this.hlViewComments.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "BlogComments.aspx?BlogPostID=" + blogPost.BlogPostId;
                 }
                 else
                     this.hlViewComments.Visible = false;
@@ -85,27 +85,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public BlogPost SaveInfo()
         {
-            BlogPost blogPost = BlogManager.GetBlogPostByID(this.BlogPostID);
+            BlogPost blogPost = BlogManager.GetBlogPostById(this.BlogPostId);
             if (blogPost != null)
             {
-                blogPost = BlogManager.UpdateBlogPost(this.BlogPostID, int.Parse(this.ddlLanguage.SelectedItem.Value),
+                blogPost = BlogManager.UpdateBlogPost(this.BlogPostId, int.Parse(this.ddlLanguage.SelectedItem.Value),
                     txtBlogPostTitle.Text, txtBlogPostBody.Content,
-                    cbBlogPostAllowComments.Checked, blogPost.CreatedByID, blogPost.CreatedOn);
+                    cbBlogPostAllowComments.Checked, blogPost.CreatedById, blogPost.CreatedOn);
             }
             else
             {
                 blogPost = BlogManager.InsertBlogPost(int.Parse(this.ddlLanguage.SelectedItem.Value),
                    txtBlogPostTitle.Text, txtBlogPostBody.Content,
-                   cbBlogPostAllowComments.Checked, NopContext.Current.User.CustomerID, DateTime.Now);
+                   cbBlogPostAllowComments.Checked, NopContext.Current.User.CustomerId, DateTime.Now);
             }
             return blogPost;
         }
 
-        public int BlogPostID
+        public int BlogPostId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BlogPostID");
+                return CommonHelper.QueryStringInt("BlogPostId");
             }
         }
     }

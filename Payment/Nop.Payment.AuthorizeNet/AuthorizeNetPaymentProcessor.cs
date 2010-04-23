@@ -134,9 +134,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
             TransactMode transactionMode = GetCurrentTransactionMode();
@@ -167,7 +167,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
             form.Add("x_amount", paymentInfo.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture));
             form.Add("x_card_num", paymentInfo.CreditCardNumber);
             form.Add("x_exp_date", paymentInfo.CreditCardExpireMonth.ToString("D2") + paymentInfo.CreditCardExpireYear.ToString());
-            form.Add("x_card_code", paymentInfo.CreditCardCVV2);
+            form.Add("x_card_code", paymentInfo.CreditCardCvv2);
             form.Add("x_first_name", paymentInfo.BillingAddress.FirstName);
             form.Add("x_last_name", paymentInfo.BillingAddress.LastName);
             if (string.IsNullOrEmpty(paymentInfo.BillingAddress.Company))
@@ -178,8 +178,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
                 form.Add("x_state", paymentInfo.BillingAddress.StateProvince.Abbreviation);
             form.Add("x_zip", paymentInfo.BillingAddress.ZipPostalCode);
             if (paymentInfo.BillingAddress.Country != null)
-                form.Add("x_country", paymentInfo.BillingAddress.Country.TwoLetterISOCode);
-            form.Add("x_invoice_num", OrderGuid.ToString());
+                form.Add("x_country", paymentInfo.BillingAddress.Country.TwoLetterIsoCode);
+            form.Add("x_invoice_num", orderGuid.ToString());
             form.Add("x_customer_ip", HttpContext.Current.Request.UserHostAddress);
 
             string reply = null;
@@ -335,9 +335,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
             MerchantAuthenticationType authentication = PopulateMerchantAuthentication();
@@ -346,11 +346,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
                 ARBSubscriptionType subscription = new ARBSubscriptionType();
                 NopSolutions.NopCommerce.Payment.Methods.AuthorizeNet.net.authorize.api.CreditCardType creditCard = new NopSolutions.NopCommerce.Payment.Methods.AuthorizeNet.net.authorize.api.CreditCardType();
 
-                subscription.name = OrderGuid.ToString();
+                subscription.name = orderGuid.ToString();
 
                 creditCard.cardNumber = paymentInfo.CreditCardNumber;
                 creditCard.expirationDate = paymentInfo.CreditCardExpireYear + "-" + paymentInfo.CreditCardExpireMonth; // required format for API is YYYY-MM
-                creditCard.cardCode = paymentInfo.CreditCardCVV2;
+                creditCard.cardCode = paymentInfo.CreditCardCvv2;
 
                 subscription.payment = new PaymentType();
                 subscription.payment.Item = creditCard;
@@ -430,7 +430,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
 
                 if (response.resultCode == MessageTypeEnum.Ok)
                 {
-                    processPaymentResult.SubscriptionTransactionID = response.subscriptionId.ToString();
+                    processPaymentResult.SubscriptionTransactionId = response.subscriptionId.ToString();
                     processPaymentResult.AuthorizationTransactionCode = response.resultCode.ToString();
                     processPaymentResult.AuthorizationTransactionResult = string.Format("Approved ({0}: {1})", response.resultCode.ToString(), response.subscriptionId.ToString());
                 }
@@ -452,7 +452,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
             InitSettings();
             MerchantAuthenticationType authentication = PopulateMerchantAuthentication();
             long subscriptionID = 0;
-            long.TryParse(cancelPaymentResult.SubscriptionTransactionID, out subscriptionID);
+            long.TryParse(cancelPaymentResult.SubscriptionTransactionId, out subscriptionID);
             ARBCancelSubscriptionResponseType response = webService.ARBCancelSubscription(authentication, subscriptionID);
 
             if (response.resultCode == MessageTypeEnum.Ok)

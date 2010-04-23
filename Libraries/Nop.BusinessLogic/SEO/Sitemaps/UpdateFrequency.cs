@@ -44,30 +44,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
         /// <summary>
         /// Always
         /// </summary>
-        always,
+        Always,
         /// <summary>
         /// Hourly
         /// </summary>
-        hourly,
+        Hourly,
         /// <summary>
         /// Daily
         /// </summary>
-        daily,
+        Daily,
         /// <summary>
         /// Weekly
         /// </summary>
-        weekly,
+        Weekly,
         /// <summary>
         /// Monthly
         /// </summary>
-        monthly,
+        Monthly,
         /// <summary>
         /// Yearly
         /// </summary>
-        yearly,
+        Yearly,
         /// <summary>
         /// Never
         /// </summary>
-        never
+        Never
     }
 }

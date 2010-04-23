@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (BlogManager.BlogEnabled)
             {
-                BlogPostCollection blogPosts = BlogManager.GetAllBlogPosts(LanguageID);
+                BlogPostCollection blogPosts = BlogManager.GetAllBlogPosts(LanguageId);
                 rptrBlogPosts.DataSource = blogPosts;
                 rptrBlogPosts.DataBind();
             }
@@ -52,11 +52,11 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

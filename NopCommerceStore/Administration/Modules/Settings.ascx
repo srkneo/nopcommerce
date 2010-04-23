@@ -13,7 +13,6 @@
 <asp:GridView ID="gvSettings" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvSettings_PageIndexChanging" AllowPaging="true" PageSize="30">
     <Columns>
-        <asp:BoundField DataField="SettingID" HeaderText="Setting ID" Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Settings.Name %>" ItemStyle-Width="40%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
@@ -27,7 +26,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Settings.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="SettingDetails.aspx?SettingID=<%#Eval("SettingID")%>" title="<%#GetLocaleResourceString("Admin.Settings.Edit.Tooltip")%>">
+                <a href="SettingDetails.aspx?SettingID=<%#Eval("SettingId")%>" title="<%#GetLocaleResourceString("Admin.Settings.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Settings.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

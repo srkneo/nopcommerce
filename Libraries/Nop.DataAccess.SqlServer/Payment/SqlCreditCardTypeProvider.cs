@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
     /// <summary>
     /// Credit card type provider for SQL Server
     /// </summary>
-    public partial class SQLCreditCardTypeProvider : DBCreditCardTypeProvider
+    public partial class SqlCreditCardTypeProvider : DBCreditCardTypeProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,13 +36,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         #region Utilities
         private DBCreditCardType GetCreditCardTypeFromReader(IDataReader dataReader)
         {
-            DBCreditCardType creditCardType = new DBCreditCardType();
-            creditCardType.CreditCardTypeID = NopSqlDataHelper.GetInt(dataReader, "CreditCardTypeID");
-            creditCardType.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            creditCardType.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
-            creditCardType.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            creditCardType.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            return creditCardType;
+            var item = new DBCreditCardType();
+            item.CreditCardTypeId = NopSqlDataHelper.GetInt(dataReader, "CreditCardTypeID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            return item;
         }
         #endregion
 
@@ -85,22 +85,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Gets a credit card type
         /// </summary>
-        /// <param name="CreditCardTypeID">Credit card type identifier</param>
+        /// <param name="creditCardTypeId">Credit card type identifier</param>
         /// <returns>Credit card type</returns>
-        public override DBCreditCardType GetCreditCardTypeByID(int CreditCardTypeID)
+        public override DBCreditCardType GetCreditCardTypeById(int creditCardTypeId)
         {
-            DBCreditCardType creditCardType = null;
+            DBCreditCardType item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CreditCardTypeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CreditCardTypeID", DbType.Int32, CreditCardTypeID);
+            db.AddInParameter(dbCommand, "CreditCardTypeID", DbType.Int32, creditCardTypeId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    creditCardType = GetCreditCardTypeFromReader(dataReader);
+                    item = GetCreditCardTypeFromReader(dataReader);
                 }
             }
-            return creditCardType;
+            return item;
         }
 
         /// <summary>
@@ -127,53 +127,54 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Inserts a credit card type
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>A credit card type</returns>
-        public override DBCreditCardType InsertCreditCardType(string Name, string SystemKeyword, int DisplayOrder, bool Deleted)
+        public override DBCreditCardType InsertCreditCardType(string name,
+            string systemKeyword, int displayOrder, bool deleted)
         {
-            DBCreditCardType creditCardType = null;
+            DBCreditCardType item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CreditCardTypeInsert");
             db.AddOutParameter(dbCommand, "CreditCardTypeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CreditCardTypeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CreditCardTypeID"));
-                creditCardType = GetCreditCardTypeByID(CreditCardTypeID);
+                int creditCardTypeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CreditCardTypeID"));
+                item = GetCreditCardTypeById(creditCardTypeId);
             }
-            return creditCardType;
+            return item;
         }
 
         /// <summary>
         /// Updates the credit card type
         /// </summary>
-        /// <param name="CreditCardTypeID">Credit card type identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="creditCardTypeId">Credit card type identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>A credit card type</returns>
-        public override DBCreditCardType UpdateCreditCardType(int CreditCardTypeID, string Name, string SystemKeyword,
-            int DisplayOrder, bool Deleted)
+        public override DBCreditCardType UpdateCreditCardType(int creditCardTypeId,
+            string name, string systemKeyword, int displayOrder, bool deleted)
         {
-            DBCreditCardType creditCardType = null;
+            DBCreditCardType item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CreditCardTypeUpdate");
-            db.AddInParameter(dbCommand, "CreditCardTypeID", DbType.Int32, CreditCardTypeID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
+            db.AddInParameter(dbCommand, "CreditCardTypeID", DbType.Int32, creditCardTypeId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                creditCardType = GetCreditCardTypeByID(CreditCardTypeID);
+                item = GetCreditCardTypeById(creditCardTypeId);
 
-            return creditCardType;
+            return item;
         }
         #endregion
     }

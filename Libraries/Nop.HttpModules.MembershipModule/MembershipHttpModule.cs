@@ -47,9 +47,9 @@ namespace NopSolutions.NopCommerce.HttpModules
             if (NopContext.Current != null)
             {
                 if (NopContext.Current.IsAdmin)
-                    loginURL = SEOHelper.GetAdminAreaLoginPageURL();
+                    loginURL = SEOHelper.GetAdminAreaLoginPageUrl();
                 else
-                    loginURL = SEOHelper.GetLoginPageURL();
+                    loginURL = SEOHelper.GetLoginPageUrl();
                 HttpContext.Current.Response.Redirect(loginURL);
             }
         }
@@ -93,14 +93,14 @@ namespace NopSolutions.NopCommerce.HttpModules
                     
                     if (customer != null)
                     {
-                        var registeredCustomerSession = CustomerManager.GetCustomerSessionByCustomerID(customer.CustomerID);
+                        var registeredCustomerSession = CustomerManager.GetCustomerSessionByCustomerId(customer.CustomerId);
                         if (registeredCustomerSession == null)
                         {
                             registeredCustomerSession = NopContext.Current.GetSession(true);
                             registeredCustomerSession.IsExpired = false;
                             registeredCustomerSession.LastAccessed = DateTime.UtcNow;
-                            registeredCustomerSession.CustomerID = customer.CustomerID;
-                            registeredCustomerSession = CustomerManager.SaveCustomerSession(registeredCustomerSession.CustomerSessionGUID, registeredCustomerSession.CustomerID, registeredCustomerSession.LastAccessed, registeredCustomerSession.IsExpired);
+                            registeredCustomerSession.CustomerId = customer.CustomerId;
+                            registeredCustomerSession = CustomerManager.SaveCustomerSession(registeredCustomerSession.CustomerSessionGuid, registeredCustomerSession.CustomerId, registeredCustomerSession.LastAccessed, registeredCustomerSession.IsExpired);
                         }
 
                         if (!String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name)
@@ -149,7 +149,11 @@ namespace NopSolutions.NopCommerce.HttpModules
                     if (NopContext.Current.Session.LastAccessed.AddMinutes(1.0) < dtNow)
                     {
                         NopContext.Current.Session.LastAccessed = dtNow;
-                        NopContext.Current.Session = CustomerManager.SaveCustomerSession(NopContext.Current.Session.CustomerSessionGUID, NopContext.Current.Session.CustomerID, NopContext.Current.Session.LastAccessed, false);
+                        NopContext.Current.Session = CustomerManager.SaveCustomerSession(
+                            NopContext.Current.Session.CustomerSessionGuid, 
+                            NopContext.Current.Session.CustomerId, 
+                            NopContext.Current.Session.LastAccessed,
+                            false);
                     }
                 }
 

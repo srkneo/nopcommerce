@@ -27,7 +27,7 @@
                         <div />
                     </td>
                     <td class="forumname">
-                        <span class="forumtitle"><a href="<%#SEOHelper.GetForumURL(Convert.ToInt32(Eval("ForumID")))%>">
+                        <span class="forumtitle"><a href="<%#SEOHelper.GetForumUrl(Convert.ToInt32(Eval("ForumId")))%>">
                             <%#Server.HtmlEncode(Eval("Name").ToString())%>
                         </a></span>
                         <br />

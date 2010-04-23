@@ -65,16 +65,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return null;
 
             var item = new Category();
-            item.CategoryID = dbItem.CategoryID;
+            item.CategoryId = dbItem.CategoryId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
-            item.TemplateID = dbItem.TemplateID;
+            item.TemplateId = dbItem.TemplateId;
             item.MetaKeywords = dbItem.MetaKeywords;
             item.MetaDescription = dbItem.MetaDescription;
             item.MetaTitle = dbItem.MetaTitle;
             item.SEName = dbItem.SEName;
-            item.ParentCategoryID = dbItem.ParentCategoryID;
-            item.PictureID = dbItem.PictureID;
+            item.ParentCategoryId = dbItem.ParentCategoryId;
+            item.PictureId = dbItem.PictureId;
             item.PageSize = dbItem.PageSize;
             item.PriceRanges = dbItem.PriceRanges;
             item.Published = dbItem.Published;
@@ -92,9 +92,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return null;
 
             var item = new CategoryLocalized();
-            item.CategoryLocalizedID = dbItem.CategoryLocalizedID;
-            item.CategoryID = dbItem.CategoryID;
-            item.LanguageID = dbItem.LanguageID;
+            item.CategoryLocalizedId = dbItem.CategoryLocalizedId;
+            item.CategoryId = dbItem.CategoryId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
             item.MetaKeywords = dbItem.MetaKeywords;
@@ -126,9 +126,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return null;
 
             var item = new ProductCategory();
-            item.ProductCategoryID = dbItem.ProductCategoryID;
-            item.ProductID = dbItem.ProductID;
-            item.CategoryID = dbItem.CategoryID;
+            item.ProductCategoryId = dbItem.ProductCategoryId;
+            item.ProductId = dbItem.ProductId;
+            item.CategoryId = dbItem.CategoryId;
             item.IsFeaturedProduct = dbItem.IsFeaturedProduct;
             item.DisplayOrder = dbItem.DisplayOrder;
 
@@ -141,15 +141,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Marks category as deleted
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        public static void MarkCategoryAsDeleted(int CategoryID)
+        /// <param name="categoryId">Category identifier</param>
+        public static void MarkCategoryAsDeleted(int categoryId)
         {
-            var category = GetCategoryByID(CategoryID);
+            var category = GetCategoryById(categoryId);
             if (category != null)
             {
-                category = UpdateCategory(category.CategoryID, category.Name, category.Description, category.TemplateID, category.MetaKeywords,
-                     category.MetaDescription, category.MetaTitle, category.SEName, category.ParentCategoryID,
-                     category.PictureID, category.PageSize, category.PriceRanges, 
+                category = UpdateCategory(category.CategoryId, category.Name, 
+                    category.Description, category.TemplateId, category.MetaKeywords,
+                     category.MetaDescription, category.MetaTitle, category.SEName, category.ParentCategoryId,
+                     category.PictureId, category.PageSize, category.PriceRanges, 
                      category.Published, true, category.DisplayOrder,
                      category.CreatedOn, category.UpdatedOn);
             }
@@ -158,63 +159,64 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Removes category picture
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        public static void RemoveCategoryPicture(int CategoryID)
+        /// <param name="categoryId">Category identifier</param>
+        public static void RemoveCategoryPicture(int categoryId)
         {
-            var category = GetCategoryByID(CategoryID);
+            var category = GetCategoryById(categoryId);
             if (category != null)
             {
-                UpdateCategory(category.CategoryID, category.Name, category.Description, category.TemplateID, category.MetaKeywords,
-                   category.MetaDescription, category.MetaTitle, category.SEName, category.ParentCategoryID,
-                   0, category.PageSize, category.PriceRanges, 
-                   category.Published, category.Deleted, category.DisplayOrder,
-                   category.CreatedOn, category.UpdatedOn);
+                UpdateCategory(category.CategoryId, category.Name, category.Description,
+                    category.TemplateId, category.MetaKeywords,
+                    category.MetaDescription, category.MetaTitle, category.SEName,
+                    category.ParentCategoryId, 0, category.PageSize, category.PriceRanges,
+                    category.Published, category.Deleted, category.DisplayOrder,
+                    category.CreatedOn, category.UpdatedOn);
             }
         }
 
         /// <summary>
         /// Gets all categories
         /// </summary>
-        /// <param name="ParentCategoryID">Parent category identifier</param>
+        /// <param name="parentCategoryId">Parent category identifier</param>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategories(int ParentCategoryID)
+        public static CategoryCollection GetAllCategories(int parentCategoryId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            return GetAllCategories(ParentCategoryID, showHidden);
+            return GetAllCategories(parentCategoryId, showHidden);
         }
 
         /// <summary>
         /// Gets all categories
         /// </summary>
-        /// <param name="ParentCategoryID">Parent category identifier</param>
+        /// <param name="parentCategoryId">Parent category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategories(int ParentCategoryID, bool showHidden)
+        public static CategoryCollection GetAllCategories(int parentCategoryId, bool showHidden)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetAllCategories(ParentCategoryID, showHidden, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetAllCategories(parentCategoryId, showHidden, languageId);
         }
 
         /// <summary>
         /// Gets all categories
         /// </summary>
-        /// <param name="ParentCategoryID">Parent category identifier</param>
+        /// <param name="parentCategoryId">Parent category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategories(int ParentCategoryID, 
-            bool showHidden, int LanguageID)
+        public static CategoryCollection GetAllCategories(int parentCategoryId,
+            bool showHidden, int languageId)
         {
-            string key = string.Format(CATEGORIES_ALL_KEY, showHidden, ParentCategoryID, LanguageID);
+            string key = string.Format(CATEGORIES_ALL_KEY, showHidden, parentCategoryId, languageId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (CategoryCollection)obj2;
             }
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategories(ParentCategoryID, 
-                showHidden, LanguageID);
+            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategories(parentCategoryId, 
+                showHidden, languageId);
             var categoryCollection = DBMapping(dbCollection);
 
             if (CategoryManager.CategoriesCacheEnabled)
@@ -227,34 +229,34 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <returns>Category</returns>
-        public static Category GetCategoryByID(int CategoryID)
+        public static Category GetCategoryById(int categoryId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetCategoryByID(CategoryID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetCategoryById(categoryId, languageId);
         }
         
         /// <summary>
         /// Gets a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category</returns>
-        public static Category GetCategoryByID(int CategoryID, int LanguageID)
+        public static Category GetCategoryById(int categoryId, int languageId)
         {
-            if (CategoryID == 0)
+            if (categoryId == 0)
                 return null;
 
-            string key = string.Format(CATEGORIES_BY_ID_KEY, CategoryID, LanguageID);
+            string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId, languageId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (Category)obj2;
             }
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryByID(CategoryID, LanguageID);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryById(categoryId, languageId);
             var category = DBMapping(dbItem);
 
             if (CategoryManager.CategoriesCacheEnabled)
@@ -267,12 +269,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets a category breadcrumb
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <returns>Category</returns>
-        public static CategoryCollection GetBreadCrumb(int CategoryID)
+        public static CategoryCollection GetBreadCrumb(int categoryId)
         {
             var breadCrumb = new CategoryCollection();
-            var category = GetCategoryByID(CategoryID);
+            var category = GetCategoryById(categoryId);
             while (category != null && !category.Deleted && category.Published)
             {
                 breadCrumb.Add(category);
@@ -283,37 +285,38 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         }
 
         /// <summary>
-        /// Inserts category identifier
+        /// Inserts category
         /// </summary>
-        /// <param name="Name">The category name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="ParentCategoryID">The parent category identifier</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The category name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="parentCategoryId">The parent category identifier</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Category</returns>
-        public static Category InsertCategory(string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int ParentCategoryID, int PictureID, int PageSize, string PriceRanges,
-            bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Category InsertCategory(string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int parentCategoryId, int pictureId,
+            int pageSize, string priceRanges, bool published, bool deleted,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategory(Name, Description,
-                TemplateID, MetaKeywords, MetaDescription, MetaTitle,
-                SEName, ParentCategoryID, PictureID, PageSize,PriceRanges, Published, Deleted,
-                DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategory(name, 
+                description, templateId, metaKeywords, metaDescription, metaTitle,
+                seName, parentCategoryId, pictureId, pageSize, priceRanges, published, deleted,
+                displayOrder, createdOn, updatedOn);
 
             var category = DBMapping(dbItem);
 
@@ -329,48 +332,49 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Updates the category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="Name">The category name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="ParentCategoryID">The parent category identifier</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="name">The category name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="parentCategoryId">The parent category identifier</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Category</returns>
-        public static Category UpdateCategory(int CategoryID, string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int ParentCategoryID, int PictureID, int PageSize, string PriceRanges,
-            bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Category UpdateCategory(int categoryId, string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int parentCategoryId, int pictureId,
+            int pageSize, string priceRanges, bool published, bool deleted,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             //validate category hierarchy
-            var parentCategory = GetCategoryByID(ParentCategoryID);
+            var parentCategory = GetCategoryById(parentCategoryId);
             while (parentCategory != null)
             {
-                if (CategoryID == parentCategory.CategoryID)
+                if (categoryId == parentCategory.CategoryId)
                 {
-                    ParentCategoryID = 0;
+                    parentCategoryId = 0;
                     break;
                 }
-                parentCategory = GetCategoryByID(parentCategory.ParentCategoryID);
+                parentCategory = GetCategoryById(parentCategory.ParentCategoryId);
             }
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategory(CategoryID, Name, Description,
-            TemplateID, MetaKeywords, MetaDescription, MetaTitle,
-            SEName, ParentCategoryID, PictureID, PageSize, PriceRanges, Published, Deleted,
-            DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategory(categoryId,
+                name, description, templateId, metaKeywords, metaDescription, metaTitle,
+                seName, parentCategoryId, pictureId, pageSize, priceRanges, published, deleted,
+                displayOrder, createdOn, updatedOn);
 
             var category = DBMapping(dbItem);
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
@@ -385,14 +389,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets localized category by id
         /// </summary>
-        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <param name="categoryLocalizedId">Localized category identifier</param>
         /// <returns>Category content</returns>
-        public static CategoryLocalized GetCategoryLocalizedByID(int CategoryLocalizedID)
+        public static CategoryLocalized GetCategoryLocalizedById(int categoryLocalizedId)
         {
-            if (CategoryLocalizedID == 0)
+            if (categoryLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedByID(CategoryLocalizedID);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedById(categoryLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -400,15 +404,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets localized category by category id and language id
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category content</returns>
-        public static CategoryLocalized GetCategoryLocalizedByCategoryIDAndLanguageID(int CategoryID, int LanguageID)
+        public static CategoryLocalized GetCategoryLocalizedByCategoryIdAndLanguageId(int categoryId, int languageId)
         {
-            if (CategoryID == 0 || LanguageID == 0)
+            if (categoryId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedByCategoryIDAndLanguageID(CategoryID, LanguageID);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedByCategoryIdAndLanguageId(categoryId, languageId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -416,22 +420,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Inserts a localized category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>CategoryContent</returns>
-        public static CategoryLocalized InsertCategoryLocalized(int CategoryID,
-            int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Category content</returns>
+        public static CategoryLocalized InsertCategoryLocalized(int categoryId,
+            int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategoryLocalized(CategoryID,
-            LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategoryLocalized(categoryId,
+                languageId, name, description, metaKeywords, 
+                metaDescription, metaTitle, seName);
             var item = DBMapping(dbItem);
 
             if (CategoryManager.CategoriesCacheEnabled)
@@ -445,23 +450,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Update a localized category
         /// </summary>
-        /// <param name="CategoryLocalizedID">Localized category identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>CategoryContent</returns>
-        public static CategoryLocalized UpdateCategoryLocalized(int CategoryLocalizedID,
-            int CategoryID, int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="categoryLocalizedId">Localized category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Category content</returns>
+        public static CategoryLocalized UpdateCategoryLocalized(int categoryLocalizedId,
+            int categoryId, int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategoryLocalized(CategoryLocalizedID,
-                CategoryID, LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategoryLocalized(categoryLocalizedId,
+                categoryId, languageId, name, description, metaKeywords, 
+                metaDescription, metaTitle, seName);
             var item = DBMapping(dbItem);
 
             if (CategoryManager.CategoriesCacheEnabled)
@@ -475,13 +481,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Deletes a product category mapping
         /// </summary>
-        /// <param name="ProductCategoryID">Product category identifier</param>
-        public static void DeleteProductCategory(int ProductCategoryID)
+        /// <param name="productCategoryId">Product category identifier</param>
+        public static void DeleteProductCategory(int productCategoryId)
         {
-            if (ProductCategoryID == 0)
+            if (productCategoryId == 0)
                 return;
 
-            DBProviderManager<DBCategoryProvider>.Provider.DeleteProductCategory(ProductCategoryID);
+            DBProviderManager<DBCategoryProvider>.Provider.DeleteProductCategory(productCategoryId);
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
@@ -493,22 +499,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets product category mapping collection
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <returns>Product a category mapping collection</returns>
-        public static ProductCategoryCollection GetProductCategoriesByCategoryID(int CategoryID)
+        public static ProductCategoryCollection GetProductCategoriesByCategoryId(int categoryId)
         {
-            if (CategoryID == 0)
+            if (categoryId == 0)
                 return new ProductCategoryCollection();
 
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(PRODUCTCATEGORIES_ALLBYCATEGORYID_KEY, showHidden, CategoryID);
+            string key = string.Format(PRODUCTCATEGORIES_ALLBYCATEGORYID_KEY, showHidden, categoryId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductCategoryCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByCategoryID(CategoryID, showHidden);
+            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByCategoryId(categoryId, showHidden);
             var productCategoryCollection = DBMapping(dbCollection);
 
             if (CategoryManager.MappingsCacheEnabled)
@@ -521,22 +527,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets a product category mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product category mapping collection</returns>
-        public static ProductCategoryCollection GetProductCategoriesByProductID(int ProductID)
+        public static ProductCategoryCollection GetProductCategoriesByProductId(int productId)
         {
-            if (ProductID == 0)
+            if (productId == 0)
                 return new ProductCategoryCollection();
 
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(PRODUCTCATEGORIES_ALLBYPRODUCTID_KEY, showHidden, ProductID);
+            string key = string.Format(PRODUCTCATEGORIES_ALLBYPRODUCTID_KEY, showHidden, productId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductCategoryCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByProductID(ProductID, showHidden);
+            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByProductId(productId, showHidden);
             var productCategoryCollection = DBMapping(dbCollection);
 
             if (CategoryManager.MappingsCacheEnabled)
@@ -549,21 +555,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets a product category mapping 
         /// </summary>
-        /// <param name="ProductCategoryID">Product category mapping identifier</param>
+        /// <param name="productCategoryId">Product category mapping identifier</param>
         /// <returns>Product category mapping</returns>
-        public static ProductCategory GetProductCategoryByID(int ProductCategoryID)
+        public static ProductCategory GetProductCategoryById(int productCategoryId)
         {
-            if (ProductCategoryID == 0)
+            if (productCategoryId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTCATEGORIES_BY_ID_KEY, ProductCategoryID);
+            string key = string.Format(PRODUCTCATEGORIES_BY_ID_KEY, productCategoryId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductCategory)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoryByID(ProductCategoryID);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoryById(productCategoryId);
             var productCategory = DBMapping(dbItem);
 
             if (CategoryManager.MappingsCacheEnabled)
@@ -576,16 +582,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Inserts a product category mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product category mapping </returns>
-        public static ProductCategory InsertProductCategory(int ProductID, int CategoryID,
-           bool IsFeaturedProduct, int DisplayOrder)
+        public static ProductCategory InsertProductCategory(int productId, int categoryId,
+           bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertProductCategory(ProductID, 
-                CategoryID, IsFeaturedProduct, DisplayOrder);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertProductCategory(productId, 
+                categoryId, isFeaturedProduct, displayOrder);
 
             var productCategory = DBMapping(dbItem);
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
@@ -599,17 +605,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Updates the product category mapping 
         /// </summary>
-        /// <param name="ProductCategoryID">Product category mapping  identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productCategoryId">Product category mapping  identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product category mapping </returns>
-        public static ProductCategory UpdateProductCategory(int ProductCategoryID, int ProductID, int CategoryID,
-           bool IsFeaturedProduct, int DisplayOrder)
+        public static ProductCategory UpdateProductCategory(int productCategoryId,
+            int productId, int categoryId, bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateProductCategory(ProductCategoryID, 
-                ProductID, CategoryID, IsFeaturedProduct, DisplayOrder);
+            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateProductCategory(productCategoryId, 
+                productId, categoryId, isFeaturedProduct, displayOrder);
             var productCategory = DBMapping(dbItem);
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)

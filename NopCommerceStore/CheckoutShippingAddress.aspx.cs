@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureSSL();
+                CommonHelper.EnsureSsl();
             }
 
             CommonHelper.SetResponseNoCache(Response);

@@ -34,12 +34,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (e.CommandName == "Update")
             {
-                int productReviewID = Convert.ToInt32(e.CommandArgument);
-                ProductReview productReview = ProductManager.GetProductReviewByID(productReviewID);
+                int productReviewId = Convert.ToInt32(e.CommandArgument);
+                ProductReview productReview = ProductManager.GetProductReviewById(productReviewId);
                 if (productReview != null)
                 {
-                    ProductManager.UpdateProductReview(productReview.ProductReviewID,
-                        productReview.ProductID, productReview.CustomerID, productReview.Title,
+                    ProductManager.UpdateProductReview(productReview.ProductReviewId,
+                        productReview.ProductId, productReview.CustomerId, productReview.Title,
                         productReview.ReviewText, productReview.Rating, productReview.HelpfulYesTotal, productReview.HelpfulNoTotal, !productReview.IsApproved, productReview.CreatedOn);
                 }
                 BindData();
@@ -50,8 +50,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (e.CommandName == "Edit")
             {
-                int productReviewID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("ProductReviewDetails.aspx?ProductReviewID=" + productReviewID.ToString());
+                int productReviewId = Convert.ToInt32(e.CommandArgument);
+                Response.Redirect("ProductReviewDetails.aspx?ProductReviewID=" + productReviewId.ToString());
             }
         }
 
@@ -59,8 +59,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (e.CommandName == "Delete")
             {
-                int productReviewID = Convert.ToInt32(e.CommandArgument);
-                ProductManager.DeleteProductReview(productReviewID);
+                int productReviewId = Convert.ToInt32(e.CommandArgument);
+                ProductManager.DeleteProductReview(productReviewId);
                 BindData();
             }
         }
@@ -77,12 +77,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 BindData();
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
-                string customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                string customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 return customerInfo;
             }
             else
@@ -92,19 +92,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void BindData()
         {
             ProductReviewCollection productReviewCollection = null;
-            if (this.ProductID > 0)
-                productReviewCollection = ProductManager.GetProductReviewByProductID(ProductID);
+            if (this.ProductId > 0)
+                productReviewCollection = ProductManager.GetProductReviewByProductId(ProductId);
             else
                 productReviewCollection = ProductManager.GetAllProductReviews();
             lvProductReviews.DataSource = productReviewCollection;
             lvProductReviews.DataBind();
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

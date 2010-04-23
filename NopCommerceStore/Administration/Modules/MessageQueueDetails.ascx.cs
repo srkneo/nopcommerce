@@ -34,7 +34,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            QueuedEmail queuedEmail = MessageManager.GetQueuedEmailByID(this.QueuedEmailID);
+            QueuedEmail queuedEmail = MessageManager.GetQueuedEmailById(this.QueuedEmailId);
             if (queuedEmail != null)
             {
                 this.txtPriority.Value = queuedEmail.Priority;
@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtFromName.Text = queuedEmail.FromName;
                 this.txtTo.Text = queuedEmail.To;
                 this.txtToName.Text = queuedEmail.ToName;
-                this.txtCc.Text = queuedEmail.Cc;
+                this.txtCc.Text = queuedEmail.CC;
                 this.txtBcc.Text = queuedEmail.Bcc;
                 this.txtSubject.Text = queuedEmail.Subject;
                 this.txtBody.Content = queuedEmail.Body;
@@ -68,7 +68,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    QueuedEmail queuedEmail = MessageManager.GetQueuedEmailByID(this.QueuedEmailID);
+                    QueuedEmail queuedEmail = MessageManager.GetQueuedEmailById(this.QueuedEmailId);
                     if (queuedEmail != null)
                     {
                         QueuedEmail requeuedEmail = MessageManager.InsertQueuedEmail(txtPriority.Value, 
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                             txtTo.Text, txtToName.Text, txtCc.Text, txtBcc.Text,
                             txtSubject.Text, txtBody.Content, DateTime.Now,
                             0, null);
-                        Response.Redirect("MessageQueueDetails.aspx?QueuedEmailID=" + requeuedEmail.QueuedEmailID.ToString());
+                        Response.Redirect("MessageQueueDetails.aspx?QueuedEmailID=" + requeuedEmail.QueuedEmailId.ToString());
                     }
                     else
                         Response.Redirect("MessageQueue.aspx");
@@ -94,15 +94,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    QueuedEmail queuedEmail = MessageManager.GetQueuedEmailByID(this.QueuedEmailID);
+                    QueuedEmail queuedEmail = MessageManager.GetQueuedEmailById(this.QueuedEmailId);
                     if (queuedEmail != null)
                     {
-                        queuedEmail = MessageManager.UpdateQueuedEmail(queuedEmail.QueuedEmailID,
+                        queuedEmail = MessageManager.UpdateQueuedEmail(queuedEmail.QueuedEmailId,
                            txtPriority.Value, txtFrom.Text, txtFromName.Text,
                            txtTo.Text, txtToName.Text, txtCc.Text, txtBcc.Text,
                            txtSubject.Text, txtBody.Content, queuedEmail.CreatedOn,
                            txtSendTries.Value, queuedEmail.SentOn);
-                        Response.Redirect("MessageQueueDetails.aspx?QueuedEmailID=" + queuedEmail.QueuedEmailID.ToString());
+                        Response.Redirect("MessageQueueDetails.aspx?QueuedEmailID=" + queuedEmail.QueuedEmailId.ToString());
                     }
                     else
                         Response.Redirect("MessageQueue.aspx");
@@ -118,7 +118,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                MessageManager.DeleteQueuedEmail(this.QueuedEmailID);
+                MessageManager.DeleteQueuedEmail(this.QueuedEmailId);
                 Response.Redirect("MessageQueue.aspx");
             }
             catch (Exception exc)
@@ -135,11 +135,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 return string.Format("Sent on {0}", DateTimeHelper.ConvertToUserTime(queuedEmail.SentOn.Value));
         }
 
-        public int QueuedEmailID
+        public int QueuedEmailId
         {
             get
             {
-                return CommonHelper.QueryStringInt("QueuedEmailID");
+                return CommonHelper.QueryStringInt("QueuedEmailId");
             }
         }
     }

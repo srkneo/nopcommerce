@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the recurring payment identifier
         /// </summary>
-        public int RecurringPaymentID { get; set; }
+        public int RecurringPaymentId { get; set; }
 
         /// <summary>
         /// Gets or sets the initial order identifier
         /// </summary>
-        public int InitialOrderID { get; set; }
+        public int InitialOrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the cycle length

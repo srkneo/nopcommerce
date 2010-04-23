@@ -39,12 +39,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the tier price identifier
         /// </summary>
-        public int TierPriceID { get; set; }
+        public int TierPriceId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity

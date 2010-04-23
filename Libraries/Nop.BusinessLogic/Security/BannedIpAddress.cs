@@ -32,16 +32,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
         #region Properties
         /// <summary>
-        /// Gets or sets the IpAddress unique identifier
+        /// Gets or sets the IP address unique identifier
         /// </summary>
-        public int BannedIpAddressID { get; set; }
+        public int BannedIpAddressId { get; set; }
+
         /// <summary>
-        /// Gets or sets a banned IP address
+        /// Gets or sets the IP address
         /// </summary>
         public string Address { get; set; }
 
         /// <summary>
-        /// Gets or sets a comment why the IP was banned
+        /// Gets or sets a reason why the IP was banned
         /// </summary>
         public string Comment { get; set; }
 

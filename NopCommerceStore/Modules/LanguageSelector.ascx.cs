@@ -42,11 +42,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var customerLanguage = NopContext.Current.WorkingLanguage;
                 foreach (var language in languages)
                 {
-                    var item = new ListItem(language.Name, language.LanguageID.ToString());
+                    var item = new ListItem(language.Name, language.LanguageId.ToString());
                     this.ddlLanguages.Items.Add(item);
                 }
                 if (customerLanguage != null)
-                    CommonHelper.SelectListItem(this.ddlLanguages, customerLanguage.LanguageID);
+                    CommonHelper.SelectListItem(this.ddlLanguages, customerLanguage.LanguageId);
             }
             else
                 this.Visible = false;
@@ -62,8 +62,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void ddlLanguages_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            int languagesID = int.Parse(this.ddlLanguages.SelectedItem.Value);
-            var language = LanguageManager.GetLanguageByID(languagesID);
+            int languagesId = int.Parse(this.ddlLanguages.SelectedItem.Value);
+            var language = LanguageManager.GetLanguageById(languagesId);
             if (language != null && language.Published)
             {
                 NopContext.Current.WorkingLanguage = language;

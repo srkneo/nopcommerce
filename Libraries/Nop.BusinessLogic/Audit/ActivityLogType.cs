@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Gets or sets the activity log type identifier
         /// </summary>
-        public int ActivityLogTypeID { get; set; }
+        public int ActivityLogTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the system keyword

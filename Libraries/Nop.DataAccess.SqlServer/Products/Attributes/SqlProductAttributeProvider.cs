@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
     /// <summary>
     /// Product attribute provider for SQL Server
     /// </summary>
-    public partial class SQLProductAttributeProvider : DBProductAttributeProvider
+    public partial class SqlProductAttributeProvider : DBProductAttributeProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,19 +36,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         #region Utilities
         private DBProductAttribute GetProductAttributeFromReader(IDataReader dataReader)
         {
-            DBProductAttribute productAttribute = new DBProductAttribute();
-            productAttribute.ProductAttributeID = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeID");
-            productAttribute.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            productAttribute.Description = NopSqlDataHelper.GetString(dataReader, "Description");
-            return productAttribute;
+            var item = new DBProductAttribute();
+            item.ProductAttributeId = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            return item;
         }
 
         private DBProductAttributeLocalized GetProductAttributeLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBProductAttributeLocalized();
-            item.ProductAttributeLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeLocalizedID");
-            item.ProductAttributeID = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.ProductAttributeLocalizedId = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeLocalizedID");
+            item.ProductAttributeId = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
             return item;
@@ -56,46 +56,46 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
 
         private DBProductVariantAttribute GetProductVariantAttributeFromReader(IDataReader dataReader)
         {
-            DBProductVariantAttribute productVariantAttribute = new DBProductVariantAttribute();
-            productVariantAttribute.ProductVariantAttributeID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeID");
-            productVariantAttribute.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
-            productVariantAttribute.ProductAttributeID = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeID");
-            productVariantAttribute.TextPrompt = NopSqlDataHelper.GetString(dataReader, "TextPrompt");
-            productVariantAttribute.IsRequired = NopSqlDataHelper.GetBoolean(dataReader, "IsRequired");
-            productVariantAttribute.AttributeControlTypeID = NopSqlDataHelper.GetInt(dataReader, "AttributeControlTypeID");
-            productVariantAttribute.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return productVariantAttribute;
+            var item = new DBProductVariantAttribute();
+            item.ProductVariantAttributeId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeID");
+            item.ProductVariantId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
+            item.ProductAttributeId = NopSqlDataHelper.GetInt(dataReader, "ProductAttributeID");
+            item.TextPrompt = NopSqlDataHelper.GetString(dataReader, "TextPrompt");
+            item.IsRequired = NopSqlDataHelper.GetBoolean(dataReader, "IsRequired");
+            item.AttributeControlTypeId = NopSqlDataHelper.GetInt(dataReader, "AttributeControlTypeID");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
 
         private DBProductVariantAttributeValue GetProductVariantAttributeValueFromReader(IDataReader dataReader)
         {
-            DBProductVariantAttributeValue productVariantAttributeValue = new DBProductVariantAttributeValue();
-            productVariantAttributeValue.ProductVariantAttributeValueID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeValueID");
-            productVariantAttributeValue.ProductVariantAttributeID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeID");
-            productVariantAttributeValue.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            productVariantAttributeValue.PriceAdjustment = NopSqlDataHelper.GetDecimal(dataReader, "PriceAdjustment");
-            productVariantAttributeValue.WeightAdjustment = NopSqlDataHelper.GetDecimal(dataReader, "WeightAdjustment");
-            productVariantAttributeValue.IsPreSelected = NopSqlDataHelper.GetBoolean(dataReader, "IsPreSelected");
-            productVariantAttributeValue.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return productVariantAttributeValue;
+            var item = new DBProductVariantAttributeValue();
+            item.ProductVariantAttributeValueId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeValueID");
+            item.ProductVariantAttributeId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.PriceAdjustment = NopSqlDataHelper.GetDecimal(dataReader, "PriceAdjustment");
+            item.WeightAdjustment = NopSqlDataHelper.GetDecimal(dataReader, "WeightAdjustment");
+            item.IsPreSelected = NopSqlDataHelper.GetBoolean(dataReader, "IsPreSelected");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
 
         private DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBProductVariantAttributeValueLocalized();
-            item.ProductVariantAttributeValueLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeValueLocalizedID");
-            item.ProductVariantAttributeValueID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeValueID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.ProductVariantAttributeValueLocalizedId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeValueLocalizedID");
+            item.ProductVariantAttributeValueId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeValueID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             return item;
         }
 
         private DBProductVariantAttributeCombination GetProductVariantAttributeCombinationFromReader(IDataReader dataReader)
         {
-            DBProductVariantAttributeCombination item = new DBProductVariantAttributeCombination();
-            item.ProductVariantAttributeCombinationID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeCombinationID");
-            item.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
-            item.AttributesXML = NopSqlDataHelper.GetString(dataReader, "AttributesXML");
+            var item = new DBProductVariantAttributeCombination();
+            item.ProductVariantAttributeCombinationId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantAttributeCombinationID");
+            item.ProductVariantId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
+            item.AttributesXml = NopSqlDataHelper.GetString(dataReader, "AttributesXML");
             item.StockQuantity = NopSqlDataHelper.GetInt(dataReader, "StockQuantity");
             item.AllowOutOfStockOrders = NopSqlDataHelper.GetBoolean(dataReader, "AllowOutOfStockOrders");
             return item;
@@ -142,26 +142,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Deletes a product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        public override void DeleteProductAttribute(int ProductAttributeID)
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        public override void DeleteProductAttribute(int productAttributeId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeDelete");
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets all product attributes
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute collection</returns>
-        public override DBProductAttributeCollection GetAllProductAttributes(int LanguageID)
+        public override DBProductAttributeCollection GetAllProductAttributes(int languageId)
         {
             var result = new DBProductAttributeCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLoadAll");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -176,82 +176,83 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets a product attribute 
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute </returns>
-        public override DBProductAttribute GetProductAttributeByID(int ProductAttributeID, int LanguageID)
+        public override DBProductAttribute GetProductAttributeById(int productAttributeId, int languageId)
         {
-            DBProductAttribute productAttribute = null;
+            DBProductAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    productAttribute = GetProductAttributeFromReader(dataReader);
+                    item = GetProductAttributeFromReader(dataReader);
                 }
             }
-            return productAttribute;
+            return item;
         }
 
         /// <summary>
         /// Inserts a product attribute
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
         /// <returns>Product attribute </returns>
-        public override DBProductAttribute InsertProductAttribute(string Name, string Description)
+        public override DBProductAttribute InsertProductAttribute(string name,
+            string description)
         {
-            DBProductAttribute productAttribute = null;
+            DBProductAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeInsert");
             db.AddOutParameter(dbCommand, "ProductAttributeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductAttributeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductAttributeID"));
-                productAttribute = GetProductAttributeByID(ProductAttributeID, 0);
+                int productAttributeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductAttributeID"));
+                item = GetProductAttributeById(productAttributeId, 0);
             }
-            return productAttribute;
+            return item;
         }
 
         /// <summary>
         /// Updates the product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
         /// <returns>Product attribute </returns>
-        public override DBProductAttribute UpdateProductAttribute(int ProductAttributeID, string Name,
-            string Description)
+        public override DBProductAttribute UpdateProductAttribute(int productAttributeId,
+            string name, string description)
         {
-            DBProductAttribute productAttribute = null;
+            DBProductAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeUpdate");
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productAttribute = GetProductAttributeByID(ProductAttributeID, 0);
-            return productAttribute;
+                item = GetProductAttributeById(productAttributeId, 0);
+            return item;
         }
 
         /// <summary>
         /// Gets localized product attribute by id
         /// </summary>
-        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <param name="productAttributeLocalizedId">Localized product attribute identifier</param>
         /// <returns>Product attribute content</returns>
-        public override DBProductAttributeLocalized GetProductAttributeLocalizedByID(int ProductAttributeLocalizedID)
+        public override DBProductAttributeLocalized GetProductAttributeLocalizedById(int productAttributeLocalizedId)
         {
             DBProductAttributeLocalized item = null;
-            if (ProductAttributeLocalizedID == 0)
+            if (productAttributeLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, ProductAttributeLocalizedID);
+            db.AddInParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, productAttributeLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -265,16 +266,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets localized product attribute by product attribute id and language id
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute content</returns>
-        public override DBProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(int ProductAttributeID, int LanguageID)
+        public override DBProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIdAndLanguageId(int productAttributeId, int languageId)
         {
             DBProductAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedLoadByProductAttributeIDAndLanguageID");
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -288,26 +289,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Inserts a localized product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>DBProductAttributeLocalized</returns>
-        public override DBProductAttributeLocalized InsertProductAttributeLocalized(int ProductAttributeID,
-            int LanguageID, string Name, string Description)
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product attribute content</returns>
+        public override DBProductAttributeLocalized InsertProductAttributeLocalized(int productAttributeId,
+            int languageId, string name, string description)
         {
             DBProductAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedInsert");
             db.AddOutParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductAttributeLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductAttributeLocalizedID"));
-                item = GetProductAttributeLocalizedByID(ProductAttributeLocalizedID);
+                int productAttributeLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductAttributeLocalizedID"));
+                item = GetProductAttributeLocalizedById(productAttributeLocalizedId);
             }
             return item;
         }
@@ -315,25 +316,25 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Update a localized product attribute
         /// </summary>
-        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>DBProductAttributeLocalized</returns>
-        public override DBProductAttributeLocalized UpdateProductAttributeLocalized(int ProductAttributeLocalizedID,
-            int ProductAttributeID, int LanguageID, string Name, string Description)
+        /// <param name="productAttributeLocalizedId">Localized product attribute identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product attribute content</returns>
+        public override DBProductAttributeLocalized UpdateProductAttributeLocalized(int productAttributeLocalizedId,
+            int productAttributeId, int languageId, string name, string description)
         {
             DBProductAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductAttributeLocalizedUpdate");
-            db.AddInParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, ProductAttributeLocalizedID);
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "ProductAttributeLocalizedID", DbType.Int32, productAttributeLocalizedId);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetProductAttributeLocalizedByID(ProductAttributeLocalizedID);
+                item = GetProductAttributeLocalizedById(productAttributeLocalizedId);
 
             return item;
         }
@@ -341,26 +342,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Deletes a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">Product variant attribute mapping identifier</param>
-        public override void DeleteProductVariantAttribute(int ProductVariantAttributeID)
+        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
+        public override void DeleteProductVariantAttribute(int productVariantAttributeId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_ProductAttribute_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, ProductVariantAttributeID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, productVariantAttributeId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets product variant attribute mappings by product identifier
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public override DBProductVariantAttributeCollection GetProductVariantAttributesByProductVariantID(int ProductVariantID)
+        public override DBProductVariantAttributeCollection GetProductVariantAttributesByProductVariantId(int productVariantId)
         {
             var result = new DBProductVariantAttributeCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_ProductAttribute_MappingLoadByProductVariantID");
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -375,109 +376,111 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">Product variant attribute mapping identifier</param>
+        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
         /// <returns>Product variant attribute mapping</returns>
-        public override DBProductVariantAttribute GetProductVariantAttributeByID(int ProductVariantAttributeID)
+        public override DBProductVariantAttribute GetProductVariantAttributeById(int productVariantAttributeId)
         {
-            DBProductVariantAttribute productVariantAttribute = null;
+            DBProductVariantAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_ProductAttribute_MappingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, ProductVariantAttributeID);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, productVariantAttributeId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    productVariantAttribute = GetProductVariantAttributeFromReader(dataReader);
+                    item = GetProductVariantAttributeFromReader(dataReader);
                 }
             }
-            return productVariantAttribute;
+            return item;
         }
 
         /// <summary>
         /// Inserts a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductAttributeID">The product attribute identifier</param>
-        /// <param name="TextPrompt">The text prompt</param>
-        /// <param name="IsRequired">The value indicating whether the entity is required</param>
-        /// <param name="AttributeControlTypeID">The attribute control type identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productAttributeId">The product attribute identifier</param>
+        /// <param name="textPrompt">The text prompt</param>
+        /// <param name="isRequired">The value indicating whether the entity is required</param>
+        /// <param name="attributeControlTypeId">The attribute control type identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute mapping</returns>
-        public override DBProductVariantAttribute InsertProductVariantAttribute(int ProductVariantID,
-            int ProductAttributeID, string TextPrompt, bool IsRequired, int AttributeControlTypeID, int DisplayOrder)
+        public override DBProductVariantAttribute InsertProductVariantAttribute(int productVariantId,
+            int productAttributeId, string textPrompt, bool isRequired,
+            int attributeControlTypeId, int displayOrder)
         {
-            DBProductVariantAttribute productVariantAttribute = null;
+            DBProductVariantAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_ProductAttribute_MappingInsert");
             db.AddOutParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, TextPrompt);
-            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, IsRequired);
-            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, AttributeControlTypeID);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, textPrompt);
+            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, isRequired);
+            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, attributeControlTypeId);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductVariantAttributeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeID"));
-                productVariantAttribute = GetProductVariantAttributeByID(ProductVariantAttributeID);
+                int productVariantAttributeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeID"));
+                item = GetProductVariantAttributeById(productVariantAttributeId);
             }
-            return productVariantAttribute;
+            return item;
         }
 
         /// <summary>
         /// Updates the product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductAttributeID">The product attribute identifier</param>
-        /// <param name="TextPrompt">The text prompt</param>
-        /// <param name="IsRequired">The value indicating whether the entity is required</param>
-        /// <param name="AttributeControlTypeID">The attribute control type identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productAttributeId">The product attribute identifier</param>
+        /// <param name="textPrompt">The text prompt</param>
+        /// <param name="isRequired">The value indicating whether the entity is required</param>
+        /// <param name="attributeControlTypeId">The attribute control type identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute mapping</returns>
-        public override DBProductVariantAttribute UpdateProductVariantAttribute(int ProductVariantAttributeID, int ProductVariantID,
-            int ProductAttributeID, string TextPrompt, bool IsRequired, int AttributeControlTypeID, int DisplayOrder)
+        public override DBProductVariantAttribute UpdateProductVariantAttribute(int productVariantAttributeId,
+            int productVariantId, int productAttributeId, string textPrompt, bool isRequired,
+            int attributeControlTypeId, int displayOrder)
         {
-            DBProductVariantAttribute productVariantAttribute = null;
+            DBProductVariantAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_ProductAttribute_MappingUpdate");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, ProductVariantAttributeID);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, ProductAttributeID);
-            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, TextPrompt);
-            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, IsRequired);
-            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, AttributeControlTypeID);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, productVariantAttributeId);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "ProductAttributeID", DbType.Int32, productAttributeId);
+            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, textPrompt);
+            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, isRequired);
+            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, attributeControlTypeId);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productVariantAttribute = GetProductVariantAttributeByID(ProductVariantAttributeID);
-            return productVariantAttribute;
+                item = GetProductVariantAttributeById(productVariantAttributeId);
+            return item;
         }
 
         /// <summary>
         /// Deletes a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        public override void DeleteProductVariantAttributeValue(int ProductVariantAttributeValueID)
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        public override void DeleteProductVariantAttributeValue(int productVariantAttributeValueId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueDelete");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, ProductVariantAttributeValueID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, productVariantAttributeValueId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets product variant attribute values by product identifier
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public override DBProductVariantAttributeValueCollection GetProductVariantAttributeValues(int ProductVariantAttributeID, int LanguageID)
+        public override DBProductVariantAttributeValueCollection GetProductVariantAttributeValues(int productVariantAttributeId, int languageId)
         {
             var result = new DBProductVariantAttributeValueCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueLoadByProductVariantAttributeID");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, ProductVariantAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, productVariantAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -492,101 +495,102 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant attribute value</returns>
-        public override DBProductVariantAttributeValue GetProductVariantAttributeValueByID(int ProductVariantAttributeValueID, int LanguageID)
+        public override DBProductVariantAttributeValue GetProductVariantAttributeValueById(int productVariantAttributeValueId, int languageId)
         {
-            DBProductVariantAttributeValue productVariantAttributeValue = null;
+            DBProductVariantAttributeValue item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, ProductVariantAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, productVariantAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    productVariantAttributeValue = GetProductVariantAttributeValueFromReader(dataReader);
+                    item = GetProductVariantAttributeValueFromReader(dataReader);
                 }
             }
-            return productVariantAttributeValue;
+            return item;
         }
 
         /// <summary>
         /// Inserts a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="Name">The product variant attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="name">The product variant attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute value</returns>
-        public override DBProductVariantAttributeValue InsertProductVariantAttributeValue(int ProductVariantAttributeID,
-            string Name, decimal PriceAdjustment, decimal WeightAdjustment, 
-            bool IsPreSelected, int DisplayOrder)
+        public override DBProductVariantAttributeValue InsertProductVariantAttributeValue(int productVariantAttributeId,
+            string name, decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
-            DBProductVariantAttributeValue productVariantAttributeValue = null;
+            DBProductVariantAttributeValue item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueInsert");
             db.AddOutParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, ProductVariantAttributeID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, PriceAdjustment);
-            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, WeightAdjustment);
-            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, IsPreSelected);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, productVariantAttributeId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, priceAdjustment);
+            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, weightAdjustment);
+            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, isPreSelected);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductVariantAttributeValueID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeValueID"));
-                productVariantAttributeValue = GetProductVariantAttributeValueByID(ProductVariantAttributeValueID, 0);
+                int productVariantAttributeValueId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeValueID"));
+                item = GetProductVariantAttributeValueById(productVariantAttributeValueId, 0);
             }
-            return productVariantAttributeValue;
+            return item;
         }
 
         /// <summary>
         /// Updates the product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">The product variant attribute value identifier</param>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="Name">The product variant attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeValueId">The product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="name">The product variant attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute value</returns>
-        public override DBProductVariantAttributeValue UpdateProductVariantAttributeValue(int ProductVariantAttributeValueID,
-            int ProductVariantAttributeID, string Name, decimal PriceAdjustment,
-            decimal WeightAdjustment, bool IsPreSelected, int DisplayOrder)
+        public override DBProductVariantAttributeValue UpdateProductVariantAttributeValue(int productVariantAttributeValueId,
+            int productVariantAttributeId, string name,
+            decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
-            DBProductVariantAttributeValue productVariantAttributeValue = null;
+            DBProductVariantAttributeValue item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueUpdate");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, ProductVariantAttributeValueID);
-            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, ProductVariantAttributeID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, PriceAdjustment);
-            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, WeightAdjustment);
-            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, IsPreSelected);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, productVariantAttributeValueId);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeID", DbType.Int32, productVariantAttributeId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, priceAdjustment);
+            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, weightAdjustment);
+            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, isPreSelected);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productVariantAttributeValue = GetProductVariantAttributeValueByID(ProductVariantAttributeValueID, 0);
-            return productVariantAttributeValue;
+                item = GetProductVariantAttributeValueById(productVariantAttributeValueId, 0);
+            return item;
         }
 
         /// <summary>
         /// Gets localized product variant attribute value by id
         /// </summary>
-        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeValueLocalizedId">Localized product variant attribute value identifier</param>
         /// <returns>Localized product variant attribute value</returns>
-        public override DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByID(int ProductVariantAttributeValueLocalizedID)
+        public override DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedById(int productVariantAttributeValueLocalizedId)
         {
             DBProductVariantAttributeValueLocalized item = null;
-            if (ProductVariantAttributeValueLocalizedID == 0)
+            if (productVariantAttributeValueLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueLocalizedID", DbType.Int32, ProductVariantAttributeValueLocalizedID);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueLocalizedID", DbType.Int32, productVariantAttributeValueLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -600,16 +604,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets localized product variant attribute value by product variant attribute value id and language id
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized product variant attribute value</returns>
-        public override DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(int ProductVariantAttributeValueID, int LanguageID)
+        public override DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIdAndLanguageId(int productVariantAttributeValueId, int languageId)
         {
             DBProductVariantAttributeValueLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueLocalizedLoadByProductVariantAttributeValueIDAndLanguageID");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, ProductVariantAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, productVariantAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -623,24 +627,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Inserts a localized product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized product variant attribute value</returns>
-        public override DBProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int ProductVariantAttributeValueID,
-            int LanguageID, string Name)
+        public override DBProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int productVariantAttributeValueId,
+            int languageId, string name)
         {
             DBProductVariantAttributeValueLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueLocalizedInsert");
             db.AddOutParameter(dbCommand, "ProductVariantAttributeValueLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, ProductVariantAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, productVariantAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductVariantAttributeValueLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeValueLocalizedID"));
-                item = GetProductVariantAttributeValueLocalizedByID(ProductVariantAttributeValueLocalizedID);
+                int productVariantAttributeValueLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeValueLocalizedID"));
+                item = GetProductVariantAttributeValueLocalizedById(productVariantAttributeValueLocalizedId);
             }
             return item;
         }
@@ -648,50 +652,50 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Update a localized product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="productVariantAttributeValueLocalizedId">Localized product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized product variant attribute value</returns>
-        public override DBProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int ProductVariantAttributeValueLocalizedID,
-            int ProductVariantAttributeValueID, int LanguageID, string Name)
+        public override DBProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int productVariantAttributeValueLocalizedId,
+            int productVariantAttributeValueId, int languageId, string name)
         {
             DBProductVariantAttributeValueLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeValueLocalizedUpdate");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueLocalizedID", DbType.Int32, ProductVariantAttributeValueLocalizedID);
-            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, ProductVariantAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueLocalizedID", DbType.Int32, productVariantAttributeValueLocalizedId);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeValueID", DbType.Int32, productVariantAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetProductVariantAttributeValueLocalizedByID(ProductVariantAttributeValueLocalizedID);
-
+                item = GetProductVariantAttributeValueLocalizedById(productVariantAttributeValueLocalizedId);
+            
             return item;
         }
 
         /// <summary>
         /// Deletes a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
-        public override void DeleteProductVariantAttributeCombination(int ProductVariantAttributeCombinationID)
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
+        public override void DeleteProductVariantAttributeCombination(int productVariantAttributeCombinationId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeCombinationDelete");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeCombinationID", DbType.Int32, ProductVariantAttributeCombinationID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeCombinationID", DbType.Int32, productVariantAttributeCombinationId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets all product variant attribute combinations
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Product variant attribute combination collection</returns>
-        public override DBProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int ProductVariantID)
+        public override DBProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int productVariantId)
         {
             var result = new DBProductVariantAttributeCombinationCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeCombinationLoadAll");
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -706,14 +710,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
         /// <returns>Product variant attribute combination</returns>
-        public override DBProductVariantAttributeCombination GetProductVariantAttributeCombinationByID(int ProductVariantAttributeCombinationID)
+        public override DBProductVariantAttributeCombination GetProductVariantAttributeCombinationById(int productVariantAttributeCombinationId)
         {
             DBProductVariantAttributeCombination item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeCombinationLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeCombinationID", DbType.Int32, ProductVariantAttributeCombinationID);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeCombinationID", DbType.Int32, productVariantAttributeCombinationId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -727,28 +731,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Inserts a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The attributes</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The attributes</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
         /// <returns>Product variant attribute combination</returns>
-        public override DBProductVariantAttributeCombination InsertProductVariantAttributeCombination(int ProductVariantID,
-            string AttributesXML,
-            int StockQuantity,
-            bool AllowOutOfStockOrders)
+        public override DBProductVariantAttributeCombination InsertProductVariantAttributeCombination(int productVariantId,
+            string attributesXml,
+            int stockQuantity,
+            bool allowOutOfStockOrders)
         {
             DBProductVariantAttributeCombination item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeCombinationInsert");
             db.AddOutParameter(dbCommand, "ProductVariantAttributeCombinationID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
-            db.AddInParameter(dbCommand, "StockQuantity", DbType.Int32, StockQuantity);
-            db.AddInParameter(dbCommand, "AllowOutOfStockOrders", DbType.Int32, AllowOutOfStockOrders);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, attributesXml);
+            db.AddInParameter(dbCommand, "StockQuantity", DbType.Int32, stockQuantity);
+            db.AddInParameter(dbCommand, "AllowOutOfStockOrders", DbType.Int32, allowOutOfStockOrders);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductVariantAttributeCombinationID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeCombinationID"));
-                item = GetProductVariantAttributeCombinationByID(ProductVariantAttributeCombinationID);
+                int productVariantAttributeCombinationId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantAttributeCombinationID"));
+                item = GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
             }
             return item;
         }
@@ -756,28 +760,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Updates a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The attributes</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The attributes</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
         /// <returns>Product variant attribute combination</returns>
-        public override DBProductVariantAttributeCombination UpdateProductVariantAttributeCombination(int ProductVariantAttributeCombinationID,
-            int ProductVariantID,
-            string AttributesXML,
-            int StockQuantity,
-            bool AllowOutOfStockOrders)
+        public override DBProductVariantAttributeCombination UpdateProductVariantAttributeCombination(int productVariantAttributeCombinationId,
+            int productVariantId,
+            string attributesXml,
+            int stockQuantity,
+            bool allowOutOfStockOrders)
         {
             DBProductVariantAttributeCombination item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantAttributeCombinationUpdate");
-            db.AddInParameter(dbCommand, "ProductVariantAttributeCombinationID", DbType.Int32, ProductVariantAttributeCombinationID);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
-            db.AddInParameter(dbCommand, "StockQuantity", DbType.Int32, StockQuantity);
-            db.AddInParameter(dbCommand, "AllowOutOfStockOrders", DbType.Int32, AllowOutOfStockOrders);
+            db.AddInParameter(dbCommand, "ProductVariantAttributeCombinationID", DbType.Int32, productVariantAttributeCombinationId);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, attributesXml);
+            db.AddInParameter(dbCommand, "StockQuantity", DbType.Int32, stockQuantity);
+            db.AddInParameter(dbCommand, "AllowOutOfStockOrders", DbType.Int32, allowOutOfStockOrders);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetProductVariantAttributeCombinationByID(ProductVariantAttributeCombinationID);
+                item = GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
             return item;
         }
 

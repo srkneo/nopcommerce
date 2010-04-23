@@ -39,8 +39,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 Address address = value;
                 if (address != null)
                 {
-                    this.btnEditAddress.CommandArgument = address.AddressID.ToString();
-                    this.btnDeleteAddress.CommandArgument = address.AddressID.ToString();
+                    this.btnEditAddress.CommandArgument = address.AddressId.ToString();
+                    this.btnDeleteAddress.CommandArgument = address.AddressId.ToString();
                     this.lFullName.Text = Server.HtmlEncode(string.Format("{0} {1}", address.FirstName, address.LastName));
                     this.lFirstName.Text = Server.HtmlEncode(address.FirstName);
                     this.lLastName.Text = Server.HtmlEncode(address.LastName);
@@ -72,14 +72,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnEditAddress_Click(object sender, CommandEventArgs e)
         {
-            int addressID = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect(string.Format("~/addressedit.aspx?addressid={0}", addressID));
+            int addressId = Convert.ToInt32(e.CommandArgument);
+            Response.Redirect(string.Format("~/addressedit.aspx?addressid={0}", addressId));
         }
 
         protected void btnDeleteAddress_Click(object sender, CommandEventArgs e)
         {
-            int addressID = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect(string.Format("~/addressedit.aspx?addressid={0}&delete={1}", addressID, true));
+            int addressId = Convert.ToInt32(e.CommandArgument);
+            Response.Redirect(string.Format("~/addressedit.aspx?addressid={0}&delete={1}", addressId, true));
         }
 
         [DefaultValue(true)]

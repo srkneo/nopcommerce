@@ -28,7 +28,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
     /// <summary>
     /// Country provider for SQL Server
     /// </summary>
-    public partial class SQLCountryProvider : DBCountryProvider
+    public partial class SqlCountryProvider : DBCountryProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -37,18 +37,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         #region Utilities
         private DBCountry GetCountryFromReader(IDataReader dataReader)
         {
-            DBCountry country = new DBCountry();
-            country.CountryID = NopSqlDataHelper.GetInt(dataReader, "CountryID");
-            country.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            country.AllowsRegistration = NopSqlDataHelper.GetBoolean(dataReader, "AllowsRegistration");
-            country.AllowsBilling = NopSqlDataHelper.GetBoolean(dataReader, "AllowsBilling");
-            country.AllowsShipping = NopSqlDataHelper.GetBoolean(dataReader, "AllowsShipping");
-            country.TwoLetterISOCode = NopSqlDataHelper.GetString(dataReader, "TwoLetterISOCode");
-            country.ThreeLetterISOCode = NopSqlDataHelper.GetString(dataReader, "ThreeLetterISOCode");
-            country.NumericISOCode = NopSqlDataHelper.GetInt(dataReader, "NumericISOCode");
-            country.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
-            country.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return country;
+            var item = new DBCountry();
+            item.CountryId = NopSqlDataHelper.GetInt(dataReader, "CountryID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.AllowsRegistration = NopSqlDataHelper.GetBoolean(dataReader, "AllowsRegistration");
+            item.AllowsBilling = NopSqlDataHelper.GetBoolean(dataReader, "AllowsBilling");
+            item.AllowsShipping = NopSqlDataHelper.GetBoolean(dataReader, "AllowsShipping");
+            item.TwoLetterIsoCode = NopSqlDataHelper.GetString(dataReader, "TwoLetterISOCode");
+            item.ThreeLetterIsoCode = NopSqlDataHelper.GetString(dataReader, "ThreeLetterISOCode");
+            item.NumericIsoCode = NopSqlDataHelper.GetInt(dataReader, "NumericISOCode");
+            item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -91,13 +91,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Deletes a country
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
-        public override void DeleteCountry(int CountryID)
+        /// <param name="countryId">Country identifier</param>
+        public override void DeleteCountry(int countryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CountryDelete");
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -187,140 +187,140 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Gets a country 
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
+        /// <param name="countryId">Country identifier</param>
         /// <returns>Country</returns>
-        public override DBCountry GetCountryByID(int CountryID)
+        public override DBCountry GetCountryById(int countryId)
         {
-            DBCountry country = null;
+            DBCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CountryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    country = GetCountryFromReader(dataReader);
+                    item = GetCountryFromReader(dataReader);
                 }
             }
-            return country;
+            return item;
         }
 
         /// <summary>
         /// Gets a country by two letter ISO code
         /// </summary>
-        /// <param name="TwoLetterISOCode">Country two letter ISO code</param>
+        /// <param name="twoLetterIsoCode">Country two letter ISO code</param>
         /// <returns>Country</returns>
-        public override DBCountry GetCountryByTwoLetterISOCode(string TwoLetterISOCode)
+        public override DBCountry GetCountryByTwoLetterIsoCode(string twoLetterIsoCode)
         {
-            DBCountry country = null;
+            DBCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CountryLoadByTwoLetterISOCode");
-            db.AddInParameter(dbCommand, "TwoLetterISOCode", DbType.String, TwoLetterISOCode);
+            db.AddInParameter(dbCommand, "TwoLetterISOCode", DbType.String, twoLetterIsoCode);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    country = GetCountryFromReader(dataReader);
+                    item = GetCountryFromReader(dataReader);
                 }
             }
-            return country;
+            return item;
         }
 
         /// <summary>
         /// Gets a country by three letter ISO code
         /// </summary>
-        /// <param name="ThreeLetterISOCode">Country three letter ISO code</param>
+        /// <param name="threeLetterIsoCode">Country three letter ISO code</param>
         /// <returns>Country</returns>
-        public override DBCountry GetCountryByThreeLetterISOCode(string ThreeLetterISOCode)
+        public override DBCountry GetCountryByThreeLetterIsoCode(string threeLetterIsoCode)
         {
-            DBCountry country = null;
+            DBCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CountryLoadByThreeLetterISOCode");
-            db.AddInParameter(dbCommand, "ThreeLetterISOCode", DbType.String, ThreeLetterISOCode);
+            db.AddInParameter(dbCommand, "ThreeLetterISOCode", DbType.String, threeLetterIsoCode);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    country = GetCountryFromReader(dataReader);
+                    item = GetCountryFromReader(dataReader);
                 }
             }
-            return country;
+            return item;
         }
 
         /// <summary>
         /// Inserts a country
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="AllowsRegistration">A value indicating whether registration is allowed to this country</param>
-        /// <param name="AllowsBilling">A value indicating whether billing is allowed to this country</param>
-        /// <param name="AllowsShipping">A value indicating whether shipping is allowed to this country</param>
-        /// <param name="TwoLetterISOCode">The two letter ISO code</param>
-        /// <param name="ThreeLetterISOCode">The three letter ISO code</param>
-        /// <param name="NumericISOCode">The numeric ISO code</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="allowsRegistration">A value indicating whether registration is allowed to this country</param>
+        /// <param name="allowsBilling">A value indicating whether billing is allowed to this country</param>
+        /// <param name="allowsShipping">A value indicating whether shipping is allowed to this country</param>
+        /// <param name="twoLetterIsoCode">The two letter ISO code</param>
+        /// <param name="threeLetterIsoCode">The three letter ISO code</param>
+        /// <param name="numericIsoCode">The numeric ISO code</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Country</returns>
-        public override DBCountry InsertCountry(string Name,
-            bool AllowsRegistration, bool AllowsBilling, bool AllowsShipping,
-            string TwoLetterISOCode, string ThreeLetterISOCode, int NumericISOCode,
-            bool Published, int DisplayOrder)
+        public override DBCountry InsertCountry(string name,
+            bool allowsRegistration, bool allowsBilling, bool allowsShipping,
+            string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
+            bool published, int displayOrder)
         {
-            DBCountry country = null;
+            DBCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CountryInsert");
             db.AddOutParameter(dbCommand, "CountryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "AllowsRegistration", DbType.Boolean, AllowsRegistration);
-            db.AddInParameter(dbCommand, "AllowsBilling", DbType.Boolean, AllowsBilling);
-            db.AddInParameter(dbCommand, "AllowsShipping", DbType.Boolean, AllowsShipping);
-            db.AddInParameter(dbCommand, "TwoLetterISOCode", DbType.String, TwoLetterISOCode);
-            db.AddInParameter(dbCommand, "ThreeLetterISOCode", DbType.String, ThreeLetterISOCode);
-            db.AddInParameter(dbCommand, "NumericISOCode", DbType.Int32, NumericISOCode);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "AllowsRegistration", DbType.Boolean, allowsRegistration);
+            db.AddInParameter(dbCommand, "AllowsBilling", DbType.Boolean, allowsBilling);
+            db.AddInParameter(dbCommand, "AllowsShipping", DbType.Boolean, allowsShipping);
+            db.AddInParameter(dbCommand, "TwoLetterISOCode", DbType.String, twoLetterIsoCode);
+            db.AddInParameter(dbCommand, "ThreeLetterISOCode", DbType.String, threeLetterIsoCode);
+            db.AddInParameter(dbCommand, "NumericISOCode", DbType.Int32, numericIsoCode);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CountryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CountryID"));
-                country = GetCountryByID(CountryID);
+                int countryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CountryID"));
+                item = GetCountryById(countryId);
             }
-            return country;
+            return item;
         }
 
         /// <summary>
         /// Updates the country
         /// </summary>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="AllowsRegistration">A value indicating whether registration is allowed to this country</param>
-        /// <param name="AllowsBilling">A value indicating whether billing is allowed to this country</param>
-        /// <param name="AllowsShipping">A value indicating whether shipping is allowed to this country</param>
-        /// <param name="TwoLetterISOCode">The two letter ISO code</param>
-        /// <param name="ThreeLetterISOCode">The three letter ISO code</param>
-        /// <param name="NumericISOCode">The numeric ISO code</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="allowsRegistration">A value indicating whether registration is allowed to this country</param>
+        /// <param name="allowsBilling">A value indicating whether billing is allowed to this country</param>
+        /// <param name="allowsShipping">A value indicating whether shipping is allowed to this country</param>
+        /// <param name="twoLetterIsoCode">The two letter ISO code</param>
+        /// <param name="threeLetterIsoCode">The three letter ISO code</param>
+        /// <param name="numericIsoCode">The numeric ISO code</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Country</returns>
-        public override DBCountry UpdateCountry(int CountryID, string Name,
-            bool AllowsRegistration, bool AllowsBilling, bool AllowsShipping,
-            string TwoLetterISOCode, string ThreeLetterISOCode, int NumericISOCode,
-            bool Published, int DisplayOrder)
+        public override DBCountry UpdateCountry(int countryId, string name,
+            bool allowsRegistration, bool allowsBilling, bool allowsShipping,
+            string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
+            bool published, int displayOrder)
         {
-            DBCountry country = null;
+            DBCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CountryUpdate");
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "AllowsRegistration", DbType.Boolean, AllowsRegistration);
-            db.AddInParameter(dbCommand, "AllowsBilling", DbType.Boolean, AllowsBilling);
-            db.AddInParameter(dbCommand, "AllowsShipping", DbType.Boolean, AllowsShipping);
-            db.AddInParameter(dbCommand, "TwoLetterISOCode", DbType.String, TwoLetterISOCode);
-            db.AddInParameter(dbCommand, "ThreeLetterISOCode", DbType.String, ThreeLetterISOCode);
-            db.AddInParameter(dbCommand, "NumericISOCode", DbType.Int32, NumericISOCode);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "AllowsRegistration", DbType.Boolean, allowsRegistration);
+            db.AddInParameter(dbCommand, "AllowsBilling", DbType.Boolean, allowsBilling);
+            db.AddInParameter(dbCommand, "AllowsShipping", DbType.Boolean, allowsShipping);
+            db.AddInParameter(dbCommand, "TwoLetterISOCode", DbType.String, twoLetterIsoCode);
+            db.AddInParameter(dbCommand, "ThreeLetterISOCode", DbType.String, threeLetterIsoCode);
+            db.AddInParameter(dbCommand, "NumericISOCode", DbType.Int32, numericIsoCode);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                country = GetCountryByID(CountryID);
-            return country;
+                item = GetCountryById(countryId);
+            return item;
         }
         #endregion
     }

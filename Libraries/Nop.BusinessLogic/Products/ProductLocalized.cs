@@ -44,17 +44,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the localized product identifier
         /// </summary>
-        public int ProductLocalizedID { get; set; }
+        public int ProductLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

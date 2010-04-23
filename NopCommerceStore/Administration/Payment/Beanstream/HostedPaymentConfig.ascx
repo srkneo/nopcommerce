@@ -7,7 +7,7 @@
             Merchant ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtMerchantID" CssClass="adminInput" />
+            <asp:TextBox runat="server" ID="txtMerchantId" CssClass="adminInput" />
         </td>
     </tr>
     <tr>

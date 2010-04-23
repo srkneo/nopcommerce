@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the order note identifier
         /// </summary>
-        public int OrderNoteID { get; set; }
+        public int OrderNoteId { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the note

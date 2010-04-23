@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             pnlTimeZone.Visible = DateTimeHelper.AllowCustomersToSetTimeZone;
             pnlUsername.Visible = CustomerManager.UsernamesEnabled;
 
-            Customer customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer != null)
             {
                 this.txtEmail.Text = customer.Email;
@@ -69,19 +69,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 txtStreetAddress2.Text = customer.StreetAddress2;
                 txtZipPostalCode.Text = customer.ZipPostalCode;
                 txtCity.Text = customer.City;
-                CommonHelper.SelectListItem(ddlCountry, customer.CountryID.ToString());
+                CommonHelper.SelectListItem(ddlCountry, customer.CountryId.ToString());
                 FillStateProvinceDropDowns();
-                CommonHelper.SelectListItem(ddlStateProvince, customer.StateProvinceID.ToString());
+                CommonHelper.SelectListItem(ddlStateProvince, customer.StateProvinceId.ToString());
                 txtPhoneNumber.Text = customer.PhoneNumber;
                 txtFaxNumber.Text = customer.FaxNumber;
                 cbNewsletter.Checked = customer.ReceiveNewsletter;
 
                 if (DateTimeHelper.AllowCustomersToSetTimeZone)
                 {
-                    CommonHelper.SelectListItem(this.ddlTimeZone, customer.TimeZoneID);
+                    CommonHelper.SelectListItem(this.ddlTimeZone, customer.TimeZoneId);
                 }
 
-                CommonHelper.SelectListItem(this.ddlAffiliate, customer.AffiliateID);
+                CommonHelper.SelectListItem(this.ddlAffiliate, customer.AffiliateId);
                 this.cbIsTaxExempt.Checked = customer.IsTaxExempt;
                 this.cbIsAdmin.Checked = customer.IsAdmin;
                 this.cbIsForumModerator.Checked = customer.IsForumModerator;
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             AffiliateCollection affiliateCollection = AffiliateManager.GetAllAffiliates();
             foreach (Affiliate affiliate in affiliateCollection)
             {
-                ListItem ddlAffiliateItem2 = new ListItem(affiliate.LastName + " (ID=" + affiliate.AffiliateID.ToString() + ")", affiliate.AffiliateID.ToString());
+                ListItem ddlAffiliateItem2 = new ListItem(affiliate.LastName + " (ID=" + affiliate.AffiliateId.ToString() + ")", affiliate.AffiliateId.ToString());
                 this.ddlAffiliate.Items.Add(ddlAffiliateItem2);
             }
         }
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CountryCollection countryCollection = CountryManager.GetAllCountriesForRegistration();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -133,14 +133,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillStateProvinceDropDowns()
         {
             ddlStateProvince.Items.Clear();
-            int countryID = 0;
+            int countryId = 0;
             if (ddlCountry.SelectedItem != null)
-                countryID = int.Parse(ddlCountry.SelectedItem.Value);
+                countryId = int.Parse(ddlCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
-                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceID.ToString());
+                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
                 ddlStateProvince.Items.Add(ddlStateProviceItem2);
             }
             if (stateProvinceCollection.Count == 0)
@@ -184,10 +184,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Customer SaveInfo()
         {
-            Customer customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
 
             string email = txtEmail.Text.Trim();
-            int affiliateID = int.Parse(this.ddlAffiliate.SelectedItem.Value);
+            int affiliateId = int.Parse(this.ddlAffiliate.SelectedItem.Value);
             bool isTaxExempt=cbIsTaxExempt.Checked;
             bool isAdmin=cbIsAdmin.Checked;
             bool isForumModerator=cbIsForumModerator.Checked;
@@ -196,18 +196,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             if (customer != null)
             {
-                customer = CustomerManager.SetEmail(customer.CustomerID, email);
+                customer = CustomerManager.SetEmail(customer.CustomerId, email);
 
-                customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
+                customer = CustomerManager.UpdateCustomer(customer.CustomerId, customer.CustomerGuid,
                     customer.Email, customer.Username, customer.PasswordHash,
-                    customer.SaltKey, affiliateID,
-                    customer.BillingAddressID, customer.ShippingAddressID,
-                    customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
+                    customer.SaltKey, affiliateId,
+                    customer.BillingAddressId, customer.ShippingAddressId,
+                    customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
                     customer.GiftCardCouponCodes, customer.CheckoutAttributes,
-                    customer.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
+                    customer.LanguageId, customer.CurrencyId, customer.TaxDisplayType,
                     isTaxExempt, isAdmin, customer.IsGuest, isForumModerator,
                     customer.TotalForumPosts, customer.Signature, adminComment, active,
-                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                    customer.Deleted, customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             else
             {
@@ -217,10 +217,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     throw new NopException(GetLocaleResourceString("Customer.PasswordIsRequired"));
                 MembershipCreateStatus createStatus = MembershipCreateStatus.Success;
                 customer = CustomerManager.AddCustomer(Guid.NewGuid(), email, username,
-                    password, affiliateID,
+                    password, affiliateId,
                     0, 0, 0, string.Empty, string.Empty, string.Empty,
-                    NopContext.Current.WorkingLanguage.LanguageID,
-                    NopContext.Current.WorkingCurrency.CurrencyID, 
+                    NopContext.Current.WorkingLanguage.LanguageId,
+                    NopContext.Current.WorkingCurrency.CurrencyId, 
                     NopContext.Current.TaxDisplayType,
                     isTaxExempt, isAdmin,
                     false, isForumModerator,
@@ -247,8 +247,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             customer.StreetAddress2 = txtStreetAddress2.Text;
             customer.ZipPostalCode = txtZipPostalCode.Text;
             customer.City = txtCity.Text;
-            customer.CountryID = int.Parse(ddlCountry.SelectedItem.Value);
-            customer.StateProvinceID = int.Parse(ddlStateProvince.SelectedItem.Value);
+            customer.CountryId = int.Parse(ddlCountry.SelectedItem.Value);
+            customer.StateProvinceId = int.Parse(ddlStateProvince.SelectedItem.Value);
             customer.PhoneNumber = txtPhoneNumber.Text;
             customer.FaxNumber = txtFaxNumber.Text;
             customer.ReceiveNewsletter = cbNewsletter.Checked;
@@ -257,10 +257,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 if (ddlTimeZone.SelectedItem != null && !String.IsNullOrEmpty(ddlTimeZone.SelectedItem.Value))
                 {
-                    string timeZoneID = ddlTimeZone.SelectedItem.Value;
-                    TimeZoneInfo timeZone = DateTimeHelper.FindTimeZoneById(timeZoneID);
+                    string timeZoneId = ddlTimeZone.SelectedItem.Value;
+                    TimeZoneInfo timeZone = DateTimeHelper.FindTimeZoneById(timeZoneId);
                     if (timeZone != null)
-                        customer = CustomerManager.SetTimeZoneID(customer.CustomerID, timeZone.Id);
+                        customer = CustomerManager.SetTimeZoneId(customer.CustomerId, timeZone.Id);
                 }
             }
 
@@ -271,7 +271,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                CustomerManager.ModifyPassword(CustomerID, txtPassword.Text);
+                CustomerManager.ModifyPassword(CustomerId, txtPassword.Text);
                 txtPassword.Text = String.Empty;
             }
             catch(Exception ex)
@@ -280,11 +280,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
     }

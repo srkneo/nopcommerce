@@ -39,24 +39,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the identifier
         /// </summary>
-        public int CustomerRoleProductPriceID { get; set; }
+        public int CustomerRoleProductPriceId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer role identifier
         /// </summary>
-        public int CustomerRoleID { get; set; }
+        public int CustomerRoleId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the price
         /// </summary>
         public decimal Price { get; set; }
 
-        #endregion
+        #endregion 
     }
 
 }

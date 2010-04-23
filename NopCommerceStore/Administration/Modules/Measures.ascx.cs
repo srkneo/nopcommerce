@@ -65,20 +65,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 foreach (GridViewRow row in gvDimensions.Rows)
                 {
                     RadioButton rdbIsPrimaryDimension = (RadioButton)row.FindControl("rdbIsPrimaryDimension");
-                    HiddenField hfMeasureDimensionID = (HiddenField)row.FindControl("hfMeasureDimensionID");
-                    int measureDimensionID = int.Parse(hfMeasureDimensionID.Value);
+                    HiddenField hfMeasureDimensionId = (HiddenField)row.FindControl("hfMeasureDimensionId");
+                    int measureDimensionId = int.Parse(hfMeasureDimensionId.Value);
                     if (rdbIsPrimaryDimension.Checked)
-                        MeasureManager.BaseDimensionIn = MeasureManager.GetMeasureDimensionByID(measureDimensionID);
+                        MeasureManager.BaseDimensionIn = MeasureManager.GetMeasureDimensionById(measureDimensionId);
                 }
 
                 //weights
                 foreach (GridViewRow row in gvWeights.Rows)
                 {
                     RadioButton rdbIsPrimaryWeight = (RadioButton)row.FindControl("rdbIsPrimaryWeight");
-                    HiddenField hfMeasureWeightID = (HiddenField)row.FindControl("hfMeasureWeightID");
-                    int measureWeightID = int.Parse(hfMeasureWeightID.Value);
+                    HiddenField hfMeasureWeightId = (HiddenField)row.FindControl("hfMeasureWeightId");
+                    int measureWeightId = int.Parse(hfMeasureWeightId.Value);
                     if (rdbIsPrimaryWeight.Checked)
-                        MeasureManager.BaseWeightIn = MeasureManager.GetMeasureWeightByID(measureWeightID);
+                        MeasureManager.BaseWeightIn = MeasureManager.GetMeasureWeightById(measureWeightId);
                 }
 
                 BindDimensions();

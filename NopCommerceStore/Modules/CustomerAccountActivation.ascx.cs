@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var accountActivationToken = CommonHelper.QueryStringGUID("ACT");
+            var accountActivationToken = CommonHelper.QueryStringGuid("ACT");
             if (!accountActivationToken.HasValue)
             {
                 Response.Redirect(CommonHelper.GetStoreLocation());
@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     if (customer.AccountActivationToken.ToLower() == accountActivationToken.Value.ToString().ToLower())
                     {
-                        CustomerManager.Activate(customer.CustomerID, true);
+                        CustomerManager.Activate(customer.CustomerId, true);
                         customer.AccountActivationToken = string.Empty;
                         lResult.Text = GetLocaleResourceString("Account.AccountHasBeenActivated");
                     }

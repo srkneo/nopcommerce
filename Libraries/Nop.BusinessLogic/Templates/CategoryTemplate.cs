@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Gets or sets the category template identifier
         /// </summary>
-        public int CategoryTemplateID { get; set; }
+        public int CategoryTemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -65,5 +65,4 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public DateTime UpdatedOn { get; set; }
         #endregion 
     }
-
 }

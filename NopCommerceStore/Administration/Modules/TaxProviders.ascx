@@ -17,8 +17,6 @@
 <br />
 <asp:GridView ID="gvTaxProviders" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="TaxProvidersID" HeaderText="TaxProviders ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.TaxProviders.Name %>" ItemStyle-Width="60%">
             <ItemTemplate>
                 <%#Eval("Name")%>
@@ -33,7 +31,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.TaxProviders.IsDefault %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <asp:HiddenField runat="server" ID="hfTaxProviderID" Value='<%#Eval("TaxProviderID")%>' />
+                <asp:HiddenField runat="server" ID="hfTaxProviderId" Value='<%#Eval("TaxProviderId")%>' />
                 <nopCommerce:GlobalRadioButton runat="server" ID="rdbIsDefault" Checked='<%#Eval("IsDefault")%>'
                     GroupName="DefaultTaxProvider" ToolTip="<% $NopResources:Admin.TaxProviders.IsDefault.Tooltip %>" />
             </ItemTemplate>
@@ -41,7 +39,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.TaxProviders.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="TaxProviderDetails.aspx?TaxProviderID=<%#Eval("TaxProviderID")%>" title="<%#GetLocaleResourceString("Admin.TaxProviders.Edit.Tooltip")%>">
+                <a href="TaxProviderDetails.aspx?TaxProviderID=<%#Eval("TaxProviderId")%>" title="<%#GetLocaleResourceString("Admin.TaxProviders.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.TaxProviders.Edit")%>
                 </a>
             </ItemTemplate>

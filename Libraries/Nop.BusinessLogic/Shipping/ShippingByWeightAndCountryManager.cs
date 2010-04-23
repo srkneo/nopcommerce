@@ -52,9 +52,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return null;
 
             var item = new ShippingByWeightAndCountry();
-            item.ShippingByWeightAndCountryID = dbItem.ShippingByWeightAndCountryID;
-            item.ShippingMethodID = dbItem.ShippingMethodID;
-            item.CountryID = dbItem.CountryID;
+            item.ShippingByWeightAndCountryId = dbItem.ShippingByWeightAndCountryId;
+            item.ShippingMethodId = dbItem.ShippingMethodId;
+            item.CountryId = dbItem.CountryId;
             item.From = dbItem.From;
             item.To = dbItem.To;
             item.UsePercentage = dbItem.UsePercentage;
@@ -69,14 +69,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">ShippingByWeightAndCountry identifier</param>
+        /// <param name="shippingByWeightAndCountryId">ShippingByWeightAndCountry identifier</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public static ShippingByWeightAndCountry GetByID(int ShippingByWeightAndCountryID)
+        public static ShippingByWeightAndCountry GetById(int shippingByWeightAndCountryId)
         {
-            if (ShippingByWeightAndCountryID == 0)
+            if (shippingByWeightAndCountryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.GetByID(ShippingByWeightAndCountryID);
+            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.GetById(shippingByWeightAndCountryId);
             var shippingByWeightAndCountry = DBMapping(dbItem);
             return shippingByWeightAndCountry;
         }
@@ -84,10 +84,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Deletes a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">ShippingByWeightAndCountry identifier</param>
-        public static void DeleteShippingByWeightAndCountry(int ShippingByWeightAndCountryID)
+        /// <param name="shippingByWeightAndCountryId">ShippingByWeightAndCountry identifier</param>
+        public static void DeleteShippingByWeightAndCountry(int shippingByWeightAndCountryId)
         {
-            DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.DeleteShippingByWeightAndCountry(ShippingByWeightAndCountryID);
+            DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.DeleteShippingByWeightAndCountry(shippingByWeightAndCountryId);
         }
 
         /// <summary>
@@ -104,21 +104,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Inserts a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public static ShippingByWeightAndCountry InsertShippingByWeightAndCountry(int ShippingMethodID,
-            int CountryID, decimal From, decimal To, bool UsePercentage,
-            decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public static ShippingByWeightAndCountry InsertShippingByWeightAndCountry(int shippingMethodId,
+            int countryId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.InsertShippingByWeightAndCountry(ShippingMethodID,
-                CountryID, From, To, UsePercentage,
-                ShippingChargePercentage, ShippingChargeAmount);
+            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.InsertShippingByWeightAndCountry(shippingMethodId,
+                countryId, from, to, usePercentage,
+                shippingChargePercentage, shippingChargeAmount);
             var shippingByWeightAndCountry = DBMapping(dbItem);
             return shippingByWeightAndCountry;
         }
@@ -126,22 +126,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Updates the ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">The ShippingByWeightAndCountry identifier</param>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingByWeightAndCountryId">The ShippingByWeightAndCountry identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public static ShippingByWeightAndCountry UpdateShippingByWeightAndCountry(int ShippingByWeightAndCountryID,
-            int ShippingMethodID, int CountryID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public static ShippingByWeightAndCountry UpdateShippingByWeightAndCountry(int shippingByWeightAndCountryId,
+            int shippingMethodId, int countryId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.UpdateShippingByWeightAndCountry(ShippingByWeightAndCountryID,
-                ShippingMethodID, CountryID, From, To, UsePercentage,
-                ShippingChargePercentage, ShippingChargeAmount);
+            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.UpdateShippingByWeightAndCountry(shippingByWeightAndCountryId,
+                shippingMethodId, countryId, from, to, usePercentage,
+                shippingChargePercentage, shippingChargeAmount);
             var shippingByWeightAndCountry = DBMapping(dbItem);
             return shippingByWeightAndCountry;
         }
@@ -149,12 +149,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets all ShippingByWeightAndCountrys by shipping method identifier
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
         /// <returns>ShippingByWeightAndCountry collection</returns>
-        public static ShippingByWeightAndCountryCollection GetAllByShippingMethodIDAndCountryID(int ShippingMethodID, int CountryID)
+        public static ShippingByWeightAndCountryCollection GetAllByShippingMethodIdAndCountryId(int shippingMethodId, 
+            int countryId)
         {
-            var dbCollection = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.GetAllByShippingMethodIDAndCountryID(ShippingMethodID, CountryID);
+            var dbCollection = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.GetAllByShippingMethodIdAndCountryId(shippingMethodId, countryId);
             var collection = DBMapping(dbCollection);
             return collection;
         }

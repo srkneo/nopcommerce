@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Installation
         /// </summary>
         public static void RedirectToInstallationPage()
         {
-            string thisPage = CommonHelper.GetThisPageURL(false);
+            string thisPage = CommonHelper.GetThisPageUrl(false);
             if (!thisPage.ToLower().Contains("install/install.aspx"))
             {
                 string fileExtension = Path.GetExtension(thisPage);
@@ -128,13 +128,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Installation
         /// Sets a version of installed application
         /// </summary>
         /// <param name="connectionString">Connection string</param>
-        /// <param name="Version">Version</param>
+        /// <param name="version">Version</param>
         /// <returns>Error</returns>
-        public static string SetCurrentVersion(string connectionString, string Version )
+        public static string SetCurrentVersion(string connectionString, string version )
         {
             try
             {
-                string query = string.Format("Update [Nop_Setting] SET [Value]='{0}' WHERE [name]='Common.CurrentVersion'", Version);
+                string query = string.Format("Update [Nop_Setting] SET [Value]='{0}' WHERE [name]='Common.CurrentVersion'", version);
 
                 using (var conn = new SqlConnection(connectionString))
                 {
@@ -154,14 +154,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Installation
         /// <summary>
         /// Creates a database on the server.
         /// </summary>
-        /// <param name="DatabaseName">Database name</param>
+        /// <param name="databaseName">Database name</param>
         /// <param name="connectionString">Connection string</param>
         /// <returns>Error</returns>
-        public static string CreateDatabase(string DatabaseName, string connectionString)
+        public static string CreateDatabase(string databaseName, string connectionString)
         {
             try
             {
-                string query = string.Format("CREATE DATABASE [{0}] COLLATE SQL_Latin1_General_CP1_CI_AS", DatabaseName);
+                string query = string.Format("CREATE DATABASE [{0}] COLLATE SQL_Latin1_General_CP1_CI_AS", databaseName);
 
                 using (var conn = new SqlConnection(connectionString))
                 {
@@ -187,7 +187,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Installation
         /// <param name="userName">The user ID to be used when connecting to SQL Server</param>
         /// <param name="password">The password for the SQL Server account</param>
         /// <returns>Returns true if the database exists.</returns>
-        public static bool DatabaseExists(bool trustedConnection, string serverName, string databaseName, string userName, string password)
+        public static bool DatabaseExists(bool trustedConnection,
+            string serverName, string databaseName, string userName, string password)
         {
             // Prepare the query
             string connectionString = CreateConnectionString(trustedConnection, serverName, "master", userName, password, 120);
@@ -216,7 +217,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Installation
         /// <param name="password">The password for the SQL Server account</param>
         /// <param name="timeout">The connection timeout</param>
         /// <returns>Connection string</returns>
-        public static string CreateConnectionString(bool trustedConnection, string serverName, string databaseName, string userName, string password, int timeout)
+        public static string CreateConnectionString(bool trustedConnection,
+            string serverName, string databaseName, string userName, string password, int timeout)
         {
             var builder = new SqlConnectionStringBuilder();
             builder.IntegratedSecurity = trustedConnection;

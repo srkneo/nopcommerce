@@ -47,7 +47,7 @@
                 <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
             </td>
             <td>
-                <a href="ForumGroupDetails.aspx?ForumGroupID=<%#Eval("ForumGroupID")%>">
+                <a href="ForumGroupDetails.aspx?ForumGroupID=<%#Eval("ForumGroupId")%>">
                     <%=GetLocaleResourceString("Admin.Forums.EditColumn.ForumGroup")%>
                 </a>
             </td>
@@ -65,7 +65,7 @@
                         <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
                     </td>
                     <td>
-                        <a href="ForumDetails.aspx?ForumID=<%#Eval("ForumID")%>">
+                        <a href="ForumDetails.aspx?ForumID=<%#Eval("ForumId")%>">
                             <%=GetLocaleResourceString("Admin.Forums.EditColumn.Forum")%>
                         </a>
                     </td>

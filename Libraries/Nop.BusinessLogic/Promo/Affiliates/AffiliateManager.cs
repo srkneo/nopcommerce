@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
                 return null;
 
             var item = new Affiliate();
-            item.AffiliateID = dbItem.AffiliateID;
+            item.AffiliateId = dbItem.AffiliateId;
             item.FirstName = dbItem.FirstName;
             item.LastName = dbItem.LastName;
             item.MiddleName = dbItem.MiddleName;
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             item.City = dbItem.City;
             item.StateProvince = dbItem.StateProvince;
             item.ZipPostalCode = dbItem.ZipPostalCode;
-            item.CountryID = dbItem.CountryID;
+            item.CountryId = dbItem.CountryId;
             item.Deleted = dbItem.Deleted;
             item.Active = dbItem.Active;
             return item;
@@ -75,14 +75,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         /// <summary>
         /// Gets an affiliate by affiliate identifier
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Affiliate</returns>
-        public static Affiliate GetAffiliateByID(int AffiliateID)
+        public static Affiliate GetAffiliateById(int affiliateId)
         {
-            if (AffiliateID == 0)
+            if (affiliateId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.GetAffiliateByID(AffiliateID);
+            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.GetAffiliateById(affiliateId);
             var affiliate = DBMapping(dbItem);
             return affiliate;
         }
@@ -90,15 +90,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         /// <summary>
         /// Marks affiliate as deleted 
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
-        public static void MarkAffiliateAsDeleted(int AffiliateID)
+        /// <param name="affiliateId">Affiliate identifier</param>
+        public static void MarkAffiliateAsDeleted(int affiliateId)
         {
-            var affiliate = GetAffiliateByID(AffiliateID);
+            var affiliate = GetAffiliateById(affiliateId);
             if (affiliate != null)
             {
-                affiliate = UpdateAffiliate(affiliate.AffiliateID, affiliate.FirstName, affiliate.LastName, affiliate.MiddleName, affiliate.PhoneNumber,
+                affiliate = UpdateAffiliate(affiliate.AffiliateId, affiliate.FirstName, affiliate.LastName, affiliate.MiddleName, affiliate.PhoneNumber,
                       affiliate.Email, affiliate.FaxNumber, affiliate.Company, affiliate.Address1, affiliate.Address2, affiliate.City,
-                      affiliate.StateProvince, affiliate.ZipPostalCode, affiliate.CountryID, true, affiliate.Active);
+                      affiliate.StateProvince, affiliate.ZipPostalCode, affiliate.CountryId, true, affiliate.Active);
             }
         }
 
@@ -116,64 +116,65 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         /// <summary>
         /// Inserts an affiliate
         /// </summary>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="MiddleName">The middle name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="Active">A value indicating whether the entity is active</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="middleName">The middle name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="active">A value indicating whether the entity is active</param>
         /// <returns>An affiliate</returns>
-        public static Affiliate InsertAffiliate(string FirstName, string LastName, string MiddleName, 
-            string PhoneNumber, string Email, string FaxNumber, string Company, string Address1,
-            string Address2, string City, string StateProvince, string ZipPostalCode,
-            int CountryID, bool Deleted, bool Active)
+        public static Affiliate InsertAffiliate(string firstName,
+            string lastName, string middleName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, string stateProvince, string zipPostalCode,
+            int countryId, bool deleted, bool active)
         {
-            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.InsertAffiliate(FirstName, LastName, MiddleName,
-                PhoneNumber, Email, FaxNumber, Company, Address1,
-                Address2, City, StateProvince, ZipPostalCode,
-                CountryID, Deleted, Active);
+            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.InsertAffiliate(firstName, 
+                lastName, middleName, phoneNumber, email, faxNumber, company, address1,
+                address2, city, stateProvince, zipPostalCode, countryId, deleted, active);
             var affiliate = DBMapping(dbItem);
             return affiliate;
         }
-        
+
         /// <summary>
         /// Updates the affiliate
         /// </summary>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="MiddleName">The middle name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="Active">A value indicating whether the entity is active</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="middleName">The middle name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="active">A value indicating whether the entity is active</param>
         /// <returns>An affiliate</returns>
-        public static Affiliate UpdateAffiliate(int AffiliateID, string FirstName, string LastName,
-            string MiddleName, string PhoneNumber, string Email, string FaxNumber, string Company,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, bool Active)
+        public static Affiliate UpdateAffiliate(int affiliateId, string firstName,
+            string lastName, string middleName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, string stateProvince, string zipPostalCode,
+            int countryId, bool deleted, bool active)
         {
-            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.UpdateAffiliate(AffiliateID, FirstName, LastName,
-                MiddleName, PhoneNumber, Email, FaxNumber, Company,
-                Address1, Address2, City, StateProvince,
-                ZipPostalCode, CountryID, Deleted, Active);
+            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.UpdateAffiliate(affiliateId, 
+                firstName, lastName, middleName, phoneNumber, email, faxNumber, company,
+                address1, address2, city, stateProvince, zipPostalCode, 
+                countryId, deleted, active);
             var affiliate = DBMapping(dbItem);
             return affiliate;
         }

@@ -35,7 +35,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CyberSource
             }
         }
 
-        public static string MerchantID
+        public static string MerchantId
         {
             get
             {

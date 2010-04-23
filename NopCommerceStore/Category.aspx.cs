@@ -40,14 +40,14 @@ namespace NopSolutions.NopCommerce.Web
 
         private void CreateChildControlsTree()
         {
-            category = CategoryManager.GetCategoryByID(this.CategoryID);
+            category = CategoryManager.GetCategoryById(this.CategoryId);
             if (category != null)
             {
                 Control child = null;
 
                 CategoryTemplate categoryTemplate = category.CategoryTemplate;
                 if (categoryTemplate == null)
-                    throw new NopException(string.Format("Category template path can not be empty. CategoryID={0}", category.CategoryID));
+                    throw new NopException(string.Format("Category template path can not be empty. CategoryID={0}", category.CategoryId));
 
                 child = base.LoadControl(categoryTemplate.TemplatePath);
                 this.CategoryPlaceHolder.Controls.Add(child);
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
             }
 
             if (category == null || category.Deleted || !category.Published)
@@ -80,11 +80,11 @@ namespace NopSolutions.NopCommerce.Web
             SEOHelper.RenderMetaTag(this, "keywords", category.MetaKeywords, true);
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryID");
+                return CommonHelper.QueryStringInt("CategoryId");
             }
         }
     }

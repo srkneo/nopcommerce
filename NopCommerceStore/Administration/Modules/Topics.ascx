@@ -28,7 +28,6 @@
 </p>
 <asp:GridView ID="gvTopics" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="TopicID" HeaderText="Topic ID" Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Topics.Name %>" ItemStyle-Width="40%">
             <ItemTemplate>
                 <%#Eval("Name")%>
@@ -37,14 +36,14 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Topics.EditInfo %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="30%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="TopicDetails.aspx?TopicID=<%#Eval("TopicID")%>" title="<%#GetLocaleResourceString("Admin.Topics.EditInfo.Tooltip")%>">
+                <a href="TopicDetails.aspx?TopicID=<%#Eval("TopicId")%>" title="<%#GetLocaleResourceString("Admin.Topics.EditInfo.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Topics.EditInfo.Link")%></a>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Topics.EditContent %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="30%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="TopicLocalizedDetails.aspx?TopicID=<%#Eval("TopicID")%>&amp;LanguageID=<%#GetSelectedLanguageID()%>"
+                <a href="TopicLocalizedDetails.aspx?TopicID=<%#Eval("TopicId")%>&amp;LanguageID=<%#GetSelectedLanguageId()%>"
                     title="<%#GetLocaleResourceString("Admin.Topics.EditContent.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Topics.EditContent.Link")%></a>
             </ItemTemplate>

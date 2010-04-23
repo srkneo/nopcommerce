@@ -45,12 +45,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
             get
             {
                 var address = ctrlBillingAddress.Address;
-                if (address.AddressID != 0 && NopContext.Current.User != null)
+                if (address.AddressId != 0 && NopContext.Current.User != null)
                 {
-                    var prevAddress = CustomerManager.GetAddressByID(address.AddressID);
-                    if (prevAddress.CustomerID != NopContext.Current.User.CustomerID)
+                    var prevAddress = CustomerManager.GetAddressById(address.AddressId);
+                    if (prevAddress.CustomerId != NopContext.Current.User.CustomerId)
                         return null;
-                    address.CustomerID = prevAddress.CustomerID;
+                    address.CustomerId = prevAddress.CustomerId;
                     address.CreatedOn = prevAddress.CreatedOn;
                 }
                 else
@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (billingAddress == null)
             {
-                NopContext.Current.User = CustomerManager.SetDefaultBillingAddress(NopContext.Current.User.CustomerID, 0);
+                NopContext.Current.User = CustomerManager.SetDefaultBillingAddress(NopContext.Current.User.CustomerId, 0);
                 var args1 = new CheckoutStepEventArgs() { BillingAddressSelected = true };
                 OnCheckoutStepChanged(args1);
                 if (!this.OnePageCheckout) 
@@ -74,15 +74,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 return;
             }
 
-            if (billingAddress.AddressID == 0)
+            if (billingAddress.AddressId == 0)
             {
                 //check if address already exists
                 var billingAddress2 = NopContext.Current.User.BillingAddresses.FindAddress(billingAddress.FirstName,
                      billingAddress.LastName, billingAddress.PhoneNumber, billingAddress.Email,
                      billingAddress.FaxNumber, billingAddress.Company,
                      billingAddress.Address1, billingAddress.Address2,
-                     billingAddress.City, billingAddress.StateProvinceID, billingAddress.ZipPostalCode,
-                     billingAddress.CountryID);
+                     billingAddress.City, billingAddress.StateProvinceId, billingAddress.ZipPostalCode,
+                     billingAddress.CountryId);
 
                 if (billingAddress2 != null)
                 {
@@ -90,15 +90,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 else
                 {
-                    billingAddress = CustomerManager.InsertAddress(NopContext.Current.User.CustomerID, true, billingAddress.FirstName,
+                    billingAddress = CustomerManager.InsertAddress(NopContext.Current.User.CustomerId, true, billingAddress.FirstName,
                         billingAddress.LastName, billingAddress.PhoneNumber, billingAddress.Email,
                         billingAddress.FaxNumber, billingAddress.Company, billingAddress.Address1, billingAddress.Address2,
-                        billingAddress.City, billingAddress.StateProvinceID, billingAddress.ZipPostalCode,
-                        billingAddress.CountryID, DateTime.Now, DateTime.Now);
+                        billingAddress.City, billingAddress.StateProvinceId, billingAddress.ZipPostalCode,
+                        billingAddress.CountryId, DateTime.Now, DateTime.Now);
                 }
             }
 
-            NopContext.Current.User = CustomerManager.SetDefaultBillingAddress(NopContext.Current.User.CustomerID, billingAddress.AddressID);
+            NopContext.Current.User = CustomerManager.SetDefaultBillingAddress(NopContext.Current.User.CustomerId, billingAddress.AddressId);
             var args2 = new CheckoutStepEventArgs() { BillingAddressSelected = true };
             OnCheckoutStepChanged(args2);
             if (!this.OnePageCheckout)
@@ -156,12 +156,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (Page.IsValid)
             {
-                int addressID = int.Parse(e.CommandArgument.ToString());
-                var billingAddress = CustomerManager.GetAddressByID(addressID);
+                int addressId = int.Parse(e.CommandArgument.ToString());
+                var billingAddress = CustomerManager.GetAddressById(addressId);
                 if (billingAddress != null && NopContext.Current.User != null)
                 {
-                    var prevAddress = CustomerManager.GetAddressByID(billingAddress.AddressID);
-                    if (prevAddress.CustomerID != NopContext.Current.User.CustomerID)
+                    var prevAddress = CustomerManager.GetAddressById(billingAddress.AddressId);
+                    if (prevAddress.CustomerId != NopContext.Current.User.CustomerId)
                         return;
                 }
 
@@ -182,7 +182,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -196,8 +196,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (shippingAddress != null && CustomerManager.CanUseAddressAsBillingAddress(shippingAddress))
             {
                 var billingAddress = new Address();
-                billingAddress.AddressID = 0;
-                billingAddress.CustomerID = shippingAddress.CustomerID;
+                billingAddress.AddressId = 0;
+                billingAddress.CustomerId = shippingAddress.CustomerId;
                 billingAddress.IsBillingAddress = true;
                 billingAddress.FirstName = shippingAddress.FirstName;
                 billingAddress.LastName = shippingAddress.LastName;
@@ -208,9 +208,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 billingAddress.Address1 = shippingAddress.Address1;
                 billingAddress.Address2 = shippingAddress.Address2;
                 billingAddress.City = shippingAddress.City;
-                billingAddress.StateProvinceID = shippingAddress.StateProvinceID;
+                billingAddress.StateProvinceId = shippingAddress.StateProvinceId;
                 billingAddress.ZipPostalCode = shippingAddress.ZipPostalCode;
-                billingAddress.CountryID = shippingAddress.CountryID;
+                billingAddress.CountryId = shippingAddress.CountryId;
                 billingAddress.CreatedOn = shippingAddress.CreatedOn;
 
                 ctrlBillingAddress.Address = billingAddress;

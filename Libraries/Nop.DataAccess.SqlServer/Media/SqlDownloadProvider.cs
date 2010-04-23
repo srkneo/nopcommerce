@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
     /// <summary>
     /// Download provider for SQL Server
     /// </summary>
-    public partial class SQLDownloadProvider : DBDownloadProvider
+    public partial class SqlDownloadProvider : DBDownloadProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,16 +36,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         #region Utilities
         private DBDownload GetDownloadFromReader(IDataReader dataReader)
         {
-            DBDownload download = new DBDownload();
-            download.DownloadID = NopSqlDataHelper.GetInt(dataReader, "DownloadID");
-            download.UseDownloadURL = NopSqlDataHelper.GetBoolean(dataReader, "UseDownloadURL");
-            download.DownloadURL = NopSqlDataHelper.GetString(dataReader, "DownloadURL");
-            download.DownloadBinary = NopSqlDataHelper.GetBytes(dataReader, "DownloadBinary");
-            download.ContentType = NopSqlDataHelper.GetString(dataReader, "ContentType");
-            download.Filename = NopSqlDataHelper.GetString(dataReader, "Filename");
-            download.Extension = NopSqlDataHelper.GetString(dataReader, "Extension");
-            download.IsNew = NopSqlDataHelper.GetBoolean(dataReader, "IsNew");
-            return download;
+            var item = new DBDownload();
+            item.DownloadId = NopSqlDataHelper.GetInt(dataReader, "DownloadID");
+            item.UseDownloadUrl = NopSqlDataHelper.GetBoolean(dataReader, "UseDownloadURL");
+            item.DownloadUrl = NopSqlDataHelper.GetString(dataReader, "DownloadURL");
+            item.DownloadBinary = NopSqlDataHelper.GetBytes(dataReader, "DownloadBinary");
+            item.ContentType = NopSqlDataHelper.GetString(dataReader, "ContentType");
+            item.Filename = NopSqlDataHelper.GetString(dataReader, "Filename");
+            item.Extension = NopSqlDataHelper.GetString(dataReader, "Extension");
+            item.IsNew = NopSqlDataHelper.GetBoolean(dataReader, "IsNew");
+            return item;
         }
         #endregion
 
@@ -88,109 +88,110 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         /// <summary>
         /// Gets a download
         /// </summary>
-        /// <param name="DownloadID">Download identifier</param>
+        /// <param name="downloadId">Download identifier</param>
         /// <returns>Download</returns>
-        public override DBDownload GetDownloadByID(int DownloadID)
+        public override DBDownload GetDownloadById(int downloadId)
         {
-            DBDownload download = null;
-            if (DownloadID == 0)
-                return download;
+            DBDownload item = null;
+            if (downloadId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DownloadLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "DownloadID", DbType.Int32, DownloadID);
+            db.AddInParameter(dbCommand, "DownloadID", DbType.Int32, downloadId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    download = GetDownloadFromReader(dataReader);
+                    item = GetDownloadFromReader(dataReader);
                 }
             }
-            return download;
+            return item;
         }
 
         /// <summary>
         /// Deletes a download
         /// </summary>
-        /// <param name="DownloadID">Download identifier</param>
-        public override void DeleteDownload(int DownloadID)
+        /// <param name="downloadId">Download identifier</param>
+        public override void DeleteDownload(int downloadId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DownloadDelete");
-            db.AddInParameter(dbCommand, "DownloadID", DbType.Int32, DownloadID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "DownloadID", DbType.Int32, downloadId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Inserts a download
         /// </summary>
-        /// <param name="UseDownloadURL">The value indicating whether DownloadURL property should be used</param>
-        /// <param name="DownloadURL">The download URL</param>
-        /// <param name="DownloadBinary">The download binary</param>
-        /// <param name="ContentType">The mimi-type of the download</param>
-        /// <param name="Filename">The filename of the download</param>
-        /// <param name="Extension">The extension</param>
-        /// <param name="IsNew">A value indicating whether the download is new</param>
+        /// <param name="useDownloadUrl">The value indicating whether DownloadURL property should be used</param>
+        /// <param name="downloadUrl">The download URL</param>
+        /// <param name="downloadBinary">The download binary</param>
+        /// <param name="contentType">The content type</param>
+        /// <param name="filename">The filename of the download</param>
+        /// <param name="extension">The extension</param>
+        /// <param name="isNew">A value indicating whether the download is new</param>
         /// <returns>Download</returns>
-        public override DBDownload InsertDownload(bool UseDownloadURL, string DownloadURL,
-            byte[] DownloadBinary, string ContentType, string Filename,
-            string Extension, bool IsNew)
+        public override DBDownload InsertDownload(bool useDownloadUrl, string downloadUrl,
+            byte[] downloadBinary, string contentType, string filename,
+            string extension, bool isNew)
         {
-            DBDownload download = null;
+            DBDownload item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DownloadInsert");
             db.AddOutParameter(dbCommand, "DownloadID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "UseDownloadURL", DbType.Boolean, UseDownloadURL);
-            db.AddInParameter(dbCommand, "DownloadURL", DbType.String, DownloadURL);
-            if (DownloadBinary != null)
-                db.AddInParameter(dbCommand, "DownloadBinary", DbType.Binary, DownloadBinary);
+            db.AddInParameter(dbCommand, "UseDownloadURL", DbType.Boolean, useDownloadUrl);
+            db.AddInParameter(dbCommand, "DownloadURL", DbType.String, downloadUrl);
+            if (downloadBinary != null)
+                db.AddInParameter(dbCommand, "DownloadBinary", DbType.Binary, downloadBinary);
             else
                 db.AddInParameter(dbCommand, "DownloadBinary", DbType.Binary, null);
-            db.AddInParameter(dbCommand, "ContentType", DbType.String, ContentType);
-            db.AddInParameter(dbCommand, "Filename", DbType.String, Filename);
-            db.AddInParameter(dbCommand, "Extension", DbType.String, Extension);
-            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, IsNew);
+            db.AddInParameter(dbCommand, "ContentType", DbType.String, contentType);
+            db.AddInParameter(dbCommand, "Filename", DbType.String, filename);
+            db.AddInParameter(dbCommand, "Extension", DbType.String, extension);
+            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, isNew);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int DownloadID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@DownloadID"));
-                download = GetDownloadByID(DownloadID);
+                int downloadId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@DownloadID"));
+                item = GetDownloadById(downloadId);
             }
-            return download;
+            return item;
         }
 
         /// <summary>
         /// Updates the download
         /// </summary>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UseDownloadURL">The value indicating whether DownloadURL property should be used</param>
-        /// <param name="DownloadURL">The download URL</param>
-        /// <param name="DownloadBinary">The download binary</param>
-        /// <param name="ContentType">The mime-type of the download</param>
-        /// <param name="Filename">The filename of the download</param>
-        /// <param name="Extension">The extension</param>
-        /// <param name="IsNew">A value indicating whether the download is new</param>
+        /// <param name="downloadId">The download identifier</param>
+        /// <param name="useDownloadUrl">The value indicating whether DownloadURL property should be used</param>
+        /// <param name="downloadUrl">The download URL</param>
+        /// <param name="downloadBinary">The download binary</param>
+        /// <param name="contentType">The content type</param>
+        /// <param name="filename">The filename of the download</param>
+        /// <param name="extension">The extension</param>
+        /// <param name="isNew">A value indicating whether the download is new</param>
         /// <returns>Download</returns>
-        public override DBDownload UpdateDownload(int DownloadID, bool UseDownloadURL, string DownloadURL,
-            byte[] DownloadBinary, string ContentType, string Filename, 
-            string Extension, bool IsNew)
+        public override DBDownload UpdateDownload(int downloadId,
+            bool useDownloadUrl, string downloadUrl,
+            byte[] downloadBinary, string contentType, string filename,
+            string extension, bool isNew)
         {
-            DBDownload download = null;
+            DBDownload item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DownloadUpdate");
-            db.AddInParameter(dbCommand, "DownloadID", DbType.Int32, DownloadID);
-            db.AddInParameter(dbCommand, "UseDownloadURL", DbType.Boolean, UseDownloadURL);
-            db.AddInParameter(dbCommand, "DownloadURL", DbType.String, DownloadURL);
-            if (DownloadBinary != null)
-                db.AddInParameter(dbCommand, "DownloadBinary", DbType.Binary, DownloadBinary);
+            db.AddInParameter(dbCommand, "DownloadID", DbType.Int32, downloadId);
+            db.AddInParameter(dbCommand, "UseDownloadURL", DbType.Boolean, useDownloadUrl);
+            db.AddInParameter(dbCommand, "DownloadURL", DbType.String, downloadUrl);
+            if (downloadBinary != null)
+                db.AddInParameter(dbCommand, "DownloadBinary", DbType.Binary, downloadBinary);
             else
                 db.AddInParameter(dbCommand, "DownloadBinary", DbType.Binary, null);
-            db.AddInParameter(dbCommand, "ContentType", DbType.String, ContentType);
-            db.AddInParameter(dbCommand, "Filename", DbType.String, Filename);
-            db.AddInParameter(dbCommand, "Extension", DbType.String, Extension);
-            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, IsNew);
+            db.AddInParameter(dbCommand, "ContentType", DbType.String, contentType);
+            db.AddInParameter(dbCommand, "Filename", DbType.String, filename);
+            db.AddInParameter(dbCommand, "Extension", DbType.String, extension);
+            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, isNew);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                download = GetDownloadByID(DownloadID);
+                item = GetDownloadById(downloadId);
 
-            return download;
+            return item;
         }
         #endregion
     }

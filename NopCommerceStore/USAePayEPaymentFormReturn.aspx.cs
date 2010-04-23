@@ -19,7 +19,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if(NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -36,23 +36,23 @@ namespace NopSolutions.NopCommerce.Web
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                int OrderID = 0;
-                if(!Int32.TryParse(Request.Form["UMinvoice"], out OrderID))
+                int orderId = 0;
+                if(!Int32.TryParse(Request.Form["UMinvoice"], out orderId))
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
-                Order order = OrderManager.GetOrderByID(OrderID);
-                if(order == null || NopContext.Current.User.CustomerID != order.CustomerID)
+                Order order = OrderManager.GetOrderById(orderId);
+                if(order == null || NopContext.Current.User.CustomerId != order.CustomerId)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                string transactionID = Request.Form["UMrefNum"];
+                string transactionId = Request.Form["UMrefNum"];
 
                 if(EPaymentFormSettings.AuthorizeOnly)
                 {
                     //set AuthorizationTransactionID
-                    order = OrderManager.UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                    order = OrderManager.UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                        order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                        order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                        order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -61,39 +61,39 @@ namespace NopSolutions.NopCommerce.Web
                        order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                        order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                        order.OrderDiscountInCustomerCurrency,
-                       order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                       order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
                        order.CustomerCurrencyCode, order.OrderWeight,
-                       order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
+                       order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber,
                        order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                       order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                       order.PaymentMethodID, order.PaymentMethodName,
-                       transactionID,
+                       order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                       order.PaymentMethodId, order.PaymentMethodName,
+                       transactionId,
                        order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                       order.CaptureTransactionID, order.CaptureTransactionResult,
-                       order.SubscriptionTransactionID, order.PurchaseOrderNumber,
+                       order.CaptureTransactionId, order.CaptureTransactionResult,
+                       order.SubscriptionTransactionId, order.PurchaseOrderNumber,
                        order.PaymentStatus, order.PaidDate,
                        order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                        order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                        order.BillingAddress2, order.BillingCity,
-                       order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                       order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                       order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                       order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                        order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                        order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                        order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                       order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                       order.ShippingCountry, order.ShippingCountryID,
-                       order.ShippingMethod, order.ShippingRateComputationMethodID,
+                       order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                       order.ShippingCountry, order.ShippingCountryId,
+                       order.ShippingMethod, order.ShippingRateComputationMethodId,
                        order.ShippedDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
 
                     if(OrderManager.CanMarkOrderAsAuthorized(order))
                     {
-                        OrderManager.MarkAsAuthorized(order.OrderID);
+                        OrderManager.MarkAsAuthorized(order.OrderId);
                     }
                 }
                 else
                 {
                     //set CaptureTransactionID
-                    order = OrderManager.UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                    order = OrderManager.UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                        order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                        order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                        order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -102,33 +102,33 @@ namespace NopSolutions.NopCommerce.Web
                        order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                        order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                        order.OrderDiscountInCustomerCurrency,
-                       order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                       order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                        order.CustomerCurrencyCode, order.OrderWeight,
-                       order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
+                       order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber,
                        order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                       order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                       order.PaymentMethodID, order.PaymentMethodName,
-                       order.AuthorizationTransactionID,
+                       order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                       order.PaymentMethodId, order.PaymentMethodName,
+                       order.AuthorizationTransactionId,
                        order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                       transactionID, order.CaptureTransactionResult,
-                       order.SubscriptionTransactionID, order.PurchaseOrderNumber,
+                       transactionId, order.CaptureTransactionResult,
+                       order.SubscriptionTransactionId, order.PurchaseOrderNumber,
                        order.PaymentStatus, order.PaidDate,
                        order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                        order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                        order.BillingAddress2, order.BillingCity,
-                       order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                       order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                       order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                       order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                        order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                        order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                        order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                       order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                       order.ShippingCountry, order.ShippingCountryID,
-                       order.ShippingMethod, order.ShippingRateComputationMethodID,
+                       order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                       order.ShippingCountry, order.ShippingCountryId,
+                       order.ShippingMethod, order.ShippingRateComputationMethodId,
                        order.ShippedDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
 
                     if(OrderManager.CanMarkOrderAsPaid(order))
                     {
-                        OrderManager.MarkOrderAsPaid(order.OrderID);
+                        OrderManager.MarkOrderAsPaid(order.OrderId);
                     }
                 }
 

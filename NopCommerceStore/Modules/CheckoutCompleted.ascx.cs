@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -52,8 +52,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 else
                 {
                     var lastOrder = orderCollection[0];
-                    lblOrderNumber.Text = lastOrder.OrderID.ToString();
-                    hlOrderDetails.NavigateUrl = string.Format("{0}OrderDetails.aspx?OrderID={1}", CommonHelper.GetStoreLocation(), lastOrder.OrderID).ToLowerInvariant();
+                    lblOrderNumber.Text = lastOrder.OrderId.ToString();
+                    hlOrderDetails.NavigateUrl = string.Format("{0}OrderDetails.aspx?OrderID={1}", CommonHelper.GetStoreLocation(), lastOrder.OrderId).ToLowerInvariant();
                 }
             }
         }

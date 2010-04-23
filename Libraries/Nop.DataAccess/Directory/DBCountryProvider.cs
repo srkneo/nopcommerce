@@ -36,8 +36,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Deletes a country
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
-        public abstract void DeleteCountry(int CountryID);
+        /// <param name="countryId">Country identifier</param>
+        public abstract void DeleteCountry(int countryId);
 
         /// <summary>
         /// Gets all countries
@@ -66,60 +66,60 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Gets a country 
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
+        /// <param name="countryId">Country identifier</param>
         /// <returns>Country</returns>
-        public abstract DBCountry GetCountryByID(int CountryID);
+        public abstract DBCountry GetCountryById(int countryId);
 
         /// <summary>
         /// Gets a country by two letter ISO code
         /// </summary>
-        /// <param name="TwoLetterISOCode">Country two letter ISO code</param>
+        /// <param name="twoLetterIsoCode">Country two letter ISO code</param>
         /// <returns>Country</returns>
-        public abstract DBCountry GetCountryByTwoLetterISOCode(string TwoLetterISOCode);
+        public abstract DBCountry GetCountryByTwoLetterIsoCode(string twoLetterIsoCode);
 
         /// <summary>
         /// Gets a country by three letter ISO code
         /// </summary>
-        /// <param name="ThreeLetterISOCode">Country three letter ISO code</param>
+        /// <param name="threeLetterIsoCode">Country three letter ISO code</param>
         /// <returns>Country</returns>
-        public abstract DBCountry GetCountryByThreeLetterISOCode(string ThreeLetterISOCode);
+        public abstract DBCountry GetCountryByThreeLetterIsoCode(string threeLetterIsoCode);
 
         /// <summary>
         /// Inserts a country
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="AllowsRegistration">A value indicating whether registration is allowed to this country</param>
-        /// <param name="AllowsBilling">A value indicating whether billing is allowed to this country</param>
-        /// <param name="AllowsShipping">A value indicating whether shipping is allowed to this country</param>
-        /// <param name="TwoLetterISOCode">The two letter ISO code</param>
-        /// <param name="ThreeLetterISOCode">The three letter ISO code</param>
-        /// <param name="NumericISOCode">The numeric ISO code</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="allowsRegistration">A value indicating whether registration is allowed to this country</param>
+        /// <param name="allowsBilling">A value indicating whether billing is allowed to this country</param>
+        /// <param name="allowsShipping">A value indicating whether shipping is allowed to this country</param>
+        /// <param name="twoLetterIsoCode">The two letter ISO code</param>
+        /// <param name="threeLetterIsoCode">The three letter ISO code</param>
+        /// <param name="numericIsoCode">The numeric ISO code</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Country</returns>
-        public abstract DBCountry InsertCountry(string Name,
-            bool AllowsRegistration, bool AllowsBilling, bool AllowsShipping,
-            string TwoLetterISOCode, string ThreeLetterISOCode, int NumericISOCode,
-            bool Published, int DisplayOrder);
+        public abstract DBCountry InsertCountry(string name,
+            bool allowsRegistration, bool allowsBilling, bool allowsShipping,
+            string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
+            bool published, int displayOrder);
 
         /// <summary>
         /// Updates the country
         /// </summary>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="AllowsRegistration">A value indicating whether registration is allowed to this country</param>
-        /// <param name="AllowsBilling">A value indicating whether billing is allowed to this country</param>
-        /// <param name="AllowsShipping">A value indicating whether shipping is allowed to this country</param>
-        /// <param name="TwoLetterISOCode">The two letter ISO code</param>
-        /// <param name="ThreeLetterISOCode">The three letter ISO code</param>
-        /// <param name="NumericISOCode">The numeric ISO code</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="allowsRegistration">A value indicating whether registration is allowed to this country</param>
+        /// <param name="allowsBilling">A value indicating whether billing is allowed to this country</param>
+        /// <param name="allowsShipping">A value indicating whether shipping is allowed to this country</param>
+        /// <param name="twoLetterIsoCode">The two letter ISO code</param>
+        /// <param name="threeLetterIsoCode">The three letter ISO code</param>
+        /// <param name="numericIsoCode">The numeric ISO code</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Country</returns>
-        public abstract DBCountry UpdateCountry(int CountryID, string Name,
-            bool AllowsRegistration, bool AllowsBilling, bool AllowsShipping,
-            string TwoLetterISOCode, string ThreeLetterISOCode, int NumericISOCode,
-            bool Published, int DisplayOrder);
+        public abstract DBCountry UpdateCountry(int countryId, string name,
+            bool allowsRegistration, bool allowsBilling, bool allowsShipping,
+            string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
+            bool published, int displayOrder);
         #endregion
     }
 }

@@ -126,12 +126,10 @@
                         <asp:GridView ID="gvRecurringPaymentHistory" runat="server" AutoGenerateColumns="False"
                             Width="100%">
                             <Columns>
-                                <asp:BoundField DataField="RecurringPaymentHistoryID" HeaderText="Recurring Payment History ID"
-                                    Visible="False"></asp:BoundField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.RecurringPaymentInfo.History.OrderColumn %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderID")%>">
+                                        <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderId")%>">
                                             <%#GetLocaleResourceString("Admin.RecurringPaymentInfo.History.OrderColumn.View")%>
                                         </a>
                                     </ItemTemplate>
@@ -139,19 +137,19 @@
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.RecurringPaymentInfo.History.OrderStatusColumn %>"
                                     ItemStyle-Width="10%">
                                     <ItemTemplate>
-                                        <%#OrderManager.GetOrderStatusName(((Order)(Eval("Order"))).OrderStatusID)%>
+                                        <%#OrderManager.GetOrderStatusName(((Order)(Eval("Order"))).OrderStatusId)%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.RecurringPaymentInfo.History.PaymentStatusColumn %>"
                                     ItemStyle-Width="20%">
                                     <ItemTemplate>
-                                        <%#PaymentStatusManager.GetPaymentStatusName(((Order)(Eval("Order"))).PaymentStatusID)%>
+                                        <%#PaymentStatusManager.GetPaymentStatusName(((Order)(Eval("Order"))).PaymentStatusId)%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.RecurringPaymentInfo.History.ShippingStatusColumn %>"
                                     ItemStyle-Width="15%">
                                     <ItemTemplate>
-                                        <%#ShippingStatusManager.GetShippingStatusName(((Order)(Eval("Order"))).ShippingStatusID)%>
+                                        <%#ShippingStatusManager.GetShippingStatusName(((Order)(Eval("Order"))).ShippingStatusId)%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.RecurringPaymentInfo.History.CreatedOnColumn %>"

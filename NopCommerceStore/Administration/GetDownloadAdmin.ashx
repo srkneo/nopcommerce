@@ -26,15 +26,15 @@ public class GetDownloadAdmin : IHttpHandler
     {
         if (NopContext.Current.User == null || !NopContext.Current.User.IsAdmin)
         {
-            string loginURL = SEOHelper.GetAdminAreaLoginPageURL();
+            string loginURL = SEOHelper.GetAdminAreaLoginPageUrl();
             context.Response.Redirect(loginURL);
         }
-        
-        int downloadID = CommonHelper.QueryStringInt("DownloadID");
-        Download download = DownloadManager.GetDownloadByID(downloadID);
+
+        int downloadId = CommonHelper.QueryStringInt("DownloadId");
+        Download download = DownloadManager.GetDownloadById(downloadId);
         if (download == null)
         {
-            returnError(context, string.Format("Download is not available any more. Download ID={0}", downloadID));
+            returnError(context, string.Format("Download is not available any more. Download ID={0}", downloadId));
             return;
         }
 
@@ -43,7 +43,7 @@ public class GetDownloadAdmin : IHttpHandler
             //use URL
             if (String.IsNullOrEmpty(download.DownloadURL))
             {
-                returnError(context, string.Format("Download URL is empty. Download ID={0}", downloadID));
+                returnError(context, string.Format("Download URL is empty. Download ID={0}", downloadId));
                 return;
             }
 
@@ -54,7 +54,7 @@ public class GetDownloadAdmin : IHttpHandler
             //use stored data
             if (download.DownloadBinary == null)
             {
-                returnError(context, string.Format("Download data is not available any more. Download ID={0}", downloadID));
+                returnError(context, string.Format("Download data is not available any more. Download ID={0}", downloadId));
                 return;
             }
 
@@ -62,7 +62,7 @@ public class GetDownloadAdmin : IHttpHandler
             if (!string.IsNullOrEmpty(download.Filename))
                 fileName = download.Filename;
             else
-                fileName = downloadID.ToString();
+                fileName = downloadId.ToString();
 
             context.Response.Clear();
             context.Response.ContentType = download.ContentType;
@@ -91,10 +91,10 @@ public class GetDownloadAdmin : IHttpHandler
         }
     }
     
-    private void returnError(HttpContext context, string Message)
+    private void returnError(HttpContext context, string message)
     {
         context.Response.Clear();
-        context.Response.Write(Message);
+        context.Response.Write(message);
         context.Response.Flush();
     }
     

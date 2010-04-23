@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Poll poll = ctrlPollInfo.SaveInfo();
-                    Response.Redirect("PollDetails.aspx?PollID=" + poll.PollID.ToString());
+                    Response.Redirect("PollDetails.aspx?PollID=" + poll.PollId.ToString());
                 }
                 catch (Exception exc)
                 {

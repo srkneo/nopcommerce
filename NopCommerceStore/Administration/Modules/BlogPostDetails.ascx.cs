@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     BlogPost blogPost = ctrlBlogPostInfo.SaveInfo();
 
-                    Response.Redirect("BlogPostDetails.aspx?BlogPostID=" + blogPost.BlogPostID.ToString());
+                    Response.Redirect("BlogPostDetails.aspx?BlogPostID=" + blogPost.BlogPostId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                BlogManager.DeleteBlogPost(this.BlogPostID);
+                BlogManager.DeleteBlogPost(this.BlogPostId);
                 Response.Redirect("Blog.aspx");
             }
             catch (Exception exc)
@@ -61,11 +61,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int BlogPostID
+        public int BlogPostId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BlogPostID");
+                return CommonHelper.QueryStringInt("BlogPostId");
             }
         }
     }

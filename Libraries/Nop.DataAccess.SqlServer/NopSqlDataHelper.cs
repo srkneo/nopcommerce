@@ -71,11 +71,11 @@ namespace NopSolutions.NopCommerce.DataAccess
         /// <summary>
         /// Creates a connection to a data soruce
         /// </summary>
-        /// <param name="ConnectionString">Connection string</param>
+        /// <param name="connectionString">Connection string</param>
         /// <returns>Database instance</returns>
-        public static Database CreateConnection(string ConnectionString)
+        public static Database CreateConnection(string connectionString)
         {
-            SqlDatabase db = new SqlDatabase(ConnectionString);
+            SqlDatabase db = new SqlDatabase(connectionString);
             return db;
         }
 

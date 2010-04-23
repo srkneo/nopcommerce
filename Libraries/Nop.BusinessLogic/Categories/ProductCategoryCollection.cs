@@ -28,13 +28,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Returns a ProductCategory that has the specified values
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <returns>A ProductCategory that has the specified values; otherwise null</returns>
-        public ProductCategory FindProductCategory(int ProductID, int CategoryID)
+        public ProductCategory FindProductCategory(int productId, int categoryId)
         {
             foreach (ProductCategory productCategory in this)
-                if (productCategory.ProductID == ProductID && productCategory.CategoryID == CategoryID)
+                if (productCategory.ProductId == productId && productCategory.CategoryId == categoryId)
                     return productCategory;
             return null;
         }

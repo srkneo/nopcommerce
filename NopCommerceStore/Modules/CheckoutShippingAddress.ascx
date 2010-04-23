@@ -16,7 +16,7 @@
                     <div class="address-item">
                         <div class="select-button">
                             <asp:Button runat="server" CommandName="Select" ID="btnSelect" Text='<%#GetLocaleResourceString("Checkout.ShipToThisAddress")%>'
-                                OnCommand="btnSelect_Command" ValidationGroup="SelectShippingAddress" CommandArgument='<%# Eval("AddressID") %>'
+                                OnCommand="btnSelect_Command" ValidationGroup="SelectShippingAddress" CommandArgument='<%# Eval("AddressId") %>'
                                 CssClass="selectshippingaddressbutton" />
                         </div>
                         <div class="address-box">

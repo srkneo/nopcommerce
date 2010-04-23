@@ -114,36 +114,36 @@ namespace NopSolutions.NopCommerce.Web
             {
                 string transStatus = CommonHelper.GetFormString("transStatus");
                 string returnedcallbackPW = CommonHelper.GetFormString("callbackPW");
-                string orderID = CommonHelper.GetFormString("cartId");
-                string returnedInstanceID = CommonHelper.GetFormString("instID");
+                string orderId = CommonHelper.GetFormString("cartId");
+                string returnedInstanceId = CommonHelper.GetFormString("instId");
                 string callbackPassword = SettingManager.GetSettingValue("PaymentMethod.Worldpay.CallbackPassword");
-                string transID = CommonHelper.GetFormString("transId");
+                string transId = CommonHelper.GetFormString("transId");
                 string transResult = CommonHelper.QueryString("msg");
-                string instanceID = SettingManager.GetSettingValue("PaymentMethod.Worldpay.InstanceID");
+                string instanceId = SettingManager.GetSettingValue("PaymentMethod.Worldpay.InstanceId");
 
-                Order order = OrderManager.GetOrderByID(Convert.ToInt32(orderID));
+                Order order = OrderManager.GetOrderById(Convert.ToInt32(orderId));
                 if (order == null)
-                    throw new NopException(string.Format("The order ID {0} doesn't exists", orderID));
+                    throw new NopException(string.Format("The order ID {0} doesn't exists", orderId));
 
-                if (string.IsNullOrEmpty(instanceID))
+                if (string.IsNullOrEmpty(instanceId))
                     throw new NopException("Worldpay Instance ID is not set");
 
-                if (string.IsNullOrEmpty(returnedInstanceID))
+                if (string.IsNullOrEmpty(returnedInstanceId))
                     throw new NopException("Returned Worldpay Instance ID is not set");
 
 
-                if (instanceID.Trim() != returnedInstanceID.Trim())
-                    throw new NopException(string.Format("The Instance ID (0}) received for order {1} does not match the WorldPay Instance ID stored in the database ({2})", returnedInstanceID, orderID, instanceID));
+                if (instanceId.Trim() != returnedInstanceId.Trim())
+                    throw new NopException(string.Format("The Instance ID (0}) received for order {1} does not match the WorldPay Instance ID stored in the database ({2})", returnedInstanceId, orderId, instanceId));
 
                 if (transStatus.ToLower() != "y")
-                    throw new NopException(string.Format("The transaction status received from WorldPay ({0}) for the order {1} was declined.", transStatus, orderID));
+                    throw new NopException(string.Format("The transaction status received from WorldPay ({0}) for the order {1} was declined.", transStatus, orderId));
 
                 if (returnedcallbackPW.Trim() != callbackPassword.Trim())
-                    throw new NopException(string.Format("The callback password ({0}) received within the Worldpay Callback for the order {1} does not match that stored in your database.", returnedcallbackPW, orderID));
+                    throw new NopException(string.Format("The callback password ({0}) received within the Worldpay Callback for the order {1} does not match that stored in your database.", returnedcallbackPW, orderId));
 
                 if (OrderManager.CanMarkOrderAsPaid(order))
                 {
-                    OrderManager.MarkOrderAsPaid(order.OrderID);
+                    OrderManager.MarkOrderAsPaid(order.OrderId);
                 }
 
                 string retURL = CommonHelper.GetStoreLocation() + "checkoutcompleted.aspx";

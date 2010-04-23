@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets or sets the search log identifier
         /// </summary>
-        public int SearchLogID { get; set; }
+        public int SearchLogId { get; set; }
 
         /// <summary>
         /// Gets or sets the search term
@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation

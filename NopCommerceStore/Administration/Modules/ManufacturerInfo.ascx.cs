@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            var manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID, 0);
+            var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
 
             if (this.HasLocalizableContent)
             {
@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 this.txtName.Text = manufacturer.Name;
                 this.txtDescription.Content = manufacturer.Description;
-                CommonHelper.SelectListItem(this.ddlTemplate, manufacturer.TemplateID);
+                CommonHelper.SelectListItem(this.ddlTemplate, manufacturer.TemplateId);
 
                 var manufacturerPicture = manufacturer.Picture;
                 btnRemoveManufacturerImage.Visible = manufacturerPicture != null;
@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             var manufacturerTemplates = TemplateManager.GetAllManufacturerTemplates();
             foreach (var manufacturerTemplate in manufacturerTemplates)
             {
-                ListItem item2 = new ListItem(manufacturerTemplate.Name, manufacturerTemplate.ManufacturerTemplateID.ToString());
+                ListItem item2 = new ListItem(manufacturerTemplate.Name, manufacturerTemplate.ManufacturerTemplateId.ToString());
                 this.ddlTemplate.Items.Add(item2);
             }
         }
@@ -104,7 +104,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         
         public Manufacturer SaveInfo()
         {
-            var manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID, 0);
+            var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
 
             if (manufacturer != null)
             {
@@ -114,19 +114,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     byte[] manufacturerPictureBinary = PictureManager.GetPictureBits(manufacturerPictureFile.InputStream, manufacturerPictureFile.ContentLength);
                     if (manufacturerPicture != null)
-                        manufacturerPicture = PictureManager.UpdatePicture(manufacturerPicture.PictureID, manufacturerPictureBinary, manufacturerPictureFile.ContentType, true);
+                        manufacturerPicture = PictureManager.UpdatePicture(manufacturerPicture.PictureId, manufacturerPictureBinary, manufacturerPictureFile.ContentType, true);
                     else
                         manufacturerPicture = PictureManager.InsertPicture(manufacturerPictureBinary, manufacturerPictureFile.ContentType, true);
                 }
-                int manufacturerPictureID = 0;
+                int manufacturerPictureId = 0;
                 if (manufacturerPicture != null)
-                    manufacturerPictureID = manufacturerPicture.PictureID;
+                    manufacturerPictureId = manufacturerPicture.PictureId;
 
-                manufacturer = ManufacturerManager.UpdateManufacturer(manufacturer.ManufacturerID, txtName.Text,
+                manufacturer = ManufacturerManager.UpdateManufacturer(manufacturer.ManufacturerId, txtName.Text,
                     txtDescription.Content, int.Parse(this.ddlTemplate.SelectedItem.Value),
                     manufacturer.MetaKeywords, manufacturer.MetaDescription,
                     manufacturer.MetaTitle, manufacturer.SEName,
-                    manufacturerPictureID, manufacturer.PageSize, txtPriceRanges.Text,
+                    manufacturerPictureId, manufacturer.PageSize, txtPriceRanges.Text,
                     cbPublished.Checked, manufacturer.Deleted, txtDisplayOrder.Value,
                     manufacturer.CreatedOn, DateTime.Now);
             }
@@ -139,23 +139,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     byte[] manufacturerPictureBinary = PictureManager.GetPictureBits(manufacturerPictureFile.InputStream, manufacturerPictureFile.ContentLength);
                     manufacturerPicture = PictureManager.InsertPicture(manufacturerPictureBinary, manufacturerPictureFile.ContentType, true);
                 }
-                int manufacturerPictureID = 0;
+                int manufacturerPictureId = 0;
                 if (manufacturerPicture != null)
-                    manufacturerPictureID = manufacturerPicture.PictureID;
+                    manufacturerPictureId = manufacturerPicture.PictureId;
 
                 DateTime nowDt = DateTime.Now;
                 manufacturer = ManufacturerManager.InsertManufacturer(txtName.Text, txtDescription.Content,
                     int.Parse(this.ddlTemplate.SelectedItem.Value),
                     string.Empty, string.Empty, string.Empty, string.Empty,
-                    manufacturerPictureID, 10, txtPriceRanges.Text, cbPublished.Checked, false, txtDisplayOrder.Value, nowDt, nowDt);
+                    manufacturerPictureId, 10, txtPriceRanges.Text, cbPublished.Checked, false, txtDisplayOrder.Value, nowDt, nowDt);
             }
 
-            saveLocalizableContent(manufacturer);
+            SaveLocalizableContent(manufacturer);
 
             return manufacturer;
         }
 
-        protected void saveLocalizableContent(Manufacturer manufacturer)
+        protected void SaveLocalizableContent(Manufacturer manufacturer)
         {
             if (manufacturer == null)
                 return;
@@ -171,29 +171,29 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedDescription");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtLocalizedName.Text;
                     string description = txtLocalizedDescription.Content;
 
                     bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description));
 
-                    var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIDAndLanguageID(manufacturer.ManufacturerID, languageID);
+                    var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIdAndLanguageId(manufacturer.ManufacturerId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = ManufacturerManager.InsertManufacturerLocalized(manufacturer.ManufacturerID,
-                                   languageID, name, description, string.Empty, string.Empty,
+                            content = ManufacturerManager.InsertManufacturerLocalized(manufacturer.ManufacturerId,
+                                   languageId, name, description, string.Empty, string.Empty,
                                    string.Empty, string.Empty);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = ManufacturerManager.UpdateManufacturerLocalized(content.ManufacturerLocalizedID, content.ManufacturerID,
-                                languageID, name, description,
+                            content = ManufacturerManager.UpdateManufacturerLocalized(content.ManufacturerLocalizedId, content.ManufacturerId,
+                                languageId, name, description,
                                 content.MetaKeywords, content.MetaDescription,
                                 content.MetaTitle, content.SEName);
                         }
@@ -210,9 +210,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedDescription");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIDAndLanguageID(this.ManufacturerID, languageID);
+                var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIdAndLanguageId(this.ManufacturerId, languageId);
 
                 if (content != null)
                 {
@@ -227,11 +227,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Manufacturer manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID, 0);
+                Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
                 if (manufacturer != null)
                 {
-                    PictureManager.DeletePicture(manufacturer.PictureID);
-                    ManufacturerManager.RemoveManufacturerPicture(manufacturer.ManufacturerID);
+                    PictureManager.DeletePicture(manufacturer.PictureId);
+                    ManufacturerManager.RemoveManufacturerPicture(manufacturer.ManufacturerId);
                     BindData();
                 }
             }
@@ -241,11 +241,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ManufacturerID
+        public int ManufacturerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ManufacturerID");
+                return CommonHelper.QueryStringInt("ManufacturerId");
             }
         }
     }

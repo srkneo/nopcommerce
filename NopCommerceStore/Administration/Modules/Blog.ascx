@@ -15,10 +15,8 @@
 <p>
 </p>
 <asp:GridView ID="gvBlogPosts" runat="server" AutoGenerateColumns="False" Width="100%"
-    OnPageIndexChanging="gvBlogPosts_PageIndexChanging" AllowPaging="true" PageSize="2">
+    OnPageIndexChanging="gvBlogPosts_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="BlogPostID" HeaderText="BlogPost ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Blog.BlogPostTitle %>" ItemStyle-Width="40%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("BlogPostTitle").ToString())%>
@@ -33,7 +31,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Blog.ViewComments %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="BlogComments.aspx?BlogPostID=<%#Eval("BlogPostID")%>" title="<%#GetLocaleResourceString("Admin.Blog.ViewComments.Tooltip")%>">
+                <a href="BlogComments.aspx?BlogPostID=<%#Eval("BlogPostId")%>" title="<%#GetLocaleResourceString("Admin.Blog.ViewComments.Tooltip")%>">
                     <%#String.Format(GetLocaleResourceString("Admin.Blog.ViewComments.Link"), ((BlogCommentCollection)Eval("BlogComments")).Count)%>
                 </a>
             </ItemTemplate>
@@ -47,7 +45,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Blog.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="BlogPostDetails.aspx?BlogPostID=<%#Eval("BlogPostID")%>" title="<%#GetLocaleResourceString("Admin.Blog.Edit.Tooltip")%>">
+                <a href="BlogPostDetails.aspx?BlogPostID=<%#Eval("BlogPostId")%>" title="<%#GetLocaleResourceString("Admin.Blog.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Blog.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

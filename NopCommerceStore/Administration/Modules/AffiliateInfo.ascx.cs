@@ -34,11 +34,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Affiliate affiliate = AffiliateManager.GetAffiliateByID(this.AffiliateID);
+            Affiliate affiliate = AffiliateManager.GetAffiliateById(this.AffiliateId);
 
             if (affiliate != null)
             {
-                this.lblAffiliateID.Text = affiliate.AffiliateID.ToString();
+                this.lblAffiliateId.Text = affiliate.AffiliateId.ToString();
                 this.txtFirstName.Text = affiliate.FirstName;
                 this.txtLastName.Text = affiliate.LastName;
                 this.txtMiddleName.Text = affiliate.MiddleName;
@@ -51,13 +51,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtCity.Text = affiliate.City;
                 this.txtStateProvince.Text = affiliate.StateProvince;
                 this.txtZipPostalCode.Text = affiliate.ZipPostalCode;
-                this.pnlAffiliateID.Visible = true;
-                CommonHelper.SelectListItem(this.ddlCountry, affiliate.CountryID);
+                this.pnlAffiliateId.Visible = true;
+                CommonHelper.SelectListItem(this.ddlCountry, affiliate.CountryId);
                 this.cbActive.Checked = affiliate.Active;
             }
             else
             {
-                this.pnlAffiliateID.Visible = false;
+                this.pnlAffiliateId.Visible = false;
             }
         }
 
@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CountryCollection countryCollection = CountryManager.GetAllCountriesForRegistration();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -83,11 +83,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Affiliate SaveInfo()
         {
-            Affiliate affiliate = AffiliateManager.GetAffiliateByID(this.AffiliateID);
+            Affiliate affiliate = AffiliateManager.GetAffiliateById(this.AffiliateId);
 
             if (affiliate != null)
             {
-                affiliate = AffiliateManager.UpdateAffiliate(affiliate.AffiliateID, txtFirstName.Text, txtLastName.Text, txtMiddleName.Text,
+                affiliate = AffiliateManager.UpdateAffiliate(affiliate.AffiliateId, txtFirstName.Text, txtLastName.Text, txtMiddleName.Text,
                     txtPhoneNumber.Text, txtEmail.Text, txtFaxNumber.Text, txtCompany.Text,
                     txtAddress1.Text, txtAddress2.Text, txtCity.Text, txtStateProvince.Text, txtZipPostalCode.Text,
                     int.Parse(this.ddlCountry.SelectedItem.Value), affiliate.Deleted, cbActive.Checked);
@@ -103,11 +103,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return affiliate;
         }
 
-        public int AffiliateID
+        public int AffiliateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("AffiliateID");
+                return CommonHelper.QueryStringInt("AffiliateId");
             }
         }
     }

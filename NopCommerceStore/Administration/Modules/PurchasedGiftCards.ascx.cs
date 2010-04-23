@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses)
             {
-                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusID), orderStatus.OrderStatusID.ToString());
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
                 this.ddlOrderStatus.Items.Add(item2);
             }
         }
@@ -72,9 +72,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             //order status filter
             OrderStatusEnum? orderStatus = null;
-            int orderStatusID = int.Parse(ddlOrderStatus.SelectedItem.Value);
-            if (orderStatusID > 0)
-                orderStatus = (OrderStatusEnum)Enum.ToObject(typeof(OrderStatusEnum), orderStatusID);
+            int orderStatusId = int.Parse(ddlOrderStatus.SelectedItem.Value);
+            if (orderStatusId > 0)
+                orderStatus = (OrderStatusEnum)Enum.ToObject(typeof(OrderStatusEnum), orderStatusId);
 
             //gift card status filter
             bool? isGiftCardActivated = null;
@@ -118,7 +118,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected string GetOrderStatusInfo(GiftCard gc)
         {
-            string result = OrderManager.GetOrderStatusName(gc.PurchasedOrderProductVariant.Order.OrderStatusID);
+            string result = OrderManager.GetOrderStatusName(gc.PurchasedOrderProductVariant.Order.OrderStatusId);
             return result;
         }
 

@@ -26,7 +26,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
     /// <summary>
     /// Discount provider for SQL Server
     /// </summary>
-    public partial class SQLDiscountProvider : DBDiscountProvider
+    public partial class SqlDiscountProvider : DBDiscountProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -35,56 +35,56 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         #region Utilities
         private DBDiscount GetDiscountFromReader(IDataReader dataReader)
         {
-            DBDiscount discount = new DBDiscount();
-            discount.DiscountID = NopSqlDataHelper.GetInt(dataReader, "DiscountID");
-            discount.DiscountTypeID = NopSqlDataHelper.GetInt(dataReader, "DiscountTypeID");
-            discount.DiscountLimitationID = NopSqlDataHelper.GetInt(dataReader, "DiscountLimitationID");
-            discount.DiscountRequirementID = NopSqlDataHelper.GetInt(dataReader, "DiscountRequirementID");
-            discount.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            discount.UsePercentage = NopSqlDataHelper.GetBoolean(dataReader, "UsePercentage");
-            discount.DiscountPercentage = NopSqlDataHelper.GetDecimal(dataReader, "DiscountPercentage");
-            discount.DiscountAmount = NopSqlDataHelper.GetDecimal(dataReader, "DiscountAmount");
-            discount.StartDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "StartDate");
-            discount.EndDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "EndDate");
-            discount.RequiresCouponCode = NopSqlDataHelper.GetBoolean(dataReader, "RequiresCouponCode");
-            discount.CouponCode = NopSqlDataHelper.GetString(dataReader, "CouponCode");
-            discount.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            return discount;
+            var item = new DBDiscount();
+            item.DiscountId = NopSqlDataHelper.GetInt(dataReader, "DiscountID");
+            item.DiscountTypeId = NopSqlDataHelper.GetInt(dataReader, "DiscountTypeID");
+            item.DiscountLimitationId = NopSqlDataHelper.GetInt(dataReader, "DiscountLimitationID");
+            item.DiscountRequirementId = NopSqlDataHelper.GetInt(dataReader, "DiscountRequirementID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.UsePercentage = NopSqlDataHelper.GetBoolean(dataReader, "UsePercentage");
+            item.DiscountPercentage = NopSqlDataHelper.GetDecimal(dataReader, "DiscountPercentage");
+            item.DiscountAmount = NopSqlDataHelper.GetDecimal(dataReader, "DiscountAmount");
+            item.StartDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "StartDate");
+            item.EndDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "EndDate");
+            item.RequiresCouponCode = NopSqlDataHelper.GetBoolean(dataReader, "RequiresCouponCode");
+            item.CouponCode = NopSqlDataHelper.GetString(dataReader, "CouponCode");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            return item;
         }
 
         private DBDiscountRequirement GetDiscountRequirementFromReader(IDataReader dataReader)
         {
-            DBDiscountRequirement discountRequirement = new DBDiscountRequirement();
-            discountRequirement.DiscountRequirementID = NopSqlDataHelper.GetInt(dataReader, "DiscountRequirementID");
-            discountRequirement.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return discountRequirement;
+            var item = new DBDiscountRequirement();
+            item.DiscountRequirementId = NopSqlDataHelper.GetInt(dataReader, "DiscountRequirementID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
 
         private DBDiscountType GetDiscountTypeFromReader(IDataReader dataReader)
         {
-            DBDiscountType discountType = new DBDiscountType();
-            discountType.DiscountTypeID = NopSqlDataHelper.GetInt(dataReader, "DiscountTypeID");
-            discountType.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return discountType;
+            var item = new DBDiscountType();
+            item.DiscountTypeId = NopSqlDataHelper.GetInt(dataReader, "DiscountTypeID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
 
         private DBDiscountLimitation GetDiscountLimitationFromReader(IDataReader dataReader)
         {
-            DBDiscountLimitation discountLimitation = new DBDiscountLimitation();
-            discountLimitation.DiscountLimitationID = NopSqlDataHelper.GetInt(dataReader, "DiscountLimitationID");
-            discountLimitation.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return discountLimitation;
+            var item = new DBDiscountLimitation();
+            item.DiscountLimitationId = NopSqlDataHelper.GetInt(dataReader, "DiscountLimitationID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
 
         private DBDiscountUsageHistory GetDiscountUsageHistoryFromReader(IDataReader dataReader)
         {
-            DBDiscountUsageHistory discountUsageHistory = new DBDiscountUsageHistory();
-            discountUsageHistory.DiscountUsageHistoryID = NopSqlDataHelper.GetInt(dataReader, "DiscountUsageHistoryID");
-            discountUsageHistory.DiscountID = NopSqlDataHelper.GetInt(dataReader, "DiscountID");
-            discountUsageHistory.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            discountUsageHistory.OrderID = NopSqlDataHelper.GetInt(dataReader, "OrderID");
-            discountUsageHistory.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return discountUsageHistory;
+            var item = new DBDiscountUsageHistory();
+            item.DiscountUsageHistoryId = NopSqlDataHelper.GetInt(dataReader, "DiscountUsageHistoryID");
+            item.DiscountId = NopSqlDataHelper.GetInt(dataReader, "DiscountID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.OrderId = NopSqlDataHelper.GetInt(dataReader, "OrderID");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         #endregion
@@ -128,38 +128,38 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         /// <summary>
         /// Gets a discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
+        /// <param name="discountId">Discount identifier</param>
         /// <returns>Discount</returns>
-        public override DBDiscount GetDiscountByID(int DiscountID)
+        public override DBDiscount GetDiscountById(int discountId)
         {
-            DBDiscount discount = null;
+            DBDiscount item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    discount = GetDiscountFromReader(dataReader);
+                    item = GetDiscountFromReader(dataReader);
                 }
             }
-            return discount;
+            return item;
         }
 
         /// <summary>
         /// Gets all discounts
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="DiscountTypeID">Discount type identifier; null to load all discount</param>
+        /// <param name="discountTypeId">Discount type identifier; null to load all discount</param>
         /// <returns>Discount collection</returns>
-        public override DBDiscountCollection GetAllDiscounts(bool showHidden, int? DiscountTypeID)
+        public override DBDiscountCollection GetAllDiscounts(bool showHidden, int? discountTypeId)
         {
             var result = new DBDiscountCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            if (DiscountTypeID.HasValue)
-                db.AddInParameter(dbCommand, "DiscountTypeID", DbType.Int32, DiscountTypeID.Value);
+            if (discountTypeId.HasValue)
+                db.AddInParameter(dbCommand, "DiscountTypeID", DbType.Int32, discountTypeId.Value);
             else
                 db.AddInParameter(dbCommand, "DiscountTypeID", DbType.Int32, null);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
@@ -177,134 +177,135 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         /// <summary>
         /// Inserts a discount
         /// </summary>
-        /// <param name="DiscountTypeID">The discount type identifier</param>
-        /// <param name="DiscountRequirementID">The discount requirement identifier</param>
-        /// <param name="DiscountLimitationID">The discount limitation identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="DiscountPercentage">The discount percentage</param>
-        /// <param name="DiscountAmount">The discount amount</param>
-        /// <param name="StartDate">The discount start date and time</param>
-        /// <param name="EndDate">The discount end date and time</param>
-        /// <param name="RequiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="CouponCode">The coupon code</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="discountTypeId">The discount type identifier</param>
+        /// <param name="discountRequirementId">The discount requirement identifier</param>
+        /// <param name="discountLimitationId">The discount limitation identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="discountPercentage">The discount percentage</param>
+        /// <param name="discountAmount">The discount amount</param>
+        /// <param name="startDate">The discount start date and time</param>
+        /// <param name="endDate">The discount end date and time</param>
+        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
+        /// <param name="couponCode">The coupon code</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>Discount</returns>
-        public override DBDiscount InsertDiscount(int DiscountTypeID, int DiscountRequirementID,
-            int DiscountLimitationID, string Name, bool UsePercentage, 
-            decimal DiscountPercentage, decimal DiscountAmount, DateTime StartDate, 
-            DateTime EndDate, bool RequiresCouponCode, string CouponCode, bool Deleted)
+        public override DBDiscount InsertDiscount(int discountTypeId,
+            int discountRequirementId, int discountLimitationId,
+            string name, bool usePercentage, decimal discountPercentage,
+            decimal discountAmount, DateTime startDate, DateTime endDate,
+            bool requiresCouponCode, string couponCode, bool deleted)
         {
-            DBDiscount discount = null;
+            DBDiscount item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountInsert");
             db.AddOutParameter(dbCommand, "DiscountID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "DiscountTypeID", DbType.Int32, DiscountTypeID);
-            db.AddInParameter(dbCommand, "DiscountRequirementID", DbType.Int32, DiscountRequirementID);
-            db.AddInParameter(dbCommand, "DiscountLimitationID", DbType.Int32, DiscountLimitationID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, UsePercentage);
-            db.AddInParameter(dbCommand, "DiscountPercentage", DbType.Decimal, DiscountPercentage);
-            db.AddInParameter(dbCommand, "DiscountAmount", DbType.Decimal, DiscountAmount);
-            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, StartDate);
-            db.AddInParameter(dbCommand, "EndDate", DbType.DateTime, EndDate);
-            db.AddInParameter(dbCommand, "RequiresCouponCode", DbType.Boolean, RequiresCouponCode);
-            db.AddInParameter(dbCommand, "CouponCode", DbType.String, CouponCode);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
+            db.AddInParameter(dbCommand, "DiscountTypeID", DbType.Int32, discountTypeId);
+            db.AddInParameter(dbCommand, "DiscountRequirementID", DbType.Int32, discountRequirementId);
+            db.AddInParameter(dbCommand, "DiscountLimitationID", DbType.Int32, discountLimitationId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, usePercentage);
+            db.AddInParameter(dbCommand, "DiscountPercentage", DbType.Decimal, discountPercentage);
+            db.AddInParameter(dbCommand, "DiscountAmount", DbType.Decimal, discountAmount);
+            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, startDate);
+            db.AddInParameter(dbCommand, "EndDate", DbType.DateTime, endDate);
+            db.AddInParameter(dbCommand, "RequiresCouponCode", DbType.Boolean, requiresCouponCode);
+            db.AddInParameter(dbCommand, "CouponCode", DbType.String, couponCode);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int DiscountID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@DiscountID"));
-                discount = GetDiscountByID(DiscountID);
+                int discountId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@DiscountID"));
+                item = GetDiscountById(discountId);
             }
-            return discount;
+            return item;
         }
 
         /// <summary>
         /// Updates the discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
-        /// <param name="DiscountTypeID">The discount type identifier</param>
-        /// <param name="DiscountRequirementID">The discount requirement identifier</param>
-        /// <param name="DiscountLimitationID">The discount limitation identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="DiscountPercentage">The discount percentage</param>
-        /// <param name="DiscountAmount">The discount amount</param>
-        /// <param name="StartDate">The discount start date and time</param>
-        /// <param name="EndDate">The discount end date and time</param>
-        /// <param name="RequiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="CouponCode">The coupon code</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="discountId">Discount identifier</param>
+        /// <param name="discountTypeId">The discount type identifier</param>
+        /// <param name="discountRequirementId">The discount requirement identifier</param>
+        /// <param name="discountLimitationId">The discount limitation identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="discountPercentage">The discount percentage</param>
+        /// <param name="discountAmount">The discount amount</param>
+        /// <param name="startDate">The discount start date and time</param>
+        /// <param name="endDate">The discount end date and time</param>
+        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
+        /// <param name="couponCode">The coupon code</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>Discount</returns>
-        public override DBDiscount UpdateDiscount(int DiscountID, int DiscountTypeID,
-            int DiscountRequirementID, int DiscountLimitationID, string Name, 
-            bool UsePercentage, decimal DiscountPercentage, decimal DiscountAmount,
-            DateTime StartDate, DateTime EndDate, bool RequiresCouponCode, 
-            string CouponCode, bool Deleted)
+        public override DBDiscount UpdateDiscount(int discountId, int discountTypeId,
+            int discountRequirementId, int discountLimitationId,
+            string name, bool usePercentage, decimal discountPercentage,
+            decimal discountAmount, DateTime startDate, DateTime endDate,
+            bool requiresCouponCode, string couponCode, bool deleted)
         {
-            DBDiscount discount = null;
+            DBDiscount item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUpdate");
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
-            db.AddInParameter(dbCommand, "DiscountTypeID", DbType.Int32, DiscountTypeID);
-            db.AddInParameter(dbCommand, "DiscountRequirementID", DbType.Int32, DiscountRequirementID);
-            db.AddInParameter(dbCommand, "DiscountLimitationID", DbType.Int32, DiscountLimitationID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, UsePercentage);
-            db.AddInParameter(dbCommand, "DiscountPercentage", DbType.Decimal, DiscountPercentage);
-            db.AddInParameter(dbCommand, "DiscountAmount", DbType.Decimal, DiscountAmount);
-            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, StartDate);
-            db.AddInParameter(dbCommand, "EndDate", DbType.DateTime, EndDate);
-            db.AddInParameter(dbCommand, "RequiresCouponCode", DbType.Boolean, RequiresCouponCode);
-            db.AddInParameter(dbCommand, "CouponCode", DbType.String, CouponCode);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
+            db.AddInParameter(dbCommand, "DiscountTypeID", DbType.Int32, discountTypeId);
+            db.AddInParameter(dbCommand, "DiscountRequirementID", DbType.Int32, discountRequirementId);
+            db.AddInParameter(dbCommand, "DiscountLimitationID", DbType.Int32, discountLimitationId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, usePercentage);
+            db.AddInParameter(dbCommand, "DiscountPercentage", DbType.Decimal, discountPercentage);
+            db.AddInParameter(dbCommand, "DiscountAmount", DbType.Decimal, discountAmount);
+            db.AddInParameter(dbCommand, "StartDate", DbType.DateTime, startDate);
+            db.AddInParameter(dbCommand, "EndDate", DbType.DateTime, endDate);
+            db.AddInParameter(dbCommand, "RequiresCouponCode", DbType.Boolean, requiresCouponCode);
+            db.AddInParameter(dbCommand, "CouponCode", DbType.String, couponCode);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                discount = GetDiscountByID(DiscountID);
+                item = GetDiscountById(discountId);
 
-            return discount;
+            return item;
         }
 
         /// <summary>
         /// Adds a discount to a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void AddDiscountToProductVariant(int ProductVariantID, int DiscountID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void AddDiscountToProductVariant(int productVariantId, int discountId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_Discount_MappingInsert");
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Removes a discount from a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void RemoveDiscountFromProductVariant(int ProductVariantID, int DiscountID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void RemoveDiscountFromProductVariant(int productVariantId, int discountId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_Discount_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a discount collection of a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Discount collection</returns>
-        public override DBDiscountCollection GetDiscountsByProductVariantID(int ProductVariantID, bool showHidden)
+        public override DBDiscountCollection GetDiscountsByProductVariantId(int productVariantId, bool showHidden)
         {
             var result = new DBDiscountCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountLoadByProductVariantID");
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -320,72 +321,44 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         /// <summary>
         /// Adds a discount to a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void AddDiscountToCategory(int CategoryID, int DiscountID)
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void AddDiscountToCategory(int categoryId, int discountId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Category_Discount_MappingInsert");
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Removes a discount from a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void RemoveDiscountFromCategory(int CategoryID, int DiscountID)
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void RemoveDiscountFromCategory(int categoryId, int discountId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Category_Discount_MappingDelete");
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Adds a discount requirement
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void AddDiscountRestriction(int ProductVariantID, int DiscountID)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountRestrictionInsert");
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Removes discount requirement
-        /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void RemoveDiscountRestriction(int ProductVariantID, int DiscountID)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountRestrictionDelete");
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a discount collection of a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Discount collection</returns>
-        public override DBDiscountCollection GetDiscountsByCategoryID(int CategoryID, bool showHidden)
+        public override DBDiscountCollection GetDiscountsByCategoryId(int categoryId, bool showHidden)
         {
             var result = new DBDiscountCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountLoadByCategoryID");
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -396,6 +369,34 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Adds a discount requirement
+        /// </summary>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void AddDiscountRestriction(int productVariantId, int discountId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountRestrictionInsert");
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
+            db.ExecuteNonQuery(dbCommand);
+        }
+
+        /// <summary>
+        /// Removes discount requirement
+        /// </summary>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void RemoveDiscountRestriction(int productVariantId, int discountId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountRestrictionDelete");
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -464,59 +465,59 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         /// <summary>
         /// Deletes a discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">Discount usage history entry identifier</param>
-        public override void DeleteDiscountUsageHistory(int DiscountUsageHistoryID)
+        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
+        public override void DeleteDiscountUsageHistory(int discountUsageHistoryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryDelete");
-            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, DiscountUsageHistoryID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, discountUsageHistoryId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">Discount usage history entry identifier</param>
+        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
         /// <returns>Discount usage history entry</returns>
-        public override DBDiscountUsageHistory GetDiscountUsageHistoryByID(int DiscountUsageHistoryID)
+        public override DBDiscountUsageHistory GetDiscountUsageHistoryById(int discountUsageHistoryId)
         {
-            DBDiscountUsageHistory discountUsageHistory = null;
+            DBDiscountUsageHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, DiscountUsageHistoryID);
+            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, discountUsageHistoryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    discountUsageHistory = GetDiscountUsageHistoryFromReader(dataReader);
+                    item = GetDiscountUsageHistoryFromReader(dataReader);
                 }
             }
-            return discountUsageHistory;
+            return item;
         }
 
         /// <summary>
         /// Gets all discount usage history entries
         /// </summary>
-        /// <param name="DiscountID">Discount type identifier; null to load all</param>
-        /// <param name="CustomerID">Customer identifier; null to load all</param>
-        /// <param name="OrderID">Order identifier; null to load all</param>
+        /// <param name="discountId">Discount type identifier; null to load all</param>
+        /// <param name="customerId">Customer identifier; null to load all</param>
+        /// <param name="orderId">Order identifier; null to load all</param>
         /// <returns>Discount usage history entries</returns>
-        public override DBDiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? DiscountID,
-            int? CustomerID, int? OrderID)
+        public override DBDiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? discountId,
+            int? customerId, int? orderId)
         {
             var result = new DBDiscountUsageHistoryCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryLoadAll");
-            if (DiscountID.HasValue)
-                db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID.Value);
+            if (discountId.HasValue)
+                db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId.Value);
             else
                 db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, null);
-            if (CustomerID.HasValue)
-                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID.Value);
+            if (customerId.HasValue)
+                db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId.Value);
             else
                 db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, null);
-            if (OrderID.HasValue)
-                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID.Value);
+            if (orderId.HasValue)
+                db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId.Value);
             else
                 db.AddInParameter(dbCommand, "OrderID", DbType.Int32, null);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
@@ -534,54 +535,54 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         /// <summary>
         /// Inserts a discount usage history entry
         /// </summary>
-        /// <param name="DiscountID">Discount type identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="discountId">Discount type identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Discount usage history entry</returns>
-        public override DBDiscountUsageHistory InsertDiscountUsageHistory(int DiscountID,
-            int CustomerID, int OrderID, DateTime CreatedOn)
+        public override DBDiscountUsageHistory InsertDiscountUsageHistory(int discountId,
+            int customerId, int orderId, DateTime createdOn)
         {
-            DBDiscountUsageHistory discountUsageHistory = null;
+            DBDiscountUsageHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryInsert");
             db.AddOutParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int DiscountUsageHistoryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@DiscountUsageHistoryID"));
-                discountUsageHistory = GetDiscountUsageHistoryByID(DiscountUsageHistoryID);
+                int discountUsageHistoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@DiscountUsageHistoryID"));
+                item = GetDiscountUsageHistoryById(discountUsageHistoryId);
             }
-            return discountUsageHistory;
+            return item;
         }
 
         /// <summary>
         /// Updates the discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">discount usage history entry identifier</param>
-        /// <param name="DiscountID">Discount type identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
-        /// <returns>Discount</returns>
-        public override DBDiscountUsageHistory UpdateDiscountUsageHistory(int DiscountUsageHistoryID, int DiscountID,
-            int CustomerID, int OrderID, DateTime CreatedOn)
+        /// <param name="discountUsageHistoryId">discount usage history entry identifier</param>
+        /// <param name="discountId">Discount type identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Discount usage history entry</returns>
+        public override DBDiscountUsageHistory UpdateDiscountUsageHistory(int discountUsageHistoryId,
+            int discountId, int customerId, int orderId, DateTime createdOn)
         {
-            DBDiscountUsageHistory discountUsageHistory = null;
+            DBDiscountUsageHistory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryUpdate");
-            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, DiscountUsageHistoryID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, OrderID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, discountUsageHistoryId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                discountUsageHistory = GetDiscountUsageHistoryByID(DiscountUsageHistoryID);
+                item = GetDiscountUsageHistoryById(discountUsageHistoryId);
 
-            return discountUsageHistory;
+            return item;
         }
 
         #endregion

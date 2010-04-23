@@ -66,9 +66,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.TwoCheckout
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.TwoCheckout
 
             builder.AppendFormat("&x_login={0}", vendorID);
             builder.AppendFormat("&x_amount={0}", order.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture));
-            builder.AppendFormat("&x_invoice_num={0}", order.OrderID);
+            builder.AppendFormat("&x_invoice_num={0}", order.OrderId);
             //("x_receipt_link_url", returnURL);
             //("x_return_url", returnURL);
             //("x_return", returnURL);
@@ -135,15 +135,15 @@ namespace NopSolutions.NopCommerce.Payment.Methods.TwoCheckout
             builder.AppendFormat("&x_Last_Name={0}",  HttpUtility.UrlEncode(order.BillingLastName));
             builder.AppendFormat("&x_Address={0}",  HttpUtility.UrlEncode(order.BillingAddress1));
             builder.AppendFormat("&x_City={0}", HttpUtility.UrlEncode(order.BillingCity));
-            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
             if (billingStateProvince != null)
                  builder.AppendFormat("&x_State={0}", HttpUtility.UrlEncode(billingStateProvince.Abbreviation));
             else
                 builder.AppendFormat("&x_State={0}", HttpUtility.UrlEncode(order.BillingStateProvince));
             builder.AppendFormat("&x_Zip={0}", HttpUtility.UrlEncode(order.BillingZipPostalCode));
-            Country billingCountry = CountryManager.GetCountryByID(order.BillingCountryID);
+            Country billingCountry = CountryManager.GetCountryById(order.BillingCountryId);
             if (billingCountry != null)
-                builder.AppendFormat("&x_Country={0}", HttpUtility.UrlEncode(billingCountry.ThreeLetterISOCode));
+                builder.AppendFormat("&x_Country={0}", HttpUtility.UrlEncode(billingCountry.ThreeLetterIsoCode));
             else
                 builder.AppendFormat("&x_Country={0}", HttpUtility.UrlEncode(order.BillingCountry));
             builder.AppendFormat("&x_EMail={0}", HttpUtility.UrlEncode(order.BillingEmail));
@@ -205,9 +205,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.TwoCheckout
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

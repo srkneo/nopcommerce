@@ -36,50 +36,52 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Deletes a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        public abstract void DeleteStateProvince(int StateProvinceID);
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        public abstract void DeleteStateProvince(int stateProvinceId);
 
         /// <summary>
         /// Gets a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
         /// <returns>State/province</returns>
-        public abstract DBStateProvince GetStateProvinceByID(int StateProvinceID);
+        public abstract DBStateProvince GetStateProvinceById(int stateProvinceId);
 
         /// <summary>
         /// Gets a state/province 
         /// </summary>
-        /// <param name="Abbreviation">The state/province abbreviation</param>
+        /// <param name="abbreviation">The state/province abbreviation</param>
         /// <returns>State/province</returns>
-        public abstract DBStateProvince GetStateProvinceByAbbreviation(string Abbreviation);
+        public abstract DBStateProvince GetStateProvinceByAbbreviation(string abbreviation);
 
         /// <summary>
         /// Gets a state/province collection by country identifier
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
+        /// <param name="countryId">Country identifier</param>
         /// <returns>State/province collection</returns>
-        public abstract DBStateProvinceCollection GetStateProvincesByCountryID(int CountryID);
+        public abstract DBStateProvinceCollection GetStateProvincesByCountryId(int countryId);
 
         /// <summary>
         /// Inserts a state/province
         /// </summary>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Abbreviation">The abbreviation</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="abbreviation">The abbreviation</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>State/province</returns>
-        public abstract DBStateProvince InsertStateProvince(int CountryID, string Name, string Abbreviation, int DisplayOrder);
+        public abstract DBStateProvince InsertStateProvince(int countryId,
+            string name, string abbreviation, int displayOrder);
 
         /// <summary>
         /// Updates a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Abbreviation">The abbreviation</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="abbreviation">The abbreviation</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>State/province</returns>
-        public abstract DBStateProvince UpdateStateProvince(int StateProvinceID, int CountryID, string Name, string Abbreviation, int DisplayOrder);
+        public abstract DBStateProvince UpdateStateProvince(int stateProvinceId, 
+            int countryId, string name, string abbreviation, int displayOrder);
         #endregion
     }
 }

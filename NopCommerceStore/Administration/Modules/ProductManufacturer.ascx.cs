@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             List<ProductManufacturerMappingHelperClass> productManufacturerMappings = null;
 
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 ProductManufacturerCollection existingProductManufacturerCollection = product.ProductManufacturers;
@@ -65,40 +65,40 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            SaveInfo(this.ProductID);
+            SaveInfo(this.ProductId);
         }
 
-        public void SaveInfo(int prodID)
+        public void SaveInfo(int prodId)
         {
-            Product product = ProductManager.GetProductByID(prodID);
+            Product product = ProductManager.GetProductById(prodId);
             if (product != null)
             {
                 foreach (GridViewRow row in gvManufacturerMappings.Rows)
                 {
                     CheckBox cbManufacturerInfo = row.FindControl("cbManufacturerInfo") as CheckBox;
-                    HiddenField hfManufacturerID = row.FindControl("hfManufacturerID") as HiddenField;
-                    HiddenField hfProductManufacturerID = row.FindControl("hfProductManufacturerID") as HiddenField;
+                    HiddenField hfManufacturerId = row.FindControl("hfManufacturerId") as HiddenField;
+                    HiddenField hfProductManufacturerId = row.FindControl("hfProductManufacturerId") as HiddenField;
                     CheckBox cbFeatured = row.FindControl("cbFeatured") as CheckBox;
                     NumericTextBox txtRowDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
-                    int productManufacturerID = int.Parse(hfProductManufacturerID.Value);
-                    int manufacturerID = int.Parse(hfManufacturerID.Value);
+                    int productManufacturerId = int.Parse(hfProductManufacturerId.Value);
+                    int manufacturerId = int.Parse(hfManufacturerId.Value);
                     int displayOrder = txtRowDisplayOrder.Value;
 
-                    if (productManufacturerID > 0 && !cbManufacturerInfo.Checked)
-                        ManufacturerManager.DeleteProductManufacturer(productManufacturerID);
-                    if (productManufacturerID > 0 && cbManufacturerInfo.Checked)
-                        ManufacturerManager.UpdateProductManufacturer(productManufacturerID, product.ProductID, manufacturerID, cbFeatured.Checked, displayOrder);
-                    if (productManufacturerID == 0 && cbManufacturerInfo.Checked)
-                        ManufacturerManager.InsertProductManufacturer(product.ProductID, manufacturerID, cbFeatured.Checked, displayOrder);
+                    if (productManufacturerId > 0 && !cbManufacturerInfo.Checked)
+                        ManufacturerManager.DeleteProductManufacturer(productManufacturerId);
+                    if (productManufacturerId > 0 && cbManufacturerInfo.Checked)
+                        ManufacturerManager.UpdateProductManufacturer(productManufacturerId, product.ProductId, manufacturerId, cbFeatured.Checked, displayOrder);
+                    if (productManufacturerId == 0 && cbManufacturerInfo.Checked)
+                        ManufacturerManager.InsertProductManufacturer(product.ProductId, manufacturerId, cbFeatured.Checked, displayOrder);
                 }
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
 
@@ -111,11 +111,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Manufacturer manufacturer = manufacturerCollection[i];
                 ProductManufacturer existingProductManufacturer = null;
                 if (ExistingProductManufacturerCollection != null)
-                    existingProductManufacturer = ExistingProductManufacturerCollection.FindProductManufacturer(this.ProductID, manufacturer.ManufacturerID);
+                    existingProductManufacturer = ExistingProductManufacturerCollection.FindProductManufacturer(this.ProductId, manufacturer.ManufacturerId);
                 ProductManufacturerMappingHelperClass pmm = new ProductManufacturerMappingHelperClass();
                 if (existingProductManufacturer != null)
                 {
-                    pmm.ProductManufacturerID = existingProductManufacturer.ProductManufacturerID;
+                    pmm.ProductManufacturerId = existingProductManufacturer.ProductManufacturerId;
                     pmm.IsMapped = true;
                     pmm.IsFeatured = existingProductManufacturer.IsFeaturedProduct;
                     pmm.DisplayOrder = existingProductManufacturer.DisplayOrder;
@@ -124,7 +124,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     pmm.DisplayOrder = 1;
                 }
-                pmm.ManufacturerID = manufacturer.ManufacturerID;
+                pmm.ManufacturerId = manufacturer.ManufacturerId;
                 pmm.ManufacturerInfo = manufacturer.Name;
 
                 result.Add(pmm);
@@ -135,8 +135,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private class ProductManufacturerMappingHelperClass
         {
-            public int ProductManufacturerID { get; set; }
-            public int ManufacturerID { get; set; }
+            public int ProductManufacturerId { get; set; }
+            public int ManufacturerId { get; set; }
             public string ManufacturerInfo { get; set; }
             public bool IsMapped { get; set; }
             public bool IsFeatured { get; set; }

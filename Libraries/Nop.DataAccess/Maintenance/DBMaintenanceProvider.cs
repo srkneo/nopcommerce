@@ -33,6 +33,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Maintenance
     public abstract partial class DBMaintenanceProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Reindex
         /// </summary>
@@ -47,6 +48,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Maintenance
         /// </summary>
         /// <param name="fileName">Target file name</param>
         public abstract void RestoreBackup(string fileName);
+
         #endregion
     }
 }

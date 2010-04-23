@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets or sets the discount requirement identifier
         /// </summary>
-        public int DiscountRequirementID { get; set; }
+        public int DiscountRequirementId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

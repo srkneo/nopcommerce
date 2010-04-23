@@ -35,7 +35,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         /// <summary>
         /// Gets or sets the IP address unique identifier
         /// </summary>
-        public int BannedIpAddressID { get; set; }
+        public int BannedIpAddressId { get; set; }
         
         /// <summary>
         /// Gets or sets the IP address

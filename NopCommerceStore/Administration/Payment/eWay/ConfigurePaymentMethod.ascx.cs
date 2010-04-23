@@ -40,16 +40,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.eWay
         private void BindData()
         {
             cbUseSandbox.Checked = SettingManager.GetSettingValueBoolean("PaymentMethod.eWay.UseSandbox");
-            txtTestCustomerID.Text = SettingManager.GetSettingValue("PaymentMethod.eWay.TestCustomerID");
-            txtLiveCustomerID.Text = SettingManager.GetSettingValue("PaymentMethod.eWay.LiveCustomerID");
+            txtTestCustomerId.Text = SettingManager.GetSettingValue("PaymentMethod.eWay.TestCustomerId");
+            txtLiveCustomerId.Text = SettingManager.GetSettingValue("PaymentMethod.eWay.LiveCustomerId");
             txtAdditionalFee.Value = SettingManager.GetSettingValueDecimalNative("PaymentMethod.eWay.AdditionalFee");
         }
 
         public void Save()
         {
             SettingManager.SetParam("PaymentMethod.eWay.UseSandbox", cbUseSandbox.Checked.ToString());
-            SettingManager.SetParam("PaymentMethod.eWay.TestCustomerID", txtTestCustomerID.Text);
-            SettingManager.SetParam("PaymentMethod.eWay.LiveCustomerID", txtLiveCustomerID.Text);
+            SettingManager.SetParam("PaymentMethod.eWay.TestCustomerId", txtTestCustomerId.Text);
+            SettingManager.SetParam("PaymentMethod.eWay.LiveCustomerId", txtLiveCustomerId.Text);
             SettingManager.SetParamNative("PaymentMethod.eWay.AdditionalFee", txtAdditionalFee.Value);
         }
     }

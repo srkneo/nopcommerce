@@ -19,7 +19,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="State/province" ItemStyle-Width="20%">
                             <ItemTemplate>
-                                <%#GetStateProvinceInfo(Convert.ToInt32(Eval("StateProvinceID")))%>
+                                <%#GetStateProvinceInfo(Convert.ToInt32(Eval("StateProvinceId")))%>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Zip" ItemStyle-Width="10%">
@@ -30,7 +30,7 @@
                         <asp:TemplateField HeaderText="Tax category" ItemStyle-Width="20%">
                             <ItemTemplate>
                                 <%#((TaxCategory)Eval("TaxCategory")).Name%>
-                                <asp:HiddenField runat="server" ID="hfTaxRateID" Value='<%#Eval("TaxRateID")%>'>
+                                <asp:HiddenField runat="server" ID="hfTaxRateId" Value='<%#Eval("TaxRateId")%>'>
                                 </asp:HiddenField>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -64,7 +64,7 @@
                             <asp:DropDownList ID="ddlCountry" AutoPostBack="True" runat="server" CssClass="adminInput"
                                 OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged">
                             </asp:DropDownList>
-                            <asp:Label ID="lblTaxRateID" runat="server" Visible="false"></asp:Label>
+                            <asp:Label ID="lblTaxRateId" runat="server" Visible="false"></asp:Label>
                         </td>
                     </tr>
                     <tr>

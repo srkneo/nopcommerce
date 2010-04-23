@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.Web
                 }
 
                 // we've got here and we have a valid VendorTxCode and a valid order id
-                Order order = OrderManager.GetOrderByID((int)Convert.ToDouble(VendorTxCode));
+                Order order = OrderManager.GetOrderById((int)Convert.ToDouble(VendorTxCode));
                 if (order == null)
                     throw new NopException(string.Format("The order ID {0} doesn't exists", VendorTxCode));
 
@@ -78,7 +78,7 @@ namespace NopSolutions.NopCommerce.Web
 
                 if (OrderManager.CanMarkOrderAsPaid(order))
                 {
-                    OrderManager.MarkOrderAsPaid(order.OrderID);
+                    OrderManager.MarkOrderAsPaid(order.OrderId);
                 }
                 Response.Redirect("~/checkoutcompleted.aspx");
             }

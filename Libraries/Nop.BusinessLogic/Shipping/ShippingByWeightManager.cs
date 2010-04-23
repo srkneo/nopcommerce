@@ -52,8 +52,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return null;
 
             var item = new ShippingByWeight();
-            item.ShippingByWeightID = dbItem.ShippingByWeightID;
-            item.ShippingMethodID = dbItem.ShippingMethodID;
+            item.ShippingByWeightId = dbItem.ShippingByWeightId;
+            item.ShippingMethodId = dbItem.ShippingMethodId;
             item.From = dbItem.From;
             item.To = dbItem.To;
             item.UsePercentage = dbItem.UsePercentage;
@@ -68,14 +68,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">ShippingByWeight identifier</param>
+        /// <param name="shippingByWeightId">ShippingByWeight identifier</param>
         /// <returns>ShippingByWeight</returns>
-        public static ShippingByWeight GetByID(int ShippingByWeightID)
+        public static ShippingByWeight GetById(int shippingByWeightId)
         {
-            if (ShippingByWeightID == 0)
+            if (shippingByWeightId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBShippingByWeightProvider>.Provider.GetByID(ShippingByWeightID);
+            var dbItem = DBProviderManager<DBShippingByWeightProvider>.Provider.GetById(shippingByWeightId);
             var shippingByWeight = DBMapping(dbItem);
             return shippingByWeight;
         }
@@ -83,10 +83,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Deletes a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">ShippingByWeight identifier</param>
-        public static void DeleteShippingByWeight(int ShippingByWeightID)
+        /// <param name="shippingByWeightId">ShippingByWeight identifier</param>
+        public static void DeleteShippingByWeight(int shippingByWeightId)
         {
-            DBProviderManager<DBShippingByWeightProvider>.Provider.DeleteShippingByWeight(ShippingByWeightID);
+            DBProviderManager<DBShippingByWeightProvider>.Provider.DeleteShippingByWeight(shippingByWeightId);
         }
 
         /// <summary>
@@ -103,18 +103,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Inserts a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeight</returns>
-        public static ShippingByWeight InsertShippingByWeight(int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public static ShippingByWeight InsertShippingByWeight(int shippingMethodId,
+            decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByWeightProvider>.Provider.InsertShippingByWeight(ShippingMethodID, From, To, UsePercentage,
-                ShippingChargePercentage, ShippingChargeAmount);
+            var dbItem = DBProviderManager<DBShippingByWeightProvider>.Provider.InsertShippingByWeight(shippingMethodId,
+                from, to, usePercentage, shippingChargePercentage, shippingChargeAmount);
             var shippingByWeight = DBMapping(dbItem);
             return shippingByWeight;
         }
@@ -122,19 +123,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Updates the ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">The ShippingByWeight identifier</param>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingByWeightId">The ShippingByWeight identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeight</returns>
-        public static ShippingByWeight UpdateShippingByWeight(int ShippingByWeightID, int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public static ShippingByWeight UpdateShippingByWeight(int shippingByWeightId,
+            int shippingMethodId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByWeightProvider>.Provider.UpdateShippingByWeight(ShippingByWeightID, ShippingMethodID, From, To, UsePercentage,
-                ShippingChargePercentage, ShippingChargeAmount);
+            var dbItem = DBProviderManager<DBShippingByWeightProvider>.Provider.UpdateShippingByWeight(shippingByWeightId, 
+                shippingMethodId, from, to, usePercentage,
+                shippingChargePercentage, shippingChargeAmount);
             var shippingByWeight = DBMapping(dbItem);
             return shippingByWeight;
         }
@@ -142,11 +145,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets all ShippingByWeights by shipping method identifier
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <returns>ShippingByWeight collection</returns>
-        public static ShippingByWeightCollection GetAllByShippingMethodID(int ShippingMethodID)
+        public static ShippingByWeightCollection GetAllByShippingMethodId(int shippingMethodId)
         {
-            var dbCollection = DBProviderManager<DBShippingByWeightProvider>.Provider.GetAllByShippingMethodID(ShippingMethodID);
+            var dbCollection = DBProviderManager<DBShippingByWeightProvider>.Provider.GetAllByShippingMethodId(shippingMethodId);
             var collection = DBMapping(dbCollection);
             return collection;
         }

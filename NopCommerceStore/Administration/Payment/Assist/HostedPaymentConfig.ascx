@@ -19,7 +19,7 @@
             Shop ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtShopID" CssClass="adminInput" />
+            <asp:TextBox runat="server" ID="txtShopId" CssClass="adminInput" />
         </td>
     </tr>
     <tr>

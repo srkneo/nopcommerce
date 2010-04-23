@@ -43,12 +43,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected string GetNewsRSSUrl()
         {
-            return SEOHelper.GetNewsRssURL();
+            return SEOHelper.GetNewsRssUrl();
         }
 
         protected void BindData()
         {
-            var newsCollection = NewsManager.GetNews(NopContext.Current.WorkingLanguage.LanguageID, NewsCount);
+            var newsCollection = NewsManager.GetNews(NopContext.Current.WorkingLanguage.LanguageId, NewsCount);
             if (newsCollection.Count > 0)
             {
                 rptrNews.DataSource = newsCollection;

@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindData()
         {
-            Currency currency = CurrencyManager.GetCurrencyByID(this.CurrencyID);
+            Currency currency = CurrencyManager.GetCurrencyById(this.CurrencyId);
             if (currency != null)
             {
                 this.txtName.Text = currency.Name;
@@ -114,10 +114,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             string displayLocale = ddlDisplayLocale.SelectedItem.Value;
 
-            Currency currency = CurrencyManager.GetCurrencyByID(this.CurrencyID);
+            Currency currency = CurrencyManager.GetCurrencyById(this.CurrencyId);
             if (currency != null)
             {
-                currency = CurrencyManager.UpdateCurrency(currency.CurrencyID, txtName.Text, txtCurrencyCode.Text,
+                currency = CurrencyManager.UpdateCurrency(currency.CurrencyId, txtName.Text, txtCurrencyCode.Text,
                     txtRate.Value, displayLocale, txtCustomFormatting.Text, cbPublished.Checked, txtDisplayOrder.Value,
                     currency.CreatedOn, DateTime.Now);
             }
@@ -132,11 +132,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return currency;
         }
 
-        public int CurrencyID
+        public int CurrencyId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CurrencyID");
+                return CommonHelper.QueryStringInt("CurrencyId");
             }
         }
     }

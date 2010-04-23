@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     StateProvince stateProvince = ctrlStateProvinceInfo.SaveInfo();
-                    Response.Redirect("StateProvinceDetails.aspx?StateProvinceID=" + stateProvince.StateProvinceID.ToString());
+                    Response.Redirect("StateProvinceDetails.aspx?StateProvinceID=" + stateProvince.StateProvinceId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                StateProvinceManager.DeleteStateProvince(this.StateProvinceID);
+                StateProvinceManager.DeleteStateProvince(this.StateProvinceId);
                 Response.Redirect("StateProvinces.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int StateProvinceID
+        public int StateProvinceId
         {
             get
             {
-                return CommonHelper.QueryStringInt("StateProvinceID");
+                return CommonHelper.QueryStringInt("StateProvinceId");
             }
         }
     }

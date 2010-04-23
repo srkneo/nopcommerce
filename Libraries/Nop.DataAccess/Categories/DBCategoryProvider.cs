@@ -37,173 +37,175 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets all categories
         /// </summary>
-        /// <param name="ParentCategoryID">Parent category identifier</param>
+        /// <param name="parentCategoryId">Parent category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category collection</returns>
-        public abstract DBCategoryCollection GetAllCategories(int ParentCategoryID, 
-            bool showHidden, int LanguageID);
+        public abstract DBCategoryCollection GetAllCategories(int parentCategoryId, 
+            bool showHidden, int languageId);
 
         /// <summary>
         /// Gets a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category</returns>
-        public abstract DBCategory GetCategoryByID(int CategoryID, int LanguageID);
+        public abstract DBCategory GetCategoryById(int categoryId, int languageId);
         
         /// <summary>
-        /// Inserts category identifier
+        /// Inserts category
         /// </summary>
-        /// <param name="Name">The category name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="ParentCategoryID">The parent category identifier</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The category name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="parentCategoryId">The parent category identifier</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Category</returns>
-        public abstract DBCategory InsertCategory(string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int ParentCategoryID, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBCategory InsertCategory(string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int parentCategoryId, int pictureId, 
+            int pageSize, string priceRanges, bool published, bool deleted,
+            int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="Name">The category name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="ParentCategoryID">The parent category identifier</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="name">The category name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="parentCategoryId">The parent category identifier</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Category</returns>
-        public abstract DBCategory UpdateCategory(int CategoryID, string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int ParentCategoryID, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBCategory UpdateCategory(int categoryId, string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int parentCategoryId, int pictureId,
+            int pageSize, string priceRanges, bool published, bool deleted,
+            int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Gets localized category by id
         /// </summary>
-        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <param name="categoryLocalizedId">Localized category identifier</param>
         /// <returns>Category content</returns>
-        public abstract DBCategoryLocalized GetCategoryLocalizedByID(int CategoryLocalizedID);
+        public abstract DBCategoryLocalized GetCategoryLocalizedById(int categoryLocalizedId);
 
         /// <summary>
         /// Gets localized category by category id and language id
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category content</returns>
-        public abstract DBCategoryLocalized GetCategoryLocalizedByCategoryIDAndLanguageID(int CategoryID, int LanguageID);
+        public abstract DBCategoryLocalized GetCategoryLocalizedByCategoryIdAndLanguageId(int categoryId, int languageId);
 
         /// <summary>
         /// Inserts a localized category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBCategoryContent</returns>
-        public abstract DBCategoryLocalized InsertCategoryLocalized(int CategoryID, 
-            int LanguageID, string Name, string Description, 
-            string MetaKeywords, string MetaDescription, string MetaTitle, 
-            string SEName);
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Category content</returns>
+        public abstract DBCategoryLocalized InsertCategoryLocalized(int categoryId, 
+            int languageId, string name, string description, 
+            string metaKeywords, string metaDescription, string metaTitle, 
+            string seName);
 
         /// <summary>
         /// Update a localized category
         /// </summary>
-        /// <param name="CategoryLocalizedID">Localized category identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBCategoryContent</returns>
-        public abstract DBCategoryLocalized UpdateCategoryLocalized(int CategoryLocalizedID, 
-            int CategoryID, int LanguageID, string Name, string Description, 
-            string MetaKeywords, string MetaDescription, string MetaTitle, 
-            string SEName);
+        /// <param name="categoryLocalizedId">Localized category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Category content</returns>
+        public abstract DBCategoryLocalized UpdateCategoryLocalized(int categoryLocalizedId,
+            int categoryId, int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName);
       
         /// <summary>
         /// Deletes a product category mapping
         /// </summary>
-        /// <param name="ProductCategoryID">Product category identifier</param>
-        public abstract void DeleteProductCategory(int ProductCategoryID);
+        /// <param name="productCategoryId">Product category identifier</param>
+        public abstract void DeleteProductCategory(int productCategoryId);
 
         /// <summary>
         /// Gets product category mapping collection
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product a category mapping collection</returns>
-        public abstract DBProductCategoryCollection GetProductCategoriesByCategoryID(int CategoryID, bool showHidden);
+        public abstract DBProductCategoryCollection GetProductCategoriesByCategoryId(int categoryId, bool showHidden);
 
         /// <summary>
         /// Gets a product category mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product category mapping collection</returns>
-        public abstract DBProductCategoryCollection GetProductCategoriesByProductID(int ProductID, bool showHidden);
+        public abstract DBProductCategoryCollection GetProductCategoriesByProductId(int productId, bool showHidden);
 
         /// <summary>
         /// Gets a product category mapping 
         /// </summary>
-        /// <param name="ProductCategoryID">Product category mapping identifier</param>
+        /// <param name="productCategoryId">Product category mapping identifier</param>
         /// <returns>Product category mapping</returns>
-        public abstract DBProductCategory GetProductCategoryByID(int ProductCategoryID);
+        public abstract DBProductCategory GetProductCategoryById(int productCategoryId);
 
         /// <summary>
         /// Inserts a product category mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product category mapping </returns>
-        public abstract DBProductCategory InsertProductCategory(int ProductID, int CategoryID,
-            bool IsFeaturedProduct, int DisplayOrder);
+        public abstract DBProductCategory InsertProductCategory(int productId, int categoryId,
+            bool isFeaturedProduct, int displayOrder);
 
         /// <summary>
         /// Updates the product category mapping 
         /// </summary>
-        /// <param name="ProductCategoryID">Product category mapping  identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productCategoryId">Product category mapping  identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product category mapping </returns>
-        public abstract DBProductCategory UpdateProductCategory(int ProductCategoryID,
-            int ProductID, int CategoryID, bool IsFeaturedProduct, int DisplayOrder);
+        public abstract DBProductCategory UpdateProductCategory(int productCategoryId,
+            int productId, int categoryId, bool isFeaturedProduct, int displayOrder);
         #endregion
     }
 }

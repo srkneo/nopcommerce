@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Gets or sets the ueued email identifier
         /// </summary>
-        public int QueuedEmailID { get; set; }
+        public int QueuedEmailId { get; set; }
 
         /// <summary>
         /// Gets or sets the priority
@@ -64,9 +64,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         public string ToName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Cc
+        /// Gets or sets the CC
         /// </summary>
-        public string Cc { get; set; }
+        public string CC { get; set; }
 
         /// <summary>
         /// Gets or sets the Bcc

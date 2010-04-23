@@ -35,11 +35,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         #region Methods
 
         /// <summary>
-        /// Gets a shipping status by ID
+        /// Gets a shipping status by identifier
         /// </summary>
-        /// <param name="ShippingStatusID">Shipping status identifier</param>
+        /// <param name="shippingStatusId">Shipping status identifier</param>
         /// <returns>Shipping status</returns>
-        public abstract DBShippingStatus GetShippingStatusByID(int ShippingStatusID);
+        public abstract DBShippingStatus GetShippingStatusById(int shippingStatusId);
 
         /// <summary>
         /// Gets all shipping statuses

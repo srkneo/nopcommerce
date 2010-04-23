@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 this.Visible = ProductManager.CompareProductsEnabled;
@@ -52,21 +52,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnAddToCompareList_Click(object sender, EventArgs e)
         {
-            var product = ProductManager.GetProductByID(this.ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
-                ProductManager.AddProductToCompareList(product.ProductID);
+                ProductManager.AddProductToCompareList(product.ProductId);
                 Response.Redirect("~/compareproducts.aspx");
             }
             else
                 Response.Redirect(CommonHelper.GetStoreLocation());
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

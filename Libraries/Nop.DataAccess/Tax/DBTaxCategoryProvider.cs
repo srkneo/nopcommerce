@@ -33,11 +33,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
     public abstract partial class DBTaxCategoryProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a tax category
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        public abstract void DeleteTaxCategory(int TaxCategoryID);
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        public abstract void DeleteTaxCategory(int taxCategoryId);
 
         /// <summary>
         /// Gets all tax categories
@@ -48,32 +49,33 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Gets a tax category
         /// </summary>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
         /// <returns>Tax category</returns>
-        public abstract DBTaxCategory GetTaxCategoryByID(int TaxCategoryID);
+        public abstract DBTaxCategory GetTaxCategoryById(int taxCategoryId);
 
         /// <summary>
         /// Inserts a tax category
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Tax category</returns>
-        public abstract DBTaxCategory InsertTaxCategory(string Name,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBTaxCategory InsertTaxCategory(string name,
+            int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the tax category
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Tax category</returns>
-        public abstract DBTaxCategory UpdateTaxCategory(int TaxCategoryID, string Name,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBTaxCategory UpdateTaxCategory(int taxCategoryId, string name,
+            int displayOrder, DateTime createdOn, DateTime updatedOn);
+
         #endregion
     }
 }

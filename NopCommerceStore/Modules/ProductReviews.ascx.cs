@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null && product.AllowCustomerReviews)
             {
                 pnlReviews.Visible = true;
@@ -62,15 +62,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (Page.IsValid)
             {
-                string writeReviewURL = CommonHelper.GetStoreLocation() + "productreviewadd.aspx?productid=" + this.ProductID.ToString();
-                Response.Redirect(writeReviewURL);
+                string writeReviewUrl = CommonHelper.GetStoreLocation() + "productreviewadd.aspx?productid=" + this.ProductId.ToString();
+                Response.Redirect(writeReviewUrl);
             }
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            var customer = CustomerManager.GetCustomerByID(CustomerID);
+            var customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
                 customerInfo = CustomerManager.FormatUserName(customer);
@@ -82,11 +82,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return customerInfo;
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

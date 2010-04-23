@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindData()
         {
-            Language language = LanguageManager.GetLanguageByID(this.LanguageID);
+            Language language = LanguageManager.GetLanguageById(this.LanguageId);
 
             if (language != null)
             {
@@ -112,7 +112,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Language SaveInfo()
         {
-            Language language = LanguageManager.GetLanguageByID(this.LanguageID);
+            Language language = LanguageManager.GetLanguageById(this.LanguageId);
 
             string name = txtName.Text;
             string languageCulture = ddlLanguageCulture.SelectedItem.Value;
@@ -122,7 +122,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             if (language != null)
             {
-                language = LanguageManager.UpdateLanguage(language.LanguageID, name,
+                language = LanguageManager.UpdateLanguage(language.LanguageId, name,
                     languageCulture, flagImageFileName, published, displayOrder);
 
             }
@@ -142,7 +142,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    Language language = LanguageManager.GetLanguageByID(this.LanguageID);
+                    Language language = LanguageManager.GetLanguageById(this.LanguageId);
 
                     if (language != null)
                     {
@@ -152,7 +152,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                             using (StreamReader sr = new StreamReader(importResourcesFile.InputStream))
                             {
                                 string content = sr.ReadToEnd();
-                                ImportManager.ImportResources(this.LanguageID, content);
+                                ImportManager.ImportResources(this.LanguageId, content);
                                 ShowMessage(GetLocaleResourceString("Admin.LanguageInfo.ResourcesImported"));
                             }
                         }
@@ -167,11 +167,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

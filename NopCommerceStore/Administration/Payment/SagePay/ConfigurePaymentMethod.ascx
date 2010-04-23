@@ -21,7 +21,7 @@
             SagePay Partner ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtPartnerID" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtPartnerId" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

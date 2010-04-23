@@ -67,11 +67,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     lvProducts.Visible = products.Count > 0;
                     pagerProducts.Visible = products.Count > pagerProducts.PageSize;
                     lblNoResults.Visible = !lvProducts.Visible;
-                    
-                    int customerID = 0;
+
+                    int customerId = 0;
                     if (NopContext.Current.User != null)
-                        customerID = NopContext.Current.User.CustomerID;
-                    SearchLogManager.InsertSearchLog(txtSearchTerm.Text, customerID, DateTime.Now);
+                        customerId = NopContext.Current.User.CustomerId;
+                    SearchLogManager.InsertSearchLog(txtSearchTerm.Text, customerId, DateTime.Now);
                 }
                 else
                 {

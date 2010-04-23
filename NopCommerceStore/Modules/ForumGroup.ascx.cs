@@ -47,10 +47,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         private void BindData()
         {
-            var forumGroup = ForumManager.GetForumGroupByID(this.ForumGroupID);
+            var forumGroup = ForumManager.GetForumGroupById(this.ForumGroupId);
             if (forumGroup != null)
             {
-                hlForumGroup.NavigateUrl = SEOHelper.GetForumGroupURL(forumGroup);
+                hlForumGroup.NavigateUrl = SEOHelper.GetForumGroupUrl(forumGroup);
                 hlForumGroup.Text = Server.HtmlEncode(forumGroup.Name);
             }
 
@@ -58,18 +58,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
             rptrForumList.DataBind();
         }
 
-        public int ForumGroupID
+        public int ForumGroupId
         {
             get
             {
-                if (ViewState["ForumGroupID"] == null)
+                if (ViewState["ForumGroupId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["ForumGroupID"];
+                    return (int)ViewState["ForumGroupId"];
             }
             set
             {
-                this.ViewState["ForumGroupID"] = value;
+                this.ViewState["ForumGroupId"] = value;
             }
         }
     }

@@ -110,27 +110,27 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html
         /// <summary>
         /// Formats the text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatText(string Text)
+        public static string FormatText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
             var info = CultureInfo.InvariantCulture;
-            foreach (Match match in regex.Matches(Text))
+            foreach (Match match in regex.Matches(text))
             {
                 if (!match.Value.Contains("://"))
                 {
-                    Text = Text.Replace(match.Value, string.Format(info, link, "http://", match.Value, ShortenUrl(match.Value, MAX_LENGTH)));
+                    text = text.Replace(match.Value, string.Format(info, link, "http://", match.Value, ShortenUrl(match.Value, MAX_LENGTH)));
                 }
                 else
                 {
-                    Text = Text.Replace(match.Value, string.Format(info, link, string.Empty, match.Value, ShortenUrl(match.Value, MAX_LENGTH)));
+                    text = text.Replace(match.Value, string.Format(info, link, string.Empty, match.Value, ShortenUrl(match.Value, MAX_LENGTH)));
                 }
             }
-            
-            return Text;
+
+            return text;
         }
         #endregion
     }

@@ -36,8 +36,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Deletes a log item
         /// </summary>
-        /// <param name="LogID">Log item identifier</param>
-        public abstract void DeleteLog(int LogID);
+        /// <param name="logId">Log item identifier</param>
+        public abstract void DeleteLog(int logId);
         
         /// <summary>
         /// Clears a log
@@ -53,26 +53,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets a log item
         /// </summary>
-        /// <param name="LogID">Log item identifier</param>
+        /// <param name="logId">Log item identifier</param>
         /// <returns>Log item</returns>
-        public abstract DBLog GetLogByID(int LogID);
+        public abstract DBLog GetLogById(int logId);
 
         /// <summary>
         /// Inserts a log item
         /// </summary>
-        /// <param name="LogTypeID">Log item type identifier</param>
-        /// <param name="Severity">The severity</param>
-        /// <param name="Message">The short message</param>
-        /// <param name="Exception">The full exception</param>
-        /// <param name="IPAddress">The IP address</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="PageURL">The page URL</param>
-        /// <param name="ReferrerURL">The referrer URL</param>
-        /// <param name="CreatedOn">The date and time of instance creationL</param>
+        /// <param name="logTypeId">Log item type identifier</param>
+        /// <param name="severity">The severity</param>
+        /// <param name="message">The short message</param>
+        /// <param name="exception">The full exception</param>
+        /// <param name="ipAddress">The IP address</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="pageUrl">The page URL</param>
+        /// <param name="referrerUrl">The referrer URL</param>
+        /// <param name="createdOn">The date and time of instance creationL</param>
         /// <returns>Log item</returns>
-        public abstract DBLog InsertLog(int LogTypeID, int Severity, string Message,
-            string Exception, string IPAddress, int CustomerID, 
-            string PageURL, string ReferrerURL, DateTime CreatedOn);
+        public abstract DBLog InsertLog(int logTypeId, int severity, string message,
+            string exception, string ipAddress, int customerId,
+            string pageUrl, string referrerUrl, DateTime createdOn);
         #endregion
     }
 }

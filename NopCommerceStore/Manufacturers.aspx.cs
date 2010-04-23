@@ -28,12 +28,12 @@ namespace NopSolutions.NopCommerce.Web
             if(e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var manufacturer = e.Item.DataItem as Manufacturer;
-                string manufacturerURL = SEOHelper.GetManufacturerURL(manufacturer);
+                string manufacturerURL = SEOHelper.GetManufacturerUrl(manufacturer);
 
                 var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                 if(hlImageLink != null)
                 {
-                    hlImageLink.ImageUrl = PictureManager.GetPictureUrl(manufacturer.PictureID, SettingManager.GetSettingValueInteger("Media.Manufacturer.ThumbnailImageSize", 125), true);
+                    hlImageLink.ImageUrl = PictureManager.GetPictureUrl(manufacturer.PictureId, SettingManager.GetSettingValueInteger("Media.Manufacturer.ThumbnailImageSize", 125), true);
                     hlImageLink.NavigateUrl = manufacturerURL;
                     hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageLinkTitleFormat"), manufacturer.Name);
                     hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageAlternateTextFormat"), manufacturer.Name);

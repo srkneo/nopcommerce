@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     CategoryTemplate categoryTemplate = ctrlCategoryTemplateInfo.SaveInfo();
-                    Response.Redirect("CategoryTemplateDetails.aspx?CategoryTemplateID=" + categoryTemplate.CategoryTemplateID.ToString());
+                    Response.Redirect("CategoryTemplateDetails.aspx?CategoryTemplateID=" + categoryTemplate.CategoryTemplateId.ToString());
                 }
                 catch (Exception exc)
                 {

@@ -32,11 +32,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
     {
         #region Methods
         /// <summary>
-        /// Gets an IP address by its ID
+        /// Gets an IP address by its identifier
         /// </summary>
-        /// <param name="bannedIpAddressID">IP Address unique identifier</param>
+        /// <param name="bannedIpAddressId">IP Address unique identifier</param>
         /// <returns>IP address</returns>
-        public abstract DBBannedIpAddress GetIpAddressByID(int bannedIpAddressID);
+        public abstract DBBannedIpAddress GetIpAddressById(int bannedIpAddressId);
 
         /// <summary>
         /// Gets all IP addresses
@@ -52,31 +52,33 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         /// <param name="createdOn">When the record was inserted</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns>IP address</returns>
-        public abstract DBBannedIpAddress InsertBannedIpAddress(string address, string comment, DateTime createdOn, DateTime updatedOn);
+        public abstract DBBannedIpAddress InsertBannedIpAddress(string address, 
+            string comment, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates an IP address
         /// </summary>
-        /// <param name="bannedIpAddressID">IP address unique identifier</param>
+        /// <param name="bannedIpAddressId">IP address unique identifier</param>
         /// <param name="address">IP address</param>
         /// <param name="comment">Reason why the IP was banned</param>
         /// <param name="createdOn">When the record was last updated</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns></returns>
-        public abstract DBBannedIpAddress UpdateBannedIpAddress(int bannedIpAddressID, string address, string comment, DateTime createdOn, DateTime updatedOn);
+        public abstract DBBannedIpAddress UpdateBannedIpAddress(int bannedIpAddressId, 
+            string address, string comment, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Deletes an IP address
         /// </summary>
-        /// <param name="bannedIpAddressID">IP address unique identifier</param>
-        public abstract void DeleteBannedIpAddress(int bannedIpAddressID);
+        /// <param name="bannedIpAddressId">IP address unique identifier</param>
+        public abstract void DeleteBannedIpAddress(int bannedIpAddressId);
 
         /// <summary>
-        /// Gets an IP network by its ID
+        /// Gets an IP network by its Id
         /// </summary>
-        /// <param name="bannedIpNetworkID">IP network unique identifier</param>
+        /// <param name="bannedIpNetworkId">IP network unique identifier</param>
         /// <returns>IP network</returns>
-        public abstract DBBannedIpNetwork GetIpNetworkByID(int bannedIpNetworkID);
+        public abstract DBBannedIpNetwork GetIpNetworkById(int bannedIpNetworkId);
 
         /// <summary>
         /// Gets all IP addresses
@@ -94,12 +96,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         /// <param name="createdOn">When the record was inserted</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns>IP network</returns>
-        public abstract DBBannedIpNetwork InsertBannedIpNetwork(string startAddress, string endAddress, string comment, string ipException, DateTime createdOn, DateTime updatedOn);
+        public abstract DBBannedIpNetwork InsertBannedIpNetwork(string startAddress, 
+            string endAddress, string comment, string ipException, 
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates an IP network
         /// </summary>
-        /// <param name="bannedIpNetworkID">IP network unique identifier</param>
+        /// <param name="bannedIpNetworkId">IP network unique identifier</param>
         /// <param name="startAddress">First IP address in the range</param>
         /// <param name="endAddress">Last IP address in the range</param>
         /// <param name="comment">Reason why the IP network was banned</param>
@@ -107,13 +111,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         /// <param name="createdOn">When the record was inserted</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns>IP network</returns>
-        public abstract DBBannedIpNetwork UpdateBannedIpNetwork(int bannedIpNetworkID, string startAddress, string endAddress, string comment, string ipException, DateTime createdOn, DateTime updatedOn);
+        public abstract DBBannedIpNetwork UpdateBannedIpNetwork(int bannedIpNetworkId, 
+            string startAddress, string endAddress, string comment, 
+            string ipException, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Deletes an IP network
         /// </summary>
-        /// <param name="bannedIpNetworkID">IP network unique identifier</param>
-        public abstract void DeleteBannedIpNetwork(int bannedIpNetworkID);
+        /// <param name="bannedIpNetworkId">IP network unique identifier</param>
+        public abstract void DeleteBannedIpNetwork(int bannedIpNetworkId);
         #endregion
     }
 }

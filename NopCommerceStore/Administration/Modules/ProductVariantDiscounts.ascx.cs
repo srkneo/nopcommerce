@@ -39,18 +39,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            List<int> _discountIDs = new List<int>();
+            List<int> _discountIds = new List<int>();
 
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
                 DiscountCollection discountCollection = productVariant.AllDiscounts;
 
                 foreach (Discount dis in discountCollection)
-                    _discountIDs.Add(dis.DiscountID);
+                    _discountIds.Add(dis.DiscountId);
             }
 
-            DiscountMappingControl.SelectedDiscountIDs = _discountIDs;
+            DiscountMappingControl.SelectedDiscountIds = _discountIds;
             DiscountMappingControl.BindData(DiscountTypeEnum.AssignedToSKUs);
         }
 
@@ -64,26 +64,26 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            SaveInfo(this.ProductVariantID);
+            SaveInfo(this.ProductVariantId);
         }
 
-        public void SaveInfo(int pvID)
+        public void SaveInfo(int pvId)
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(pvID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(pvId);
             if (productVariant != null)
             {
-                foreach (Discount discount in DiscountManager.GetDiscountsByProductVariantID(productVariant.ProductVariantID))
-                    DiscountManager.RemoveDiscountFromProductVariant(productVariant.ProductVariantID, discount.DiscountID);
-                foreach (int discountID in DiscountMappingControl.SelectedDiscountIDs)
-                    DiscountManager.AddDiscountToProductVariant(productVariant.ProductVariantID, discountID);
+                foreach (Discount discount in DiscountManager.GetDiscountsByProductVariantId(productVariant.ProductVariantId))
+                    DiscountManager.RemoveDiscountFromProductVariant(productVariant.ProductVariantId, discount.DiscountId);
+                foreach (int discountId in DiscountMappingControl.SelectedDiscountIds)
+                    DiscountManager.AddDiscountToProductVariant(productVariant.ProductVariantId, discountId);
             }
         }
 
-        public int ProductVariantID
+        public int ProductVariantId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductVariantID");
+                return CommonHelper.QueryStringInt("ProductVariantId");
             }
         }
     }

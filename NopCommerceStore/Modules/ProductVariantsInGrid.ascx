@@ -19,7 +19,7 @@
                     <div class="productname">
                         <%#Server.HtmlEncode(Eval("Name").ToString())%>
                     </div>
-                    <asp:Label runat="server" ID="ProductVariantID" Text='<%#Eval("ProductVariantID")%>'
+                    <asp:Label runat="server" ID="ProductVariantId" Text='<%#Eval("ProductVariantId")%>'
                         Visible="false" />
                 </div>
                 <div class="description">
@@ -33,12 +33,12 @@
                         </asp:HyperLink>
                     </span>
                 </asp:Panel>
-                <nopCommerce:TierPrices ID="ctrlTierPrices" runat="server" ProductVariantID='<%#Eval("ProductVariantID") %>'>
+                <nopCommerce:TierPrices ID="ctrlTierPrices" runat="server" ProductVariantID='<%#Eval("ProductVariantId") %>'>
                 </nopCommerce:TierPrices>
                 <div class="clear">
                 </div>
                 <div class="attributes">
-                    <nopCommerce:ProductAttributes ID="ctrlProductAttributes" runat="server" ProductVariantID='<%#Eval("ProductVariantID") %>'>
+                    <nopCommerce:ProductAttributes ID="ctrlProductAttributes" runat="server" ProductVariantID='<%#Eval("ProductVariantId") %>'>
                     </nopCommerce:ProductAttributes>
                 </div>
                 <div class="clear">
@@ -82,7 +82,7 @@
                 <div class="clear">
                 </div>
                 <div class="price">
-                    <nopCommerce:ProductPrice ID="ctrlProductPrice" runat="server" ProductVariantID='<%#Eval("ProductVariantID") %>'>
+                    <nopCommerce:ProductPrice ID="ctrlProductPrice" runat="server" ProductVariantID='<%#Eval("ProductVariantId") %>'>
                     </nopCommerce:ProductPrice>
                     <nopCommerce:NumericTextBox runat="server" ID="txtCustomerEnteredPrice" Value="1"
                         RequiredErrorMessage="<% $NopResources:Products.CustomerEnteredPrice.EnterPrice %>"
@@ -93,10 +93,10 @@
                         RangeErrorMessage="<% $NopResources:Products.QuantityRange %>" MinimumValue="1"
                         MaximumValue="999999" Width="50"></nopCommerce:NumericTextBox>
                     <asp:Button ID="btnAddToCart" runat="server" Text="<% $NopResources:Products.AddToCart %>"
-                        CommandName="AddToCart" CommandArgument='<%#Eval("ProductVariantID")%>' CssClass="productvariantaddtocartbutton">
+                        CommandName="AddToCart" CommandArgument='<%#Eval("ProductVariantId")%>' CssClass="productvariantaddtocartbutton">
                     </asp:Button>
                     <asp:Button ID="btnAddToWishlist" runat="server" Text="<% $NopResources:Wishlist.AddToWishlist %>"
-                        CommandName="AddToWishlist" CommandArgument='<%#Eval("ProductVariantID")%>' CssClass="productvariantaddtowishlistbutton">
+                        CommandName="AddToWishlist" CommandArgument='<%#Eval("ProductVariantId")%>' CssClass="productvariantaddtowishlistbutton">
                     </asp:Button>
                 </div>
                 <div class="clear">

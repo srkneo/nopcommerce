@@ -35,18 +35,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets selected product variant attribute identifiers
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Selected product variant attribute identifiers</returns>
-        public static List<int> ParseProductVariantAttributeIDs(string Attributes)
+        public static List<int> ParseProductVariantAttributeIds(string attributes)
         {
-            var IDs = new List<int>();
-            if (String.IsNullOrEmpty(Attributes))
-                return IDs;
+            var Ids = new List<int>();
+            if (String.IsNullOrEmpty(attributes))
+                return Ids;
 
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(Attributes);
+                xmlDoc.LoadXml(attributes);
 
                 XmlNodeList nodeList1 = xmlDoc.SelectNodes(@"//Attributes/ProductVariantAttribute");
                 foreach (XmlNode node1 in nodeList1)
@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     if (node1.Attributes != null && node1.Attributes["ID"] != null)
                     {
                         int id = Convert.ToInt32(node1.Attributes["ID"].InnerText.Trim());
-                        IDs.Add(id);
+                        Ids.Add(id);
                     }
                 }
             }
@@ -62,21 +62,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             {
                 Debug.Write(exc.ToString());
             }
-            return IDs;
+            return Ids;
         }
 
         /// <summary>
         /// Gets selected product variant attributes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Selected product variant attributes</returns>
-        public static ProductVariantAttributeCollection ParseProductVariantAttributes(string Attributes)
+        public static ProductVariantAttributeCollection ParseProductVariantAttributes(string attributes)
         {
             var pvaCollection = new ProductVariantAttributeCollection();
-            var IDs = ParseProductVariantAttributeIDs(Attributes);
-            foreach (int id in IDs)
+            var Ids = ParseProductVariantAttributeIds(attributes);
+            foreach (int id in Ids)
             {
-                var pva = ProductAttributeManager.GetProductVariantAttributeByID(id);
+                var pva = ProductAttributeManager.GetProductVariantAttributeById(id);
                 if (pva != null)
                 {
                     pvaCollection.Add(pva);
@@ -88,26 +88,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Get product variant attribute values
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Product variant attribute values</returns>
-        public static ProductVariantAttributeValueCollection ParseProductVariantAttributeValues(string Attributes)
+        public static ProductVariantAttributeValueCollection ParseProductVariantAttributeValues(string attributes)
         {
             var pvaValues = new ProductVariantAttributeValueCollection();
-            var pvaCollection = ParseProductVariantAttributes(Attributes);
+            var pvaCollection = ParseProductVariantAttributes(attributes);
             foreach (var pva in pvaCollection)
             {
                 if (!pva.ShouldHaveValues)
                     continue;
 
-                var pvaValuesStr = ParseValues(Attributes, pva.ProductVariantAttributeID);
+                var pvaValuesStr = ParseValues(attributes, pva.ProductVariantAttributeId);
                 foreach (string pvaValueStr in pvaValuesStr)
                 {
                     if (!String.IsNullOrEmpty(pvaValueStr))
                     {
-                        int pvaValueID = 0;
-                        if (int.TryParse(pvaValueStr, out pvaValueID))
+                        int pvaValueId = 0;
+                        if (int.TryParse(pvaValueStr, out pvaValueId))
                         {
-                            var pvaValue = ProductAttributeManager.GetProductVariantAttributeValueByID(pvaValueID);
+                            var pvaValue = ProductAttributeManager.GetProductVariantAttributeValueById(pvaValueId);
                             if (pvaValue != null)
                                 pvaValues.Add(pvaValue);
                         }
@@ -120,16 +120,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets selected product variant attribute value
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
-        /// <param name="ProductVariantAttributeID">Product variant attribute identifier</param>
+        /// <param name="attributes">Attributes</param>
+        /// <param name="productVariantAttributeId">Product variant attribute identifier</param>
         /// <returns>Product variant attribute value</returns>
-        public static List<string> ParseValues(string Attributes, int ProductVariantAttributeID)
+        public static List<string> ParseValues(string attributes, int productVariantAttributeId)
         {
             var selectedProductVariantAttributeValues = new List<string>();
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(Attributes);
+                xmlDoc.LoadXml(attributes);
 
                 XmlNodeList nodeList1 = xmlDoc.SelectNodes(@"//Attributes/ProductVariantAttribute");
                 foreach (XmlNode node1 in nodeList1)
@@ -137,7 +137,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     if (node1.Attributes != null && node1.Attributes["ID"] != null)
                     {
                         int id = Convert.ToInt32(node1.Attributes["ID"].InnerText.Trim());
-                        if (id == ProductVariantAttributeID)
+                        if (id == productVariantAttributeId)
                         {
                             XmlNodeList nodeList2 = node1.SelectNodes(@"ProductVariantAttributeValue/Value");
                             foreach (XmlNode node2 in nodeList2)
@@ -159,24 +159,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Adds an attribute
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="pva">Product variant attribute</param>
         /// <param name="value">Value</param>
         /// <returns>Attributes</returns>
-        public static string AddProductAttribute(string Attributes, ProductVariantAttribute pva, string value)
+        public static string AddProductAttribute(string attributes, ProductVariantAttribute pva, string value)
         {
             string result = string.Empty;
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                if (String.IsNullOrEmpty(Attributes))
+                if (String.IsNullOrEmpty(attributes))
                 {
                     XmlElement _element1 = xmlDoc.CreateElement("Attributes");
                     xmlDoc.AppendChild(_element1);
                 }
                 else
                 {
-                    xmlDoc.LoadXml(Attributes);
+                    xmlDoc.LoadXml(attributes);
                 }
                 XmlElement rootElement = (XmlElement)xmlDoc.SelectSingleNode(@"//Attributes");
 
@@ -188,7 +188,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     if (node1.Attributes != null && node1.Attributes["ID"] != null)
                     {
                         int id = Convert.ToInt32(node1.Attributes["ID"].InnerText.Trim());
-                        if (id == pva.ProductVariantAttributeID)
+                        if (id == pva.ProductVariantAttributeId)
                         {
                             pvaElement = (XmlElement)node1;
                             break;
@@ -200,7 +200,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 if (pvaElement == null)
                 {
                     pvaElement = xmlDoc.CreateElement("ProductVariantAttribute");
-                    pvaElement.SetAttribute("ID", pva.ProductVariantAttributeID.ToString());
+                    pvaElement.SetAttribute("ID", pva.ProductVariantAttributeId.ToString());
                     rootElement.AppendChild(pvaElement);
                 }
 
@@ -223,24 +223,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Are attributes equal
         /// </summary>
-        /// <param name="Attributes1">The attributes of the first product variant</param>
-        /// <param name="Attributes2">The attributes of the second product variant</param>
+        /// <param name="attributes1">The attributes of the first product variant</param>
+        /// <param name="attributes2">The attributes of the second product variant</param>
         /// <returns>Result</returns>
-        public static bool AreProductAttributesEqual(string Attributes1, string Attributes2)
+        public static bool AreProductAttributesEqual(string attributes1, string attributes2)
         {
             bool attributesEqual = true;
-            if (ProductAttributeHelper.ParseProductVariantAttributeIDs(Attributes1).Count == ProductAttributeHelper.ParseProductVariantAttributeIDs(Attributes2).Count)
+            if (ProductAttributeHelper.ParseProductVariantAttributeIds(attributes1).Count == ProductAttributeHelper.ParseProductVariantAttributeIds(attributes2).Count)
             {
-                var pva1Collection = ProductAttributeHelper.ParseProductVariantAttributes(Attributes2);
-                var pva2Collection = ProductAttributeHelper.ParseProductVariantAttributes(Attributes1);
+                var pva1Collection = ProductAttributeHelper.ParseProductVariantAttributes(attributes2);
+                var pva2Collection = ProductAttributeHelper.ParseProductVariantAttributes(attributes1);
                 foreach (var pva1 in pva1Collection)
                 {
                     foreach (var pva2 in pva2Collection)
                     {
-                        if (pva1.ProductVariantAttributeID == pva2.ProductVariantAttributeID)
+                        if (pva1.ProductVariantAttributeId == pva2.ProductVariantAttributeId)
                         {
-                            var pvaValues1Str = ProductAttributeHelper.ParseValues(Attributes2, pva1.ProductVariantAttributeID);
-                            var pvaValues2Str = ProductAttributeHelper.ParseValues(Attributes1, pva2.ProductVariantAttributeID);
+                            var pvaValues1Str = ProductAttributeHelper.ParseValues(attributes2, pva1.ProductVariantAttributeId);
+                            var pvaValues2Str = ProductAttributeHelper.ParseValues(attributes1, pva2.ProductVariantAttributeId);
                             if (pvaValues1Str.Count == pvaValues2Str.Count)
                             {
                                 foreach (string str1 in pvaValues1Str)
@@ -286,14 +286,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Add gift card attrbibutes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="recipientName">Recipient name</param>
         /// <param name="recipientEmail">Recipient email</param>
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="giftCardMessage">Message</param>
         /// <returns>Attributes</returns>
-        public static string AddGiftCardAttribute(string Attributes, string recipientName,
+        public static string AddGiftCardAttribute(string attributes, string recipientName,
             string recipientEmail, string senderName, string senderEmail, string giftCardMessage)
         {
             string result = string.Empty;
@@ -305,14 +305,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 senderEmail = senderEmail.Trim();
 
                 XmlDocument xmlDoc = new XmlDocument();
-                if (String.IsNullOrEmpty(Attributes))
+                if (String.IsNullOrEmpty(attributes))
                 {
                     XmlElement _element1 = xmlDoc.CreateElement("Attributes");
                     xmlDoc.AppendChild(_element1);
                 }
                 else
                 {
-                    xmlDoc.LoadXml(Attributes);
+                    xmlDoc.LoadXml(attributes);
                 }
 
                 XmlElement rootElement = (XmlElement)xmlDoc.SelectSingleNode(@"//Attributes");
@@ -356,13 +356,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Get gift card attrbibutes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="recipientName">Recipient name</param>
         /// <param name="recipientEmail">Recipient email</param>
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="giftCardMessage">Message</param>
-        public static void GetGiftCardAttribute(string Attributes, out string recipientName,
+        public static void GetGiftCardAttribute(string attributes, out string recipientName,
             out string recipientEmail, out string senderName,
             out string senderEmail, out string giftCardMessage)
         {
@@ -375,7 +375,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(Attributes);
+                xmlDoc.LoadXml(attributes);
 
                 XmlElement recipientNameElement = (XmlElement)xmlDoc.SelectSingleNode(@"//Attributes/GiftCardInfo/RecipientName");
                 XmlElement recipientEmailElement = (XmlElement)xmlDoc.SelectSingleNode(@"//Attributes/GiftCardInfo/RecipientEmail");
@@ -408,84 +408,85 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// Formats attributes
         /// </summary>
         /// <param name="productVariant">Product variant</param>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(ProductVariant productVariant, string Attributes)
+        public static string FormatAttributes(ProductVariant productVariant, string attributes)
         {
             var customer = NopContext.Current.User;
-            return FormatAttributes(productVariant, Attributes, customer, "<br />");
+            return FormatAttributes(productVariant, attributes, customer, "<br />");
         }
 
         /// <summary>
         /// Formats attributes
         /// </summary>
         /// <param name="productVariant">Product variant</param>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Serapator">Serapator</param>
+        /// <param name="serapator">Serapator</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(ProductVariant productVariant, string Attributes, Customer customer, string Serapator)
+        public static string FormatAttributes(ProductVariant productVariant, string attributes,
+            Customer customer, string serapator)
         {
-            return FormatAttributes(productVariant, Attributes, customer, Serapator, true);
+            return FormatAttributes(productVariant, attributes, customer, serapator, true);
         }
 
         /// <summary>
         /// Formats attributes
         /// </summary>
         /// <param name="productVariant">Product variant</param>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Serapator">Serapator</param>
-        /// <param name="HTMLEncode">A value indicating whether to encode (HTML) values</param>
+        /// <param name="serapator">Serapator</param>
+        /// <param name="htmlEncode">A value indicating whether to encode (HTML) values</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(ProductVariant productVariant, string Attributes,
-            Customer customer, string Serapator, bool HTMLEncode)
+        public static string FormatAttributes(ProductVariant productVariant, string attributes,
+            Customer customer, string serapator, bool htmlEncode)
         {
-            return FormatAttributes(productVariant, Attributes, customer, Serapator, HTMLEncode, true);
+            return FormatAttributes(productVariant, attributes, customer, serapator, htmlEncode, true);
         }
 
         /// <summary>
         /// Formats attributes
         /// </summary>
         /// <param name="productVariant">Product variant</param>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Serapator">Serapator</param>
-        /// <param name="HTMLEncode">A value indicating whether to encode (HTML) values</param>
-        /// <param name="RenderPrices">A value indicating whether to render prices</param>
+        /// <param name="serapator">Serapator</param>
+        /// <param name="htmlEncode">A value indicating whether to encode (HTML) values</param>
+        /// <param name="renderPrices">A value indicating whether to render prices</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(ProductVariant productVariant, string Attributes,
-            Customer customer, string Serapator, bool HTMLEncode, bool RenderPrices)
+        public static string FormatAttributes(ProductVariant productVariant, string attributes,
+            Customer customer, string serapator, bool htmlEncode, bool renderPrices)
         {
-            return FormatAttributes(productVariant, Attributes, customer, Serapator, HTMLEncode, RenderPrices, true, true);
+            return FormatAttributes(productVariant, attributes, customer, serapator, htmlEncode, renderPrices, true, true);
         }
 
         /// <summary>
         /// Formats attributes
         /// </summary>
         /// <param name="productVariant">Product variant</param>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Serapator">Serapator</param>
-        /// <param name="HTMLEncode">A value indicating whether to encode (HTML) values</param>
-        /// <param name="RenderPrices">A value indicating whether to render prices</param>
-        /// <param name="RenderProductAttributes">A value indicating whether to render product attributes</param>
-        /// <param name="RenderGiftCardAttributes">A value indicating whether to render gift card attributes</param>
+        /// <param name="serapator">Serapator</param>
+        /// <param name="htmlEncode">A value indicating whether to encode (HTML) values</param>
+        /// <param name="renderPrices">A value indicating whether to render prices</param>
+        /// <param name="renderProductAttributes">A value indicating whether to render product attributes</param>
+        /// <param name="renderGiftCardAttributes">A value indicating whether to render gift card attributes</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(ProductVariant productVariant, string Attributes,
-            Customer customer, string Serapator, bool HTMLEncode, bool RenderPrices,
-            bool RenderProductAttributes, bool RenderGiftCardAttributes)
+        public static string FormatAttributes(ProductVariant productVariant, string attributes,
+            Customer customer, string serapator, bool htmlEncode, bool renderPrices,
+            bool renderProductAttributes, bool renderGiftCardAttributes)
         {
             var result = new StringBuilder();
 
             //attributes
-            if (RenderProductAttributes)
+            if (renderProductAttributes)
             {
-                var pvaCollection = ParseProductVariantAttributes(Attributes);
+                var pvaCollection = ParseProductVariantAttributes(attributes);
                 for (int i = 0; i < pvaCollection.Count; i++)
                 {
                     var pva = pvaCollection[i];
-                    var valuesStr = ParseValues(Attributes, pva.ProductVariantAttributeID);
+                    var valuesStr = ParseValues(attributes, pva.ProductVariantAttributeId);
                     for (int j = 0; j < valuesStr.Count; j++)
                     {
                         string valueStr = valuesStr[j];
@@ -496,11 +497,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                         }
                         else
                         {
-                            var pvaValue = ProductAttributeManager.GetProductVariantAttributeValueByID(Convert.ToInt32(valueStr));
+                            var pvaValue = ProductAttributeManager.GetProductVariantAttributeValueById(Convert.ToInt32(valueStr));
                             if (pvaValue != null)
                             {
                                 pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.Name, pvaValue.Name);
-                                if (RenderPrices)
+                                if (renderPrices)
                                 {
                                     decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment, customer);
                                     decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
@@ -517,10 +518,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                         {
                             if (i != 0 || j != 0)
                             {
-                                result.Append(Serapator);
+                                result.Append(serapator);
                             }
 
-                            if (HTMLEncode)
+                            if (htmlEncode)
                             {
                                 result.Append(HttpUtility.HtmlEncode(pvaAttribute));
                             }
@@ -534,7 +535,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             }
 
             //gift cards
-            if (RenderGiftCardAttributes)
+            if (renderGiftCardAttributes)
             {
                 if (productVariant.IsGiftCard)
                 {
@@ -543,24 +544,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     string giftCardSenderName = string.Empty;
                     string giftCardSenderEmail = string.Empty;
                     string giftCardMessage = string.Empty;
-                    GetGiftCardAttribute(Attributes, out giftCardRecipientName, out giftCardRecipientEmail,
+                    GetGiftCardAttribute(attributes, out giftCardRecipientName, out giftCardRecipientEmail,
                         out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
 
                     if (!String.IsNullOrEmpty(result.ToString()))
                     {
-                        result.Append(Serapator);
+                        result.Append(serapator);
                     }
 
-                    if (HTMLEncode)
+                    if (htmlEncode)
                     {
                         result.Append(HttpUtility.HtmlEncode(string.Format(LocalizationManager.GetLocaleResourceString("GiftCardAttribute.For"), giftCardRecipientName)));
-                        result.Append(Serapator);
+                        result.Append(serapator);
                         result.Append(HttpUtility.HtmlEncode(string.Format(LocalizationManager.GetLocaleResourceString("GiftCardAttribute.From"), giftCardSenderName)));
                     }
                     else
                     {
                         result.Append(string.Format(LocalizationManager.GetLocaleResourceString("GiftCardAttribute.For"), giftCardRecipientName));
-                        result.Append(Serapator);
+                        result.Append(serapator);
                         result.Append(string.Format(LocalizationManager.GetLocaleResourceString("GiftCardAttribute.From"), giftCardSenderName));
                     }
                 }

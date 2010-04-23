@@ -35,7 +35,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Beanstream
             }
         }
 
-        public static string MerchantID
+        public static string MerchantId
         {
             get
             {

@@ -24,13 +24,13 @@ namespace NopSolutions.NopCommerce.Web
             {
                 if(HostedPaymentHelper.ValidateResponseSign(Request.Form))
                 {
-                    int OrderID = 0;
-                    if(Int32.TryParse(Request.Form["cs1"], out OrderID))
+                    int orderId = 0;
+                    if(Int32.TryParse(Request.Form["cs1"], out orderId))
                     {
-                        Order order = OrderManager.GetOrderByID(OrderID);
+                        Order order = OrderManager.GetOrderById(orderId);
                         if(order != null && OrderManager.CanMarkOrderAsPaid(order))
                         {
-                            OrderManager.MarkOrderAsPaid(order.OrderID);
+                            OrderManager.MarkOrderAsPaid(order.OrderId);
                         }
                     }
                 }

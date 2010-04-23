@@ -34,7 +34,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
             }
         }
     }

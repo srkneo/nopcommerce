@@ -93,17 +93,17 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (topic == null)
                 {
-                    topic = TopicManager.GetLocalizedTopic(this.TopicID, NopContext.Current.WorkingLanguage.LanguageID);
+                    topic = TopicManager.GetLocalizedTopic(this.TopicId, NopContext.Current.WorkingLanguage.LanguageId);
                 }
                 return topic;
             }
         }
 
-        public int TopicID
+        public int TopicId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TopicID");
+                return CommonHelper.QueryStringInt("TopicId");
             }
         }
     }

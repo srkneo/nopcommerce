@@ -37,8 +37,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Gets or sets the manufacturer template identifier
         /// </summary>
-        public int ManufacturerTemplateID { get; set; }
-        
+        public int ManufacturerTemplateId { get; set; }
+
         /// <summary>
         /// Gets or sets the name
         /// </summary>

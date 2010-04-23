@@ -26,7 +26,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     public partial class BestSellersReportLine : BaseEntity
     {
         #region Fields
-        private ProductVariant pv = null;
+        private ProductVariant _pv = null;
         #endregion
 
         #region Ctor
@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the total count
@@ -64,9 +64,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (pv == null)
-                    pv = ProductManager.GetProductVariantByID(this.ProductVariantID);
-                return pv;
+                if (_pv == null)
+                    _pv = ProductManager.GetProductVariantById(this.ProductVariantId);
+                return _pv;
             }
         }
         #endregion

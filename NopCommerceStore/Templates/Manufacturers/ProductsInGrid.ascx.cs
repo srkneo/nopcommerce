@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
 
         protected void BindData()
         {
-            var manufacturer = ManufacturerManager.GetManufacturerByID(ManufacturerID);
+            var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
             lName.Text = Server.HtmlEncode(manufacturer.Name);
             lDescription.Text = manufacturer.Description;
 
@@ -90,7 +90,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
                 }
             }
 
-            var productCollection = ProductManager.GetAllProducts(0, this.ManufacturerID, 
+            var productCollection = ProductManager.GetAllProducts(0, this.ManufacturerId, 
                 false, minPriceConverted, maxPriceConverted, pageSize,
                 this.CurrentPageIndex, null, out totalRecords);
 
@@ -127,11 +127,11 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
             }
         }
 
-        public int ManufacturerID
+        public int ManufacturerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ManufacturerID");
+                return CommonHelper.QueryStringInt("ManufacturerId");
             }
         }
     }

@@ -11,7 +11,7 @@
                                 GroupName="shippingOptionGroup" />
                             <%#Server.HtmlEncode(Eval("Name").ToString()) %>
                             <%#Server.HtmlEncode(FormatShippingOption(((ShippingOption)Container.DataItem)))%>
-                            <asp:HiddenField ID="hfShippingRateComputationMethodID" runat="server" Value='<%# Eval("ShippingRateComputationMethodID") %>' />
+                            <asp:HiddenField ID="hfShippingRateComputationMethodId" runat="server" Value='<%# Eval("ShippingRateComputationMethodId") %>' />
                             <asp:HiddenField ID="hfName" runat="server" Value='<%# Eval("Name") %>' />
                         </div>
                         <div class="option-description">

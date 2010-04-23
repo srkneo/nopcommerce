@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the related product identifier
         /// </summary>
-        public int RelatedProductID { get; set; }
+        public int RelatedProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the first product identifier
         /// </summary>
-        public int ProductID1 { get; set; }
+        public int ProductId1 { get; set; }
 
         /// <summary>
         /// Gets or sets the second product identifier
         /// </summary>
-        public int ProductID2 { get; set; }
+        public int ProductId2 { get; set; }
 
         /// <summary>
         /// Gets or sets the display order

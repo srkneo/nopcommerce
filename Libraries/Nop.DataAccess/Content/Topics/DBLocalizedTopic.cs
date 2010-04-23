@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         /// <summary>
         /// Gets or sets the localized topic identifier
         /// </summary>
-        public int TopicLocalizedID { get; set; }
+        public int TopicLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the topic identifier
         /// </summary>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the title

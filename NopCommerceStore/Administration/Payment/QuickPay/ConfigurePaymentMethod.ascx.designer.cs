@@ -23,13 +23,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.QuickPay {
         protected global::System.Web.UI.WebControls.CheckBox cbUseSandbox;
         
         /// <summary>
-        /// txtMerchantID control.
+        /// txtMerchantId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMerchantID;
+        protected global::System.Web.UI.WebControls.TextBox txtMerchantId;
         
         /// <summary>
         /// txtMD5Secret control.

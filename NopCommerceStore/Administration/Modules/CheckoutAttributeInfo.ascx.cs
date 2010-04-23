@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeByID(this.CheckoutAttributeID, 0);
+            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
 
             if (this.HasLocalizableContent)
             {
@@ -50,8 +50,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.cbAttributeRequired.Checked = checkoutAttribute.IsRequired;
                 this.cbShippableProductRequired.Checked = checkoutAttribute.ShippableProductRequired;
                 this.cbIsTaxExempt.Checked = checkoutAttribute.IsTaxExempt;
-                CommonHelper.SelectListItem(this.ddlTaxCategory, checkoutAttribute.TaxCategoryID);
-                CommonHelper.SelectListItem(this.ddlAttributeControlType, checkoutAttribute.AttributeControlTypeID);
+                CommonHelper.SelectListItem(this.ddlTaxCategory, checkoutAttribute.TaxCategoryId);
+                CommonHelper.SelectListItem(this.ddlAttributeControlType, checkoutAttribute.AttributeControlTypeId);
                 this.txtDisplayOrder.Value = checkoutAttribute.DisplayOrder;
             }
         }
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             TaxCategoryCollection taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
             foreach (TaxCategory taxCategory in taxCategoryCollection)
             {
-                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryID.ToString());
+                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryId.ToString());
                 this.ddlTaxCategory.Items.Add(item2);
             }
 
@@ -95,33 +95,33 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             string name = txtName.Text;
             string textPrompt = txtTextPrompt.Text;
-            int taxCategoryID = int.Parse(this.ddlTaxCategory.SelectedItem.Value);
+            int taxCategoryId = int.Parse(this.ddlTaxCategory.SelectedItem.Value);
             bool isRequired = cbAttributeRequired.Checked;
             bool shippableProductRequired = cbShippableProductRequired.Checked;
             bool isTaxExempt = cbIsTaxExempt.Checked;
-            int attributeControlTypeID = int.Parse(this.ddlAttributeControlType.SelectedItem.Value);
+            int attributeControlTypeId = int.Parse(this.ddlAttributeControlType.SelectedItem.Value);
             int displayOrder = txtDisplayOrder.Value;
 
-            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeByID(this.CheckoutAttributeID, 0);
+            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
             if (checkoutAttribute != null)
             {
-                checkoutAttribute = CheckoutAttributeManager.UpdateCheckoutAttribute(checkoutAttribute.CheckoutAttributeID,
+                checkoutAttribute = CheckoutAttributeManager.UpdateCheckoutAttribute(checkoutAttribute.CheckoutAttributeId,
                      name, textPrompt, isRequired, shippableProductRequired,
-                     isTaxExempt, taxCategoryID, attributeControlTypeID, displayOrder);
+                     isTaxExempt, taxCategoryId, attributeControlTypeId, displayOrder);
             }
             else
             {
                 checkoutAttribute = CheckoutAttributeManager.InsertCheckoutAttribute(name,
                     textPrompt, isRequired, shippableProductRequired,
-                    isTaxExempt, taxCategoryID, attributeControlTypeID, displayOrder);
+                    isTaxExempt, taxCategoryId, attributeControlTypeId, displayOrder);
             }
 
-            saveLocalizableContent(checkoutAttribute);
+            SaveLocalizableContent(checkoutAttribute);
 
             return checkoutAttribute;
         }
 
-        protected void saveLocalizableContent(CheckoutAttribute checkoutAttribute)
+        protected void SaveLocalizableContent(CheckoutAttribute checkoutAttribute)
         {
             if (checkoutAttribute == null)
                 return;
@@ -137,28 +137,28 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedTextPrompt = (TextBox)item.FindControl("txtLocalizedTextPrompt");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtLocalizedName.Text;
                     string textPrompt = txtLocalizedTextPrompt.Text;
 
                     bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(textPrompt));
 
-                    var content = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeIDAndLanguageID(checkoutAttribute.CheckoutAttributeID, languageID);
+                    var content = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeIdAndLanguageId(checkoutAttribute.CheckoutAttributeId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = CheckoutAttributeManager.InsertCheckoutAttributeLocalized(checkoutAttribute.CheckoutAttributeID,
-                                   languageID, name, textPrompt);
+                            content = CheckoutAttributeManager.InsertCheckoutAttributeLocalized(checkoutAttribute.CheckoutAttributeId,
+                                   languageId, name, textPrompt);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = CheckoutAttributeManager.UpdateCheckoutAttributeLocalized(content.CheckoutAttributeLocalizedID, content.CheckoutAttributeID,
-                                languageID, name, textPrompt);
+                            content = CheckoutAttributeManager.UpdateCheckoutAttributeLocalized(content.CheckoutAttributeLocalizedId, content.CheckoutAttributeId,
+                                languageId, name, textPrompt);
                         }
                     }
                 }
@@ -173,9 +173,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedTextPrompt = (TextBox)e.Item.FindControl("txtLocalizedTextPrompt");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeIDAndLanguageID(this.CheckoutAttributeID, languageID);
+                var content = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeIdAndLanguageId(this.CheckoutAttributeId, languageId);
 
                 if (content != null)
                 {
@@ -186,11 +186,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
         
-        public int CheckoutAttributeID
+        public int CheckoutAttributeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CheckoutAttributeID");
+                return CommonHelper.QueryStringInt("CheckoutAttributeId");
             }
         }
     }

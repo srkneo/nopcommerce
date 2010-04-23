@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 this.Visible = false;
                 return;
             }
-            var forumTopics = ForumManager.GetActiveTopics(this.ForumID, this.TopicCount);
+            var forumTopics = ForumManager.GetActiveTopics(this.ForumId, this.TopicCount);
             if (forumTopics.Count > 0)
             {
                 rptrTopics.DataSource = forumTopics;
@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var hlTopic = e.Item.FindControl("hlTopic") as HyperLink;
                 if (hlTopic != null)
                 {
-                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicURL(forumTopic.ForumTopicID);
+                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
                     hlTopic.Text = Server.HtmlEncode(forumTopic.Subject);
                 }
 
@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if(customer != null && CustomerManager.AllowViewingProfiles && !customer.IsGuest)
                     {
                         hlTopicStarter.Text = Server.HtmlEncode(CustomerManager.FormatUserName(customer));
-                        hlTopicStarter.NavigateUrl = SEOHelper.GetUserProfileURL(customer.CustomerID);
+                        hlTopicStarter.NavigateUrl = SEOHelper.GetUserProfileUrl(customer.CustomerId);
                     }
                     else
                     {
@@ -106,18 +106,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ForumID
+        public int ForumId
         {
             get
             {
-                if (ViewState["ForumID"] == null)
+                if (ViewState["ForumId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["ForumID"];
+                    return (int)ViewState["ForumId"];
             }
             set
             {
-                this.ViewState["ForumID"] = value;
+                this.ViewState["ForumId"] = value;
             }
         }
 

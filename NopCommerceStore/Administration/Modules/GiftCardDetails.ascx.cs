@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditGiftCard"),
                         gc.GiftCardCouponCode);
 
-                    Response.Redirect("GiftCardDetails.aspx?GiftCardID=" + gc.GiftCardID.ToString());
+                    Response.Redirect("GiftCardDetails.aspx?GiftCardID=" + gc.GiftCardId.ToString());
                 }
                 catch (Exception exc)
                 {

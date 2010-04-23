@@ -19,7 +19,7 @@
             <%} %>
             <% if (ForumManager.ForumsEnabled)
                { %>
-            <li><a href="<%= SEOHelper.GetForumMainURL()%> ">
+            <li><a href="<%= SEOHelper.GetForumMainUrl()%> ">
                 <%=GetLocaleResourceString("Forum.Forums")%></a></li>
             <%} %>
             <% if (ProductManager.RecentlyAddedProductsEnabled)

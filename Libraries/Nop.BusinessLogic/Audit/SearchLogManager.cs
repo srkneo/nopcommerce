@@ -52,9 +52,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                 return null;
 
             var item = new SearchLog();
-            item.SearchLogID = dbItem.SearchLogID;
+            item.SearchLogId = dbItem.SearchLogId;
             item.SearchTerm = dbItem.SearchTerm;
-            item.CustomerID = dbItem.CustomerID;
+            item.CustomerId = dbItem.CustomerId;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
@@ -66,13 +66,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Get search term stats
         /// </summary>
-        /// <param name="StartTime">Start time; null to load all</param>
-        /// <param name="EndTime">End time; null to load all</param>
-        /// <param name="Count">Item count. 0 if you want to get all items</param>
+        /// <param name="startTime">Start time; null to load all</param>
+        /// <param name="endTime">End time; null to load all</param>
+        /// <param name="count">Item count. 0 if you want to get all items</param>
         /// <returns>Result</returns>
-        public static IDataReader SearchTermReport(DateTime? StartTime, DateTime? EndTime, int Count)
+        public static IDataReader SearchTermReport(DateTime? startTime, 
+            DateTime? endTime, int count)
         {
-            return DBProviderManager<DBSearchLogProvider>.Provider.SearchTermReport(StartTime, EndTime, Count);
+            return DBProviderManager<DBSearchLogProvider>.Provider.SearchTermReport(startTime,
+                endTime, count);
         }
 
         /// <summary>
@@ -89,14 +91,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Gets a search log item
         /// </summary>
-        /// <param name="SearchLogID">The search log item identifier</param>
+        /// <param name="searchLogId">The search log item identifier</param>
         /// <returns>Search log item</returns>
-        public static SearchLog GetSearchLogByID(int SearchLogID)
+        public static SearchLog GetSearchLogById(int searchLogId)
         {
-            if (SearchLogID == 0)
+            if (searchLogId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBSearchLogProvider>.Provider.GetSearchLogByID(SearchLogID);
+            var dbItem = DBProviderManager<DBSearchLogProvider>.Provider.GetSearchLogById(searchLogId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -104,15 +106,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Inserts a search log item
         /// </summary>
-        /// <param name="SearchTerm">The search term</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="searchTerm">The search term</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Search log item</returns>
-        public static SearchLog InsertSearchLog(string SearchTerm, int CustomerID, DateTime CreatedOn)
+        public static SearchLog InsertSearchLog(string searchTerm,
+            int customerId, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBSearchLogProvider>.Provider.InsertSearchLog(SearchTerm, CustomerID, CreatedOn);
+            var dbItem = DBProviderManager<DBSearchLogProvider>.Provider.InsertSearchLog(searchTerm,
+                customerId, createdOn);
             var item = DBMapping(dbItem);
             return item;
         }

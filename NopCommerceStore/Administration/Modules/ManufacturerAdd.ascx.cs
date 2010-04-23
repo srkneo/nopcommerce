@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.ManufacturerTabs, this.TabID);
+                this.SelectTab(this.ManufacturerTabs, this.TabId);
             }
         }
 
@@ -48,14 +48,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Manufacturer manufacturer = ctrlManufacturerInfo.SaveInfo();
-                    ctrlManufacturerSEO.SaveInfo(manufacturer.ManufacturerID);
+                    ctrlManufacturerSEO.SaveInfo(manufacturer.ManufacturerId);
 
                     CustomerActivityManager.InsertActivity(
                         "AddNewManufacturer",
                         GetLocaleResourceString("ActivityLog.AddNewManufacturer"),
                         manufacturer.Name);
 
-                    Response.Redirect(string.Format("ManufacturerDetails.aspx?ManufacturerID={0}&TabID={1}", manufacturer.ManufacturerID, this.GetActiveTabID(this.ManufacturerTabs)));
+                    Response.Redirect(string.Format("ManufacturerDetails.aspx?ManufacturerID={0}&TabID={1}", manufacturer.ManufacturerId, this.GetActiveTabId(this.ManufacturerTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -64,19 +64,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ManufacturerID
+        public int ManufacturerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ManufacturerID");
+                return CommonHelper.QueryStringInt("ManufacturerId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

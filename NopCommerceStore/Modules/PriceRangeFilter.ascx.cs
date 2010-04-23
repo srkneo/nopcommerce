@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     pnlPriceRangeSelector.Visible = false;
                     pnlSelectedPriceRange.Visible = true;
 
-                    string url = CommonHelper.RemoveQueryString(CommonHelper.GetThisPageURL(true), this.QueryStringProperty);
+                    string url = CommonHelper.RemoveQueryString(CommonHelper.GetThisPageUrl(true), this.QueryStringProperty);
                     url = excludeQueryStringParams(url);
                     hlRemoveFilter.NavigateUrl = url;
 
@@ -136,7 +136,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     toQuery = priceRange.To.Value.ToString(new CultureInfo("en-US"));
                 }
 
-                string url = CommonHelper.ModifyQueryString(CommonHelper.GetThisPageURL(true), this.QueryStringProperty + "=" + fromQuery + "-" + toQuery, null);
+                string url = CommonHelper.ModifyQueryString(CommonHelper.GetThisPageUrl(true), this.QueryStringProperty + "=" + fromQuery + "-" + toQuery, null);
                 url = excludeQueryStringParams(url);
                 hlPriceRange.NavigateUrl = url;
             }

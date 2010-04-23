@@ -33,9 +33,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult);
+        void ProcessPayment(PaymentInfo paymentInfo, Customer customer, 
+            Guid orderGuid, ref ProcessPaymentResult processPaymentResult);
         
         /// <summary>
         /// Post process payment (payment gateways that require redirecting)
@@ -76,9 +77,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult);
+        void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, 
+            Guid orderGuid, ref ProcessPaymentResult processPaymentResult);
 
         /// <summary>
         /// Cancels recurring payment

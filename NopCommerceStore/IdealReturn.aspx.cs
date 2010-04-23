@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.Web
             if (Request.QueryString["s"] != null && Int32.TryParse(Request.QueryString["s"], out failure) &&
                 Request.QueryString["o"] != null && Int32.TryParse(Request.QueryString["o"], out orderid))
             {
-                Order o = OrderManager.GetOrderByID(orderid);
+                Order o = OrderManager.GetOrderById(orderid);
                 if (o != null)
                 {
                     switch (failure)

@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets or sets the product attribute identifier
         /// </summary>
-        public int ProductAttributeID { get; set; }
+        public int ProductAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -50,5 +50,4 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public string Description { get; set; }
         #endregion
     }
-
 }

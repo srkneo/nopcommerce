@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.CustomerTabs, this.TabID);
+                this.SelectTab(this.CustomerTabs, this.TabId);
             }
         }
 
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    Customer customer = CustomerManager.GetCustomerByID(this.CustomerID);
+                    Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
 
                     if (customer != null)
                     {
@@ -63,10 +63,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         CustomerActivityManager.InsertActivity(
                             "EditCustomer",
                             GetLocaleResourceString("ActivityLog.EditCustomer"),
-                            customer.CustomerID);
+                            customer.CustomerId);
                     }
 
-                    Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}&TabID={1}", customer.CustomerID, this.GetActiveTabID(this.CustomerTabs)));
+                    Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}&TabID={1}", customer.CustomerId, this.GetActiveTabId(this.CustomerTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -79,12 +79,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                CustomerManager.MarkCustomerAsDeleted(this.CustomerID);
+                CustomerManager.MarkCustomerAsDeleted(this.CustomerId);
 
                 CustomerActivityManager.InsertActivity(
                     "DeleteCustomer",
                     GetLocaleResourceString("ActivityLog.DeleteCustomer"),
-                    this.CustomerID);
+                    this.CustomerId);
 
                 Response.Redirect("Customers.aspx");
             }
@@ -94,19 +94,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

@@ -10,20 +10,20 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if(!IsPostBack)
             {
-                var NewsLetterSubscriptionGuid = CommonHelper.QueryStringGUID("T");
+                var NewsLetterSubscriptionGuid = CommonHelper.QueryStringGuid("T");
                 bool IsActive = CommonHelper.QueryStringBool("Active");
                 if(!NewsLetterSubscriptionGuid.HasValue)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                var subscription = MessageManager.GetNewsLetterSubscriptionByGUID(NewsLetterSubscriptionGuid.Value);
+                var subscription = MessageManager.GetNewsLetterSubscriptionByGuid(NewsLetterSubscriptionGuid.Value);
                 if(subscription == null)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                subscription = MessageManager.UpdateNewsLetterSubscription(subscription.NewsLetterSubscriptionID, subscription.Email, IsActive);
+                subscription = MessageManager.UpdateNewsLetterSubscription(subscription.NewsLetterSubscriptionId, subscription.Email, IsActive);
 
                 if(subscription.IsActive)
                 {

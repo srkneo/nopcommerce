@@ -36,12 +36,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the download identifier
         /// </summary>
-        public int DownloadID { get; set; }
+        public int DownloadId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this downloadable product can be downloaded unlimited number of times
@@ -111,7 +111,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the sample download identifier
         /// </summary>
-        public int SampleDownloadID { get; set; }
+        public int SampleDownloadId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the product has user agreement
@@ -166,7 +166,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the tax category identifier
         /// </summary>
-        public int TaxCategoryID { get; set; }
+        public int TaxCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating how to manage inventory
@@ -191,7 +191,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the low stock activity identifier
         /// </summary>
-        public int LowStockActivityID { get; set; }
+        public int LowStockActivityId { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity when admin should be notified
@@ -276,7 +276,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the available start date and time

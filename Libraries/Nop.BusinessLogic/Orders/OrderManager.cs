@@ -78,11 +78,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new Order();
-            item.OrderID = dbItem.OrderID;
-            item.OrderGUID = dbItem.OrderGUID;
-            item.CustomerID = dbItem.CustomerID;
-            item.CustomerLanguageID = dbItem.CustomerLanguageID;
-            item.CustomerTaxDisplayTypeID = dbItem.CustomerTaxDisplayTypeID;
+            item.OrderId = dbItem.OrderId;
+            item.OrderGuid = dbItem.OrderGuid;
+            item.CustomerId = dbItem.CustomerId;
+            item.CustomerLanguageId = dbItem.CustomerLanguageId;
+            item.CustomerTaxDisplayTypeId = dbItem.CustomerTaxDisplayTypeId;
             item.CustomerIP = dbItem.CustomerIP;
             item.OrderSubtotalInclTax = dbItem.OrderSubtotalInclTax;
             item.OrderSubtotalExclTax = dbItem.OrderSubtotalExclTax;
@@ -103,29 +103,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.OrderTotalInCustomerCurrency = dbItem.OrderTotalInCustomerCurrency;
             item.OrderDiscountInCustomerCurrency = dbItem.OrderDiscountInCustomerCurrency;
             item.CheckoutAttributeDescription = dbItem.CheckoutAttributeDescription;
-            item.CheckoutAttributesXML = dbItem.CheckoutAttributesXML;
+            item.CheckoutAttributesXml = dbItem.CheckoutAttributesXml;
             item.CustomerCurrencyCode = dbItem.CustomerCurrencyCode;
             item.OrderWeight = dbItem.OrderWeight;
-            item.AffiliateID = dbItem.AffiliateID;
-            item.OrderStatusID = dbItem.OrderStatusID;
+            item.AffiliateId = dbItem.AffiliateId;
+            item.OrderStatusId = dbItem.OrderStatusId;
             item.AllowStoringCreditCardNumber = dbItem.AllowStoringCreditCardNumber;
             item.CardType = dbItem.CardType;
             item.CardName = dbItem.CardName;
             item.CardNumber = dbItem.CardNumber;
             item.MaskedCreditCardNumber = dbItem.MaskedCreditCardNumber;
-            item.CardCVV2 = dbItem.CardCVV2;
+            item.CardCvv2 = dbItem.CardCvv2;
             item.CardExpirationMonth = dbItem.CardExpirationMonth;
             item.CardExpirationYear = dbItem.CardExpirationYear;
-            item.PaymentMethodID = dbItem.PaymentMethodID;
+            item.PaymentMethodId = dbItem.PaymentMethodId;
             item.PaymentMethodName = dbItem.PaymentMethodName;
-            item.AuthorizationTransactionID = dbItem.AuthorizationTransactionID;
+            item.AuthorizationTransactionId = dbItem.AuthorizationTransactionId;
             item.AuthorizationTransactionCode = dbItem.AuthorizationTransactionCode;
             item.AuthorizationTransactionResult = dbItem.AuthorizationTransactionResult;
-            item.CaptureTransactionID = dbItem.CaptureTransactionID;
+            item.CaptureTransactionId = dbItem.CaptureTransactionId;
             item.CaptureTransactionResult = dbItem.CaptureTransactionResult;
-            item.SubscriptionTransactionID = dbItem.SubscriptionTransactionID;
+            item.SubscriptionTransactionId = dbItem.SubscriptionTransactionId;
             item.PurchaseOrderNumber = dbItem.PurchaseOrderNumber;
-            item.PaymentStatusID = dbItem.PaymentStatusID;
+            item.PaymentStatusId = dbItem.PaymentStatusId;
             item.PaidDate = dbItem.PaidDate;
             item.BillingFirstName = dbItem.BillingFirstName;
             item.BillingLastName = dbItem.BillingLastName;
@@ -137,11 +137,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.BillingAddress2 = dbItem.BillingAddress2;
             item.BillingCity = dbItem.BillingCity;
             item.BillingStateProvince = dbItem.BillingStateProvince;
-            item.BillingStateProvinceID = dbItem.BillingStateProvinceID;
+            item.BillingStateProvinceId = dbItem.BillingStateProvinceId;
             item.BillingZipPostalCode = dbItem.BillingZipPostalCode;
             item.BillingCountry = dbItem.BillingCountry;
-            item.BillingCountryID = dbItem.BillingCountryID;
-            item.ShippingStatusID = dbItem.ShippingStatusID;
+            item.BillingCountryId = dbItem.BillingCountryId;
+            item.ShippingStatusId = dbItem.ShippingStatusId;
             item.ShippingFirstName = dbItem.ShippingFirstName;
             item.ShippingLastName = dbItem.ShippingLastName;
             item.ShippingPhoneNumber = dbItem.ShippingPhoneNumber;
@@ -152,12 +152,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.ShippingAddress2 = dbItem.ShippingAddress2;
             item.ShippingCity = dbItem.ShippingCity;
             item.ShippingStateProvince = dbItem.ShippingStateProvince;
-            item.ShippingStateProvinceID = dbItem.ShippingStateProvinceID;
+            item.ShippingStateProvinceId = dbItem.ShippingStateProvinceId;
             item.ShippingZipPostalCode = dbItem.ShippingZipPostalCode;
             item.ShippingCountry = dbItem.ShippingCountry;
-            item.ShippingCountryID = dbItem.ShippingCountryID;
+            item.ShippingCountryId = dbItem.ShippingCountryId;
             item.ShippingMethod = dbItem.ShippingMethod;
-            item.ShippingRateComputationMethodID = dbItem.ShippingRateComputationMethodID;
+            item.ShippingRateComputationMethodId = dbItem.ShippingRateComputationMethodId;
             item.ShippedDate = dbItem.ShippedDate;
             item.TrackingNumber = dbItem.TrackingNumber;
             item.Deleted = dbItem.Deleted;
@@ -187,8 +187,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new OrderNote();
-            item.OrderNoteID = dbItem.OrderNoteID;
-            item.OrderID = dbItem.OrderID;
+            item.OrderNoteId = dbItem.OrderNoteId;
+            item.OrderId = dbItem.OrderId;
             item.Note = dbItem.Note;
             item.DisplayToCustomer = dbItem.DisplayToCustomer;
             item.CreatedOn = dbItem.CreatedOn;
@@ -217,10 +217,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new OrderProductVariant();
-            item.OrderProductVariantID = dbItem.OrderProductVariantID;
-            item.OrderProductVariantGUID = dbItem.OrderProductVariantGUID;
-            item.OrderID = dbItem.OrderID;
-            item.ProductVariantID = dbItem.ProductVariantID;
+            item.OrderProductVariantId = dbItem.OrderProductVariantId;
+            item.OrderProductVariantGuid = dbItem.OrderProductVariantGuid;
+            item.OrderId = dbItem.OrderId;
+            item.ProductVariantId = dbItem.ProductVariantId;
             item.UnitPriceInclTax = dbItem.UnitPriceInclTax;
             item.UnitPriceExclTax = dbItem.UnitPriceExclTax;
             item.PriceInclTax = dbItem.PriceInclTax;
@@ -230,13 +230,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.PriceInclTaxInCustomerCurrency = dbItem.PriceInclTaxInCustomerCurrency;
             item.PriceExclTaxInCustomerCurrency = dbItem.PriceExclTaxInCustomerCurrency;
             item.AttributeDescription = dbItem.AttributeDescription;
-            item.AttributesXML = dbItem.AttributesXML;
+            item.AttributesXml = dbItem.AttributesXml;
             item.Quantity = dbItem.Quantity;
             item.DiscountAmountInclTax = dbItem.DiscountAmountInclTax;
             item.DiscountAmountExclTax = dbItem.DiscountAmountExclTax;
             item.DownloadCount = dbItem.DownloadCount;
             item.IsDownloadActivated = dbItem.IsDownloadActivated;
-            item.LicenseDownloadID = dbItem.LicenseDownloadID;
+            item.LicenseDownloadId = dbItem.LicenseDownloadId;
 
             return item;
         }
@@ -262,7 +262,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new OrderStatus();
-            item.OrderStatusID = dbItem.OrderStatusID;
+            item.OrderStatusId = dbItem.OrderStatusId;
             item.Name = dbItem.Name;
 
             return item;
@@ -301,7 +301,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new BestSellersReportLine();
-            item.ProductVariantID = dbItem.ProductVariantID;
+            item.ProductVariantId = dbItem.ProductVariantId;
             item.SalesTotalCount = dbItem.SalesTotalCount;
             item.SalesTotalAmount = dbItem.SalesTotalAmount;
 
@@ -329,8 +329,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new RecurringPayment();
-            item.RecurringPaymentID = dbItem.RecurringPaymentID;
-            item.InitialOrderID = dbItem.InitialOrderID;
+            item.RecurringPaymentId = dbItem.RecurringPaymentId;
+            item.InitialOrderId = dbItem.InitialOrderId;
             item.CycleLength = dbItem.CycleLength;
             item.CyclePeriod = dbItem.CyclePeriod;
             item.TotalCycles = dbItem.TotalCycles;
@@ -363,9 +363,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new RecurringPaymentHistory();
-            item.RecurringPaymentHistoryID = dbItem.RecurringPaymentHistoryID;
-            item.RecurringPaymentID = dbItem.RecurringPaymentID;
-            item.OrderID = dbItem.OrderID;
+            item.RecurringPaymentHistoryId = dbItem.RecurringPaymentHistoryId;
+            item.RecurringPaymentId = dbItem.RecurringPaymentId;
+            item.OrderId = dbItem.OrderId;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
@@ -392,8 +392,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new GiftCard();
-            item.GiftCardID = dbItem.GiftCardID;
-            item.PurchasedOrderProductVariantID = dbItem.PurchasedOrderProductVariantID;
+            item.GiftCardId = dbItem.GiftCardId;
+            item.PurchasedOrderProductVariantId = dbItem.PurchasedOrderProductVariantId;
             item.Amount = dbItem.Amount;
             item.IsGiftCardActivated = dbItem.IsGiftCardActivated;
             item.GiftCardCouponCode = dbItem.GiftCardCouponCode;
@@ -429,10 +429,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             var item = new GiftCardUsageHistory();
-            item.GiftCardUsageHistoryID = dbItem.GiftCardUsageHistoryID;
-            item.GiftCardID = dbItem.GiftCardID;
-            item.CustomerID = dbItem.CustomerID;
-            item.OrderID = dbItem.OrderID;
+            item.GiftCardUsageHistoryId = dbItem.GiftCardUsageHistoryId;
+            item.GiftCardId = dbItem.GiftCardId;
+            item.CustomerId = dbItem.CustomerId;
+            item.OrderId = dbItem.OrderId;
             item.UsedValue = dbItem.UsedValue;
             item.UsedValueInCustomerCurrency = dbItem.UsedValueInCustomerCurrency;
             item.CreatedOn = dbItem.CreatedOn;
@@ -443,66 +443,115 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Sets an order status
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="OS">New order status</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="os">New order status</param>
         /// <param name="notifyCustomer">True to notify customer</param>
         /// <returns>Order</returns>
-        protected static Order SetOrderStatus(int OrderID, OrderStatusEnum OS, bool notifyCustomer)
+        protected static Order SetOrderStatus(int orderId, 
+            OrderStatusEnum os, bool notifyCustomer)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order != null)
             {
-                if (order.OrderStatus == OS)
+                if (order.OrderStatus == os)
                     return order;
 
-                var updatedOrder = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
-                    order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
-                    order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
+                var updatedOrder = UpdateOrder(order.OrderId, 
+                    order.OrderGuid, 
+                    order.CustomerId, 
+                    order.CustomerLanguageId,
+                    order.CustomerTaxDisplayType, 
+                    order.CustomerIP,
+                    order.OrderSubtotalInclTax, 
+                    order.OrderSubtotalExclTax, 
+                    order.OrderShippingInclTax,
+                    order.OrderShippingExclTax, 
+                    order.PaymentMethodAdditionalFeeInclTax,
+                    order.PaymentMethodAdditionalFeeExclTax,
                     order.OrderTax, order.OrderTotal, order.OrderDiscount,
-                    order.OrderSubtotalInclTaxInCustomerCurrency, order.OrderSubtotalExclTaxInCustomerCurrency,
-                    order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
-                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
+                    order.OrderSubtotalInclTaxInCustomerCurrency, 
+                    order.OrderSubtotalExclTaxInCustomerCurrency,
+                    order.OrderShippingInclTaxInCustomerCurrency, 
+                    order.OrderShippingExclTaxInCustomerCurrency,
+                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, 
+                    order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+                    order.OrderTaxInCustomerCurrency, 
+                    order.OrderTotalInCustomerCurrency,
                     order.OrderDiscountInCustomerCurrency,
-                    order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
-                    order.CustomerCurrencyCode, order.OrderWeight,
-                    order.AffiliateID, OS, order.AllowStoringCreditCardNumber, order.CardType,
-                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                    order.PaymentMethodID, order.PaymentMethodName,
-                    order.AuthorizationTransactionID,
-                    order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                    order.CaptureTransactionID, order.CaptureTransactionResult,
-                    order.SubscriptionTransactionID, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
-                    order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
-                    order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
-                    order.BillingAddress2, order.BillingCity,
-                    order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                    order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
-                    order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
-                    order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
-                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                    order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                    order.ShippingCountry, order.ShippingCountryID,
-                    order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
-                    order.TrackingNumber, order.Deleted, order.CreatedOn);
+                    order.CheckoutAttributeDescription, 
+                    order.CheckoutAttributesXml, 
+                    order.CustomerCurrencyCode,
+                    order.OrderWeight,
+                    order.AffiliateId, 
+                    os,
+                    order.AllowStoringCreditCardNumber,
+                    order.CardType,
+                    order.CardName, order.CardNumber, 
+                    order.MaskedCreditCardNumber,
+                    order.CardCvv2, order.CardExpirationMonth, 
+                    order.CardExpirationYear,
+                    order.PaymentMethodId, 
+                    order.PaymentMethodName,
+                    order.AuthorizationTransactionId,
+                    order.AuthorizationTransactionCode, 
+                    order.AuthorizationTransactionResult,
+                    order.CaptureTransactionId, 
+                    order.CaptureTransactionResult,
+                    order.SubscriptionTransactionId, 
+                    order.PurchaseOrderNumber, 
+                    order.PaymentStatus, order.PaidDate,
+                    order.BillingFirstName, 
+                    order.BillingLastName, 
+                    order.BillingPhoneNumber,
+                    order.BillingEmail, 
+                    order.BillingFaxNumber, 
+                    order.BillingCompany, 
+                    order.BillingAddress1,
+                    order.BillingAddress2, 
+                    order.BillingCity,
+                    order.BillingStateProvince, 
+                    order.BillingStateProvinceId,
+                    order.BillingZipPostalCode,
+                    order.BillingCountry, 
+                    order.BillingCountryId, 
+                    order.ShippingStatus,
+                    order.ShippingFirstName, 
+                    order.ShippingLastName,
+                    order.ShippingPhoneNumber,
+                    order.ShippingEmail, 
+                    order.ShippingFaxNumber,
+                    order.ShippingCompany,
+                    order.ShippingAddress1,
+                    order.ShippingAddress2, 
+                    order.ShippingCity,
+                    order.ShippingStateProvince, 
+                    order.ShippingStateProvinceId,
+                    order.ShippingZipPostalCode,
+                    order.ShippingCountry,
+                    order.ShippingCountryId,
+                    order.ShippingMethod,
+                    order.ShippingRateComputationMethodId, 
+                    order.ShippedDate,
+                    order.TrackingNumber, 
+                    order.Deleted,
+                    order.CreatedOn);
 
-                InsertOrderNote(OrderID, string.Format("Order status has been changed to {0}", OS.ToString()), false, DateTime.Now);
+                InsertOrderNote(orderId, string.Format("Order status has been changed to {0}", os.ToString()), false, DateTime.Now);
 
                 if (order.OrderStatus != OrderStatusEnum.Complete &&
-                    OS == OrderStatusEnum.Complete
+                    os == OrderStatusEnum.Complete
                     && notifyCustomer)
                 {
-                    int orderCompletedCustomerNotificationQueuedEmailID = MessageManager.SendOrderCompletedCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageID);
-                    InsertOrderNote(OrderID, string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailID), false, DateTime.Now);
+                    int orderCompletedCustomerNotificationQueuedEmailId = MessageManager.SendOrderCompletedCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageId);
+                    InsertOrderNote(orderId, string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailId), false, DateTime.Now);
                 }
 
                 if (order.OrderStatus != OrderStatusEnum.Cancelled &&
-                    OS == OrderStatusEnum.Cancelled
+                    os == OrderStatusEnum.Cancelled
                     && notifyCustomer)
                 {
-                    int orderCancelledCustomerNotificationQueuedEmailID = MessageManager.SendOrderCancelledCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageID);
-                    InsertOrderNote(OrderID, string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailID), false, DateTime.Now);
+                    int orderCancelledCustomerNotificationQueuedEmailId = MessageManager.SendOrderCancelledCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageId);
+                    InsertOrderNote(orderId, string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId), false, DateTime.Now);
                 }
 
                 return updatedOrder;
@@ -513,11 +562,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Checks order status
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>Validated order</returns>
-        protected static Order CheckOrderStatus(int OrderID)
+        protected static Order CheckOrderStatus(int orderId)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return null;
 
@@ -525,7 +574,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             {
                 if (order.PaymentStatus == PaymentStatusEnum.Authorized || order.PaymentStatus == PaymentStatusEnum.Paid)
                 {
-                    order = SetOrderStatus(OrderID, OrderStatusEnum.Processing, false);
+                    order = SetOrderStatus(orderId, OrderStatusEnum.Processing, false);
                 }
             }
 
@@ -533,7 +582,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             {
                 if (order.ShippingStatus == ShippingStatusEnum.Shipped)
                 {
-                    order = SetOrderStatus(OrderID, OrderStatusEnum.Processing, false);
+                    order = SetOrderStatus(orderId, OrderStatusEnum.Processing, false);
                 }
             }
 
@@ -543,7 +592,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 {
                     if (!CanShip(order))
                     {
-                        order = SetOrderStatus(OrderID, OrderStatusEnum.Complete, true);
+                        order = SetOrderStatus(orderId, OrderStatusEnum.Complete, true);
                     }
                 }
             }
@@ -552,7 +601,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             {
                 //ensure that paid date is set
                 DateTime paidDate = DateTime.Now;
-                order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                     order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                     order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                     order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -561,27 +610,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                     order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                     order.OrderDiscountInCustomerCurrency,
-                    order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                    order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                     order.CustomerCurrencyCode, order.OrderWeight,
-                    order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                    order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                     order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                    order.PaymentMethodID, order.PaymentMethodName,
-                    order.AuthorizationTransactionID,
+                    order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                    order.PaymentMethodId, order.PaymentMethodName,
+                    order.AuthorizationTransactionId,
                     order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                    order.CaptureTransactionID, order.CaptureTransactionResult,
-                    order.SubscriptionTransactionID, order.PurchaseOrderNumber, order.PaymentStatus, paidDate,
+                    order.CaptureTransactionId, order.CaptureTransactionResult,
+                    order.SubscriptionTransactionId, order.PurchaseOrderNumber, order.PaymentStatus, paidDate,
                     order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                     order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                     order.BillingAddress2, order.BillingCity,
-                    order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                    order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                    order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                    order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                     order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                     order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                     order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                    order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                    order.ShippingCountry, order.ShippingCountryID,
-                    order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                    order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                    order.ShippingCountry, order.ShippingCountryId,
+                    order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                     order.TrackingNumber, order.Deleted, order.CreatedOn);
             }
 
@@ -599,14 +648,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
+        /// <param name="orderId">The order identifier</param>
         /// <returns>Order</returns>
-        public static Order GetOrderByID(int OrderID)
+        public static Order GetOrderById(int orderId)
         {
-            if (OrderID == 0)
+            if (orderId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderByID(OrderID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderById(orderId);
             var order = DBMapping(dbItem);
             return order;
         }
@@ -614,14 +663,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order
         /// </summary>
-        /// <param name="OrderGUID">The order identifier</param>
+        /// <param name="orderGuid">The order identifier</param>
         /// <returns>Order</returns>
-        public static Order GetOrderByGUID(Guid OrderGUID)
+        public static Order GetOrderByGuid(Guid orderGuid)
         {
-            if (OrderGUID == Guid.Empty)
+            if (orderGuid == Guid.Empty)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderByGUID(OrderGUID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderByGuid(orderGuid);
             var order = DBMapping(dbItem);
             return order;
         }
@@ -629,13 +678,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Marks an order as deleted
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
-        public static void MarkOrderAsDeleted(int OrderID)
+        /// <param name="orderId">The order identifier</param>
+        public static void MarkOrderAsDeleted(int orderId)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order != null)
             {
-                UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                     order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                    order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                    order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -644,26 +693,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                    order.OrderDiscountInCustomerCurrency,
-                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
                    order.CustomerCurrencyCode, order.OrderWeight,
-                   order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                   order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                    order.PaymentMethodID, order.PaymentMethodName, order.AuthorizationTransactionID,
+                    order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                    order.PaymentMethodId, order.PaymentMethodName, order.AuthorizationTransactionId,
                     order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                    order.CaptureTransactionID, order.CaptureTransactionResult,
-                    order.SubscriptionTransactionID, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
+                    order.CaptureTransactionId, order.CaptureTransactionResult,
+                    order.SubscriptionTransactionId, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
                     order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                     order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                     order.BillingAddress2, order.BillingCity, order.BillingStateProvince,
-                    order.BillingStateProvinceID, order.BillingZipPostalCode, order.BillingCountry,
-                    order.BillingCountryID, order.ShippingStatus,
+                    order.BillingStateProvinceId, order.BillingZipPostalCode, order.BillingCountry,
+                    order.BillingCountryId, order.ShippingStatus,
                     order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                     order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                     order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                    order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                    order.ShippingCountry, order.ShippingCountryID,
-                    order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate, order.TrackingNumber, true,
+                    order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                    order.ShippingCountry, order.ShippingCountryId,
+                    order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate, order.TrackingNumber, true,
                     order.CreatedOn);
             }
         }
@@ -671,30 +720,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Search orders
         /// </summary>
-        /// <param name="StartTime">Order start time; null to load all orders</param>
-        /// <param name="EndTime">Order end time; null to load all orders</param>
-        /// <param name="CustomerEmail">Customer email</param>
-        /// <param name="OS">Order status; null to load all orders</param>
-        /// <param name="PS">Order payment status; null to load all orders</param>
-        /// <param name="SS">Order shippment status; null to load all orders</param>
+        /// <param name="startTime">Order start time; null to load all orders</param>
+        /// <param name="endTime">Order end time; null to load all orders</param>
+        /// <param name="customerEmail">Customer email</param>
+        /// <param name="os">Order status; null to load all orders</param>
+        /// <param name="ps">Order payment status; null to load all orders</param>
+        /// <param name="ss">Order shippment status; null to load all orders</param>
         /// <returns>Order collection</returns>
-        public static OrderCollection SearchOrders(DateTime? StartTime, DateTime? EndTime,
-            string CustomerEmail, OrderStatusEnum? OS, PaymentStatusEnum? PS, 
-            ShippingStatusEnum? SS)
+        public static OrderCollection SearchOrders(DateTime? startTime, DateTime? endTime,
+            string customerEmail, OrderStatusEnum? os, PaymentStatusEnum? ps, 
+            ShippingStatusEnum? ss)
         {
-            int? orderStatusID = null;
-            if (OS.HasValue)
-                orderStatusID = (int)OS.Value;
+            int? orderStatusId = null;
+            if (os.HasValue)
+                orderStatusId = (int)os.Value;
 
-            int? paymentStatusID = null;
-            if (PS.HasValue)
-                paymentStatusID = (int)PS.Value;
+            int? paymentStatusId = null;
+            if (ps.HasValue)
+                paymentStatusId = (int)ps.Value;
 
-            int? shippingStatusID = null;
-            if (SS.HasValue)
-                shippingStatusID = (int)SS.Value;
+            int? shippingStatusId = null;
+            if (ss.HasValue)
+                shippingStatusId = (int)ss.Value;
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchOrders(StartTime, EndTime, CustomerEmail, orderStatusID, paymentStatusID, shippingStatusID);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchOrders(startTime, 
+                endTime, customerEmail, orderStatusId, paymentStatusId, shippingStatusId);
             var orders = DBMapping(dbCollection);
             return orders;
         }
@@ -711,11 +761,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets all orders by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Order collection</returns>
-        public static OrderCollection GetOrdersByCustomerID(int CustomerID)
+        public static OrderCollection GetOrdersByCustomerId(int customerId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrdersByCustomerID(CustomerID);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrdersByCustomerId(customerId);
             var orders = DBMapping(dbCollection);
             return orders;
         }
@@ -723,12 +773,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order by authorization transaction identifier
         /// </summary>
-        /// <param name="AuthorizationTransactionID">Authorization transaction identifier</param>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="authorizationTransactionId">Authorization transaction identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>Order</returns>
-        public static Order GetOrderByAuthorizationTransactionIDAndPaymentMethodID(string AuthorizationTransactionID, int PaymentMethodID)
+        public static Order GetOrderByAuthorizationTransactionIdAndPaymentMethodId(string authorizationTransactionId, 
+            int paymentMethodId)
         {
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderByAuthorizationTransactionIDAndPaymentMethodID(AuthorizationTransactionID, PaymentMethodID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderByAuthorizationTransactionIdAndPaymentMethodId(authorizationTransactionId, paymentMethodId);
             var order = DBMapping(dbItem);
             return order;
         }
@@ -736,11 +787,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets all orders by affiliate identifier
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Order collection</returns>
-        public static OrderCollection GetOrdersByAffiliateID(int AffiliateID)
+        public static OrderCollection GetOrdersByAffiliateId(int affiliateId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrdersByAffiliateID(AffiliateID);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrdersByAffiliateId(affiliateId);
             var orders = DBMapping(dbCollection);
             return orders;
         }
@@ -748,229 +799,286 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Inserts an order
         /// </summary>
-        /// <param name="OrderGUID">The order identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CustomerLanguageID">The customer language identifier</param>
-        /// <param name="CustomerTaxDisplayType">The customer tax display type</param>
-        /// <param name="CustomerIP">The customer IP address</param>
-        /// <param name="OrderSubtotalInclTax">The order subtotal (incl tax)</param>
-        /// <param name="OrderSubtotalExclTax">The order subtotal (excl tax)</param>
-        /// <param name="OrderShippingInclTax">The order shipping (incl tax)</param>
-        /// <param name="OrderShippingExclTax">The order shipping (excl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
-        /// <param name="OrderTax">The order tax</param>
-        /// <param name="OrderTotal">The order total</param>
-        /// <param name="OrderDiscount">The order discount</param>
-        /// <param name="OrderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
-        /// <param name="OrderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
-        /// <param name="OrderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
-        /// <param name="OrderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
-        /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
-        /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
-        /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
-        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
-        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
-        /// <param name="CustomerCurrencyCode">The customer currency code</param>
-        /// <param name="OrderWeight">The order weight</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="OrderStatus">The order status</param>
-        /// <param name="AllowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
-        /// <param name="CardType">The card type</param>
-        /// <param name="CardName">The card name</param>
-        /// <param name="CardNumber">The card number</param>
-        /// <param name="MaskedCreditCardNumber">The masked credit card number</param>
-        /// <param name="CardCVV2">The card CVV2</param>
-        /// <param name="CardExpirationMonth">The card expiration month</param>
-        /// <param name="CardExpirationYear">The card expiration year</param>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="PaymentMethodName">The payment method name</param>
-        /// <param name="AuthorizationTransactionID">The authorization transaction ID</param>
-        /// <param name="AuthorizationTransactionCode">The authorization transaction code</param>
-        /// <param name="AuthorizationTransactionResult">The authorization transaction result</param>
-        /// <param name="CaptureTransactionID">The capture transaction ID</param>
-        /// <param name="CaptureTransactionResult">The capture transaction result</param>
-        /// <param name="SubscriptionTransactionID">The subscription transaction ID</param>
-        /// <param name="PurchaseOrderNumber">The purchase order number</param>
-        /// <param name="PaymentStatus">The payment status</param>
-        /// <param name="PaidDate">The paid date and time</param>
-        /// <param name="BillingFirstName">The billing first name</param>
-        /// <param name="BillingLastName">The billing last name</param>
-        /// <param name="BillingPhoneNumber">he billing phone number</param>
-        /// <param name="BillingEmail">The billing email</param>
-        /// <param name="BillingFaxNumber">The billing fax number</param>
-        /// <param name="BillingCompany">The billing company</param>
-        /// <param name="BillingAddress1">The billing address 1</param>
-        /// <param name="BillingAddress2">The billing address 2</param>
-        /// <param name="BillingCity">The billing city</param>
-        /// <param name="BillingStateProvince">The billing state/province</param>
-        /// <param name="BillingStateProvinceID">The billing state/province identifier</param>
-        /// <param name="BillingZipPostalCode">The billing zip/postal code</param>
-        /// <param name="BillingCountry">The billing country</param>
-        /// <param name="BillingCountryID">The billing country identifier</param>
-        /// <param name="ShippingStatus">The shipping status</param>
-        /// <param name="ShippingFirstName">The shipping first name</param>
-        /// <param name="ShippingLastName">The shipping last name</param>
-        /// <param name="ShippingPhoneNumber">The shipping phone number</param>
-        /// <param name="ShippingEmail">The shipping email</param>
-        /// <param name="ShippingFaxNumber">The shipping fax number</param>
-        /// <param name="ShippingCompany">The shipping  company</param>
-        /// <param name="ShippingAddress1">The shipping address 1</param>
-        /// <param name="ShippingAddress2">The shipping address 2</param>
-        /// <param name="ShippingCity">The shipping city</param>
-        /// <param name="ShippingStateProvince">The shipping state/province</param>
-        /// <param name="ShippingStateProvinceID">The shipping state/province identifier</param>
-        /// <param name="ShippingZipPostalCode">The shipping zip/postal code</param>
-        /// <param name="ShippingCountry">The shipping country</param>
-        /// <param name="ShippingCountryID">The shipping country identifier</param>
-        /// <param name="ShippingMethod">The shipping method</param>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
-        /// <param name="ShippedDate">The shipped date and time</param>
-        /// <param name="TrackingNumber">The tracking number of order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of order creation</param>
+        /// <param name="orderGuid">The order identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="customerLanguageId">The customer language identifier</param>
+        /// <param name="customerTaxDisplayType">The customer tax display type</param>
+        /// <param name="customerIP">The customer IP address</param>
+        /// <param name="orderSubtotalInclTax">The order subtotal (incl tax)</param>
+        /// <param name="orderSubtotalExclTax">The order subtotal (excl tax)</param>
+        /// <param name="orderShippingInclTax">The order shipping (incl tax)</param>
+        /// <param name="orderShippingExclTax">The order shipping (excl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
+        /// <param name="orderTax">The order tax</param>
+        /// <param name="orderTotal">The order total</param>
+        /// <param name="orderDiscount">The order discount</param>
+        /// <param name="orderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
+        /// <param name="orderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
+        /// <param name="orderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
+        /// <param name="orderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
+        /// <param name="orderTaxInCustomerCurrency">The order tax (customer currency)</param>
+        /// <param name="orderTotalInCustomerCurrency">The order total (customer currency)</param>
+        /// <param name="orderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="checkoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="checkoutAttributesXml">The checkout attributes in XML format</param>
+        /// <param name="customerCurrencyCode">The customer currency code</param>
+        /// <param name="orderWeight">The order weight</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="orderStatus">The order status</param>
+        /// <param name="allowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
+        /// <param name="cardType">The card type</param>
+        /// <param name="cardName">The card name</param>
+        /// <param name="cardNumber">The card number</param>
+        /// <param name="maskedCreditCardNumber">The masked credit card number</param>
+        /// <param name="cardCvv2">The card CVV2</param>
+        /// <param name="cardExpirationMonth">The card expiration month</param>
+        /// <param name="cardExpirationYear">The card expiration year</param>
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="paymentMethodName">The payment method name</param>
+        /// <param name="authorizationTransactionId">The authorization transaction identifier</param>
+        /// <param name="authorizationTransactionCode">The authorization transaction code</param>
+        /// <param name="authorizationTransactionResult">The authorization transaction result</param>
+        /// <param name="captureTransactionId">The capture transaction identifier</param>
+        /// <param name="captureTransactionResult">The capture transaction result</param>
+        /// <param name="subscriptionTransactionId">The subscription transaction identifier</param>
+        /// <param name="purchaseOrderNumber">The purchase order number</param>
+        /// <param name="paymentStatus">The payment status</param>
+        /// <param name="paidDate">The paid date and time</param>
+        /// <param name="billingFirstName">The billing first name</param>
+        /// <param name="billingLastName">The billing last name</param>
+        /// <param name="billingPhoneNumber">he billing phone number</param>
+        /// <param name="billingEmail">The billing email</param>
+        /// <param name="billingFaxNumber">The billing fax number</param>
+        /// <param name="billingCompany">The billing company</param>
+        /// <param name="billingAddress1">The billing address 1</param>
+        /// <param name="billingAddress2">The billing address 2</param>
+        /// <param name="billingCity">The billing city</param>
+        /// <param name="billingStateProvince">The billing state/province</param>
+        /// <param name="billingStateProvinceId">The billing state/province identifier</param>
+        /// <param name="billingZipPostalCode">The billing zip/postal code</param>
+        /// <param name="billingCountry">The billing country</param>
+        /// <param name="billingCountryId">The billing country identifier</param>
+        /// <param name="shippingStatus">The shipping status</param>
+        /// <param name="shippingFirstName">The shipping first name</param>
+        /// <param name="shippingLastName">The shipping last name</param>
+        /// <param name="shippingPhoneNumber">The shipping phone number</param>
+        /// <param name="shippingEmail">The shipping email</param>
+        /// <param name="shippingFaxNumber">The shipping fax number</param>
+        /// <param name="shippingCompany">The shipping  company</param>
+        /// <param name="shippingAddress1">The shipping address 1</param>
+        /// <param name="shippingAddress2">The shipping address 2</param>
+        /// <param name="shippingCity">The shipping city</param>
+        /// <param name="shippingStateProvince">The shipping state/province</param>
+        /// <param name="shippingStateProvinceId">The shipping state/province identifier</param>
+        /// <param name="shippingZipPostalCode">The shipping zip/postal code</param>
+        /// <param name="shippingCountry">The shipping country</param>
+        /// <param name="shippingCountryId">The shipping country identifier</param>
+        /// <param name="shippingMethod">The shipping method</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
+        /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="trackingNumber">The tracking number of order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of order creation</param>
         /// <returns>Order</returns>
-        public static Order InsertOrder(Guid OrderGUID, int CustomerID, int CustomerLanguageID,
-            TaxDisplayTypeEnum CustomerTaxDisplayType, string CustomerIP, decimal OrderSubtotalInclTax, decimal OrderSubtotalExclTax,
-            decimal OrderShippingInclTax, decimal OrderShippingExclTax,
-            decimal PaymentMethodAdditionalFeeInclTax, decimal PaymentMethodAdditionalFeeExclTax,
-            decimal OrderTax, decimal OrderTotal, decimal OrderDiscount,
-            decimal OrderSubtotalInclTaxInCustomerCurrency, decimal OrderSubtotalExclTaxInCustomerCurrency,
-            decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
-            decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-            decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency,
-            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
-            string CustomerCurrencyCode, decimal OrderWeight,
-            int AffiliateID, OrderStatusEnum OrderStatus, bool AllowStoringCreditCardNumber, string CardType,
-            string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
-            string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
-            string PaymentMethodName, string AuthorizationTransactionID, string AuthorizationTransactionCode,
-            string AuthorizationTransactionResult, string CaptureTransactionID, string CaptureTransactionResult,
-            string SubscriptionTransactionID, string PurchaseOrderNumber, PaymentStatusEnum PaymentStatus, DateTime? PaidDate,
-            string BillingFirstName, string BillingLastName,
-            string BillingPhoneNumber, string BillingEmail, string BillingFaxNumber, string BillingCompany,
-            string BillingAddress1, string BillingAddress2, string BillingCity, string BillingStateProvince,
-            int BillingStateProvinceID, string BillingZipPostalCode, string BillingCountry,
-            int BillingCountryID, ShippingStatusEnum ShippingStatus, string ShippingFirstName,
-            string ShippingLastName, string ShippingPhoneNumber, string ShippingEmail,
-            string ShippingFaxNumber, string ShippingCompany, string ShippingAddress1,
-            string ShippingAddress2, string ShippingCity, string ShippingStateProvince,
-            int ShippingStateProvinceID, string ShippingZipPostalCode,
-            string ShippingCountry, int ShippingCountryID, string ShippingMethod, int ShippingRateComputationMethodID, DateTime? ShippedDate,
-            string TrackingNumber, bool Deleted, DateTime CreatedOn)
+        public static Order InsertOrder(Guid orderGuid,
+            int customerId,
+            int customerLanguageId,
+            TaxDisplayTypeEnum customerTaxDisplayType,
+            string customerIP,
+            decimal orderSubtotalInclTax,
+            decimal orderSubtotalExclTax,
+            decimal orderShippingInclTax,
+            decimal orderShippingExclTax,
+            decimal paymentMethodAdditionalFeeInclTax,
+            decimal paymentMethodAdditionalFeeExclTax,
+            decimal orderTax,
+            decimal orderTotal,
+            decimal orderDiscount,
+            decimal orderSubtotalInclTaxInCustomerCurrency,
+            decimal orderSubtotalExclTaxInCustomerCurrency,
+            decimal orderShippingInclTaxInCustomerCurrency,
+            decimal orderShippingExclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeInclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+            decimal orderTaxInCustomerCurrency,
+            decimal orderTotalInCustomerCurrency,
+            decimal orderDiscountInCustomerCurrency,
+            string checkoutAttributeDescription,
+            string checkoutAttributesXml,
+            string customerCurrencyCode,
+            decimal orderWeight,
+            int affiliateId, 
+            OrderStatusEnum orderStatus,
+            bool allowStoringCreditCardNumber,
+            string cardType,
+            string cardName,
+            string cardNumber,
+            string maskedCreditCardNumber,
+            string cardCvv2,
+            string cardExpirationMonth,
+            string cardExpirationYear,
+            int paymentMethodId,
+            string paymentMethodName,
+            string authorizationTransactionId,
+            string authorizationTransactionCode,
+            string authorizationTransactionResult,
+            string captureTransactionId,
+            string captureTransactionResult,
+            string subscriptionTransactionId,
+            string purchaseOrderNumber,
+            PaymentStatusEnum paymentStatus, 
+            DateTime? paidDate,
+            string billingFirstName,
+            string billingLastName,
+            string billingPhoneNumber,
+            string billingEmail,
+            string billingFaxNumber,
+            string billingCompany,
+            string billingAddress1,
+            string billingAddress2,
+            string billingCity,
+            string billingStateProvince,
+            int billingStateProvinceId,
+            string billingZipPostalCode,
+            string billingCountry,
+            int billingCountryId,
+            ShippingStatusEnum shippingStatus, 
+            string shippingFirstName,
+            string shippingLastName,
+            string shippingPhoneNumber,
+            string shippingEmail,
+            string shippingFaxNumber,
+            string shippingCompany,
+            string shippingAddress1,
+            string shippingAddress2,
+            string shippingCity,
+            string shippingStateProvince,
+            int shippingStateProvinceId,
+            string shippingZipPostalCode,
+            string shippingCountry,
+            int shippingCountryId,
+            string shippingMethod,
+            int shippingRateComputationMethodId,
+            DateTime? shippedDate,
+            string trackingNumber,
+            bool deleted,
+            DateTime createdOn)
         {
-            if (CustomerIP == null)
-                CustomerIP = string.Empty;
-            if (CheckoutAttributeDescription == null)
-                CheckoutAttributeDescription = string.Empty;
-            if (CheckoutAttributesXML == null)
-                CheckoutAttributesXML = string.Empty;
-            if (CardType == null)
-                CardType = string.Empty;
-            if (CardName == null)
-                CardName = string.Empty;
-            if (CardNumber == null)
-                CardNumber = string.Empty;
-            if (CardCVV2 == null)
-                CardCVV2 = string.Empty;
-            if (CardExpirationMonth == null)
-                CardExpirationMonth = string.Empty;
-            if (CardExpirationYear == null)
-                CardExpirationYear = string.Empty;
-            if (PaymentMethodName == null)
-                PaymentMethodName = string.Empty;
-            if (AuthorizationTransactionID == null)
-                AuthorizationTransactionID = string.Empty;
-            if (AuthorizationTransactionCode == null)
-                AuthorizationTransactionCode = string.Empty;
-            if (AuthorizationTransactionResult == null)
-                AuthorizationTransactionResult = string.Empty;
-            if (CaptureTransactionID == null)
-                CaptureTransactionID = string.Empty;
-            if (CaptureTransactionResult == null)
-                CaptureTransactionResult = string.Empty;
-            if (SubscriptionTransactionID == null)
-                SubscriptionTransactionID = string.Empty;
-            if (PurchaseOrderNumber == null)
-                PurchaseOrderNumber = string.Empty;
-            if (BillingFirstName == null)
-                BillingFirstName = string.Empty;
-            if (BillingLastName == null)
-                BillingLastName = string.Empty;
-            if (BillingPhoneNumber == null)
-                BillingPhoneNumber = string.Empty;
-            if (BillingEmail == null)
-                BillingEmail = string.Empty;
-            if (BillingFaxNumber == null)
-                BillingFaxNumber = string.Empty;
-            if (BillingCompany == null)
-                BillingCompany = string.Empty;
-            if (BillingZipPostalCode == null)
-                BillingZipPostalCode = string.Empty;
-            if (BillingCountry == null)
-                BillingCountry = string.Empty;
-            if (ShippingLastName == null)
-                ShippingLastName = string.Empty;
-            if (ShippingPhoneNumber == null)
-                ShippingPhoneNumber = string.Empty;
-            if (ShippingEmail == null)
-                ShippingEmail = string.Empty;
-            if (ShippingFaxNumber == null)
-                ShippingFaxNumber = string.Empty;
-            if (ShippingCompany == null)
-                ShippingCompany = string.Empty;
-            if (ShippingAddress1 == null)
-                ShippingAddress1 = string.Empty;
-            if (ShippingAddress2 == null)
-                ShippingAddress2 = string.Empty;
-            if (ShippingCity == null)
-                ShippingCity = string.Empty;
-            if (ShippingStateProvince == null)
-                ShippingStateProvince = string.Empty;
-            if (ShippingZipPostalCode == null)
-                ShippingZipPostalCode = string.Empty;
-            if (ShippingCountry == null)
-                ShippingCountry = string.Empty;
-            if (ShippingMethod == null)
-                ShippingMethod = string.Empty;
-            if (PaidDate.HasValue)
-                PaidDate = DateTimeHelper.ConvertToUtcTime(PaidDate.Value);
-            if (ShippedDate.HasValue)
-                ShippedDate = DateTimeHelper.ConvertToUtcTime(ShippedDate.Value);
-            if (TrackingNumber == null)
-                TrackingNumber = string.Empty;
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            if (customerIP == null)
+                customerIP = string.Empty;
+            if (checkoutAttributeDescription == null)
+                checkoutAttributeDescription = string.Empty;
+            if (checkoutAttributesXml == null)
+                checkoutAttributesXml = string.Empty;
+            if (cardType == null)
+                cardType = string.Empty;
+            if (cardName == null)
+                cardName = string.Empty;
+            if (cardNumber == null)
+                cardNumber = string.Empty;
+            if (cardCvv2 == null)
+                cardCvv2 = string.Empty;
+            if (cardExpirationMonth == null)
+                cardExpirationMonth = string.Empty;
+            if (cardExpirationYear == null)
+                cardExpirationYear = string.Empty;
+            if (paymentMethodName == null)
+                paymentMethodName = string.Empty;
+            if (authorizationTransactionId == null)
+                authorizationTransactionId = string.Empty;
+            if (authorizationTransactionCode == null)
+                authorizationTransactionCode = string.Empty;
+            if (authorizationTransactionResult == null)
+                authorizationTransactionResult = string.Empty;
+            if (captureTransactionId == null)
+                captureTransactionId = string.Empty;
+            if (captureTransactionResult == null)
+                captureTransactionResult = string.Empty;
+            if (subscriptionTransactionId == null)
+                subscriptionTransactionId = string.Empty;
+            if (purchaseOrderNumber == null)
+                purchaseOrderNumber = string.Empty;
+            if (billingFirstName == null)
+                billingFirstName = string.Empty;
+            if (billingLastName == null)
+                billingLastName = string.Empty;
+            if (billingPhoneNumber == null)
+                billingPhoneNumber = string.Empty;
+            if (billingEmail == null)
+                billingEmail = string.Empty;
+            if (billingFaxNumber == null)
+                billingFaxNumber = string.Empty;
+            if (billingCompany == null)
+                billingCompany = string.Empty;
+            if (billingZipPostalCode == null)
+                billingZipPostalCode = string.Empty;
+            if (billingCountry == null)
+                billingCountry = string.Empty;
+            if (shippingLastName == null)
+                shippingLastName = string.Empty;
+            if (shippingPhoneNumber == null)
+                shippingPhoneNumber = string.Empty;
+            if (shippingEmail == null)
+                shippingEmail = string.Empty;
+            if (shippingFaxNumber == null)
+                shippingFaxNumber = string.Empty;
+            if (shippingCompany == null)
+                shippingCompany = string.Empty;
+            if (shippingAddress1 == null)
+                shippingAddress1 = string.Empty;
+            if (shippingAddress2 == null)
+                shippingAddress2 = string.Empty;
+            if (shippingCity == null)
+                shippingCity = string.Empty;
+            if (shippingStateProvince == null)
+                shippingStateProvince = string.Empty;
+            if (shippingZipPostalCode == null)
+                shippingZipPostalCode = string.Empty;
+            if (shippingCountry == null)
+                shippingCountry = string.Empty;
+            if (shippingMethod == null)
+                shippingMethod = string.Empty;
+            if (paidDate.HasValue)
+                paidDate = DateTimeHelper.ConvertToUtcTime(paidDate.Value);
+            if (shippedDate.HasValue)
+                shippedDate = DateTimeHelper.ConvertToUtcTime(shippedDate.Value);
+            if (trackingNumber == null)
+                trackingNumber = string.Empty;
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrder(OrderGUID, CustomerID, CustomerLanguageID,
-             (int)CustomerTaxDisplayType, CustomerIP, OrderSubtotalInclTax, OrderSubtotalExclTax,
-             OrderShippingInclTax, OrderShippingExclTax,
-             PaymentMethodAdditionalFeeInclTax, PaymentMethodAdditionalFeeExclTax,
-             OrderTax, OrderTotal, OrderDiscount,
-             OrderSubtotalInclTaxInCustomerCurrency, OrderSubtotalExclTaxInCustomerCurrency,
-             OrderShippingInclTaxInCustomerCurrency, OrderShippingExclTaxInCustomerCurrency,
-             PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-             OrderTaxInCustomerCurrency, OrderTotalInCustomerCurrency, 
-             OrderDiscountInCustomerCurrency,
-             CheckoutAttributeDescription, CheckoutAttributesXML,
-             CustomerCurrencyCode, OrderWeight,
-             AffiliateID, (int)OrderStatus, AllowStoringCreditCardNumber,
-             CardType, CardName, CardNumber, MaskedCreditCardNumber, CardCVV2,
-             CardExpirationMonth, CardExpirationYear, PaymentMethodID,
-             PaymentMethodName, AuthorizationTransactionID, AuthorizationTransactionCode,
-             AuthorizationTransactionResult, CaptureTransactionID, CaptureTransactionResult,
-             SubscriptionTransactionID, PurchaseOrderNumber,
-             (int)PaymentStatus, PaidDate, BillingFirstName, BillingLastName,
-             BillingPhoneNumber, BillingEmail, BillingFaxNumber, BillingCompany,
-             BillingAddress1, BillingAddress2, BillingCity, BillingStateProvince, BillingStateProvinceID,
-             BillingZipPostalCode, BillingCountry, BillingCountryID, (int)ShippingStatus, ShippingFirstName, ShippingLastName,
-             ShippingPhoneNumber, ShippingEmail,
-             ShippingFaxNumber, ShippingCompany, ShippingAddress1,
-             ShippingAddress2, ShippingCity, ShippingStateProvince, ShippingStateProvinceID, ShippingZipPostalCode,
-             ShippingCountry, ShippingCountryID, ShippingMethod, ShippingRateComputationMethodID, ShippedDate,
-             TrackingNumber, Deleted, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrder(orderGuid,
+                customerId, customerLanguageId, (int)customerTaxDisplayType, 
+                customerIP, orderSubtotalInclTax, orderSubtotalExclTax,
+                orderShippingInclTax, orderShippingExclTax,
+             paymentMethodAdditionalFeeInclTax, paymentMethodAdditionalFeeExclTax,
+             orderTax, orderTotal, orderDiscount,
+             orderSubtotalInclTaxInCustomerCurrency, orderSubtotalExclTaxInCustomerCurrency,
+             orderShippingInclTaxInCustomerCurrency, orderShippingExclTaxInCustomerCurrency,
+             paymentMethodAdditionalFeeInclTaxInCustomerCurrency, paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+             orderTaxInCustomerCurrency, orderTotalInCustomerCurrency, 
+             orderDiscountInCustomerCurrency,
+             checkoutAttributeDescription, checkoutAttributesXml,
+             customerCurrencyCode, orderWeight,
+             affiliateId, (int)orderStatus, allowStoringCreditCardNumber,
+             cardType, cardName, cardNumber, maskedCreditCardNumber, cardCvv2,
+             cardExpirationMonth, cardExpirationYear, paymentMethodId,
+             paymentMethodName, authorizationTransactionId, authorizationTransactionCode,
+             authorizationTransactionResult, captureTransactionId, captureTransactionResult,
+             subscriptionTransactionId, purchaseOrderNumber,
+             (int)paymentStatus, paidDate, billingFirstName, billingLastName,
+             billingPhoneNumber, billingEmail, billingFaxNumber, billingCompany,
+             billingAddress1, billingAddress2, billingCity, billingStateProvince, 
+             billingStateProvinceId, billingZipPostalCode, billingCountry, 
+             billingCountryId, (int)shippingStatus, shippingFirstName, shippingLastName,
+             shippingPhoneNumber, shippingEmail,
+             shippingFaxNumber, shippingCompany, shippingAddress1,
+             shippingAddress2, shippingCity, shippingStateProvince, shippingStateProvinceId, 
+             shippingZipPostalCode, shippingCountry, shippingCountryId, 
+             shippingMethod, shippingRateComputationMethodId, shippedDate,
+             trackingNumber, deleted, createdOn);
 
             var order = DBMapping(dbItem);
             return order;
@@ -979,155 +1087,214 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Updates the order
         /// </summary>
-        /// <param name="OrderID">he order identifier</param>
-        /// <param name="OrderGUID">The order identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CustomerLanguageID">The customer language identifier</param>
-        /// <param name="CustomerTaxDisplayType">The customer tax display type</param>
-        /// <param name="CustomerIP">The customer IP address</param>
-        /// <param name="OrderSubtotalInclTax">The order subtotal (incl tax)</param>
-        /// <param name="OrderSubtotalExclTax">The order subtotal (excl tax)</param>
-        /// <param name="OrderShippingInclTax">The order shipping (incl tax)</param>
-        /// <param name="OrderShippingExclTax">The order shipping (excl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
-        /// <param name="OrderTax">The order tax</param>
-        /// <param name="OrderTotal">The order total</param>
-        /// <param name="OrderDiscount">The order discount</param>
-        /// <param name="OrderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
-        /// <param name="OrderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
-        /// <param name="OrderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
-        /// <param name="OrderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
-        /// <param name="PaymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
-        /// <param name="OrderTaxInCustomerCurrency">The order tax (customer currency)</param>
-        /// <param name="OrderTotalInCustomerCurrency">The order total (customer currency)</param>
-        /// <param name="OrderDiscountInCustomerCurrency">The order discount (customer currency)</param>
-        /// <param name="CheckoutAttributeDescription">The checkout attribute description</param>
-        /// <param name="CheckoutAttributesXML">The checkout attributes in XML format</param>
-        /// <param name="CustomerCurrencyCode">The customer currency code</param>
-        /// <param name="OrderWeight">The order weight</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="OrderStatus">The order status</param>
-        /// <param name="AllowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
-        /// <param name="CardType">The card type</param>
-        /// <param name="CardName">The card name</param>
-        /// <param name="CardNumber">The card number</param>
-        /// <param name="MaskedCreditCardNumber">The masked credit card number</param>
-        /// <param name="CardCVV2">The card CVV2</param>
-        /// <param name="CardExpirationMonth">The card expiration month</param>
-        /// <param name="CardExpirationYear">The card expiration year</param>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="PaymentMethodName">The payment method name</param>
-        /// <param name="AuthorizationTransactionID">The authorization transaction ID</param>
-        /// <param name="AuthorizationTransactionCode">The authorization transaction code</param>
-        /// <param name="AuthorizationTransactionResult">The authorization transaction result</param>
-        /// <param name="CaptureTransactionID">The capture transaction ID</param>
-        /// <param name="CaptureTransactionResult">The capture transaction result</param>
-        /// <param name="SubscriptionTransactionID">The subscription transaction ID</param>
-        /// <param name="PurchaseOrderNumber">The purchase order number</param>
-        /// <param name="PaymentStatus">The payment status</param>
-        /// <param name="PaidDate">The paid date and time</param>
-        /// <param name="BillingFirstName">The billing first name</param>
-        /// <param name="BillingLastName">The billing last name</param>
-        /// <param name="BillingPhoneNumber">he billing phone number</param>
-        /// <param name="BillingEmail">The billing email</param>
-        /// <param name="BillingFaxNumber">The billing fax number</param>
-        /// <param name="BillingCompany">The billing company</param>
-        /// <param name="BillingAddress1">The billing address 1</param>
-        /// <param name="BillingAddress2">The billing address 2</param>
-        /// <param name="BillingCity">The billing city</param>
-        /// <param name="BillingStateProvince">The billing state/province</param>
-        /// <param name="BillingStateProvinceID">The billing state/province identifier</param>
-        /// <param name="BillingZipPostalCode">The billing zip/postal code</param>
-        /// <param name="BillingCountry">The billing country</param>
-        /// <param name="BillingCountryID">The billing country identifier</param>
-        /// <param name="ShippingStatus">The shipping status</param>
-        /// <param name="ShippingFirstName">The shipping first name</param>
-        /// <param name="ShippingLastName">The shipping last name</param>
-        /// <param name="ShippingPhoneNumber">The shipping phone number</param>
-        /// <param name="ShippingEmail">The shipping email</param>
-        /// <param name="ShippingFaxNumber">The shipping fax number</param>
-        /// <param name="ShippingCompany">The shipping  company</param>
-        /// <param name="ShippingAddress1">The shipping address 1</param>
-        /// <param name="ShippingAddress2">The shipping address 2</param>
-        /// <param name="ShippingCity">The shipping city</param>
-        /// <param name="ShippingStateProvince">The shipping state/province</param>
-        /// <param name="ShippingStateProvinceID">The shipping state/province identifier</param>
-        /// <param name="ShippingZipPostalCode">The shipping zip/postal code</param>
-        /// <param name="ShippingCountry">The shipping country</param>
-        /// <param name="ShippingCountryID">The shipping country identifier</param>
-        /// <param name="ShippingMethod">The shipping method</param>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
-        /// <param name="ShippedDate">The shipped date and time</param>
-        /// <param name="TrackingNumber">The tracking number of order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of order creation</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="orderGuid">The order identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="customerLanguageId">The customer language identifier</param>
+        /// <param name="customerTaxDisplayType">The customer tax display type</param>
+        /// <param name="customerIP">The customer IP address</param>
+        /// <param name="orderSubtotalInclTax">The order subtotal (incl tax)</param>
+        /// <param name="orderSubtotalExclTax">The order subtotal (excl tax)</param>
+        /// <param name="orderShippingInclTax">The order shipping (incl tax)</param>
+        /// <param name="orderShippingExclTax">The order shipping (excl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTax">The payment method additional fee (incl tax)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTax">The payment method additional fee (excl tax)</param>
+        /// <param name="orderTax">The order tax</param>
+        /// <param name="orderTotal">The order total</param>
+        /// <param name="orderDiscount">The order discount</param>
+        /// <param name="orderSubtotalInclTaxInCustomerCurrency">The order subtotal incl tax (customer currency)</param>
+        /// <param name="orderSubtotalExclTaxInCustomerCurrency">The order subtotal excl tax (customer currency)</param>
+        /// <param name="orderShippingInclTaxInCustomerCurrency">The order shipping incl tax (customer currency)</param>
+        /// <param name="orderShippingExclTaxInCustomerCurrency">The order shipping excl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeInclTaxInCustomerCurrency">The payment method additional fee incl tax (customer currency)</param>
+        /// <param name="paymentMethodAdditionalFeeExclTaxInCustomerCurrency">The payment method additional fee excl tax (customer currency)</param>
+        /// <param name="orderTaxInCustomerCurrency">The order tax (customer currency)</param>
+        /// <param name="orderTotalInCustomerCurrency">The order total (customer currency)</param>
+        /// <param name="orderDiscountInCustomerCurrency">The order discount (customer currency)</param>
+        /// <param name="checkoutAttributeDescription">The checkout attribute description</param>
+        /// <param name="checkoutAttributesXml">The checkout attributes in XML format</param>
+        /// <param name="customerCurrencyCode">The customer currency code</param>
+        /// <param name="orderWeight">The order weight</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="orderStatus">The order status</param>
+        /// <param name="allowStoringCreditCardNumber">The value indicating whether storing of credit card number is allowed</param>
+        /// <param name="cardType">The card type</param>
+        /// <param name="cardName">The card name</param>
+        /// <param name="cardNumber">The card number</param>
+        /// <param name="maskedCreditCardNumber">The masked credit card number</param>
+        /// <param name="cardCvv2">The card CVV2</param>
+        /// <param name="cardExpirationMonth">The card expiration month</param>
+        /// <param name="cardExpirationYear">The card expiration year</param>
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="paymentMethodName">The payment method name</param>
+        /// <param name="authorizationTransactionId">The authorization transaction identifier</param>
+        /// <param name="authorizationTransactionCode">The authorization transaction code</param>
+        /// <param name="authorizationTransactionResult">The authorization transaction result</param>
+        /// <param name="captureTransactionId">The capture transaction identifier</param>
+        /// <param name="captureTransactionResult">The capture transaction result</param>
+        /// <param name="subscriptionTransactionId">The subscription transaction identifier</param>
+        /// <param name="purchaseOrderNumber">The purchase order number</param>
+        /// <param name="paymentStatus">The payment status</param>
+        /// <param name="paidDate">The paid date and time</param>
+        /// <param name="billingFirstName">The billing first name</param>
+        /// <param name="billingLastName">The billing last name</param>
+        /// <param name="billingPhoneNumber">he billing phone number</param>
+        /// <param name="billingEmail">The billing email</param>
+        /// <param name="billingFaxNumber">The billing fax number</param>
+        /// <param name="billingCompany">The billing company</param>
+        /// <param name="billingAddress1">The billing address 1</param>
+        /// <param name="billingAddress2">The billing address 2</param>
+        /// <param name="billingCity">The billing city</param>
+        /// <param name="billingStateProvince">The billing state/province</param>
+        /// <param name="billingStateProvinceId">The billing state/province identifier</param>
+        /// <param name="billingZipPostalCode">The billing zip/postal code</param>
+        /// <param name="billingCountry">The billing country</param>
+        /// <param name="billingCountryId">The billing country identifier</param>
+        /// <param name="shippingStatus">The shipping status</param>
+        /// <param name="shippingFirstName">The shipping first name</param>
+        /// <param name="shippingLastName">The shipping last name</param>
+        /// <param name="shippingPhoneNumber">The shipping phone number</param>
+        /// <param name="shippingEmail">The shipping email</param>
+        /// <param name="shippingFaxNumber">The shipping fax number</param>
+        /// <param name="shippingCompany">The shipping  company</param>
+        /// <param name="shippingAddress1">The shipping address 1</param>
+        /// <param name="shippingAddress2">The shipping address 2</param>
+        /// <param name="shippingCity">The shipping city</param>
+        /// <param name="shippingStateProvince">The shipping state/province</param>
+        /// <param name="shippingStateProvinceId">The shipping state/province identifier</param>
+        /// <param name="shippingZipPostalCode">The shipping zip/postal code</param>
+        /// <param name="shippingCountry">The shipping country</param>
+        /// <param name="shippingCountryId">The shipping country identifier</param>
+        /// <param name="shippingMethod">The shipping method</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
+        /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="trackingNumber">The tracking number of order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of order creation</param>
         /// <returns>Order</returns>
-        public static Order UpdateOrder(int OrderID, Guid OrderGUID, int CustomerID, int CustomerLanguageID,
-            TaxDisplayTypeEnum CustomerTaxDisplayType, string CustomerIP, decimal OrderSubtotalInclTax, decimal OrderSubtotalExclTax,
-            decimal OrderShippingInclTax, decimal OrderShippingExclTax,
-            decimal PaymentMethodAdditionalFeeInclTax, decimal PaymentMethodAdditionalFeeExclTax,
-            decimal OrderTax, decimal OrderTotal, decimal OrderDiscount,
-            decimal OrderSubtotalInclTaxInCustomerCurrency, decimal OrderSubtotalExclTaxInCustomerCurrency,
-            decimal OrderShippingInclTaxInCustomerCurrency, decimal OrderShippingExclTaxInCustomerCurrency,
-            decimal PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, decimal PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-            decimal OrderTaxInCustomerCurrency, decimal OrderTotalInCustomerCurrency,
-            decimal OrderDiscountInCustomerCurrency,
-            string CheckoutAttributeDescription, string CheckoutAttributesXML, 
-            string CustomerCurrencyCode, decimal OrderWeight,
-            int AffiliateID, OrderStatusEnum OrderStatus, bool AllowStoringCreditCardNumber,
-            string CardType, string CardName, string CardNumber, string MaskedCreditCardNumber, string CardCVV2,
-            string CardExpirationMonth, string CardExpirationYear, int PaymentMethodID,
-            string PaymentMethodName, string AuthorizationTransactionID, string AuthorizationTransactionCode,
-            string AuthorizationTransactionResult, string CaptureTransactionID, string CaptureTransactionResult,
-            string SubscriptionTransactionID, string PurchaseOrderNumber, PaymentStatusEnum PaymentStatus, DateTime? PaidDate,
-            string BillingFirstName, string BillingLastName,
-            string BillingPhoneNumber, string BillingEmail, string BillingFaxNumber, string BillingCompany,
-            string BillingAddress1, string BillingAddress2, string BillingCity, string BillingStateProvince,
-            int BillingStateProvinceID, string BillingZipPostalCode, string BillingCountry,
-            int BillingCountryID, ShippingStatusEnum ShippingStatus, string ShippingFirstName,
-            string ShippingLastName, string ShippingPhoneNumber, string ShippingEmail,
-            string ShippingFaxNumber, string ShippingCompany, string ShippingAddress1,
-            string ShippingAddress2, string ShippingCity, string ShippingStateProvince,
-            int ShippingStateProvinceID, string ShippingZipPostalCode,
-            string ShippingCountry, int ShippingCountryID, string ShippingMethod, int ShippingRateComputationMethodID, DateTime? ShippedDate,
-            string TrackingNumber, bool Deleted, DateTime CreatedOn)
+        public static Order UpdateOrder(int orderId,
+            Guid orderGuid,
+            int customerId,
+            int customerLanguageId,
+            TaxDisplayTypeEnum customerTaxDisplayType,
+            string customerIP,
+            decimal orderSubtotalInclTax,
+            decimal orderSubtotalExclTax,
+            decimal orderShippingInclTax,
+            decimal orderShippingExclTax,
+            decimal paymentMethodAdditionalFeeInclTax,
+            decimal paymentMethodAdditionalFeeExclTax,
+            decimal orderTax,
+            decimal orderTotal,
+            decimal orderDiscount,
+            decimal orderSubtotalInclTaxInCustomerCurrency,
+            decimal orderSubtotalExclTaxInCustomerCurrency,
+            decimal orderShippingInclTaxInCustomerCurrency,
+            decimal orderShippingExclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeInclTaxInCustomerCurrency,
+            decimal paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+            decimal orderTaxInCustomerCurrency,
+            decimal orderTotalInCustomerCurrency,
+            decimal orderDiscountInCustomerCurrency,
+            string checkoutAttributeDescription,
+            string checkoutAttributesXml,
+            string customerCurrencyCode,
+            decimal orderWeight,
+            int affiliateId,
+            OrderStatusEnum orderStatus,
+            bool allowStoringCreditCardNumber,
+            string cardType,
+            string cardName,
+            string cardNumber,
+            string maskedCreditCardNumber,
+            string cardCvv2,
+            string cardExpirationMonth,
+            string cardExpirationYear,
+            int paymentMethodId,
+            string paymentMethodName,
+            string authorizationTransactionId,
+            string authorizationTransactionCode,
+            string authorizationTransactionResult,
+            string captureTransactionId,
+            string captureTransactionResult,
+            string subscriptionTransactionId,
+            string purchaseOrderNumber,
+            PaymentStatusEnum paymentStatus,
+            DateTime? paidDate,
+            string billingFirstName,
+            string billingLastName,
+            string billingPhoneNumber,
+            string billingEmail,
+            string billingFaxNumber,
+            string billingCompany,
+            string billingAddress1,
+            string billingAddress2,
+            string billingCity,
+            string billingStateProvince,
+            int billingStateProvinceId,
+            string billingZipPostalCode,
+            string billingCountry,
+            int billingCountryId,
+            ShippingStatusEnum shippingStatus,
+            string shippingFirstName,
+            string shippingLastName,
+            string shippingPhoneNumber,
+            string shippingEmail,
+            string shippingFaxNumber,
+            string shippingCompany,
+            string shippingAddress1,
+            string shippingAddress2,
+            string shippingCity,
+            string shippingStateProvince,
+            int shippingStateProvinceId,
+            string shippingZipPostalCode,
+            string shippingCountry,
+            int shippingCountryId,
+            string shippingMethod,
+            int shippingRateComputationMethodId,
+            DateTime? shippedDate,
+            string trackingNumber,
+            bool deleted,
+            DateTime createdOn)
         {
-            if (PaidDate.HasValue)
-                PaidDate = DateTimeHelper.ConvertToUtcTime(PaidDate.Value);
-            if (ShippedDate.HasValue)
-                ShippedDate = DateTimeHelper.ConvertToUtcTime(ShippedDate.Value);
-            if (TrackingNumber == null)
-                TrackingNumber = string.Empty;
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            if (paidDate.HasValue)
+                paidDate = DateTimeHelper.ConvertToUtcTime(paidDate.Value);
+            if (shippedDate.HasValue)
+                shippedDate = DateTimeHelper.ConvertToUtcTime(shippedDate.Value);
+            if (trackingNumber == null)
+                trackingNumber = string.Empty;
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrder(OrderID, OrderGUID, CustomerID, CustomerLanguageID,
-                (int)CustomerTaxDisplayType, CustomerIP, OrderSubtotalInclTax, OrderSubtotalExclTax,
-                OrderShippingInclTax, OrderShippingExclTax,
-                PaymentMethodAdditionalFeeInclTax, PaymentMethodAdditionalFeeExclTax,
-                OrderTax, OrderTotal, OrderDiscount,
-                OrderSubtotalInclTaxInCustomerCurrency, OrderSubtotalExclTaxInCustomerCurrency,
-                OrderShippingInclTaxInCustomerCurrency, OrderShippingExclTaxInCustomerCurrency,
-                PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-                OrderTaxInCustomerCurrency, OrderTotalInCustomerCurrency,
-                OrderDiscountInCustomerCurrency, CheckoutAttributeDescription, 
-                CheckoutAttributesXML, CustomerCurrencyCode, OrderWeight,
-                AffiliateID, (int)OrderStatus, AllowStoringCreditCardNumber,
-                CardType, CardName, CardNumber, MaskedCreditCardNumber, CardCVV2,
-                CardExpirationMonth, CardExpirationYear, PaymentMethodID,
-                PaymentMethodName, AuthorizationTransactionID, AuthorizationTransactionCode,
-                AuthorizationTransactionResult, CaptureTransactionID, CaptureTransactionResult,
-                SubscriptionTransactionID, PurchaseOrderNumber,
-                (int)PaymentStatus, PaidDate, BillingFirstName, BillingLastName,
-                BillingPhoneNumber, BillingEmail, BillingFaxNumber, BillingCompany,
-                BillingAddress1, BillingAddress2, BillingCity, BillingStateProvince, BillingStateProvinceID,
-                BillingZipPostalCode, BillingCountry, BillingCountryID, (int)ShippingStatus, ShippingFirstName, ShippingLastName,
-                ShippingPhoneNumber, ShippingEmail,
-                ShippingFaxNumber, ShippingCompany, ShippingAddress1,
-                ShippingAddress2, ShippingCity, ShippingStateProvince, ShippingStateProvinceID, ShippingZipPostalCode,
-                ShippingCountry, ShippingCountryID, ShippingMethod, ShippingRateComputationMethodID, ShippedDate,
-                TrackingNumber, Deleted, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrder(orderId,
+                orderGuid, customerId, customerLanguageId,
+                (int)customerTaxDisplayType, customerIP, orderSubtotalInclTax, 
+                orderSubtotalExclTax, orderShippingInclTax, orderShippingExclTax,
+                paymentMethodAdditionalFeeInclTax, paymentMethodAdditionalFeeExclTax,
+                orderTax, orderTotal, orderDiscount,
+                orderSubtotalInclTaxInCustomerCurrency, orderSubtotalExclTaxInCustomerCurrency,
+                orderShippingInclTaxInCustomerCurrency, orderShippingExclTaxInCustomerCurrency,
+                paymentMethodAdditionalFeeInclTaxInCustomerCurrency, paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+                orderTaxInCustomerCurrency, orderTotalInCustomerCurrency,
+                orderDiscountInCustomerCurrency, checkoutAttributeDescription, 
+                checkoutAttributesXml, customerCurrencyCode, orderWeight,
+                affiliateId, (int)orderStatus, allowStoringCreditCardNumber,
+                cardType, cardName, cardNumber, maskedCreditCardNumber, cardCvv2,
+                cardExpirationMonth, cardExpirationYear, paymentMethodId,
+                paymentMethodName, authorizationTransactionId, authorizationTransactionCode,
+                authorizationTransactionResult, captureTransactionId, captureTransactionResult,
+                subscriptionTransactionId, purchaseOrderNumber,
+                (int)paymentStatus, paidDate, billingFirstName, billingLastName,
+                billingPhoneNumber, billingEmail, billingFaxNumber, billingCompany,
+                billingAddress1, billingAddress2, billingCity, billingStateProvince, 
+                billingStateProvinceId, billingZipPostalCode, billingCountry, 
+                billingCountryId, (int)shippingStatus, shippingFirstName, shippingLastName,
+                shippingPhoneNumber, shippingEmail,
+                shippingFaxNumber, shippingCompany, shippingAddress1,
+                shippingAddress2, shippingCity, shippingStateProvince, 
+                shippingStateProvinceId, shippingZipPostalCode,
+                shippingCountry, shippingCountryId, shippingMethod, 
+                shippingRateComputationMethodId, shippedDate,
+                trackingNumber, deleted, createdOn);
 
             var order = DBMapping(dbItem);
             return order;
@@ -1136,15 +1303,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Set tracking number of order
         /// </summary>
-        /// <param name="OrderID">Order note identifier</param>
-        /// <param name="TrackingNumber">The tracking number of order</param>
-        public static void SetOrderTrackingNumber(int OrderID, string TrackingNumber)
+        /// <param name="orderId">Order note identifier</param>
+        /// <param name="trackingNumber">The tracking number of order</param>
+        public static void SetOrderTrackingNumber(int orderId, string trackingNumber)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order != null)
             {
                 UpdateOrder(
-                   order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                   order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                    order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                    order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                    order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -1153,27 +1320,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                    order.OrderDiscountInCustomerCurrency,
-                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                    order.CustomerCurrencyCode, order.OrderWeight,
-                   order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                   order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                   order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                   order.PaymentMethodID, order.PaymentMethodName, order.AuthorizationTransactionID,
+                   order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                   order.PaymentMethodId, order.PaymentMethodName, order.AuthorizationTransactionId,
                    order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                   order.CaptureTransactionID, order.CaptureTransactionResult,
-                   order.SubscriptionTransactionID, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
+                   order.CaptureTransactionId, order.CaptureTransactionResult,
+                   order.SubscriptionTransactionId, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
                    order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                    order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                    order.BillingAddress2, order.BillingCity, order.BillingStateProvince,
-                   order.BillingStateProvinceID, order.BillingZipPostalCode, order.BillingCountry,
-                   order.BillingCountryID, order.ShippingStatus,
+                   order.BillingStateProvinceId, order.BillingZipPostalCode, order.BillingCountry,
+                   order.BillingCountryId, order.ShippingStatus,
                    order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                    order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                   order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                   order.ShippingCountry, order.ShippingCountryID,
-                   order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
-                   TrackingNumber, order.Deleted, order.CreatedOn);
+                   order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                   order.ShippingCountry, order.ShippingCountryId,
+                   order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                   trackingNumber, order.Deleted, order.CreatedOn);
             }
         }
 
@@ -1184,14 +1351,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order product variant
         /// </summary>
-        /// <param name="OrderProductVariantID">Order product variant identifier</param>
+        /// <param name="orderProductVariantId">Order product variant identifier</param>
         /// <returns>Order product variant</returns>
-        public static OrderProductVariant GetOrderProductVariantByID(int OrderProductVariantID)
+        public static OrderProductVariant GetOrderProductVariantById(int orderProductVariantId)
         {
-            if (OrderProductVariantID == 0)
+            if (orderProductVariantId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderProductVariantByID(OrderProductVariantID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderProductVariantById(orderProductVariantId);
             var orderProductVariant = DBMapping(dbItem);
             return orderProductVariant;
         }
@@ -1199,14 +1366,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order product variant
         /// </summary>
-        /// <param name="OrderProductVariantGUID">Order product variant identifier</param>
+        /// <param name="orderProductVariantGuid">Order product variant identifier</param>
         /// <returns>Order product variant</returns>
-        public static OrderProductVariant GetOrderProductVariantByGUID(Guid OrderProductVariantGUID)
+        public static OrderProductVariant GetOrderProductVariantByGuid(Guid orderProductVariantGuid)
         {
-            if (OrderProductVariantGUID == Guid.Empty)
+            if (orderProductVariantGuid == Guid.Empty)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderProductVariantByGUID(OrderProductVariantGUID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderProductVariantByGuid(orderProductVariantGuid);
             var orderProductVariant = DBMapping(dbItem);
             return orderProductVariant;
         }
@@ -1214,53 +1381,54 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets all order product variants
         /// </summary>
-        /// <param name="OrderID">Order identifier; null to load all records</param>
-        /// <param name="CustomerID">Customer identifier; null to load all records</param>
-        /// <param name="StartTime">Order start time; null to load all records</param>
-        /// <param name="EndTime">Order end time; null to load all records</param>
-        /// <param name="OS">Order status; null to load all records</param>
-        /// <param name="PS">Order payment status; null to load all records</param>
-        /// <param name="SS">Order shippment status; null to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="startTime">Order start time; null to load all records</param>
+        /// <param name="endTime">Order end time; null to load all records</param>
+        /// <param name="os">Order status; null to load all records</param>
+        /// <param name="ps">Order payment status; null to load all records</param>
+        /// <param name="ss">Order shippment status; null to load all records</param>
         /// <returns>Order collection</returns>
-        public static OrderProductVariantCollection GetAllOrderProductVariants(int? OrderID,
-            int? CustomerID, DateTime? StartTime, DateTime? EndTime,
-            OrderStatusEnum? OS, PaymentStatusEnum? PS, ShippingStatusEnum? SS)
+        public static OrderProductVariantCollection GetAllOrderProductVariants(int? orderId,
+            int? customerId, DateTime? startTime, DateTime? endTime,
+            OrderStatusEnum? os, PaymentStatusEnum? ps, ShippingStatusEnum? ss)
         {
-            return GetAllOrderProductVariants(OrderID, CustomerID, StartTime, EndTime, OS, PS, SS, false);
+            return GetAllOrderProductVariants(orderId, customerId, startTime, 
+                endTime, os, ps, ss, false);
         }
 
         /// <summary>
         /// Gets all order product variants
         /// </summary>
-        /// <param name="OrderID">Order identifier; null to load all records</param>
-        /// <param name="CustomerID">Customer identifier; null to load all records</param>
-        /// <param name="StartTime">Order start time; null to load all records</param>
-        /// <param name="EndTime">Order end time; null to load all records</param>
-        /// <param name="OS">Order status; null to load all records</param>
-        /// <param name="PS">Order payment status; null to load all records</param>
-        /// <param name="SS">Order shippment status; null to load all records</param>
-        /// <param name="LoadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="startTime">Order start time; null to load all records</param>
+        /// <param name="endTime">Order end time; null to load all records</param>
+        /// <param name="os">Order status; null to load all records</param>
+        /// <param name="ps">Order payment status; null to load all records</param>
+        /// <param name="ss">Order shippment status; null to load all records</param>
+        /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
         /// <returns>Order collection</returns>
-        public static OrderProductVariantCollection GetAllOrderProductVariants(int? OrderID,
-            int? CustomerID, DateTime? StartTime, DateTime? EndTime,
-            OrderStatusEnum? OS, PaymentStatusEnum? PS, ShippingStatusEnum? SS,
-            bool LoadDownloableProductsOnly)
+        public static OrderProductVariantCollection GetAllOrderProductVariants(int? orderId,
+            int? customerId, DateTime? startTime, DateTime? endTime,
+            OrderStatusEnum? os, PaymentStatusEnum? ps, ShippingStatusEnum? ss,
+            bool loadDownloableProductsOnly)
         {
-            int? orderStatusID = null;
-            if (OS.HasValue)
-                orderStatusID = (int)OS.Value;
+            int? orderStatusId = null;
+            if (os.HasValue)
+                orderStatusId = (int)os.Value;
 
-            int? paymentStatusID = null;
-            if (PS.HasValue)
-                paymentStatusID = (int)PS.Value;
+            int? paymentStatusId = null;
+            if (ps.HasValue)
+                paymentStatusId = (int)ps.Value;
 
-            int? shippingStatusID = null;
-            if (SS.HasValue)
-                shippingStatusID = (int)SS.Value;
+            int? shippingStatusId = null;
+            if (ss.HasValue)
+                shippingStatusId = (int)ss.Value;
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllOrderProductVariants(OrderID,
-                CustomerID, StartTime, EndTime, orderStatusID, paymentStatusID, shippingStatusID,
-                LoadDownloableProductsOnly);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllOrderProductVariants(orderId,
+                customerId, startTime, endTime, orderStatusId, paymentStatusId, shippingStatusId,
+                loadDownloableProductsOnly);
             var orderProductVariants = DBMapping(dbCollection);
             return orderProductVariants;
         }
@@ -1268,55 +1436,66 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order product variants by the order identifier
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
+        /// <param name="orderId">The order identifier</param>
         /// <returns>Order product variant collection</returns>
-        public static OrderProductVariantCollection GetOrderProductVariantsByOrderID(int OrderID)
+        public static OrderProductVariantCollection GetOrderProductVariantsByOrderId(int orderId)
         {
-            return GetAllOrderProductVariants(OrderID, null, null, null, null, null, null);
+            return GetAllOrderProductVariants(orderId, null, null, null, null, null, null);
         }
 
         /// <summary>
         /// Inserts a order product variant
         /// </summary>
-        /// <param name="OrderProductVariantGUID">The order product variant identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="UnitPriceInclTax">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTax">The unit price in primary store currency (excl tax)</param>
-        /// <param name="PriceInclTax">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTax">The price in primary store currency (excl tax)</param>
-        /// <param name="UnitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
-        /// <param name="PriceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
-        /// <param name="AttributeDescription">The attribute description</param>
-        /// <param name="AttributesXML">The attribute description in XML format</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="DiscountAmountInclTax">The discount amount (incl tax)</param>
-        /// <param name="DiscountAmountExclTax">The discount amount (excl tax)</param>
-        /// <param name="DownloadCount">The download count</param>
-        /// <param name="IsDownloadActivated">The value indicating whether download is activated</param>
-        /// <param name="LicenseDownloadID">A license download identifier (in case this is a downloadable product)</param>
+        /// <param name="orderProductVariantGuid">The order product variant identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="unitPriceInclTax">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTax">The unit price in primary store currency (excl tax)</param>
+        /// <param name="priceInclTax">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTax">The price in primary store currency (excl tax)</param>
+        /// <param name="unitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
+        /// <param name="priceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
+        /// <param name="attributeDescription">The attribute description</param>
+        /// <param name="attributesXml">The attribute description in XML format</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="discountAmountInclTax">The discount amount (incl tax)</param>
+        /// <param name="discountAmountExclTax">The discount amount (excl tax)</param>
+        /// <param name="downloadCount">The download count</param>
+        /// <param name="isDownloadActivated">The value indicating whether download is activated</param>
+        /// <param name="licenseDownloadId">A license download identifier (in case this is a downloadable product)</param>
         /// <returns>Order product variant</returns>
-        public static OrderProductVariant InsertOrderProductVariant(Guid OrderProductVariantGUID,
-            int OrderID, int ProductVariantID,
-            decimal UnitPriceInclTax, decimal UnitPriceExclTax, decimal PriceInclTax, decimal PriceExclTax,
-            decimal UnitPriceInclTaxInCustomerCurrency, decimal UnitPriceExclTaxInCustomerCurrency,
-            decimal PriceInclTaxInCustomerCurrency, decimal PriceExclTaxInCustomerCurrency,
-            string AttributeDescription, string AttributesXML, int Quantity,
-            decimal DiscountAmountInclTax, decimal DiscountAmountExclTax,
-            int DownloadCount, bool IsDownloadActivated, int LicenseDownloadID)
+        public static OrderProductVariant InsertOrderProductVariant(Guid orderProductVariantGuid,
+            int orderId,
+            int productVariantId,
+            decimal unitPriceInclTax,
+            decimal unitPriceExclTax,
+            decimal priceInclTax,
+            decimal priceExclTax,
+            decimal unitPriceInclTaxInCustomerCurrency,
+            decimal unitPriceExclTaxInCustomerCurrency,
+            decimal priceInclTaxInCustomerCurrency,
+            decimal priceExclTaxInCustomerCurrency,
+            string attributeDescription,
+            string attributesXml,
+            int quantity,
+            decimal discountAmountInclTax,
+            decimal discountAmountExclTax,
+            int downloadCount,
+            bool isDownloadActivated,
+            int licenseDownloadId)
         {
-            if (AttributeDescription == null)
-                AttributeDescription = string.Empty;
+            if (attributeDescription == null)
+                attributeDescription = string.Empty;
 
             var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrderProductVariant(
-                OrderProductVariantGUID, OrderID, ProductVariantID,
-                UnitPriceInclTax, UnitPriceExclTax, PriceInclTax, PriceExclTax,
-                UnitPriceInclTaxInCustomerCurrency, UnitPriceExclTaxInCustomerCurrency,
-                PriceInclTaxInCustomerCurrency, PriceExclTaxInCustomerCurrency,
-                AttributeDescription, AttributesXML, Quantity, DiscountAmountInclTax,
-                DiscountAmountExclTax, DownloadCount, IsDownloadActivated, LicenseDownloadID);
+                orderProductVariantGuid, orderId, productVariantId,
+                unitPriceInclTax, unitPriceExclTax, priceInclTax, priceExclTax,
+                unitPriceInclTaxInCustomerCurrency, unitPriceExclTaxInCustomerCurrency,
+                priceInclTaxInCustomerCurrency, priceExclTaxInCustomerCurrency,
+                attributeDescription, attributesXml, quantity, discountAmountInclTax,
+                discountAmountExclTax, downloadCount, isDownloadActivated, licenseDownloadId);
             var log = DBMapping(dbItem);
             return log;
         }
@@ -1324,46 +1503,59 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Updates the order product variant
         /// </summary>
-        /// <param name="OrderProductVariantID">The order product variant identifier</param>
-        /// <param name="OrderProductVariantGUID">The order product variant identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="UnitPriceInclTax">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTax">The unit price in primary store currency (excl tax)</param>
-        /// <param name="PriceInclTax">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTax">The price in primary store currency (excl tax)</param>
-        /// <param name="UnitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
-        /// <param name="UnitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
-        /// <param name="PriceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
-        /// <param name="PriceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
-        /// <param name="AttributeDescription">The attribute description</param>
-        /// <param name="AttributesXML">The attribute description in XML format</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="DiscountAmountInclTax">The discount amount (incl tax)</param>
-        /// <param name="DiscountAmountExclTax">The discount amount (excl tax)</param>
-        /// <param name="DownloadCount">The downloads count</param>
-        /// <param name="IsDownloadActivated">The value indicating whether download is activated</param>
-        /// <param name="LicenseDownloadID">A license download identifier (in case this is a downloadable product)</param>
+        /// <param name="orderProductVariantId">The order product variant identifier</param>
+        /// <param name="orderProductVariantGuid">The order product variant identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="unitPriceInclTax">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTax">The unit price in primary store currency (excl tax)</param>
+        /// <param name="priceInclTax">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTax">The price in primary store currency (excl tax)</param>
+        /// <param name="unitPriceInclTaxInCustomerCurrency">The unit price in primary store currency (incl tax)</param>
+        /// <param name="unitPriceExclTaxInCustomerCurrency">The unit price in customer currency (excl tax)</param>
+        /// <param name="priceInclTaxInCustomerCurrency">The price in primary store currency (incl tax)</param>
+        /// <param name="priceExclTaxInCustomerCurrency">The price in customer currency (excl tax)</param>
+        /// <param name="attributeDescription">The attribute description</param>
+        /// <param name="attributesXml">The attribute description in XML format</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="discountAmountInclTax">The discount amount (incl tax)</param>
+        /// <param name="discountAmountExclTax">The discount amount (excl tax)</param>
+        /// <param name="downloadCount">The download count</param>
+        /// <param name="isDownloadActivated">The value indicating whether download is activated</param>
+        /// <param name="licenseDownloadId">A license download identifier (in case this is a downloadable product)</param>
         /// <returns>Order product variant</returns>
-        public static OrderProductVariant UpdateOrderProductVariant(int OrderProductVariantID,
-            Guid OrderProductVariantGUID, int OrderID, int ProductVariantID,
-            decimal UnitPriceInclTax, decimal UnitPriceExclTax, decimal PriceInclTax, decimal PriceExclTax,
-            decimal UnitPriceInclTaxInCustomerCurrency, decimal UnitPriceExclTaxInCustomerCurrency,
-            decimal PriceInclTaxInCustomerCurrency, decimal PriceExclTaxInCustomerCurrency,
-            string AttributeDescription, string AttributesXML, int Quantity,
-            decimal DiscountAmountInclTax, decimal DiscountAmountExclTax,
-            int DownloadCount, bool IsDownloadActivated, int LicenseDownloadID)
+        public static OrderProductVariant UpdateOrderProductVariant(int orderProductVariantId,
+            Guid orderProductVariantGuid,
+            int orderId,
+            int productVariantId,
+            decimal unitPriceInclTax,
+            decimal unitPriceExclTax,
+            decimal priceInclTax,
+            decimal priceExclTax,
+            decimal unitPriceInclTaxInCustomerCurrency,
+            decimal unitPriceExclTaxInCustomerCurrency,
+            decimal priceInclTaxInCustomerCurrency,
+            decimal priceExclTaxInCustomerCurrency,
+            string attributeDescription,
+            string attributesXml,
+            int quantity,
+            decimal discountAmountInclTax,
+            decimal discountAmountExclTax,
+            int downloadCount,
+            bool isDownloadActivated,
+            int licenseDownloadId)
         {
-            if (AttributeDescription == null)
-                AttributeDescription = string.Empty;
+            if (attributeDescription == null)
+                attributeDescription = string.Empty;
 
             var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrderProductVariant(
-                OrderProductVariantID, OrderProductVariantGUID, OrderID,
-                ProductVariantID, UnitPriceInclTax, UnitPriceExclTax, PriceInclTax, PriceExclTax,
-                UnitPriceInclTaxInCustomerCurrency, UnitPriceExclTaxInCustomerCurrency,
-                PriceInclTaxInCustomerCurrency, PriceExclTaxInCustomerCurrency,
-                AttributeDescription, AttributesXML, Quantity, DiscountAmountInclTax,
-                DiscountAmountExclTax, DownloadCount, IsDownloadActivated, LicenseDownloadID);
+                orderProductVariantId, orderProductVariantGuid, orderId,
+                productVariantId, unitPriceInclTax, unitPriceExclTax, 
+                priceInclTax, priceExclTax,
+                unitPriceInclTaxInCustomerCurrency, unitPriceExclTaxInCustomerCurrency,
+                priceInclTaxInCustomerCurrency, priceExclTaxInCustomerCurrency,
+                attributeDescription, attributesXml, quantity, discountAmountInclTax,
+                discountAmountExclTax, downloadCount, isDownloadActivated, licenseDownloadId);
             var log = DBMapping(dbItem);
             return log;
         }
@@ -1371,28 +1563,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Increase an order product variant download count
         /// </summary>
-        /// <param name="OrderProductVariantID">Order product variant identifier</param>
+        /// <param name="orderProductVariantId">Order product variant identifier</param>
         /// <returns>Order product variant</returns>
-        public static OrderProductVariant IncreaseOrderProductDownloadCount(int OrderProductVariantID)
+        public static OrderProductVariant IncreaseOrderProductDownloadCount(int orderProductVariantId)
         {
-            var orderProductVariant = GetOrderProductVariantByID(OrderProductVariantID);
+            var orderProductVariant = GetOrderProductVariantById(orderProductVariantId);
             if (orderProductVariant == null)
                 throw new NopException("Order product variant could not be loaded");
 
             int newDownloadCount = orderProductVariant.DownloadCount + 1;
 
-            orderProductVariant = UpdateOrderProductVariant(orderProductVariant.OrderProductVariantID,
-                orderProductVariant.OrderProductVariantGUID, orderProductVariant.OrderID,
-                orderProductVariant.ProductVariantID,
+            orderProductVariant = UpdateOrderProductVariant(orderProductVariant.OrderProductVariantId,
+                orderProductVariant.OrderProductVariantGuid, orderProductVariant.OrderId,
+                orderProductVariant.ProductVariantId,
                 orderProductVariant.UnitPriceInclTax, orderProductVariant.UnitPriceExclTax,
                 orderProductVariant.PriceInclTax, orderProductVariant.PriceExclTax,
                 orderProductVariant.UnitPriceInclTaxInCustomerCurrency, orderProductVariant.UnitPriceExclTaxInCustomerCurrency,
                 orderProductVariant.PriceInclTaxInCustomerCurrency, orderProductVariant.PriceExclTaxInCustomerCurrency,
-                orderProductVariant.AttributeDescription, orderProductVariant.AttributesXML,
+                orderProductVariant.AttributeDescription, orderProductVariant.AttributesXml,
                 orderProductVariant.Quantity,
                 orderProductVariant.DiscountAmountInclTax, orderProductVariant.DiscountAmountExclTax,
                 newDownloadCount, orderProductVariant.IsDownloadActivated,
-                orderProductVariant.LicenseDownloadID);
+                orderProductVariant.LicenseDownloadId);
 
             return orderProductVariant;
         }
@@ -1404,14 +1596,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order note
         /// </summary>
-        /// <param name="OrderNoteID">Order note identifier</param>
+        /// <param name="orderNoteId">Order note identifier</param>
         /// <returns>Order note</returns>
-        public static OrderNote GetOrderNoteByID(int OrderNoteID)
+        public static OrderNote GetOrderNoteById(int orderNoteId)
         {
-            if (OrderNoteID == 0)
+            if (orderNoteId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderNoteByID(OrderNoteID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderNoteById(orderNoteId);
             var orderNote = DBMapping(dbItem);
             return orderNote;
         }
@@ -1419,22 +1611,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order notes by order identifier
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>Order note collection</returns>
-        public static OrderNoteCollection GetOrderNoteByOrderID(int OrderID)
+        public static OrderNoteCollection GetOrderNoteByOrderId(int orderId)
         {
-            return GetOrderNoteByOrderID(OrderID, NopContext.Current.IsAdmin);
+            return GetOrderNoteByOrderId(orderId, NopContext.Current.IsAdmin);
         }
 
         /// <summary>
         /// Gets an order notes by order identifier
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="ShowHidden">A value indicating whether all orders should be loaded</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="showHidden">A value indicating whether all orders should be loaded</param>
         /// <returns>Order note collection</returns>
-        public static OrderNoteCollection GetOrderNoteByOrderID(int OrderID, bool ShowHidden)
+        public static OrderNoteCollection GetOrderNoteByOrderId(int orderId, bool showHidden)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrderNoteByOrderID(OrderID, ShowHidden);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrderNoteByOrderId(orderId, showHidden);
             var orderNotes = DBMapping(dbCollection);
             return orderNotes;
         }
@@ -1442,37 +1634,39 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Deletes an order note
         /// </summary>
-        /// <param name="OrderNoteID">Order note identifier</param>
-        public static void DeleteOrderNote(int OrderNoteID)
+        /// <param name="orderNoteId">Order note identifier</param>
+        public static void DeleteOrderNote(int orderNoteId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteOrderNote(OrderNoteID);
+            DBProviderManager<DBOrderProvider>.Provider.DeleteOrderNote(orderNoteId);
         }
 
         /// <summary>
         /// Inserts an order note
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="Note">The note</param>
-        /// <param name="CreatedOn">The date and time of order note creation</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="note">The note</param>
+        /// <param name="createdOn">The date and time of order note creation</param>
         /// <returns>Order note</returns>
-        public static OrderNote InsertOrderNote(int OrderID, string Note, DateTime CreatedOn)
+        public static OrderNote InsertOrderNote(int orderId, string note, DateTime createdOn)
         {
-            return InsertOrderNote(OrderID, Note, false, CreatedOn);
+            return InsertOrderNote(orderId, note, false, createdOn);
         }
 
         /// <summary>
         /// Inserts an order note
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="Note">The note</param>
-        /// <param name="DisplayToCustomer">A value indicating whether the customer can see a note</param>
-        /// <param name="CreatedOn">The date and time of order note creation</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="note">The note</param>
+        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
+        /// <param name="createdOn">The date and time of order note creation</param>
         /// <returns>Order note</returns>
-        public static OrderNote InsertOrderNote(int OrderID, string Note, bool DisplayToCustomer, DateTime CreatedOn)
+        public static OrderNote InsertOrderNote(int orderId, string note, 
+            bool displayToCustomer, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrderNote(OrderID, Note, DisplayToCustomer, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrderNote(orderId,
+                note, displayToCustomer, createdOn);
             var orderNote = DBMapping(dbItem);
             return orderNote;
         }
@@ -1480,17 +1674,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Updates the order note
         /// </summary>
-        /// <param name="OrderNoteID">The order note identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="Note">The note</param>
-        /// <param name="DisplayToCustomer">A value indicating whether the customer can see a note</param>
-        /// <param name="CreatedOn">The date and time of order note creation</param>
+        /// <param name="orderNoteId">The order note identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="note">The note</param>
+        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
+        /// <param name="createdOn">The date and time of order note creation</param>
         /// <returns>Order note</returns>
-        public static OrderNote UpdateOrderNote(int OrderNoteID, int OrderID, string Note, bool DisplayToCustomer, DateTime CreatedOn)
+        public static OrderNote UpdateOrderNote(int orderNoteId, int orderId, 
+            string note, bool displayToCustomer, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrderNote(OrderNoteID, OrderID, Note, DisplayToCustomer, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrderNote(orderNoteId,
+                orderId, note, displayToCustomer, createdOn);
             var orderNote = DBMapping(dbItem);
             return orderNote;
         }
@@ -1502,17 +1698,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order status full name
         /// </summary>
-        /// <param name="OrderStatusID">Order status identifier</param>
+        /// <param name="orderStatusId">Order status identifier</param>
         /// <returns>Order status name</returns>
-        public static string GetOrderStatusName(int OrderStatusID)
+        public static string GetOrderStatusName(int orderStatusId)
         {
-            var orderStatus = GetOrderStatusByID(OrderStatusID);
+            var orderStatus = GetOrderStatusById(orderStatusId);
             if (orderStatus != null)
             {
                 string name = string.Empty;
                 if (NopContext.Current != null)
                 {
-                    name = LocalizationManager.GetLocaleResourceString(string.Format("OrderStatus.{0}", (OrderStatusEnum)orderStatus.OrderStatusID), NopContext.Current.WorkingLanguage.LanguageID, true, orderStatus.Name);
+                    name = LocalizationManager.GetLocaleResourceString(string.Format("OrderStatus.{0}", (OrderStatusEnum)orderStatus.OrderStatusId), NopContext.Current.WorkingLanguage.LanguageId, true, orderStatus.Name);
                 }
                 else
                 {
@@ -1522,28 +1718,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             }
             else
             {
-                return ((OrderStatusEnum)OrderStatusID).ToString();
+                return ((OrderStatusEnum)orderStatusId).ToString();
             }
         }
 
         /// <summary>
-        /// Gets an order status by ID
+        /// Gets an order status by Id
         /// </summary>
-        /// <param name="OrderStatusID">Order status identifier</param>
+        /// <param name="orderStatusId">Order status identifier</param>
         /// <returns>Order status</returns>
-        public static OrderStatus GetOrderStatusByID(int OrderStatusID)
+        public static OrderStatus GetOrderStatusById(int orderStatusId)
         {
-            if (OrderStatusID == 0)
+            if (orderStatusId == 0)
                 return null;
 
-            string key = string.Format(ORDERSTATUSES_BY_ID_KEY, OrderStatusID);
+            string key = string.Format(ORDERSTATUSES_BY_ID_KEY, orderStatusId);
             object obj2 = NopCache.Get(key);
             if (OrderManager.CacheEnabled && (obj2 != null))
             {
                 return (OrderStatus)obj2;
             }
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderStatusByID(OrderStatusID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderStatusById(orderStatusId);
             var orderStatus = DBMapping(dbItem);
 
             if (OrderManager.CacheEnabled)
@@ -1583,35 +1779,38 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Get order product variant sales report
         /// </summary>
-        /// <param name="StartTime">Order start time; null to load all</param>
-        /// <param name="EndTime">Order end time; null to load all</param>
-        /// <param name="OS">Order status; null to load all orders</param>
-        /// <param name="PS">Order payment status; null to load all orders</param>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="os">Order status; null to load all orders</param>
+        /// <param name="ps">Order payment status; null to load all orders</param>
         /// <returns>Result</returns>
-        public static IDataReader OrderProductVariantReport(DateTime? StartTime, DateTime? EndTime,
-            OrderStatusEnum? OS, PaymentStatusEnum? PS)
+        public static IDataReader OrderProductVariantReport(DateTime? startTime, 
+            DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps)
         {
-            int? orderStatusID = null;
-            if (OS.HasValue)
-                orderStatusID = (int)OS.Value;
+            int? orderStatusId = null;
+            if (os.HasValue)
+                orderStatusId = (int)os.Value;
 
-            int? paymentStatusID = null;
-            if (PS.HasValue)
-                paymentStatusID = (int)PS.Value;
+            int? paymentStatusId = null;
+            if (ps.HasValue)
+                paymentStatusId = (int)ps.Value;
 
-            return DBProviderManager<DBOrderProvider>.Provider.OrderProductVariantReport(StartTime, EndTime, orderStatusID, paymentStatusID);
+            return DBProviderManager<DBOrderProvider>.Provider.OrderProductVariantReport(startTime,
+                endTime, orderStatusId, paymentStatusId);
         }
 
         /// <summary>
         /// Get the bests sellers report
         /// </summary>
-        /// <param name="LastDays">Last number of days</param>
-        /// <param name="RecordsToReturn">Number of products to return</param>
-        /// <param name="OrderBy">1 - order by total count, 2 - Order by total amount</param>
+        /// <param name="lastDays">Last number of days</param>
+        /// <param name="recordsToReturn">Number of products to return</param>
+        /// <param name="orderBy">1 - order by total count, 2 - Order by total amount</param>
         /// <returns>Result</returns>
-        public static List<BestSellersReportLine> BestSellersReport(int LastDays, int RecordsToReturn, int OrderBy)
+        public static List<BestSellersReportLine> BestSellersReport(int lastDays, 
+            int recordsToReturn, int orderBy)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.BestSellersReport(LastDays, RecordsToReturn, OrderBy);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.BestSellersReport(lastDays,
+                recordsToReturn, orderBy);
             var report = DBMapping(dbCollection);
             return report;
         }
@@ -1619,14 +1818,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Get order average report
         /// </summary>
-        /// <param name="OS">Order status;</param>
+        /// <param name="os">Order status;</param>
         /// <param name="startTime">Start date</param>
         /// <param name="endTime">End date</param>
         /// <returns>Result</returns>
-        public static OrderAverageReportLine GetOrderAverageReportLine(OrderStatusEnum OS, DateTime? startTime, DateTime? endTime)
+        public static OrderAverageReportLine GetOrderAverageReportLine(OrderStatusEnum os, 
+            DateTime? startTime, DateTime? endTime)
         {
-            int orderStatusID = (int)OS;
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.OrderAverageReport(orderStatusID, startTime, endTime);
+            int orderStatusId = (int)os;
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.OrderAverageReport(orderStatusId, startTime, endTime);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -1634,36 +1834,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Get order average report
         /// </summary>
-        /// <param name="OS">Order status</param>
+        /// <param name="os">Order status</param>
         /// <returns>Result</returns>
-        public static OrderAverageReportLineSummary OrderAverageReport(OrderStatusEnum OS)
+        public static OrderAverageReportLineSummary OrderAverageReport(OrderStatusEnum os)
         {
-            int orderStatusID = (int)OS;
+            int orderStatusId = (int)os;
 
             DateTime nowDT = DateTimeHelper.ConvertToUserTime(DateTime.Now);
 
             //today
             DateTime? startTime = DateTimeHelper.ConvertToUtcTime(new DateTime(nowDT.Year, nowDT.Month, nowDT.Day), DateTimeHelper.CurrentTimeZone);
             DateTime? endTime = null;
-            var todayResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            var todayResult = GetOrderAverageReportLine(os, startTime, endTime);
             //week
             DayOfWeek fdow = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
             DateTime today = new DateTime(nowDT.Year, nowDT.Month, nowDT.Day);
             startTime = DateTimeHelper.ConvertToUtcTime(today.AddDays(-(today.DayOfWeek - fdow)), DateTimeHelper.CurrentTimeZone);
             endTime = null;
-            var weekResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            var weekResult = GetOrderAverageReportLine(os, startTime, endTime);
             //month
             startTime = DateTimeHelper.ConvertToUtcTime(new DateTime(nowDT.Year, nowDT.Month, 1), DateTimeHelper.CurrentTimeZone);
             endTime = null;
-            var monthResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            var monthResult = GetOrderAverageReportLine(os, startTime, endTime);
             //year
             startTime = DateTimeHelper.ConvertToUtcTime(new DateTime(nowDT.Year, 1, 1), DateTimeHelper.CurrentTimeZone);
             endTime = null;
-            var yearResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            var yearResult = GetOrderAverageReportLine(os, startTime, endTime);
             //all time
             startTime = null;
             endTime = null;
-            var allTimeResult = GetOrderAverageReportLine(OS, startTime, endTime);
+            var allTimeResult = GetOrderAverageReportLine(os, startTime, endTime);
 
             var item = new OrderAverageReportLineSummary();
             item.SumTodayOrders = todayResult.SumOrders;
@@ -1676,7 +1876,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.CountThisYearOrders = yearResult.CountOrders;
             item.SumAllTimeOrders = allTimeResult.SumOrders;
             item.CountAllTimeOrders = allTimeResult.CountOrders;
-            item.OrderStatus = OS;
+            item.OrderStatus = os;
 
             return item;
         }
@@ -1684,25 +1884,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets an order report
         /// </summary>
-        /// <param name="OS">Order status; null to load all orders</param>
-        /// <param name="PS">Order payment status; null to load all orders</param>
-        /// <param name="SS">Order shippment status; null to load all orders</param>
-        /// <returns>IDataReader</returns>
-        public static IDataReader GetOrderReport(OrderStatusEnum? OS, PaymentStatusEnum? PS, ShippingStatusEnum? SS)
+        /// <param name="os">Order status; null to load all orders</param>
+        /// <param name="ps">Order payment status; null to load all orders</param>
+        /// <param name="ss">Order shippment status; null to load all orders</param>
+        /// <returns>IdataReader</returns>
+        public static IDataReader GetOrderReport(OrderStatusEnum? os, 
+            PaymentStatusEnum? ps, ShippingStatusEnum? ss)
         {
-            int? orderStatusID = null;
-            if (OS.HasValue)
-                orderStatusID = (int)OS.Value;
+            int? orderStatusId = null;
+            if (os.HasValue)
+                orderStatusId = (int)os.Value;
 
-            int? paymentStatusID = null;
-            if (PS.HasValue)
-                paymentStatusID = (int)PS.Value;
+            int? paymentStatusId = null;
+            if (ps.HasValue)
+                paymentStatusId = (int)ps.Value;
 
-            int? shippmentStatusID = null;
-            if (SS.HasValue)
-                shippmentStatusID = (int)SS.Value;
+            int? shippmentStatusId = null;
+            if (ss.HasValue)
+                shippmentStatusId = (int)ss.Value;
 
-            return DBProviderManager<DBOrderProvider>.Provider.GetOrderReport(orderStatusID, paymentStatusID, shippmentStatusID);
+            return DBProviderManager<DBOrderProvider>.Provider.GetOrderReport(orderStatusId, 
+                paymentStatusId, shippmentStatusId);
         }
        
         #endregion
@@ -1712,14 +1914,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets a recurring payment
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
         /// <returns>Recurring payment</returns>
-        public static RecurringPayment GetRecurringPaymentByID(int RecurringPaymentID)
+        public static RecurringPayment GetRecurringPaymentById(int recurringPaymentId)
         {
-            if (RecurringPaymentID == 0)
+            if (recurringPaymentId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRecurringPaymentByID(RecurringPaymentID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRecurringPaymentById(recurringPaymentId);
             var recurringPayment = DBMapping(dbItem);
             return recurringPayment;
         }
@@ -1727,13 +1929,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Deletes a recurring payment
         /// </summary>
-        /// <param name="RecurringPaymentID">Recurring payment identifier</param>
-        public static void DeleteRecurringPayment(int RecurringPaymentID)
+        /// <param name="recurringPaymentId">Recurring payment identifier</param>
+        public static void DeleteRecurringPayment(int recurringPaymentId)
         {
-            var recurringPayment = GetRecurringPaymentByID(RecurringPaymentID);
+            var recurringPayment = GetRecurringPaymentById(recurringPaymentId);
             if (recurringPayment != null)
             {
-                UpdateRecurringPayment(recurringPayment.RecurringPaymentID, recurringPayment.InitialOrderID,
+                UpdateRecurringPayment(recurringPayment.RecurringPaymentId, recurringPayment.InitialOrderId,
                     recurringPayment.CycleLength, recurringPayment.CyclePeriod,
                     recurringPayment.TotalCycles, recurringPayment.StartDate,
                     recurringPayment.IsActive, true, recurringPayment.CreatedOn);
@@ -1743,24 +1945,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Inserts a recurring payment
         /// </summary>
-        /// <param name="InitialOrderID">The initial order identifier</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="StartDate">The start date</param>
-        /// <param name="IsActive">The value indicating whether the payment is active</param>
-        /// <param name="Deleted">The value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="initialOrderId">The initial order identifier</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="startDate">The start date</param>
+        /// <param name="isActive">The value indicating whether the payment is active</param>
+        /// <param name="deleted">The value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment</returns>
-        public static RecurringPayment InsertRecurringPayment(int InitialOrderID,
-            int CycleLength, int CyclePeriod, int TotalCycles,
-            DateTime StartDate, bool IsActive, bool Deleted, DateTime CreatedOn)
+        public static RecurringPayment InsertRecurringPayment(int initialOrderId,
+            int cycleLength, int cyclePeriod, int totalCycles,
+            DateTime startDate, bool isActive, bool deleted, DateTime createdOn)
         {
-            StartDate = DateTimeHelper.ConvertToUtcTime(StartDate);
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            startDate = DateTimeHelper.ConvertToUtcTime(startDate);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRecurringPayment(InitialOrderID,
-                CycleLength, CyclePeriod, TotalCycles, StartDate, IsActive, Deleted, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRecurringPayment(initialOrderId,
+                cycleLength, cyclePeriod, totalCycles, startDate, isActive, deleted, createdOn);
             var recurringPayment = DBMapping(dbItem);
             return recurringPayment;
         }
@@ -1768,26 +1970,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Updates the recurring payment
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
-        /// <param name="InitialOrderID">The initial order identifier</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="StartDate">The start date</param>
-        /// <param name="IsActive">The value indicating whether the payment is active</param>
-        /// <param name="Deleted">The value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
+        /// <param name="initialOrderId">The initial order identifier</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="startDate">The start date</param>
+        /// <param name="isActive">The value indicating whether the payment is active</param>
+        /// <param name="deleted">The value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment</returns>
-        public static RecurringPayment UpdateRecurringPayment(int RecurringPaymentID,
-            int InitialOrderID, int CycleLength, int CyclePeriod, int TotalCycles,
-            DateTime StartDate, bool IsActive, bool Deleted, DateTime CreatedOn)
+        public static RecurringPayment UpdateRecurringPayment(int recurringPaymentId,
+            int initialOrderId, int cycleLength, int cyclePeriod, int totalCycles,
+            DateTime startDate, bool isActive, bool deleted, DateTime createdOn)
         {
-            StartDate = DateTimeHelper.ConvertToUtcTime(StartDate);
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            startDate = DateTimeHelper.ConvertToUtcTime(startDate);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRecurringPayment(RecurringPaymentID,
-                InitialOrderID, CycleLength, CyclePeriod, TotalCycles,
-                StartDate, IsActive, Deleted, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRecurringPayment(recurringPaymentId,
+                initialOrderId, cycleLength, cyclePeriod, totalCycles,
+                startDate, isActive, deleted, createdOn);
             var recurringPayment = DBMapping(dbItem);
             return recurringPayment;
         }
@@ -1795,34 +1997,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Search recurring payments
         /// </summary>
-        /// <param name="CustomerID">The customer identifier; 0 to load all records</param>
-        /// <param name="InitialOrderID">The initial order identifier; 0 to load all records</param>
-        /// <param name="InitialOrderStatus">Initial order status identifier; null to load all records</param>
+        /// <param name="customerId">The customer identifier; 0 to load all records</param>
+        /// <param name="initialOrderId">The initial order identifier; 0 to load all records</param>
+        /// <param name="initialOrderStatus">Initial order status identifier; null to load all records</param>
         /// <returns>Recurring payment collection</returns>
-        public static RecurringPaymentCollection SearchRecurringPayments(int CustomerID, 
-            int InitialOrderID, OrderStatusEnum? InitialOrderStatus)
+        public static RecurringPaymentCollection SearchRecurringPayments(int customerId, 
+            int initialOrderId, OrderStatusEnum? initialOrderStatus)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            return SearchRecurringPayments(showHidden, CustomerID, InitialOrderID, InitialOrderStatus);
+            return SearchRecurringPayments(showHidden, 
+                customerId, initialOrderId, initialOrderStatus);
         }
 
         /// <summary>
         /// Search recurring payments
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="CustomerID">The customer identifier; 0 to load all records</param>
-        /// <param name="InitialOrderID">The initial order identifier; 0 to load all records</param>
-        /// <param name="InitialOrderStatus">Initial order status identifier; null to load all records</param>
+        /// <param name="customerId">The customer identifier; 0 to load all records</param>
+        /// <param name="initialOrderId">The initial order identifier; 0 to load all records</param>
+        /// <param name="initialOrderStatus">Initial order status identifier; null to load all records</param>
         /// <returns>Recurring payment collection</returns>
         public static RecurringPaymentCollection SearchRecurringPayments(bool showHidden,
-            int CustomerID, int InitialOrderID, OrderStatusEnum? InitialOrderStatus)
+            int customerId, int initialOrderId, OrderStatusEnum? initialOrderStatus)
         {
-            int? initialOrderStatusID = null;
-            if (InitialOrderStatus.HasValue)
-                initialOrderStatusID = (int)InitialOrderStatus.Value;
+            int? initialOrderStatusId = null;
+            if (initialOrderStatus.HasValue)
+                initialOrderStatusId = (int)initialOrderStatus.Value;
 
             var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchRecurringPayments(showHidden, 
-                CustomerID, InitialOrderID, initialOrderStatusID);
+                customerId, initialOrderId, initialOrderStatusId);
             var recurringPayments = DBMapping(dbCollection);
             return recurringPayments;
         }
@@ -1830,23 +2033,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Deletes a recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentHistoryID">Recurring payment history identifier</param>
-        public static void DeleteRecurringPaymentHistory(int RecurringPaymentHistoryID)
+        /// <param name="recurringPaymentHistoryId">Recurring payment history identifier</param>
+        public static void DeleteRecurringPaymentHistory(int recurringPaymentHistoryId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteRecurringPaymentHistory(RecurringPaymentHistoryID);
+            DBProviderManager<DBOrderProvider>.Provider.DeleteRecurringPaymentHistory(recurringPaymentHistoryId);
         }
 
         /// <summary>
         /// Gets a recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentHistoryID">The recurring payment history identifier</param>
+        /// <param name="recurringPaymentHistoryId">The recurring payment history identifier</param>
         /// <returns>Recurring payment history</returns>
-        public static RecurringPaymentHistory GetRecurringPaymentHistoryByID(int RecurringPaymentHistoryID)
+        public static RecurringPaymentHistory GetRecurringPaymentHistoryById(int recurringPaymentHistoryId)
         {
-            if (RecurringPaymentHistoryID == 0)
+            if (recurringPaymentHistoryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRecurringPaymentHistoryByID(RecurringPaymentHistoryID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
             var recurringPaymentHistory = DBMapping(dbItem);
             return recurringPaymentHistory;
         }
@@ -1854,17 +2057,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Inserts a recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment history</returns>
-        public static RecurringPaymentHistory InsertRecurringPaymentHistory(int RecurringPaymentID,
-            int OrderID, DateTime CreatedOn)
+        public static RecurringPaymentHistory InsertRecurringPaymentHistory(int recurringPaymentId,
+            int orderId, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRecurringPaymentHistory(RecurringPaymentID,
-                OrderID, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRecurringPaymentHistory(recurringPaymentId,
+                orderId, createdOn);
             var recurringPaymentHistory = DBMapping(dbItem);
             return recurringPaymentHistory;
         }
@@ -1872,18 +2075,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Updates the recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentHistoryID">The recurring payment history identifier</param>
-        /// <param name="RecurringPaymentID">The recurring payment identifier</param>
-        /// <param name="OrderID">The order identifier</param>
-        /// <param name="CreatedOn">The date and time of payment creation</param>
+        /// <param name="recurringPaymentHistoryId">The recurring payment history identifier</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment history</returns>
-        public static RecurringPaymentHistory UpdateRecurringPaymentHistory(int RecurringPaymentHistoryID,
-            int RecurringPaymentID, int OrderID, DateTime CreatedOn)
+        public static RecurringPaymentHistory UpdateRecurringPaymentHistory(int recurringPaymentHistoryId,
+            int recurringPaymentId, int orderId, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRecurringPaymentHistory(RecurringPaymentHistoryID,
-                RecurringPaymentID, OrderID, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRecurringPaymentHistory(recurringPaymentHistoryId,
+                recurringPaymentId, orderId, createdOn);
             var recurringPaymentHistory = DBMapping(dbItem);
             return recurringPaymentHistory;
         }
@@ -1891,12 +2094,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Search recurring payment history
         /// </summary>
-        /// <param name="RecurringPaymentID">The recurring payment identifier; 0 to load all records</param>
-        /// <param name="OrderID">The order identifier; 0 to load all records</param>
+        /// <param name="recurringPaymentId">The recurring payment identifier; 0 to load all records</param>
+        /// <param name="orderId">The order identifier; 0 to load all records</param>
         /// <returns>Recurring payment history collection</returns>
-        public static RecurringPaymentHistoryCollection SearchRecurringPaymentHistory(int RecurringPaymentID, int OrderID)
+        public static RecurringPaymentHistoryCollection SearchRecurringPaymentHistory(int recurringPaymentId, 
+            int orderId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchRecurringPaymentHistory(RecurringPaymentID, OrderID);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchRecurringPaymentHistory(recurringPaymentId, orderId);
             var recurringPaymentHistoryCollection = DBMapping(dbCollection);
             return recurringPaymentHistoryCollection;
         }
@@ -1908,23 +2112,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Deletes a gift card
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        public static void DeleteGiftCard(int GiftCardID)
+        /// <param name="giftCardId">Gift card identifier</param>
+        public static void DeleteGiftCard(int giftCardId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteGiftCard(GiftCardID);
+            DBProviderManager<DBOrderProvider>.Provider.DeleteGiftCard(giftCardId);
         }
 
         /// <summary>
         /// Gets a gift card
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
+        /// <param name="giftCardId">Gift card identifier</param>
         /// <returns>Gift card entry</returns>
-        public static GiftCard GetGiftCardByID(int GiftCardID)
+        public static GiftCard GetGiftCardById(int giftCardId)
         {
-            if (GiftCardID == 0)
+            if (giftCardId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetGiftCardByID(GiftCardID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetGiftCardById(giftCardId);
             var giftCard = DBMapping(dbItem);
             return giftCard;
         }
@@ -1932,39 +2136,39 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets all gift cards
         /// </summary>
-        /// <param name="OrderID">Order identifier; null to load all records</param>
-        /// <param name="CustomerID">Customer identifier; null to load all records</param>
-        /// <param name="StartTime">Order start time; null to load all records</param>
-        /// <param name="EndTime">Order end time; null to load all records</param>
-        /// <param name="OS">Order status; null to load all records</param>
-        /// <param name="PS">Order payment status; null to load all records</param>
-        /// <param name="SS">Order shippment status; null to load all records</param>
-        /// <param name="IsGiftCardActivated">Value indicating whether gift card is activated; null to load all records</param>
-        /// <param name="GiftCardCouponCode">Gift card coupon code; null or string.empty to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="startTime">Order start time; null to load all records</param>
+        /// <param name="endTime">Order end time; null to load all records</param>
+        /// <param name="os">Order status; null to load all records</param>
+        /// <param name="ps">Order payment status; null to load all records</param>
+        /// <param name="ss">Order shippment status; null to load all records</param>
+        /// <param name="isGiftCardActivated">Value indicating whether gift card is activated; null to load all records</param>
+        /// <param name="giftCardCouponCode">Gift card coupon code; null or string.empty to load all records</param>
         /// <returns>Gift cards</returns>
-        public static GiftCardCollection GetAllGiftCards(int? OrderID,
-            int? CustomerID, DateTime? StartTime, DateTime? EndTime,
-            OrderStatusEnum? OS, PaymentStatusEnum? PS, ShippingStatusEnum? SS,
-            bool? IsGiftCardActivated, string GiftCardCouponCode)
+        public static GiftCardCollection GetAllGiftCards(int? orderId,
+            int? customerId, DateTime? startTime, DateTime? endTime,
+            OrderStatusEnum? os, PaymentStatusEnum? ps, ShippingStatusEnum? ss,
+            bool? isGiftCardActivated, string giftCardCouponCode)
         {
-            int? orderStatusID = null;
-            if (OS.HasValue)
-                orderStatusID = (int)OS.Value;
+            int? orderStatusId = null;
+            if (os.HasValue)
+                orderStatusId = (int)os.Value;
 
-            int? paymentStatusID = null;
-            if (PS.HasValue)
-                paymentStatusID = (int)PS.Value;
+            int? paymentStatusId = null;
+            if (ps.HasValue)
+                paymentStatusId = (int)ps.Value;
 
-            int? shippingStatusID = null;
-            if (SS.HasValue)
-                shippingStatusID = (int)SS.Value;
+            int? shippingStatusId = null;
+            if (ss.HasValue)
+                shippingStatusId = (int)ss.Value;
 
-            if (GiftCardCouponCode != null)
-                GiftCardCouponCode = GiftCardCouponCode.Trim();
+            if (giftCardCouponCode != null)
+                giftCardCouponCode = giftCardCouponCode.Trim();
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllGiftCards(OrderID,
-                CustomerID, StartTime, EndTime, orderStatusID, paymentStatusID, shippingStatusID,
-                IsGiftCardActivated, GiftCardCouponCode);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllGiftCards(orderId,
+                customerId, startTime, endTime, orderStatusId, paymentStatusId, shippingStatusId,
+                isGiftCardActivated, giftCardCouponCode);
             var giftCards = DBMapping(dbCollection);
             return giftCards;
         }
@@ -1972,29 +2176,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Inserts a gift card
         /// </summary>
-        /// <param name="PurchasedOrderProductVariantID">Purchased order product variant identifier</param>
-        /// <param name="Amount">Amount</param>
-        /// <param name="IsGiftCardActivated">Value indicating whether gift card is activated</param>
-        /// <param name="GiftCardCouponCode">Gift card coupon code</param>
-        /// <param name="RecipientName">Recipient name</param>
-        /// <param name="RecipientEmail">Recipient email</param>
-        /// <param name="SenderName">Sender name</param>
-        /// <param name="SenderEmail">Sender email</param>
-        /// <param name="Message">Message</param>
-        /// <param name="IsSenderNotified">Value indicating whether sender is notified</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="purchasedOrderProductVariantId">Purchased order product variant identifier</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="isGiftCardActivated">Value indicating whether gift card is activated</param>
+        /// <param name="giftCardCouponCode">Gift card coupon code</param>
+        /// <param name="recipientName">Recipient name</param>
+        /// <param name="recipientEmail">Recipient email</param>
+        /// <param name="senderName">Sender name</param>
+        /// <param name="senderEmail">Sender email</param>
+        /// <param name="message">Message</param>
+        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
-        public static GiftCard InsertGiftCard(int PurchasedOrderProductVariantID,
-            decimal Amount, bool IsGiftCardActivated, string GiftCardCouponCode,
-            string RecipientName, string RecipientEmail,
-            string SenderName, string SenderEmail, string Message,
-            bool IsSenderNotified, DateTime CreatedOn)
+        public static GiftCard InsertGiftCard(int purchasedOrderProductVariantId,
+            decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
+            string recipientName, string recipientEmail,
+            string senderName, string senderEmail, string message,
+            bool isSenderNotified, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertGiftCard(PurchasedOrderProductVariantID,
-                Amount, IsGiftCardActivated, GiftCardCouponCode, RecipientName, RecipientEmail,
-                SenderName, SenderEmail, Message, IsSenderNotified, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertGiftCard(purchasedOrderProductVariantId,
+                amount, isGiftCardActivated, giftCardCouponCode, recipientName, recipientEmail,
+                senderName, senderEmail, message, isSenderNotified, createdOn);
             var giftCard = DBMapping(dbItem);
             return giftCard;
         }
@@ -2002,32 +2206,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Updates the gift card
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        /// <param name="PurchasedOrderProductVariantID">Purchased order product variant identifier</param>
-        /// <param name="Amount">Amount</param>
-        /// <param name="IsGiftCardActivated">Value indicating whether gift card is activated</param>
-        /// <param name="GiftCardCouponCode">Gift card coupon code</param>
-        /// <param name="RecipientName">Recipient name</param>
-        /// <param name="RecipientEmail">Recipient email</param>
-        /// <param name="SenderName">Sender name</param>
-        /// <param name="SenderEmail">Sender email</param>
-        /// <param name="Message">Message</param>
-        /// <param name="IsSenderNotified">Value indicating whether sender is notified</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="giftCardId">Gift card identifier</param>
+        /// <param name="purchasedOrderProductVariantId">Purchased order product variant identifier</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="isGiftCardActivated">Value indicating whether gift card is activated</param>
+        /// <param name="giftCardCouponCode">Gift card coupon code</param>
+        /// <param name="recipientName">Recipient name</param>
+        /// <param name="recipientEmail">Recipient email</param>
+        /// <param name="senderName">Sender name</param>
+        /// <param name="senderEmail">Sender email</param>
+        /// <param name="message">Message</param>
+        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
-        public static GiftCard UpdateGiftCard(int GiftCardID, 
-            int PurchasedOrderProductVariantID, decimal Amount, 
-            bool IsGiftCardActivated, string GiftCardCouponCode,
-            string RecipientName, string RecipientEmail,
-            string SenderName, string SenderEmail, string Message,
-            bool IsSenderNotified, DateTime CreatedOn)
+        public static GiftCard UpdateGiftCard(int giftCardId,
+            int purchasedOrderProductVariantId,
+            decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
+            string recipientName, string recipientEmail,
+            string senderName, string senderEmail, string message,
+            bool isSenderNotified, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateGiftCard(GiftCardID,
-                PurchasedOrderProductVariantID, Amount, IsGiftCardActivated, 
-                GiftCardCouponCode, RecipientName, RecipientEmail,
-                SenderName, SenderEmail, Message, IsSenderNotified, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateGiftCard(giftCardId,
+                purchasedOrderProductVariantId, amount, isGiftCardActivated, 
+                giftCardCouponCode, recipientName, recipientEmail,
+                senderName, senderEmail, message, isSenderNotified, createdOn);
             var giftCard = DBMapping(dbItem);
             return giftCard;
         }
@@ -2035,23 +2239,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Deletes a gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardUsageHistoryID">Gift card usage history entry identifier</param>
-        public static void DeleteGiftCardUsageHistory(int GiftCardUsageHistoryID)
+        /// <param name="giftCardUsageHistoryId">Gift card usage history entry identifier</param>
+        public static void DeleteGiftCardUsageHistory(int giftCardUsageHistoryId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteGiftCardUsageHistory(GiftCardUsageHistoryID);
+            DBProviderManager<DBOrderProvider>.Provider.DeleteGiftCardUsageHistory(giftCardUsageHistoryId);
         }
 
         /// <summary>
         /// Gets a gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardUsageHistoryID">Gift card usage history entry identifier</param>
+        /// <param name="giftCardUsageHistoryId">Gift card usage history entry identifier</param>
         /// <returns>Gift card usage history entry</returns>
-        public static GiftCardUsageHistory GetGiftCardUsageHistoryByID(int GiftCardUsageHistoryID)
+        public static GiftCardUsageHistory GetGiftCardUsageHistoryById(int giftCardUsageHistoryId)
         {
-            if (GiftCardUsageHistoryID == 0)
+            if (giftCardUsageHistoryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetGiftCardUsageHistoryByID(GiftCardUsageHistoryID);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
             var giftCardUsageHistory = DBMapping(dbItem);
             return giftCardUsageHistory;
         }
@@ -2059,14 +2263,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets all gift card usage history entries
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier; null to load all records</param>
-        /// <param name="CustomerID">Customer identifier; null to load all records</param>
-        /// <param name="OrderID">Order identifier; null to load all records</param>
+        /// <param name="giftCardId">Gift card identifier; null to load all records</param>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
         /// <returns>Gift card usage history entries</returns>
-        public static GiftCardUsageHistoryCollection GetAllGiftCardUsageHistoryEntries(int? GiftCardID,
-            int? CustomerID, int? OrderID)
+        public static GiftCardUsageHistoryCollection GetAllGiftCardUsageHistoryEntries(int? giftCardId,
+            int? customerId, int? orderId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllGiftCardUsageHistoryEntries(GiftCardID, CustomerID, OrderID);
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllGiftCardUsageHistoryEntries(giftCardId, 
+                customerId, orderId);
             var giftCardUsageHistoryEntries = DBMapping(dbCollection);
             return giftCardUsageHistoryEntries;
         }
@@ -2074,21 +2279,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Inserts a gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="UsedValue">Used value</param>
-        /// <param name="UsedValueInCustomerCurrency">Used value (customer currency)</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="giftCardId">Gift card identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="usedValue">Used value</param>
+        /// <param name="usedValueInCustomerCurrency">Used value (customer currency)</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card usage history entry</returns>
-        public static GiftCardUsageHistory InsertGiftCardUsageHistory(int GiftCardID,
-            int CustomerID, int OrderID, decimal UsedValue, 
-            decimal UsedValueInCustomerCurrency, DateTime CreatedOn)
+        public static GiftCardUsageHistory InsertGiftCardUsageHistory(int giftCardId,
+            int customerId, int orderId, decimal usedValue, 
+            decimal usedValueInCustomerCurrency, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertGiftCardUsageHistory(GiftCardID, 
-                CustomerID, OrderID, UsedValue, UsedValueInCustomerCurrency, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertGiftCardUsageHistory(giftCardId, 
+                customerId, orderId, usedValue, usedValueInCustomerCurrency, createdOn);
             var giftCardUsageHistory = DBMapping(dbItem);
             return giftCardUsageHistory;
         }
@@ -2096,22 +2301,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Updates the gift card usage history entry
         /// </summary>
-        /// <param name="GiftCardUsageHistoryID">Gift card usage history entry identifier</param>
-        /// <param name="GiftCardID">Gift card identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="UsedValue">Used value</param>
-        /// <param name="UsedValueInCustomerCurrency">Used value (customer currency)</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="giftCardUsageHistoryId">Gift card usage history entry identifier</param>
+        /// <param name="giftCardId">Gift card identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="usedValue">Used value</param>
+        /// <param name="usedValueInCustomerCurrency">Used value (customer currency)</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card usage history entry</returns>
-        public static GiftCardUsageHistory UpdateGiftCardUsageHistory(int GiftCardUsageHistoryID,
-            int GiftCardID, int CustomerID, int OrderID, decimal UsedValue,
-            decimal UsedValueInCustomerCurrency, DateTime CreatedOn)
+        public static GiftCardUsageHistory UpdateGiftCardUsageHistory(int giftCardUsageHistoryId,
+            int giftCardId, int customerId, int orderId, decimal usedValue,
+            decimal usedValueInCustomerCurrency, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateGiftCardUsageHistory(GiftCardUsageHistoryID,
-                GiftCardID, CustomerID, OrderID, UsedValue, UsedValueInCustomerCurrency, CreatedOn);
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateGiftCardUsageHistory(giftCardUsageHistoryId,
+                giftCardId, customerId, orderId, usedValue, usedValueInCustomerCurrency, createdOn);
             var giftCardUsageHistory = DBMapping(dbItem);
             return giftCardUsageHistory;
         }
@@ -2201,21 +2406,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (orderProductVariant == null)
                 return false;
 
-            return IsDownloadAllowed(orderProductVariant) && orderProductVariant.LicenseDownloadID > 0;
+            return IsDownloadAllowed(orderProductVariant) && orderProductVariant.LicenseDownloadId > 0;
         }
 
         /// <summary>
         /// Formats the order note text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatOrderNoteText(string Text)
+        public static string FormatOrderNoteText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            Text = HtmlHelper.FormatText(Text, false, true, false, false, false, false);
-            return Text;
+            text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
+            return text;
         }
 
         #endregion
@@ -2227,13 +2432,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="paymentInfo">Payment info</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>The error status, or String.Empty if no errors</returns>
         public static string PlaceOrder(PaymentInfo paymentInfo, Customer customer, 
-            out int OrderID)
+            out int orderId)
         {
-            var OrderGuid = Guid.NewGuid();
-            return PlaceOrder(paymentInfo, customer, OrderGuid, out OrderID);
+            var orderGuid = Guid.NewGuid();
+            return PlaceOrder(paymentInfo, customer, orderGuid, out orderId);
         }
 
         /// <summary>
@@ -2241,13 +2446,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="paymentInfo">Payment info</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Order GUID to use</param>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderGuid">Order GUID to use</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>The error status, or String.Empty if no errors</returns>
         public static string PlaceOrder(PaymentInfo paymentInfo, Customer customer, 
-            Guid OrderGuid, out int OrderID)
+            Guid orderGuid, out int orderId)
         {
-            OrderID = 0;
+            orderId = 0;
             var processPaymentResult = new ProcessPaymentResult();
             try
             {
@@ -2268,7 +2473,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 Order initialOrder = null;
                 if (paymentInfo.IsRecurringPayment)
                 {
-                    initialOrder = GetOrderByID(paymentInfo.InitialOrderID);
+                    initialOrder = GetOrderById(paymentInfo.InitialOrderId);
                     if (initialOrder == null)
                         throw new NopException("Initial order could not be loaded");
                 }
@@ -2286,18 +2491,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
                 if (paymentInfo.IsRecurringPayment)
                 {
-                    paymentInfo.PaymentMethodID = initialOrder.PaymentMethodID;
+                    paymentInfo.PaymentMethodId = initialOrder.PaymentMethodId;
                 }
 
-                var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(paymentInfo.PaymentMethodID);
+                var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentInfo.PaymentMethodId);
                 if (paymentMethod == null)
                     throw new NopException("Payment method couldn't be loaded");
 
                 if (!paymentMethod.IsActive)
                     throw new NopException("Payment method is not active");
 
-                if (paymentInfo.CreditCardCVV2 == null)
-                    paymentInfo.CreditCardCVV2 = string.Empty;
+                if (paymentInfo.CreditCardCvv2 == null)
+                    paymentInfo.CreditCardCvv2 = string.Empty;
 
                 if (paymentInfo.CreditCardName == null)
                     paymentInfo.CreditCardName = string.Empty;
@@ -2314,7 +2519,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 ShoppingCart cart = null;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerID, ShoppingCartTypeEnum.ShoppingCart);
+                    cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerId, ShoppingCartTypeEnum.ShoppingCart);
 
                     //validate cart
                     var warnings = ShoppingCartManager.GetShoppingCartWarnings(cart, customer.CheckoutAttributes, true);
@@ -2333,7 +2538,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     foreach (var sci in cart)
                     {
                         var sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(sci.ShoppingCartType,
-                            sci.ProductVariantID, sci.AttributesXML, 
+                            sci.ProductVariantId, sci.AttributesXml, 
                             sci.CustomerEnteredPrice, sci.Quantity);
 
                         if (sciWarnings.Count > 0)
@@ -2368,7 +2573,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
                 //checkout attributes
                 string checkoutAttributeDescription = CheckoutAttributeHelper.FormatAttributes(customer.CheckoutAttributes, customer, "<br />");
-                string checkoutAttributesXML = customer.CheckoutAttributes;
+                string checkoutAttributesXml = customer.CheckoutAttributes;
 
                 //sub total
                 decimal orderSubTotalInclTax = decimal.Zero;
@@ -2487,7 +2692,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 {
                     string PaymentAdditionalFeeError1 = string.Empty;
                     string PaymentAdditionalFeeError2 = string.Empty;
-                    decimal paymentAdditionalFee = PaymentManager.GetAdditionalHandlingFee(paymentInfo.PaymentMethodID);
+                    decimal paymentAdditionalFee = PaymentManager.GetAdditionalHandlingFee(paymentInfo.PaymentMethodId);
                     paymentAdditionalFeeInclTax = TaxManager.GetPaymentMethodAdditionalFee(paymentAdditionalFee, true, customer, ref PaymentAdditionalFeeError1);
                     paymentAdditionalFeeExclTax = TaxManager.GetPaymentMethodAdditionalFee(paymentAdditionalFee, false, customer, ref PaymentAdditionalFeeError2);
                     if (!String.IsNullOrEmpty(PaymentAdditionalFeeError1))
@@ -2514,7 +2719,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 if (!paymentInfo.IsRecurringPayment)
                 {
                     string TaxError = string.Empty;
-                    orderTaxTotal = TaxManager.GetTaxTotal(cart, paymentInfo.PaymentMethodID, customer, ref TaxError);
+                    orderTaxTotal = TaxManager.GetTaxTotal(cart, paymentInfo.PaymentMethodId, customer, ref TaxError);
                     if (!String.IsNullOrEmpty(TaxError))
                         throw new NopException("Tax total couldn't be calculated");
 
@@ -2533,7 +2738,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 decimal orderTotalInCustomerCurrency = decimal.Zero;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    orderTotal = ShoppingCartManager.GetShoppingCartTotal(cart, paymentInfo.PaymentMethodID, customer);
+                    orderTotal = ShoppingCartManager.GetShoppingCartTotal(cart, paymentInfo.PaymentMethodId, customer);
                     if (!orderTotal.HasValue)
                         throw new NopException("Order total couldn't be calculated");
 
@@ -2568,10 +2773,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 string billingAddress2 = string.Empty;
                 string billingCity = string.Empty;
                 string billingStateProvince = string.Empty;
-                int billingStateProvinceID = 0;
+                int billingStateProvinceId = 0;
                 string billingZipPostalCode = string.Empty;
                 string billingCountry = string.Empty;
-                int billingCountryID = 0;
+                int billingCountryId = 0;
                 if (!paymentInfo.IsRecurringPayment)
                 {
                     var billingAddress = paymentInfo.BillingAddress;
@@ -2587,13 +2792,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     if (billingAddress.StateProvince != null)
                     {
                         billingStateProvince = billingAddress.StateProvince.Name;
-                        billingStateProvinceID = billingAddress.StateProvince.StateProvinceID;
+                        billingStateProvinceId = billingAddress.StateProvince.StateProvinceId;
                     }
                     billingZipPostalCode = billingAddress.ZipPostalCode;
                     if (billingAddress.Country != null)
                     {
                         billingCountry = billingAddress.Country.Name;
-                        billingCountryID = billingAddress.Country.CountryID;
+                        billingCountryId = billingAddress.Country.CountryId;
 
                         if (!billingAddress.Country.AllowsBilling)
                         {
@@ -2613,10 +2818,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     billingAddress2 = initialOrder.BillingAddress2;
                     billingCity = initialOrder.BillingCity;
                     billingStateProvince = initialOrder.BillingStateProvince;
-                    billingStateProvinceID = initialOrder.BillingStateProvinceID;
+                    billingStateProvinceId = initialOrder.BillingStateProvinceId;
                     billingZipPostalCode = initialOrder.BillingZipPostalCode;
                     billingCountry = initialOrder.BillingCountry;
-                    billingCountryID = initialOrder.BillingCountryID;
+                    billingCountryId = initialOrder.BillingCountryId;
                 }
 
                 //shipping info
@@ -2630,12 +2835,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 string shippingAddress2 = string.Empty;
                 string shippingCity = string.Empty;
                 string shippingStateProvince = string.Empty;
-                int shippingStateProvinceID = 0;
+                int shippingStateProvinceId = 0;
                 string shippingZipPostalCode = string.Empty;
                 string shippingCountry = string.Empty;
-                int shippingCountryID = 0;
+                int shippingCountryId = 0;
                 string shippingMethodName = string.Empty;
-                int shippingRateComputationMethodID = 0;
+                int shippingRateComputationMethodId = 0;
                 if (shoppingCartRequiresShipping)
                 {
                     if (!paymentInfo.IsRecurringPayment)
@@ -2655,13 +2860,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                             if (shippingAddress.StateProvince != null)
                             {
                                 shippingStateProvince = shippingAddress.StateProvince.Name;
-                                shippingStateProvinceID = shippingAddress.StateProvince.StateProvinceID;
+                                shippingStateProvinceId = shippingAddress.StateProvince.StateProvinceId;
                             }
                             shippingZipPostalCode = shippingAddress.ZipPostalCode;
                             if (shippingAddress.Country != null)
                             {
                                 shippingCountry = shippingAddress.Country.Name;
-                                shippingCountryID = shippingAddress.Country.CountryID;
+                                shippingCountryId = shippingAddress.Country.CountryId;
 
                                 if (!shippingAddress.Country.AllowsShipping)
                                 {
@@ -2673,7 +2878,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                             if (shippingOption != null)
                             {
                                 shippingMethodName = shippingOption.Name;
-                                shippingRateComputationMethodID = shippingOption.ShippingRateComputationMethodID;
+                                shippingRateComputationMethodId = shippingOption.ShippingRateComputationMethodId;
                             }
                         }
                     }
@@ -2689,24 +2894,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         shippingAddress2 = initialOrder.ShippingAddress2;
                         shippingCity = initialOrder.ShippingCity;
                         shippingStateProvince = initialOrder.ShippingStateProvince;
-                        shippingStateProvinceID = initialOrder.ShippingStateProvinceID;
+                        shippingStateProvinceId = initialOrder.ShippingStateProvinceId;
                         shippingZipPostalCode = initialOrder.ShippingZipPostalCode;
                         shippingCountry = initialOrder.ShippingCountry;
-                        shippingCountryID = initialOrder.ShippingCountryID;
+                        shippingCountryId = initialOrder.ShippingCountryId;
                         shippingMethodName = initialOrder.ShippingMethod;
-                        shippingRateComputationMethodID = initialOrder.ShippingRateComputationMethodID;
+                        shippingRateComputationMethodId = initialOrder.ShippingRateComputationMethodId;
                     }
                 }
 
                 //customer language
-                int customerLanguageID = 0;
+                int customerLanguageId = 0;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    customerLanguageID = paymentInfo.CustomerLanguage.LanguageID;
+                    customerLanguageId = paymentInfo.CustomerLanguage.LanguageId;
                 }
                 else
                 {
-                    customerLanguageID = initialOrder.CustomerLanguageID;
+                    customerLanguageId = initialOrder.CustomerLanguageId;
                 }
 
                 //recurring or standard shopping cart
@@ -2740,7 +2945,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     if (isRecurringShoppingCart)
                     {
                         //recurring cart
-                        var recurringPaymentType = PaymentManager.SupportRecurringPayments(paymentMethod.PaymentMethodID);
+                        var recurringPaymentType = PaymentManager.SupportRecurringPayments(paymentMethod.PaymentMethodId);
                         switch (recurringPaymentType)
                         {
                             case RecurringPaymentTypeEnum.NotSupported:
@@ -2748,7 +2953,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                 break;
                             case RecurringPaymentTypeEnum.Manual:
                             case RecurringPaymentTypeEnum.Automatic:
-                                PaymentManager.ProcessRecurringPayment(paymentInfo, customer, OrderGuid, ref processPaymentResult);
+                                PaymentManager.ProcessRecurringPayment(paymentInfo, customer, orderGuid, ref processPaymentResult);
                                 break;
                             default:
                                 throw new NopException("Not supported recurring payment type");
@@ -2758,21 +2963,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     else
                     {
                         //standard cart
-                        PaymentManager.ProcessPayment(paymentInfo, customer, OrderGuid, ref processPaymentResult);
+                        PaymentManager.ProcessPayment(paymentInfo, customer, orderGuid, ref processPaymentResult);
                     }
                 }
                 else
                 {
                     if (isRecurringShoppingCart)
                     {
-                        var recurringPaymentType = PaymentManager.SupportRecurringPayments(paymentMethod.PaymentMethodID);
+                        var recurringPaymentType = PaymentManager.SupportRecurringPayments(paymentMethod.PaymentMethodId);
                         switch (recurringPaymentType)
                         {
                             case RecurringPaymentTypeEnum.NotSupported:
                                 throw new NopException("Recurring payments are not supported by selected payment method");
                                 break;
                             case RecurringPaymentTypeEnum.Manual:
-                                PaymentManager.ProcessRecurringPayment(paymentInfo, customer, OrderGuid, ref processPaymentResult);
+                                PaymentManager.ProcessRecurringPayment(paymentInfo, customer, orderGuid, ref processPaymentResult);
                                 break;
                             case RecurringPaymentTypeEnum.Automatic:
                                 //payment is processed on payment gateway site
@@ -2800,9 +3005,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     //using (var scope = new System.Transactions.TransactionScope())
                     {
 
-                        var order = InsertOrder(OrderGuid,
-                             customer.CustomerID,
-                             customerLanguageID,
+                        var order = InsertOrder(orderGuid,
+                             customer.CustomerId,
+                             customerLanguageId,
                              customerTaxDisplayType,
                              NopContext.Current.UserHostAddress,
                              orderSubTotalInclTax,
@@ -2824,27 +3029,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                              orderTotalInCustomerCurrency,
                              orderSubtotalDiscountInCustomerCurrency,
                              checkoutAttributeDescription,
-                             checkoutAttributesXML,
+                             checkoutAttributesXml,
                              customerCurrencyCode,
                              orderWeight,
-                             customer.AffiliateID,
+                             customer.AffiliateId,
                              OrderStatusEnum.Pending,
                              processPaymentResult.AllowStoringCreditCardNumber,
                              processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Encrypt(paymentInfo.CreditCardType) : string.Empty,
                              processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Encrypt(paymentInfo.CreditCardName) : string.Empty,
                              processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Encrypt(paymentInfo.CreditCardNumber) : string.Empty,
                              SecurityHelper.Encrypt(PaymentManager.GetMaskedCreditCardNumber(paymentInfo.CreditCardNumber)),
-                             processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Encrypt(paymentInfo.CreditCardCVV2) : string.Empty,
+                             processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Encrypt(paymentInfo.CreditCardCvv2) : string.Empty,
                              processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Encrypt(paymentInfo.CreditCardExpireMonth.ToString()) : string.Empty,
                              processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Encrypt(paymentInfo.CreditCardExpireYear.ToString()) : string.Empty,
-                             paymentMethod.PaymentMethodID,
+                             paymentMethod.PaymentMethodId,
                              paymentMethod.Name,
-                             processPaymentResult.AuthorizationTransactionID,
+                             processPaymentResult.AuthorizationTransactionId,
                              processPaymentResult.AuthorizationTransactionCode,
                              processPaymentResult.AuthorizationTransactionResult,
-                             processPaymentResult.CaptureTransactionID,
+                             processPaymentResult.CaptureTransactionId,
                              processPaymentResult.CaptureTransactionResult,
-                             processPaymentResult.SubscriptionTransactionID,
+                             processPaymentResult.SubscriptionTransactionId,
                              paymentInfo.PurchaseOrderNumber,
                              processPaymentResult.PaymentStatus,
                              null,
@@ -2858,10 +3063,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                              billingAddress2,
                              billingCity,
                              billingStateProvince,
-                             billingStateProvinceID,
+                             billingStateProvinceId,
                              billingZipPostalCode,
                              billingCountry,
-                             billingCountryID,
+                             billingCountryId,
                              shippingStatusEnum,
                              shippingFirstName,
                              shippingLastName,
@@ -2873,18 +3078,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                              shippingAddress2,
                              shippingCity,
                              shippingStateProvince,
-                             shippingStateProvinceID,
+                             shippingStateProvinceId,
                              shippingZipPostalCode,
                              shippingCountry,
-                             shippingCountryID,
+                             shippingCountryId,
                              shippingMethodName,
-                             shippingRateComputationMethodID,
+                             shippingRateComputationMethodId,
                              null,
                              null,
                              false,
                              DateTime.Now);
 
-                        OrderID = order.OrderID;
+                        orderId = order.OrderId;
 
                         if (!paymentInfo.IsRecurringPayment)
                         {
@@ -2912,14 +3117,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     appliedDiscounts.Add(scDiscount);
 
                                 //attributes
-                                string attributeDescription = ProductAttributeHelper.FormatAttributes(sc.ProductVariant, sc.AttributesXML, customer, "<br />");
+                                string attributeDescription = ProductAttributeHelper.FormatAttributes(sc.ProductVariant, sc.AttributesXml, customer, "<br />");
 
                                 //save item
-                                var opv = InsertOrderProductVariant(Guid.NewGuid(), order.OrderID,
-                                    sc.ProductVariantID, scUnitPriceInclTax, scUnitPriceExclTax, scSubTotalInclTax, scSubTotalExclTax,
+                                var opv = InsertOrderProductVariant(Guid.NewGuid(), order.OrderId,
+                                    sc.ProductVariantId, scUnitPriceInclTax, scUnitPriceExclTax, scSubTotalInclTax, scSubTotalExclTax,
                                     scUnitPriceInclTaxInCustomerCurrency, scUnitPriceExclTaxInCustomerCurrency,
                                     scSubTotalInclTaxInCustomerCurrency, scSubTotalExclTaxInCustomerCurrency,
-                                    attributeDescription, sc.AttributesXML, sc.Quantity, discountAmountInclTax,
+                                    attributeDescription, sc.AttributesXml, sc.Quantity, discountAmountInclTax,
                                     discountAmountExclTax, 0, false, 0);
 
                                 //gift cards
@@ -2930,13 +3135,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     string giftCardSenderName = string.Empty;
                                     string giftCardSenderEmail = string.Empty;
                                     string giftCardMessage = string.Empty;
-                                    ProductAttributeHelper.GetGiftCardAttribute(sc.AttributesXML,
+                                    ProductAttributeHelper.GetGiftCardAttribute(sc.AttributesXml,
                                         out giftCardRecipientName, out giftCardRecipientEmail,
                                         out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
 
                                     for (int i = 0; i < sc.Quantity; i++)
                                     {
-                                        var gc = InsertGiftCard(opv.OrderProductVariantID, scUnitPriceExclTax,
+                                        var gc = InsertGiftCard(opv.OrderProductVariantId, scUnitPriceExclTax,
                                             false, GiftCardHelper.GenerateGiftCardCode(),
                                             giftCardRecipientName, giftCardRecipientEmail,
                                            giftCardSenderName, giftCardSenderEmail,
@@ -2944,10 +3149,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     }
                                 }
 
-                                ShoppingCartManager.DeleteShoppingCartItem(sc.ShoppingCartItemID, false);
+                                ShoppingCartManager.DeleteShoppingCartItem(sc.ShoppingCartItemId, false);
 
                                 //inventory
-                                ProductManager.AdjustInventory(sc.ProductVariantID, true, sc.Quantity, sc.AttributesXML);
+                                ProductManager.AdjustInventory(sc.ProductVariantId, true, sc.Quantity, sc.AttributesXml);
                             }
                         }
                         else
@@ -2955,12 +3160,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                             var initialOrderProductVariants = initialOrder.OrderProductVariants;
                             foreach (var opv in initialOrderProductVariants)
                             {
-                                InsertOrderProductVariant(Guid.NewGuid(), order.OrderID,
-                                    opv.ProductVariantID, opv.UnitPriceInclTax, opv.UnitPriceExclTax,
+                                InsertOrderProductVariant(Guid.NewGuid(), order.OrderId,
+                                    opv.ProductVariantId, opv.UnitPriceInclTax, opv.UnitPriceExclTax,
                                     opv.PriceInclTax, opv.PriceExclTax,
                                     opv.UnitPriceInclTaxInCustomerCurrency, opv.UnitPriceExclTaxInCustomerCurrency,
                                     opv.PriceInclTaxInCustomerCurrency, opv.PriceExclTaxInCustomerCurrency,
-                                    opv.AttributeDescription, opv.AttributesXML, opv.Quantity, opv.DiscountAmountInclTax,
+                                    opv.AttributeDescription, opv.AttributesXml, opv.Quantity, opv.DiscountAmountInclTax,
                                     opv.DiscountAmountExclTax, 0, false, 0);
 
                                 //UNDONE gift cards are not supported in recurring products
@@ -2968,14 +3173,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                 //{
                                 //    for (int i = 0; i < opv.Quantity; i++)
                                 //    {
-                                //        GiftCard gc = InsertGiftCard(opv.OrderProductVariantID, opv.UnitPriceExclTax,
+                                //        GiftCard gc = InsertGiftCard(opv.OrderProductVariantId, opv.UnitPriceExclTax,
                                 //            false, GiftCardHelper.GenerateGiftCardCode(), string.Empty, string.Empty,
                                 //            string.Empty, string.Empty, string.Empty, false, DateTime.Now);
                                 //    }
                                 //}
 
                                 //inventory
-                                ProductManager.AdjustInventory(opv.ProductVariantID, true, opv.Quantity, opv.AttributesXML);
+                                ProductManager.AdjustInventory(opv.ProductVariantId, true, opv.Quantity, opv.AttributesXml);
                             }
                         }
 
@@ -2984,8 +3189,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         {
                             foreach (var discount in appliedDiscounts)
                             {
-                                var duh = DiscountManager.InsertDiscountUsageHistory(discount.DiscountID,
-                                    customer.CustomerID, order.OrderID, DateTime.Now);
+                                var duh = DiscountManager.InsertDiscountUsageHistory(discount.DiscountId,
+                                    customer.CustomerId, order.OrderId, DateTime.Now);
                             }
                         }
 
@@ -2998,8 +3203,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                 {
                                     decimal amountUsed = agc.AmountCanBeUsed;
                                     decimal amountUsedInCustomerCurrency = CurrencyManager.ConvertCurrency(amountUsed, CurrencyManager.PrimaryStoreCurrency, paymentInfo.CustomerCurrency);
-                                    var gcuh = InsertGiftCardUsageHistory(agc.GiftCardID,
-                                        customer.CustomerID, order.OrderID,
+                                    var gcuh = InsertGiftCardUsageHistory(agc.GiftCardId,
+                                        customer.CustomerId, order.OrderId,
                                         amountUsed, amountUsedInCustomerCurrency, DateTime.Now);
                                 }
                             }
@@ -3011,13 +3216,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                             if (isRecurringShoppingCart)
                             {
                                 //create recurring payment
-                                var rp = InsertRecurringPayment(order.OrderID,
+                                var rp = InsertRecurringPayment(order.OrderId,
                                     paymentInfo.RecurringCycleLength, paymentInfo.RecurringCyclePeriod,
                                     paymentInfo.RecurringTotalCycles, DateTime.Now,
                                     true, false, DateTime.Now);
 
 
-                                var recurringPaymentType = PaymentManager.SupportRecurringPayments(paymentMethod.PaymentMethodID);
+                                var recurringPaymentType = PaymentManager.SupportRecurringPayments(paymentMethod.PaymentMethodId);
                                 switch (recurringPaymentType)
                                 {
                                     case RecurringPaymentTypeEnum.NotSupported:
@@ -3028,8 +3233,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     case RecurringPaymentTypeEnum.Manual:
                                         {
                                             //first payment
-                                            RecurringPaymentHistory rph = InsertRecurringPaymentHistory(rp.RecurringPaymentID,
-                                                order.OrderID, DateTime.Now);
+                                            RecurringPaymentHistory rph = InsertRecurringPaymentHistory(rp.RecurringPaymentId,
+                                                order.OrderId, DateTime.Now);
                                         }
                                         break;
                                     case RecurringPaymentTypeEnum.Automatic:
@@ -3045,26 +3250,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
 
                         //notes, messages
-                        InsertOrderNote(order.OrderID, string.Format("Order placed"), false, DateTime.Now);
+                        InsertOrderNote(order.OrderId, string.Format("Order placed"), false, DateTime.Now);
 
-                        int orderPlacedStoreOwnerNotificationQueuedEmailID = MessageManager.SendOrderPlacedStoreOwnerNotification(order, LocalizationManager.DefaultAdminLanguage.LanguageID);
-                        InsertOrderNote(order.OrderID, string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailID), false, DateTime.Now);
+                        int orderPlacedStoreOwnerNotificationQueuedEmailId = MessageManager.SendOrderPlacedStoreOwnerNotification(order, LocalizationManager.DefaultAdminLanguage.LanguageId);
+                        InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailId), false, DateTime.Now);
 
-                        int orderPlacedCustomerNotificationQueuedEmailID = MessageManager.SendOrderPlacedCustomerNotification(order, order.CustomerLanguageID);
-                        InsertOrderNote(order.OrderID, string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailID), false, DateTime.Now);
+                        int orderPlacedCustomerNotificationQueuedEmailId = MessageManager.SendOrderPlacedCustomerNotification(order, order.CustomerLanguageId);
+                        InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailId), false, DateTime.Now);
 
                         if (SMSManager.IsSMSAlertsEnabled && SMSManager.SendOrderPlacedNotification(order))
                         {
-                            InsertOrderNote(order.OrderID, "\"Order placed\" SMS alert (to store owner) has been sent", false, DateTime.Now);
+                            InsertOrderNote(order.OrderId, "\"Order placed\" SMS alert (to store owner) has been sent", false, DateTime.Now);
                         }
 
                         //order status
-                        order = CheckOrderStatus(order.OrderID);
+                        order = CheckOrderStatus(order.OrderId);
 
                         //reset checkout data
                         if (!paymentInfo.IsRecurringPayment)
                         {
-                            CustomerManager.ResetCheckoutData(customer.CustomerID, true);
+                            CustomerManager.ResetCheckoutData(customer.CustomerId, true);
                         }
 
                         //log
@@ -3073,7 +3278,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                             CustomerActivityManager.InsertActivity(
                                 "PlaceOrder",
                                 LocalizationManager.GetLocaleResourceString("ActivityLog.PlaceOrder"),
-                                order.OrderID);
+                                order.OrderId);
                         }
 
                         //uncomment this line to support transactions
@@ -3097,17 +3302,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Place order items in current user shopping cart.
         /// </summary>
-        /// <param name="OrderID">The order identifier</param>
-        public static void ReOrder(int OrderID)
+        /// <param name="orderId">The order identifier</param>
+        public static void ReOrder(int orderId)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if(order != null)
             {
                 foreach (var orderProductVariant in order.OrderProductVariants)
                 {
                     ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart, 
-                        orderProductVariant.ProductVariantID, 
-                        orderProductVariant.AttributesXML, 
+                        orderProductVariant.ProductVariantId, 
+                        orderProductVariant.AttributesXml, 
                         orderProductVariant.UnitPriceExclTax,
                         orderProductVariant.Quantity);
                 }
@@ -3117,12 +3322,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Process next recurring psayment
         /// </summary>
-        /// <param name="RecurringPaymentID">Recurring payment identifier</param>
-        public static void ProcessNextRecurringPayment(int RecurringPaymentID)
+        /// <param name="recurringPaymentId">Recurring payment identifier</param>
+        public static void ProcessNextRecurringPayment(int recurringPaymentId)
         {
             try
             {
-                var rp = GetRecurringPaymentByID(RecurringPaymentID);
+                var rp = GetRecurringPaymentById(recurringPaymentId);
                 if (rp == null)
                     throw new NopException("Recurring payment could not be loaded");
 
@@ -3144,22 +3349,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 //payment info
                 var paymentInfo = new PaymentInfo();
                 paymentInfo.IsRecurringPayment = true;
-                paymentInfo.InitialOrderID = initialOrder.OrderID;
+                paymentInfo.InitialOrderId = initialOrder.OrderId;
                 paymentInfo.RecurringCycleLength = rp.CycleLength;
                 paymentInfo.RecurringCyclePeriod = rp.CyclePeriod;
                 paymentInfo.RecurringTotalCycles = rp.TotalCycles;
 
                 //place new order
-                int newOrderID = 0;
+                int newOrderId = 0;
                 string result = OrderManager.PlaceOrder(paymentInfo, customer,
-                    Guid.NewGuid(), out newOrderID);
+                    Guid.NewGuid(), out newOrderId);
                 if (!String.IsNullOrEmpty(result))
                 {
                     throw new NopException(result);
                 }
                 else
                 {
-                    InsertRecurringPaymentHistory(rp.RecurringPaymentID, newOrderID, DateTime.Now);
+                    InsertRecurringPaymentHistory(rp.RecurringPaymentId, newOrderId, DateTime.Now);
                 }
             }
             catch (Exception exc)
@@ -3172,26 +3377,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Cancels a recurring payment
         /// </summary>
-        /// <param name="RecurringPaymentID">Recurring payment identifier</param>
-        public static RecurringPayment CancelRecurringPayment(int RecurringPaymentID)
+        /// <param name="recurringPaymentId">Recurring payment identifier</param>
+        public static RecurringPayment CancelRecurringPayment(int recurringPaymentId)
         {
-            return CancelRecurringPayment(RecurringPaymentID, true);
+            return CancelRecurringPayment(recurringPaymentId, true);
         }
 
         /// <summary>
         /// Cancels a recurring payment
         /// </summary>
-        /// <param name="RecurringPaymentID">Recurring payment identifier</param>
+        /// <param name="recurringPaymentId">Recurring payment identifier</param>
         /// <param name="throwException">A value indicating whether to throw the exception after an error has occupied.</param>
-        public static RecurringPayment CancelRecurringPayment(int RecurringPaymentID, bool throwException)
+        public static RecurringPayment CancelRecurringPayment(int recurringPaymentId, 
+            bool throwException)
         {
-            var recurringPayment = GetRecurringPaymentByID(RecurringPaymentID);
+            var recurringPayment = GetRecurringPaymentById(recurringPaymentId);
             try
             {
                 if (recurringPayment != null)
                 {
                     //update recurring payment
-                    UpdateRecurringPayment(recurringPayment.RecurringPaymentID, recurringPayment.InitialOrderID,
+                    UpdateRecurringPayment(recurringPayment.RecurringPaymentId, recurringPayment.InitialOrderId,
                         recurringPayment.CycleLength, recurringPayment.CyclePeriod,
                         recurringPayment.TotalCycles, recurringPayment.StartDate,
                         false, recurringPayment.Deleted, recurringPayment.CreatedOn);
@@ -3202,18 +3408,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
                     //old info from placing order
                     var cancelPaymentResult = new CancelPaymentResult();                    
-                    cancelPaymentResult.AuthorizationTransactionID = initialOrder.AuthorizationTransactionID;
-                    cancelPaymentResult.CaptureTransactionID = initialOrder.CaptureTransactionID;
-                    cancelPaymentResult.SubscriptionTransactionID = initialOrder.SubscriptionTransactionID;
+                    cancelPaymentResult.AuthorizationTransactionId = initialOrder.AuthorizationTransactionId;
+                    cancelPaymentResult.CaptureTransactionId = initialOrder.CaptureTransactionId;
+                    cancelPaymentResult.SubscriptionTransactionId = initialOrder.SubscriptionTransactionId;
                     cancelPaymentResult.Amount = initialOrder.OrderTotal;
                     PaymentManager.CancelRecurringPayment(initialOrder, ref cancelPaymentResult);
                     if (String.IsNullOrEmpty(cancelPaymentResult.Error))
                     {
-                        InsertOrderNote(initialOrder.OrderID, string.Format("Recurring payment has been cancelled"), false, DateTime.Now);
+                        InsertOrderNote(initialOrder.OrderId, string.Format("Recurring payment has been cancelled"), false, DateTime.Now);
                     }
                     else
                     {
-                        InsertOrderNote(initialOrder.OrderID, string.Format("Error cancelling recurring payment. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
+                        InsertOrderNote(initialOrder.OrderId, string.Format("Error cancelling recurring payment. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
                     }
                 }
             }
@@ -3253,7 +3459,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (!customerToValidate.IsAdmin)
             {
-                if (customer.CustomerID != customerToValidate.CustomerID)
+                if (customer.CustomerId != customerToValidate.CustomerId)
                     return false;
             }
 
@@ -3285,12 +3491,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Ships order
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <param name="notifyCustomer">True to notify customer</param>
         /// <returns>Updated order</returns>
-        public static Order Ship(int OrderID, bool notifyCustomer)
+        public static Order Ship(int orderId, bool notifyCustomer)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
@@ -3298,7 +3504,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 throw new NopException("Can not do shipment for order.");
 
             var ShippedDate = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-            order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+            order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                 order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                 order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                 order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3307,38 +3513,38 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                 order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                 order.OrderDiscountInCustomerCurrency,
-                order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                 order.CustomerCurrencyCode, order.OrderWeight,
-                order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                 order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                order.PaymentMethodID, order.PaymentMethodName,
-                order.AuthorizationTransactionID,
+                order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                order.PaymentMethodId, order.PaymentMethodName,
+                order.AuthorizationTransactionId,
                 order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                order.CaptureTransactionID, order.CaptureTransactionResult,
-                order.SubscriptionTransactionID, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
+                order.CaptureTransactionId, order.CaptureTransactionResult,
+                order.SubscriptionTransactionId, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
                 order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                 order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                 order.BillingAddress2, order.BillingCity,
-                order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                order.BillingCountry, order.BillingCountryID, ShippingStatusEnum.Shipped,
+                order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                order.BillingCountry, order.BillingCountryId, ShippingStatusEnum.Shipped,
                 order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                 order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                 order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                order.ShippingCountry, order.ShippingCountryID,
-                order.ShippingMethod, order.ShippingRateComputationMethodID, ShippedDate,
+                order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                order.ShippingCountry, order.ShippingCountryId,
+                order.ShippingMethod, order.ShippingRateComputationMethodId, ShippedDate,
                 order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderID, string.Format("Order has been shipped"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been shipped"), false, DateTime.Now);
 
             if (notifyCustomer)
             {
-                int orderShippedCustomerNotificationQueuedEmailID = MessageManager.SendOrderShippedCustomerNotification(order, order.CustomerLanguageID);
-                InsertOrderNote(order.OrderID, string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailID), false, DateTime.Now);
+                int orderShippedCustomerNotificationQueuedEmailId = MessageManager.SendOrderShippedCustomerNotification(order, order.CustomerLanguageId);
+                InsertOrderNote(order.OrderId, string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId), false, DateTime.Now);
             }
 
-            order = CheckOrderStatus(order.OrderID);
+            order = CheckOrderStatus(order.OrderId);
 
             return order;
         }
@@ -3362,12 +3568,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Cancels order
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <param name="notifyCustomer">True to notify customer</param>
         /// <returns>Cancelled order</returns>
-        public static Order CancelOrder(int OrderID, bool notifyCustomer)
+        public static Order CancelOrder(int orderId, bool notifyCustomer)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
@@ -3375,20 +3581,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 throw new NopException("Can not do cancel for order.");
             
             //Cancel order
-            order = SetOrderStatus(order.OrderID, OrderStatusEnum.Cancelled, notifyCustomer);
+            order = SetOrderStatus(order.OrderId, OrderStatusEnum.Cancelled, notifyCustomer);
 
-            InsertOrderNote(order.OrderID, string.Format("Order has been cancelled"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been cancelled"), false, DateTime.Now);
             
             //cancel recurring payments
-            var recurringPayments = SearchRecurringPayments(0, order.OrderID, null);
+            var recurringPayments = SearchRecurringPayments(0, order.OrderId, null);
             foreach (var rp in recurringPayments)
             {
-                CancelRecurringPayment(rp.RecurringPaymentID, false);
+                CancelRecurringPayment(rp.RecurringPaymentId, false);
             }
                 
             //Adjust inventory
             foreach (var opv in order.OrderProductVariants)
-                ProductManager.AdjustInventory(opv.ProductVariantID, false, opv.Quantity, opv.AttributesXML);
+                ProductManager.AdjustInventory(opv.ProductVariantId, false, opv.Quantity, opv.AttributesXml);
 
             return order;
         }
@@ -3415,15 +3621,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Marks order as authorized
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>Authorized order</returns>
-        public static Order MarkAsAuthorized(int OrderID)
+        public static Order MarkAsAuthorized(int orderId)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
-            order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+            order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                 order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                    order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                    order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3432,33 +3638,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                    order.OrderDiscountInCustomerCurrency,
-                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
                    order.CustomerCurrencyCode, order.OrderWeight,
-                   order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
+                   order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber,
                    order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                   order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                   order.PaymentMethodID, order.PaymentMethodName,
-                   order.AuthorizationTransactionID,
+                   order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                   order.PaymentMethodId, order.PaymentMethodName,
+                   order.AuthorizationTransactionId,
                    order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                   order.CaptureTransactionID, order.CaptureTransactionResult,
-                   order.SubscriptionTransactionID, order.PurchaseOrderNumber, 
+                   order.CaptureTransactionId, order.CaptureTransactionResult,
+                   order.SubscriptionTransactionId, order.PurchaseOrderNumber, 
                    PaymentStatusEnum.Authorized, order.PaidDate,
                    order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                    order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                    order.BillingAddress2, order.BillingCity,
-                   order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                   order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                   order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                   order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                    order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                    order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                   order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                   order.ShippingCountry, order.ShippingCountryID,
-                   order.ShippingMethod, order.ShippingRateComputationMethodID,
+                   order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                   order.ShippingCountry, order.ShippingCountryId,
+                   order.ShippingMethod, order.ShippingRateComputationMethodId,
                    order.ShippedDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderID, string.Format("Order has been marked as authorized"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as authorized"), false, DateTime.Now);
 
-            order = CheckOrderStatus(order.OrderID);
+            order = CheckOrderStatus(order.OrderId);
 
             return order;
         }
@@ -3478,7 +3684,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return false;
 
             if (order.PaymentStatus == PaymentStatusEnum.Authorized &&
-                PaymentManager.CanCapture(order.PaymentMethodID))
+                PaymentManager.CanCapture(order.PaymentMethodId))
                 return true;
 
             return false;
@@ -3487,12 +3693,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Captures order (from admin panel)
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="Error">Error</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="error">Error</param>
         /// <returns>Captured order</returns>
-        public static Order Capture(int OrderID, ref string Error)
+        public static Order Capture(int orderId, ref string error)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
@@ -3503,12 +3709,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             try
             {
                 //old info from placing order
-                processPaymentResult.AuthorizationTransactionID = order.AuthorizationTransactionID;
+                processPaymentResult.AuthorizationTransactionId = order.AuthorizationTransactionId;
                 processPaymentResult.AuthorizationTransactionCode = order.AuthorizationTransactionCode;
                 processPaymentResult.AuthorizationTransactionResult = order.AuthorizationTransactionResult;
-                processPaymentResult.CaptureTransactionID = order.CaptureTransactionID;
+                processPaymentResult.CaptureTransactionId = order.CaptureTransactionId;
                 processPaymentResult.CaptureTransactionResult = order.CaptureTransactionResult;
-                processPaymentResult.SubscriptionTransactionID = order.SubscriptionTransactionID;
+                processPaymentResult.SubscriptionTransactionId = order.SubscriptionTransactionId;
                 processPaymentResult.PaymentStatus = order.PaymentStatus;
 
                 PaymentManager.Capture(order, ref processPaymentResult);
@@ -3519,7 +3725,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     var paymentStatus = processPaymentResult.PaymentStatus;
                     if (paymentStatus == PaymentStatusEnum.Paid)
                         paidDate = DateTime.Now;
-                    order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                    order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                         order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                         order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                         order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3528,41 +3734,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                         order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                         order.OrderDiscountInCustomerCurrency,
-                        order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                        order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                         order.CustomerCurrencyCode, order.OrderWeight,
-                        order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
+                        order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber,
                         order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                        order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                        order.PaymentMethodID, order.PaymentMethodName,
-                        processPaymentResult.AuthorizationTransactionID,
+                        order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                        order.PaymentMethodId, order.PaymentMethodName,
+                        processPaymentResult.AuthorizationTransactionId,
                         processPaymentResult.AuthorizationTransactionCode,
                         processPaymentResult.AuthorizationTransactionResult,
-                        processPaymentResult.CaptureTransactionID,
+                        processPaymentResult.CaptureTransactionId,
                         processPaymentResult.CaptureTransactionResult,
-                        processPaymentResult.SubscriptionTransactionID,
+                        processPaymentResult.SubscriptionTransactionId,
                         order.PurchaseOrderNumber, paymentStatus, paidDate,
                         order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                         order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                         order.BillingAddress2, order.BillingCity,
-                        order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                        order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                        order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                        order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                         order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                         order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                         order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                        order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                        order.ShippingCountry, order.ShippingCountryID,
-                        order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                        order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                        order.ShippingCountry, order.ShippingCountryId,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-                    InsertOrderNote(order.OrderID, string.Format("Order has been captured"), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Order has been captured"), false, DateTime.Now);
 
                 }
                 else
                 {
-                    InsertOrderNote(order.OrderID, string.Format("Unable to capture order. Error: {0}", processPaymentResult.Error), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Unable to capture order. Error: {0}", processPaymentResult.Error), false, DateTime.Now);
 
                 }
-                order = CheckOrderStatus(order.OrderID);
+                order = CheckOrderStatus(order.OrderId);
             }
             catch (Exception exc)
             {
@@ -3572,7 +3778,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (!String.IsNullOrEmpty(processPaymentResult.Error))
             {
-                Error = processPaymentResult.Error;
+                error = processPaymentResult.Error;
                 LogManager.InsertLog(LogTypeEnum.OrderError, string.Format("Error capturing order. {0}", processPaymentResult.Error), processPaymentResult.FullError);
             }
             return order;
@@ -3602,18 +3808,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Marks order as paid
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>Updated order</returns>
-        public static Order MarkOrderAsPaid(int OrderID)
+        public static Order MarkOrderAsPaid(int orderId)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
             if (!CanMarkOrderAsPaid(order))
                 throw new NopException("You can't mark this order as paid");
 
-            order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+            order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                     order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                     order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                     order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3622,32 +3828,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                     order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                     order.OrderDiscountInCustomerCurrency,
-                    order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                    order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                     order.CustomerCurrencyCode, order.OrderWeight,
-                    order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                    order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                     order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                    order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                    order.PaymentMethodID, order.PaymentMethodName,
-                    order.AuthorizationTransactionID,
+                    order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                    order.PaymentMethodId, order.PaymentMethodName,
+                    order.AuthorizationTransactionId,
                     order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                    order.CaptureTransactionID, order.CaptureTransactionResult,
-                    order.SubscriptionTransactionID, order.PurchaseOrderNumber, PaymentStatusEnum.Paid, DateTime.Now,
+                    order.CaptureTransactionId, order.CaptureTransactionResult,
+                    order.SubscriptionTransactionId, order.PurchaseOrderNumber, PaymentStatusEnum.Paid, DateTime.Now,
                     order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                     order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                     order.BillingAddress2, order.BillingCity,
-                    order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                    order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                    order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                    order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                     order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                     order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                     order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                    order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                    order.ShippingCountry, order.ShippingCountryID,
-                    order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                    order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                    order.ShippingCountry, order.ShippingCountryId,
+                    order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                     order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderID, string.Format("Order has been marked as paid"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as paid"), false, DateTime.Now);
 
-            order = CheckOrderStatus(order.OrderID);
+            order = CheckOrderStatus(order.OrderId);
 
             return order;
         }
@@ -3666,7 +3872,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return false;
 
             if (order.PaymentStatus == PaymentStatusEnum.Paid &&
-                PaymentManager.CanRefund(order.PaymentMethodID))
+                PaymentManager.CanRefund(order.PaymentMethodId))
                 return true;
 
             return false;
@@ -3675,12 +3881,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Refunds order (from admin panel)
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="Error">Error</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="error">Error</param>
         /// <returns>Refunded order</returns>
-        public static Order Refund(int OrderID, ref string Error)
+        public static Order Refund(int orderId, ref string error)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
@@ -3691,9 +3897,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             try
             {
                 //old info from placing order
-                cancelPaymentResult.AuthorizationTransactionID = order.AuthorizationTransactionID;
-                cancelPaymentResult.CaptureTransactionID = order.CaptureTransactionID;
-                cancelPaymentResult.SubscriptionTransactionID = order.SubscriptionTransactionID;
+                cancelPaymentResult.AuthorizationTransactionId = order.AuthorizationTransactionId;
+                cancelPaymentResult.CaptureTransactionId = order.CaptureTransactionId;
+                cancelPaymentResult.SubscriptionTransactionId = order.SubscriptionTransactionId;
                 cancelPaymentResult.Amount = order.OrderTotal;
                 cancelPaymentResult.PaymentStatus = order.PaymentStatus;
 
@@ -3701,7 +3907,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
                 if (String.IsNullOrEmpty(cancelPaymentResult.Error))
                 {
-                    order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                    order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                         order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                         order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                         order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3710,40 +3916,40 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                         order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                         order.OrderDiscountInCustomerCurrency,
-                        order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                        order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
                         order.CustomerCurrencyCode, order.OrderWeight,
-                        order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
+                        order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber,
                         order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                        order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                        order.PaymentMethodID, order.PaymentMethodName,
-                        cancelPaymentResult.AuthorizationTransactionID,
+                        order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                        order.PaymentMethodId, order.PaymentMethodName,
+                        cancelPaymentResult.AuthorizationTransactionId,
                         order.AuthorizationTransactionCode,
                         order.AuthorizationTransactionResult,
-                        cancelPaymentResult.CaptureTransactionID,
+                        cancelPaymentResult.CaptureTransactionId,
                         order.CaptureTransactionResult,
-                        order.SubscriptionTransactionID, order.PurchaseOrderNumber, cancelPaymentResult.PaymentStatus, order.PaidDate,
+                        order.SubscriptionTransactionId, order.PurchaseOrderNumber, cancelPaymentResult.PaymentStatus, order.PaidDate,
                         order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                         order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                         order.BillingAddress2, order.BillingCity,
-                        order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                        order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                        order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                        order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                         order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                         order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                         order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                        order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                        order.ShippingCountry, order.ShippingCountryID,
-                        order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                        order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                        order.ShippingCountry, order.ShippingCountryId,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-                    InsertOrderNote(order.OrderID, string.Format("Order has been refunded"), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Order has been refunded"), false, DateTime.Now);
 
                 }
                 else
                 {
-                    InsertOrderNote(order.OrderID, string.Format("Unable to refund order. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Unable to refund order. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
 
                 }
-                order = CheckOrderStatus(order.OrderID);
+                order = CheckOrderStatus(order.OrderId);
             }
             catch (Exception exc)
             {
@@ -3753,7 +3959,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (!String.IsNullOrEmpty(cancelPaymentResult.Error))
             {
-                Error = cancelPaymentResult.Error;
+                error = cancelPaymentResult.Error;
                 LogManager.InsertLog(LogTypeEnum.OrderError, string.Format("Error refunding order. {0}", cancelPaymentResult.Error), cancelPaymentResult.FullError);
             }
             return order;
@@ -3781,18 +3987,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Refunds order (offline)
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>Updated order</returns>
-        public static Order RefundOffline(int OrderID)
+        public static Order RefundOffline(int orderId)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
             if (!CanRefundOffline(order))
                 throw new NopException("You can't refund this order");
 
-            order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+            order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                 order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                    order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                    order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3801,32 +4007,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                    order.OrderDiscountInCustomerCurrency,
-                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                    order.CustomerCurrencyCode, order.OrderWeight,
-                   order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                   order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
                    order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                   order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                   order.PaymentMethodID, order.PaymentMethodName,
-                   order.AuthorizationTransactionID,
+                   order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                   order.PaymentMethodId, order.PaymentMethodName,
+                   order.AuthorizationTransactionId,
                    order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                   order.CaptureTransactionID, order.CaptureTransactionResult,
-                   order.SubscriptionTransactionID, order.PurchaseOrderNumber, PaymentStatusEnum.Refunded, order.PaidDate,
+                   order.CaptureTransactionId, order.CaptureTransactionResult,
+                   order.SubscriptionTransactionId, order.PurchaseOrderNumber, PaymentStatusEnum.Refunded, order.PaidDate,
                    order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                    order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                    order.BillingAddress2, order.BillingCity,
-                   order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                   order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                   order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                   order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                    order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                    order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                   order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                   order.ShippingCountry, order.ShippingCountryID,
-                   order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                   order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                   order.ShippingCountry, order.ShippingCountryId,
+                   order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                    order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderID, string.Format("Order has been marked as refunded"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as refunded"), false, DateTime.Now);
 
-            order = CheckOrderStatus(order.OrderID);
+            order = CheckOrderStatus(order.OrderId);
 
             return order;
         }
@@ -3845,7 +4051,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return false;
 
             if (order.PaymentStatus == PaymentStatusEnum.Authorized &&
-                PaymentManager.CanVoid(order.PaymentMethodID))
+                PaymentManager.CanVoid(order.PaymentMethodId))
                 return true;
 
             return false;
@@ -3854,12 +4060,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Voids order (from admin panel)
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="Error">Error</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="error">Error</param>
         /// <returns>Voided order</returns>
-        public static Order Void(int OrderID, ref string Error)
+        public static Order Void(int orderId, ref string error)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
@@ -3870,8 +4076,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             try
             {
                 //old info from placing order
-                cancelPaymentResult.AuthorizationTransactionID = order.AuthorizationTransactionID;
-                cancelPaymentResult.CaptureTransactionID = order.CaptureTransactionID;
+                cancelPaymentResult.AuthorizationTransactionId = order.AuthorizationTransactionId;
+                cancelPaymentResult.CaptureTransactionId = order.CaptureTransactionId;
                 cancelPaymentResult.Amount = order.OrderTotal;
                 cancelPaymentResult.PaymentStatus = order.PaymentStatus;
 
@@ -3879,7 +4085,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
                 if (String.IsNullOrEmpty(cancelPaymentResult.Error))
                 {
-                    order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+                    order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                         order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                         order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                         order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3888,41 +4094,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                         order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                         order.OrderDiscountInCustomerCurrency,
-                        order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                        order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                         order.CustomerCurrencyCode, order.OrderWeight,
-                        order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
+                        order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber,
                         order.CardType, order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
-                        order.CardCVV2, order.CardExpirationMonth, order.CardExpirationYear,
-                        order.PaymentMethodID, order.PaymentMethodName,
-                        cancelPaymentResult.AuthorizationTransactionID,
+                        order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                        order.PaymentMethodId, order.PaymentMethodName,
+                        cancelPaymentResult.AuthorizationTransactionId,
                         order.AuthorizationTransactionCode,
                         order.AuthorizationTransactionResult,
-                        cancelPaymentResult.CaptureTransactionID,
+                        cancelPaymentResult.CaptureTransactionId,
                         order.CaptureTransactionResult,
-                        order.SubscriptionTransactionID, order.PurchaseOrderNumber,
+                        order.SubscriptionTransactionId, order.PurchaseOrderNumber,
                         cancelPaymentResult.PaymentStatus, order.PaidDate,
                         order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                         order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                         order.BillingAddress2, order.BillingCity,
-                        order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                        order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                        order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                        order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                         order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                         order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                         order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                        order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                        order.ShippingCountry, order.ShippingCountryID,
-                        order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                        order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                        order.ShippingCountry, order.ShippingCountryId,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-                    InsertOrderNote(order.OrderID, string.Format("Order has been voided"), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Order has been voided"), false, DateTime.Now);
 
                 }
                 else
                 {
-                    InsertOrderNote(order.OrderID, string.Format("Unable to void order. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Unable to void order. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
 
                 }
-                order = CheckOrderStatus(order.OrderID);
+                order = CheckOrderStatus(order.OrderId);
             }
             catch (Exception exc)
             {
@@ -3932,7 +4138,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (!String.IsNullOrEmpty(cancelPaymentResult.Error))
             {
-                Error = cancelPaymentResult.Error;
+                error = cancelPaymentResult.Error;
                 LogManager.InsertLog(LogTypeEnum.OrderError, string.Format("Error voiding order. {0}", cancelPaymentResult.Error), cancelPaymentResult.FullError);
             }
             return order;
@@ -3960,18 +4166,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Voids order (offline)
         /// </summary>
-        /// <param name="OrderID">Order identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <returns>Updated order</returns>
-        public static Order VoidOffline(int OrderID)
+        public static Order VoidOffline(int orderId)
         {
-            var order = GetOrderByID(OrderID);
+            var order = GetOrderById(orderId);
             if (order == null)
                 return order;
 
             if (!CanVoidOffline(order))
                 throw new NopException("You can't void this order");
 
-            order = UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID, order.CustomerLanguageID,
+            order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                 order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                    order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                    order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -3980,33 +4186,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                    order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                    order.OrderDiscountInCustomerCurrency,
-                   order.CheckoutAttributeDescription, order.CheckoutAttributesXML, 
+                   order.CheckoutAttributeDescription, order.CheckoutAttributesXml, 
                    order.CustomerCurrencyCode, order.OrderWeight,
-                   order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber, 
+                   order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, 
                    order.CardType, order.CardName, order.CardNumber, 
-                   order.MaskedCreditCardNumber, order.CardCVV2, 
+                   order.MaskedCreditCardNumber, order.CardCvv2, 
                    order.CardExpirationMonth, order.CardExpirationYear,
-                   order.PaymentMethodID, order.PaymentMethodName,
-                   order.AuthorizationTransactionID,
+                   order.PaymentMethodId, order.PaymentMethodName,
+                   order.AuthorizationTransactionId,
                    order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                   order.CaptureTransactionID, order.CaptureTransactionResult,
-                   order.SubscriptionTransactionID, order.PurchaseOrderNumber, PaymentStatusEnum.Voided, order.PaidDate,
+                   order.CaptureTransactionId, order.CaptureTransactionResult,
+                   order.SubscriptionTransactionId, order.PurchaseOrderNumber, PaymentStatusEnum.Voided, order.PaidDate,
                    order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                    order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                    order.BillingAddress2, order.BillingCity,
-                   order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                   order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                   order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                   order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                    order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                    order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                   order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                   order.ShippingCountry, order.ShippingCountryID,
-                   order.ShippingMethod, order.ShippingRateComputationMethodID, order.ShippedDate,
+                   order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                   order.ShippingCountry, order.ShippingCountryId,
+                   order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                    order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderID, string.Format("Order has been marked as voided"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as voided"), false, DateTime.Now);
 
-            order = CheckOrderStatus(order.OrderID);
+            order = CheckOrderStatus(order.OrderId);
 
             return order;
         }

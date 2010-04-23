@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.AffiliateTabs, this.TabID);
+                this.SelectTab(this.AffiliateTabs, this.TabId);
             }
         }
 
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     ctrlAffiliateCustomers.SaveInfo();
                     ctrlAffiliateOrders.SaveInfo();
 
-                    Response.Redirect(string.Format("AffiliateDetails.aspx?AffiliateID={0}&TabID={1}", affiliate.AffiliateID, this.GetActiveTabID(this.AffiliateTabs)));
+                    Response.Redirect(string.Format("AffiliateDetails.aspx?AffiliateID={0}&TabID={1}", affiliate.AffiliateId, this.GetActiveTabId(this.AffiliateTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                AffiliateManager.MarkAffiliateAsDeleted(this.AffiliateID);
+                AffiliateManager.MarkAffiliateAsDeleted(this.AffiliateId);
                 Response.Redirect("Affiliates.aspx");
             }
             catch (Exception exc)
@@ -73,19 +73,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
         
-        public int AffiliateID
+        public int AffiliateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("AffiliateID");
+                return CommonHelper.QueryStringInt("AffiliateId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

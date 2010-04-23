@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         /// <summary>
         /// Gets or sets the customer action identifier
         /// </summary>
-        public int CustomerActionID { get; set; }
+        public int CustomerActionId { get; set; }
         
         /// <summary>
         /// Gets or sets the name

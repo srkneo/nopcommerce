@@ -37,22 +37,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Gets or sets the tax rate identifier
         /// </summary>
-        public int TaxRateID { get; set; }
+        public int TaxRateId { get; set; }
 
         /// <summary>
         /// Gets or sets the tax category identifier
         /// </summary>
-        public int TaxCategoryID { get; set; }
+        public int TaxCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the state/province identifier
         /// </summary>
-        public int StateProvinceID { get; set; }
+        public int StateProvinceId { get; set; }
 
         /// <summary>
         /// Gets or sets the zip

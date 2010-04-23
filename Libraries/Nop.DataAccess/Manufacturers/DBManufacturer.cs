@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Gets or sets the manufacturer identifier
         /// </summary>
-        public int ManufacturerID { get; set; }
+        public int ManufacturerId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Gets or sets the template identifier
         /// </summary>
-        public int TemplateID { get; set; }
+        public int TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the meta keywords
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Gets or sets the parent picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the page size

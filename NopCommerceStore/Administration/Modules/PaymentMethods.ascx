@@ -14,8 +14,6 @@
 </div>
 <asp:GridView ID="gvPaymentMethods" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="PaymentMethodID" HeaderText="PaymentMethod ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.PaymentMethods.Name %>" ItemStyle-Width="30%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
@@ -43,7 +41,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.PaymentMethods.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="PaymentMethodDetails.aspx?PaymentMethodID=<%#Eval("PaymentMethodID")%>"
+                <a href="PaymentMethodDetails.aspx?PaymentMethodID=<%#Eval("PaymentMethodId")%>"
                     title="<%#GetLocaleResourceString("Admin.PaymentMethods.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.PaymentMethods.Edit")%>
                 </a>

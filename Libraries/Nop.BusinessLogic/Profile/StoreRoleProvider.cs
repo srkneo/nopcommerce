@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
     public partial class StoreRoleProvider : RoleProvider
     {
         #region Fields
-        private string _AppName;
+        private string _appName;
         #endregion
 
         #region Methods
@@ -113,7 +113,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                 }
                 else
                 {
-                    var customerRoles = CustomerManager.GetCustomerRolesByCustomerID(customer.CustomerID, false);
+                    var customerRoles = CustomerManager.GetCustomerRolesByCustomerId(customer.CustomerId, false);
                     foreach (var cr in customerRoles)
                     {
                         if (cr.Active)
@@ -158,12 +158,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                 config.Add("description", "Roles Provider");
             }
             base.Initialize(name, config);
-            this._AppName = config["applicationName"];
-            if (string.IsNullOrEmpty(this._AppName))
+            this._appName = config["applicationName"];
+            if (string.IsNullOrEmpty(this._appName))
             {
-                this._AppName = "NopCommerce";
+                this._appName = "NopCommerce";
             }
-            if (this._AppName.Length > 0x100)
+            if (this._appName.Length > 0x100)
             {
                 throw new ProviderException("Provider application name too long");
             }
@@ -172,7 +172,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
             string connectionStringName = config["connectionStringName"];
             if (string.IsNullOrEmpty(connectionStringName))
             {
-                this._AppName = "NopSqlConnection";
+                this._appName = "NopSqlConnection";
             }
             config.Remove("connectionStringName");
 
@@ -214,7 +214,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                     return false;
                 }
 
-                var customerRoles = CustomerManager.GetCustomerRolesByCustomerID(customer.CustomerID, false);
+                var customerRoles = CustomerManager.GetCustomerRolesByCustomerId(customer.CustomerId, false);
                 foreach (var cr in customerRoles)
                 {
                     if (cr.Active)
@@ -257,11 +257,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                return this._AppName;
+                return this._appName;
             }
             set
             {
-                this._AppName = value;
+                this._appName = value;
             }
         }
         #endregion

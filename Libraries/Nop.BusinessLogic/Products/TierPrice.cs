@@ -44,12 +44,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the tier price identifier
         /// </summary>
-        public int TierPriceID { get; set; }
-        
+        public int TierPriceId { get; set; }
+
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity
@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         public decimal Price { get; set; }
 
-        #endregion 
+        #endregion
 
         #region Custom Properties
 
@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductVariantByID(ProductVariantID);
+                return ProductManager.GetProductVariantById(this.ProductVariantId);
             }
         }
         #endregion

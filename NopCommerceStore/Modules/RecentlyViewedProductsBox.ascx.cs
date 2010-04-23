@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if (product != null)
                     {
                         var hlProduct = dataItem.FindControl("hlProduct") as HyperLink;
-                        hlProduct.NavigateUrl = SEOHelper.GetProductURL(product);
+                        hlProduct.NavigateUrl = SEOHelper.GetProductUrl(product);
                     }
                 }
             }

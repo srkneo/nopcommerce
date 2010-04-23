@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -65,13 +65,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the product type identifier
         /// </summary>
-        public int ProductTypeID { get; set; }
+        public int ProductTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the template identifier
         /// </summary>
-        public int TemplateID { get; set; }
-        
+        public int TemplateId { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether to show the product on home page
         /// </summary>
@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductVariantsByProductID(ProductID);
+                return ProductManager.GetProductVariantsByProductId(this.ProductId);
             }
         }
 
@@ -168,7 +168,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return TemplateManager.GetProductTemplateByID(TemplateID);
+                return TemplateManager.GetProductTemplateById(this.TemplateId);
             }
         }
 
@@ -179,7 +179,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductTypeByID(ProductTypeID);
+                return ProductManager.GetProductTypeById(this.ProductTypeId);
             }
         }
 
@@ -190,7 +190,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetRelatedProductsByProductID1(ProductID);
+                return ProductManager.GetRelatedProductsByProductId1(this.ProductId);
             }
         }
 
@@ -201,7 +201,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductPicturesByProductID(ProductID);
+                return ProductManager.GetProductPicturesByProductId(this.ProductId);
             }
         }
 
@@ -212,7 +212,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return CategoryManager.GetProductCategoriesByProductID(ProductID);
+                return CategoryManager.GetProductCategoriesByProductId(this.ProductId);
             }
         }
 
@@ -223,7 +223,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ManufacturerManager.GetProductManufacturersByProductID(ProductID);
+                return ManufacturerManager.GetProductManufacturersByProductId(this.ProductId);
             }
         }
 
@@ -234,7 +234,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductReviewByProductID(ProductID);
+                return ProductManager.GetProductReviewByProductId(this.ProductId);
             }
         }
 

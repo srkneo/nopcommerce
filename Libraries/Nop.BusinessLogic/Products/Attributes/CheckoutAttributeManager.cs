@@ -61,14 +61,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new CheckoutAttribute();
-            item.CheckoutAttributeID = dbItem.CheckoutAttributeID;
+            item.CheckoutAttributeId = dbItem.CheckoutAttributeId;
             item.Name = dbItem.Name;
             item.TextPrompt = dbItem.TextPrompt;
             item.IsRequired = dbItem.IsRequired;
             item.ShippableProductRequired = dbItem.ShippableProductRequired;
             item.IsTaxExempt = dbItem.IsTaxExempt;
-            item.TaxCategoryID = dbItem.TaxCategoryID;
-            item.AttributeControlTypeID = dbItem.AttributeControlTypeID;
+            item.TaxCategoryId = dbItem.TaxCategoryId;
+            item.AttributeControlTypeId = dbItem.AttributeControlTypeId;
             item.DisplayOrder = dbItem.DisplayOrder;
 
             return item;
@@ -80,9 +80,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new CheckoutAttributeLocalized();
-            item.CheckoutAttributeLocalizedID = dbItem.CheckoutAttributeLocalizedID;
-            item.CheckoutAttributeID = dbItem.CheckoutAttributeID;
-            item.LanguageID = dbItem.LanguageID;
+            item.CheckoutAttributeLocalizedId = dbItem.CheckoutAttributeLocalizedId;
+            item.CheckoutAttributeId = dbItem.CheckoutAttributeId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.TextPrompt = dbItem.TextPrompt;
 
@@ -110,8 +110,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new CheckoutAttributeValue();
-            item.CheckoutAttributeValueID = dbItem.CheckoutAttributeValueID;
-            item.CheckoutAttributeID = dbItem.CheckoutAttributeID;
+            item.CheckoutAttributeValueId = dbItem.CheckoutAttributeValueId;
+            item.CheckoutAttributeId = dbItem.CheckoutAttributeId;
             item.Name = dbItem.Name;
             item.PriceAdjustment = dbItem.PriceAdjustment;
             item.WeightAdjustment = dbItem.WeightAdjustment;
@@ -127,9 +127,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new CheckoutAttributeValueLocalized();
-            item.CheckoutAttributeValueLocalizedID = dbItem.CheckoutAttributeValueLocalizedID;
-            item.CheckoutAttributeValueID = dbItem.CheckoutAttributeValueID;
-            item.LanguageID = dbItem.LanguageID;
+            item.CheckoutAttributeValueLocalizedId = dbItem.CheckoutAttributeValueLocalizedId;
+            item.CheckoutAttributeValueId = dbItem.CheckoutAttributeValueId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
 
             return item;
@@ -144,10 +144,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Deletes a checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        public static void DeleteCheckoutAttribute(int CheckoutAttributeID)
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        public static void DeleteCheckoutAttribute(int checkoutAttributeId)
         {
-            DBProviderManager<DBCheckoutAttributeProvider>.Provider.DeleteCheckoutAttribute(CheckoutAttributeID);
+            DBProviderManager<DBCheckoutAttributeProvider>.Provider.DeleteCheckoutAttribute(checkoutAttributeId);
             if (CheckoutAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CHECKOUTATTRIBUTES_PATTERN_KEY);
@@ -158,32 +158,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets all checkout attributes
         /// </summary>
-        /// <param name="DontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
+        /// <param name="dontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
         /// <returns>Checkout attribute collection</returns>
-        public static CheckoutAttributeCollection GetAllCheckoutAttributes(bool DontLoadShippableProductRequired)
+        public static CheckoutAttributeCollection GetAllCheckoutAttributes(bool dontLoadShippableProductRequired)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetAllCheckoutAttributes(languageId, DontLoadShippableProductRequired);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetAllCheckoutAttributes(languageId, dontLoadShippableProductRequired);
         }
 
         /// <summary>
         /// Gets all checkout attributes
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="DontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="dontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
         /// <returns>Checkout attribute collection</returns>
-        public static CheckoutAttributeCollection GetAllCheckoutAttributes(int LanguageID, bool DontLoadShippableProductRequired)
+        public static CheckoutAttributeCollection GetAllCheckoutAttributes(int languageId,
+            bool dontLoadShippableProductRequired)
         {
-            string key = string.Format(CHECKOUTATTRIBUTES_ALL_KEY, LanguageID, DontLoadShippableProductRequired);
+            string key = string.Format(CHECKOUTATTRIBUTES_ALL_KEY, languageId, dontLoadShippableProductRequired);
             object obj2 = NopCache.Get(key);
             if (CheckoutAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (CheckoutAttributeCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetAllCheckoutAttributes(LanguageID, DontLoadShippableProductRequired);
+            var dbCollection = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetAllCheckoutAttributes(languageId, dontLoadShippableProductRequired);
             var checkoutAttributes = DBMapping(dbCollection);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -196,35 +197,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets a checkout attribute 
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
         /// <returns>Checkout attribute</returns>
-        public static CheckoutAttribute GetCheckoutAttributeByID(int CheckoutAttributeID)
+        public static CheckoutAttribute GetCheckoutAttributeById(int checkoutAttributeId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetCheckoutAttributeByID(CheckoutAttributeID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetCheckoutAttributeById(checkoutAttributeId, languageId);
         }
 
         /// <summary>
         /// Gets a checkout attribute 
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute</returns>
-        public static CheckoutAttribute GetCheckoutAttributeByID(int CheckoutAttributeID, int LanguageID)
+        public static CheckoutAttribute GetCheckoutAttributeById(int checkoutAttributeId, 
+            int languageId)
         {
-            if (CheckoutAttributeID == 0)
+            if (checkoutAttributeId == 0)
                 return null;
 
-            string key = string.Format(CHECKOUTATTRIBUTES_BY_ID_KEY, CheckoutAttributeID, LanguageID);
+            string key = string.Format(CHECKOUTATTRIBUTES_BY_ID_KEY, checkoutAttributeId, languageId);
             object obj2 = NopCache.Get(key);
             if (CheckoutAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (CheckoutAttribute)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeByID(CheckoutAttributeID, LanguageID);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeById(checkoutAttributeId, languageId);
             var checkoutAttribute = DBMapping(dbItem);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -237,23 +239,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a checkout attribute
         /// </summary>
-        /// <param name="Name">Name</param>
-        /// <param name="TextPrompt">Text prompt</param>
-        /// <param name="IsRequired">Value indicating whether the entity is required</param>
-        /// <param name="ShippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
-        /// <param name="IsTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
-        /// <param name="AttributeControlTypeID">Attribute control type identifier</param>
-        /// <param name="DisplayOrder">Display order</param>
+        /// <param name="name">Name</param>
+        /// <param name="textPrompt">Text prompt</param>
+        /// <param name="isRequired">Value indicating whether the entity is required</param>
+        /// <param name="shippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
+        /// <param name="isTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
+        /// <param name="attributeControlTypeId">Attribute control type identifier</param>
+        /// <param name="displayOrder">Display order</param>
         /// <returns>Checkout attribute</returns>
-        public static CheckoutAttribute InsertCheckoutAttribute(string Name,
-            string TextPrompt, bool IsRequired, bool ShippableProductRequired,
-            bool IsTaxExempt, int TaxCategoryID, int AttributeControlTypeID,
-            int DisplayOrder)
+        public static CheckoutAttribute InsertCheckoutAttribute(string name,
+            string textPrompt, bool isRequired, bool shippableProductRequired,
+            bool isTaxExempt, int taxCategoryId, int attributeControlTypeId,
+            int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttribute(Name,
-                TextPrompt, IsRequired, ShippableProductRequired,
-                IsTaxExempt, TaxCategoryID, AttributeControlTypeID, DisplayOrder);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttribute(name,
+                textPrompt, isRequired, shippableProductRequired,
+                isTaxExempt, taxCategoryId, attributeControlTypeId, displayOrder);
             var checkoutAttribute = DBMapping(dbItem);
             if (CheckoutAttributeManager.CacheEnabled)
             {
@@ -266,24 +268,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Updates the checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="Name">Name</param>
-        /// <param name="TextPrompt">Text prompt</param>
-        /// <param name="IsRequired">Value indicating whether the entity is required</param>
-        /// <param name="ShippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
-        /// <param name="IsTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
-        /// <param name="AttributeControlTypeID">Attribute control type identifier</param>
-        /// <param name="DisplayOrder">Display order</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="name">Name</param>
+        /// <param name="textPrompt">Text prompt</param>
+        /// <param name="isRequired">Value indicating whether the entity is required</param>
+        /// <param name="shippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
+        /// <param name="isTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
+        /// <param name="attributeControlTypeId">Attribute control type identifier</param>
+        /// <param name="displayOrder">Display order</param>
         /// <returns>Checkout attribute</returns>
-        public static CheckoutAttribute UpdateCheckoutAttribute(int CheckoutAttributeID,
-            string Name, string TextPrompt, bool IsRequired, bool ShippableProductRequired,
-            bool IsTaxExempt, int TaxCategoryID, int AttributeControlTypeID,
-            int DisplayOrder)
+        public static CheckoutAttribute UpdateCheckoutAttribute(int checkoutAttributeId,
+            string name, string textPrompt, bool isRequired, bool shippableProductRequired,
+            bool isTaxExempt, int taxCategoryId, int attributeControlTypeId,
+            int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttribute(CheckoutAttributeID,
-                Name, TextPrompt, IsRequired, ShippableProductRequired,
-                IsTaxExempt, TaxCategoryID, AttributeControlTypeID, DisplayOrder);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttribute(checkoutAttributeId,
+                name, textPrompt, isRequired, shippableProductRequired,
+                isTaxExempt, taxCategoryId, attributeControlTypeId, displayOrder);
             var checkoutAttribute = DBMapping(dbItem);
             if (CheckoutAttributeManager.CacheEnabled)
             {
@@ -297,14 +299,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized checkout attribute by id
         /// </summary>
-        /// <param name="CheckoutAttributeLocalizedID">Localized checkout attribute identifier</param>
+        /// <param name="checkoutAttributeLocalizedId">Localized checkout attribute identifier</param>
         /// <returns>Checkout attribute content</returns>
-        public static CheckoutAttributeLocalized GetCheckoutAttributeLocalizedByID(int CheckoutAttributeLocalizedID)
+        public static CheckoutAttributeLocalized GetCheckoutAttributeLocalizedById(int checkoutAttributeLocalizedId)
         {
-            if (CheckoutAttributeLocalizedID == 0)
+            if (checkoutAttributeLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeLocalizedByID(CheckoutAttributeLocalizedID);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeLocalizedById(checkoutAttributeLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -312,15 +314,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized checkout attribute by checkout attribute id and language id
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute content</returns>
-        public static CheckoutAttributeLocalized GetCheckoutAttributeLocalizedByCheckoutAttributeIDAndLanguageID(int CheckoutAttributeID, int LanguageID)
+        public static CheckoutAttributeLocalized GetCheckoutAttributeLocalizedByCheckoutAttributeIdAndLanguageId(int checkoutAttributeId, int languageId)
         {
-            if (CheckoutAttributeID == 0 || LanguageID == 0)
+            if (checkoutAttributeId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeLocalizedByCheckoutAttributeIDAndLanguageID(CheckoutAttributeID, LanguageID);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeLocalizedByCheckoutAttributeIdAndLanguageId(checkoutAttributeId, languageId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -328,16 +330,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a localized checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="TextPrompt">Text prompt</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="textPrompt">Text prompt</param>
         /// <returns>Checkout attribute content</returns>
-        public static CheckoutAttributeLocalized InsertCheckoutAttributeLocalized(int CheckoutAttributeID,
-            int LanguageID, string Name, string TextPrompt)
+        public static CheckoutAttributeLocalized InsertCheckoutAttributeLocalized(int checkoutAttributeId,
+            int languageId, string name, string textPrompt)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttributeLocalized(CheckoutAttributeID,
-                LanguageID, Name, TextPrompt);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttributeLocalized(checkoutAttributeId,
+                languageId, name, textPrompt);
             var item = DBMapping(dbItem);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -352,17 +354,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Update a localized checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeLocalizedID">Localized checkout attribute identifier</param>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="TextPrompt">Text prompt</param>
+        /// <param name="checkoutAttributeLocalizedId">Localized checkout attribute identifier</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="textPrompt">Text prompt</param>
         /// <returns>Checkout attribute content</returns>
-        public static CheckoutAttributeLocalized UpdateCheckoutAttributeLocalized(int CheckoutAttributeLocalizedID,
-            int CheckoutAttributeID, int LanguageID, string Name, string TextPrompt)
+        public static CheckoutAttributeLocalized UpdateCheckoutAttributeLocalized(int checkoutAttributeLocalizedId,
+            int checkoutAttributeId, int languageId, string name, string textPrompt)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttributeLocalized(CheckoutAttributeLocalizedID,
-                CheckoutAttributeID, LanguageID, Name, TextPrompt);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttributeLocalized(checkoutAttributeLocalizedId,
+                checkoutAttributeId, languageId, name, textPrompt);
             var item = DBMapping(dbItem);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -381,10 +383,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Deletes a checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        public static void DeleteCheckoutAttributeValue(int CheckoutAttributeValueID)
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        public static void DeleteCheckoutAttributeValue(int checkoutAttributeValueId)
         {
-            DBProviderManager<DBCheckoutAttributeProvider>.Provider.DeleteCheckoutAttributeValue(CheckoutAttributeValueID);
+            DBProviderManager<DBCheckoutAttributeProvider>.Provider.DeleteCheckoutAttributeValue(checkoutAttributeValueId);
             if (CheckoutAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CHECKOUTATTRIBUTES_PATTERN_KEY);
@@ -395,33 +397,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets checkout attribute values by checkout attribute identifier
         /// </summary>
-        /// <param name="CheckoutAttributeID">The checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
         /// <returns>Checkout attribute value collection</returns>
-        public static CheckoutAttributeValueCollection GetCheckoutAttributeValues(int CheckoutAttributeID)
+        public static CheckoutAttributeValueCollection GetCheckoutAttributeValues(int checkoutAttributeId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetCheckoutAttributeValues(CheckoutAttributeID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetCheckoutAttributeValues(checkoutAttributeId, languageId);
         }
 
         /// <summary>
         /// Gets checkout attribute values by checkout attribute identifier
         /// </summary>
-        /// <param name="CheckoutAttributeID">The checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute value collection</returns>
-        public static CheckoutAttributeValueCollection GetCheckoutAttributeValues(int CheckoutAttributeID, int LanguageID)
+        public static CheckoutAttributeValueCollection GetCheckoutAttributeValues(int checkoutAttributeId, int languageId)
         {
-            string key = string.Format(CHECKOUTATTRIBUTEVALUES_ALL_KEY, CheckoutAttributeID, LanguageID);
+            string key = string.Format(CHECKOUTATTRIBUTEVALUES_ALL_KEY, checkoutAttributeId, languageId);
             object obj2 = NopCache.Get(key);
             if (CheckoutAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (CheckoutAttributeValueCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValues(CheckoutAttributeID, LanguageID);
+            var dbCollection = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValues(checkoutAttributeId, languageId);
             var checkoutAttributeValues = DBMapping(dbCollection);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -434,35 +435,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets a checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
         /// <returns>Checkout attribute value</returns>
-        public static CheckoutAttributeValue GetCheckoutAttributeValueByID(int CheckoutAttributeValueID)
+        public static CheckoutAttributeValue GetCheckoutAttributeValueById(int checkoutAttributeValueId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetCheckoutAttributeValueByID(CheckoutAttributeValueID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetCheckoutAttributeValueById(checkoutAttributeValueId, languageId);
         }
 
         /// <summary>
         /// Gets a checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute value</returns>
-        public static CheckoutAttributeValue GetCheckoutAttributeValueByID(int CheckoutAttributeValueID, int LanguageID)
+        public static CheckoutAttributeValue GetCheckoutAttributeValueById(int checkoutAttributeValueId, int languageId)
         {
-            if (CheckoutAttributeValueID == 0)
+            if (checkoutAttributeValueId == 0)
                 return null;
 
-            string key = string.Format(CHECKOUTATTRIBUTEVALUES_BY_ID_KEY, CheckoutAttributeValueID, LanguageID);
+            string key = string.Format(CHECKOUTATTRIBUTEVALUES_BY_ID_KEY, checkoutAttributeValueId, languageId);
             object obj2 = NopCache.Get(key);
             if (CheckoutAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (CheckoutAttributeValue)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValueByID(CheckoutAttributeValueID, LanguageID);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValueById(checkoutAttributeValueId, languageId);
             var checkoutAttributeValue = DBMapping(dbItem);
             if (CheckoutAttributeManager.CacheEnabled)
             {
@@ -474,19 +475,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeID">The checkout attribute identifier</param>
-        /// <param name="Name">The checkout attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
+        /// <param name="name">The checkout attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Checkout attribute value</returns>
-        public static CheckoutAttributeValue InsertCheckoutAttributeValue(int CheckoutAttributeID,
-            string Name, decimal PriceAdjustment, decimal WeightAdjustment,
-            bool IsPreSelected, int DisplayOrder)
+        public static CheckoutAttributeValue InsertCheckoutAttributeValue(int checkoutAttributeId,
+            string name, decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttributeValue(CheckoutAttributeID,
-                Name, PriceAdjustment, WeightAdjustment, IsPreSelected, DisplayOrder);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttributeValue(checkoutAttributeId,
+                name, priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
             var checkoutAttributeValue = DBMapping(dbItem);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -501,20 +502,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Updates the checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">The checkout attribute value identifier</param>
-        /// <param name="CheckoutAttributeID">The checkout attribute identifier</param>
-        /// <param name="Name">The checkout attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="checkoutAttributeValueId">The checkout attribute value identifier</param>
+        /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
+        /// <param name="name">The checkout attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Checkout attribute value</returns>
-        public static CheckoutAttributeValue UpdateCheckoutAttributeValue(int CheckoutAttributeValueID,
-            int CheckoutAttributeID, string Name, decimal PriceAdjustment,
-            decimal WeightAdjustment, bool IsPreSelected, int DisplayOrder)
+        public static CheckoutAttributeValue UpdateCheckoutAttributeValue(int checkoutAttributeValueId,
+            int checkoutAttributeId, string name, decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttributeValue(CheckoutAttributeValueID,
-                CheckoutAttributeID, Name, PriceAdjustment, WeightAdjustment, IsPreSelected, DisplayOrder);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttributeValue(checkoutAttributeValueId,
+                checkoutAttributeId, name, priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
             var checkoutAttributeValue = DBMapping(dbItem);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -529,14 +530,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized checkout attribute value by id
         /// </summary>
-        /// <param name="CheckoutAttributeValueLocalizedID">Localized checkout attribute value identifier</param>
+        /// <param name="checkoutAttributeValueLocalizedId">Localized checkout attribute value identifier</param>
         /// <returns>Localized checkout attribute value</returns>
-        public static CheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedByID(int CheckoutAttributeValueLocalizedID)
+        public static CheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedById(int checkoutAttributeValueLocalizedId)
         {
-            if (CheckoutAttributeValueLocalizedID == 0)
+            if (checkoutAttributeValueLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValueLocalizedByID(CheckoutAttributeValueLocalizedID);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValueLocalizedById(checkoutAttributeValueLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -544,15 +545,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized checkout attribute value by checkout attribute value id and language id
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized checkout attribute value</returns>
-        public static CheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIDAndLanguageID(int CheckoutAttributeValueID, int LanguageID)
+        public static CheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIdAndLanguageId(int checkoutAttributeValueId, int languageId)
         {
-            if (CheckoutAttributeValueID == 0 || LanguageID == 0)
+            if (checkoutAttributeValueId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIDAndLanguageID(CheckoutAttributeValueID, LanguageID);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIdAndLanguageId(checkoutAttributeValueId, languageId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -560,15 +561,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a localized checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized checkout attribute value</returns>
-        public static CheckoutAttributeValueLocalized InsertCheckoutAttributeValueLocalized(int CheckoutAttributeValueID,
-            int LanguageID, string Name)
+        public static CheckoutAttributeValueLocalized InsertCheckoutAttributeValueLocalized(int checkoutAttributeValueId,
+            int languageId, string name)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttributeValueLocalized(CheckoutAttributeValueID,
-                LanguageID, Name);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.InsertCheckoutAttributeValueLocalized(checkoutAttributeValueId,
+                languageId, name);
             var item = DBMapping(dbItem);
 
             if (CheckoutAttributeManager.CacheEnabled)
@@ -583,16 +584,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Update a localized checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueLocalizedID">Localized checkout attribute value identifier</param>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="checkoutAttributeValueLocalizedId">Localized checkout attribute value identifier</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized checkout attribute value</returns>
-        public static CheckoutAttributeValueLocalized UpdateCheckoutAttributeValueLocalized(int CheckoutAttributeValueLocalizedID,
-            int CheckoutAttributeValueID, int LanguageID, string Name)
+        public static CheckoutAttributeValueLocalized UpdateCheckoutAttributeValueLocalized(int checkoutAttributeValueLocalizedId,
+            int checkoutAttributeValueId, int languageId, string name)
         {
-            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttributeValueLocalized(CheckoutAttributeValueLocalizedID,
-                CheckoutAttributeValueID, LanguageID, Name);
+            var dbItem = DBProviderManager<DBCheckoutAttributeProvider>.Provider.UpdateCheckoutAttributeValueLocalized(checkoutAttributeValueLocalizedId,
+                checkoutAttributeValueId, languageId, name);
             var item = DBMapping(dbItem);
 
             if (CheckoutAttributeManager.CacheEnabled)

@@ -29,17 +29,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shipmentPackage">Shipment package</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        ShippingOptionCollection GetShippingOptions(ShipmentPackage ShipmentPackage, ref string Error);
+        ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, 
+            ref string error);
 
         /// <summary>
         /// Gets fixed shipping rate (if shipping rate computation method allows it and the rate can be calculated before checkout).
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
+        /// <param name="shipmentPackage">Shipment package</param>
         /// <returns>Fixed shipping rate; or null if shipping rate could not be calculated before checkout</returns>
-        decimal? GetFixedRate(ShipmentPackage ShipmentPackage);
+        decimal? GetFixedRate(ShipmentPackage shipmentPackage);
         #endregion
 
         #region Properties

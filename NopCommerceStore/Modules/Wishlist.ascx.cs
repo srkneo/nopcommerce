@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         public void BindData()
         {
-            var Cart = ShoppingCartManager.GetShoppingCartByCustomerSessionGUID(ShoppingCartTypeEnum.Wishlist, this.CustomerSessionGuid);
+            var Cart = ShoppingCartManager.GetShoppingCartByCustomerSessionGuid(ShoppingCartTypeEnum.Wishlist, this.CustomerSessionGuid);
 
             if (Cart.Count > 0)
             {
@@ -119,25 +119,25 @@ namespace NopSolutions.NopCommerce.Web.Modules
             foreach (RepeaterItem item in rptShoppingCart.Items)
             {
                 var txtQuantity = item.FindControl("txtQuantity") as TextBox;
-                var lblShoppingCartItemID = item.FindControl("lblShoppingCartItemID") as Label;
+                var lblShoppingCartItemId = item.FindControl("lblShoppingCartItemId") as Label;
                 var cbRemoveFromCart = item.FindControl("cbRemoveFromCart") as CheckBox;
                 var pnlWarnings = item.FindControl("pnlWarnings") as Panel;
                 var lblWarning = item.FindControl("lblWarning") as Label;
 
-                int shoppingCartItemID = 0;
+                int shoppingCartItemId = 0;
                 int quantity = 0;
-                if (txtQuantity != null && lblShoppingCartItemID != null && cbRemoveFromCart != null)
+                if (txtQuantity != null && lblShoppingCartItemId != null && cbRemoveFromCart != null)
                 {
-                    int.TryParse(lblShoppingCartItemID.Text, out shoppingCartItemID);
+                    int.TryParse(lblShoppingCartItemId.Text, out shoppingCartItemId);
                     if (!cbRemoveFromCart.Checked)
                     {
                         int.TryParse(txtQuantity.Text, out quantity);
-                        var sci = ShoppingCartManager.GetShoppingCartItemByID(shoppingCartItemID);
+                        var sci = ShoppingCartManager.GetShoppingCartItemById(shoppingCartItemId);
 
                         var warnings = ShoppingCartManager.GetShoppingCartItemWarnings(
                             sci.ShoppingCartType, 
-                            sci.ProductVariantID, 
-                            sci.AttributesXML, 
+                            sci.ProductVariantId, 
+                            sci.AttributesXml, 
                             sci.CustomerEnteredPrice,
                             quantity);
 
@@ -181,20 +181,20 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 foreach (RepeaterItem item in rptShoppingCart.Items)
                 {
                     var txtQuantity = item.FindControl("txtQuantity") as TextBox;
-                    var lblShoppingCartItemID = item.FindControl("lblShoppingCartItemID") as Label;
+                    var lblShoppingCartItemId = item.FindControl("lblShoppingCartItemId") as Label;
                     var cbRemoveFromCart = item.FindControl("cbRemoveFromCart") as CheckBox;
 
-                    int shoppingCartItemID = 0;
+                    int shoppingCartItemId = 0;
                     int quantity = 0;
-                    if (txtQuantity != null && lblShoppingCartItemID != null && cbRemoveFromCart != null)
+                    if (txtQuantity != null && lblShoppingCartItemId != null && cbRemoveFromCart != null)
                     {
-                        int.TryParse(lblShoppingCartItemID.Text, out shoppingCartItemID);
+                        int.TryParse(lblShoppingCartItemId.Text, out shoppingCartItemId);
                         if (cbRemoveFromCart.Checked)
-                            ShoppingCartManager.DeleteShoppingCartItem(shoppingCartItemID, false);
+                            ShoppingCartManager.DeleteShoppingCartItem(shoppingCartItemId, false);
                         else
                         {
                             int.TryParse(txtQuantity.Text, out quantity);
-                            List<string> addToCartWarning = ShoppingCartManager.UpdateCart(shoppingCartItemID, quantity, false);
+                            List<string> addToCartWarning = ShoppingCartManager.UpdateCart(shoppingCartItemId, quantity, false);
                         }
                     }
                 }
@@ -225,7 +225,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var productPictures = product.ProductPictures;
                     if (productPictures.Count > 0)
                     {
-                        pictureUrl = PictureManager.GetPictureUrl(productPictures[0].PictureID, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
+                        pictureUrl = PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
                     }
                     else
                     {
@@ -236,17 +236,17 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return pictureUrl;
         }
 
-        public string GetProductURL(ShoppingCartItem shoppingCartItem)
+        public string GetProductUrl(ShoppingCartItem shoppingCartItem)
         {
             var productVariant = shoppingCartItem.ProductVariant;
             if (productVariant != null)
-                return SEOHelper.GetProductURL(productVariant.ProductID);
+                return SEOHelper.GetProductUrl(productVariant.ProductId);
             return string.Empty;
         }
 
         public string GetAttributeDescription(ShoppingCartItem shoppingCartItem)
         {
-            string result = ProductAttributeHelper.FormatAttributes(shoppingCartItem.ProductVariant, shoppingCartItem.AttributesXML);
+            string result = ProductAttributeHelper.FormatAttributes(shoppingCartItem.ProductVariant, shoppingCartItem.AttributesXml);
             if (!String.IsNullOrEmpty(result))
                 result = "<br />" + result;
             return result;
@@ -299,22 +299,22 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             foreach (RepeaterItem item in rptShoppingCart.Items)
             {
-                var lblShoppingCartItemID = item.FindControl("lblShoppingCartItemID") as Label;
+                var lblShoppingCartItemId = item.FindControl("lblShoppingCartItemId") as Label;
                 var cbAddToCart = item.FindControl("cbAddToCart") as CheckBox;
 
-                int shoppingCartItemID = 0;
-                if (lblShoppingCartItemID != null && cbAddToCart != null)
+                int shoppingCartItemId = 0;
+                if (lblShoppingCartItemId != null && cbAddToCart != null)
                 {
-                    int.TryParse(lblShoppingCartItemID.Text, out shoppingCartItemID);
+                    int.TryParse(lblShoppingCartItemId.Text, out shoppingCartItemId);
                     if (cbAddToCart.Checked)
                     {
-                        var sci  = ShoppingCartManager.GetShoppingCartItemByID(shoppingCartItemID);
+                        var sci  = ShoppingCartManager.GetShoppingCartItemById(shoppingCartItemId);
                         if (sci != null)
                         {
                             ShoppingCartManager.AddToCart(
                                 ShoppingCartTypeEnum.ShoppingCart,
-                                sci.ProductVariantID, 
-                                sci.AttributesXML,
+                                sci.ProductVariantId, 
+                                sci.AttributesXml,
                                 sci.CustomerEnteredPrice,
                                 sci.Quantity);
                         }

@@ -62,12 +62,12 @@ namespace NopSolutions.NopCommerce.Froogle
                 var products = ProductManager.GetAllProducts(false);
                 foreach (var product in products)
                 {
-                    var productVariants = ProductManager.GetProductVariantsByProductID(product.ProductID, false);
+                    var productVariants = ProductManager.GetProductVariantsByProductId(product.ProductId, false);
 
                     foreach (var productVariant in productVariants)
                     {
                         writer.WriteStartElement("item");
-                        writer.WriteElementString("link", SEOHelper.GetProductURL(product));
+                        writer.WriteElementString("link", SEOHelper.GetProductUrl(product));
                         writer.WriteElementString("title", productVariant.FullProductName);
                         writer.WriteStartElement("description");
                         string description = productVariant.Description;
@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.Froogle
                         writer.WriteFullEndElement(); // g:brand
                         writer.WriteElementString("g", "condition", googleBaseNamespace, "new");
                         writer.WriteElementString("g", "expiration_date", googleBaseNamespace, DateTime.Now.AddDays(28).ToString("yyyy-MM-dd"));
-                        writer.WriteElementString("g", "id", googleBaseNamespace, productVariant.ProductVariantID.ToString());
+                        writer.WriteElementString("g", "id", googleBaseNamespace, productVariant.ProductVariantId.ToString());
                         string imageUrl = string.Empty;
                         var productPictures = product.ProductPictures;
                         if (productPictures.Count > 0)

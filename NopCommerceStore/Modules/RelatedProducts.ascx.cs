@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 var relatedProducts = product.RelatedProducts;
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var product = relatedProduct.Product2;
                 if (relatedProduct != null && product != null)
                 {
-                    string productURL = SEOHelper.GetProductURL(product);
+                    string productURL = SEOHelper.GetProductUrl(product);
 
                     var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                     if (hlImageLink != null)
@@ -95,11 +95,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

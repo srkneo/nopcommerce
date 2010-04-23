@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.SagePay
         private void BindData()
         {
             cbUseSandbox.Checked = SettingManager.GetSettingValueBoolean("PaymentMethod.SagePay.UseSandbox", false);
-            txtPartnerID.Text = SettingManager.GetSettingValue("PaymentMethod.SagePay.PartnerID");
+            txtPartnerId.Text = SettingManager.GetSettingValue("PaymentMethod.SagePay.PartnerId");
             txtVendorName.Text = SettingManager.GetSettingValue("PaymentMethod.SagePay.VendorName");
             txtVendorDescription.Text = SettingManager.GetSettingValue("PaymentMethod.SagePay.VendorDescription");
             cbSendEmails.Checked = SettingManager.GetSettingValueBoolean("PaymentMethod.SagePay.SendEmails", false);
@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.SagePay
         public void Save()
         {
             SettingManager.SetParam("PaymentMethod.SagePay.UseSandbox", cbUseSandbox.Checked.ToString());
-            SettingManager.SetParam("PaymentMethod.SagePay.PartnerID", txtPartnerID.Text);
+            SettingManager.SetParam("PaymentMethod.SagePay.PartnerId", txtPartnerId.Text);
             SettingManager.SetParam("PaymentMethod.SagePay.VendorName", txtVendorName.Text);
             SettingManager.SetParam("PaymentMethod.SagePay.VendorDescription", txtVendorDescription.Text);
             SettingManager.SetParam("PaymentMethod.SagePay.SendEmails", cbSendEmails.Checked.ToString());

@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.AddNewSpecAttribute"),
                         specificationAttribute.Name);
 
-                    Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + specificationAttribute.SpecificationAttributeID.ToString());
+                    Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + specificationAttribute.SpecificationAttributeId.ToString());
                 }
                 catch (Exception exc)
                 {

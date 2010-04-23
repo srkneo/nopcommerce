@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
     /// <summary>
     /// Picture provider for SQL Server
     /// </summary>
-    public partial class SQLPictureProvider : DBPictureProvider
+    public partial class SqlPictureProvider : DBPictureProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,12 +36,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         #region Utilities
         private DBPicture GetPictureFromReader(IDataReader dataReader)
         {
-            DBPicture picture = new DBPicture();
-            picture.PictureID = NopSqlDataHelper.GetInt(dataReader, "PictureID");
-            picture.PictureBinary = NopSqlDataHelper.GetBytes(dataReader, "PictureBinary");
-            picture.Extension = NopSqlDataHelper.GetString(dataReader, "Extension");
-            picture.IsNew = NopSqlDataHelper.GetBoolean(dataReader, "IsNew");
-            return picture;
+            var item = new DBPicture();
+            item.PictureId = NopSqlDataHelper.GetInt(dataReader, "PictureID");
+            item.PictureBinary = NopSqlDataHelper.GetBytes(dataReader, "PictureBinary");
+            item.Extension = NopSqlDataHelper.GetString(dataReader, "Extension");
+            item.IsNew = NopSqlDataHelper.GetBoolean(dataReader, "IsNew");
+            return item;
         }
         #endregion
 
@@ -84,83 +84,85 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         /// <summary>
         /// Gets a picture
         /// </summary>
-        /// <param name="PictureID">Picture identifier</param>
+        /// <param name="pictureId">Picture identifier</param>
         /// <returns>Picture</returns>
-        public override DBPicture GetPictureByID(int PictureID)
+        public override DBPicture GetPictureById(int pictureId)
         {
-            DBPicture picture = null;
-            if (PictureID == 0)
-                return picture;
+            DBPicture item = null;
+            if (pictureId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PictureLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, PictureID);
+            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, pictureId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    picture = GetPictureFromReader(dataReader);
+                    item = GetPictureFromReader(dataReader);
                 }
             }
-            return picture;
+            return item;
         }
 
         /// <summary>
         /// Deletes a picture
         /// </summary>
-        /// <param name="PictureID">Picture identifier</param>
-        public override void DeletePicture(int PictureID)
+        /// <param name="pictureId">Picture identifier</param>
+        public override void DeletePicture(int pictureId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PictureDelete");
-            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, PictureID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, pictureId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Inserts a picture
         /// </summary>
-        /// <param name="PictureBinary">The picture binary</param>
-        /// <param name="Extension">The picture extension</param>
-        /// <param name="IsNew">A value indicating whether the picture is new</param>
+        /// <param name="pictureBinary">The picture binary</param>
+        /// <param name="extension">The picture extension</param>
+        /// <param name="isNew">A value indicating whether the picture is new</param>
         /// <returns>Picture</returns>
-        public override DBPicture InsertPicture(byte[] PictureBinary, string Extension, bool IsNew)
+        public override DBPicture InsertPicture(byte[] pictureBinary,
+            string extension, bool isNew)
         {
-            DBPicture picture = null;
+            DBPicture item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PictureInsert");
             db.AddOutParameter(dbCommand, "PictureID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "PictureBinary", DbType.Binary, PictureBinary);
-            db.AddInParameter(dbCommand, "Extension", DbType.String, Extension);
-            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, IsNew);
+            db.AddInParameter(dbCommand, "PictureBinary", DbType.Binary, pictureBinary);
+            db.AddInParameter(dbCommand, "Extension", DbType.String, extension);
+            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, isNew);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int PictureID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PictureID"));
-                picture = GetPictureByID(PictureID);
+                int pictureId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PictureID"));
+                item = GetPictureById(pictureId);
             }
-            return picture;
+            return item;
         }
 
         /// <summary>
         /// Updates the picture
         /// </summary>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PictureBinary">The picture binary</param>
-        /// <param name="Extension">The picture extension</param>
-        /// <param name="IsNew">A value indicating whether the picture is new</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pictureBinary">The picture binary</param>
+        /// <param name="extension">The picture extension</param>
+        /// <param name="isNew">A value indicating whether the picture is new</param>
         /// <returns>Picture</returns>
-        public override DBPicture UpdatePicture(int PictureID, byte[] PictureBinary, string Extension, bool IsNew)
+        public override DBPicture UpdatePicture(int pictureId, byte[] pictureBinary,
+            string extension, bool isNew)
         {
-            DBPicture picture = null;
+            DBPicture item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PictureUpdate");
-            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, PictureID);
-            db.AddInParameter(dbCommand, "PictureBinary", DbType.Binary, PictureBinary);
-            db.AddInParameter(dbCommand, "Extension", DbType.String, Extension);
-            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, IsNew);
+            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, pictureId);
+            db.AddInParameter(dbCommand, "PictureBinary", DbType.Binary, pictureBinary);
+            db.AddInParameter(dbCommand, "Extension", DbType.String, extension);
+            db.AddInParameter(dbCommand, "IsNew", DbType.Boolean, isNew);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                picture = GetPictureByID(PictureID);
+                item = GetPictureById(pictureId);
 
-            return picture;
+            return item;
         }
         #endregion
     }

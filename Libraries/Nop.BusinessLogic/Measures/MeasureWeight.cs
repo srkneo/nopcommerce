@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Gets or sets the measure weight identifier
         /// </summary>
-        public int MeasureWeightID { get; set; }
+        public int MeasureWeightId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             get
             {
                 MeasureWeight primaryMeasureWeight = MeasureManager.BaseWeightIn;
-                return ((primaryMeasureWeight != null && primaryMeasureWeight.MeasureWeightID == MeasureWeightID));
+                return ((primaryMeasureWeight != null && primaryMeasureWeight.MeasureWeightId == this.MeasureWeightId));
             }
         }
         #endregion

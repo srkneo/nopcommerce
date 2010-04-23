@@ -33,171 +33,174 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
     public abstract partial class DBManufacturerProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets all manufacturers
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer collection</returns>
-        public abstract DBManufacturerCollection GetAllManufacturers(bool showHidden, int LanguageID);
+        public abstract DBManufacturerCollection GetAllManufacturers(bool showHidden, int languageId);
 
         /// <summary>
         /// Gets a manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer</returns>
-        public abstract DBManufacturer GetManufacturerByID(int ManufacturerID, int LanguageID);
+        public abstract DBManufacturer GetManufacturerById(int manufacturerId, int languageId);
 
         /// <summary>
         /// Inserts a manufacturer
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="PictureID">The parent picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="pictureId">The parent picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer</returns>
-        public abstract DBManufacturer InsertManufacturer(string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBManufacturer InsertManufacturer(string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int pictureId, int pageSize, string priceRanges, 
+            bool published, bool deleted, int displayOrder, 
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="PictureID">The parent picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="pictureId">The parent picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer</returns>
-        public abstract DBManufacturer UpdateManufacturer(int ManufacturerID, string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBManufacturer UpdateManufacturer(int manufacturerId,
+            string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int pictureId, int pageSize, string priceRanges,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Gets localized manufacturer by id
         /// </summary>
-        /// <param name=ManufacturerLocalizedID">Localized manufacturer identifier</param>
+        /// <param name="manufacturerLocalizedId">Localized manufacturer identifier</param>
         /// <returns>Manufacturer content</returns>
-        public abstract DBManufacturerLocalized GetManufacturerLocalizedByID(int ManufacturerLocalizedID);
+        public abstract DBManufacturerLocalized GetManufacturerLocalizedById(int manufacturerLocalizedId);
 
         /// <summary>
         /// Gets localized manufacturer by manufacturer id and language id
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer content</returns>
-        public abstract DBManufacturerLocalized GetManufacturerLocalizedByManufacturerIDAndLanguageID(int ManufacturerID, int LanguageID);
+        public abstract DBManufacturerLocalized GetManufacturerLocalizedByManufacturerIdAndLanguageId(int manufacturerId, int languageId);
 
         /// <summary>
         /// Inserts a localized manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBManufacturerContent</returns>
-        public abstract DBManufacturerLocalized InsertManufacturerLocalized(int ManufacturerID,
-            int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName);
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se name text</param>
+        /// <returns>Manufacturer content</returns>
+        public abstract DBManufacturerLocalized InsertManufacturerLocalized(int manufacturerId,
+            int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle, string seName);
 
         /// <summary>
         /// Update a localized manufacturer
         /// </summary>
-        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBManufacturerContent</returns>
-        public abstract DBManufacturerLocalized UpdateManufacturerLocalized(int ManufacturerLocalizedID,
-            int ManufacturerID, int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName);
+        /// <param name="manufacturerLocalizedId">Localized manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se name text</param>
+        /// <returns>Manufacturer content</returns>
+        public abstract DBManufacturerLocalized UpdateManufacturerLocalized(int manufacturerLocalizedId,
+            int manufacturerId, int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle, string seName);
       
         /// <summary>
         /// Deletes a product manufacturer mapping
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifer</param>
-        public abstract void DeleteProductManufacturer(int ProductManufacturerID);
+        /// <param name="productManufacturerId">Product manufacturer mapping identifer</param>
+        public abstract void DeleteProductManufacturer(int productManufacturerId);
 
         /// <summary>
         /// Gets product product manufacturer collection
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product manufacturer collection</returns>
-        public abstract DBProductManufacturerCollection GetProductManufacturersByManufacturerID(int ManufacturerID, bool showHidden);
+        public abstract DBProductManufacturerCollection GetProductManufacturersByManufacturerId(int manufacturerId, bool showHidden);
 
         /// <summary>
         /// Gets a product manufacturer mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product manufacturer mapping collection</returns>
-        public abstract DBProductManufacturerCollection GetProductManufacturersByProductID(int ProductID, bool showHidden);
+        public abstract DBProductManufacturerCollection GetProductManufacturersByProductId(int productId, bool showHidden);
 
         /// <summary>
         /// Gets a product manufacturer mapping 
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifier</param>
+        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
         /// <returns>Product manufacturer mapping</returns>
-        public abstract DBProductManufacturer GetProductManufacturerByID(int ProductManufacturerID);
+        public abstract DBProductManufacturer GetProductManufacturerById(int productManufacturerId);
 
         /// <summary>
         /// Inserts a product manufacturer mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product manufacturer mapping </returns>
-        public abstract DBProductManufacturer InsertProductManufacturer(int ProductID, int ManufacturerID, bool IsFeaturedProduct, int DisplayOrder);
+        public abstract DBProductManufacturer InsertProductManufacturer(int productId, 
+            int manufacturerId, bool isFeaturedProduct, int displayOrder);
 
         /// <summary>
         /// Updates the product manufacturer mapping
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product manufacturer mapping </returns>
-        public abstract DBProductManufacturer UpdateProductManufacturer(int ProductManufacturerID,
-            int ProductID, int ManufacturerID, bool IsFeaturedProduct, int DisplayOrder);
+        public abstract DBProductManufacturer UpdateProductManufacturer(int productManufacturerId,
+            int productId, int manufacturerId, bool isFeaturedProduct, int displayOrder);
 
         #endregion
     }

@@ -42,20 +42,20 @@
                 </tr>
                 <tr>
                     <td class="adminTitle">
-                        <nopCommerce:ToolTipLabel runat="server" ID="lblOrderIDTitle" Text="<% $NopResources:Admin.OrderDetails.OrderID %>"
+                        <nopCommerce:ToolTipLabel runat="server" ID="lblOrderIdTitle" Text="<% $NopResources:Admin.OrderDetails.OrderID %>"
                             ToolTip="<% $NopResources:Admin.OrderDetails.OrderID.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
-                        <asp:Label ID="lblOrderID" runat="server"></asp:Label>
+                        <asp:Label ID="lblOrderId" runat="server"></asp:Label>
                     </td>
                 </tr>
                 <tr>
                     <td class="adminTitle">
-                        <nopCommerce:ToolTipLabel runat="server" ID="lblOrderGUIDTitle" Text="<% $NopResources:Admin.OrderDetails.OrderGUID %>"
+                        <nopCommerce:ToolTipLabel runat="server" ID="lblOrderGuidTitle" Text="<% $NopResources:Admin.OrderDetails.OrderGUID %>"
                             ToolTip="<% $NopResources:Admin.OrderDetails.OrderGUID.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
-                        <asp:Label ID="lblOrderGUID" runat="server"></asp:Label>
+                        <asp:Label ID="lblOrderGuid" runat="server"></asp:Label>
                     </td>
                 </tr>
                 <tr class="adminSeparator">
@@ -446,14 +446,12 @@
                             Width="100%" OnRowDataBound="gvOrderProductVariants_RowDataBound"
     OnRowCommand="gvOrderProductVariants_RowCommand">
                             <Columns>
-                                <asp:BoundField DataField="OrderProductVariantID" HeaderText="Order Product Variant ID"
-                                    Visible="False"></asp:BoundField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Name %>"
                                     ItemStyle-Width="30%">
                                     <ItemTemplate>
                                         <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
-                                            <em><a href='<%#GetProductURL(Convert.ToInt32(Eval("ProductVariantID")))%>' title="<%#GetLocaleResourceString("Admin.OrderDetails.Products.Name.Tooltip")%>">
-                                                <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantID"))))%></a></em>
+                                            <em><a href='<%#GetProductUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="<%#GetLocaleResourceString("Admin.OrderDetails.Products.Name.Tooltip")%>">
+                                                <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantId"))))%></a></em>
                                             <%#GetAttributeDescription((OrderProductVariant)Container.DataItem)%>
                                         </div>
                                     </ItemTemplate>
@@ -461,7 +459,7 @@
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.DownloadColumn %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <%#GetDownloadURL(Container.DataItem as OrderProductVariant)%>
+                                        <%#GetDownloadUrl(Container.DataItem as OrderProductVariant)%>
                                         <asp:Panel id="pnlDownloadActivation" runat="server">
                                             <hr />
                                             <asp:Button ID="btnActivate" runat="server" CssClass="adminButton" Text="<% $NopResources:Admin.OrderDetails.Products.ActivateDownload %>"
@@ -481,7 +479,7 @@
                                             runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.License.UploadButton %>"
                                             CommandName="UploadLicenseDownload"  />
                                         </asp:Panel>
-                                        <asp:HiddenField ID="hfOrderProductVariantID" runat="server" Value='<%# Eval("OrderProductVariantID") %>' />
+                                        <asp:HiddenField ID="hfOrderProductVariantId" runat="server" Value='<%# Eval("OrderProductVariantId") %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Price %>"
@@ -522,11 +520,9 @@
             <table class="adminContent">
                 <tr>
                     <td class="adminData" colspan="2">
-                        <asp:GridView ID="gvOrderNotes" runat="server" DataKeyNames="OrderNoteID" AutoGenerateColumns="False"
+                        <asp:GridView ID="gvOrderNotes" runat="server" DataKeyNames="OrderNoteId" AutoGenerateColumns="False"
                             Width="100%" OnRowDeleting="gvOrderNotes_RowDeleting">
                             <Columns>
-                                <asp:BoundField DataField="OrderNoteID" HeaderText="OrderNoteID" Visible="False">
-                                </asp:BoundField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.OrderNotes.CreatedOn %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>

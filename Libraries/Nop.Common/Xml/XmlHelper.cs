@@ -29,17 +29,18 @@ namespace NopSolutions.NopCommerce.Common.Xml
     public partial class XmlHelper
     {
         #region Methods
+
         /// <summary>
         /// XML Encode
         /// </summary>
-        /// <param name="s">String</param>
+        /// <param name="str">String</param>
         /// <returns>Encoded string</returns>
-        public static string XmlEncode(string s)
+        public static string XmlEncode(string str)
         {
-            if (s == null)
+            if (str == null)
                 return null;
-            s = Regex.Replace(s, @"[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD]", "", RegexOptions.Compiled);
-            return XmlEncodeAsIs(s);
+            str = Regex.Replace(str, @"[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD]", "", RegexOptions.Compiled);
+            return XmlEncodeAsIs(str);
         }
 
         /// <summary>
@@ -47,14 +48,14 @@ namespace NopSolutions.NopCommerce.Common.Xml
         /// </summary>
         /// <param name="s">String</param>
         /// <returns>Encoded string</returns>
-        public static string XmlEncodeAsIs(string s)
+        public static string XmlEncodeAsIs(string str)
         {
-            if (s == null)
+            if (str == null)
                 return null;
             using (StringWriter sw = new StringWriter())
             using (XmlTextWriter xwr = new XmlTextWriter(sw))
             {
-                xwr.WriteString(s);
+                xwr.WriteString(str);
                 String sTmp = sw.ToString();
                 return sTmp;
             }
@@ -65,32 +66,32 @@ namespace NopSolutions.NopCommerce.Common.Xml
         /// </summary>
         /// <param name="s">Attribute</param>
         /// <returns>Encoded attribute</returns>
-        public static string XmlEncodeAttribute(string s)
+        public static string XmlEncodeAttribute(string str)
         {
-            if (s == null)
+            if (str == null)
                 return null;
-            s = Regex.Replace(s, @"[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD]", "", RegexOptions.Compiled);
-            return XmlEncodeAttributeAsIs(s);
+            str = Regex.Replace(str, @"[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD]", "", RegexOptions.Compiled);
+            return XmlEncodeAttributeAsIs(str);
         }
 
         /// <summary>
         /// Encodes an attribute as is
         /// </summary>
-        /// <param name="s">Attribute</param>
+        /// <param name="str">Attribute</param>
         /// <returns>Encoded attribute</returns>
-        public static string XmlEncodeAttributeAsIs(string s)
+        public static string XmlEncodeAttributeAsIs(string str)
         {
-            return XmlEncodeAsIs(s).Replace("\"", "&quot;");
+            return XmlEncodeAsIs(str).Replace("\"", "&quot;");
         }
 
         /// <summary>
         /// Decodes an attribute
         /// </summary>
-        /// <param name="s">Attribute</param>
+        /// <param name="str">Attribute</param>
         /// <returns>Decoded attribute</returns>
-        public static string XmlDecode(string s)
+        public static string XmlDecode(string str)
         {
-            var sb = new StringBuilder(s);
+            var sb = new StringBuilder(str);
             return sb.Replace("&quot;", "\"").Replace("&apos;", "'").Replace("&lt;", "<").Replace("&gt;", ">").Replace("&amp;", "&").ToString();
         }
 
@@ -118,13 +119,13 @@ namespace NopSolutions.NopCommerce.Common.Xml
         public static DateTime DeserializeDateTime(string dateTime)
         {
             var xmlS = new XmlSerializer(typeof(DateTime));
-            var sb = new StringBuilder();
             using (StringReader sr = new StringReader(dateTime))
             {
                 object test = xmlS.Deserialize(sr);
                 return (DateTime)test;
             }
         }
+
         #endregion
     }
 }

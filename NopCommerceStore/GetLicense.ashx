@@ -25,16 +25,16 @@ using NopSolutions.NopCommerce.Common.Utils;
 
 public class GetLicense : IHttpHandler
 {
-    private void processLicenseDownload(HttpContext context, Guid orderProductVariantGUID)
+    private void processLicenseDownload(HttpContext context, Guid orderProductVariantGuid)
     {
-        OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantByGUID(orderProductVariantGUID);
+        OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantByGuid(orderProductVariantGuid);
         if (orderProductVariant == null)
         {
             returnError(context, "Order product variant doesn't exist.");
             return;
         }
 
-        Order order = OrderManager.GetOrderByID(orderProductVariant.OrderID);
+        Order order = OrderManager.GetOrderById(orderProductVariant.OrderId);
         if (order == null)
         {
             returnError(context, "Order doesn't exist.");
@@ -51,11 +51,11 @@ public class GetLicense : IHttpHandler
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL();
-                context.Response.Redirect(loginURL);
+                string loginUrl = SEOHelper.GetLoginPageUrl();
+                context.Response.Redirect(loginUrl);
             }
 
-            if (order.CustomerID != NopContext.Current.User.CustomerID)
+            if (order.CustomerId != NopContext.Current.User.CustomerId)
             {
                 returnError(context, "This is not your order.");
                 return;
@@ -79,7 +79,7 @@ public class GetLicense : IHttpHandler
         if (!string.IsNullOrEmpty(download.Filename))
             fileName = download.Filename;
         else
-            fileName = orderProductVariant.OrderProductVariantID.ToString();
+            fileName = orderProductVariant.OrderProductVariantId.ToString();
 
         //use stored data
         context.Response.Clear();
@@ -111,16 +111,16 @@ public class GetLicense : IHttpHandler
 
     public void ProcessRequest(HttpContext context)
     {
-        Guid? orderProductVariantGUID = CommonHelper.QueryStringGUID("OrderProductVariantGUID");
+        Guid? orderProductVariantGuid = CommonHelper.QueryStringGuid("OrderProductVariantGUID");
 
-        if (orderProductVariantGUID.HasValue)
-            processLicenseDownload(context, orderProductVariantGUID.Value);
+        if (orderProductVariantGuid.HasValue)
+            processLicenseDownload(context, orderProductVariantGuid.Value);
     }
     
-    private void returnError(HttpContext context, string Message)
+    private void returnError(HttpContext context, string message)
     {
         context.Response.Clear();
-        context.Response.Write(Message);
+        context.Response.Write(message);
         context.Response.Flush();
     }
     

@@ -15,7 +15,7 @@
             HPP ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtHppID" CssClass="adminInput" />
+            <asp:TextBox runat="server" ID="txtHppId" CssClass="adminInput" />
         </td>
     </tr>
     <tr>

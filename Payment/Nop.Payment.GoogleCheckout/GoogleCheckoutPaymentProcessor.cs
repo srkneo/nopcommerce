@@ -81,9 +81,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 int CustomerID = Convert.ToInt32(CustomerInfo.Attributes["CustomerID"].Value);
                 int CustomerLanguageID = Convert.ToInt32(CustomerInfo.Attributes["CustomerLanguageID"].Value);
                 int CustomerCurrencyID = Convert.ToInt32(CustomerInfo.Attributes["CustomerCurrencyID"].Value);
-                Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+                Customer customer = CustomerManager.GetCustomerById(CustomerID);
 
-                NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCart Cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerID, ShoppingCartTypeEnum.ShoppingCart);
+                NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCart Cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerId, ShoppingCartTypeEnum.ShoppingCart);
 
                 if (customer == null)
                 {
@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                     {
                         if (!String.IsNullOrEmpty(item.merchantitemid))
                         {
-                            if ((Convert.ToInt32(item.merchantitemid) == sci.ShoppingCartItemID) && (item.quantity == sci.Quantity))
+                            if ((Convert.ToInt32(item.merchantitemid) == sci.ShoppingCartItemId) && (item.quantity == sci.Quantity))
                             {
                                 ok = true;
                                 break;
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
 
                     if (!ok)
                     {
-                        logMessage(string.Format("Shopping Cart item has been changed. {0}. {1}", sci.ShoppingCartItemID, sci.Quantity));
+                        logMessage(string.Format("Shopping Cart item has been changed. {0}. {1}", sci.ShoppingCartItemId, sci.Quantity));
                         return;
                     }
                 }
@@ -136,12 +136,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 int billingStateProvinceID = 0;
                 StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceByAbbreviation(newOrderNotification.buyerbillingaddress.region.Trim());
                 if (billingStateProvince != null)
-                    billingStateProvinceID = billingStateProvince.StateProvinceID;
+                    billingStateProvinceID = billingStateProvince.StateProvinceId;
                 string billingZipPostalCode = newOrderNotification.buyerbillingaddress.postalcode.Trim();
                 int billingCountryID = 0;
-                Country billingCountry = CountryManager.GetCountryByTwoLetterISOCode(newOrderNotification.buyerbillingaddress.countrycode.Trim());
+                Country billingCountry = CountryManager.GetCountryByTwoLetterIsoCode(newOrderNotification.buyerbillingaddress.countrycode.Trim());
                 if (billingCountry != null)
-                    billingCountryID = billingCountry.CountryID;
+                    billingCountryID = billingCountry.CountryId;
 
                 NopSolutions.NopCommerce.BusinessLogic.CustomerManagement.Address BillingAddress = customer.BillingAddresses.FindAddress(
                     billingFirstName, billingLastName, billingPhoneNumber,
@@ -157,7 +157,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                         billingStateProvinceID, billingZipPostalCode,
                         billingCountryID, DateTime.Now, DateTime.Now);
                 }
-                customer = CustomerManager.SetDefaultBillingAddress(customer.CustomerID, BillingAddress.AddressID);
+                customer = CustomerManager.SetDefaultBillingAddress(customer.CustomerId, BillingAddress.AddressId);
 
                 NopSolutions.NopCommerce.BusinessLogic.CustomerManagement.Address ShippingAddress = null;
                 customer.LastShippingOption = null;
@@ -177,12 +177,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                     int shippingStateProvinceID = 0;
                     StateProvince shippingStateProvince = StateProvinceManager.GetStateProvinceByAbbreviation(newOrderNotification.buyershippingaddress.region.Trim());
                     if (shippingStateProvince != null)
-                        shippingStateProvinceID = shippingStateProvince.StateProvinceID;
+                        shippingStateProvinceID = shippingStateProvince.StateProvinceId;
                     int shippingCountryID = 0;
                     string shippingZipPostalCode = newOrderNotification.buyershippingaddress.postalcode.Trim();
-                    Country shippingCountry = CountryManager.GetCountryByTwoLetterISOCode(newOrderNotification.buyershippingaddress.countrycode.Trim());
+                    Country shippingCountry = CountryManager.GetCountryByTwoLetterIsoCode(newOrderNotification.buyershippingaddress.countrycode.Trim());
                     if (shippingCountry != null)
-                        shippingCountryID = shippingCountry.CountryID;
+                        shippingCountryID = shippingCountry.CountryId;
 
                     ShippingAddress = customer.ShippingAddresses.FindAddress(
                         shippingFirstName, shippingLastName, shippingPhoneNumber,
@@ -199,7 +199,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                              DateTime.Now, DateTime.Now);
                     }
 
-                    customer = CustomerManager.SetDefaultShippingAddress(customer.CustomerID, ShippingAddress.AddressID);
+                    customer = CustomerManager.SetDefaultShippingAddress(customer.CustomerId, ShippingAddress.AddressId);
 
                     string shippingMethod = string.Empty;
                     decimal shippingCost = decimal.Zero;
@@ -224,11 +224,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 PaymentMethod googleCheckoutPaymentMethod = PaymentMethodManager.GetPaymentMethodBySystemKeyword("GoogleCheckout");
 
                 PaymentInfo paymentInfo = new PaymentInfo();
-                paymentInfo.PaymentMethodID = googleCheckoutPaymentMethod.PaymentMethodID;
+                paymentInfo.PaymentMethodId = googleCheckoutPaymentMethod.PaymentMethodId;
                 paymentInfo.BillingAddress = BillingAddress;
                 paymentInfo.ShippingAddress = ShippingAddress;
-                paymentInfo.CustomerLanguage = LanguageManager.GetLanguageByID(CustomerLanguageID);
-                paymentInfo.CustomerCurrency = CurrencyManager.GetCurrencyByID(CustomerCurrencyID);
+                paymentInfo.CustomerLanguage = LanguageManager.GetLanguageById(CustomerLanguageID);
+                paymentInfo.CustomerCurrency = CurrencyManager.GetCurrencyById(CustomerCurrencyID);
                 paymentInfo.GoogleOrderNumber = googleOrderNumber;
                 int orderID = 0;
                 string result = OrderManager.PlaceOrder(paymentInfo, customer, out orderID);
@@ -238,7 +238,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                     return;
                 }
 
-                Order order = OrderManager.GetOrderByID(orderID);
+                Order order = OrderManager.GetOrderById(orderID);
                 logMessage("new-order-notification received and saved: Order Number " + orderID);
 
             }
@@ -259,7 +259,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 {
                     string message = string.Format("Order status {0} from Google: Order Number {1}", orderState, changeOrder.googleordernumber);
                     logMessage(message);
-                    OrderManager.InsertOrderNote(order.OrderID, message, false, DateTime.Now);
+                    OrderManager.InsertOrderNote(order.OrderId, message, false, DateTime.Now);
 
                     if (orderState == FinancialOrderState.CHARGING ||
                         orderState == FinancialOrderState.REVIEWING)
@@ -268,15 +268,15 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
 
                     if (orderState == FinancialOrderState.CHARGEABLE)
                     {
-                        order = OrderManager.MarkAsAuthorized(order.OrderID);
+                        order = OrderManager.MarkAsAuthorized(order.OrderId);
                     }
                     if (orderState == FinancialOrderState.CHARGED)
                     {
-                        order = OrderManager.MarkOrderAsPaid(order.OrderID);
+                        order = OrderManager.MarkOrderAsPaid(order.OrderId);
                     }
                     if (orderState == FinancialOrderState.CANCELLED || orderState == FinancialOrderState.CANCELLED_BY_GOOGLE)
                     {
-                        order = OrderManager.CancelOrder(order.OrderID, true);
+                        order = OrderManager.CancelOrder(order.OrderId, true);
                     }
                 }
             }
@@ -323,7 +323,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
             Order order = getMerchantOrderByGoogleOrderID(riskInformationNotification.googleordernumber);
             if (order != null)
             {
-                OrderManager.InsertOrderNote(order.OrderID, message, false, DateTime.Now);
+                OrderManager.InsertOrderNote(order.OrderId, message, false, DateTime.Now);
             }
         }
         private Order getMerchantOrderByGoogleOrderID(string GoogleOrderID)
@@ -335,7 +335,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
             if (googleCheckoutPaymentMethod == null)
                 return null;
 
-            return OrderManager.GetOrderByAuthorizationTransactionIDAndPaymentMethodID(GoogleOrderID, googleCheckoutPaymentMethod.PaymentMethodID);
+            return OrderManager.GetOrderByAuthorizationTransactionIdAndPaymentMethodId(GoogleOrderID, googleCheckoutPaymentMethod.PaymentMethodId);
         }
 
         #endregion
@@ -346,12 +346,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
-            processPaymentResult.AuthorizationTransactionID = paymentInfo.GoogleOrderNumber;
+            processPaymentResult.AuthorizationTransactionId = paymentInfo.GoogleOrderNumber;
 
         }
 
@@ -421,7 +421,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
         /// <param name="processPaymentResult">Process payment result</param>
         public void Capture(Order order, ref ProcessPaymentResult processPaymentResult)
         {
-            string googleOrderNumber = processPaymentResult.AuthorizationTransactionID;
+            string googleOrderNumber = processPaymentResult.AuthorizationTransactionId;
             GCheckout.OrderProcessing.ChargeOrderRequest chargeOrderRequest = new GCheckout.OrderProcessing.ChargeOrderRequest(googleOrderNumber);
             GCheckoutResponse chargeOrderResponse = chargeOrderRequest.Send();
             if (chargeOrderResponse.IsGood)
@@ -449,10 +449,10 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 ProductVariant productVariant = sci.ProductVariant;
                 if (productVariant != null)
                 {
-                    string description = ProductAttributeHelper.FormatAttributes(productVariant, sci.AttributesXML, NopContext.Current.User, ", ", false);
+                    string description = ProductAttributeHelper.FormatAttributes(productVariant, sci.AttributesXml, NopContext.Current.User, ", ", false);
                     string fullName = productVariant.FullProductName;
                     decimal unitPrice = TaxManager.GetPrice(sci.ProductVariant, PriceHelper.GetUnitPrice(sci, NopContext.Current.User, true));
-                    Req.AddItem(fullName, description, sci.ShoppingCartItemID.ToString(), unitPrice, sci.Quantity);
+                    Req.AddItem(fullName, description, sci.ShoppingCartItemId.ToString(), unitPrice, sci.Quantity);
                 }
             }
 
@@ -503,9 +503,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
 
             XmlDocument customerInfoDoc = new XmlDocument();
             XmlElement customerInfo = customerInfoDoc.CreateElement("CustomerInfo");
-            customerInfo.SetAttribute("CustomerID", NopContext.Current.User.CustomerID.ToString());
-            customerInfo.SetAttribute("CustomerLanguageID", NopContext.Current.WorkingLanguage.LanguageID.ToString());
-            customerInfo.SetAttribute("CustomerCurrencyID", NopContext.Current.WorkingCurrency.CurrencyID.ToString());
+            customerInfo.SetAttribute("CustomerID", NopContext.Current.User.CustomerId.ToString());
+            customerInfo.SetAttribute("CustomerLanguageID", NopContext.Current.WorkingLanguage.LanguageId.ToString());
+            customerInfo.SetAttribute("CustomerCurrencyID", NopContext.Current.WorkingCurrency.CurrencyId.ToString());
             Req.AddMerchantPrivateDataNode(customerInfo);
 
             Req.ContinueShoppingUrl = CommonHelper.GetStoreLocation(false);
@@ -596,9 +596,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

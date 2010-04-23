@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
     /// <summary>
     /// Tax category provider for SQL Server
     /// </summary>
-    public partial class SQLTaxCategoryProvider : DBTaxCategoryProvider
+    public partial class SqlTaxCategoryProvider : DBTaxCategoryProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,13 +36,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         #region Utilities
         private DBTaxCategory GetTaxCategoryFromReader(IDataReader dataReader)
         {
-            DBTaxCategory taxCategory = new DBTaxCategory();
-            taxCategory.TaxCategoryID = NopSqlDataHelper.GetInt(dataReader, "TaxCategoryID");
-            taxCategory.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            taxCategory.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            taxCategory.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            taxCategory.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return taxCategory;
+            var item = new DBTaxCategory();
+            item.TaxCategoryId = NopSqlDataHelper.GetInt(dataReader, "TaxCategoryID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
         #endregion
 
@@ -85,17 +85,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Deletes a tax category
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        public override void DeleteTaxCategory(int TaxCategoryID)
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        public override void DeleteTaxCategory(int taxCategoryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DBTaxCategory taxCategory = GetTaxCategoryByID(TaxCategoryID);
-            if (taxCategory != null)
-            {
-                DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxCategoryDelete");
-                db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, TaxCategoryID);
-                int retValue = db.ExecuteNonQuery(dbCommand);
-            }
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxCategoryDelete");
+            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, taxCategoryId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -122,77 +118,77 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Gets a tax category
         /// </summary>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
         /// <returns>Tax category</returns>
-        public override DBTaxCategory GetTaxCategoryByID(int TaxCategoryID)
+        public override DBTaxCategory GetTaxCategoryById(int taxCategoryId)
         {
-            DBTaxCategory taxCategory = null;
-            if (TaxCategoryID == 0)
-                return taxCategory;
+            DBTaxCategory item = null;
+            if (taxCategoryId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxCategoryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, TaxCategoryID);
+            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, taxCategoryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    taxCategory = GetTaxCategoryFromReader(dataReader);
+                    item = GetTaxCategoryFromReader(dataReader);
                 }
             }
-            return taxCategory;
+            return item;
         }
 
         /// <summary>
         /// Inserts a tax category
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Tax category</returns>
-        public override DBTaxCategory InsertTaxCategory(string Name,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBTaxCategory InsertTaxCategory(string name,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            DBTaxCategory taxCategory = null;
+            DBTaxCategory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxCategoryInsert");
             db.AddOutParameter(dbCommand, "TaxCategoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int TaxCategoryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TaxCategoryID"));
-                taxCategory = GetTaxCategoryByID(TaxCategoryID);
+                int taxCategoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TaxCategoryID"));
+                item = GetTaxCategoryById(taxCategoryId);
             }
-            return taxCategory;
+            return item;
         }
 
         /// <summary>
         /// Updates the tax category
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Tax category</returns>
-        public override DBTaxCategory UpdateTaxCategory(int TaxCategoryID, string Name,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBTaxCategory UpdateTaxCategory(int taxCategoryId, string name,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            DBTaxCategory taxCategory = null;
+            DBTaxCategory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxCategoryUpdate");
-            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, TaxCategoryID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, taxCategoryId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                taxCategory = GetTaxCategoryByID(TaxCategoryID);
+                item = GetTaxCategoryById(taxCategoryId);
 
-            return taxCategory;
+            return item;
         }
         #endregion
     }

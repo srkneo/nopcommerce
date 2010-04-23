@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (customer != null)
             {
-                ShoppingCart cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerID, ShoppingCartTypeEnum.ShoppingCart);
+                ShoppingCart cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerId, ShoppingCartTypeEnum.ShoppingCart);
                 if (cart.Count > 0)
                 {
                     pnlEmptyCart.Visible = false;
@@ -63,23 +63,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (!Page.IsPostBack)
             {              
                 this.BindData();
             }
         }
 
-        public string GetProductVariantURL(ShoppingCartItem shoppingCartItem)
+        public string GetProductVariantUrl(ShoppingCartItem shoppingCartItem)
         {
             string result = string.Empty;
             if (shoppingCartItem == null)
                 return result;
             ProductVariant productVariant = shoppingCartItem.ProductVariant;
             if (productVariant != null)
-                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantID.ToString();
+                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantId.ToString();
             else
-                result = "Not available. Product variant ID=" + shoppingCartItem.ProductVariantID.ToString();
+                result = "Not available. Product variant ID=" + shoppingCartItem.ProductVariantId.ToString();
             return result;
         }
 
@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public string GetAttributeDescription(ShoppingCartItem shoppingCartItem)
         {
-            string result = ProductAttributeHelper.FormatAttributes(shoppingCartItem.ProductVariant, shoppingCartItem.AttributesXML, customer, "<br />");
+            string result = ProductAttributeHelper.FormatAttributes(shoppingCartItem.ProductVariant, shoppingCartItem.AttributesXml, customer, "<br />");
             if (!String.IsNullOrEmpty(result))
                 result = "<br />" + result;
             return result;
@@ -140,11 +140,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
     }

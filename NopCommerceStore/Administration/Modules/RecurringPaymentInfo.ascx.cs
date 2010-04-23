@@ -43,13 +43,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindData()
         {
-            RecurringPayment recurringPayment = OrderManager.GetRecurringPaymentByID(this.RecurringPaymentID);
+            RecurringPayment recurringPayment = OrderManager.GetRecurringPaymentById(this.RecurringPaymentId);
             if (recurringPayment != null)
             {
                 Order initialOrder = recurringPayment.InitialOrder;
                 if (initialOrder != null)
                 {
-                    this.lblInitialOrder.Text = string.Format("<a href=\"OrderDetails.aspx?OrderID={0}\">{1}</a>", initialOrder.OrderID, GetLocaleResourceString("Admin.RecurringPaymentInfo.InitialOrder.View"));
+                    this.lblInitialOrder.Text = string.Format("<a href=\"OrderDetails.aspx?OrderID={0}\">{1}</a>", initialOrder.OrderId, GetLocaleResourceString("Admin.RecurringPaymentInfo.InitialOrder.View"));
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Customer customer = recurringPayment.Customer;
                 if (customer != null)
                 {
-                    this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.RecurringPaymentInfo.Customer.View"));
+                    this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.RecurringPaymentInfo.Customer.View"));
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindHistory()
         {
-            RecurringPayment recurringPayment = OrderManager.GetRecurringPaymentByID(this.RecurringPaymentID);
+            RecurringPayment recurringPayment = OrderManager.GetRecurringPaymentById(this.RecurringPaymentId);
             if (recurringPayment != null)
             {
                 DateTime? nextPaymentDate = recurringPayment.NextPaymentDate;
@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 btnCancelPayment.Visible = OrderManager.CanCancelRecurringPayment(NopContext.Current.User, recurringPayment);
 
-                var recurringPaymentHistoryCollection = OrderManager.SearchRecurringPaymentHistory(recurringPayment.RecurringPaymentID, 0);
+                var recurringPaymentHistoryCollection = OrderManager.SearchRecurringPaymentHistory(recurringPayment.RecurringPaymentId, 0);
                 gvRecurringPaymentHistory.DataSource = recurringPaymentHistoryCollection;
                 gvRecurringPaymentHistory.DataBind();
             }
@@ -120,7 +120,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.ProcessNextRecurringPayment(this.RecurringPaymentID);
+                OrderManager.ProcessNextRecurringPayment(this.RecurringPaymentId);
                 this.BindData();
                 this.BindHistory();
             }
@@ -134,10 +134,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                RecurringPayment rp = OrderManager.GetRecurringPaymentByID(this.RecurringPaymentID);
+                RecurringPayment rp = OrderManager.GetRecurringPaymentById(this.RecurringPaymentId);
                 if (OrderManager.CanCancelRecurringPayment(NopContext.Current.User, rp))
                 {
-                    rp = OrderManager.CancelRecurringPayment(rp.RecurringPaymentID);
+                    rp = OrderManager.CancelRecurringPayment(rp.RecurringPaymentId);
                 }
                 this.BindHistory();
             }
@@ -154,11 +154,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             int totalCycles = txtTotalCycles.Value;
             bool isActive = cbIsActive.Checked;
 
-            RecurringPayment recurringPayment = OrderManager.GetRecurringPaymentByID(this.RecurringPaymentID);
+            RecurringPayment recurringPayment = OrderManager.GetRecurringPaymentById(this.RecurringPaymentId);
             if (recurringPayment != null)
             {
-                recurringPayment = OrderManager.UpdateRecurringPayment(recurringPayment.RecurringPaymentID,
-                    recurringPayment.InitialOrderID,
+                recurringPayment = OrderManager.UpdateRecurringPayment(recurringPayment.RecurringPaymentId,
+                    recurringPayment.InitialOrderId,
                     cycleLength,
                     (int)cyclePeriod,
                     totalCycles,
@@ -175,11 +175,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return recurringPayment;
         }
 
-        public int RecurringPaymentID
+        public int RecurringPaymentId
         {
             get
             {
-                return CommonHelper.QueryStringInt("RecurringPaymentID");
+                return CommonHelper.QueryStringInt("RecurringPaymentId");
             }
         }
     }

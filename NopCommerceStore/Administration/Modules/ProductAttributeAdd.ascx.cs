@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.AddNewProductAttribute"),
                         productAttribute.Name);
 
-                    Response.Redirect("ProductAttributeDetails.aspx?ProductAttributeID=" + productAttribute.ProductAttributeID.ToString());
+                    Response.Redirect("ProductAttributeDetails.aspx?ProductAttributeID=" + productAttribute.ProductAttributeId.ToString());
                 }
                 catch (Exception exc)
                 {

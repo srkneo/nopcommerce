@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets or sets the payment status identifier
         /// </summary>
-        public int PaymentStatusID { get; set; }
+        public int PaymentStatusId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

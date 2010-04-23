@@ -37,27 +37,27 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Forums
         /// <summary>
         /// Gets or sets the forum subscription identifier
         /// </summary>
-        public int ForumSubscriptionID { get; set; }
+        public int ForumSubscriptionId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum subscription identifier
         /// </summary>
-        public Guid SubscriptionGUID { get; set; }
+        public Guid SubscriptionGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the user identifier
         /// </summary>
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum identifier
         /// </summary>
-        public int ForumID { get; set; }
+        public int ForumId { get; set; }
 
         /// <summary>
         /// Gets or sets the topic identifier
         /// </summary>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation

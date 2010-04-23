@@ -64,9 +64,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
             remotePostHelper.Url = GetWorldpayUrl();
 
             remotePostHelper.Add("instId", instanceID);
-            remotePostHelper.Add("cartId", order.OrderID.ToString());
+            remotePostHelper.Add("cartId", order.OrderId.ToString());
 
             if (!string.IsNullOrEmpty(SettingManager.GetSettingValue(WorldpayConstants.SETTING_CREDITCARD_CODE_PROPERTY)))
             {
@@ -105,7 +105,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
             remotePostHelper.Add("fixContact", "false");
             remotePostHelper.Add("amount", order.OrderTotal.ToString(new CultureInfo("en-US", false).NumberFormat));
             remotePostHelper.Add("desc", SettingManager.StoreName);
-            remotePostHelper.Add("M_UserID", order.CustomerID.ToString());
+            remotePostHelper.Add("M_UserID", order.CustomerId.ToString());
             remotePostHelper.Add("M_FirstName", order.BillingFirstName);
             remotePostHelper.Add("M_LastName", order.BillingLastName);
             remotePostHelper.Add("M_Addr1", order.BillingAddress1);
@@ -116,7 +116,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
             CultureInfo cultureInfo = new CultureInfo(NopContext.Current.WorkingLanguage.LanguageCulture);
             remotePostHelper.Add("lang", cultureInfo.TwoLetterISOLanguageName);
 
-            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
             if (billingStateProvince != null)
                 remotePostHelper.Add("M_StateCounty", billingStateProvince.Abbreviation);
             else
@@ -127,9 +127,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
                 remotePostHelper.Add("testMode", "100");
             //TODO remotePostHelper.Add("testMode", "101");
             remotePostHelper.Add("postcode", order.BillingZipPostalCode);
-            Country billingCountry = CountryManager.GetCountryByID(order.BillingCountryID);
+            Country billingCountry = CountryManager.GetCountryById(order.BillingCountryId);
             if (billingCountry != null)
-                remotePostHelper.Add("country", billingCountry.TwoLetterISOCode);
+                remotePostHelper.Add("country", billingCountry.TwoLetterIsoCode);
             else
                 remotePostHelper.Add("country", order.BillingCountry);
 
@@ -144,8 +144,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
                 delvAddress += (!string.IsNullOrEmpty(order.ShippingAddress2)) ? " " + order.ShippingAddress2 : string.Empty;
                 remotePostHelper.Add("delvAddress", delvAddress);
                 remotePostHelper.Add("delvPostcode", order.ShippingZipPostalCode);
-                Country shippingCountry = CountryManager.GetCountryByID(order.ShippingCountryID);
-                remotePostHelper.Add("delvCountry", shippingCountry.TwoLetterISOCode);
+                Country shippingCountry = CountryManager.GetCountryById(order.ShippingCountryId);
+                remotePostHelper.Add("delvCountry", shippingCountry.TwoLetterIsoCode);
             }
 
             remotePostHelper.Post();
@@ -206,9 +206,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

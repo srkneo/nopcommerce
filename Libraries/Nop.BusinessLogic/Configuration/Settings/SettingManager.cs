@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
                 return null;
 
             var item = new Setting();
-            item.SettingID = dbItem.SettingID;
+            item.SettingId = dbItem.SettingId;
             item.Name = dbItem.Name;
             item.Value = dbItem.Value;
             item.Description = dbItem.Description;
@@ -69,14 +69,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Gets a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifer</param>
+        /// <param name="settingId">Setting identifer</param>
         /// <returns>Setting</returns>
-        public static Setting GetSettingByID(int SettingID)
+        public static Setting GetSettingById(int settingId)
         {
-            if (SettingID == 0)
+            if (settingId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBSettingProvider>.Provider.GetSettingByID(SettingID);
+            var dbItem = DBProviderManager<DBSettingProvider>.Provider.GetSettingById(settingId);
             var setting = DBMapping(dbItem);
             return setting;
         }
@@ -84,10 +84,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Deletes a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifer</param>
-        public static void DeleteSetting(int SettingID)
+        /// <param name="settingId">Setting identifer</param>
+        public static void DeleteSetting(int settingId)
         {
-            DBProviderManager<DBSettingProvider>.Provider.DeleteSetting(SettingID);
+            DBProviderManager<DBSettingProvider>.Provider.DeleteSetting(settingId);
 
             if (SettingManager.CacheEnabled)
             {
@@ -121,35 +121,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
          /// <summary>
         /// Inserts/updates a param
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
         /// <returns>Setting</returns>
-        public static Setting SetParam(string Name, string Value)
+        public static Setting SetParam(string name, string value)
         {
-            var setting = GetSettingByName(Name);
+            var setting = GetSettingByName(name);
             if (setting != null)
-                return SetParam(Name, Value, setting.Description);
+                return SetParam(name, value, setting.Description);
             else
-                return SetParam(Name, Value, string.Empty);
+                return SetParam(name, value, string.Empty);
         }
 
         /// <summary>
         /// Inserts/updates a param
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public static Setting SetParam(string Name, string Value, string Description)
+        public static Setting SetParam(string name, string value, string description)
         {
-            var setting = GetSettingByName(Name);
+            var setting = GetSettingByName(name);
             if (setting != null)
             {
-                if (setting.Name != Name || setting.Value != Value || setting.Description != Description)
-                    setting = UpdateSetting(setting.SettingID, Name, Value, Description);
+                if (setting.Name != name || setting.Value != value || setting.Description != description)
+                    setting = UpdateSetting(setting.SettingId, name, value, description);
             }
             else
-                setting = AddSetting(Name, Value, Description);
+                setting = AddSetting(name, value, description);
 
             return setting;
         }
@@ -157,37 +157,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Inserts/updates a param in US locale
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
         /// <returns>Setting</returns>
-        public static Setting SetParamNative(string Name, decimal Value)
+        public static Setting SetParamNative(string name, decimal value)
         {
-            return SetParamNative(Name, Value, string.Empty);
+            return SetParamNative(name, value, string.Empty);
         }
 
         /// <summary>
         /// Inserts/updates a param in US locale
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public static Setting SetParamNative(string Name, decimal Value, string Description)
+        public static Setting SetParamNative(string name, decimal value, string description)
         {
-            string valueStr = Value.ToString(new CultureInfo("en-US"));
-            return SetParam(Name, valueStr, Description);
+            string valueStr = value.ToString(new CultureInfo("en-US"));
+            return SetParam(name, valueStr, description);
         }
 
         /// <summary>
         /// Adds a setting
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public static Setting AddSetting(string Name, string Value, string Description)
+        public static Setting AddSetting(string name, string value, string description)
         {
-            var dbItem = DBProviderManager<DBSettingProvider>.Provider.AddSetting(Name, Value, Description);
+            var dbItem = DBProviderManager<DBSettingProvider>.Provider.AddSetting(name, value, description);
             var setting = DBMapping(dbItem);
 
             if (SettingManager.CacheEnabled)
@@ -201,14 +201,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Updates a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="settingId">Setting identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public static Setting UpdateSetting(int SettingID, string Name, string Value, string Description)
+        public static Setting UpdateSetting(int settingId, string name, string value, string description)
         {
-            var dbItem = DBProviderManager<DBSettingProvider>.Provider.UpdateSetting(SettingID, Name, Value, Description);
+            var dbItem = DBProviderManager<DBSettingProvider>.Provider.UpdateSetting(settingId, name, value, description);
             var setting = DBMapping(dbItem);
             if (SettingManager.CacheEnabled)
             {
@@ -221,89 +221,89 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Gets a boolean value of a setting
         /// </summary>
-        /// <param name="Name">The setting name</param>
+        /// <param name="name">The setting name</param>
         /// <returns>The setting value</returns>
-        public static bool GetSettingValueBoolean(string Name)
+        public static bool GetSettingValueBoolean(string name)
         {
-            return GetSettingValueBoolean(Name, false);
+            return GetSettingValueBoolean(name, false);
         }
 
         /// <summary>
         /// Gets a boolean value of a setting
         /// </summary>
-        /// <param name="Name">The setting name</param>
-        /// <param name="DefaultValue">The default value</param>
+        /// <param name="name">The setting name</param>
+        /// <param name="defaultValue">The default value</param>
         /// <returns>The setting value</returns>
-        public static bool GetSettingValueBoolean(string Name, bool DefaultValue)
+        public static bool GetSettingValueBoolean(string name, bool defaultValue)
         {
-            string value = GetSettingValue(Name);
+            string value = GetSettingValue(name);
             if (!String.IsNullOrEmpty(value))
             {
                 return bool.Parse(value);
             }
-            return DefaultValue;
+            return defaultValue;
         }
 
         /// <summary>
         /// Gets an integer value of a setting
         /// </summary>
-        /// <param name="Name">The setting name</param>
+        /// <param name="name">The setting name</param>
         /// <returns>The setting value</returns>
-        public static int GetSettingValueInteger(string Name)
+        public static int GetSettingValueInteger(string name)
         {
-            return GetSettingValueInteger(Name, 0);
+            return GetSettingValueInteger(name, 0);
         }
 
         /// <summary>
         /// Gets an integer value of a setting
         /// </summary>
-        /// <param name="Name">The setting name</param>
-        /// <param name="DefaultValue">The default value</param>
+        /// <param name="name">The setting name</param>
+        /// <param name="defaultValue">The default value</param>
         /// <returns>The setting value</returns>
-        public static int GetSettingValueInteger(string Name, int DefaultValue)
+        public static int GetSettingValueInteger(string name, int defaultValue)
         {
-            string value = GetSettingValue(Name);
+            string value = GetSettingValue(name);
             if (!String.IsNullOrEmpty(value))
             {
                 return int.Parse(value);
             }
-            return DefaultValue;
+            return defaultValue;
         }
 
         /// <summary>
         /// Gets a decimal value of a setting in US locale
         /// </summary>
-        /// <param name="Name">The setting name</param>
+        /// <param name="name">The setting name</param>
         /// <returns>The setting value</returns>
-        public static decimal GetSettingValueDecimalNative(string Name)
+        public static decimal GetSettingValueDecimalNative(string name)
         {
-            return GetSettingValueDecimalNative(Name, decimal.Zero);
+            return GetSettingValueDecimalNative(name, decimal.Zero);
         }
 
         /// <summary>
         /// Gets a decimal value of a setting in US locale
         /// </summary>
-        /// <param name="Name">The setting name</param>
-        /// <param name="DefaultValue">The default value</param>
+        /// <param name="name">The setting name</param>
+        /// <param name="defaultValue">The default value</param>
         /// <returns>The setting value</returns>
-        public static decimal GetSettingValueDecimalNative(string Name, decimal DefaultValue)
+        public static decimal GetSettingValueDecimalNative(string name, decimal defaultValue)
         {
-            string value = GetSettingValue(Name);
+            string value = GetSettingValue(name);
             if (!String.IsNullOrEmpty(value))
             {
                 return decimal.Parse(value, new CultureInfo("en-US"));
             }
-            return DefaultValue;
+            return defaultValue;
         }
 
         /// <summary>
         /// Gets a setting value
         /// </summary>
-        /// <param name="Name">The setting name</param>
+        /// <param name="name">The setting name</param>
         /// <returns>The setting value</returns>
-        public static string GetSettingValue(string Name)
+        public static string GetSettingValue(string name)
         {
-            var setting = GetSettingByName(Name);
+            var setting = GetSettingByName(name);
             if (setting != null)
                 return setting.Value;
             return string.Empty;
@@ -312,35 +312,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Gets a setting value
         /// </summary>
-        /// <param name="Name">The setting name</param>
-        /// <param name="DefaultValue">The default value</param>
+        /// <param name="name">The setting name</param>
+        /// <param name="defaultValue">The default value</param>
         /// <returns>The setting value</returns>
-        public static string GetSettingValue(string Name, string DefaultValue)
+        public static string GetSettingValue(string name, string defaultValue)
         {
-            string value = GetSettingValue(Name);
+            string value = GetSettingValue(name);
             if (!String.IsNullOrEmpty(value))
             {
                 return value;
             }
-            return DefaultValue;
+            return defaultValue;
         }
 
         /// <summary>
         /// Get a setting by name
         /// </summary>
-        /// <param name="Name">The setting name</param>
+        /// <param name="name">The setting name</param>
         /// <returns>Setting instance</returns>
-        public static Setting GetSettingByName(string Name)
+        public static Setting GetSettingByName(string name)
         {
-            if (String.IsNullOrEmpty(Name))
+            if (String.IsNullOrEmpty(name))
                 return null;
 
-            Name = Name.Trim().ToLowerInvariant();
+            name = name.Trim().ToLowerInvariant();
 
             var settings = GetAllSettings();
-            if (settings.ContainsKey(Name))
+            if (settings.ContainsKey(name))
             {
-                var setting = settings[Name];
+                var setting = settings[name];
                 return setting;
             }
             return null;
@@ -378,14 +378,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Gets or sets a store URL (ending with "/")
         /// </summary>
-        public static string StoreURL
+        public static string StoreUrl
         {
             get
             {
-                string storeURL = SettingManager.GetSettingValue("Common.StoreURL");
-                if (!storeURL.EndsWith("/"))
-                    storeURL += "/";
-                return storeURL;
+                string storeUrl = SettingManager.GetSettingValue("Common.StoreURL");
+                if (!storeUrl.EndsWith("/"))
+                    storeUrl += "/";
+                return storeUrl;
             }
             set
             {

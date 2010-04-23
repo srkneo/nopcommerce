@@ -163,7 +163,7 @@
             Google Vendor ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtGoogleVendorID" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtGoogleVendorId" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

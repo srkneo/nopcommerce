@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Currency currency = ctrlCurrencyInfo.SaveInfo();
-                    Response.Redirect("CurrencyDetails.aspx?CurrencyID=" + currency.CurrencyID.ToString());
+                    Response.Redirect("CurrencyDetails.aspx?CurrencyID=" + currency.CurrencyId.ToString());
                 }
                 catch (Exception exc)
                 {

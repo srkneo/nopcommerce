@@ -26,13 +26,13 @@ namespace NopSolutions.NopCommerce.Web
                     string reasonCode = Request.Form["reasonCode"];
                     if(!String.IsNullOrEmpty(reasonCode) && reasonCode.Equals("100"))
                     {
-                        int OrderID = 0;
-                        if(Int32.TryParse(Request.Form["orderNumber"], out OrderID))
+                        int orderId = 0;
+                        if(Int32.TryParse(Request.Form["orderNumber"], out orderId))
                         {
-                            Order order = OrderManager.GetOrderByID(OrderID);
+                            Order order = OrderManager.GetOrderById(orderId);
                             if(order != null && OrderManager.CanMarkOrderAsAuthorized(order))
                             {
-                                OrderManager.MarkAsAuthorized(order.OrderID);
+                                OrderManager.MarkAsAuthorized(order.OrderId);
                             }
                         }
                     }

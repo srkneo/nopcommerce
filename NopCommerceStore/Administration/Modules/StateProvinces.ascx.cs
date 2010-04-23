@@ -34,7 +34,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CountryCollection countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -50,8 +50,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            int countryID = int.Parse(this.ddlCountry.SelectedItem.Value);
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
+            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             gvStateProvinces.DataSource = stateProvinceCollection;
             gvStateProvinces.DataBind();
         }
@@ -60,8 +60,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (Page.IsValid)
             {
-                int countryID = int.Parse(this.ddlCountry.SelectedItem.Value);
-                Response.Redirect("StateProvinceAdd.aspx?CountryID=" + countryID.ToString());
+                int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
+                Response.Redirect("StateProvinceAdd.aspx?CountryID=" + countryId.ToString());
             }
         }
 

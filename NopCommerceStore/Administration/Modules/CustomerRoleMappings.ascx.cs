@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            List<int> _customerRoleIDs = new List<int>();
+            List<int> _customerRoleIds = new List<int>();
 
-            Customer customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer != null)
             {
                 CustomerRoleCollection customerRoles = customer.CustomerRoles;
                 foreach (CustomerRole customerRole in customerRoles)
-                    _customerRoleIDs.Add(customerRole.CustomerRoleID);
+                    _customerRoleIds.Add(customerRole.CustomerRoleId);
             }
 
-            CustomerRoleMappingControl.SelectedCustomerRoleIDs = _customerRoleIDs;
+            CustomerRoleMappingControl.SelectedCustomerRoleIds = _customerRoleIds;
             CustomerRoleMappingControl.BindData();
         }
 
@@ -60,27 +60,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            SaveInfo(this.CustomerID);
+            SaveInfo(this.CustomerId);
         }
 
-        public void SaveInfo(int cusID)
+        public void SaveInfo(int cusId)
         {
-            Customer customer = CustomerManager.GetCustomerByID(cusID);
+            Customer customer = CustomerManager.GetCustomerById(cusId);
 
             if (customer != null)
             {
                 foreach (CustomerRole customerRole in customer.CustomerRoles)
-                    CustomerManager.RemoveCustomerFromRole(customer.CustomerID, customerRole.CustomerRoleID);
-                foreach (int customerRoleID in CustomerRoleMappingControl.SelectedCustomerRoleIDs)
-                    CustomerManager.AddCustomerToRole(customer.CustomerID, customerRoleID);
+                    CustomerManager.RemoveCustomerFromRole(customer.CustomerId, customerRole.CustomerRoleId);
+                foreach (int customerRoleId in CustomerRoleMappingControl.SelectedCustomerRoleIds)
+                    CustomerManager.AddCustomerToRole(customer.CustomerId, customerRoleId);
             }
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
     }

@@ -40,9 +40,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
         #region Properties
         /// <summary>
-        /// Gets or sets the queued email identifier
+        /// Gets or sets the ueued email identifier
         /// </summary>
-        public int QueuedEmailID { get; set; }
+        public int QueuedEmailId { get; set; }
 
         /// <summary>
         /// Gets or sets the priority
@@ -70,9 +70,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         public string ToName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Cc
+        /// Gets or sets the CC
         /// </summary>
-        public string Cc { get; set; }
+        public string CC { get; set; }
 
         /// <summary>
         /// Gets or sets the Bcc

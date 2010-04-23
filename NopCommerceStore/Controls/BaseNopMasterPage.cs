@@ -66,11 +66,11 @@ namespace NopSolutions.NopCommerce.Web
 
             if (SettingManager.GetSettingValueBoolean("Display.ShowNewsHeaderRssURL"))
             {
-                SEOHelper.RenderHeaderRSSLink(this.Page, defaulSEOTitle + ": News", SEOHelper.GetNewsRssURL());
+                SEOHelper.RenderHeaderRssLink(this.Page, defaulSEOTitle + ": News", SEOHelper.GetNewsRssUrl());
             }
             if (SettingManager.GetSettingValueBoolean("Display.ShowBlogHeaderRssURL"))
             {
-                SEOHelper.RenderHeaderRSSLink(this.Page, defaulSEOTitle + ": Blog", SEOHelper.GetBlogRssURL());
+                SEOHelper.RenderHeaderRssLink(this.Page, defaulSEOTitle + ": Blog", SEOHelper.GetBlogRssUrl());
             }
         }
 
@@ -83,22 +83,22 @@ namespace NopSolutions.NopCommerce.Web
 
         protected void CheckAffiliate()
         {
-            Affiliate affiliate = AffiliateManager.GetAffiliateByID(CommonHelper.QueryStringInt("AffiliateID"));
+            Affiliate affiliate = AffiliateManager.GetAffiliateById(CommonHelper.QueryStringInt("AffiliateId"));
             if (affiliate != null && affiliate.Active)
             {
                 if (NopContext.Current.User == null)
                 {
-                    HttpCookie affiliateCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.AffiliateID");
+                    HttpCookie affiliateCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.AffiliateId");
                     if (affiliateCookie == null)
-                        affiliateCookie = new HttpCookie("NopCommerce.AffiliateID");
+                        affiliateCookie = new HttpCookie("NopCommerce.AffiliateId");
 
-                    affiliateCookie.Value = affiliate.AffiliateID.ToString();
+                    affiliateCookie.Value = affiliate.AffiliateId.ToString();
                     affiliateCookie.Expires = DateTime.Now.AddDays(10.0);
                     HttpContext.Current.Response.Cookies.Set(affiliateCookie);
                 }
-                else if (NopContext.Current.User.AffiliateID != affiliate.AffiliateID)
+                else if (NopContext.Current.User.AffiliateId != affiliate.AffiliateId)
                 {
-                    NopContext.Current.User = CustomerManager.SetAffiliate(NopContext.Current.User.CustomerID, affiliate.AffiliateID);
+                    NopContext.Current.User = CustomerManager.SetAffiliate(NopContext.Current.User.CustomerId, affiliate.AffiliateId);
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace NopSolutions.NopCommerce.Web
         protected string GetLocaleResourceString(string ResourceName)
         {
             Language language = NopContext.Current.WorkingLanguage;
-            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageID);
+            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageId);
         }
     }
 }

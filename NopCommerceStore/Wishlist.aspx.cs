@@ -46,15 +46,15 @@ namespace NopSolutions.NopCommerce.Web
 
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureSSL();
+                CommonHelper.EnsureSsl();
 
-                Customer customer = CustomerManager.GetCustomerByGUID(this.CustomerGUID.HasValue ? this.CustomerGUID.Value : Guid.Empty);
+                Customer customer = CustomerManager.GetCustomerByGuid(this.CustomerGuid.HasValue ? this.CustomerGuid.Value : Guid.Empty);
                 if (customer != null)
                 {
                     lTitle.Text = string.Format(GetLocaleResourceString("Wishlist.WishlistOf"), Server.HtmlEncode(customer.FullName), Server.HtmlEncode(customer.Email));
-                    CustomerSession customerSession = CustomerManager.GetCustomerSessionByCustomerID(customer.CustomerID);
+                    CustomerSession customerSession = CustomerManager.GetCustomerSessionByCustomerId(customer.CustomerId);
                     if (customerSession != null)
-                        ctrlWishlist.CustomerSessionGuid = customerSession.CustomerSessionGUID;
+                        ctrlWishlist.CustomerSessionGuid = customerSession.CustomerSessionGuid;
                     ctrlWishlist.IsEditable = false;
                     ctrlWishlist.BindData();
                 }
@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     lTitle.Text = GetLocaleResourceString("Wishlist.YourWishlist");
                     if (NopContext.Current.Session != null)
-                        ctrlWishlist.CustomerSessionGuid = NopContext.Current.Session.CustomerSessionGUID;
+                        ctrlWishlist.CustomerSessionGuid = NopContext.Current.Session.CustomerSessionGuid;
                     ctrlWishlist.IsEditable = true;
                     ctrlWishlist.BindData();
 
@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.Web
                         lblYourWishlistURL.Visible = true;
                         lnkWishListUrl.Visible = true;
                         lblYourWishlistURL.Text = GetLocaleResourceString("Wishlist.YourWishlistURL");
-                        string wishListUrl = CommonHelper.GetStoreLocation() + "wishlist.aspx?CustomerGUID=" + NopContext.Current.User.CustomerGUID.ToString();
+                        string wishListUrl = CommonHelper.GetStoreLocation() + "wishlist.aspx?CustomerGUID=" + NopContext.Current.User.CustomerGuid.ToString();
                         lnkWishListUrl.NavigateUrl = wishListUrl;
                         lnkWishListUrl.Text = wishListUrl;                      
                     }
@@ -79,11 +79,11 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        public Guid? CustomerGUID
+        public Guid? CustomerGuid
         {
             get
             {
-                return CommonHelper.QueryStringGUID("CustomerGUID");
+                return CommonHelper.QueryStringGuid("CustomerGUID");
             }
         }
     }

@@ -33,37 +33,41 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
     public abstract partial class DBPictureProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets a picture
         /// </summary>
-        /// <param name="PictureID">Picture identifier</param>
+        /// <param name="pictureId">Picture identifier</param>
         /// <returns>Picture</returns>
-        public abstract DBPicture GetPictureByID(int PictureID);
+        public abstract DBPicture GetPictureById(int pictureId);
 
         /// <summary>
         /// Deletes a picture
         /// </summary>
-        /// <param name="PictureID">Picture identifier</param>
-        public abstract void DeletePicture(int PictureID);
+        /// <param name="pictureId">Picture identifier</param>
+        public abstract void DeletePicture(int pictureId);
 
         /// <summary>
         /// Inserts a picture
         /// </summary>
-        /// <param name="PictureBinary">The picture binary</param>
-        /// <param name="Extension">The picture extension</param>
-        /// <param name="IsNew">A value indicating whether the picture is new</param>
+        /// <param name="pictureBinary">The picture binary</param>
+        /// <param name="extension">The picture extension</param>
+        /// <param name="isNew">A value indicating whether the picture is new</param>
         /// <returns>Picture</returns>
-        public abstract DBPicture InsertPicture(byte[] PictureBinary, string Extension, bool IsNew);
+        public abstract DBPicture InsertPicture(byte[] pictureBinary, 
+            string extension, bool isNew);
 
         /// <summary>
         /// Updates the picture
         /// </summary>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PictureBinary">The picture binary</param>
-        /// <param name="Extension">The picture extension</param>
-        /// <param name="IsNew">A value indicating whether the picture is new</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pictureBinary">The picture binary</param>
+        /// <param name="extension">The picture extension</param>
+        /// <param name="isNew">A value indicating whether the picture is new</param>
         /// <returns>Picture</returns>
-        public abstract DBPicture UpdatePicture(int PictureID, byte[] PictureBinary, string Extension, bool IsNew);
+        public abstract DBPicture UpdatePicture(int pictureId, byte[] pictureBinary,
+            string extension, bool isNew);
+
         #endregion
     }
 }

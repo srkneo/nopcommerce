@@ -23,7 +23,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SecurePay
     public class SecurePaySettings
     {
         #region Properties
-        public static string MerchantID
+        public static string MerchantId
         {
             get
             {

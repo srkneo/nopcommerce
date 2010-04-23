@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Country country = ctrlCountryInfo.SaveInfo();
-                    Response.Redirect("CountryDetails.aspx?CountryID=" + country.CountryID.ToString());
+                    Response.Redirect("CountryDetails.aspx?CountryID=" + country.CountryId.ToString());
                 }
                 catch (Exception exc)
                 {

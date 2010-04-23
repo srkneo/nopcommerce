@@ -34,58 +34,62 @@ namespace NopSolutions.NopCommerce.DataAccess.Localization
     public abstract partial class DBLocaleStringResourceProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a locale string resource
         /// </summary>
-        /// <param name="LocaleStringResourceID">Locale string resource identifier</param>
-        public abstract void DeleteLocaleStringResource(int LocaleStringResourceID);
+        /// <param name="localeStringResourceId">Locale string resource identifier</param>
+        public abstract void DeleteLocaleStringResource(int localeStringResourceId);
 
         /// <summary>
         /// Gets a locale string resource
         /// </summary>
-        /// <param name="LocaleStringResourceID">Locale string resource identifier</param>
+        /// <param name="localeStringResourceId">Locale string resource identifier</param>
         /// <returns>Locale string resource</returns>
-        public abstract DBLocaleStringResource GetLocaleStringResourceByID(int LocaleStringResourceID);
+        public abstract DBLocaleStringResource GetLocaleStringResourceById(int localeStringResourceId);
 
         /// <summary>
         /// Gets all locale string resources by language identifier
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Locale string resource collection</returns>
-        public abstract DBLocaleStringResourceCollection GetAllResourcesByLanguageID(int LanguageID);
+        public abstract DBLocaleStringResourceCollection GetAllResourcesByLanguageId(int languageId);
 
         /// <summary>
         /// Inserts a locale string resource
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="ResourceName">The resource name</param>
-        /// <param name="ResourceValue">The resource value</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="resourceName">The resource name</param>
+        /// <param name="resourceValue">The resource value</param>
         /// <returns>Locale string resource</returns>
-        public abstract DBLocaleStringResource InsertLocaleStringResource(int LanguageID, string ResourceName, string ResourceValue);
+        public abstract DBLocaleStringResource InsertLocaleStringResource(int languageId,
+            string resourceName, string resourceValue);
 
         /// <summary>
         /// Updates the locale string resource
         /// </summary>
-        /// <param name="LocaleStringResourceID">The locale string resource identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="ResourceName">The resource name</param>
-        /// <param name="ResourceValue">The resource value</param>
+        /// <param name="localeStringResourceId">The locale string resource identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="resourceName">The resource name</param>
+        /// <param name="resourceValue">The resource value</param>
         /// <returns>Locale string resource</returns>
-        public abstract DBLocaleStringResource UpdateLocaleStringResource(int LocaleStringResourceID, int LanguageID, string ResourceName, string ResourceValue);
+        public abstract DBLocaleStringResource UpdateLocaleStringResource(int localeStringResourceId,
+            int languageId, string resourceName, string resourceValue);
 
         /// <summary>
         /// Loads all locale string resources as XML
         /// </summary>
-        /// <param name="LanguageID">The Language identifier</param>
+        /// <param name="languageId">The Language identifier</param>
         /// <returns>XML</returns>
-        public abstract string GetAllLocaleStringResourcesAsXML(int LanguageID);
+        public abstract string GetAllLocaleStringResourcesAsXml(int languageId);
 
         /// <summary>
         /// Inserts all locale string resources from XML
         /// </summary>
-        /// <param name="LanguageID">The Language identifier</param>
+        /// <param name="languageId">The Language identifier</param>
         /// <param name="xml">The XML package</param>
-        public abstract void InsertAllLocaleStringResourcesFromXML(int LanguageID, string xml);
+        public abstract void InsertAllLocaleStringResourcesFromXml(int languageId, string xml);
+        
         #endregion
     }
 }

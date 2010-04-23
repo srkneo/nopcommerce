@@ -36,12 +36,12 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the address identifier
         /// </summary>
-        public int AddressID { get; set; }
+        public int AddressId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the address is billing or shipping
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the state/province identifier
         /// </summary>
-        public int StateProvinceID { get; set; }
+        public int StateProvinceId { get; set; }
 
         /// <summary>
         /// Gets or sets the zip/postal code
@@ -106,7 +106,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
         
         /// <summary>
         /// Gets or sets the date and time of instance creation

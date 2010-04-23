@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            TaxCategory taxCategory = TaxCategoryManager.GetTaxCategoryByID(this.TaxCategoryID);
+            TaxCategory taxCategory = TaxCategoryManager.GetTaxCategoryById(this.TaxCategoryId);
             if (taxCategory != null)
             {
                 this.txtName.Text = taxCategory.Name;
@@ -59,11 +59,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public TaxCategory SaveInfo()
         {
-            TaxCategory taxCategory = TaxCategoryManager.GetTaxCategoryByID(this.TaxCategoryID);
+            TaxCategory taxCategory = TaxCategoryManager.GetTaxCategoryById(this.TaxCategoryId);
 
             if (taxCategory != null)
             {
-                taxCategory = TaxCategoryManager.UpdateTaxCategory(taxCategory.TaxCategoryID, txtName.Text,
+                taxCategory = TaxCategoryManager.UpdateTaxCategory(taxCategory.TaxCategoryId, txtName.Text,
                     txtDisplayOrder.Value, taxCategory.CreatedOn, DateTime.Now);
             }
             else
@@ -75,11 +75,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return taxCategory;
         }
 
-        public int TaxCategoryID
+        public int TaxCategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TaxCategoryID");
+                return CommonHelper.QueryStringInt("TaxCategoryId");
             }
         }
     }

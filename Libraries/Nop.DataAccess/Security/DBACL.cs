@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         /// <summary>
         /// Gets or sets the ACL identifier
         /// </summary>
-        public int ACLID { get; set; }
+        public int AclId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer action identifier
         /// </summary>
-        public int CustomerActionID { get; set; }
+        public int CustomerActionId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer role identifier
         /// </summary>
-        public int CustomerRoleID { get; set; }
+        public int CustomerRoleId { get; set; }
         
         /// <summary>
         /// Gets or sets the value indicating whether action is allowed

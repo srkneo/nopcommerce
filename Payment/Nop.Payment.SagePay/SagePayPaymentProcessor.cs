@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SagePay
         {
             StringBuilder cryptBuilder = new StringBuilder();
 
-            cryptBuilder.AppendFormat("VendorTxCode={0}", order.OrderID.ToString("N"));
+            cryptBuilder.AppendFormat("VendorTxCode={0}", order.OrderId.ToString("N"));
             cryptBuilder.AppendFormat("&ReferrerID={0}", partnerID);
             cryptBuilder.AppendFormat("&Amount={0:0.00}", order.OrderTotal); // FormatNumber(order.OrderTotal, 2, -1, 0, 0)); // ** Formatted to 2 decimal places with leading digit **
             cryptBuilder.AppendFormat("&Currency={0}", CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
@@ -133,13 +133,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SagePay
                 cryptBuilder.AppendFormat("&BillingAddress2={0}", order.BillingAddress2);
             cryptBuilder.AppendFormat("&BillingCity={0}", order.BillingCity);
             cryptBuilder.AppendFormat("&BillingPostCode={0}", order.BillingZipPostalCode);
-            var billingCountryCode = CountryManager.GetCountryByID(order.BillingCountryID).TwoLetterISOCode;
+            var billingCountryCode = CountryManager.GetCountryById(order.BillingCountryId).TwoLetterIsoCode;
             cryptBuilder.AppendFormat("&BillingCountry={0}", billingCountryCode);
             if (!string.IsNullOrEmpty(order.BillingStateProvince))
             {
                 if (billingCountryCode == "US")
                 {
-                    var stateProvince = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+                    var stateProvince = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
                     if (stateProvince != null)
                     {
                         cryptBuilder.AppendFormat("&BillingState={0}", stateProvince.Abbreviation);
@@ -158,13 +158,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SagePay
                     cryptBuilder.AppendFormat("&DeliveryAddress2={0}", order.ShippingAddress2);
                 cryptBuilder.AppendFormat("&DeliveryCity={0}", order.ShippingCity);
                 cryptBuilder.AppendFormat("&DeliveryPostCode={0}", order.ShippingZipPostalCode);
-                var shippingCountryCode = CountryManager.GetCountryByID(order.ShippingCountryID).TwoLetterISOCode;
+                var shippingCountryCode = CountryManager.GetCountryById(order.ShippingCountryId).TwoLetterIsoCode;
                 cryptBuilder.AppendFormat("&DeliveryCountry={0}", shippingCountryCode);
                 if (!string.IsNullOrEmpty(order.ShippingStateProvince))
                 {
                     if (shippingCountryCode == "US")
                     {
-                        var stateProvince = StateProvinceManager.GetStateProvinceByID(order.ShippingStateProvinceID);
+                        var stateProvince = StateProvinceManager.GetStateProvinceById(order.ShippingStateProvinceId);
                         if (stateProvince != null)
                         {
                             cryptBuilder.AppendFormat("&DeliveryState={0}", stateProvince.Abbreviation);
@@ -310,9 +310,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SagePay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -380,9 +380,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SagePay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

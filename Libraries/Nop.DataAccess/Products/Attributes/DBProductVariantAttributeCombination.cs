@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the product variant attribute combination identifier
         /// </summary>
-        public int ProductVariantAttributeCombinationID { get; set; }
+        public int ProductVariantAttributeCombinationId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the attributes
         /// </summary>
-        public string AttributesXML { get; set; }
+        public string AttributesXml { get; set; }
 
         /// <summary>
         /// Gets or sets the stock quantity

@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return null;
 
             var item = new TaxProvider();
-            item.TaxProviderID = dbItem.TaxProviderID;
+            item.TaxProviderId = dbItem.TaxProviderId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
             item.ConfigureTemplatePath = dbItem.ConfigureTemplatePath;
@@ -73,10 +73,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Deletes a tax provider
         /// </summary>
-        /// <param name="TaxProviderID">Tax provider identifier</param>
-        public static void DeleteTaxProvider(int TaxProviderID)
+        /// <param name="taxProviderId">Tax provider identifier</param>
+        public static void DeleteTaxProvider(int taxProviderId)
         {
-            DBProviderManager<DBTaxProviderProvider>.Provider.DeleteTaxProvider(TaxProviderID);
+            DBProviderManager<DBTaxProviderProvider>.Provider.DeleteTaxProvider(taxProviderId);
             if (TaxProviderManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXPROVIDERS_PATTERN_KEY);
@@ -86,21 +86,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Gets a tax provider
         /// </summary>
-        /// <param name="TaxProviderID">Tax provider identifier</param>
+        /// <param name="taxProviderId">Tax provider identifier</param>
         /// <returns>Tax provider</returns>
-        public static TaxProvider GetTaxProviderByID(int TaxProviderID)
+        public static TaxProvider GetTaxProviderById(int taxProviderId)
         {
-            if (TaxProviderID == 0)
+            if (taxProviderId == 0)
                 return null;
 
-            string key = string.Format(TAXPROVIDERS_BY_ID_KEY, TaxProviderID);
+            string key = string.Format(TAXPROVIDERS_BY_ID_KEY, taxProviderId);
             object obj2 = NopCache.Get(key);
             if (TaxProviderManager.CacheEnabled && (obj2 != null))
             {
                 return (TaxProvider)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.GetTaxProviderByID(TaxProviderID);
+            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.GetTaxProviderById(taxProviderId);
             var taxProvider = DBMapping(dbItem);
 
             if (TaxProviderManager.CacheEnabled)
@@ -136,17 +136,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Inserts a tax provider
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Tax provider</returns>
-        public static TaxProvider InsertTaxProvider(string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, int DisplayOrder)
+        public static TaxProvider InsertTaxProvider(string name, string description,
+           string configureTemplatePath, string className, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.InsertTaxProvider(Name, Description,
-                ConfigureTemplatePath, ClassName, DisplayOrder);
+            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.InsertTaxProvider(name, 
+                description, configureTemplatePath, className, displayOrder);
             var taxProvider = DBMapping(dbItem);
 
             if (TaxProviderManager.CacheEnabled)
@@ -159,18 +159,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Updates the tax provider
         /// </summary>
-        /// <param name="TaxProviderID">The tax provider identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="taxProviderId">The tax provider identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Tax provider</returns>
-        public static TaxProvider UpdateTaxProvider(int TaxProviderID, string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, int DisplayOrder)
+        public static TaxProvider UpdateTaxProvider(int taxProviderId,
+            string name, string description, string configureTemplatePath,
+            string className, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.UpdateTaxProvider(TaxProviderID, Name, 
-                Description, ConfigureTemplatePath, ClassName, DisplayOrder);
+            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.UpdateTaxProvider(taxProviderId, name, 
+                description, configureTemplatePath, className, displayOrder);
             var taxProvider = DBMapping(dbItem);
 
             if (TaxProviderManager.CacheEnabled)

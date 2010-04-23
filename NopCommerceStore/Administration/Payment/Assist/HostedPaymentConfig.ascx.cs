@@ -15,7 +15,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Assist
         {
             if(!Page.IsPostBack)
             {
-                txtShopID.Text = HostedPaymentSettings.ShopID;
+                txtShopId.Text = HostedPaymentSettings.ShopId;
                 txtGatewayUrl.Text = HostedPaymentSettings.GatewayUrl;
                 cbAuthorizeOnly.Checked = HostedPaymentSettings.AuthorizeOnly;
                 cbTestMode.Checked = HostedPaymentSettings.TestMode;
@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Assist
 
         public void Save()
         {
-            HostedPaymentSettings.ShopID = txtShopID.Text;
+            HostedPaymentSettings.ShopId = txtShopId.Text;
             HostedPaymentSettings.GatewayUrl = txtGatewayUrl.Text;
             HostedPaymentSettings.AuthorizeOnly = cbAuthorizeOnly.Checked;
             HostedPaymentSettings.TestMode = cbTestMode.Checked;

@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
             this.lblAllowedTokens.Text = allowedTokensString.ToString();
 
-            Pricelist pricelist = ProductManager.GetPricelistByID(this.PricelistID);
+            Pricelist pricelist = ProductManager.GetPricelistById(this.PricelistId);
             if (pricelist != null)
             {
                 this.txtAdminNotes.Text = pricelist.AdminNotes;
@@ -83,10 +83,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtHeader.Text = pricelist.Header;
                 this.txtPricelistGuid.Text = pricelist.PricelistGuid;
                 this.txtShortName.Text = pricelist.ShortName;
-                CommonHelper.SelectListItem(this.ddlExportMode, pricelist.ExportModeID);
-                CommonHelper.SelectListItem(this.ddlExportType, pricelist.ExportTypeID);
-                CommonHelper.SelectListItem(this.ddlPriceAdjustmentType, pricelist.PriceAdjustmentTypeID);
-                CommonHelper.SelectListItem(this.ddlAffiliate, pricelist.AffiliateID);
+                CommonHelper.SelectListItem(this.ddlExportMode, pricelist.ExportModeId);
+                CommonHelper.SelectListItem(this.ddlExportType, pricelist.ExportTypeId);
+                CommonHelper.SelectListItem(this.ddlPriceAdjustmentType, pricelist.PriceAdjustmentTypeId);
+                CommonHelper.SelectListItem(this.ddlAffiliate, pricelist.AffiliateId);
                 this.chkOverrideIndivAdjustment.Checked = pricelist.OverrideIndivAdjustment;
                 this.txtPriceAdjustment.Value = pricelist.PriceAdjustment;
                 this.ddlFormatLocalization.SelectedValue = pricelist.FormatLocalization;
@@ -145,7 +145,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             AffiliateCollection affiliateCollection = AffiliateManager.GetAllAffiliates();
             foreach (Affiliate affiliate in affiliateCollection)
             {
-                ListItem ddlAffiliateItem2 = new ListItem(affiliate.LastName + " (ID=" + affiliate.AffiliateID.ToString() + ")", affiliate.AffiliateID.ToString());
+                ListItem ddlAffiliateItem2 = new ListItem(affiliate.LastName + " (ID=" + affiliate.AffiliateId.ToString() + ")", affiliate.AffiliateId.ToString());
                 this.ddlAffiliate.Items.Add(ddlAffiliateItem2);
             }
         }
@@ -166,7 +166,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected void SavePricelistChanges(int priceListID)
+        protected void SavePricelistChanges(int priceListId)
         {
             foreach (GridViewRow objRow in gvProductVariants.Rows)
             {
@@ -175,36 +175,36 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     CheckBox chkSelected = objRow.FindControl("chkSelected") as CheckBox;
                     DropDownList ddlPriceAdjustmentType = objRow.FindControl("ddlPriceAdjustmentType") as DropDownList;
                     DecimalTextBox txtPriceAdjustment = objRow.FindControl("txtPriceAdjustment") as DecimalTextBox;
-                    HiddenField hfProductVariantPricelistID = objRow.FindControl("hfProductVariantPricelistID") as HiddenField;
-                    HiddenField hfProductVariantID = objRow.FindControl("hfProductVariantID") as HiddenField;
+                    HiddenField hfProductVariantPricelistId = objRow.FindControl("hfProductVariantPricelistId") as HiddenField;
+                    HiddenField hfProductVariantId = objRow.FindControl("hfProductVariantId") as HiddenField;
 
-                    int productVariantPricelistID = 0;
-                    int.TryParse(hfProductVariantPricelistID.Value, out productVariantPricelistID);
+                    int productVariantPricelistId = 0;
+                    int.TryParse(hfProductVariantPricelistId.Value, out productVariantPricelistId);
 
-                    ProductVariantPricelist productVariantPricelist = ProductManager.GetProductVariantPricelistByID(productVariantPricelistID);
+                    ProductVariantPricelist productVariantPricelist = ProductManager.GetProductVariantPricelistById(productVariantPricelistId);
                     if (chkSelected.Checked)
                     {
-                        int productVariantID = 0;
-                        int.TryParse(hfProductVariantID.Value, out productVariantID);
+                        int productVariantId = 0;
+                        int.TryParse(hfProductVariantId.Value, out productVariantId);
 
                         PriceAdjustmentTypeEnum priceAdjustmentType = (PriceAdjustmentTypeEnum)Enum.ToObject(typeof(PriceAdjustmentTypeEnum), int.Parse(ddlPriceAdjustmentType.SelectedItem.Value));
                         decimal priceAdjustment = txtPriceAdjustment.Value;
 
                         if (productVariantPricelist != null)
                         {
-                            productVariantPricelist = ProductManager.UpdateProductVariantPricelist(productVariantPricelistID, productVariantPricelist.ProductVariantID,
-                               productVariantPricelist.PricelistID, priceAdjustmentType, priceAdjustment, DateTime.Now);
+                            productVariantPricelist = ProductManager.UpdateProductVariantPricelist(productVariantPricelistId, productVariantPricelist.ProductVariantId,
+                               productVariantPricelist.PricelistId, priceAdjustmentType, priceAdjustment, DateTime.Now);
                         }
                         else
                         {
-                            productVariantPricelist = ProductManager.InsertProductVariantPricelist(productVariantID,
-                                priceListID, priceAdjustmentType, priceAdjustment, DateTime.Now);
+                            productVariantPricelist = ProductManager.InsertProductVariantPricelist(productVariantId,
+                                priceListId, priceAdjustmentType, priceAdjustment, DateTime.Now);
                         }
                     }
                     else
                     {
                         if (productVariantPricelist != null)
-                            ProductManager.DeleteProductVariantPricelist(productVariantPricelistID);
+                            ProductManager.DeleteProductVariantPricelist(productVariantPricelistId);
                     }
                 }
             }
@@ -219,21 +219,21 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 DropDownList ddlPriceAdjustmentType = e.Row.FindControl("ddlPriceAdjustmentType") as DropDownList;
                 CheckBox chkSelected = e.Row.FindControl("chkSelected") as CheckBox;
                 DecimalTextBox txtPriceAdjustment = e.Row.FindControl("txtPriceAdjustment") as DecimalTextBox;
-                HiddenField hfProductVariantPricelistID = e.Row.FindControl("hfProductVariantPricelistID") as HiddenField;
+                HiddenField hfProductVariantPricelistId = e.Row.FindControl("hfProductVariantPricelistId") as HiddenField;
 
-                if (chkSelected != null && ddlPriceAdjustmentType != null && txtPriceAdjustment != null && hfProductVariantPricelistID != null)
+                if (chkSelected != null && ddlPriceAdjustmentType != null && txtPriceAdjustment != null && hfProductVariantPricelistId != null)
                 {
                     CommonHelper.FillDropDownWithEnum(ddlPriceAdjustmentType, typeof(PriceAdjustmentTypeEnum));
 
                     ProductVariantPricelist productVariantPricelist = ProductManager.GetProductVariantPricelist(
-                        productVariant.ProductVariantID, this.PricelistID);
+                        productVariant.ProductVariantId, this.PricelistId);
 
                     if (productVariantPricelist != null)
                     {
                         chkSelected.Checked = true;
-                        CommonHelper.SelectListItem(ddlPriceAdjustmentType, productVariantPricelist.PriceAdjustmentTypeID);
+                        CommonHelper.SelectListItem(ddlPriceAdjustmentType, productVariantPricelist.PriceAdjustmentTypeId);
                         txtPriceAdjustment.Value = productVariantPricelist.PriceAdjustment;
-                        hfProductVariantPricelistID.Value = productVariantPricelist.ProductVariantPricelistID.ToString();
+                        hfProductVariantPricelistId.Value = productVariantPricelist.ProductVariantPricelistId.ToString();
                     }
                 }
             }
@@ -246,47 +246,47 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Pricelist SaveInfo()
         {
-            int affiliateID = int.Parse(ddlAffiliate.SelectedValue);
+            int affiliateId = int.Parse(ddlAffiliate.SelectedValue);
 
             PriceListExportModeEnum exportMode = (PriceListExportModeEnum)Enum.ToObject(typeof(PriceListExportModeEnum), int.Parse(this.ddlExportMode.SelectedItem.Value));
             PriceListExportTypeEnum exportType = (PriceListExportTypeEnum)Enum.ToObject(typeof(PriceListExportTypeEnum), int.Parse(this.ddlExportType.SelectedItem.Value));
             PriceAdjustmentTypeEnum priceAdjustmentType = (PriceAdjustmentTypeEnum)Enum.ToObject(typeof(PriceAdjustmentTypeEnum), int.Parse(this.ddlPriceAdjustmentType.SelectedItem.Value));
             decimal priceAdjustment = txtPriceAdjustment.Value;
 
-            Pricelist pricelist = ProductManager.GetPricelistByID(this.PricelistID);
+            Pricelist pricelist = ProductManager.GetPricelistById(this.PricelistId);
             if (pricelist != null)
             {
-                pricelist = ProductManager.UpdatePricelist(pricelist.PricelistID,
-                    exportMode, exportType, affiliateID, this.txtDisplayName.Text,
+                pricelist = ProductManager.UpdatePricelist(pricelist.PricelistId,
+                    exportMode, exportType, affiliateId, this.txtDisplayName.Text,
                     this.txtShortName.Text, this.txtPricelistGuid.Text, this.txtCacheTime.Value,
                     this.ddlFormatLocalization.SelectedValue, this.txtDescription.Text,
                     this.txtAdminNotes.Text, this.txtHeader.Text, this.txtBody.Text, this.txtFooter.Text,
                     priceAdjustmentType, this.txtPriceAdjustment.Value, this.chkOverrideIndivAdjustment.Checked,
                     pricelist.CreatedOn, DateTime.Now);
 
-                SavePricelistChanges(pricelist.PricelistID);
+                SavePricelistChanges(pricelist.PricelistId);
 
             }
             else
             {
                 pricelist = ProductManager.InsertPricelist(
-                    exportMode, exportType, affiliateID, this.txtDisplayName.Text,
+                    exportMode, exportType, affiliateId, this.txtDisplayName.Text,
                     this.txtShortName.Text, this.txtPricelistGuid.Text, this.txtCacheTime.Value, this.ddlFormatLocalization.SelectedValue,
                     this.txtDescription.Text, this.txtAdminNotes.Text, this.txtHeader.Text, this.txtBody.Text, this.txtFooter.Text,
                     priceAdjustmentType, priceAdjustment, chkOverrideIndivAdjustment.Checked,
                     DateTime.Now, DateTime.Now);
 
-                SavePricelistChanges(pricelist.PricelistID);
+                SavePricelistChanges(pricelist.PricelistId);
             }
 
             return pricelist;
         }
 
-        public int PricelistID
+        public int PricelistId
         {
             get
             {
-                return CommonHelper.QueryStringInt("PricelistID");
+                return CommonHelper.QueryStringInt("PricelistId");
             }
         }
     }

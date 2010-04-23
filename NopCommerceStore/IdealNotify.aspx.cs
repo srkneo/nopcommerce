@@ -29,7 +29,7 @@ namespace NopSolutions.NopCommerce.Web
                 XmlDocument doc = new XmlDocument();
                 doc.Load(Request.InputStream);
                 //// Try to find the order the notification is posted about
-                Order o = OrderManager.GetOrderByID(Convert.ToInt32(doc.ChildNodes[1]["purchaseID"].InnerText));
+                Order o = OrderManager.GetOrderById(Convert.ToInt32(doc.ChildNodes[1]["purchaseID"].InnerText));
                 if (o == null)
                 {
                     throw new NullReferenceException("No order");
@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web
                     case "success":
                         if (OrderManager.CanMarkOrderAsPaid(o))
                         {
-                            OrderManager.MarkOrderAsPaid(o.OrderID);
+                            OrderManager.MarkOrderAsPaid(o.OrderId);
                         }
                         break;
                     case "Expired":
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web
                     case "Failure":
                         if (OrderManager.CanCancelOrder(o))
                         {
-                            OrderManager.CancelOrder(o.OrderID, true);
+                            OrderManager.CancelOrder(o.OrderId, true);
                         }
                         break;
                     default:

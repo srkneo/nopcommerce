@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 decimal currentRating = 0;
@@ -67,17 +67,17 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             else
             {
-                ProductManager.SetProductRating(this.ProductID, int.Parse(e.Value));
+                ProductManager.SetProductRating(this.ProductId, int.Parse(e.Value));
                 lblProductRatingResult.Text = GetLocaleResourceString("Products.RatingWillBeUpdatedVerySoon");
                 e.CallbackResult = "Update done. Value = " + e.Value;
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

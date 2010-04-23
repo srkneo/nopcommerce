@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             public int ActivityLogID
             {
-                get { return _activityLog.ActivityLogID; }
+                get { return _activityLog.ActivityLogId; }
             }
 
             public string ActivityLogType
@@ -104,7 +104,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             var activityLogTypes = CustomerActivityManager.GetAllActivityTypes();
             foreach (var activityType in activityLogTypes)
             {
-                var item = new ListItem(activityType.Name, activityType.ActivityLogTypeID.ToString());
+                var item = new ListItem(activityType.Name, activityType.ActivityLogTypeId.ToString());
                 ddlActivityLogType.Items.Add(item);
             }
 
@@ -127,10 +127,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             string customerEmail = txtCustomerEmail.Text.Trim();
             string customerName = txtCustomerName.Text.Trim();
 
-            int activityLogTypeID = int.Parse(this.ddlActivityLogType.SelectedItem.Value);
+            int activityLogTypeId = int.Parse(this.ddlActivityLogType.SelectedItem.Value);
             int totalRecords = 0;
             var activityLogs = CustomerActivityManager.GetAllActivities(
-                startDate, endDate, customerEmail, customerName, activityLogTypeID,
+                startDate, endDate, customerEmail, customerName, activityLogTypeId,
                 int.MaxValue, 0, out totalRecords);
 
             var result = new List<RowHelper>();
@@ -145,7 +145,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (customer != null)
                 return string.Format(
                     "<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>",
-                    customer.CustomerID,
+                    customer.CustomerId,
                     Server.HtmlEncode(customer.Email));
 
             return string.Empty;

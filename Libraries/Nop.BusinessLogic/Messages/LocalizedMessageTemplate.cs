@@ -38,22 +38,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <summary>
         /// Gets or sets the localized message template identifier
         /// </summary>
-        public int MessageTemplateLocalizedID { get; set; }
+        public int MessageTemplateLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the message template identifier
         /// </summary>
-        public int MessageTemplateID { get; set; }
+        public int MessageTemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
-        
+        public int LanguageId { get; set; }
+
         /// <summary>
         /// Gets or sets the BCC Email addresses
         /// </summary>
-        public string BCCEmailAddresses { get; set; }
+        public string BccEmailAddresses { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -84,7 +84,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         {
             get
             {
-                return LanguageManager.GetLanguageByID(LanguageID);
+                return LanguageManager.GetLanguageById(this.LanguageId);
             }
         }
 
@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         {
             get
             {
-                return MessageManager.GetMessageTemplateByID(MessageTemplateID);
+                return MessageManager.GetMessageTemplateById(this.MessageTemplateId);
             }
         }
         #endregion

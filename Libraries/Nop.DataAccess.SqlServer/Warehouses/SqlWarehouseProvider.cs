@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Warehouses
     /// <summary>
     /// Warehouse provider for SQL Server
     /// </summary>
-    public partial class SQLWarehouseProvider : DBWarehouseProvider
+    public partial class SqlWarehouseProvider : DBWarehouseProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,22 +36,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Warehouses
         #region Utilities
         private DBWarehouse GetWarehouseFromReader(IDataReader dataReader)
         {
-            DBWarehouse warehouse = new DBWarehouse();
-            warehouse.WarehouseID = NopSqlDataHelper.GetInt(dataReader, "WarehouseID");
-            warehouse.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            warehouse.PhoneNumber = NopSqlDataHelper.GetString(dataReader, "PhoneNumber");
-            warehouse.Email = NopSqlDataHelper.GetString(dataReader, "Email");
-            warehouse.FaxNumber = NopSqlDataHelper.GetString(dataReader, "FaxNumber");
-            warehouse.Address1 = NopSqlDataHelper.GetString(dataReader, "Address1");
-            warehouse.Address2 = NopSqlDataHelper.GetString(dataReader, "Address2");
-            warehouse.City = NopSqlDataHelper.GetString(dataReader, "City");
-            warehouse.StateProvince = NopSqlDataHelper.GetString(dataReader, "StateProvince");
-            warehouse.ZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ZipPostalCode");
-            warehouse.CountryID = NopSqlDataHelper.GetInt(dataReader, "CountryID");
-            warehouse.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            warehouse.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            warehouse.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return warehouse;
+            var item = new DBWarehouse();
+            item.WarehouseId = NopSqlDataHelper.GetInt(dataReader, "WarehouseID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.PhoneNumber = NopSqlDataHelper.GetString(dataReader, "PhoneNumber");
+            item.Email = NopSqlDataHelper.GetString(dataReader, "Email");
+            item.FaxNumber = NopSqlDataHelper.GetString(dataReader, "FaxNumber");
+            item.Address1 = NopSqlDataHelper.GetString(dataReader, "Address1");
+            item.Address2 = NopSqlDataHelper.GetString(dataReader, "Address2");
+            item.City = NopSqlDataHelper.GetString(dataReader, "City");
+            item.StateProvince = NopSqlDataHelper.GetString(dataReader, "StateProvince");
+            item.ZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ZipPostalCode");
+            item.CountryId = NopSqlDataHelper.GetInt(dataReader, "CountryID");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
         #endregion
 
@@ -115,114 +115,117 @@ namespace NopSolutions.NopCommerce.DataAccess.Warehouses
         /// <summary>
         /// Gets a warehouse
         /// </summary>
-        /// <param name="WarehouseID">The warehouse identifier</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
         /// <returns>Warehouse</returns>
-        public override DBWarehouse GetWarehouseByID(int WarehouseID)
+        public override DBWarehouse GetWarehouseById(int warehouseId)
         {
-            DBWarehouse warehouse = null;
+            DBWarehouse item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_WarehouseLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "WarehouseID", DbType.Int32, WarehouseID);
+            db.AddInParameter(dbCommand, "WarehouseID", DbType.Int32, warehouseId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    warehouse = GetWarehouseFromReader(dataReader);
+                    item = GetWarehouseFromReader(dataReader);
                 }
             }
-            return warehouse;
+            return item;
         }
 
         /// <summary>
         /// Inserts a warehouse
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Warehouse</returns>
-        public override DBWarehouse InsertWarehouse(string Name, string PhoneNumber, string Email, string FaxNumber,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBWarehouse InsertWarehouse(string name, string phoneNumber,
+            string email, string faxNumber, string address1, string address2,
+            string city, string stateProvince, string zipPostalCode, int countryId,
+            bool deleted, DateTime createdOn, DateTime updatedOn)
         {
-            DBWarehouse warehouse = null;
+            DBWarehouse item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_WarehouseInsert");
             db.AddOutParameter(dbCommand, "WarehouseID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, PhoneNumber);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, FaxNumber);
-            db.AddInParameter(dbCommand, "Address1", DbType.String, Address1);
-            db.AddInParameter(dbCommand, "Address2", DbType.String, Address2);
-            db.AddInParameter(dbCommand, "City", DbType.String, City);
-            db.AddInParameter(dbCommand, "StateProvince", DbType.String, StateProvince);
-            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, ZipPostalCode);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, phoneNumber);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, faxNumber);
+            db.AddInParameter(dbCommand, "Address1", DbType.String, address1);
+            db.AddInParameter(dbCommand, "Address2", DbType.String, address2);
+            db.AddInParameter(dbCommand, "City", DbType.String, city);
+            db.AddInParameter(dbCommand, "StateProvince", DbType.String, stateProvince);
+            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, zipPostalCode);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int WarehouseID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@WarehouseID"));
-                warehouse = GetWarehouseByID(WarehouseID);
+                int warehouseId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@WarehouseID"));
+                item = GetWarehouseById(warehouseId);
             }
 
-            return warehouse;
+            return item;
         }
 
         /// <summary>
         /// Updates the warehouse
         /// </summary>
-        /// <param name="WarehouseID">The warehouse identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Warehouse</returns>
-        public override DBWarehouse UpdateWarehouse(int WarehouseID, string Name, string PhoneNumber, string Email, string FaxNumber,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBWarehouse UpdateWarehouse(int warehouseId,
+            string name, string phoneNumber, string email, string faxNumber,
+            string address1, string address2, string city, string stateProvince,
+            string zipPostalCode, int countryId, bool deleted,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBWarehouse warehouse = null;
+            DBWarehouse item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_WarehouseUpdate");
-            db.AddInParameter(dbCommand, "WarehouseID", DbType.Int32, WarehouseID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, PhoneNumber);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, FaxNumber);
-            db.AddInParameter(dbCommand, "Address1", DbType.String, Address1);
-            db.AddInParameter(dbCommand, "Address2", DbType.String, Address2);
-            db.AddInParameter(dbCommand, "City", DbType.String, City);
-            db.AddInParameter(dbCommand, "StateProvince", DbType.String, StateProvince);
-            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, ZipPostalCode);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "WarehouseID", DbType.Int32, warehouseId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, phoneNumber);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, faxNumber);
+            db.AddInParameter(dbCommand, "Address1", DbType.String, address1);
+            db.AddInParameter(dbCommand, "Address2", DbType.String, address2);
+            db.AddInParameter(dbCommand, "City", DbType.String, city);
+            db.AddInParameter(dbCommand, "StateProvince", DbType.String, stateProvince);
+            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, zipPostalCode);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                warehouse = GetWarehouseByID(WarehouseID);
+                item = GetWarehouseById(warehouseId);
 
-            return warehouse;
+            return item;
         }
         #endregion
     }

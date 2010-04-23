@@ -37,72 +37,76 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// <summary>
         /// Deletes an blog post
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
-        public abstract void DeleteBlogPost(int BlogPostID);
+        /// <param name="blogPostId">Blog post identifier</param>
+        public abstract void DeleteBlogPost(int blogPostId);
         
         /// <summary>
         /// Gets an blog post
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
+        /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>Blog post</returns>
-        public abstract DBBlogPost GetBlogPostByID(int BlogPostID);
+        public abstract DBBlogPost GetBlogPostById(int blogPostId);
 
         /// <summary>
         /// Gets all blog posts
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Blog posts</returns>
-        public abstract DBBlogPostCollection GetAllBlogPosts(int LanguageID, int PageSize, int PageIndex, out int TotalRecords);
+        public abstract DBBlogPostCollection GetAllBlogPosts(int languageId, int pageSize, 
+            int pageIndex, out int totalRecords);
 
         /// <summary>
         /// Inserts an blog post
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BlogPostTitle">The blog post title</param>
-        /// <param name="BlogPostBody">The blog post title</param>
-        /// <param name="BlogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
-        /// <param name="CreatedByID">The user identifier who created the blog post</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="blogPostTitle">The blog post title</param>
+        /// <param name="blogPostBody">The blog post title</param>
+        /// <param name="blogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
+        /// <param name="createdById">The user identifier who created the blog post</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog post</returns>
-        public abstract DBBlogPost InsertBlogPost(int LanguageID, string BlogPostTitle, string BlogPostBody,
-            bool BlogPostAllowComments, int CreatedByID, DateTime CreatedOn);
+        public abstract DBBlogPost InsertBlogPost(int languageId, string blogPostTitle,
+            string blogPostBody, bool blogPostAllowComments, 
+            int createdById, DateTime createdOn);
 
         /// <summary>
         /// Updates the blog post
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BlogPostID">Blog post identifier</param>
-        /// <param name="BlogPostTitle">The blog post title</param>
-        /// <param name="BlogPostBody">The blog post title</param>
-        /// <param name="BlogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
-        /// <param name="CreatedByID">The user identifier who created the blog post</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="blogPostTitle">The blog post title</param>
+        /// <param name="blogPostBody">The blog post title</param>
+        /// <param name="blogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
+        /// <param name="createdById">The user identifier who created the blog post</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog post</returns>
-        public abstract DBBlogPost UpdateBlogPost(int BlogPostID, int LanguageID, string BlogPostTitle, string BlogPostBody,
-            bool BlogPostAllowComments, int CreatedByID, DateTime CreatedOn);
+        public abstract DBBlogPost UpdateBlogPost(int blogPostId, 
+            int languageId, string blogPostTitle,
+            string blogPostBody, bool blogPostAllowComments,
+            int createdById, DateTime createdOn);
 
         /// <summary>
-        /// Deletes an blog comment
+        /// Deletes a blog comment
         /// </summary>
-        /// <param name="BlogCommentID">Blog comment identifier</param>
-        public abstract void DeleteBlogComment(int BlogCommentID);
+        /// <param name="blogCommentId">Blog comment identifier</param>
+        public abstract void DeleteBlogComment(int blogCommentId);
 
         /// <summary>
-        /// Gets an blog comment
+        /// Gets a blog comment
         /// </summary>
-        /// <param name="BlogCommentID">Blog comment identifier</param>
-        /// <returns>An blog comment</returns>
-        public abstract DBBlogComment GetBlogCommentByID(int BlogCommentID);
+        /// <param name="blogCommentId">Blog comment identifier</param>
+        /// <returns>A blog comment</returns>
+        public abstract DBBlogComment GetBlogCommentById(int blogCommentId);
 
         /// <summary>
         /// Gets a collection of blog comments by blog post identifier
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
+        /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>A collection of blog comments</returns>
-        public abstract DBBlogCommentCollection GetBlogCommentsByBlogPostID(int BlogPostID);
+        public abstract DBBlogCommentCollection GetBlogCommentsByBlogPostId(int blogPostId);
 
         /// <summary>
         /// Gets all blog comments
@@ -111,27 +115,27 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         public abstract DBBlogCommentCollection GetAllBlogComments();
 
         /// <summary>
-        /// Inserts an blog comment
+        /// Inserts a blog comment
         /// </summary>
-        /// <param name="BlogPostID">The blog post identifier</param>
-        /// <param name="CustomerID">The customer identifier who commented the blog post</param>
-        /// <param name="CommentText">The comment text</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
-        public abstract DBBlogComment InsertBlogComment(int BlogPostID,
-            int CustomerID, string CommentText, DateTime CreatedOn);
+        public abstract DBBlogComment InsertBlogComment(int blogPostId,
+            int customerId, string commentText, DateTime createdOn);
 
         /// <summary>
         /// Updates the blog comment
         /// </summary>
-        /// <param name="BlogCommentID">The blog comment identifier</param>
-        /// <param name="BlogPostID">The blog post identifier</param>
-        /// <param name="CustomerID">The customer identifier who commented the blog post</param>
-        /// <param name="CommentText">The comment text</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogCommentId">The blog comment identifier</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
-        public abstract DBBlogComment UpdateBlogComment(int BlogCommentID, int BlogPostID,
-            int CustomerID, string CommentText, DateTime CreatedOn);
+        public abstract DBBlogComment UpdateBlogComment(int blogCommentId, int blogPostId,
+            int customerId, string commentText, DateTime createdOn);
         #endregion
     }
 }

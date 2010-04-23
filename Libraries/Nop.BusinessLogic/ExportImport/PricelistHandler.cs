@@ -48,14 +48,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         {
             if (PricelistGuid.Length == 0)
             {
-                context.Response.Write("No pricelist specified, please use PricelistGUID parameter");
+                context.Response.Write("No pricelist specified, please use PricelistGuid parameter");
                 return;
             }
 
             Pricelist pl = null;
 
             if (PricelistGuid.Length != 0)
-                pl = ProductManager.GetPricelistByGUID(PricelistGuid);
+                pl = ProductManager.GetPricelistByGuid(PricelistGuid);
 
             else
                 throw new MissingFieldException();
@@ -70,7 +70,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
             context.Response.Write(pl.CreatePricelist(cachePath));
         }
 
-        private string PricelistGuid
+        /// <summary>
+        /// Pricelist GUID
+        /// </summary>
+        public string PricelistGuid
         {
             get
             {

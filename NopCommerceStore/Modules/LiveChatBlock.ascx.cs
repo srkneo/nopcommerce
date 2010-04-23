@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             get
             {
-                return SettingManager.GetSettingValue("LiveChat.SiteID");
+                return SettingManager.GetSettingValue("LiveChat.SiteId");
             }
         }
     }

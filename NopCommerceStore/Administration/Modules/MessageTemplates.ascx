@@ -23,8 +23,6 @@
 <asp:GridView ID="gvMessageTemplates" runat="server" AutoGenerateColumns="False"
     Width="100%">
     <Columns>
-        <asp:BoundField DataField="MessageTemplateID" HeaderText="MessageTemplate ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.MessageTemplates.Name %>" ItemStyle-Width="70%">
             <ItemTemplate>
                 <%#Eval("Name")%>
@@ -33,7 +31,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.MessageTemplates.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="30%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="MessageTemplateDetails.aspx?MessageTemplateID=<%#Eval("MessageTemplateID")%>&LanguageID=<%#GetSelectedLanguageID()%>"
+                <a href="MessageTemplateDetails.aspx?MessageTemplateID=<%#Eval("MessageTemplateId")%>&LanguageID=<%#GetSelectedLanguageId()%>"
                     title="<%=GetLocaleResourceString("Admin.MessageTemplates.Edit.Tooltip")%>">
                     <%=GetLocaleResourceString("Admin.MessageTemplates.Edit")%>
                 </a>

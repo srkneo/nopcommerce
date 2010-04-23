@@ -40,10 +40,10 @@ namespace NopSolutions.NopCommerce.Web.Boards
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
             }
 
-            Forum forum = ForumManager.GetForumByID(this.ForumID);
+            Forum forum = ForumManager.GetForumById(this.ForumId);
             if (forum != null)
             {
                 string title = forum.Name;
@@ -51,11 +51,11 @@ namespace NopSolutions.NopCommerce.Web.Boards
             }
         }
 
-        public int ForumID
+        public int ForumId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ForumID");
+                return CommonHelper.QueryStringInt("ForumId");
             }
         }
     }

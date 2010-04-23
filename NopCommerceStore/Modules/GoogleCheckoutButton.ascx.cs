@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 return;
             }
 
-            if (Cart.IsRecurring && PaymentManager.SupportRecurringPayments(gcPaymentMethod.PaymentMethodID) == RecurringPaymentTypeEnum.NotSupported)
+            if (Cart.IsRecurring && PaymentManager.SupportRecurringPayments(gcPaymentMethod.PaymentMethodId) == RecurringPaymentTypeEnum.NotSupported)
             {
                 this.Visible = false;
                 return;
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 

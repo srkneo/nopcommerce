@@ -30,7 +30,7 @@ namespace NopSolutions.NopCommerce.Web
                 LogManager.InsertLog(LogTypeEnum.OrderError, "TPV SERMEPA: Host " + HostName, "Host: " + HostName);
 
                 //ID de Pedido
-                string orderID = Request["Ds_Order"];
+                string orderId = Request["Ds_Order"];
                 string strDs_Merchant_Order = Request["Ds_Order"];
 
                 string strDs_Merchant_Amount = Request["Ds_Amount"];
@@ -74,9 +74,9 @@ namespace NopSolutions.NopCommerce.Web
                 }
 
                 //Pedido
-                Order order = OrderManager.GetOrderByID(Convert.ToInt32(orderID));
+                Order order = OrderManager.GetOrderById(Convert.ToInt32(orderId));
                 if (order == null)
-                    throw new NopException(string.Format("El pedido de ID {0} no existe", orderID));
+                    throw new NopException(string.Format("El pedido de ID {0} no existe", orderId));
 
                 //Actualizamos el pedido
                 if (Ds_Response > -1 && Ds_Response < 100)
@@ -84,14 +84,14 @@ namespace NopSolutions.NopCommerce.Web
                     //Lo marcamos como pagado
                     if (OrderManager.CanMarkOrderAsPaid(order))
                     {
-                        OrderManager.MarkOrderAsPaid(order.OrderID);
+                        OrderManager.MarkOrderAsPaid(order.OrderId);
                     }
-                    //OrderManager.InsertOrderNote(order.OrderID, "Información del pago: " + Request.Form.ToString(), DateTime.Now);
+                    //OrderManager.InsertOrderNote(order.OrderId, "Información del pago: " + Request.Form.ToString(), DateTime.Now);
                 }
                 else
                 {
                     LogManager.InsertLog(LogTypeEnum.OrderError, "TPV SERMEPA: Pago no autorizado", "Pago no autorizado con ERROR: " + Ds_Response);
-                    //OrderManager.InsertOrderNote(order.OrderID, "!!! PAGO DENEGADO !!! " + Request.Form.ToString(), DateTime.Now);
+                    //OrderManager.InsertOrderNote(order.OrderId, "!!! PAGO DENEGADO !!! " + Request.Form.ToString(), DateTime.Now);
                 }
 
             }

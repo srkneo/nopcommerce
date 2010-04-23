@@ -13,7 +13,7 @@
             Account ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtAccountID" CssClass="adminInput" />
+            <asp:TextBox runat="server" ID="txtAccountId" CssClass="adminInput" />
         </td>
     </tr>
     <tr>

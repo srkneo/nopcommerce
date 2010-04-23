@@ -64,12 +64,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
                 return null;
 
             var item = new BlogPost();
-            item.BlogPostID = dbItem.BlogPostID;
-            item.LanguageID = dbItem.LanguageID;
+            item.BlogPostId = dbItem.BlogPostId;
+            item.LanguageId = dbItem.LanguageId;
             item.BlogPostTitle = dbItem.BlogPostTitle;
             item.BlogPostBody = dbItem.BlogPostBody;
             item.BlogPostAllowComments = dbItem.BlogPostAllowComments;
-            item.CreatedByID = dbItem.CreatedByID;
+            item.CreatedById = dbItem.CreatedById;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
@@ -96,9 +96,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
                 return null;
 
             var item = new BlogComment();
-            item.BlogCommentID = dbItem.BlogCommentID;
-            item.BlogPostID = dbItem.BlogPostID;
-            item.CustomerID = dbItem.CustomerID;
+            item.BlogCommentId = dbItem.BlogCommentId;
+            item.BlogPostId = dbItem.BlogPostId;
+            item.CustomerId = dbItem.CustomerId;
             item.CommentText = dbItem.CommentText;
             item.CreatedOn = dbItem.CreatedOn;
 
@@ -110,10 +110,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Deletes an blog post
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
-        public static void DeleteBlogPost(int BlogPostID)
+        /// <param name="blogPostId">Blog post identifier</param>
+        public static void DeleteBlogPost(int blogPostId)
         {
-            DBProviderManager<DBBlogProvider>.Provider.DeleteBlogPost(BlogPostID);
+            DBProviderManager<DBBlogProvider>.Provider.DeleteBlogPost(blogPostId);
             if (BlogManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
@@ -123,21 +123,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Gets an blog post
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
+        /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>Blog post</returns>
-        public static BlogPost GetBlogPostByID(int BlogPostID)
+        public static BlogPost GetBlogPostById(int blogPostId)
         {
-            if (BlogPostID == 0)
+            if (blogPostId == 0)
                 return null;
 
-            string key = string.Format(BLOGPOST_BY_ID_KEY, BlogPostID);
+            string key = string.Format(BLOGPOST_BY_ID_KEY, blogPostId);
             object obj2 = NopCache.Get(key);
             if (BlogManager.CacheEnabled && (obj2 != null))
             {
                 return (BlogPost)obj2;
             }
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.GetBlogPostByID(BlogPostID);
+            var dbItem = DBProviderManager<DBBlogProvider>.Provider.GetBlogPostById(blogPostId);
             var blogPost = DBMapping(dbItem);
 
             if (BlogManager.CacheEnabled)
@@ -150,60 +150,55 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Gets all blog posts
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <returns>Blog posts</returns>
-        public static BlogPostCollection GetAllBlogPosts(int LanguageID)
+        public static BlogPostCollection GetAllBlogPosts(int languageId)
         {
-            int TotalRecords;
-            return GetAllBlogPosts(LanguageID, Int32.MaxValue, 0, out TotalRecords);
+            int totalRecords;
+            return GetAllBlogPosts(languageId, Int32.MaxValue, 0, out totalRecords);
         }
 
         /// <summary>
         /// Gets all blog posts
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Blog posts</returns>
-        public static BlogPostCollection GetAllBlogPosts(int LanguageID, int PageSize, int PageIndex, out int TotalRecords)
+        public static BlogPostCollection GetAllBlogPosts(int languageId, int pageSize,
+            int pageIndex, out int totalRecords)
         {
-            if(PageSize <= 0)
-            {
-                PageSize = 10;
-            }
-            if(PageSize == Int32.MaxValue)
-            {
-                PageSize = Int32.MaxValue - 1;
-            }
-            if(PageIndex < 0)
-            {
-                PageIndex = 0;
-            }
-            if(PageIndex == Int32.MaxValue)
-            {
-                PageIndex = Int32.MaxValue - 1;
-            }
-            return DBMapping(DBProviderManager<DBBlogProvider>.Provider.GetAllBlogPosts(LanguageID, PageSize, PageIndex, out TotalRecords));
+            if(pageSize <= 0)
+                pageSize = 10;
+            if(pageSize == Int32.MaxValue)
+                pageSize = Int32.MaxValue - 1;
+            if(pageIndex < 0)
+                pageIndex = 0;
+            if(pageIndex == Int32.MaxValue)
+                pageIndex = Int32.MaxValue - 1;
+            return DBMapping(DBProviderManager<DBBlogProvider>.Provider.GetAllBlogPosts(languageId, pageSize, pageIndex, out totalRecords));
         }
 
         /// <summary>
         /// Inserts an blog post
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BlogPostTitle">The blog post title</param>
-        /// <param name="BlogPostBody">The blog post title</param>
-        /// <param name="BlogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
-        /// <param name="CreatedByID">The user identifier who created the blog post</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="blogPostTitle">The blog post title</param>
+        /// <param name="blogPostBody">The blog post title</param>
+        /// <param name="blogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
+        /// <param name="createdById">The user identifier who created the blog post</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog post</returns>
-        public static BlogPost InsertBlogPost(int LanguageID, string BlogPostTitle, string BlogPostBody,
-            bool BlogPostAllowComments, int CreatedByID, DateTime CreatedOn)
+        public static BlogPost InsertBlogPost(int languageId, string blogPostTitle,
+            string blogPostBody, bool blogPostAllowComments,
+            int createdById, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.InsertBlogPost(LanguageID, BlogPostTitle, BlogPostBody,
-                BlogPostAllowComments, CreatedByID, CreatedOn);
+            var dbItem = DBProviderManager<DBBlogProvider>.Provider.InsertBlogPost(languageId, 
+                blogPostTitle, blogPostBody, blogPostAllowComments, 
+                createdById, createdOn);
             var blogPost = DBMapping(dbItem);
 
             if (BlogManager.CacheEnabled)
@@ -217,21 +212,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Updates the blog post
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BlogPostID">Blog post identifier</param>
-        /// <param name="BlogPostTitle">The blog post title</param>
-        /// <param name="BlogPostBody">The blog post title</param>
-        /// <param name="BlogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
-        /// <param name="CreatedByID">The user identifier who created the blog post</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="blogPostTitle">The blog post title</param>
+        /// <param name="blogPostBody">The blog post title</param>
+        /// <param name="blogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
+        /// <param name="createdById">The user identifier who created the blog post</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog post</returns>
-        public static BlogPost UpdateBlogPost(int BlogPostID,int LanguageID, string BlogPostTitle, string BlogPostBody,
-            bool BlogPostAllowComments, int CreatedByID, DateTime CreatedOn)
+        public static BlogPost UpdateBlogPost(int blogPostId,
+            int languageId, string blogPostTitle,
+            string blogPostBody, bool blogPostAllowComments,
+            int createdById, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogPost(BlogPostID, LanguageID, BlogPostTitle, BlogPostBody,
-                BlogPostAllowComments, CreatedByID, CreatedOn);
+            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogPost(blogPostId, 
+                languageId, blogPostTitle, blogPostBody,
+                blogPostAllowComments, createdById, createdOn);
             var blogPost = DBMapping(dbItem);
 
             if (BlogManager.CacheEnabled)
@@ -245,23 +243,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Deletes an blog comment
         /// </summary>
-        /// <param name="BlogCommentID">Blog comment identifier</param>
-        public static void DeleteBlogComment(int BlogCommentID)
+        /// <param name="blogCommentId">Blog comment identifier</param>
+        public static void DeleteBlogComment(int blogCommentId)
         {
-            DBProviderManager<DBBlogProvider>.Provider.DeleteBlogComment(BlogCommentID);
+            DBProviderManager<DBBlogProvider>.Provider.DeleteBlogComment(blogCommentId);
         }
 
         /// <summary>
         /// Gets an blog comment
         /// </summary>
-        /// <param name="BlogCommentID">Blog comment identifier</param>
-        /// <returns>An blog comment</returns>
-        public static BlogComment GetBlogCommentByID(int BlogCommentID)
+        /// <param name="blogCommentId">Blog comment identifier</param>
+        /// <returns>A blog comment</returns>
+        public static BlogComment GetBlogCommentById(int blogCommentId)
         {
-            if (BlogCommentID == 0)
+            if (blogCommentId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.GetBlogCommentByID(BlogCommentID);
+            var dbItem = DBProviderManager<DBBlogProvider>.Provider.GetBlogCommentById(blogCommentId);
             var blogComment = DBMapping(dbItem);
             return blogComment;
         }
@@ -269,11 +267,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Gets a collection of blog comments by blog post identifier
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
+        /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>A collection of blog comments</returns>
-        public static BlogCommentCollection GetBlogCommentsByBlogPostID(int BlogPostID)
+        public static BlogCommentCollection GetBlogCommentsByBlogPostId(int blogPostId)
         {
-            var dbCollection = DBProviderManager<DBBlogProvider>.Provider.GetBlogCommentsByBlogPostID(BlogPostID);
+            var dbCollection = DBProviderManager<DBBlogProvider>.Provider.GetBlogCommentsByBlogPostId(blogPostId);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -290,40 +288,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         }
 
         /// <summary>
-        /// Inserts an blog comment
+        /// Inserts a blog comment
         /// </summary>
-        /// <param name="BlogPostID">The blog post identifier</param>
-        /// <param name="CustomerID">The customer identifier who commented the blog post</param>
-        /// <param name="CommentText">The comment text</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
-        public static BlogComment InsertBlogComment(int BlogPostID,
-            int CustomerID, string CommentText, DateTime CreatedOn)
+        public static BlogComment InsertBlogComment(int blogPostId,
+            int customerId, string commentText, DateTime createdOn)
         {
-            return InsertBlogComment(BlogPostID, CustomerID, CommentText, CreatedOn, BlogManager.NotifyAboutNewBlogComments);
+            return InsertBlogComment(blogPostId, customerId, commentText,
+                createdOn, BlogManager.NotifyAboutNewBlogComments);
         }
 
         /// <summary>
-        /// Inserts an blog comment
+        /// Inserts a blog comment
         /// </summary>
-        /// <param name="BlogPostID">The blog post identifier</param>
-        /// <param name="CustomerID">The customer identifier who commented the blog post</param>
-        /// <param name="CommentText">The comment text</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <param name="notify">A value indicating whether to notify the store owner</param>
         /// <returns>Blog comment</returns>
-        public static BlogComment InsertBlogComment(int BlogPostID,
-            int CustomerID, string CommentText, DateTime CreatedOn, bool notify)
+        public static BlogComment InsertBlogComment(int blogPostId,
+            int customerId, string commentText, DateTime createdOn, bool notify)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.InsertBlogComment(BlogPostID,
-                CustomerID, CommentText, CreatedOn);
+            var dbItem = DBProviderManager<DBBlogProvider>.Provider.InsertBlogComment(blogPostId,
+                customerId, commentText, createdOn);
             var blogComment = DBMapping(dbItem);
 
             if (notify)
             {
-                MessageManager.SendBlogCommentNotificationMessage(blogComment, LocalizationManager.DefaultAdminLanguage.LanguageID);
+                MessageManager.SendBlogCommentNotificationMessage(blogComment, LocalizationManager.DefaultAdminLanguage.LanguageId);
             }
 
             return blogComment;
@@ -332,19 +331,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Updates the blog comment
         /// </summary>
-        /// <param name="BlogCommentID">The blog comment identifier</param>
-        /// <param name="BlogPostID">The blog post identifier</param>
-        /// <param name="CustomerID">The customer identifier who commented the blog post</param>
-        /// <param name="CommentText">The comment text</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogCommentId">The blog comment identifier</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
-        public static BlogComment UpdateBlogComment(int BlogCommentID, int BlogPostID,
-            int CustomerID, string CommentText, DateTime CreatedOn)
+        public static BlogComment UpdateBlogComment(int blogCommentId, int blogPostId,
+            int customerId, string commentText, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogComment(BlogCommentID, BlogPostID,
-                CustomerID, CommentText, CreatedOn);
+            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogComment(blogCommentId, 
+                blogPostId, customerId, commentText, createdOn);
             var blogComment = DBMapping(dbItem);
             return blogComment;
         }
@@ -352,15 +351,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Formats the text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatCommentText(string Text)
+        public static string FormatCommentText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            Text = HtmlHelper.FormatText(Text, false, true, false, false, false, false);
-            return Text;
+            text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
+            return text;
         }
         #endregion
 

@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Gets or sets the tax category identifier
         /// </summary>
-        public int TaxCategoryID { get; set; }
+        public int TaxCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

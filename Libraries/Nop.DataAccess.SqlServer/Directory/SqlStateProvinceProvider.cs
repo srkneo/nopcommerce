@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
     /// <summary>
     /// State/province provider for SQL Server
     /// </summary>
-    public partial class SQLStateProvinceProvider : DBStateProvinceProvider
+    public partial class SqlStateProvinceProvider : DBStateProvinceProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,13 +36,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         #region Utilities
         private DBStateProvince GetStateProvinceFromReader(IDataReader dataReader)
         {
-            DBStateProvince stateProvince = new DBStateProvince();
-            stateProvince.StateProvinceID = NopSqlDataHelper.GetInt(dataReader, "StateProvinceID");
-            stateProvince.CountryID = NopSqlDataHelper.GetInt(dataReader, "CountryID");
-            stateProvince.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            stateProvince.Abbreviation = NopSqlDataHelper.GetString(dataReader, "Abbreviation");
-            stateProvince.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return stateProvince;
+            var item = new DBStateProvince();
+            item.StateProvinceId = NopSqlDataHelper.GetInt(dataReader, "StateProvinceID");
+            item.CountryId = NopSqlDataHelper.GetInt(dataReader, "CountryID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Abbreviation = NopSqlDataHelper.GetString(dataReader, "Abbreviation");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -85,70 +85,70 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Deletes a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        public override void DeleteStateProvince(int StateProvinceID)
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        public override void DeleteStateProvince(int stateProvinceId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_StateProvinceDelete");
-            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, StateProvinceID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, stateProvinceId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
         /// <returns>State/province</returns>
-        public override DBStateProvince GetStateProvinceByID(int StateProvinceID)
+        public override DBStateProvince GetStateProvinceById(int stateProvinceId)
         {
-            DBStateProvince stateProvince = null;
+            DBStateProvince item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_StateProvinceLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, StateProvinceID);
+            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, stateProvinceId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    stateProvince = GetStateProvinceFromReader(dataReader);
+                    item = GetStateProvinceFromReader(dataReader);
                 }
             }
-            return stateProvince;
+            return item;
         }
 
         /// <summary>
         /// Gets a state/province 
         /// </summary>
-        /// <param name="Abbreviation">The state/province abbreviation</param>
+        /// <param name="abbreviation">The state/province abbreviation</param>
         /// <returns>State/province</returns>
-        public override DBStateProvince GetStateProvinceByAbbreviation(string Abbreviation)
+        public override DBStateProvince GetStateProvinceByAbbreviation(string abbreviation)
         {
-            DBStateProvince stateProvince = null;
+            DBStateProvince item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_StateProvinceLoadByAbbreviation");
-            db.AddInParameter(dbCommand, "Abbreviation", DbType.String, Abbreviation);
+            db.AddInParameter(dbCommand, "Abbreviation", DbType.String, abbreviation);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    stateProvince = GetStateProvinceFromReader(dataReader);
+                    item = GetStateProvinceFromReader(dataReader);
                 }
             }
-            return stateProvince;
+            return item;
         }
 
         /// <summary>
         /// Gets a state/province collection by country identifier
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
+        /// <param name="countryId">Country identifier</param>
         /// <returns>State/province collection</returns>
-        public override DBStateProvinceCollection GetStateProvincesByCountryID(int CountryID)
+        public override DBStateProvinceCollection GetStateProvincesByCountryId(int countryId)
         {
             var result = new DBStateProvinceCollection();
-            if (CountryID == 0)
+            if (countryId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_StateProvinceLoadAllByCountryID");
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -163,52 +163,54 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Inserts a state/province
         /// </summary>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Abbreviation">The abbreviation</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="abbreviation">The abbreviation</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>State/province</returns>
-        public override DBStateProvince InsertStateProvince(int CountryID, string Name, string Abbreviation, int DisplayOrder)
+        public override DBStateProvince InsertStateProvince(int countryId,
+            string name, string abbreviation, int displayOrder)
         {
-            DBStateProvince stateProvince = null;
+            DBStateProvince item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_StateProvinceInsert");
             db.AddOutParameter(dbCommand, "StateProvinceID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Abbreviation", DbType.String, Abbreviation);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Abbreviation", DbType.String, abbreviation);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int StateProvinceID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@StateProvinceID"));
-                stateProvince = GetStateProvinceByID(StateProvinceID);
+                int stateProvinceId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@StateProvinceID"));
+                item = GetStateProvinceById(stateProvinceId);
             }
-            return stateProvince;
+            return item;
         }
 
         /// <summary>
         /// Updates a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Abbreviation">The abbreviation</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="abbreviation">The abbreviation</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>State/province</returns>
-        public override DBStateProvince UpdateStateProvince(int StateProvinceID, int CountryID, string Name, string Abbreviation, int DisplayOrder)
+        public override DBStateProvince UpdateStateProvince(int stateProvinceId,
+            int countryId, string name, string abbreviation, int displayOrder)
         {
-            DBStateProvince stateProvince = null;
+            DBStateProvince item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_StateProvinceUpdate");
-            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, StateProvinceID);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Abbreviation", DbType.String, Abbreviation);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, stateProvinceId);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Abbreviation", DbType.String, abbreviation);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                stateProvince = GetStateProvinceByID(StateProvinceID);
+                item = GetStateProvinceById(stateProvinceId);
 
-            return stateProvince;
+            return item;
         }
         #endregion
     }

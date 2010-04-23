@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureSSL();
+                CommonHelper.EnsureSsl();
 
                 if (this.Tab.ToLowerInvariant() == "sent")
                 {

@@ -28,7 +28,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Configuration.Settings
     /// <summary>
     /// Category provider for SQL Server
     /// </summary>
-    public partial class SQLSettingProvider : DBSettingProvider
+    public partial class SqlSettingProvider : DBSettingProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Configuration.Settings
         #region Utilities
         private DBSetting GetSettingFromReader(IDataReader dataReader)
         {
-            DBSetting setting = new DBSetting();
-            setting.SettingID = NopSqlDataHelper.GetInt(dataReader, "SettingID");
-            setting.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            setting.Value = NopSqlDataHelper.GetString(dataReader, "Value");
-            setting.Description = NopSqlDataHelper.GetString(dataReader, "Description");
-            return setting;
+            var item = new DBSetting();
+            item.SettingId = NopSqlDataHelper.GetInt(dataReader, "SettingID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Value = NopSqlDataHelper.GetString(dataReader, "Value");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            return item;
         }
         #endregion
 
@@ -85,36 +85,35 @@ namespace NopSolutions.NopCommerce.DataAccess.Configuration.Settings
         /// <summary>
         /// Gets a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifer</param>
+        /// <param name="settingId">Setting identifer</param>
         /// <returns>Setting</returns>
-        public override DBSetting GetSettingByID(int SettingID)
+        public override DBSetting GetSettingById(int settingId)
         {
-            DBSetting setting = null;
+            DBSetting item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SettingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "SettingID", DbType.Int32, SettingID);
+            db.AddInParameter(dbCommand, "SettingID", DbType.Int32, settingId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    setting = GetSettingFromReader(dataReader);
+                    item = GetSettingFromReader(dataReader);
                 }
             }
 
-            return setting;
+            return item;
         }
 
         /// <summary>
         /// Deletes a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifer</param>
-        public override void DeleteSetting(int SettingID)
+        /// <param name="settingId">Setting identifer</param>
+        public override void DeleteSetting(int settingId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SettingDelete");
-            db.AddInParameter(dbCommand, "SettingID", DbType.Int32, SettingID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "SettingID", DbType.Int32, settingId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -140,48 +139,49 @@ namespace NopSolutions.NopCommerce.DataAccess.Configuration.Settings
         /// <summary>
         /// Adds a setting
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public override DBSetting AddSetting(string Name, string Value, string Description)
+        public override DBSetting AddSetting(string name, string value, string description)
         {
-            DBSetting setting = null;
+            DBSetting item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SettingInsert");
             db.AddOutParameter(dbCommand, "SettingID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Value", DbType.String, Value);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Value", DbType.String, value);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int SettingID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SettingID"));
-                setting = GetSettingByID(SettingID);
+                int settingId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SettingID"));
+                item = GetSettingById(settingId);
             }
-            return setting;
+            return item;
         }
 
         /// <summary>
         /// Updates a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="settingId">Setting identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public override DBSetting UpdateSetting(int SettingID, string Name, string Value, string Description)
+        public override DBSetting UpdateSetting(int settingId, string name, string value, 
+            string description)
         {
-            DBSetting setting = null;
+            DBSetting item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SettingUpdate");
-            db.AddInParameter(dbCommand, "SettingID", DbType.Int32, SettingID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Value", DbType.String, Value);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
+            db.AddInParameter(dbCommand, "SettingID", DbType.Int32, settingId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Value", DbType.String, value);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                setting = GetSettingByID(SettingID);
+                item = GetSettingById(settingId);
 
-            return setting;
+            return item;
         }
         #endregion
     }

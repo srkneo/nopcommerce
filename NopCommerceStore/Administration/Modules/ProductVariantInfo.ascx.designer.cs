@@ -68,13 +68,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Repeater rptrLanguageDivs;
         
         /// <summary>
-        /// pnlProductVariantID control.
+        /// pnlProductVariantId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlProductVariantID;
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pnlProductVariantId;
         
         /// <summary>
         /// lblCreatedOnTitle control.
@@ -86,13 +86,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblCreatedOnTitle;
         
         /// <summary>
-        /// lblProductVariantID control.
+        /// lblProductVariantId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductVariantID;
+        protected global::System.Web.UI.WebControls.Label lblProductVariantId;
         
         /// <summary>
         /// lblSKU control.

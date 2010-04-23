@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     News news = ctrlNewsInfo.SaveInfo();
-                    Response.Redirect("NewsDetails.aspx?NewsID=" + news.NewsID.ToString());
+                    Response.Redirect("NewsDetails.aspx?NewsID=" + news.NewsId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                NewsManager.DeleteNews(this.NewsID);
+                NewsManager.DeleteNews(this.NewsId);
                 Response.Redirect("News.aspx");
             }
             catch (Exception exc)
@@ -60,11 +60,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int NewsID
+        public int NewsId
         {
             get
             {
-                return CommonHelper.QueryStringInt("NewsID");
+                return CommonHelper.QueryStringInt("NewsId");
             }
         }
     }

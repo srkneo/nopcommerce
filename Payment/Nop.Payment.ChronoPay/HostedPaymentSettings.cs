@@ -35,7 +35,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.ChronoPay
             }
         }
 
-        public static string ProductID
+        public static string ProductId
         {
             get
             {

@@ -38,22 +38,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the gift card usage history entry identifier
         /// </summary>
-        public int GiftCardUsageHistoryID { get; set; }
+        public int GiftCardUsageHistoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the gift card identifier
         /// </summary>
-        public int GiftCardID { get; set; }
+        public int GiftCardId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the used value (amount)

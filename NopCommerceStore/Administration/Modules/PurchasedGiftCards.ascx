@@ -74,8 +74,6 @@
 <asp:GridView ID="gvGiftCards" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvGiftCards_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="GiftCardID" HeaderText="Gift Card ID"
-            Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.PurchasedGiftCards.CustomerColumn %>"
             ItemStyle-Width="15%">
             <ItemTemplate>
@@ -122,7 +120,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.PurchasedGiftCards.EditColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="GiftCardDetails.aspx?GiftCardID=<%#Eval("GiftCardID")%>" title="<%#GetLocaleResourceString("Admin.PurchasedGiftCards.EditColumn.Tooltip")%>">
+                <a href="GiftCardDetails.aspx?GiftCardID=<%#Eval("GiftCardId")%>" title="<%#GetLocaleResourceString("Admin.PurchasedGiftCards.EditColumn.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.PurchasedGiftCards.EditColumn")%>
                 </a>
             </ItemTemplate>

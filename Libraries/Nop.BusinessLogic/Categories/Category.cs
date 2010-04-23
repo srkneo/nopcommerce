@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets or sets the category identifier
         /// </summary>
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets or sets the template identifier
         /// </summary>
-        public int TemplateID { get; set; }
+        public int TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the meta keywords
@@ -83,12 +83,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets or sets the parent category identifier
         /// </summary>
-        public int ParentCategoryID { get; set; }
+        public int ParentCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the page size
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the date and time of instance creation
         /// </summary>
@@ -135,7 +135,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         {
             get
             {
-                return CategoryManager.GetCategoryByID(ParentCategoryID);
+                return CategoryManager.GetCategoryById(this.ParentCategoryId);
             }
         }
 
@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         {
             get
             {
-                return TemplateManager.GetCategoryTemplateByID(TemplateID);
+                return TemplateManager.GetCategoryTemplateById(this.TemplateId);
             }
         }
 
@@ -157,7 +157,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         {
             get
             {
-                return CategoryManager.GetProductCategoriesByCategoryID(CategoryID);
+                return CategoryManager.GetProductCategoriesByCategoryId(this.CategoryId);
             }
         }
 
@@ -168,7 +168,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         {
             get
             {
-                return PictureManager.GetPictureByID(PictureID);
+                return PictureManager.GetPictureById(this.PictureId);
             }
         }
 
@@ -179,7 +179,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         {
             get
             {
-                return DiscountManager.GetDiscountsByCategoryID(CategoryID);
+                return DiscountManager.GetDiscountsByCategoryId(this.CategoryId);
             }
         }
 
@@ -191,7 +191,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             get
             {
                 int totalFeaturedRecords = 0;
-                ProductCollection featuredProducts = ProductManager.GetAllProducts(CategoryID,
+                ProductCollection featuredProducts = ProductManager.GetAllProducts(this.CategoryId,
                     0, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
                 return featuredProducts;
             }

@@ -33,18 +33,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     public abstract partial class DBShippingRateComputationMethodProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">Shipping rate computation method identifier</param>
-        public abstract void DeleteShippingRateComputationMethod(int ShippingRateComputationMethodID);
+        /// <param name="shippingRateComputationMethodId">Shipping rate computation method identifier</param>
+        public abstract void DeleteShippingRateComputationMethod(int shippingRateComputationMethodId);
 
         /// <summary>
         /// Gets a shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">Shipping rate computation method identifier</param>
+        /// <param name="shippingRateComputationMethodId">Shipping rate computation method identifier</param>
         /// <returns>Shipping rate computation method</returns>
-        public abstract DBShippingRateComputationMethod GetShippingRateComputationMethodByID(int ShippingRateComputationMethodID);
+        public abstract DBShippingRateComputationMethod GetShippingRateComputationMethodById(int shippingRateComputationMethodId);
 
         /// <summary>
         /// Gets all shipping rate computation methods
@@ -56,29 +57,32 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Inserts a shipping rate computation method
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="IsActive">The value indicating whether the method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="isActive">The value indicating whether the method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping rate computation method</returns>
-        public abstract DBShippingRateComputationMethod InsertShippingRateComputationMethod(string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, bool IsActive, int DisplayOrder);
+        public abstract DBShippingRateComputationMethod InsertShippingRateComputationMethod(string name, 
+            string description, string configureTemplatePath, string className,
+            bool isActive, int displayOrder);
 
         /// <summary>
         /// Updates the shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="IsActive">The value indicating whether the method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="isActive">The value indicating whether the method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping rate computation method</returns>
-        public abstract DBShippingRateComputationMethod UpdateShippingRateComputationMethod(int ShippingRateComputationMethodID, string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, bool IsActive, int DisplayOrder);
+        public abstract DBShippingRateComputationMethod UpdateShippingRateComputationMethod(int shippingRateComputationMethodId, 
+            string name, string description, string configureTemplatePath, string className,
+            bool isActive, int displayOrder);
+
         #endregion
     }
 }

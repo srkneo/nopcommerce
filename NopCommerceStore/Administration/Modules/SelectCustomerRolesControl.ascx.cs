@@ -30,15 +30,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
     public partial class SelectCustomerRolesControl : BaseNopAdministrationUserControl
     {
-        protected List<int> selectedCustomerRoleIDs = new List<int>();
+        protected List<int> selectedCustomerRoleIds = new List<int>();
 
         public void BindData()
         {
             CustomerRoleCollection customerRoles = CustomerManager.GetAllCustomerRoles();
             foreach (CustomerRole customerRole in customerRoles)
             {
-                ListItem item = new ListItem(customerRole.Name, customerRole.CustomerRoleID.ToString());
-                if (this.selectedCustomerRoleIDs.Contains(customerRole.CustomerRoleID))
+                ListItem item = new ListItem(customerRole.Name, customerRole.CustomerRoleId.ToString());
+                if (this.selectedCustomerRoleIds.Contains(customerRole.CustomerRoleId))
                     item.Selected = true;
                 this.cblCustomerRoles.Items.Add(item);
             }
@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public List<int> SelectedCustomerRoleIDs
+        public List<int> SelectedCustomerRoleIds
         {
             get
             {
@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
             set
             {
-                this.selectedCustomerRoleIDs = value;
+                this.selectedCustomerRoleIds = value;
             }
         }
     }

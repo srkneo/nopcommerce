@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ForumGroup forumGroup = ctrlForumGroupInfo.SaveInfo();
-                    Response.Redirect("ForumGroupDetails.aspx?ForumGroupID=" + forumGroup.ForumGroupID.ToString());
+                    Response.Redirect("ForumGroupDetails.aspx?ForumGroupID=" + forumGroup.ForumGroupId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ForumManager.DeleteForumGroup(this.ForumGroupID);
+                ForumManager.DeleteForumGroup(this.ForumGroupId);
                 Response.Redirect("Forums.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ForumGroupID
+        public int ForumGroupId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ForumGroupID");
+                return CommonHelper.QueryStringInt("ForumGroupId");
             }
         }
     }

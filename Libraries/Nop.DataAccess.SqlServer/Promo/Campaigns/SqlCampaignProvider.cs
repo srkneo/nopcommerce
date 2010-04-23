@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Campaigns
     /// <summary>
     /// Campaign provider for SQL Server
     /// </summary>
-    public partial class SQLCampaignProvider : DBCampaignProvider
+    public partial class SqlCampaignProvider : DBCampaignProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,13 +36,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Campaigns
         #region Utilities
         private DBCampaign GetCampaignFromReader(IDataReader dataReader)
         {
-            DBCampaign campaign = new DBCampaign();
-            campaign.CampaignID = NopSqlDataHelper.GetInt(dataReader, "CampaignID");
-            campaign.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            campaign.Subject = NopSqlDataHelper.GetString(dataReader, "Subject");
-            campaign.Body = NopSqlDataHelper.GetString(dataReader, "Body");
-            campaign.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return campaign;
+            var item = new DBCampaign();
+            item.CampaignId = NopSqlDataHelper.GetInt(dataReader, "CampaignID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Subject = NopSqlDataHelper.GetString(dataReader, "Subject");
+            item.Body = NopSqlDataHelper.GetString(dataReader, "Body");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
         #endregion
 
@@ -85,36 +85,36 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Campaigns
         /// <summary>
         /// Gets a campaign by campaign identifier
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
+        /// <param name="campaignId">Campaign identifier</param>
         /// <returns>Message template</returns>
-        public override DBCampaign GetCampaignByID(int CampaignID)
+        public override DBCampaign GetCampaignById(int campaignId)
         {
-            DBCampaign campaign = null;
-            if (CampaignID == 0)
-                return campaign;
+            DBCampaign item = null;
+            if (campaignId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CampaignLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CampaignID", DbType.Int32, CampaignID);
+            db.AddInParameter(dbCommand, "CampaignID", DbType.Int32, campaignId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    campaign = GetCampaignFromReader(dataReader);
+                    item = GetCampaignFromReader(dataReader);
                 }
             }
-            return campaign;
+            return item;
         }
 
         /// <summary>
         /// Deletes a campaign
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
-        public override void DeleteCampaign(int CampaignID)
+        /// <param name="campaignId">Campaign identifier</param>
+        public override void DeleteCampaign(int campaignId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CampaignDelete");
-            db.AddInParameter(dbCommand, "CampaignID", DbType.Int32, CampaignID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "CampaignID", DbType.Int32, campaignId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -140,53 +140,54 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Campaigns
         /// <summary>
         /// Inserts a campaign
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="name">The name</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Campaign</returns>
-        public override DBCampaign InsertCampaign(string Name, string Subject, string Body, DateTime CreatedOn)
+        public override DBCampaign InsertCampaign(string name,
+            string subject, string body, DateTime createdOn)
         {
-            DBCampaign campaign = null;
+            DBCampaign item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CampaignInsert");
             db.AddOutParameter(dbCommand, "CampaignID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Subject", DbType.String, subject);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CampaignID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CampaignID"));
-                campaign = GetCampaignByID(CampaignID);
+                int campaignId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CampaignID"));
+                item = GetCampaignById(campaignId);
             }
-            return campaign;
+            return item;
         }
 
         /// <summary>
         /// Updates the campaign
         /// </summary>
-        /// <param name="CampaignID">The campaign identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="campaignId">The campaign identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Campaign</returns>
-        public override DBCampaign UpdateCampaign(int CampaignID,
-           string Name, string Subject, string Body, DateTime CreatedOn)
+        public override DBCampaign UpdateCampaign(int campaignId,
+            string name, string subject, string body, DateTime createdOn)
         {
-            DBCampaign campaign = null;
+            DBCampaign item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CampaignUpdate");
-            db.AddInParameter(dbCommand, "CampaignID", DbType.Int32, CampaignID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "CampaignID", DbType.Int32, campaignId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Subject", DbType.String, subject);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                campaign = GetCampaignByID(CampaignID);
+                item = GetCampaignById(campaignId);
 
-            return campaign;
+            return item;
         }
         #endregion
     }

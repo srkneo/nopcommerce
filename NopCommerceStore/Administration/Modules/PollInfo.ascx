@@ -64,7 +64,7 @@
             <div>
                 <hr />
             </div>
-            <asp:GridView ID="gvPollAnswers" runat="server" AutoGenerateColumns="false" DataKeyNames="PollAnswerID"
+            <asp:GridView ID="gvPollAnswers" runat="server" AutoGenerateColumns="false" DataKeyNames="PollAnswerId"
                 OnRowDeleting="gvPollAnswers_RowDeleting" OnRowDataBound="gvPollAnswers_RowDataBound"
                 OnRowCommand="gvPollAnswers_RowCommand" Width="100%">
                 <Columns>
@@ -74,7 +74,7 @@
                             <nopCommerce:SimpleTextBox runat="server" ID="txtName" Text='<%# Eval("Name") %>'
                                 ErrorMessage="<% $NopResources:Admin.PollInfo.PollAnswerColumn.ErrorMessage %>"
                                 CssClass="adminInput" ValidationGroup="UpdatePollAnswer"></nopCommerce:SimpleTextBox>
-                            <asp:HiddenField ID="hfPollAnswerID" runat="server" Value='<%# Eval("PollAnswerID") %>' />
+                            <asp:HiddenField ID="hfPollAnswerId" runat="server" Value='<%# Eval("PollAnswerId") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Count" HeaderText="<% $NopResources:Admin.PollInfo.CountColumn %>"

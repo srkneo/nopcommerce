@@ -36,7 +36,7 @@
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Product.ProductVariants.View %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <a href='ProductVariantDetails.aspx?ProductVariantID=<%#Eval("ProductVariantID")%>'
+                            <a href='ProductVariantDetails.aspx?ProductVariantID=<%#Eval("ProductVariantId")%>'
                                 title="<%#GetLocaleResourceString("Admin.Product.ProductVariants.View")%>">
                                 <%#GetLocaleResourceString("Admin.Product.ProductVariants.View")%></a>
                         </ItemTemplate>
@@ -47,7 +47,7 @@
     </tr>
 </table>
 <p>
-    <input type="button" onclick="location.href='ProductVariantAdd.aspx?ProductID=<%=ProductID%>'"
+    <input type="button" onclick="location.href='ProductVariantAdd.aspx?ProductID=<%=ProductId%>'"
         value="<%=GetLocaleResourceString("Admin.Product.ProductVariants.AddButton.Text")%>"
         id="btnAddNewVariant" class="adminButton" title="<%=GetLocaleResourceString("Admin.Product.ProductVariants.AddButton.Tooltip")%>" />
 </p>

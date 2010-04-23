@@ -9,11 +9,9 @@
         </div>
         <div class="recurring-payments-box">
             <asp:GridView ID="gvRecurringPayments" runat="server" AutoGenerateColumns="False"
-                Width="100%" DataKeyNames="RecurringPaymentID" OnRowDataBound="gvRecurringPayments_RowDataBound"
+                Width="100%" DataKeyNames="RecurringPaymentId" OnRowDataBound="gvRecurringPayments_RowDataBound"
                 OnRowCommand="gvRecurringPayments_RowCommand">
                 <Columns>
-                    <asp:BoundField DataField="RecurringPaymentID" HeaderText="Recurring Payment ID"
-                        Visible="False"></asp:BoundField>
                     <asp:TemplateField HeaderText="<% $NopResources:Order.RecurringPayments.StartDateColumn %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
@@ -48,7 +46,7 @@
                             <asp:Button runat="server" ID="btnCancelRecurringPayment" CommandName="CancelRecurringPayment"
                                 Text="<% $NopResources:Order.RecurringPayments.Cancel %>" ValidationGroup="CancelRecurringPaymentButton"
                                 CssClass="cancelrecurringorderbutton" />
-                            <asp:HiddenField ID="hfRecurringPaymentID" runat="server" Value='<%# Eval("RecurringPaymentID") %>' />
+                            <asp:HiddenField ID="hfRecurringPaymentId" runat="server" Value='<%# Eval("RecurringPaymentId") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -68,11 +66,11 @@
                                 <td style="vertical-align: middle;">
                                     <b>
                                         <%=GetLocaleResourceString("Account.OrderNumber")%>:
-                                        <%#Eval("OrderID")%></b>
+                                        <%#Eval("OrderId")%></b>
                                 </td>
                                 <td align="right">
                                     <asp:Button runat="server" ID="btnOrderDetails" OnCommand="btnOrderDetails_Click"
-                                        Text="<% $NopResources:Common.Details %>" ValidationGroup="OrderDetails" CommandArgument='<%# Eval("OrderID") %>'
+                                        Text="<% $NopResources:Common.Details %>" ValidationGroup="OrderDetails" CommandArgument='<%# Eval("OrderId") %>'
                                         CssClass="orderdetailsbutton" />
                                 </td>
                             </tr>
@@ -84,7 +82,7 @@
                                                 <td>
                                                     <div>
                                                         <%=GetLocaleResourceString("Order.OrderStatus")%>
-                                                        <%#OrderManager.GetOrderStatusName(Convert.ToInt32(Eval("OrderStatusID")))%></div>
+                                                        <%#OrderManager.GetOrderStatusName(Convert.ToInt32(Eval("OrderStatusId")))%></div>
                                                     <div>
                                                         <%=GetLocaleResourceString("Account.OrderDate")%>:
                                                         <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%></div>

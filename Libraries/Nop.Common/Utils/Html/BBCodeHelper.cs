@@ -50,68 +50,74 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html
         /// <summary>
         /// Formats the text
         /// </summary>
-        /// <param name="str">Text</param>
+        /// <param name="text">Text</param>
+        /// <param name="replaceBold">A value indicating whether to replace Bold</param>
+        /// <param name="replaceItalic">A value indicating whether to replace Italic</param>
+        /// <param name="replaceUnderline">A value indicating whether to replace Underline</param>
+        /// <param name="replaceUrl">A value indicating whether to replace URL</param>
+        /// <param name="replaceCode">A value indicating whether to replace Code</param>
+        /// <param name="replaceQuote">A value indicating whether to replace Quote</param>
         /// <returns>Formatted text</returns>
-        public static string FormatText(string Text, bool ReplaceBold, bool ReplaceItalic,
-            bool ReplaceUnderLine, bool ReplaceUrl, bool ReplaceCode, bool ReplaceQuote)
+        public static string FormatText(string text, bool replaceBold, bool replaceItalic,
+            bool replaceUnderline, bool replaceUrl, bool replaceCode, bool replaceQuote)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            if (ReplaceBold)
+            if (replaceBold)
             {
                 // format the bold tags: [b][/b]
                 // becomes: <strong></strong>
-                Text = regexBold.Replace(Text, "<strong>$1</strong>");
+                text = regexBold.Replace(text, "<strong>$1</strong>");
             }
 
-            if (ReplaceItalic)
+            if (replaceItalic)
             {
                 // format the italic tags: [i][/i]
                 // becomes: <em></em>
-                Text = regexItalic.Replace(Text, "<em>$1</em>");
+                text = regexItalic.Replace(text, "<em>$1</em>");
             }
 
-            if (ReplaceUnderLine)
+            if (replaceUnderline)
             {
                 // format the underline tags: [u][/u]
                 // becomes: <u></u>
-                Text = regexUnderLine.Replace(Text, "<u>$1</u>");
+                text = regexUnderLine.Replace(text, "<u>$1</u>");
             }
 
-            if (ReplaceUrl)
+            if (replaceUrl)
             {
                 // format the url tags: [url=http://www.nopCommerce.com]my site[/url]
                 // becomes: <a href="http://www.nopCommerce.com">my site</a>
-                Text = regexUrl1.Replace(Text, "<a href=\"$1\" rel=\"nofollow\">$2</a>");
+                text = regexUrl1.Replace(text, "<a href=\"$1\" rel=\"nofollow\">$2</a>");
 
                 // format the url tags: [url]http://www.nopCommerce.com[/url]
                 // becomes: <a href="http://www.nopCommerce.com">http://www.nopCommerce.com</a>
-                Text = regexUrl2.Replace(Text, "<a href=\"$1\" rel=\"nofollow\">$1</a>");
+                text = regexUrl2.Replace(text, "<a href=\"$1\" rel=\"nofollow\">$1</a>");
             }
 
-            if (ReplaceCode)
+            if (replaceCode)
             {
                 //Text = CodeFormatHelper.FormatText(Text);
-                Text = CodeFormatHelper.FormatTextSimple(Text);
+                text = CodeFormatHelper.FormatTextSimple(text);
             }
 
-            if(ReplaceQuote)
+            if(replaceQuote)
             {
-                Text = regexQuote.Replace(Text, "<b>$1 wrote:</b><p class=\"quote\">$2</p>");
+                text = regexQuote.Replace(text, "<b>$1 wrote:</b><p class=\"quote\">$2</p>");
             }
 
-            return Text;
+            return text;
         }
 
         /// <summary>
         /// Removes all quotes from string
         /// </summary>
-        /// <param name="s">Source string</param>
+        /// <param name="str">Source string</param>
         /// <returns>string</returns>
-        public static string RemoveQuotes(string s)
+        public static string RemoveQuotes(string str)
         {
-            return regexQuote.Replace(s, String.Empty);
+            return regexQuote.Replace(str, String.Empty);
         }
         #endregion
     }

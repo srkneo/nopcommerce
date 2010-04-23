@@ -68,7 +68,6 @@
 <asp:GridView ID="gvActivityLog" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvActivityLog_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="ActivityLogID" HeaderText="ActivityLog ID" Visible="False" />
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ActivityLog.ActivityLogTypeColumn %>" ItemStyle-Width="20%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("ActivityLogType").ToString())%>
@@ -94,7 +93,7 @@
             ItemStyle-Width="5%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <asp:Button ID="DeleteActivityLogButton" runat="server" CssClass="adminButton" CommandName="DeleteActivityLog"
-                    Text="<% $NopResources:Admin.ActivityLog.DeleteButton.Text %>" CommandArgument='<%#Eval("ActivityLogID")%>'
+                    Text="<% $NopResources:Admin.ActivityLog.DeleteButton.Text %>" CommandArgument='<%#Eval("ActivityLogId")%>'
                     OnCommand="DeleteActivityLogButton_OnCommand" CausesValidation="false" ToolTip="<% $NopResources:Admin.ActivityLog.DeleteButton.Tooltip %>" />
             </ItemTemplate>
         </asp:TemplateField>

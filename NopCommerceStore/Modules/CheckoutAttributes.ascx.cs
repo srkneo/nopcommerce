@@ -107,14 +107,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                     divAttribute.Controls.Add(attributeTitle);
 
-                    string controlID = attribute.CheckoutAttributeID.ToString();
+                    string controlId = attribute.CheckoutAttributeId.ToString();
                     switch (attribute.AttributeControlType)
                     {
                         case AttributeControlTypeEnum.DropdownList:
                             {
                                 //add control items
                                 var ddlAttributes = new DropDownList();
-                                ddlAttributes.ID = controlID;
+                                ddlAttributes.ID = controlId;
                                 if (!attribute.IsRequired)
                                 {
                                     ddlAttributes.Items.Add(new ListItem("---", "0"));
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         if (priceAdjustmentBase > decimal.Zero)
                                             caValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment));
                                     }
-                                    var caValueItem = new ListItem(caValueName, caValue.CheckoutAttributeValueID.ToString());
+                                    var caValueItem = new ListItem(caValueName, caValue.CheckoutAttributeValueId.ToString());
                                     if (!preSelectedSet && caValue.IsPreSelected)
                                     {
                                         caValueItem.Selected = caValue.IsPreSelected;
@@ -158,7 +158,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         {
                                             foreach (ListItem item in ddlAttributes.Items)
                                             {
-                                                if (caValue.CheckoutAttributeValueID == Convert.ToInt32(item.Value))
+                                                if (caValue.CheckoutAttributeValueId == Convert.ToInt32(item.Value))
                                                 {
                                                     item.Selected = true;
                                                 }
@@ -172,7 +172,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         case AttributeControlTypeEnum.RadioList:
                             {
                                 var rblAttributes = new RadioButtonList();
-                                rblAttributes.ID = controlID;
+                                rblAttributes.ID = controlId;
                                 var caValues = attribute.CheckoutAttributeValues;
 
                                 bool preSelectedSet = false;
@@ -186,7 +186,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         if (priceAdjustmentBase > decimal.Zero)
                                             caValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment));
                                     }
-                                    var caValueItem = new ListItem(Server.HtmlEncode(caValueName), caValue.CheckoutAttributeValueID.ToString());
+                                    var caValueItem = new ListItem(Server.HtmlEncode(caValueName), caValue.CheckoutAttributeValueId.ToString());
                                     if (!preSelectedSet && caValue.IsPreSelected)
                                     {
                                         caValueItem.Selected = caValue.IsPreSelected;
@@ -212,7 +212,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         {
                                             foreach (ListItem item in rblAttributes.Items)
                                             {
-                                                if (caValue.CheckoutAttributeValueID == Convert.ToInt32(item.Value))
+                                                if (caValue.CheckoutAttributeValueId == Convert.ToInt32(item.Value))
                                                 {
                                                     item.Selected = true;
                                                 }
@@ -226,7 +226,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         case AttributeControlTypeEnum.Checkboxes:
                             {
                                 var cblAttributes = new CheckBoxList();
-                                cblAttributes.ID = controlID;
+                                cblAttributes.ID = controlId;
                                 var caValues = attribute.CheckoutAttributeValues;
                                 foreach (var caValue in caValues)
                                 {
@@ -238,7 +238,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         if (priceAdjustmentBase > decimal.Zero)
                                             caValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment));
                                     }
-                                    var caValueItem = new ListItem(Server.HtmlEncode(caValueName), caValue.CheckoutAttributeValueID.ToString());
+                                    var caValueItem = new ListItem(Server.HtmlEncode(caValueName), caValue.CheckoutAttributeValueId.ToString());
                                     caValueItem.Selected = caValue.IsPreSelected;
                                     cblAttributes.Items.Add(caValueItem);
                                 }
@@ -260,7 +260,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         {
                                             foreach (ListItem item in cblAttributes.Items)
                                             {
-                                                if (caValue.CheckoutAttributeValueID == Convert.ToInt32(item.Value))
+                                                if (caValue.CheckoutAttributeValueId == Convert.ToInt32(item.Value))
                                                 {
                                                     item.Selected = true;
                                                 }
@@ -274,7 +274,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         case AttributeControlTypeEnum.TextBox:
                             {
                                 var txtAttribute = new TextBox();
-                                txtAttribute.ID = controlID;
+                                txtAttribute.ID = controlId;
 
                                 //set already selected attributes
                                 if (NopContext.Current.User != null)
@@ -286,7 +286,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         txtAttribute.Text = string.Empty;
 
                                         //select new values
-                                        var enteredText = CheckoutAttributeHelper.ParseValues(selectedCheckoutAttributes,attribute.CheckoutAttributeID);
+                                        var enteredText = CheckoutAttributeHelper.ParseValues(selectedCheckoutAttributes,attribute.CheckoutAttributeId);
                                         if (enteredText.Count > 0)
                                         {
                                             txtAttribute.Text = enteredText[0];
@@ -317,23 +317,23 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 foreach (var attribute in checkoutAttributes)
                 {
-                    string controlID = attribute.CheckoutAttributeID.ToString();
+                    string controlId = attribute.CheckoutAttributeId.ToString();
                     switch (attribute.AttributeControlType)
                     {
                         case AttributeControlTypeEnum.DropdownList:
                             {
-                                var ddlAttributes = phAttributes.FindControl(controlID) as DropDownList;
+                                var ddlAttributes = phAttributes.FindControl(controlId) as DropDownList;
                                 if (ddlAttributes != null)
                                 {
-                                    int selectedAttributeID = 0;
+                                    int selectedAttributeId = 0;
                                     if (!String.IsNullOrEmpty(ddlAttributes.SelectedValue))
                                     {
-                                        selectedAttributeID = int.Parse(ddlAttributes.SelectedValue);
+                                        selectedAttributeId = int.Parse(ddlAttributes.SelectedValue);
                                     }
-                                    if (selectedAttributeID > 0)
+                                    if (selectedAttributeId > 0)
                                     {
                                         selectedAttributes = CheckoutAttributeHelper.AddCheckoutAttribute(selectedAttributes,
-                                            attribute, selectedAttributeID.ToString());
+                                            attribute, selectedAttributeId.ToString());
                                     }
                                 }
                             }
@@ -341,40 +341,40 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         case AttributeControlTypeEnum.RadioList:
                             {
                                 var rblAttributes =
-                                    phAttributes.FindControl(controlID) as RadioButtonList;
+                                    phAttributes.FindControl(controlId) as RadioButtonList;
                                 if (rblAttributes != null)
                                 {
-                                    int selectedAttributeID = 0;
+                                    int selectedAttributeId = 0;
                                     if (!String.IsNullOrEmpty(rblAttributes.SelectedValue))
                                     {
-                                        selectedAttributeID = int.Parse(rblAttributes.SelectedValue);
+                                        selectedAttributeId = int.Parse(rblAttributes.SelectedValue);
                                     }
-                                    if (selectedAttributeID > 0)
+                                    if (selectedAttributeId > 0)
                                     {
                                         selectedAttributes = CheckoutAttributeHelper.AddCheckoutAttribute(selectedAttributes,
-                                            attribute, selectedAttributeID.ToString());
+                                            attribute, selectedAttributeId.ToString());
                                     }
                                 }
                             }
                             break;
                         case AttributeControlTypeEnum.Checkboxes:
                             {
-                                var cblAttributes = phAttributes.FindControl(controlID) as CheckBoxList;
+                                var cblAttributes = phAttributes.FindControl(controlId) as CheckBoxList;
                                 if (cblAttributes != null)
                                 {
                                     foreach (ListItem item in cblAttributes.Items)
                                     {
                                         if (item.Selected)
                                         {
-                                            int selectedAttributeID = 0;
+                                            int selectedAttributeId = 0;
                                             if (!String.IsNullOrEmpty(item.Value))
                                             {
-                                                selectedAttributeID = int.Parse(item.Value);
+                                                selectedAttributeId = int.Parse(item.Value);
                                             }
-                                            if (selectedAttributeID > 0)
+                                            if (selectedAttributeId > 0)
                                             {
                                                 selectedAttributes = CheckoutAttributeHelper.AddCheckoutAttribute(selectedAttributes, 
-                                                    attribute, selectedAttributeID.ToString());
+                                                    attribute, selectedAttributeId.ToString());
                                             }
                                         }
                                     }
@@ -383,7 +383,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             break;
                         case AttributeControlTypeEnum.TextBox:
                             {
-                                var txtAttribute = phAttributes.FindControl(controlID) as TextBox;
+                                var txtAttribute = phAttributes.FindControl(controlId) as TextBox;
                                 if (txtAttribute != null)
                                 {
                                     string enteredText = txtAttribute.Text.Trim();

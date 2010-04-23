@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneris
         /// <summary>
         /// Gets or sets the hpp ID
         /// </summary>
-        public static string HppID
+        public static string HppId
         {
             get
             {

@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Forums
         /// <summary>
         /// Gets or sets the forum post identifier
         /// </summary>
-        public int ForumPostID { get; set; }
+        public int ForumPostId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum topic identifier
         /// </summary>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the user identifier
         /// </summary>
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the text

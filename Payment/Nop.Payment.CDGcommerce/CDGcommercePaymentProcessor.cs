@@ -48,9 +48,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CDGcommerce
 		/// </summary>
 		/// <param name="paymentInfo">Payment info required for an order processing</param>
 		/// <param name="customer">Customer</param>
-		/// <param name="OrderGuid">Unique order identifier</param>
+		/// <param name="orderGuid">Unique order identifier</param>
 		/// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref
 		                           ProcessPaymentResult processPaymentResult)
 		{
 			InitSettings();
@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CDGcommerce
 			form.Add("ccnum", paymentInfo.CreditCardNumber);
 			form.Add("ccmo", paymentInfo.CreditCardExpireMonth.ToString("D2"));
 			form.Add("ccyr", paymentInfo.CreditCardExpireYear.ToString());
-			form.Add("CVV2", paymentInfo.CreditCardCVV2);
+			form.Add("CVV2", paymentInfo.CreditCardCvv2);
 
 			form.Add("FNAME", paymentInfo.BillingAddress.FirstName);
 			form.Add("LNAME", paymentInfo.BillingAddress.LastName);
@@ -83,8 +83,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CDGcommerce
 				form.Add("BSTATE", paymentInfo.BillingAddress.StateProvince.Name);
 			form.Add("BZIP1", paymentInfo.BillingAddress.ZipPostalCode);
 			if (paymentInfo.BillingAddress.Country != null)
-				form.Add("BCOUNTRY", paymentInfo.BillingAddress.Country.TwoLetterISOCode);
-			form.Add("invoice_num", OrderGuid.ToString());
+				form.Add("BCOUNTRY", paymentInfo.BillingAddress.Country.TwoLetterIsoCode);
+			form.Add("invoice_num", orderGuid.ToString());
 			form.Add("customer_ip", HttpContext.Current.Request.UserHostAddress);
 			form.Add("BCUST_EMAIL", paymentInfo.BillingAddress.Email);
 
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CDGcommerce
 					case "\"APPROVED\"":
 						processPaymentResult.AuthorizationTransactionCode = responseFields[1];
 						processPaymentResult.AVSResult = "AVRResponse: " + responseFields[3] + " Max Score:" + responseFields[5];
-						processPaymentResult.AuthorizationTransactionID = responseFields[2]; //responseFields[38];
+						processPaymentResult.AuthorizationTransactionId = responseFields[2]; //responseFields[38];
 						processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
 						break;
 					case "\"DECLINED\"":
@@ -194,9 +194,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.CDGcommerce
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

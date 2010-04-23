@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
     /// <summary>
     /// Currency provider for SQL Server
     /// </summary>
-    public partial class SQLCurrencyProvider : DBCurrencyProvider
+    public partial class SqlCurrencyProvider : DBCurrencyProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,18 +36,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         #region Utilities
         private DBCurrency GetCurrencyFromReader(IDataReader dataReader)
         {
-            DBCurrency currency = new DBCurrency();
-            currency.CurrencyID = NopSqlDataHelper.GetInt(dataReader, "CurrencyID");
-            currency.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            currency.CurrencyCode = NopSqlDataHelper.GetString(dataReader, "CurrencyCode");
-            currency.Rate = NopSqlDataHelper.GetDecimal(dataReader, "Rate");
-            currency.DisplayLocale = NopSqlDataHelper.GetString(dataReader, "DisplayLocale");
-            currency.CustomFormatting = NopSqlDataHelper.GetString(dataReader, "CustomFormatting");
-            currency.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
-            currency.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            currency.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            currency.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return currency;
+            var item = new DBCurrency();
+            item.CurrencyId = NopSqlDataHelper.GetInt(dataReader, "CurrencyID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.CurrencyCode = NopSqlDataHelper.GetString(dataReader, "CurrencyCode");
+            item.Rate = NopSqlDataHelper.GetDecimal(dataReader, "Rate");
+            item.DisplayLocale = NopSqlDataHelper.GetString(dataReader, "DisplayLocale");
+            item.CustomFormatting = NopSqlDataHelper.GetString(dataReader, "CustomFormatting");
+            item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
         #endregion
 
@@ -90,36 +90,36 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Deletes currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
-        public override void DeleteCurrency(int CurrencyID)
+        /// <param name="currencyId">Currency identifier</param>
+        public override void DeleteCurrency(int currencyId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CurrencyDelete");
-            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, CurrencyID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, currencyId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
+        /// <param name="currencyId">Currency identifier</param>
         /// <returns>Currency</returns>
-        public override DBCurrency GetCurrencyByID(int CurrencyID)
+        public override DBCurrency GetCurrencyById(int currencyId)
         {
-            DBCurrency currency = null;
-            if (CurrencyID == 0)
-                return currency;
+            DBCurrency item = null;
+            if (currencyId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CurrencyLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, CurrencyID);
+            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, currencyId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    currency = GetCurrencyFromReader(dataReader);
+                    item = GetCurrencyFromReader(dataReader);
                 }
             }
-            return currency;
+            return item;
         }
 
         /// <summary>
@@ -147,74 +147,78 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Inserts a currency
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="CurrencyCode">The currency code</param>
-        /// <param name="Rate">The rate</param>
-        /// <param name="DisplayLocale">The display locale</param>
-        /// <param name="CustomFormatting">The custom formatting</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <param name="rate">The rate</param>
+        /// <param name="displayLocale">The display locale</param>
+        /// <param name="customFormatting">The custom formatting</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A currency</returns>
-        public override DBCurrency InsertCurrency(string Name, string CurrencyCode, decimal Rate,
-           string DisplayLocale, string CustomFormatting, bool Published, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBCurrency InsertCurrency(string name,
+            string currencyCode, decimal rate, string displayLocale,
+            string customFormatting, bool published, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBCurrency currency = null;
+            DBCurrency item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CurrencyInsert");
             db.AddOutParameter(dbCommand, "CurrencyID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "CurrencyCode", DbType.String, CurrencyCode);
-            db.AddInParameter(dbCommand, "Rate", DbType.Decimal, Rate);
-            db.AddInParameter(dbCommand, "DisplayLocale", DbType.String, DisplayLocale);
-            db.AddInParameter(dbCommand, "CustomFormatting", DbType.String, CustomFormatting);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "CurrencyCode", DbType.String, currencyCode);
+            db.AddInParameter(dbCommand, "Rate", DbType.Decimal, rate);
+            db.AddInParameter(dbCommand, "DisplayLocale", DbType.String, displayLocale);
+            db.AddInParameter(dbCommand, "CustomFormatting", DbType.String, customFormatting);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CurrencyID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CurrencyID"));
-                currency = GetCurrencyByID(CurrencyID);
+                int currencyId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CurrencyID"));
+                item = GetCurrencyById(currencyId);
             }
-            return currency;
+            return item;
         }
 
         /// <summary>
         /// Updates the currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="CurrencyCode">The currency code</param>
-        /// <param name="Rate">The rate</param>
-        /// <param name="DisplayLocale">The display locale</param>
-        /// <param name="CustomFormatting">The custom formatting</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="currencyId">Currency identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <param name="rate">The rate</param>
+        /// <param name="displayLocale">The display locale</param>
+        /// <param name="customFormatting">The custom formatting</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A currency</returns>
-        public override DBCurrency UpdateCurrency(int CurrencyID, string Name, string CurrencyCode, decimal Rate,
-           string DisplayLocale, string CustomFormatting, bool Published, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBCurrency UpdateCurrency(int currencyId, string name,
+            string currencyCode, decimal rate, string displayLocale,
+            string customFormatting, bool published, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBCurrency currency = null;
+            DBCurrency item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CurrencyUpdate");
-            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, CurrencyID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "CurrencyCode", DbType.String, CurrencyCode);
-            db.AddInParameter(dbCommand, "Rate", DbType.Decimal, Rate);
-            db.AddInParameter(dbCommand, "DisplayLocale", DbType.String, DisplayLocale);
-            db.AddInParameter(dbCommand, "CustomFormatting", DbType.String, CustomFormatting);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, currencyId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "CurrencyCode", DbType.String, currencyCode);
+            db.AddInParameter(dbCommand, "Rate", DbType.Decimal, rate);
+            db.AddInParameter(dbCommand, "DisplayLocale", DbType.String, displayLocale);
+            db.AddInParameter(dbCommand, "CustomFormatting", DbType.String, customFormatting);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                currency = GetCurrencyByID(CurrencyID);
+                item = GetCurrencyById(currencyId);
 
-            return currency;
+            return item;
         }
         #endregion
     }

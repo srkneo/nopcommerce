@@ -22,7 +22,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         if (!subscription.IsActive)
                         {
-                            MessageManager.SendNewsLetterSubscriptionActivationMessage(subscription.NewsLetterSubscriptionID, NopContext.Current.WorkingLanguage.LanguageID);
+                            MessageManager.SendNewsLetterSubscriptionActivationMessage(subscription.NewsLetterSubscriptionId, NopContext.Current.WorkingLanguage.LanguageId);
                         }
                         lblResult.Text = GetLocaleResourceString("NewsLetterSubscriptionBox.SubscriptionCreated");
                     }
@@ -30,7 +30,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         if (subscription.IsActive)
                         {
-                            MessageManager.SendNewsLetterSubscriptionDeactivationMessage(subscription.NewsLetterSubscriptionID, NopContext.Current.WorkingLanguage.LanguageID);
+                            MessageManager.SendNewsLetterSubscriptionDeactivationMessage(subscription.NewsLetterSubscriptionId, NopContext.Current.WorkingLanguage.LanguageId);
                         }
                         lblResult.Text = GetLocaleResourceString("NewsLetterSubscriptionBox.SubscriptionDeactivated");
                     }
@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 else if(rbSubscribe.Checked)
                 {
                     subscription = MessageManager.InsertNewsLetterSubscription(txtEmail.Text, false);
-                    MessageManager.SendNewsLetterSubscriptionActivationMessage(subscription.NewsLetterSubscriptionID, NopContext.Current.WorkingLanguage.LanguageID);
+                    MessageManager.SendNewsLetterSubscriptionActivationMessage(subscription.NewsLetterSubscriptionId, NopContext.Current.WorkingLanguage.LanguageId);
                     lblResult.Text = GetLocaleResourceString("NewsLetterSubscriptionBox.SubscriptionCreated");
                 }
                 else

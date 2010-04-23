@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the product attribute identifier
         /// </summary>
-        public int ProductAttributeID { get; set; }
+        public int ProductAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

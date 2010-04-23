@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Payment.Worldpay
             paymentInfo.CreditCardNumber = string.Empty;
             paymentInfo.CreditCardExpireYear = 0;
             paymentInfo.CreditCardExpireMonth = 0;
-            paymentInfo.CreditCardCVV2 = string.Empty;
+            paymentInfo.CreditCardCvv2 = string.Empty;
             return paymentInfo;
         }
 

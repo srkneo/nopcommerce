@@ -37,10 +37,29 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
     /// </summary>
     public static class WorldpayConstants
     {
+        /// <summary>
+        /// Setting
+        /// </summary>
         public const string SETTING_CREDITCARD_CODE_PROPERTY = "PaymentMethod.Worldpay.CardPayment";
+
+        /// <summary>
+        /// Setting
+        /// </summary>
         public const string SETTING_USE_SANDBOX = "PaymentMethod.Worldpay.UseSandbox";
+
+        /// <summary>
+        /// Setting
+        /// </summary>
         public const string SETTING_INSTANCEID = "PaymentMethod.Worldpay.InstanceID";
+
+        /// <summary>
+        /// Setting
+        /// </summary>
         public const string SETTING_CALLBACK_PASSWORD = "PaymentMethod.Worldpay.CallbackPassword";
+
+        /// <summary>
+        /// Setting
+        /// </summary>
         public const string SETTING_WorldPayCSSName = "PaymentMethod.Worldpay.WorldPayCSSName";
     }
 }

@@ -72,35 +72,33 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected string GetCategories(int ForParentEntityID)
+        protected string GetCategories(int forParentEntityId)
         {
             StringBuilder tmpS = new StringBuilder(4096);
 
-            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(ForParentEntityID);
+            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(forParentEntityId);
 
             for (int i = 0; i < categoryCollection.Count; i++)
             {
                 Category category = categoryCollection[i];
-                string categoryDetailsURL = CommonHelper.GetStoreAdminLocation() + "CategoryDetails.aspx?CategoryID=" + category.CategoryID.ToString();
+                string categoryDetailsURL = CommonHelper.GetStoreAdminLocation() + "CategoryDetails.aspx?CategoryID=" + category.CategoryId.ToString();
                 tmpS.Append("<siteMapNode  title=\"" + XmlHelper.XmlEncodeAttribute(category.Name)
                     + "\" url=\"" + categoryDetailsURL + "\">");
-                if (CategoryManager.GetAllCategories(category.CategoryID).Count > 0)
-                    tmpS.Append(GetCategories(category.CategoryID));
+                if (CategoryManager.GetAllCategories(category.CategoryId).Count > 0)
+                    tmpS.Append(GetCategories(category.CategoryId));
 
-                string categoryAddURL = CommonHelper.GetStoreAdminLocation() + "CategoryAdd.aspx?ParentCategoryID=" + category.CategoryID.ToString();
+                string categoryAddURL = CommonHelper.GetStoreAdminLocation() + "CategoryAdd.aspx?ParentCategoryID=" + category.CategoryId.ToString();
                 tmpS.Append("<siteMapNode  title=\"" + GetLocaleResourceString("Admin.Categories.AddNewCategory") + "\" url=\"" + categoryAddURL + "\"></siteMapNode>");
 
                 bool hideProducts = SettingManager.GetSettingValueBoolean("Display.HideProductsOnCategoriesHomePage");
                 if (!hideProducts)
                 {
                     tmpS.Append("<siteMapNode  title=\"" + GetLocaleResourceString("Admin.Categories.Products") + "\" url=\"" + string.Empty + "\">");
-                    //string productAddURL = CommonHelper.GetStoreAdminLocation() + "ProductAdd.aspx?CategoryID=" + category.CategoryID.ToString();
-                    //tmpS.Append("<siteMapNode  title=\"Add new product:\" url=\"" + productAddURL + "\"></siteMapNode>");
                     int totalRecords = 0;
-                    ProductCollection products = ProductManager.GetAllProducts(category.CategoryID, 0, null, int.MaxValue, 0, out totalRecords);
+                    ProductCollection products = ProductManager.GetAllProducts(category.CategoryId, 0, null, int.MaxValue, 0, out totalRecords);
                     foreach (Product product in products)
                     {
-                        string productDetailsURL = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + product.ProductID.ToString();
+                        string productDetailsURL = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + product.ProductId.ToString();
                         tmpS.Append("<siteMapNode  title=\"" + XmlHelper.XmlEncodeAttribute(product.Name) + "\" url=\"" + productDetailsURL + "\">");
                         tmpS.Append("</siteMapNode>");
                     }
@@ -119,8 +117,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     string fileName = string.Format("categories_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
-                    string xml = ExportManager.ExportCategoriesToXML();
-                    CommonHelper.WriteResponseXML(xml, fileName);
+                    string xml = ExportManager.ExportCategoriesToXml();
+                    CommonHelper.WriteResponseXml(xml, fileName);
                 }
                 catch (Exception exc)
                 {

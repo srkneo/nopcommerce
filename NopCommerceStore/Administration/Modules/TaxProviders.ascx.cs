@@ -58,10 +58,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 foreach (GridViewRow row in gvTaxProviders.Rows)
                 {
                     RadioButton rdbIsDefault = (RadioButton)row.FindControl("rdbIsDefault");
-                    HiddenField hfTaxProviderID = (HiddenField)row.FindControl("hfTaxProviderID");
-                    int taxProviderID = int.Parse(hfTaxProviderID.Value);
+                    HiddenField hfTaxProviderId = (HiddenField)row.FindControl("hfTaxProviderId");
+                    int taxProviderId = int.Parse(hfTaxProviderId.Value);
                     if (rdbIsDefault.Checked)
-                        TaxManager.ActiveTaxProvider = TaxProviderManager.GetTaxProviderByID(taxProviderID);
+                        TaxManager.ActiveTaxProvider = TaxProviderManager.GetTaxProviderById(taxProviderId);
                 }
                 BindGrid();
             }

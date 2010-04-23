@@ -43,17 +43,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets or sets the localized category identifier
         /// </summary>
-        public int CategoryLocalizedID { get; set; }
+        public int CategoryLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the category identifier
         /// </summary>
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

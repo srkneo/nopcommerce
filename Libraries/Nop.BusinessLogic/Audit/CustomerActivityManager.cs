@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                 return null;
 
             var item = new ActivityLogType();
-            item.ActivityLogTypeID = dbItem.ActivityLogTypeID;
+            item.ActivityLogTypeId = dbItem.ActivityLogTypeId;
             item.SystemKeyword = dbItem.SystemKeyword;
             item.Name = dbItem.Name;
             item.Enabled = dbItem.Enabled;
@@ -85,9 +85,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                 return null;
 
             var item = new ActivityLog();
-            item.ActivityLogID = dbItem.ActivityLogID;
-            item.ActivityLogTypeID = dbItem.ActivityLogTypeID;
-            item.CustomerID = dbItem.CustomerID;
+            item.ActivityLogId = dbItem.ActivityLogId;
+            item.ActivityLogTypeId = dbItem.ActivityLogTypeId;
+            item.CustomerId = dbItem.CustomerId;
             item.Comment = dbItem.Comment;
             item.CreatedOn = dbItem.CreatedOn;
 
@@ -99,32 +99,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Inserts an activity log type item
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Name">The display name</param>
-        /// <param name="Enabled">Value indicating whether the activity log type is enabled</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="name">The display name</param>
+        /// <param name="enabled">Value indicating whether the activity log type is enabled</param>
         /// <returns>Activity log type item</returns>
-        public static ActivityLogType InsertActivityType(string SystemKeyword, string Name, bool Enabled)
+        public static ActivityLogType InsertActivityType(string systemKeyword,
+            string name, bool enabled)
         {
-            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.InsertActivityType(SystemKeyword, Name, Enabled);
-            var activityType = DBMapping(dbItem);
-
-            if (NopCache.IsEnabled)
-                NopCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
-            
-            return activityType;
-        }
-        
-        /// <summary>
-        /// Updates an activity log type item
-        /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Name">The display name</param>
-        /// <param name="Enabled">Value indicating whether the activity log type is enabled</param>
-        /// <returns>Activity log type item</returns>
-        public static ActivityLogType UpdateActivityType(int ActivityLogTypeID, string SystemKeyword, string Name, bool Enabled)
-        {
-            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.UpdateActivityType(ActivityLogTypeID, SystemKeyword, Name, Enabled);
+            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.InsertActivityType(systemKeyword, name, enabled);
             var activityType = DBMapping(dbItem);
 
             if (NopCache.IsEnabled)
@@ -136,36 +118,50 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Updates an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="Enabled">Value indicating whether the activity log type is enabled</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="name">The display name</param>
+        /// <param name="enabled">Value indicating whether the activity log type is enabled</param>
         /// <returns>Activity log type item</returns>
-        public static ActivityLogType UpdateActivityType(int ActivityLogTypeID, bool Enabled)
+        public static ActivityLogType UpdateActivityType(int activityLogTypeId,
+            string systemKeyword, string name, bool enabled)
         {
-            var activityType = GetActivityTypeByID(ActivityLogTypeID);
-            if (activityType == null || activityType.Enabled == Enabled)
+            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.UpdateActivityType(activityLogTypeId, 
+                systemKeyword, name, enabled);
+            var activityType = DBMapping(dbItem);
+
+            if (NopCache.IsEnabled)
+                NopCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
+            
+            return activityType;
+        }
+
+        /// <summary>
+        /// Updates an activity log type item
+        /// </summary>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="enabled">Value indicating whether the activity log type is enabled</param>
+        /// <returns>Activity log type item</returns>
+        public static ActivityLogType UpdateActivityType(int activityLogTypeId, bool enabled)
+        {
+            var activityType = GetActivityTypeById(activityLogTypeId);
+            if (activityType == null || activityType.Enabled == enabled)
                 return activityType;
 
-            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.UpdateActivityType(
-                activityType.ActivityLogTypeID, activityType.SystemKeyword,
-                activityType.Name, Enabled);
-            activityType = DBMapping(dbItem);
-
-            if (NopCache.IsEnabled)
-                NopCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
-
-            return activityType;
+            return UpdateActivityType(activityType.ActivityLogTypeId, 
+                activityType.SystemKeyword, activityType.Name, enabled);
         }
         
         /// <summary>
         /// Deletes an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        public static void DeleteActivityType(int ActivityLogTypeID)
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        public static void DeleteActivityType(int activityLogTypeId)
         {
             if (NopCache.IsEnabled)
                 NopCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
             
-            DBProviderManager<DBCustomerActivityProvider>.Provider.DeleteActivityType(ActivityLogTypeID);
+            DBProviderManager<DBCustomerActivityProvider>.Provider.DeleteActivityType(activityLogTypeId);
         }
         
         /// <summary>
@@ -193,14 +189,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Gets an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
         /// <returns>Activity log type item</returns>
-        public static ActivityLogType GetActivityTypeByID(int ActivityLogTypeID)
+        public static ActivityLogType GetActivityTypeById(int activityLogTypeId)
         {
-            if (ActivityLogTypeID == 0)
+            if (activityLogTypeId == 0)
                 return null;
 
-            string key = string.Format(ACTIVITYTYPE_BY_ID_KEY, ActivityLogTypeID);
+            string key = string.Format(ACTIVITYTYPE_BY_ID_KEY, activityLogTypeId);
             if (NopCache.IsEnabled)
             {
                 object cache = NopCache.Get(key);
@@ -208,7 +204,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                     return (ActivityLogType)cache;
             }
 
-            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.GetActivityTypeByID(ActivityLogTypeID);
+            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.GetActivityTypeById(activityLogTypeId);
             var activityLogType = DBMapping(dbItem);
 
             if (NopCache.IsEnabled)
@@ -220,36 +216,40 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Inserts an activity log item
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Comment">The activity comment</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="comment">The activity comment</param>
         /// <returns>Activity log item</returns>
-        public static ActivityLog InsertActivity(string SystemKeyword, string Comment)
+        public static ActivityLog InsertActivity(string systemKeyword, string comment)
         {
-            return InsertActivity(SystemKeyword, Comment, new object[0]);
+            return InsertActivity(systemKeyword, comment, new object[0]);
         }
 
         /// <summary>
         /// Inserts an activity log item
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Comment">The activity comment</param>
-        /// <param name="CommentParams">The activity comment parameters for string.Format() function.</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="comment">The activity comment</param>
+        /// <param name="commentParams">The activity comment parameters for string.Format() function.</param>
         /// <returns>Activity log item</returns>
-        public static ActivityLog InsertActivity(string SystemKeyword, string Comment, params object[] CommentParams)
+        public static ActivityLog InsertActivity(string systemKeyword, 
+            string comment, params object[] commentParams)
         {
-            if (NopContext.Current == null || NopContext.Current.User == null || NopContext.Current.User.IsGuest)
+            if (NopContext.Current == null || 
+                NopContext.Current.User == null ||
+                NopContext.Current.User.IsGuest)
                 return null;
 
             var activityTypes = GetAllActivityTypes();
-            var activityType = activityTypes.FindBySystemKeyword(SystemKeyword);
+            var activityType = activityTypes.FindBySystemKeyword(systemKeyword);
             if (activityType == null || !activityType.Enabled)
                 return null;
 
-            int CustomerID = NopContext.Current.User.CustomerID;
-            DateTime CreatedOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-            Comment = string.Format(Comment, CommentParams);
+            int customerId = NopContext.Current.User.CustomerId;
+            DateTime createdOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            comment = string.Format(comment, commentParams);
 
-            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.InsertActivity(activityType.ActivityLogTypeID, CustomerID, Comment, CreatedOn);
+            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.InsertActivity(activityType.ActivityLogTypeId, 
+                customerId, comment, createdOn);
             var activity = DBMapping(dbItem);
             return activity;
         }
@@ -257,15 +257,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Updates an activity log 
         /// </summary>
-        /// <param name="ActivityLogID">Activity log identifier</param>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Comment">The activity comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="activityLogId">Activity log identifier</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="comment">The activity comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Activity log item</returns>
-        public static ActivityLog UpdateActivity(int ActivityLogID, int ActivityLogTypeID, int CustomerID, string Comment, DateTime CreatedOn)
+        public static ActivityLog UpdateActivity(int activityLogId, int activityLogTypeId,
+            int customerId, string comment, DateTime createdOn)
         {
-            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.UpdateActivity(ActivityLogID, ActivityLogTypeID, CustomerID, Comment, CreatedOn);
+            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.UpdateActivity(activityLogId, 
+                activityLogTypeId, customerId, comment, createdOn);
             var activity = DBMapping(dbItem);
             return activity;
         }
@@ -273,40 +275,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Deletes an activity log item
         /// </summary>
-        /// <param name="ActivityLogID">Activity log type identifier</param>
-        public static void DeleteActivity(int ActivityLogID)
+        /// <param name="activityLogId">Activity log type identifier</param>
+        public static void DeleteActivity(int activityLogId)
         {
-            DBProviderManager<DBCustomerActivityProvider>.Provider.DeleteActivity(ActivityLogID);
+            DBProviderManager<DBCustomerActivityProvider>.Provider.DeleteActivity(activityLogId);
         }
-        
+
         /// <summary>
         /// Gets all activity log items
         /// </summary>
-        /// <param name="CreatedOnFrom">Log item creation from; null to load all customers</param>
-        /// <param name="CreatedOnTo">Log item creation to; null to load all customers</param>
-        /// <param name="Email">Customer Email</param>
-        /// <param name="Username">Customer username</param>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="createdOnFrom">Log item creation from; null to load all customers</param>
+        /// <param name="createdOnTo">Log item creation to; null to load all customers</param>
+        /// <param name="email">Customer Email</param>
+        /// <param name="username">Customer username</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Activity log collection</returns>
-        public static ActivityLogCollection GetAllActivities(DateTime? CreatedOnFrom, DateTime? CreatedOnTo,
-            string Email, string Username, int ActivityLogTypeID,
-            int PageSize, int PageIndex, out int TotalRecords)
+        public static ActivityLogCollection GetAllActivities(DateTime? createdOnFrom,
+            DateTime? createdOnTo, string email, string username, int activityLogTypeId,
+            int pageSize, int pageIndex, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
             var dbCollection = DBProviderManager<DBCustomerActivityProvider>.Provider.GetAllActivities(
-                CreatedOnFrom, CreatedOnTo, Email, Username, ActivityLogTypeID, PageSize, PageIndex, out TotalRecords);
+                createdOnFrom, createdOnTo, email, username, activityLogTypeId, 
+                pageSize, pageIndex, out totalRecords);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -314,14 +317,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Gets an activity log item
         /// </summary>
-        /// <param name="ActivityLogID">Activity log identifier</param>
+        /// <param name="activityLogId">Activity log identifier</param>
         /// <returns>Activity log item</returns>
-        public static ActivityLog GetActivityByID(int ActivityLogID)
+        public static ActivityLog GetActivityById(int activityLogId)
         {
-            if (ActivityLogID == 0)
+            if (activityLogId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.GetActivityByID(ActivityLogID);
+            var dbItem = DBProviderManager<DBCustomerActivityProvider>.Provider.GetActivityById(activityLogId);
             var activityLog = DBMapping(dbItem);
             return activityLog;
         }

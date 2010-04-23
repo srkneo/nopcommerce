@@ -31,58 +31,59 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Gets currency string
         /// </summary>
-        /// <param name="Amount">Amount</param>
+        /// <param name="amount">Amount</param>
         /// <returns>Currency string without exchange rate</returns>
-        public static string GetCurrencyString(decimal Amount)
+        public static string GetCurrencyString(decimal amount)
         {
-            bool ShowCurrency = true;
-            var TargetCurrency = NopContext.Current.WorkingCurrency;
-            return GetCurrencyString(Amount, ShowCurrency, TargetCurrency);
+            bool showCurrency = true;
+            var targetCurrency = NopContext.Current.WorkingCurrency;
+            return GetCurrencyString(amount, showCurrency, targetCurrency);
         }
 
         /// <summary>
         /// Gets currency string
         /// </summary>
-        /// <param name="Amount">Amount</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
         /// <returns>Currency string without exchange rate</returns>
-        public static string GetCurrencyString(decimal Amount, bool ShowCurrency, Currency TargetCurrency)
+        public static string GetCurrencyString(decimal amount, 
+            bool showCurrency, Currency targetCurrency)
         {
             string result = string.Empty;
-            if (!String.IsNullOrEmpty(TargetCurrency.CustomFormatting))
+            if (!String.IsNullOrEmpty(targetCurrency.CustomFormatting))
             {
-                result = Amount.ToString(TargetCurrency.CustomFormatting);
+                result = amount.ToString(targetCurrency.CustomFormatting);
             }
             else
             {
-                if (!String.IsNullOrEmpty(TargetCurrency.DisplayLocale))
+                if (!String.IsNullOrEmpty(targetCurrency.DisplayLocale))
                 {
-                    result = Amount.ToString("C", new CultureInfo(TargetCurrency.DisplayLocale));
+                    result = amount.ToString("C", new CultureInfo(targetCurrency.DisplayLocale));
                 }
                 else
                 {
-                    result = String.Format("{0} ({1})", Amount.ToString("N"), TargetCurrency.CurrencyCode);
+                    result = String.Format("{0} ({1})", amount.ToString("N"), targetCurrency.CurrencyCode);
                     return result;
                 }
             }
 
-            if (ShowCurrency && CurrencyManager.GetAllCurrencies().Count > 1)
-                result = String.Format("{0} ({1})", result, TargetCurrency.CurrencyCode);
+            if (showCurrency && CurrencyManager.GetAllCurrencies().Count > 1)
+                result = String.Format("{0} ({1})", result, targetCurrency.CurrencyCode);
             return result;
         }
 
         /// <summary>
         /// Gets a resource string based on the specified ResourceKey property.
         /// </summary>
-        /// <param name="ResourceKey">A string representing a ResourceKey.</param>
+        /// <param name="resourceKey">A string representing a ResourceKey.</param>
         /// <returns>A string representing the requested resource string.</returns>
-        public static string GetLocaleResourceString(string ResourceKey)
+        public static string GetLocaleResourceString(string resourceKey)
         {
             if (NopContext.Current != null && NopContext.Current.WorkingLanguage != null)
             {
                 var language = NopContext.Current.WorkingLanguage;
-                return GetLocaleResourceString(ResourceKey, language.LanguageID);
+                return GetLocaleResourceString(resourceKey, language.LanguageId);
             }
             else
                 return string.Empty;
@@ -91,54 +92,55 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Gets a resource string based on the specified ResourceKey property.
         /// </summary>
-        /// <param name="ResourceKey">A string representing a ResourceKey.</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="resourceKey">A string representing a ResourceKey.</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>A string representing the requested resource string.</returns>
-        public static string GetLocaleResourceString(string ResourceKey, int LanguageID)
+        public static string GetLocaleResourceString(string resourceKey, int languageId)
         {
-            return GetLocaleResourceString(ResourceKey, LanguageID, true);
+            return GetLocaleResourceString(resourceKey, languageId, true);
         }
 
         /// <summary>
         /// Gets a resource string based on the specified ResourceKey property.
         /// </summary>
-        /// <param name="ResourceKey">A string representing a ResourceKey.</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="LogIfNotFound">A value indicating whether to log error if locale string resource is not found</param>
+        /// <param name="resourceKey">A string representing a ResourceKey.</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="logIfNotFound">A value indicating whether to log error if locale string resource is not found</param>
         /// <returns>A string representing the requested resource string.</returns>
-        public static string GetLocaleResourceString(string ResourceKey, int LanguageID, bool LogIfNotFound)
+        public static string GetLocaleResourceString(string resourceKey,
+            int languageId, bool logIfNotFound)
         {
-            return GetLocaleResourceString(ResourceKey, LanguageID, LogIfNotFound, string.Empty);
+            return GetLocaleResourceString(resourceKey, languageId, logIfNotFound, string.Empty);
         }
 
         /// <summary>
         /// Gets a resource string based on the specified ResourceKey property.
         /// </summary>
-        /// <param name="ResourceKey">A string representing a ResourceKey.</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="LogIfNotFound">A value indicating whether to log error if locale string resource is not found</param>
+        /// <param name="resourceKey">A string representing a ResourceKey.</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="logIfNotFound">A value indicating whether to log error if locale string resource is not found</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns>A string representing the requested resource string.</returns>
-        public static string GetLocaleResourceString(string ResourceKey, int LanguageID,
-            bool LogIfNotFound, string defaultValue)
+        public static string GetLocaleResourceString(string resourceKey, int languageId,
+            bool logIfNotFound, string defaultValue)
         {
             string result = string.Empty;
-            if (ResourceKey == null)
-                ResourceKey = string.Empty;
-            ResourceKey = ResourceKey.Trim().ToLowerInvariant();
-            var resources = LocaleStringResourceManager.GetAllResourcesByLanguageID(LanguageID);
+            if (resourceKey == null)
+                resourceKey = string.Empty;
+            resourceKey = resourceKey.Trim().ToLowerInvariant();
+            var resources = LocaleStringResourceManager.GetAllResourcesByLanguageId(languageId);
 
-            if (resources.ContainsKey(ResourceKey))
+            if (resources.ContainsKey(resourceKey))
             {
-                var lsr = resources[ResourceKey];
+                var lsr = resources[resourceKey];
                 if (lsr != null)
                     result = lsr.ResourceValue;
             }
             if (String.IsNullOrEmpty(result))
             {
-                if (LogIfNotFound)
+                if (logIfNotFound)
                 {
-                    LogManager.InsertLog(LogTypeEnum.CommonError, "Resource string is not found", string.Format("Resource string ({0}) is not found. Language ID ={1}", ResourceKey, LanguageID));
+                    LogManager.InsertLog(LogTypeEnum.CommonError, "Resource string is not found", string.Format("Resource string ({0}) is not found. Language Id ={1}", resourceKey, languageId));
                 }
 
                 if (!String.IsNullOrEmpty(defaultValue))
@@ -147,7 +149,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
                 }
                 else
                 {
-                    result = ResourceKey;
+                    result = resourceKey;
                 }
             }
             return result;
@@ -156,21 +158,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Imports language pack from XML
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <param name="content">XML content</param>
-        public static void LanguagePackImport(int LanguageID, string content)
+        public static void LanguagePackImport(int languageId, string content)
         {
-            LocaleStringResourceManager.InsertAllLocaleStringResourcesFromXML(LanguageID, content);
+            LocaleStringResourceManager.InsertAllLocaleStringResourcesFromXml(languageId, content);
         }
 
         /// <summary>
         /// Exports language pack to XML
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>XML content</returns>
-        public static string LanguagePackExport(int LanguageID)
+        public static string LanguagePackExport(int languageId)
         {
-            return LocaleStringResourceManager.GetAllLocaleStringResourcesAsXML(LanguageID);
+            return LocaleStringResourceManager.GetAllLocaleStringResourcesAsXml(languageId);
         }
         #endregion
 
@@ -182,9 +184,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         {
             get
             {
-                int defaultAdminLanguageID = SettingManager.GetSettingValueInteger("Localization.DefaultAdminLanguageID");
+                int defaultAdminLanguageId = SettingManager.GetSettingValueInteger("Localization.DefaultAdminLanguageId");
 
-                var language = LanguageManager.GetLanguageByID(defaultAdminLanguageID);
+                var language = LanguageManager.GetLanguageById(defaultAdminLanguageId);
                 if (language != null & language.Published)
                 {
                     return language;
@@ -200,7 +202,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
             set
             {
                 if (value != null)
-                    SettingManager.SetParam("Localization.DefaultAdminLanguageID", value.LanguageID.ToString());
+                    SettingManager.SetParam("Localization.DefaultAdminLanguageId", value.LanguageId.ToString());
             }
         }
         #endregion

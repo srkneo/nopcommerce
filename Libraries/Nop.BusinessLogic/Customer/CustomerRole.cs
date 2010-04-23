@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets or sets the customer role identifier
         /// </summary>
-        public int CustomerRoleID { get; set; }
+        public int CustomerRoleId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer role name
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                return CustomerManager.GetCustomersByCustomerRoleID(CustomerRoleID);
+                return CustomerManager.GetCustomersByCustomerRoleId(this.CustomerRoleId);
             }
         }
 

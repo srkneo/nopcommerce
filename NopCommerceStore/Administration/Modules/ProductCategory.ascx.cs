@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             List<ProductCategoryMappingHelperClass> productCategoryMappings = null;
 
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 ProductCategoryCollection existingProductCategoryCollection = product.ProductCategories;
@@ -65,58 +65,58 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            SaveInfo(this.ProductID);
+            SaveInfo(this.ProductId);
         }
 
-        public void SaveInfo(int prodID)
+        public void SaveInfo(int prodId)
         {
-            Product product = ProductManager.GetProductByID(prodID);
+            Product product = ProductManager.GetProductById(prodId);
             if (product != null)
             {
                 foreach (GridViewRow row in gvCategoryMappings.Rows)
                 {
                     CheckBox cbCategoryInfo = row.FindControl("cbCategoryInfo") as CheckBox;
-                    HiddenField hfCategoryID = row.FindControl("hfCategoryID") as HiddenField;
-                    HiddenField hfProductCategoryID = row.FindControl("hfProductCategoryID") as HiddenField;
+                    HiddenField hfCategoryId = row.FindControl("hfCategoryId") as HiddenField;
+                    HiddenField hfProductCategoryId = row.FindControl("hfProductCategoryId") as HiddenField;
                     CheckBox cbFeatured = row.FindControl("cbFeatured") as CheckBox;
                     NumericTextBox txtRowDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
-                    int productCategoryID = int.Parse(hfProductCategoryID.Value);
-                    int categoryID = int.Parse(hfCategoryID.Value);
+                    int productCategoryId = int.Parse(hfProductCategoryId.Value);
+                    int categoryId = int.Parse(hfCategoryId.Value);
                     int displayOrder = txtRowDisplayOrder.Value;
 
-                    if (productCategoryID > 0 && !cbCategoryInfo.Checked)
-                        CategoryManager.DeleteProductCategory(productCategoryID);
-                    if (productCategoryID > 0 && cbCategoryInfo.Checked)
-                        CategoryManager.UpdateProductCategory(productCategoryID, product.ProductID, categoryID, cbFeatured.Checked, displayOrder);
-                    if (productCategoryID == 0 && cbCategoryInfo.Checked)
-                        CategoryManager.InsertProductCategory(product.ProductID, categoryID, cbFeatured.Checked, displayOrder);
+                    if (productCategoryId > 0 && !cbCategoryInfo.Checked)
+                        CategoryManager.DeleteProductCategory(productCategoryId);
+                    if (productCategoryId > 0 && cbCategoryInfo.Checked)
+                        CategoryManager.UpdateProductCategory(productCategoryId, product.ProductId, categoryId, cbFeatured.Checked, displayOrder);
+                    if (productCategoryId == 0 && cbCategoryInfo.Checked)
+                        CategoryManager.InsertProductCategory(product.ProductId, categoryId, cbFeatured.Checked, displayOrder);
                 }
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
 
-        private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(int ForParentCategoryID,
+        private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(int forParentCategoryId,
             string prefix, ProductCategoryCollection ExistingProductCategoryCollection)
         {
-            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(ForParentCategoryID);
+            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(forParentCategoryId);
             List<ProductCategoryMappingHelperClass> result = new List<ProductCategoryMappingHelperClass>();
             for (int i = 0; i < categoryCollection.Count; i++)
             {
                 Category category = categoryCollection[i];
                 ProductCategory existingProductCategory = null;
                 if (ExistingProductCategoryCollection != null)
-                    existingProductCategory = ExistingProductCategoryCollection.FindProductCategory(this.ProductID, category.CategoryID);
+                    existingProductCategory = ExistingProductCategoryCollection.FindProductCategory(this.ProductId, category.CategoryId);
                 ProductCategoryMappingHelperClass pcm = new ProductCategoryMappingHelperClass();
                 if (existingProductCategory != null)
                 {
-                    pcm.ProductCategoryID = existingProductCategory.ProductCategoryID;
+                    pcm.ProductCategoryId = existingProductCategory.ProductCategoryId;
                     pcm.IsMapped = true;
                     pcm.IsFeatured = existingProductCategory.IsFeaturedProduct;
                     pcm.DisplayOrder = existingProductCategory.DisplayOrder;
@@ -125,13 +125,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     pcm.DisplayOrder = 1;
                 }
-                pcm.CategoryID = category.CategoryID;
+                pcm.CategoryId = category.CategoryId;
                 pcm.CategoryInfo = prefix + category.Name;
-                //if (pcm.CategoryID == this.CategoryID)
-                //    pcm.IsMapped = true;
                 result.Add(pcm);
-                if (CategoryManager.GetAllCategories(category.CategoryID).Count > 0)
-                    result.AddRange(GetProductCategoryMappings(category.CategoryID, prefix + "--", ExistingProductCategoryCollection));
+                if (CategoryManager.GetAllCategories(category.CategoryId).Count > 0)
+                    result.AddRange(GetProductCategoryMappings(category.CategoryId, prefix + "--", ExistingProductCategoryCollection));
             }
 
             return result;
@@ -139,8 +137,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         
         private class ProductCategoryMappingHelperClass
         {
-            public int ProductCategoryID { get; set; }
-            public int CategoryID { get; set; }
+            public int ProductCategoryId { get; set; }
+            public int CategoryId { get; set; }
             public string CategoryInfo { get; set; }
             public bool IsMapped { get; set; }
             public bool IsFeatured { get; set; }

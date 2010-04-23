@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Warehouse warehouse = ctrlWarehouseInfo.SaveInfo();
-                    Response.Redirect("WarehouseDetails.aspx?WarehouseID=" + warehouse.WarehouseID.ToString());
+                    Response.Redirect("WarehouseDetails.aspx?WarehouseID=" + warehouse.WarehouseId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -48,16 +48,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            WarehouseManager.MarkWarehouseAsDeleted(this.WarehouseID);
+            WarehouseManager.MarkWarehouseAsDeleted(this.WarehouseId);
 
             Response.Redirect("Warehouses.aspx");
         }
 
-        public int WarehouseID
+        public int WarehouseId
         {
             get
             {
-                return CommonHelper.QueryStringInt("WarehouseID");
+                return CommonHelper.QueryStringInt("WarehouseId");
             }
         }
     }

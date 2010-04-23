@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.CategoryTabs, this.TabID);
+                this.SelectTab(this.CategoryTabs, this.TabId);
             }
         }
 
@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditCategory"),
                         category.Name);
 
-                    Response.Redirect(string.Format("CategoryDetails.aspx?CategoryID={0}&TabID={1}", category.CategoryID, this.GetActiveTabID(this.CategoryTabs)));
+                    Response.Redirect(string.Format("CategoryDetails.aspx?CategoryID={0}&TabID={1}", category.CategoryId, this.GetActiveTabId(this.CategoryTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -76,10 +76,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+                Category category = CategoryManager.GetCategoryById(this.CategoryId);
                 if (category != null)
                 {
-                    CategoryManager.MarkCategoryAsDeleted(category.CategoryID);
+                    CategoryManager.MarkCategoryAsDeleted(category.CategoryId);
 
                     CustomerActivityManager.InsertActivity(
                         "DeleteCategory",
@@ -94,19 +94,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryID");
+                return CommonHelper.QueryStringInt("CategoryId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

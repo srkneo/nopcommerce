@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets or sets a credit card CVV2 (Card Verification Value)
         /// </summary>
-        public string CreditCardCVV2 { get; set; }
+        public string CreditCardCvv2 { get; set; }
 
         /// <summary>
         /// Gets or sets an order total
@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// Gets or sets a payment method identifier
         /// </summary>
         /// </summary>
-        public int PaymentMethodID { get; set; }
+        public int PaymentMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets a paypal payer token (required for Paypal payment methods)
@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets or sets a paypal payer identifier (required for Paypal payment methods)
         /// </summary>
-        public string PaypalPayerID { get; set; }
+        public string PaypalPayerId { get; set; }
 
         /// <summary>
         /// Gets or sets a google order number (required for Google Checkout)
@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets or sets an initial (parent) order identifier if order is recurring
         /// </summary>
-        public int InitialOrderID { get; set; }
+        public int InitialOrderId { get; set; }
         
         /// <summary>
         /// Gets or sets the cycle length

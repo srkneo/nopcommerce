@@ -33,49 +33,52 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
     public abstract partial class DBTaxProviderProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a tax provider
         /// </summary>
-        /// <param name="TaxProviderID">Tax provider identifier</param>
-        public abstract void DeleteTaxProvider(int TaxProviderID);
+        /// <param name="taxProviderId">Tax provider identifier</param>
+        public abstract void DeleteTaxProvider(int taxProviderId);
 
         /// <summary>
         /// Gets a tax provider
         /// </summary>
-        /// <param name="TaxProviderID">Tax provider identifier</param>
+        /// <param name="taxProviderId">Tax provider identifier</param>
         /// <returns>Tax provider</returns>
-        public abstract DBTaxProvider GetTaxProviderByID(int TaxProviderID);
+        public abstract DBTaxProvider GetTaxProviderById(int taxProviderId);
 
         /// <summary>
         /// Gets all tax providers
         /// </summary>
-        /// <returns>Shipping rate computation method collection</returns>
+        /// <returns>Tax rate computation method collection</returns>
         public abstract DBTaxProviderCollection GetAllTaxProviders();
 
         /// <summary>
         /// Inserts a tax provider
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Tax provider</returns>
-        public abstract DBTaxProvider InsertTaxProvider(string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, int DisplayOrder);
+        public abstract DBTaxProvider InsertTaxProvider(string name, string description,
+           string configureTemplatePath, string className, int displayOrder);
 
         /// <summary>
         /// Updates the tax provider
         /// </summary>
-        /// <param name="TaxProviderID">The tax provider identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="taxProviderId">The tax provider identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Tax provider</returns>
-        public abstract DBTaxProvider UpdateTaxProvider(int TaxProviderID, string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, int DisplayOrder);
+        public abstract DBTaxProvider UpdateTaxProvider(int taxProviderId, 
+            string name, string description, string configureTemplatePath, 
+            string className, int displayOrder);
+
         #endregion
     }
 }

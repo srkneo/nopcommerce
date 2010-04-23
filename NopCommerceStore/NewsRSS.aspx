@@ -17,7 +17,7 @@
          <title><![CDATA[<%# Eval("Title") %>]]></title>
          <author><![CDATA[<%# SettingManager.StoreName%>]]></author>
          <description><![CDATA[<%# Eval("Short") %>]]></description>
-         <link><![CDATA[<%# SEOHelper.GetNewsURL(Convert.ToInt32(Eval("NewsID"))) %>]]></link>
+         <link><![CDATA[<%# SEOHelper.GetNewsUrl(Convert.ToInt32(Eval("NewsId"))) %>]]></link>
          <pubDate><%# string.Format("{0:R}", DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")))%></pubDate>
       </item>
     </ItemTemplate>

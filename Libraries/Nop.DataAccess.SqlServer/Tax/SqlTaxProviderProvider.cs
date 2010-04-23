@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
     /// <summary>
     /// Tax provider provider for SQL Server
     /// </summary>
-    public partial class SQLTaxProviderProvider : DBTaxProviderProvider
+    public partial class SqlTaxProviderProvider : DBTaxProviderProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,14 +36,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         #region Utilities
         private DBTaxProvider GetTaxProviderFromReader(IDataReader dataReader)
         {
-            DBTaxProvider taxProvider = new DBTaxProvider();
-            taxProvider.TaxProviderID = NopSqlDataHelper.GetInt(dataReader, "TaxProviderID");
-            taxProvider.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            taxProvider.Description = NopSqlDataHelper.GetString(dataReader, "Description");
-            taxProvider.ConfigureTemplatePath = NopSqlDataHelper.GetString(dataReader, "ConfigureTemplatePath");
-            taxProvider.ClassName = NopSqlDataHelper.GetString(dataReader, "ClassName");
-            taxProvider.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return taxProvider;
+            var item = new DBTaxProvider();
+            item.TaxProviderId = NopSqlDataHelper.GetInt(dataReader, "TaxProviderID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            item.ConfigureTemplatePath = NopSqlDataHelper.GetString(dataReader, "ConfigureTemplatePath");
+            item.ClassName = NopSqlDataHelper.GetString(dataReader, "ClassName");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -86,37 +86,36 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Deletes a tax provider
         /// </summary>
-        /// <param name="TaxProviderID">Tax provider identifier</param>
-        public override void DeleteTaxProvider(int TaxProviderID)
+        /// <param name="taxProviderId">Tax provider identifier</param>
+        public override void DeleteTaxProvider(int taxProviderId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxProviderDelete");
-            db.AddInParameter(dbCommand, "TaxProviderID", DbType.Int32, TaxProviderID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "TaxProviderID", DbType.Int32, taxProviderId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a tax provider
         /// </summary>
-        /// <param name="TaxProviderID">Tax provider identifier</param>
+        /// <param name="taxProviderId">Tax provider identifier</param>
         /// <returns>Tax provider</returns>
-        public override DBTaxProvider GetTaxProviderByID(int TaxProviderID)
+        public override DBTaxProvider GetTaxProviderById(int taxProviderId)
         {
-
-            DBTaxProvider taxProvider = null;
-            if (TaxProviderID == 0)
-                return taxProvider;
+            DBTaxProvider item = null;
+            if (taxProviderId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxProviderLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "TaxProviderID", DbType.Int32, TaxProviderID);
+            db.AddInParameter(dbCommand, "TaxProviderID", DbType.Int32, taxProviderId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    taxProvider = GetTaxProviderFromReader(dataReader);
+                    item = GetTaxProviderFromReader(dataReader);
                 }
             }
-            return taxProvider;
+            return item;
         }
 
         /// <summary>
@@ -142,58 +141,59 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Inserts a tax provider
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Tax provider</returns>
-        public override DBTaxProvider InsertTaxProvider(string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, int DisplayOrder)
+        public override DBTaxProvider InsertTaxProvider(string name, string description,
+           string configureTemplatePath, string className, int displayOrder)
         {
-            DBTaxProvider taxProvider = null;
+            DBTaxProvider item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxProviderInsert");
             db.AddOutParameter(dbCommand, "TaxProviderID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, ConfigureTemplatePath);
-            db.AddInParameter(dbCommand, "ClassName", DbType.String, ClassName);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, configureTemplatePath);
+            db.AddInParameter(dbCommand, "ClassName", DbType.String, className);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int TaxProviderID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TaxProviderID"));
-                taxProvider = GetTaxProviderByID(TaxProviderID);
+                int taxProviderId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TaxProviderID"));
+                item = GetTaxProviderById(taxProviderId);
             }
-            return taxProvider;
+            return item;
         }
 
         /// <summary>
         /// Updates the tax provider
         /// </summary>
-        /// <param name="TaxProviderID">The tax provider identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="taxProviderId">The tax provider identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Tax provider</returns>
-        public override DBTaxProvider UpdateTaxProvider(int TaxProviderID, string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, int DisplayOrder)
+        public override DBTaxProvider UpdateTaxProvider(int taxProviderId,
+            string name, string description, string configureTemplatePath,
+            string className, int displayOrder)
         {
-            DBTaxProvider taxProvider = null;
+            DBTaxProvider item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxProviderUpdate");
-            db.AddInParameter(dbCommand, "TaxProviderID", DbType.Int32, TaxProviderID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, ConfigureTemplatePath);
-            db.AddInParameter(dbCommand, "ClassName", DbType.String, ClassName);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "TaxProviderID", DbType.Int32, taxProviderId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, configureTemplatePath);
+            db.AddInParameter(dbCommand, "ClassName", DbType.String, className);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                taxProvider = GetTaxProviderByID(TaxProviderID);
+                item = GetTaxProviderById(taxProviderId);
 
-            return taxProvider;
+            return item;
         }
         #endregion
     }

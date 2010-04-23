@@ -36,22 +36,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the order product variant identifier
         /// </summary>
-        public int OrderProductVariantID { get; set; }
+        public int OrderProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the order product variant identifier
         /// </summary>
-        public Guid OrderProductVariantGUID { get; set; }
+        public Guid OrderProductVariantGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the unit price in primary store currency (incl tax)
@@ -101,7 +101,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the product variant attributes in XML format
         /// </summary>
-        public string AttributesXML { get; set; }
+        public string AttributesXml { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity
@@ -131,7 +131,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets a license download identifier (in case this is a downloadable product)
         /// </summary>
-        public int LicenseDownloadID { get; set; }
+        public int LicenseDownloadId { get; set; }
 
         #endregion
     }

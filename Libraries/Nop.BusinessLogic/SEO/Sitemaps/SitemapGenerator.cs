@@ -83,17 +83,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
             WriteOtherPages(OtherPages);
         }
 
-        private void WriteCategories(int ParentCategoryID)
+        private void WriteCategories(int parentCategoryId)
         {
-            var categories = CategoryManager.GetAllCategories(ParentCategoryID, false);
+            var categories = CategoryManager.GetAllCategories(parentCategoryId, false);
             foreach (var category in categories)
             {
-                var url = SEOHelper.GetCategoryURL(category.CategoryID);
-                var updateFrequency = UpdateFrequency.weekly;
+                var url = SEOHelper.GetCategoryUrl(category.CategoryId);
+                var updateFrequency = UpdateFrequency.Weekly;
                 var updateTime = category.UpdatedOn;
                 WriteUrlLocation(url, updateFrequency, updateTime);
 
-                WriteCategories(category.CategoryID);
+                WriteCategories(category.CategoryId);
             }
         }
 
@@ -102,8 +102,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
             var manufacturers = ManufacturerManager.GetAllManufacturers(false);
             foreach (var manufacturer in manufacturers)
             {
-                var url = SEOHelper.GetManufacturerURL(manufacturer);
-                var updateFrequency = UpdateFrequency.weekly;
+                var url = SEOHelper.GetManufacturerUrl(manufacturer);
+                var updateFrequency = UpdateFrequency.Weekly;
                 var updateTime = manufacturer.UpdatedOn;
                 WriteUrlLocation(url, updateFrequency, updateTime);
             }
@@ -114,8 +114,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
             var products = ProductManager.GetAllProducts(false);
             foreach (var product in products)
             {
-                var url = SEOHelper.GetProductURL(product);
-                var updateFrequency = UpdateFrequency.weekly;
+                var url = SEOHelper.GetProductUrl(product);
+                var updateFrequency = UpdateFrequency.Weekly;
                 var updateTime = product.UpdatedOn;
                 WriteUrlLocation(url, updateFrequency, updateTime);
             }
@@ -131,24 +131,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
                 {
                     //UNDONE add topic of one language only (they have the same URL now)
                     var localizedTopic = localizedTopics[0];
-                    var url = SEOHelper.GetTopicUrl(localizedTopic.TopicID, localizedTopic.Title);
-                    var updateFrequency = UpdateFrequency.weekly;
+                    var url = SEOHelper.GetTopicUrl(localizedTopic.TopicId, localizedTopic.Title);
+                    var updateFrequency = UpdateFrequency.Weekly;
                     var updateTime = localizedTopic.UpdatedOn;
                     WriteUrlLocation(url, updateFrequency, updateTime);
                 }
             }
         }
 
-        private void WriteOtherPages(string OtherPages)
+        private void WriteOtherPages(string otherPages)
         {
-            if (String.IsNullOrEmpty(OtherPages))
+            if (String.IsNullOrEmpty(otherPages))
                 return;
 
-            string[] pages = OtherPages.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] pages = otherPages.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string page in pages)
             {
                 string url = CommonHelper.GetStoreLocation() + page.Trim();
-                var updateFrequency = UpdateFrequency.weekly;
+                var updateFrequency = UpdateFrequency.Weekly;
                 var updateTime = DateTime.UtcNow;
                 WriteUrlLocation(url, updateFrequency, updateTime);
             }

@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets or sets the forum group identifier
         /// </summary>
-        public int ForumGroupID { get; set; }
+        public int ForumGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// </summary>
         public DateTime UpdatedOn { get; set; }
 
-        #endregion
+        #endregion 
 
         #region Custom Properties
         /// <summary>
@@ -74,7 +74,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return ForumManager.GetAllForumsByGroupID(ForumGroupID);
+                return ForumManager.GetAllForumsByGroupId(this.ForumGroupId);
             }
         }
 

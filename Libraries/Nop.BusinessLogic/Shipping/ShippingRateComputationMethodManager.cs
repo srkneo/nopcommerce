@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return null;
 
             var item = new ShippingRateComputationMethod();
-            item.ShippingRateComputationMethodID = dbItem.ShippingRateComputationMethodID;
+            item.ShippingRateComputationMethodId = dbItem.ShippingRateComputationMethodId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
             item.ConfigureTemplatePath = dbItem.ConfigureTemplatePath;
@@ -77,10 +77,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Deletes a shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">Shipping rate computation method identifier</param>
-        public static void DeleteShippingRateComputationMethod(int ShippingRateComputationMethodID)
+        /// <param name="shippingRateComputationMethodId">Shipping rate computation method identifier</param>
+        public static void DeleteShippingRateComputationMethod(int shippingRateComputationMethodId)
         {
-            DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.DeleteShippingRateComputationMethod(ShippingRateComputationMethodID);
+            DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.DeleteShippingRateComputationMethod(shippingRateComputationMethodId);
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
@@ -90,21 +90,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets a shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">Shipping rate computation method identifier</param>
+        /// <param name="shippingRateComputationMethodId">Shipping rate computation method identifier</param>
         /// <returns>Shipping rate computation method</returns>
-        public static ShippingRateComputationMethod GetShippingRateComputationMethodByID(int ShippingRateComputationMethodID)
+        public static ShippingRateComputationMethod GetShippingRateComputationMethodById(int shippingRateComputationMethodId)
         {
-            if (ShippingRateComputationMethodID == 0)
+            if (shippingRateComputationMethodId == 0)
                 return null;
 
-            string key = string.Format(SHIPPINGRATECOMPUTATIONMETHODS_BY_ID_KEY, ShippingRateComputationMethodID);
+            string key = string.Format(SHIPPINGRATECOMPUTATIONMETHODS_BY_ID_KEY, shippingRateComputationMethodId);
             object obj2 = NopCache.Get(key);
             if (ShippingRateComputationMethodManager.CacheEnabled && (obj2 != null))
             {
                 return (ShippingRateComputationMethod)obj2;
             }
 
-            var dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.GetShippingRateComputationMethodByID(ShippingRateComputationMethodID);
+            var dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.GetShippingRateComputationMethodById(shippingRateComputationMethodId);
             var shippingRateComputationMethod = DBMapping(dbItem);
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
@@ -151,18 +151,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Inserts a shipping rate computation method
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="IsActive">The value indicating whether the method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="isActive">The value indicating whether the method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping rate computation method</returns>
-        public static ShippingRateComputationMethod InsertShippingRateComputationMethod(string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, bool IsActive, int DisplayOrder)
+        public static ShippingRateComputationMethod InsertShippingRateComputationMethod(string name,
+            string description, string configureTemplatePath, string className,
+            bool isActive, int displayOrder)
         {
-            DBShippingRateComputationMethod dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.InsertShippingRateComputationMethod(Name,
-                Description, ConfigureTemplatePath, ClassName, IsActive, DisplayOrder);
+            DBShippingRateComputationMethod dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.InsertShippingRateComputationMethod(name,
+                description, configureTemplatePath, className, isActive, displayOrder);
             ShippingRateComputationMethod shippingRateComputationMethod = DBMapping(dbItem);
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
@@ -175,20 +176,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Updates the shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="IsActive">The value indicating whether the method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="isActive">The value indicating whether the method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping rate computation method</returns>
-        public static ShippingRateComputationMethod UpdateShippingRateComputationMethod(int ShippingRateComputationMethodID, string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, bool IsActive, int DisplayOrder)
+        public static ShippingRateComputationMethod UpdateShippingRateComputationMethod(int shippingRateComputationMethodId,
+            string name, string description, string configureTemplatePath, string className,
+            bool isActive, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.UpdateShippingRateComputationMethod(ShippingRateComputationMethodID,
-                Name, Description, ConfigureTemplatePath, ClassName,
-                IsActive, DisplayOrder);
+            var dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.UpdateShippingRateComputationMethod(shippingRateComputationMethodId,
+                name, description, configureTemplatePath, className,
+                isActive, displayOrder);
             var shippingRateComputationMethod = DBMapping(dbItem);
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
@@ -201,11 +203,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets a shipping rate computation method type
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
         /// <returns>A shipping rate computation method type</returns>
-        public static ShippingRateComputationMethodTypeEnum GetShippingRateComputationMethodTypeEnum(int ShippingRateComputationMethodID)
+        public static ShippingRateComputationMethodTypeEnum GetShippingRateComputationMethodTypeEnum(int shippingRateComputationMethodId)
         {
-            var method = GetShippingRateComputationMethodByID(ShippingRateComputationMethodID);
+            var method = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
             if (method == null)
                 return ShippingRateComputationMethodTypeEnum.Unknown;
             var iMethod = Activator.CreateInstance(Type.GetType(method.ClassName)) as IShippingRateComputationMethod;

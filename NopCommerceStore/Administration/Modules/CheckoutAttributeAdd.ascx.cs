@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         attribute.Name);
 
                     if (attribute != null)
-                        Response.Redirect("CheckoutAttributeDetails.aspx?CheckoutAttributeID=" + attribute.CheckoutAttributeID);
+                        Response.Redirect("CheckoutAttributeDetails.aspx?CheckoutAttributeID=" + attribute.CheckoutAttributeId);
                 }
                 catch (Exception exc)
                 {

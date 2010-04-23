@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             {
                 this._path = attribute1.Value;
             }
-            string url = SettingManager.StoreURL;
+            string url = SettingManager.StoreUrl;
             url += _path;
 
             using (var wc = new WebClient())

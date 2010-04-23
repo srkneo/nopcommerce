@@ -32,29 +32,29 @@ namespace NopSolutions.NopCommerce.Tax
         /// Gets tax rate
         /// </summary>
         /// <param name="calculateTaxRequest">Tax calculation request</param>
-        /// <param name="Error">Error</param>
+        /// <param name="error">Error</param>
         /// <returns>Tax</returns>
-        public decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string Error)
+        public decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string error)
         {
             if (calculateTaxRequest.Address == null)
             {
-                Error = "Address is not set";
+                error = "Address is not set";
                 return 0;
             }
 
             decimal taxRate = decimal.Zero;
 
             int taxClassID = 0;
-            if (calculateTaxRequest.TaxClassID > 0)
+            if (calculateTaxRequest.TaxClassId > 0)
             {
-                taxClassID = calculateTaxRequest.TaxClassID;
+                taxClassID = calculateTaxRequest.TaxClassId;
             }
             else
             {
                 var productVariant = calculateTaxRequest.Item;
                 if (productVariant != null)
                 {
-                    taxClassID = productVariant.TaxCategoryID;
+                    taxClassID = productVariant.TaxCategoryId;
                 }
             }
             taxRate = GetTaxRate(calculateTaxRequest.Address, taxClassID);
@@ -66,23 +66,23 @@ namespace NopSolutions.NopCommerce.Tax
         /// Gets a tax rate
         /// </summary>
         /// <param name="address">Address</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
+        /// <param name="taxCategoryID">The tax category identifier</param>
         /// <returns>Tax rate</returns>
-        protected decimal GetTaxRate(Address address, int TaxCategoryID)
+        protected decimal GetTaxRate(Address address, int taxCategoryID)
         {
             int CountryID = 0;
             int StateProvinceID = 0;
 
             if (address.Country != null)
             {
-                CountryID = address.Country.CountryID;
+                CountryID = address.Country.CountryId;
             }
             if (address.StateProvince != null)
             {
-                StateProvinceID = address.StateProvince.StateProvinceID;
+                StateProvinceID = address.StateProvince.StateProvinceId;
             }
             decimal tr = decimal.Zero;
-            var taxRates = TaxRateManager.GetAllTaxRates(TaxCategoryID, CountryID, StateProvinceID, address.ZipPostalCode);
+            var taxRates = TaxRateManager.GetAllTaxRates(taxCategoryID, CountryID, StateProvinceID, address.ZipPostalCode);
             if (taxRates.Count > 0)
                 tr += taxRates[0].Percentage;
             return tr;

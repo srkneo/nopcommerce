@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Boards
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
 
                 lblCurrentTime.Text = DateTimeHelper.ConvertToUserTime(DateTime.Now).ToString("F");
             }

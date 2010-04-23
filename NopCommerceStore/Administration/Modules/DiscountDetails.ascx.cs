@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditDiscount"),
                         discount.Name);
 
-                    Response.Redirect("DiscountDetails.aspx?DiscountID=" + discount.DiscountID.ToString());
+                    Response.Redirect("DiscountDetails.aspx?DiscountID=" + discount.DiscountId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -59,10 +59,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Discount discount = DiscountManager.GetDiscountByID(this.DiscountID);
+                Discount discount = DiscountManager.GetDiscountById(this.DiscountId);
                 if (discount != null)
                 {
-                    DiscountManager.MarkDiscountAsDeleted(discount.DiscountID);
+                    DiscountManager.MarkDiscountAsDeleted(discount.DiscountId);
                     CustomerActivityManager.InsertActivity(
                         "DeleteDiscount",
                         GetLocaleResourceString("ActivityLog.DeleteDiscount"),
@@ -77,11 +77,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int DiscountID
+        public int DiscountId
         {
             get
             {
-                return CommonHelper.QueryStringInt("DiscountID");
+                return CommonHelper.QueryStringInt("DiscountId");
             }
         }
     }

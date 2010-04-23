@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                     TaxProvider taxProvider = TaxProviderManager.InsertTaxProvider(txtName.Text,
                         txtDescription.Text, txtConfigureTemplatePath.Text, txtClassName.Text, txtDisplayOrder.Value);
 
-                    Response.Redirect("TaxProviderDetails.aspx?TaxProviderID=" + taxProvider.TaxProviderID.ToString());
+                    Response.Redirect("TaxProviderDetails.aspx?TaxProviderID=" + taxProvider.TaxProviderId.ToString());
                 }
                 catch (Exception exc)
                 {

@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
     /// <summary>
     /// Message provider for SQL Server
     /// </summary>
-    public partial class SQLMessageProvider : DBMessageProvider
+    public partial class SqlMessageProvider : DBMessageProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,55 +36,55 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         #region Utilities
         private DBMessageTemplate GetMessageTemplateFromReader(IDataReader dataReader)
         {
-            DBMessageTemplate messageTemplate = new DBMessageTemplate();
-            messageTemplate.MessageTemplateID = NopSqlDataHelper.GetInt(dataReader, "MessageTemplateID");
-            messageTemplate.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return messageTemplate;
+            var item = new DBMessageTemplate();
+            item.MessageTemplateId = NopSqlDataHelper.GetInt(dataReader, "MessageTemplateID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
 
         private DBLocalizedMessageTemplate GetLocalizedMessageTemplateFromReader(IDataReader dataReader)
         {
-            DBLocalizedMessageTemplate localizedMessageTemplate = new DBLocalizedMessageTemplate();
-            localizedMessageTemplate.MessageTemplateLocalizedID = NopSqlDataHelper.GetInt(dataReader, "MessageTemplateLocalizedID");
-            localizedMessageTemplate.MessageTemplateID = NopSqlDataHelper.GetInt(dataReader, "MessageTemplateID");
-            localizedMessageTemplate.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            localizedMessageTemplate.BCCEmailAddresses = NopSqlDataHelper.GetString(dataReader, "BCCEmailAddresses");
-            localizedMessageTemplate.Subject = NopSqlDataHelper.GetString(dataReader, "Subject");
-            localizedMessageTemplate.Body = NopSqlDataHelper.GetString(dataReader, "Body");
-            localizedMessageTemplate.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
-            return localizedMessageTemplate;
+            var item = new DBLocalizedMessageTemplate();
+            item.MessageTemplateLocalizedId = NopSqlDataHelper.GetInt(dataReader, "MessageTemplateLocalizedID");
+            item.MessageTemplateId = NopSqlDataHelper.GetInt(dataReader, "MessageTemplateID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.BccEmailAddresses = NopSqlDataHelper.GetString(dataReader, "BCCEmailAddresses");
+            item.Subject = NopSqlDataHelper.GetString(dataReader, "Subject");
+            item.Body = NopSqlDataHelper.GetString(dataReader, "Body");
+            item.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
+            return item;
         }
 
         private DBQueuedEmail GetQueuedEmailFromReader(IDataReader dataReader)
         {
-            DBQueuedEmail queuedEmail = new DBQueuedEmail();
-            queuedEmail.QueuedEmailID = NopSqlDataHelper.GetInt(dataReader, "QueuedEmailID");
-            queuedEmail.Priority = NopSqlDataHelper.GetInt(dataReader, "Priority");
-            queuedEmail.From = NopSqlDataHelper.GetString(dataReader, "From");
-            queuedEmail.FromName = NopSqlDataHelper.GetString(dataReader, "FromName");
-            queuedEmail.To = NopSqlDataHelper.GetString(dataReader, "To");
-            queuedEmail.ToName = NopSqlDataHelper.GetString(dataReader, "ToName");
-            queuedEmail.Cc = NopSqlDataHelper.GetString(dataReader, "Cc");
-            queuedEmail.Bcc = NopSqlDataHelper.GetString(dataReader, "Bcc");
-            queuedEmail.Subject = NopSqlDataHelper.GetString(dataReader, "Subject");
-            queuedEmail.Body = NopSqlDataHelper.GetString(dataReader, "Body");
-            queuedEmail.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            queuedEmail.SendTries = NopSqlDataHelper.GetInt(dataReader, "SendTries");
-            queuedEmail.SentOn = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "SentOn");
-            return queuedEmail;
+            var item = new DBQueuedEmail();
+            item.QueuedEmailId = NopSqlDataHelper.GetInt(dataReader, "QueuedEmailID");
+            item.Priority = NopSqlDataHelper.GetInt(dataReader, "Priority");
+            item.From = NopSqlDataHelper.GetString(dataReader, "From");
+            item.FromName = NopSqlDataHelper.GetString(dataReader, "FromName");
+            item.To = NopSqlDataHelper.GetString(dataReader, "To");
+            item.ToName = NopSqlDataHelper.GetString(dataReader, "ToName");
+            item.CC = NopSqlDataHelper.GetString(dataReader, "Cc");
+            item.Bcc = NopSqlDataHelper.GetString(dataReader, "Bcc");
+            item.Subject = NopSqlDataHelper.GetString(dataReader, "Subject");
+            item.Body = NopSqlDataHelper.GetString(dataReader, "Body");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.SendTries = NopSqlDataHelper.GetInt(dataReader, "SendTries");
+            item.SentOn = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "SentOn");
+            return item;
         }
 
         private DBNewsLetterSubscription GetNewsLetterSubscriptionFromReader(IDataReader dataReader)
         {
-            DBNewsLetterSubscription dbItem = new DBNewsLetterSubscription();
+            var item = new DBNewsLetterSubscription();
 
-            dbItem.NewsLetterSubscriptionID = NopSqlDataHelper.GetInt(dataReader, "NewsLetterSubscriptionID");
-            dbItem.NewsLetterSubscriptionGuid = NopSqlDataHelper.GetGuid(dataReader, "NewsLetterSubscriptionGuid");
-            dbItem.Email = NopSqlDataHelper.GetString(dataReader, "Email");
-            dbItem.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "Active");
-            dbItem.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.NewsLetterSubscriptionId = NopSqlDataHelper.GetInt(dataReader, "NewsLetterSubscriptionID");
+            item.NewsLetterSubscriptionGuid = NopSqlDataHelper.GetGuid(dataReader, "NewsLetterSubscriptionGuid");
+            item.Email = NopSqlDataHelper.GetString(dataReader, "Email");
+            item.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "Active");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
 
-            return dbItem;
+            return item;
         }
         #endregion
 
@@ -127,24 +127,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Gets a message template by template identifier
         /// </summary>
-        /// <param name="MessageTemplateID">Message template identifier</param>
+        /// <param name="messageTemplateId">Message template identifier</param>
         /// <returns>Message template</returns>
-        public override DBMessageTemplate GetMessageTemplateByID(int MessageTemplateID)
+        public override DBMessageTemplate GetMessageTemplateById(int messageTemplateId)
         {
-            DBMessageTemplate messageTemplate = null;
-            if (MessageTemplateID == 0)
-                return messageTemplate;
+            DBMessageTemplate item = null;
+            if (messageTemplateId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MessageTemplateLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "MessageTemplateID", DbType.Int32, MessageTemplateID);
+            db.AddInParameter(dbCommand, "MessageTemplateID", DbType.Int32, messageTemplateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    messageTemplate = GetMessageTemplateFromReader(dataReader);
+                    item = GetMessageTemplateFromReader(dataReader);
                 }
             }
-            return messageTemplate;
+            return item;
         }
 
         /// <summary>
@@ -170,72 +170,73 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Gets a localized message template by identifier
         /// </summary>
-        /// <param name="LocalizedMessageTemplateID">Localized message template identifier</param>
+        /// <param name="localizedMessageTemplateId">Localized message template identifier</param>
         /// <returns>Localized message template</returns>
-        public override DBLocalizedMessageTemplate GetLocalizedMessageTemplateByID(int LocalizedMessageTemplateID)
+        public override DBLocalizedMessageTemplate GetLocalizedMessageTemplateById(int localizedMessageTemplateId)
         {
-            DBLocalizedMessageTemplate localizedMessageTemplate = null;
-            if (LocalizedMessageTemplateID == 0)
-                return localizedMessageTemplate;
+            DBLocalizedMessageTemplate item = null;
+            if (localizedMessageTemplateId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MessageTemplateLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "MessageTemplateLocalizedID", DbType.Int32, LocalizedMessageTemplateID);
+            db.AddInParameter(dbCommand, "MessageTemplateLocalizedID", DbType.Int32, localizedMessageTemplateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    localizedMessageTemplate = GetLocalizedMessageTemplateFromReader(dataReader);
+                    item = GetLocalizedMessageTemplateFromReader(dataReader);
                 }
             }
-            return localizedMessageTemplate;
+            return item;
         }
 
         /// <summary>
         /// Gets a localized message template by name and language identifier
         /// </summary>
-        /// <param name="Name">Message template name</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="name">Message template name</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized message template</returns>
-        public override DBLocalizedMessageTemplate GetLocalizedMessageTemplate(string Name, int LanguageID)
+        public override DBLocalizedMessageTemplate GetLocalizedMessageTemplate(string name,
+            int languageId)
         {
-            DBLocalizedMessageTemplate localizedMessageTemplate = null;
+            DBLocalizedMessageTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MessageTemplateLocalizedLoadByNameAndLanguageID");
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    localizedMessageTemplate = GetLocalizedMessageTemplateFromReader(dataReader);
+                    item = GetLocalizedMessageTemplateFromReader(dataReader);
                 }
             }
-            return localizedMessageTemplate;
+            return item;
         }
 
         /// <summary>
         /// Deletes a localized message template
         /// </summary>
-        /// <param name="LocalizedMessageTemplateID">Message template identifier</param>
-        public override void DeleteLocalizedMessageTemplate(int LocalizedMessageTemplateID)
+        /// <param name="localizedMessageTemplateId">Message template identifier</param>
+        public override void DeleteLocalizedMessageTemplate(int localizedMessageTemplateId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MessageTemplateLocalizedDelete");
-            db.AddInParameter(dbCommand, "MessageTemplateLocalizedID", DbType.Int32, LocalizedMessageTemplateID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "MessageTemplateLocalizedID", DbType.Int32, localizedMessageTemplateId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets all localized message templates
         /// </summary>
-        /// <param name="MessageTemplatesName">Message template name</param>
+        /// <param name="messageTemplateName">Message template name</param>
         /// <returns>Localized message template collection</returns>
-        public override DBLocalizedMessageTemplateCollection GetAllLocalizedMessageTemplates(string MessageTemplatesName)
+        public override DBLocalizedMessageTemplateCollection GetAllLocalizedMessageTemplates(string messageTemplateName)
         {
             var result = new DBLocalizedMessageTemplateCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MessageTemplateLocalizedLoadAllByName");
-            db.AddInParameter(dbCommand, "Name", DbType.String, MessageTemplatesName);
+            db.AddInParameter(dbCommand, "Name", DbType.String, messageTemplateName);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -250,131 +251,131 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Inserts a localized message template
         /// </summary>
-        /// <param name="MessageTemplateID">The message template identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="IsActive">A value indicating whether the message template is active</param>
+        /// <param name="messageTemplateId">The message template identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="bccEmailAddresses">The BCC Email addresses</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="isActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
-        public override DBLocalizedMessageTemplate InsertLocalizedMessageTemplate(int MessageTemplateID,
-            int LanguageID, string BCCEmailAddresses, string Subject, string Body, bool IsActive)
+        public override DBLocalizedMessageTemplate InsertLocalizedMessageTemplate(int messageTemplateId,
+            int languageId, string bccEmailAddresses, string subject, string body, bool isActive)
         {
-            DBLocalizedMessageTemplate localizedMessageTemplate = null;
+            DBLocalizedMessageTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MessageTemplateLocalizedInsert");
             db.AddOutParameter(dbCommand, "MessageTemplateLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "MessageTemplateID", DbType.Int32, MessageTemplateID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "BCCEmailAddresses", DbType.String, BCCEmailAddresses);
-            db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
+            db.AddInParameter(dbCommand, "MessageTemplateID", DbType.Int32, messageTemplateId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "BCCEmailAddresses", DbType.String, bccEmailAddresses);
+            db.AddInParameter(dbCommand, "Subject", DbType.String, subject);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int MessageTemplateLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@MessageTemplateLocalizedID"));
-                localizedMessageTemplate = GetLocalizedMessageTemplateByID(MessageTemplateLocalizedID);
+                int messageTemplateLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@MessageTemplateLocalizedID"));
+                item = GetLocalizedMessageTemplateById(messageTemplateLocalizedId);
             }
-            return localizedMessageTemplate;
+            return item;
         }
 
         /// <summary>
         /// Updates the localized message template
         /// </summary>
-        /// <param name="MessageTemplateLocalizedID">The localized message template identifier</param>
-        /// <param name="MessageTemplateID">The message template identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="IsActive">A value indicating whether the message template is active</param>
+        /// <param name="messageTemplateLocalizedId">The localized message template identifier</param>
+        /// <param name="messageTemplateId">The message template identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="bccEmailAddresses">The BCC Email addresses</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="isActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
-        public override DBLocalizedMessageTemplate UpdateLocalizedMessageTemplate(int MessageTemplateLocalizedID,
-            int MessageTemplateID, int LanguageID, string BCCEmailAddresses,
-            string Subject, string Body, bool IsActive)
+        public override DBLocalizedMessageTemplate UpdateLocalizedMessageTemplate(int messageTemplateLocalizedId,
+            int messageTemplateId, int languageId, string bccEmailAddresses,
+            string subject, string body, bool isActive)
         {
-            DBLocalizedMessageTemplate localizedMessageTemplate = null;
+            DBLocalizedMessageTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_MessageTemplateLocalizedUpdate");
-            db.AddInParameter(dbCommand, "MessageTemplateLocalizedID", DbType.Int32, MessageTemplateLocalizedID);
-            db.AddInParameter(dbCommand, "MessageTemplateID", DbType.Int32, MessageTemplateID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "BCCEmailAddresses", DbType.String, BCCEmailAddresses);
-            db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
+            db.AddInParameter(dbCommand, "MessageTemplateLocalizedID", DbType.Int32, messageTemplateLocalizedId);
+            db.AddInParameter(dbCommand, "MessageTemplateID", DbType.Int32, messageTemplateId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "BCCEmailAddresses", DbType.String, bccEmailAddresses);
+            db.AddInParameter(dbCommand, "Subject", DbType.String, subject);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                localizedMessageTemplate = GetLocalizedMessageTemplateByID(MessageTemplateLocalizedID);
+                item = GetLocalizedMessageTemplateById(messageTemplateLocalizedId);
 
-            return localizedMessageTemplate;
+            return item;
         }
 
         /// <summary>
         /// Gets a queued email by identifier
         /// </summary>
-        /// <param name="QueuedEmailID">Email item identifier</param>
+        /// <param name="queuedEmailId">Email item identifier</param>
         /// <returns>Email item</returns>
-        public override DBQueuedEmail GetQueuedEmailByID(int QueuedEmailID)
+        public override DBQueuedEmail GetQueuedEmailById(int queuedEmailId)
         {
-            DBQueuedEmail queuedEmail = null;
-            if (QueuedEmailID == 0)
-                return queuedEmail;
+            DBQueuedEmail item = null;
+            if (queuedEmailId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_QueuedEmailLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "QueuedEmailID", DbType.Int32, QueuedEmailID);
+            db.AddInParameter(dbCommand, "QueuedEmailID", DbType.Int32, queuedEmailId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    queuedEmail = GetQueuedEmailFromReader(dataReader);
+                    item = GetQueuedEmailFromReader(dataReader);
                 }
             }
-            return queuedEmail;
+            return item;
         }
 
         /// <summary>
         /// Deletes a queued email
         /// </summary>
-        /// <param name="QueuedEmailID">Email item identifier</param>
-        public override void DeleteQueuedEmail(int QueuedEmailID)
+        /// <param name="queuedEmailId">Email item identifier</param>
+        public override void DeleteQueuedEmail(int queuedEmailId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_QueuedEmailDelete");
-            db.AddInParameter(dbCommand, "QueuedEmailID", DbType.Int32, QueuedEmailID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "QueuedEmailID", DbType.Int32, queuedEmailId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets all queued emails
         /// </summary>
-        /// <param name="FromEmail">From Email</param>
-        /// <param name="ToEmail">To Email</param>
-        /// <param name="StartTime">The start time</param>
-        /// <param name="EndTime">The end time</param>
-        /// <param name="QueuedEmailCount">Email item count. 0 if you want to get all items</param>
-        /// <param name="LoadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
-        /// <param name="MaxSendTries">Maximum send tries</param>
+        /// <param name="fromEmail">From Email</param>
+        /// <param name="toEmail">To Email</param>
+        /// <param name="startTime">The start time</param>
+        /// <param name="endTime">The end time</param>
+        /// <param name="queuedEmailCount">Email item count. 0 if you want to get all items</param>
+        /// <param name="loadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
+        /// <param name="maxSendTries">Maximum send tries</param>
         /// <returns>Email item collection</returns>
-        public override DBQueuedEmailCollection GetAllQueuedEmails(string FromEmail,
-            string ToEmail, DateTime? StartTime, DateTime? EndTime,
-            int QueuedEmailCount, bool LoadNotSentItemsOnly, int MaxSendTries)
+        public override DBQueuedEmailCollection GetAllQueuedEmails(string fromEmail,
+            string toEmail, DateTime? startTime, DateTime? endTime,
+            int queuedEmailCount, bool loadNotSentItemsOnly, int maxSendTries)
         {
             var result = new DBQueuedEmailCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_QueuedEmailLoadAll");
-            db.AddInParameter(dbCommand, "FromEmail", DbType.String, FromEmail);
-            db.AddInParameter(dbCommand, "ToEmail", DbType.String, ToEmail);
-            if (StartTime.HasValue)
-                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, StartTime.Value);
+            db.AddInParameter(dbCommand, "FromEmail", DbType.String, fromEmail);
+            db.AddInParameter(dbCommand, "ToEmail", DbType.String, toEmail);
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
             else
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, DBNull.Value);
-            if (EndTime.HasValue)
-                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, EndTime.Value);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
             else
                 db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, DBNull.Value);
-            db.AddInParameter(dbCommand, "QueuedEmailCount", DbType.Int32, QueuedEmailCount);
-            db.AddInParameter(dbCommand, "LoadNotSentItemsOnly", DbType.Boolean, LoadNotSentItemsOnly);
-            db.AddInParameter(dbCommand, "MaxSendTries", DbType.Int32, MaxSendTries);
+            db.AddInParameter(dbCommand, "QueuedEmailCount", DbType.Int32, queuedEmailCount);
+            db.AddInParameter(dbCommand, "LoadNotSentItemsOnly", DbType.Boolean, loadNotSentItemsOnly);
+            db.AddInParameter(dbCommand, "MaxSendTries", DbType.Int32, maxSendTries);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -390,207 +391,201 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Inserts a queued email
         /// </summary>
-        /// <param name="Priority">The priority</param>
-        /// <param name="From">From</param>
-        /// <param name="FromName">From name</param>
-        /// <param name="To">To</param>
-        /// <param name="ToName">To name</param>
-        /// <param name="Cc">Cc</param>
-        /// <param name="Bcc">Bcc</param>
-        /// <param name="Subject">Subject</param>
-        /// <param name="Body">Body</param>
-        /// <param name="CreatedOn">The date and time of item creation</param>
-        /// <param name="SendTries">The send tries</param>
-        /// <param name="SentOn">The sent date and time. Null if email is not sent yet</param>
+        /// <param name="priority">The priority</param>
+        /// <param name="from">From</param>
+        /// <param name="fromName">From name</param>
+        /// <param name="to">To</param>
+        /// <param name="toName">To name</param>
+        /// <param name="cc">Cc</param>
+        /// <param name="bcc">Bcc</param>
+        /// <param name="subject">Subject</param>
+        /// <param name="body">Body</param>
+        /// <param name="createdOn">The date and time of item creation</param>
+        /// <param name="sendTries">The send tries</param>
+        /// <param name="sentOn">The sent date and time. Null if email is not sent yet</param>
         /// <returns>Queued email</returns>
-        public override DBQueuedEmail InsertQueuedEmail(int Priority, string From, string FromName,
-            string To, string ToName, string Cc, string Bcc, string Subject,
-            string Body, DateTime CreatedOn, int SendTries, DateTime? SentOn)
+        public override DBQueuedEmail InsertQueuedEmail(int priority, string from,
+            string fromName, string to, string toName, string cc, string bcc,
+            string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn)
         {
-            DBQueuedEmail queuedEmail = null;
+            DBQueuedEmail item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_QueuedEmailInsert");
             db.AddOutParameter(dbCommand, "QueuedEmailID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Priority", DbType.Int32, Priority);
-            db.AddInParameter(dbCommand, "From", DbType.String, From);
-            db.AddInParameter(dbCommand, "FromName", DbType.String, FromName);
-            db.AddInParameter(dbCommand, "To", DbType.String, To);
-            db.AddInParameter(dbCommand, "ToName", DbType.String, ToName);
-            db.AddInParameter(dbCommand, "Cc", DbType.String, Cc);
-            db.AddInParameter(dbCommand, "Bcc", DbType.String, Bcc);
-            db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "SendTries", DbType.Int32, SendTries);
-            if (SentOn.HasValue)
-                db.AddInParameter(dbCommand, "SentOn", DbType.DateTime, SentOn.Value);
+            db.AddInParameter(dbCommand, "Priority", DbType.Int32, priority);
+            db.AddInParameter(dbCommand, "From", DbType.String, from);
+            db.AddInParameter(dbCommand, "FromName", DbType.String, fromName);
+            db.AddInParameter(dbCommand, "To", DbType.String, to);
+            db.AddInParameter(dbCommand, "ToName", DbType.String, toName);
+            db.AddInParameter(dbCommand, "Cc", DbType.String, cc);
+            db.AddInParameter(dbCommand, "Bcc", DbType.String, bcc);
+            db.AddInParameter(dbCommand, "Subject", DbType.String, subject);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "SendTries", DbType.Int32, sendTries);
+            if (sentOn.HasValue)
+                db.AddInParameter(dbCommand, "SentOn", DbType.DateTime, sentOn.Value);
             else
                 db.AddInParameter(dbCommand, "SentOn", DbType.DateTime, DBNull.Value);
 
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int QueuedEmailID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@QueuedEmailID"));
-                queuedEmail = GetQueuedEmailByID(QueuedEmailID);
+                int queuedEmailId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@QueuedEmailID"));
+                item = GetQueuedEmailById(queuedEmailId);
             }
-            return queuedEmail;
+            return item;
         }
 
         /// <summary>
         /// Updates a queued email
         /// </summary>
-        /// <param name="QueuedEmailID">Email item identifier</param>
-        /// <param name="Priority">The priority</param>
-        /// <param name="From">From</param>
-        /// <param name="FromName">From name</param>
-        /// <param name="To">To</param>
-        /// <param name="ToName">To name</param>
-        /// <param name="Cc">Cc</param>
-        /// <param name="Bcc">Bcc</param>
-        /// <param name="Subject">Subject</param>
-        /// <param name="Body">Body</param>
-        /// <param name="CreatedOn">The date and time of item creation</param>
-        /// <param name="SendTries">The send tries</param>
-        /// <param name="SentOn">The sent date and time. Null if email is not sent yet</param>
+        /// <param name="queuedEmailId">Email item identifier</param>
+        /// <param name="priority">The priority</param>
+        /// <param name="from">From</param>
+        /// <param name="fromName">From name</param>
+        /// <param name="to">To</param>
+        /// <param name="toName">To name</param>
+        /// <param name="cc">Cc</param>
+        /// <param name="bcc">Bcc</param>
+        /// <param name="subject">Subject</param>
+        /// <param name="body">Body</param>
+        /// <param name="createdOn">The date and time of item creation</param>
+        /// <param name="sendTries">The send tries</param>
+        /// <param name="sentOn">The sent date and time. Null if email is not sent yet</param>
         /// <returns>Queued email</returns>
-        public override DBQueuedEmail UpdateQueuedEmail(int QueuedEmailID, int Priority,
-            string From, string FromName, string To, string ToName, string Cc, string Bcc,
-            string Subject, string Body, DateTime CreatedOn, int SendTries, DateTime? SentOn)
+        public override DBQueuedEmail UpdateQueuedEmail(int queuedEmailId,
+            int priority, string from,
+            string fromName, string to, string toName, string cc, string bcc,
+            string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn)
         {
-            DBQueuedEmail queuedEmail = null;
+            DBQueuedEmail item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_QueuedEmailUpdate");
-            db.AddInParameter(dbCommand, "QueuedEmailID", DbType.Int32, QueuedEmailID);
-            db.AddInParameter(dbCommand, "Priority", DbType.Int32, Priority);
-            db.AddInParameter(dbCommand, "From", DbType.String, From);
-            db.AddInParameter(dbCommand, "FromName", DbType.String, FromName);
-            db.AddInParameter(dbCommand, "To", DbType.String, To);
-            db.AddInParameter(dbCommand, "ToName", DbType.String, ToName);
-            db.AddInParameter(dbCommand, "Cc", DbType.String, Cc);
-            db.AddInParameter(dbCommand, "Bcc", DbType.String, Bcc);
-            db.AddInParameter(dbCommand, "Subject", DbType.String, Subject);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "SendTries", DbType.Int32, SendTries);
-            if (SentOn.HasValue)
-                db.AddInParameter(dbCommand, "SentOn", DbType.DateTime, SentOn.Value);
+            db.AddInParameter(dbCommand, "QueuedEmailID", DbType.Int32, queuedEmailId);
+            db.AddInParameter(dbCommand, "Priority", DbType.Int32, priority);
+            db.AddInParameter(dbCommand, "From", DbType.String, from);
+            db.AddInParameter(dbCommand, "FromName", DbType.String, fromName);
+            db.AddInParameter(dbCommand, "To", DbType.String, to);
+            db.AddInParameter(dbCommand, "ToName", DbType.String, toName);
+            db.AddInParameter(dbCommand, "Cc", DbType.String, cc);
+            db.AddInParameter(dbCommand, "Bcc", DbType.String, bcc);
+            db.AddInParameter(dbCommand, "Subject", DbType.String, subject);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "SendTries", DbType.Int32, sendTries);
+            if (sentOn.HasValue)
+                db.AddInParameter(dbCommand, "SentOn", DbType.DateTime, sentOn.Value);
             else
                 db.AddInParameter(dbCommand, "SentOn", DbType.DateTime, DBNull.Value);
 
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                queuedEmail = GetQueuedEmailByID(QueuedEmailID);
+                item = GetQueuedEmailById(queuedEmailId);
 
-            return queuedEmail;
+            return item;
         }
 
         /// <summary>
         /// Inserts the new newsletter subscription
         /// </summary>
-        /// <param name="NewsLetterSubscriptionGuid">The newsletter subscription GUID</param>
-        /// <param name="Email">The subscriber email</param>
-        /// <param name="IsActive">A value indicating whether subscription is active</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsLetterSubscriptionGuid">The newsletter subscription GUID</param>
+        /// <param name="email">The subscriber email</param>
+        /// <param name="isActive">A value indicating whether subscription is active</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public override DBNewsLetterSubscription InsertNewsLetterSubscription(Guid NewsLetterSubscriptionGuid, string Email, bool IsActive, DateTime CreatedOn)
+        public override DBNewsLetterSubscription InsertNewsLetterSubscription(Guid newsLetterSubscriptionGuid,
+            string email, bool isActive, DateTime createdOn)
         {
-            DBNewsLetterSubscription dbItem = null;
+            DBNewsLetterSubscription item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLetterSubscriptionInsert");
 
             db.AddOutParameter(dbCommand, "NewsLetterSubscriptionID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "NewsLetterSubscriptionGuid", DbType.Guid, NewsLetterSubscriptionGuid);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "NewsLetterSubscriptionGuid", DbType.Guid, newsLetterSubscriptionGuid);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
 
             if(db.ExecuteNonQuery(dbCommand) > 0)
             {
-                dbItem = GetNewsLetterSubscriptionByID(Convert.ToInt32(db.GetParameterValue(dbCommand, "@NewsLetterSubscriptionID")));
+                item = GetNewsLetterSubscriptionById(Convert.ToInt32(db.GetParameterValue(dbCommand, "@NewsLetterSubscriptionID")));
             }
-            return dbItem;
+            return item;
         }
 
         /// <summary>
         /// Gets the newsletter subscription by newsletter subscription identifier
         /// </summary>
-        /// <param name="NewsLetterSubscriptionID">The newsletter subscription identifier</param>
+        /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public override DBNewsLetterSubscription GetNewsLetterSubscriptionByID(int NewsLetterSubscriptionID)
+        public override DBNewsLetterSubscription GetNewsLetterSubscriptionById(int newsLetterSubscriptionId)
         {
-            DBNewsLetterSubscription dbItem = null;
+            DBNewsLetterSubscription item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLetterSubscriptionLoadByPrimaryKey");
-
-            db.AddInParameter(dbCommand, "NewsLetterSubscriptionID", DbType.Int32, NewsLetterSubscriptionID);
-
+            db.AddInParameter(dbCommand, "NewsLetterSubscriptionID", DbType.Int32, newsLetterSubscriptionId);
             using(IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if(dataReader.Read())
                 {
-                    dbItem = GetNewsLetterSubscriptionFromReader(dataReader);
+                    item = GetNewsLetterSubscriptionFromReader(dataReader);
                 }
             }
-            return dbItem;
+            return item;
         }
 
         /// <summary>
         /// Gets the newsletter subscription by newsletter subscription GUID
         /// </summary>
-        /// <param name="NewsLetterSubscriptionGuid">The newsletter subscription GUID</param>
+        /// <param name="newsLetterSubscriptionGuid">The newsletter subscription GUID</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public override DBNewsLetterSubscription GetNewsLetterSubscriptionByGUID(Guid NewsLetterSubscriptionGuid)
+        public override DBNewsLetterSubscription GetNewsLetterSubscriptionByGuid(Guid newsLetterSubscriptionGuid)
         {
-            DBNewsLetterSubscription dbItem = null;
+            DBNewsLetterSubscription item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLetterSubscriptionLoadByGuid");
-
-            db.AddInParameter(dbCommand, "NewsLetterSubscriptionGuid", DbType.Guid, NewsLetterSubscriptionGuid);
-
+            db.AddInParameter(dbCommand, "NewsLetterSubscriptionGuid", DbType.Guid, newsLetterSubscriptionGuid);
             using(IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if(dataReader.Read())
                 {
-                    dbItem = GetNewsLetterSubscriptionFromReader(dataReader);
+                    item = GetNewsLetterSubscriptionFromReader(dataReader);
                 }
             }
-            return dbItem;
+            return item;
         }
 
         /// <summary>
         /// Gets the newsletter subscription by email
         /// </summary>
-        /// <param name="Email">The Email</param>
+        /// <param name="email">The Email</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public override DBNewsLetterSubscription GetNewsLetterSubscriptionByEmail(string Email)
+        public override DBNewsLetterSubscription GetNewsLetterSubscriptionByEmail(string email)
         {
-            DBNewsLetterSubscription dbItem = null;
+            DBNewsLetterSubscription item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLetterSubscriptionLoadByEmail");
-
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
             using(IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if(dataReader.Read())
                 {
-                    dbItem = GetNewsLetterSubscriptionFromReader(dataReader);
+                    item = GetNewsLetterSubscriptionFromReader(dataReader);
                 }
             }
-            return dbItem;
+            return item;
         }
 
         /// <summary>
         /// Gets the newsletter subscription collection
         /// </summary>
-        /// <param name="ShowHidden">A value indicating whether the not active subscriptions should be loaded</param>
+        /// <param name="showHidden">A value indicating whether the not active subscriptions should be loaded</param>
         /// <returns>NewsLetterSubscription entity collection</returns>
-        public override DBNewsLetterSubscriptionCollection GetAllNewsLetterSubscriptions(bool ShowHidden)
+        public override DBNewsLetterSubscriptionCollection GetAllNewsLetterSubscriptions(bool showHidden)
         {
             var result = new DBNewsLetterSubscriptionCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLetterSubscriptionLoadAll");
-
-            db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, ShowHidden);
-
+            db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using(IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while(dataReader.Read())
@@ -605,42 +600,40 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Updates the newsletter subscription
         /// </summary>
-        /// <param name="NewsLetterSubscriptionID">The newsletter subscription identifier</param>
-        /// <param name="NewsLetterSubscriptionGuid">The newsletter subscription GUID</param>
-        /// <param name="Email">The subscriber email</param>
-        /// <param name="IsActive">A value indicating whether subscription is active</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
+        /// <param name="newsLetterSubscriptionGuid">The newsletter subscription GUID</param>
+        /// <param name="email">The subscriber email</param>
+        /// <param name="isActive">A value indicating whether subscription is active</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public override DBNewsLetterSubscription UpdateNewsLetterSubscription(int NewsLetterSubscriptionID, Guid NewsLetterSubscriptionGuid, string Email, bool IsActive, DateTime CreatedOn)
+        public override DBNewsLetterSubscription UpdateNewsLetterSubscription(int newsLetterSubscriptionId,
+            Guid newsLetterSubscriptionGuid, string email, bool isActive, DateTime createdOn)
         {
-            DBNewsLetterSubscription dbItem = null;
+            DBNewsLetterSubscription item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLetterSubscriptionUpdate");
-
-            db.AddInParameter(dbCommand, "NewsLetterSubscriptionID", DbType.Int32, NewsLetterSubscriptionID);
-            db.AddInParameter(dbCommand, "NewsLetterSubscriptionGuid", DbType.Guid, NewsLetterSubscriptionGuid);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "NewsLetterSubscriptionID", DbType.Int32, newsLetterSubscriptionId);
+            db.AddInParameter(dbCommand, "NewsLetterSubscriptionGuid", DbType.Guid, newsLetterSubscriptionGuid);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
 
             if(db.ExecuteNonQuery(dbCommand) > 0)
             {
-                dbItem = GetNewsLetterSubscriptionByID(NewsLetterSubscriptionID);
+                item = GetNewsLetterSubscriptionById(newsLetterSubscriptionId);
             }
-            return dbItem;
+            return item;
         }
 
         /// <summary>
         /// Deletes the newsletter subscription
         /// </summary>
-        /// <param name="NewsLetterSubscriptionID">The newsletter subscription identifier</param>
-        public override void DeleteNewsLetterSubscription(int NewsLetterSubscriptionID)
+        /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
+        public override void DeleteNewsLetterSubscription(int newsLetterSubscriptionId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLetterSubscriptionDelete");
-
-            db.AddInParameter(dbCommand, "NewsLetterSubscriptionID", DbType.Int32, NewsLetterSubscriptionID);
-
+            db.AddInParameter(dbCommand, "NewsLetterSubscriptionID", DbType.Int32, newsLetterSubscriptionId);
             db.ExecuteNonQuery(dbCommand);
         }
         #endregion

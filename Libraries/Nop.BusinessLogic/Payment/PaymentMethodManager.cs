@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return null;
 
             var item = new PaymentMethod();
-            item.PaymentMethodID = dbItem.PaymentMethodID;
+            item.PaymentMethodId = dbItem.PaymentMethodId;
             item.Name = dbItem.Name;
             item.VisibleName = dbItem.VisibleName;
             item.Description = dbItem.Description;
@@ -76,10 +76,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Deletes a payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
-        public static void DeletePaymentMethod(int PaymentMethodID)
+        /// <param name="paymentMethodId">Payment method identifier</param>
+        public static void DeletePaymentMethod(int paymentMethodId)
         {
-            DBProviderManager<DBPaymentMethodProvider>.Provider.DeletePaymentMethod(PaymentMethodID);
+            DBProviderManager<DBPaymentMethodProvider>.Provider.DeletePaymentMethod(paymentMethodId);
 
             if (PaymentMethodManager.CacheEnabled)
             {
@@ -90,21 +90,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>Payment method</returns>
-        public static PaymentMethod GetPaymentMethodByID(int PaymentMethodID)
+        public static PaymentMethod GetPaymentMethodById(int paymentMethodId)
         {
-            if (PaymentMethodID == 0)
+            if (paymentMethodId == 0)
                 return null;
 
-            string key = string.Format(PAYMENTMETHODS_BY_ID_KEY, PaymentMethodID);
+            string key = string.Format(PAYMENTMETHODS_BY_ID_KEY, paymentMethodId);
             object obj2 = NopCache.Get(key);
             if (PaymentMethodManager.CacheEnabled && (obj2 != null))
             {
                 return (PaymentMethod)obj2;
             }
 
-            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.GetPaymentMethodByID(PaymentMethodID);
+            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.GetPaymentMethodById(paymentMethodId);
             var paymentMethod = DBMapping(dbItem);
 
             if (PaymentMethodManager.CacheEnabled)
@@ -117,11 +117,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a payment method
         /// </summary>
-        /// <param name="SystemKeyword">Payment method system keyword</param>
+        /// <param name="systemKeyword">Payment method system keyword</param>
         /// <returns>Payment method</returns>
-        public static PaymentMethod GetPaymentMethodBySystemKeyword(string SystemKeyword)
+        public static PaymentMethod GetPaymentMethodBySystemKeyword(string systemKeyword)
         {
-            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.GetPaymentMethodBySystemKeyword(SystemKeyword);
+            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.GetPaymentMethodBySystemKeyword(systemKeyword);
             var paymentMethod = DBMapping(dbItem);
             return paymentMethod;
         }
@@ -138,24 +138,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets all payment methods
         /// </summary>
-        /// <param name="FilterByCountryID">The country indentifier</param>
+        /// <param name="filterByCountryId">The country indentifier</param>
         /// <returns>Payment method collection</returns>
-        public static PaymentMethodCollection GetAllPaymentMethods(int? FilterByCountryID)
+        public static PaymentMethodCollection GetAllPaymentMethods(int? filterByCountryId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
 
-            return GetAllPaymentMethods(FilterByCountryID, showHidden);
+            return GetAllPaymentMethods(filterByCountryId, showHidden);
         }
 
         /// <summary>
         /// Gets all payment methods
         /// </summary>
-        /// <param name="FilterByCountryID">The country indentifier</param>
-        /// <param name="ShowHidden">A value indicating whether the not active payment methods should be load</param>
+        /// <param name="filterByCountryId">The country indentifier</param>
+        /// <param name="showHidden">A value indicating whether the not active payment methods should be load</param>
         /// <returns>Payment method collection</returns>
-        public static PaymentMethodCollection GetAllPaymentMethods(int? FilterByCountryID, bool ShowHidden)
+        public static PaymentMethodCollection GetAllPaymentMethods(int? filterByCountryId, bool showHidden)
         {
-            var dbCollection = DBProviderManager<DBPaymentMethodProvider>.Provider.GetAllPaymentMethods(ShowHidden, FilterByCountryID);
+            var dbCollection = DBProviderManager<DBPaymentMethodProvider>.Provider.GetAllPaymentMethods(showHidden, filterByCountryId);
             var paymentMethodCollection = DBMapping(dbCollection);
 
             return paymentMethodCollection;
@@ -164,22 +164,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Inserts a payment method
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="VisibleName">The visible name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="UserTemplatePath">The user template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="IsActive">A value indicating whether the payment method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="visibleName">The visible name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="userTemplatePath">The user template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="isActive">A value indicating whether the payment method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
-        public static PaymentMethod InsertPaymentMethod(string Name, string VisibleName, string Description,
-           string ConfigureTemplatePath, string UserTemplatePath, string ClassName, string SystemKeyword, bool IsActive, int DisplayOrder)
+        public static PaymentMethod InsertPaymentMethod(string name,
+            string visibleName, string description, string configureTemplatePath,
+            string userTemplatePath, string className, string systemKeyword,
+            bool isActive, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.InsertPaymentMethod(Name, VisibleName, 
-                Description, ConfigureTemplatePath, UserTemplatePath, ClassName,
-                SystemKeyword, IsActive, DisplayOrder);
+            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.InsertPaymentMethod(name, visibleName, 
+                description, configureTemplatePath, userTemplatePath, className,
+                systemKeyword, isActive, displayOrder);
 
             var paymentMethod = DBMapping(dbItem);
             if (PaymentMethodManager.CacheEnabled)
@@ -192,23 +194,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Updates the payment method
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifer</param>
-        /// <param name="Name">The name</param>
-        /// <param name="VisibleName">The visible name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="UserTemplatePath">The user template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="IsActive">A value indicating whether the payment method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="paymentMethodId">The payment method identifer</param>
+        /// <param name="name">The name</param>
+        /// <param name="visibleName">The visible name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="userTemplatePath">The user template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="isActive">A value indicating whether the payment method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
-        public static PaymentMethod UpdatePaymentMethod(int PaymentMethodID, string Name, string VisibleName, string Description,
-           string ConfigureTemplatePath, string UserTemplatePath, string ClassName, string SystemKeyword, bool IsActive, int DisplayOrder)
+        public static PaymentMethod UpdatePaymentMethod(int paymentMethodId,
+            string name, string visibleName, string description, string configureTemplatePath,
+            string userTemplatePath, string className, string systemKeyword,
+            bool isActive, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.UpdatePaymentMethod(PaymentMethodID, Name,
-                VisibleName, Description, ConfigureTemplatePath, UserTemplatePath, 
-                ClassName, SystemKeyword, IsActive, DisplayOrder);
+            var dbItem = DBProviderManager<DBPaymentMethodProvider>.Provider.UpdatePaymentMethod(paymentMethodId, 
+                name, visibleName, description, configureTemplatePath, userTemplatePath, 
+                className, systemKeyword, isActive, displayOrder);
 
             var paymentMethod = DBMapping(dbItem);
 
@@ -222,32 +226,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Creates the payment method country mapping
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        public static void CreatePaymentMethodCountryMapping(int PaymentMethodID, int CountryID)
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public static void CreatePaymentMethodCountryMapping(int paymentMethodId, int countryId)
         {
-            DBProviderManager<DBPaymentMethodProvider>.Provider.InsertPaymentMethodCountryMapping(PaymentMethodID, CountryID);
+            DBProviderManager<DBPaymentMethodProvider>.Provider.InsertPaymentMethodCountryMapping(paymentMethodId, countryId);
         }
 
         /// <summary>
         /// Checking whether the payment method country mapping is exists
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public static bool IsPaymentMethodCountryMappingExists(int PaymentMethodID, int CountryID)
+        public static bool IsPaymentMethodCountryMappingExists(int paymentMethodId, int countryId)
         {
-            return DBProviderManager<DBPaymentMethodProvider>.Provider.IsPaymentMethodCountryMappingExists(PaymentMethodID, CountryID);
+            return DBProviderManager<DBPaymentMethodProvider>.Provider.IsPaymentMethodCountryMappingExists(paymentMethodId, countryId);
         }
 
         /// <summary>
         /// Deletes the payment method country mapping
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        public static void DeletePaymentMethodCountryMapping(int PaymentMethodID, int CountryID)
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public static void DeletePaymentMethodCountryMapping(int paymentMethodId, int countryId)
         {
-            DBProviderManager<DBPaymentMethodProvider>.Provider.DeletePaymentMethodCountryMapping(PaymentMethodID, CountryID);
+            DBProviderManager<DBPaymentMethodProvider>.Provider.DeletePaymentMethodCountryMapping(paymentMethodId, countryId);
         }
         #endregion
 

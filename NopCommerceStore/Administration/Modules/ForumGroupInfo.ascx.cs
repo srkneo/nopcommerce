@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ForumGroup forumGroup = ForumManager.GetForumGroupByID(this.ForumGroupID);
+            ForumGroup forumGroup = ForumManager.GetForumGroupById(this.ForumGroupId);
             if (forumGroup != null)
             {
                 this.txtName.Text = forumGroup.Name;
@@ -62,11 +62,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public ForumGroup SaveInfo()
         {
-            ForumGroup forumGroup = ForumManager.GetForumGroupByID(this.ForumGroupID);
+            ForumGroup forumGroup = ForumManager.GetForumGroupById(this.ForumGroupId);
             DateTime nowDT = DateTime.Now;
             if (forumGroup != null)
             {
-                forumGroup = ForumManager.UpdateForumGroup(forumGroup.ForumGroupID,
+                forumGroup = ForumManager.UpdateForumGroup(forumGroup.ForumGroupId,
                     txtName.Text, txtDescription.Text, txtDisplayOrder.Value, forumGroup.CreatedOn, nowDT);
             }
             else
@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ForumManager.DeleteForumGroup(this.ForumGroupID);
+                ForumManager.DeleteForumGroup(this.ForumGroupId);
                 Response.Redirect("Forums.aspx");
             }
             catch (Exception exc)
@@ -91,11 +91,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ForumGroupID
+        public int ForumGroupId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ForumGroupID");
+                return CommonHelper.QueryStringInt("ForumGroupId");
             }
         }
     }

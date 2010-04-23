@@ -2,7 +2,7 @@
     CodeBehind="PrivateMessagesInbox.ascx.cs" %>
 <div class="private-messages-box">
     <div class="PrivateMessages">
-        <asp:GridView ID="gvInbox" DataKeyNames="PrivateMessageID" runat="server" AllowPaging="True"
+        <asp:GridView ID="gvInbox" DataKeyNames="PrivateMessageId" runat="server" AllowPaging="True"
             AutoGenerateColumns="False" CellPadding="4" DataSourceID="odsInbox" GridLines="None"
             PageSize="10" CssClass="pmgridtablestyle">
             <AlternatingRowStyle CssClass="pmgridaltrowstyle" />
@@ -13,13 +13,13 @@
                 <asp:TemplateField HeaderText="" ItemStyle-Width="5%">
                     <ItemTemplate>
                         <asp:CheckBox ID="cbSelect" runat="server" />
-                        <asp:HiddenField ID="hfPrivateMessageID" runat="server" Value='<%# Eval("PrivateMessageID") %>' />
+                        <asp:HiddenField ID="hfPrivateMessageId" runat="server" Value='<%# Eval("PrivateMessageId") %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="<% $NopResources:PrivateMessages.Inbox.FromColumn %>"
                     ItemStyle-Width="20%">
                     <ItemTemplate>
-                        <%#GetFromInfo(Convert.ToInt32(Eval("FromUserID")))%>
+                        <%#GetFromInfo(Convert.ToInt32(Eval("FromUserId")))%>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="<% $NopResources:PrivateMessages.Inbox.SubjectColumn %>"

@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
                 return null;
 
             var item = new Campaign();
-            item.CampaignID = dbItem.CampaignID;
+            item.CampaignId = dbItem.CampaignId;
             item.Name = dbItem.Name;
             item.Subject = dbItem.Subject;
             item.Body = dbItem.Body;
@@ -71,14 +71,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <summary>
         /// Gets a campaign by campaign identifier
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
+        /// <param name="campaignId">Campaign identifier</param>
         /// <returns>Message template</returns>
-        public static Campaign GetCampaignByID(int CampaignID)
+        public static Campaign GetCampaignById(int campaignId)
         {
-            if (CampaignID == 0)
+            if (campaignId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.GetCampaignByID(CampaignID);
+            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.GetCampaignById(campaignId);
             var campaign = DBMapping(dbItem);
             return campaign;
         }
@@ -86,10 +86,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <summary>
         /// Deletes a campaign
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
-        public static void DeleteCampaign(int CampaignID)
+        /// <param name="campaignId">Campaign identifier</param>
+        public static void DeleteCampaign(int campaignId)
         {
-            DBProviderManager<DBCampaignProvider>.Provider.DeleteCampaign(CampaignID);
+            DBProviderManager<DBCampaignProvider>.Provider.DeleteCampaign(campaignId);
         }
 
         /// <summary>
@@ -106,16 +106,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <summary>
         /// Inserts a campaign
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="name">The name</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Campaign</returns>
-        public static Campaign InsertCampaign(string Name, string Subject, string Body, DateTime CreatedOn)
+        public static Campaign InsertCampaign(string name,
+            string subject, string body, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.InsertCampaign(Name, Subject, Body, CreatedOn);
+            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.InsertCampaign(name, 
+                subject, body, createdOn);
             var campaign = DBMapping(dbItem);
             return campaign;
         }
@@ -123,18 +125,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <summary>
         /// Updates the campaign
         /// </summary>
-        /// <param name="CampaignID">The campaign identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="campaignId">The campaign identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Campaign</returns>
-        public static Campaign UpdateCampaign(int CampaignID,
-           string Name, string Subject, string Body, DateTime CreatedOn)
+        public static Campaign UpdateCampaign(int campaignId,
+            string name, string subject, string body, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.UpdateCampaign(CampaignID, Name, Subject, Body, CreatedOn);
+            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.UpdateCampaign(campaignId, 
+                name, subject, body, createdOn);
             var campaign = DBMapping(dbItem);
             return campaign;
         }
@@ -142,20 +145,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <summary>
         /// Sends a campaign to specified emails
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
-        /// <param name="Subscriptions">Subscriptions</param>
+        /// <param name="campaignId">Campaign identifier</param>
+        /// <param name="subscriptions">Subscriptions</param>
         /// <returns>Total emails sent</returns>
-        public static int SendCampaign(int CampaignID, NewsLetterSubscriptionCollection Subscriptions)
+        public static int SendCampaign(int campaignId, 
+            NewsLetterSubscriptionCollection subscriptions)
         {
             int totalEmailsSent = 0;
-            var campaign = GetCampaignByID(CampaignID);
+            var campaign = GetCampaignById(campaignId);
 
             if(campaign == null)
             {
                 throw new NopException("Campaign could not be loaded");
             }
 
-            foreach (var subscription in Subscriptions)
+            foreach (var subscription in subscriptions)
             {
                 string subject = MessageManager.ReplaceMessageTemplateTokens(subscription, campaign.Subject);
                 string body = MessageManager.ReplaceMessageTemplateTokens(subscription, campaign.Body);
@@ -170,11 +174,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <summary>
         /// Sends a campaign to specified email
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
-        /// <param name="Email">Email</param>
-        public static void SendCampaign(int CampaignID, string Email)
+        /// <param name="campaignId">Campaign identifier</param>
+        /// <param name="email">Email</param>
+        public static void SendCampaign(int campaignId, string email)
         {
-            var campaign = GetCampaignByID(CampaignID);
+            var campaign = GetCampaignById(campaignId);
             if(campaign == null)
             {
                 throw new NopException("Campaign could not be loaded");
@@ -183,7 +187,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
             string subject = campaign.Subject;
             string body = campaign.Body;
             var from = new MailAddress(MessageManager.AdminEmailAddress, MessageManager.AdminEmailDisplayName);
-            var to = new MailAddress(Email);
+            var to = new MailAddress(email);
             MessageManager.SendEmail(subject, body, from, to);
         }
         #endregion

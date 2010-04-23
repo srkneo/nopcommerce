@@ -190,14 +190,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
             customer.City = txtCity.Text;
             customer.PhoneNumber = txtPhoneNumber.Text;
             customer.FaxNumber = txtFaxNumber.Text;
-            customer.CountryID = int.Parse(ddlCountry.SelectedItem.Value);
-            customer.StateProvinceID = int.Parse(ddlStateProvince.SelectedItem.Value);
+            customer.CountryId = int.Parse(ddlCountry.SelectedItem.Value);
+            customer.StateProvinceId = int.Parse(ddlStateProvince.SelectedItem.Value);
             customer.ReceiveNewsletter = cbNewsletter.Checked;
 
             //billing address
             var billingAddress = new Address()
             {
-                CustomerID = customer.CustomerID,
+                CustomerId = customer.CustomerId,
                 IsBillingAddress = true,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
@@ -208,25 +208,25 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 Address1 = customer.StreetAddress,
                 Address2 = customer.StreetAddress2,
                 City = customer.City,
-                StateProvinceID = customer.StateProvinceID,
+                StateProvinceId = customer.StateProvinceId,
                 ZipPostalCode = customer.ZipPostalCode,
-                CountryID = customer.CountryID,
+                CountryId = customer.CountryId,
                 CreatedOn = customer.RegistrationDate
             };
             if (CustomerManager.CanUseAddressAsBillingAddress(billingAddress))
             {
-                billingAddress = CustomerManager.InsertAddress(billingAddress.CustomerID, billingAddress.IsBillingAddress,
+                billingAddress = CustomerManager.InsertAddress(billingAddress.CustomerId, billingAddress.IsBillingAddress,
                     billingAddress.FirstName, billingAddress.LastName, billingAddress.PhoneNumber,
                     billingAddress.Email, billingAddress.FaxNumber, billingAddress.Company,
                     billingAddress.Address1, billingAddress.Address2,
-                    billingAddress.City, billingAddress.StateProvinceID,
-                    billingAddress.ZipPostalCode, billingAddress.CountryID, DateTime.Now, DateTime.Now);
+                    billingAddress.City, billingAddress.StateProvinceId,
+                    billingAddress.ZipPostalCode, billingAddress.CountryId, DateTime.Now, DateTime.Now);
             }
 
             //shipping address
             var shippingAddress = new Address()
             {
-                CustomerID = customer.CustomerID,
+                CustomerId = customer.CustomerId,
                 IsBillingAddress = false,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
@@ -237,19 +237,19 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 Address1 = customer.StreetAddress,
                 Address2 = customer.StreetAddress2,
                 City = customer.City,
-                StateProvinceID = customer.StateProvinceID,
+                StateProvinceId = customer.StateProvinceId,
                 ZipPostalCode = customer.ZipPostalCode,
-                CountryID = customer.CountryID,
+                CountryId = customer.CountryId,
                 CreatedOn = customer.RegistrationDate
             };
             if (CustomerManager.CanUseAddressAsShippingAddress(shippingAddress))
             {
-                shippingAddress = CustomerManager.InsertAddress(shippingAddress.CustomerID, shippingAddress.IsBillingAddress,
+                shippingAddress = CustomerManager.InsertAddress(shippingAddress.CustomerId, shippingAddress.IsBillingAddress,
                     shippingAddress.FirstName, shippingAddress.LastName, shippingAddress.PhoneNumber,
                     shippingAddress.Email, shippingAddress.FaxNumber, shippingAddress.Company,
                     shippingAddress.Address1, shippingAddress.Address2,
-                    shippingAddress.City, shippingAddress.StateProvinceID,
-                    shippingAddress.ZipPostalCode, shippingAddress.CountryID, DateTime.Now, DateTime.Now);
+                    shippingAddress.City, shippingAddress.StateProvinceId,
+                    shippingAddress.ZipPostalCode, shippingAddress.CountryId, DateTime.Now, DateTime.Now);
             }
         }
 
@@ -287,7 +287,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var countryCollection = CountryManager.GetAllCountriesForRegistration();
             foreach (var country in countryCollection)
             {
-                var ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                var ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -297,14 +297,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var ddlCountry = (DropDownList)CreateUserWizardStep1.ContentTemplateContainer.FindControl("ddlCountry");
             var ddlStateProvince = (DropDownList)CreateUserWizardStep1.ContentTemplateContainer.FindControl("ddlStateProvince");
             ddlStateProvince.Items.Clear();
-            int countryID = 0;
+            int countryId = 0;
             if (ddlCountry.SelectedItem != null)
-                countryID = int.Parse(ddlCountry.SelectedItem.Value);
+                countryId = int.Parse(ddlCountry.SelectedItem.Value);
 
-            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (var stateProvince in stateProvinceCollection)
             {
-                var ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceID.ToString());
+                var ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
                 ddlStateProvince.Items.Add(ddlStateProviceItem2);
             }
             if (stateProvinceCollection.Count == 0)

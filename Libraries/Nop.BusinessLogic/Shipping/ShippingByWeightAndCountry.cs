@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets or sets the ShippingByWeightAndCountry identifier
         /// </summary>
-        public int ShippingByWeightAndCountryID { get; set; }
+        public int ShippingByWeightAndCountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping method identifier
         /// </summary>
-        public int ShippingMethodID { get; set; }
+        public int ShippingMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the "from" value
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             get
             {
-                return ShippingMethodManager.GetShippingMethodByID(ShippingMethodID);
+                return ShippingMethodManager.GetShippingMethodById(this.ShippingMethodId);
             }
         }
 
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             get
             {
-                return CountryManager.GetCountryByID(CountryID);
+                return CountryManager.GetCountryById(this.CountryId);
             }
         }
         #endregion

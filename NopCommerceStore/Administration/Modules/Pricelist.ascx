@@ -14,8 +14,6 @@
     OnPageIndexChanging="gvPricelists_PageIndexChanging" AllowPaging="true" PageSize="15"
     Visible="true">
     <Columns>
-        <asp:BoundField DataField="PricelistID" HeaderText="Pricelist ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Pricelists.Name %>" ItemStyle-Width="80%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("DisplayName").ToString())%>
@@ -24,7 +22,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Pricelists.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="PricelistDetails.aspx?PricelistID=<%#Eval("PricelistID")%>" title="<%#GetLocaleResourceString("Admin.Pricelists.Edit.Tooltip")%>">
+                <a href="PricelistDetails.aspx?PricelistID=<%#Eval("PricelistId")%>" title="<%#GetLocaleResourceString("Admin.Pricelists.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Pricelists.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

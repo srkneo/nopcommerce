@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlShippingTaxClass.Items.Add(itemShippingTaxCategory);
             foreach (TaxCategory taxCategory in taxCategoryCollection)
             {
-                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryID.ToString());
+                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryId.ToString());
                 this.ddlShippingTaxClass.Items.Add(item2);
             }
 
@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlPaymentMethodAdditionalFeeTaxClass.Items.Add(itemPaymentMethodAdditionalFeeTaxCategory);
             foreach (TaxCategory taxCategory in taxCategoryCollection)
             {
-                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryID.ToString());
+                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryId.ToString());
                 this.ddlPaymentMethodAdditionalFeeTaxClass.Items.Add(item2);
             }
         }
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CountryCollection countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlTaxDefaultCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -100,12 +100,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void FillStateProvinceDropDowns()
         {
             this.ddlTaxDefaultStateProvince.Items.Clear();
-            int countryID = int.Parse(this.ddlTaxDefaultCountry.SelectedItem.Value);
+            int countryId = int.Parse(this.ddlTaxDefaultCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
-                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceID.ToString());
+                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
                 this.ddlTaxDefaultStateProvince.Items.Add(ddlStateProviceItem2);
             }
             if (stateProvinceCollection.Count == 0)
@@ -127,18 +127,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             Address defaultTaxAddress = TaxManager.DefaultTaxAddress;
             this.FillCountryDropDowns();
-            CommonHelper.SelectListItem(this.ddlTaxDefaultCountry, defaultTaxAddress.CountryID);
+            CommonHelper.SelectListItem(this.ddlTaxDefaultCountry, defaultTaxAddress.CountryId);
             this.FillStateProvinceDropDowns();
-            CommonHelper.SelectListItem(this.ddlTaxDefaultStateProvince, defaultTaxAddress.StateProvinceID);
+            CommonHelper.SelectListItem(this.ddlTaxDefaultStateProvince, defaultTaxAddress.StateProvinceId);
             txtTaxDefaultZipPostalCode.Text = defaultTaxAddress.ZipPostalCode;
 
             cbShippingIsTaxable.Checked = TaxManager.ShippingIsTaxable;
             cbShippingPriceIncludesTax.Checked = TaxManager.ShippingPriceIncludesTax;
-            CommonHelper.SelectListItem(this.ddlShippingTaxClass, TaxManager.ShippingTaxClassID);
+            CommonHelper.SelectListItem(this.ddlShippingTaxClass, TaxManager.ShippingTaxClassId);
 
             cbPaymentMethodAdditionalFeeIsTaxable.Checked = TaxManager.PaymentMethodAdditionalFeeIsTaxable;
             cbPaymentMethodAdditionalFeeIncludesTax.Checked = TaxManager.PaymentMethodAdditionalFeeIncludesTax;
-            CommonHelper.SelectListItem(this.ddlPaymentMethodAdditionalFeeTaxClass, TaxManager.PaymentMethodAdditionalFeeTaxClassID);
+            CommonHelper.SelectListItem(this.ddlPaymentMethodAdditionalFeeTaxClass, TaxManager.PaymentMethodAdditionalFeeTaxClassId);
         }
 
         protected void ddlTaxDefaultCountry_SelectedIndexChanged(object sender, EventArgs e)
@@ -177,18 +177,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     TaxManager.TaxBasedOn = (TaxBasedOnEnum)Enum.ToObject(typeof(TaxBasedOnEnum), int.Parse(this.ddlTaxBasedOn.SelectedItem.Value));
 
                     Address defaultTaxAddress = new Address();
-                    defaultTaxAddress.CountryID = int.Parse(this.ddlTaxDefaultCountry.SelectedItem.Value);
-                    defaultTaxAddress.StateProvinceID = int.Parse(this.ddlTaxDefaultStateProvince.SelectedItem.Value);
+                    defaultTaxAddress.CountryId = int.Parse(this.ddlTaxDefaultCountry.SelectedItem.Value);
+                    defaultTaxAddress.StateProvinceId = int.Parse(this.ddlTaxDefaultStateProvince.SelectedItem.Value);
                     defaultTaxAddress.ZipPostalCode = txtTaxDefaultZipPostalCode.Text;
                     TaxManager.DefaultTaxAddress = defaultTaxAddress;
 
                     TaxManager.ShippingIsTaxable = cbShippingIsTaxable.Checked;
                     TaxManager.ShippingPriceIncludesTax = cbShippingPriceIncludesTax.Checked;
-                    TaxManager.ShippingTaxClassID = int.Parse(this.ddlShippingTaxClass.SelectedItem.Value);
+                    TaxManager.ShippingTaxClassId = int.Parse(this.ddlShippingTaxClass.SelectedItem.Value);
 
                     TaxManager.PaymentMethodAdditionalFeeIsTaxable = cbPaymentMethodAdditionalFeeIsTaxable.Checked;
                     TaxManager.PaymentMethodAdditionalFeeIncludesTax = cbPaymentMethodAdditionalFeeIncludesTax.Checked;
-                    TaxManager.PaymentMethodAdditionalFeeTaxClassID = int.Parse(this.ddlPaymentMethodAdditionalFeeTaxClass.SelectedItem.Value);
+                    TaxManager.PaymentMethodAdditionalFeeTaxClassId = int.Parse(this.ddlPaymentMethodAdditionalFeeTaxClass.SelectedItem.Value);
 
                     CustomerActivityManager.InsertActivity(
                         "EditTaxSettings",

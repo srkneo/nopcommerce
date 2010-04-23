@@ -36,15 +36,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Deletes currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
-        public abstract void DeleteCurrency(int CurrencyID);
+        /// <param name="currencyId">Currency identifier</param>
+        public abstract void DeleteCurrency(int currencyId);
 
         /// <summary>
         /// Gets a currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
+        /// <param name="currencyId">Currency identifier</param>
         /// <returns>Currency</returns>
-        public abstract DBCurrency GetCurrencyByID(int CurrencyID);
+        public abstract DBCurrency GetCurrencyById(int currencyId);
 
         /// <summary>
         /// Gets all currencies
@@ -55,35 +55,39 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Inserts a currency
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="CurrencyCode">The currency code</param>
-        /// <param name="Rate">The rate</param>
-        /// <param name="DisplayLocale">The display locale</param>
-        /// <param name="CustomFormatting">The custom formatting</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <param name="rate">The rate</param>
+        /// <param name="displayLocale">The display locale</param>
+        /// <param name="customFormatting">The custom formatting</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A currency</returns>
-        public abstract DBCurrency InsertCurrency(string Name, string CurrencyCode, decimal Rate,
-           string DisplayLocale, string CustomFormatting, bool Published, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBCurrency InsertCurrency(string name, 
+            string currencyCode, decimal rate, string displayLocale, 
+            string customFormatting, bool published, int displayOrder,
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="CurrencyCode">The currency code</param>
-        /// <param name="Rate">The rate</param>
-        /// <param name="DisplayLocale">The display locale</param>
-        /// <param name="CustomFormatting">The custom formatting</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="currencyId">Currency identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <param name="rate">The rate</param>
+        /// <param name="displayLocale">The display locale</param>
+        /// <param name="customFormatting">The custom formatting</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A currency</returns>
-        public abstract DBCurrency UpdateCurrency(int CurrencyID, string Name, string CurrencyCode, decimal Rate,
-           string DisplayLocale, string CustomFormatting, bool Published, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBCurrency UpdateCurrency(int currencyId, string name, 
+            string currencyCode, decimal rate, string displayLocale, 
+            string customFormatting, bool published, int displayOrder,
+            DateTime createdOn, DateTime updatedOn);
         #endregion
     }
 }

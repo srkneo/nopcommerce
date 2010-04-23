@@ -39,8 +39,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.iDeal
 
         private void BindData()
         {
-            txtMerchantID.Text = iDealBasicPaymentSettings.MerchantID;
-            txtSubID.Text = iDealBasicPaymentSettings.SubID;
+            txtMerchantId.Text = iDealBasicPaymentSettings.MerchantId;
+            txtSubId.Text = iDealBasicPaymentSettings.SubId;
             txtHashKey.Text = iDealBasicPaymentSettings.HashKey;
             txtUrl.Text = iDealBasicPaymentSettings.Url;
             txtAdditionalFee.Value = iDealBasicPaymentSettings.AdditionalFee;
@@ -48,8 +48,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.iDeal
 
         public void Save()
         {
-            iDealBasicPaymentSettings.MerchantID = txtMerchantID.Text;
-            iDealBasicPaymentSettings.SubID = txtSubID.Text;
+            iDealBasicPaymentSettings.MerchantId = txtMerchantId.Text;
+            iDealBasicPaymentSettings.SubId = txtSubId.Text;
             iDealBasicPaymentSettings.HashKey = txtHashKey.Text;
             iDealBasicPaymentSettings.Url = txtUrl.Text;
             iDealBasicPaymentSettings.AdditionalFee = txtAdditionalFee.Value;

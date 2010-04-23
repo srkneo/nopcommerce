@@ -38,12 +38,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Gets or sets the locale string resource identifier
         /// </summary>
-        public int LocaleStringResourceID { get; set; }
+        public int LocaleStringResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the resource name
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         {
             get
             {
-                return LanguageManager.GetLanguageByID(this.LanguageID);
+                return LanguageManager.GetLanguageById(this.LanguageId);
             }
         }
         #endregion

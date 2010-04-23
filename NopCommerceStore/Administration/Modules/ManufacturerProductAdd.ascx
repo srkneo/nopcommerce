@@ -58,7 +58,7 @@
             <ItemTemplate>
                 <asp:CheckBox ID="cbProductInfo" runat="server" Text='<%# Server.HtmlEncode(Eval("Name").ToString()) %>'
                     ToolTip="<% $NopResources:Admin.AddManufacturerProduct.ProductColumn.Tooltip %>" />
-                <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
+                <asp:HiddenField ID="hfProductId" runat="server" Value='<%# Eval("ProductId") %>' />
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.AddManufacturerProduct.PublishedColumn %>"

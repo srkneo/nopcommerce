@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var product = e.Item.DataItem as Product;
                 if (product != null)
                 {
-                    string productURL = SEOHelper.GetProductURL(product);
+                    string productURL = SEOHelper.GetProductUrl(product);
 
                     var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                     if (hlImageLink != null)

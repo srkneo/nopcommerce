@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             pnlError.Visible = false;
 
-            var news = NewsManager.GetNewsByID(this.NewsID);
+            var news = NewsManager.GetNewsById(this.NewsId);
             if (news != null && news.Published)
             {
                 this.lTitle.Text = Server.HtmlEncode(news.Title);
@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (Page.IsValid)
                 {
-                    var news = NewsManager.GetNewsByID(this.NewsID);
+                    var news = NewsManager.GetNewsById(this.NewsId);
                     if (news != null && news.AllowComments)
                     {
                         if (!NewsManager.AllowNotRegisteredUsersToLeaveComments
@@ -110,11 +110,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             throw new NopException(GetLocaleResourceString("News.PleaseEnterCommentText"));
                         }
 
-                        int customerID = 0;
+                        int customerId = 0;
                         if (NopContext.Current.User != null && !NopContext.Current.User.IsGuest)
-                            customerID = NopContext.Current.User.CustomerID;
+                            customerId = NopContext.Current.User.CustomerId;
 
-                        NewsManager.InsertNewsComment(news.NewsID, customerID, title, comment, DateTime.Now);
+                        NewsManager.InsertNewsComment(news.NewsId, customerId, title, comment, DateTime.Now);
                         txtTitle.Text = string.Empty;
                         txtComment.Text = string.Empty;
                         BindData();
@@ -130,11 +130,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int NewsID
+        public int NewsId
         {
             get
             {
-                return CommonHelper.QueryStringInt("NewsID");
+                return CommonHelper.QueryStringInt("NewsId");
             }
         }
     }

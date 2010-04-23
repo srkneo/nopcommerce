@@ -35,11 +35,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         #region Methods
 
         /// <summary>
-        /// Gets a payment status by ID
+        /// Gets a payment status by identifier
         /// </summary>
-        /// <param name="PaymentStatusID">payment status identifier</param>
+        /// <param name="paymentStatusId">payment status identifier</param>
         /// <returns>Payment status</returns>
-        public abstract DBPaymentStatus GetPaymentStatusByID(int PaymentStatusID);
+        public abstract DBPaymentStatus GetPaymentStatusById(int paymentStatusId);
 
         /// <summary>
         /// Gets all payment statuses

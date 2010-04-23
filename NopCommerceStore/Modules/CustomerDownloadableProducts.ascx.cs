@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #region Utilities
         protected void BindData()
         {
-            var items = OrderManager.GetAllOrderProductVariants(null, NopContext.Current.User.CustomerID, null, null, null, null, null, true);
+            var items = OrderManager.GetAllOrderProductVariants(null, NopContext.Current.User.CustomerId, null, null, null, null, null, true);
             if (items.Count > 0)
             {
                 pnlProducts.Visible = true;
@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             Order order = opv.Order;
             if (order!=null)
             {
-                result = string.Format("<a class=\"link\" href=\"{0}OrderDetails.aspx?OrderID={1}\" >{1}</a>", CommonHelper.GetStoreLocation(), order.OrderID);
+                result = string.Format("<a class=\"link\" href=\"{0}OrderDetails.aspx?OrderID={1}\" >{1}</a>", CommonHelper.GetStoreLocation(), order.OrderId);
             }
             return result.ToLowerInvariant();
         }
@@ -100,12 +100,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return result;
         }
         
-        public string GetProductVariantName(int ProductVariantID)
+        public string GetProductVariantName(int productVariantId)
         {
-            var productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
                 return productVariant.FullProductName;
-            return "Not available. ID=" + ProductVariantID.ToString();
+            return "Not available. ID=" + productVariantId.ToString();
         }
         
         public string GetAttributeDescription(OrderProductVariant opv)
@@ -116,15 +116,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return result;
         }
 
-        public string GetProductURL(int ProductVariantID)
+        public string GetProductUrl(int productVariantId)
         {
-            var productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
-                return SEOHelper.GetProductURL(productVariant.ProductID);
+                return SEOHelper.GetProductUrl(productVariant.ProductId);
             return string.Empty;
         }
 
-        public string GetDownloadURL(OrderProductVariant orderProductVariant)
+        public string GetDownloadUrl(OrderProductVariant orderProductVariant)
         {
             string result = string.Empty;
             if (OrderManager.IsDownloadAllowed(orderProductVariant))
@@ -134,7 +134,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return result;
         }
 
-        public string GetLicenseDownloadURL(OrderProductVariant orderProductVariant)
+        public string GetLicenseDownloadUrl(OrderProductVariant orderProductVariant)
         {
             string result = string.Empty;
             if (OrderManager.IsLicenseDownloadAllowed(orderProductVariant))

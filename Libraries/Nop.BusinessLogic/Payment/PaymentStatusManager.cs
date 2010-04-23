@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return null;
 
             var item = new PaymentStatus();
-            item.PaymentStatusID = dbItem.PaymentStatusID;
+            item.PaymentStatusId = dbItem.PaymentStatusId;
             item.Name = dbItem.Name;
 
             return item;
@@ -71,17 +71,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a payment status full name
         /// </summary>
-        /// <param name="PaymentStatusID">Payment status identifier</param>
+        /// <param name="paymentStatusId">Payment status identifier</param>
         /// <returns>Payment status name</returns>
-        public static string GetPaymentStatusName(int PaymentStatusID)
+        public static string GetPaymentStatusName(int paymentStatusId)
         {
-            var paymentStatus = GetPaymentStatusByID(PaymentStatusID);
+            var paymentStatus = GetPaymentStatusById(paymentStatusId);
             if (paymentStatus != null)
             {
                 string name = string.Empty;
                 if (NopContext.Current != null)
                 {
-                    name = LocalizationManager.GetLocaleResourceString(string.Format("PaymentStatus.{0}", (PaymentStatusEnum)paymentStatus.PaymentStatusID), NopContext.Current.WorkingLanguage.LanguageID, true, paymentStatus.Name);
+                    name = LocalizationManager.GetLocaleResourceString(string.Format("PaymentStatus.{0}", (PaymentStatusEnum)paymentStatus.PaymentStatusId), NopContext.Current.WorkingLanguage.LanguageId, true, paymentStatus.Name);
                 }
                 else
                 {
@@ -91,28 +91,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             }
             else
             {
-                return ((PaymentStatusEnum)PaymentStatusID).ToString();
+                return ((PaymentStatusEnum)paymentStatusId).ToString();
             }
         }
 
         /// <summary>
-        /// Gets a payment status by ID
+        /// Gets a payment status by identifier
         /// </summary>
-        /// <param name="PaymentStatusID">payment status identifier</param>
+        /// <param name="paymentStatusId">payment status identifier</param>
         /// <returns>Payment status</returns>
-        public static PaymentStatus GetPaymentStatusByID(int PaymentStatusID)
+        public static PaymentStatus GetPaymentStatusById(int paymentStatusId)
         {
-            if (PaymentStatusID == 0)
+            if (paymentStatusId == 0)
                 return null;
 
-            string key = string.Format(PAYMENTSTATUSES_BY_ID_KEY, PaymentStatusID);
+            string key = string.Format(PAYMENTSTATUSES_BY_ID_KEY, paymentStatusId);
             object obj2 = NopCache.Get(key);
             if (PaymentStatusManager.CacheEnabled && (obj2 != null))
             {
                 return (PaymentStatus)obj2;
             }
 
-            var dbItem = DBProviderManager<DBPaymentStatusProvider>.Provider.GetPaymentStatusByID(PaymentStatusID);
+            var dbItem = DBProviderManager<DBPaymentStatusProvider>.Provider.GetPaymentStatusById(paymentStatusId);
             var paymentStatus = DBMapping(dbItem);
 
             if (PaymentStatusManager.CacheEnabled)

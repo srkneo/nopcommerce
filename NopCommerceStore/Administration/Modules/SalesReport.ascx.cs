@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses)
             {
-                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusID), orderStatus.OrderStatusID.ToString());
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
                 this.ddlOrderStatus.Items.Add(item2);
             }
 
@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             PaymentStatusCollection paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
             foreach (PaymentStatus paymentStatus in paymentStatuses)
             {
-                ListItem item2 = new ListItem(PaymentStatusManager.GetPaymentStatusName(paymentStatus.PaymentStatusID), paymentStatus.PaymentStatusID.ToString());
+                ListItem item2 = new ListItem(PaymentStatusManager.GetPaymentStatusName(paymentStatus.PaymentStatusId), paymentStatus.PaymentStatusId.ToString());
                 this.ddlPaymentStatus.Items.Add(item2);
             }
         }
@@ -80,14 +80,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             OrderStatusEnum? orderStatus = null;
-            int orderStatusID = int.Parse(ddlOrderStatus.SelectedItem.Value);
-            if (orderStatusID > 0)
-                orderStatus = (OrderStatusEnum)Enum.ToObject(typeof(OrderStatusEnum), orderStatusID);
+            int orderStatusId = int.Parse(ddlOrderStatus.SelectedItem.Value);
+            if (orderStatusId > 0)
+                orderStatus = (OrderStatusEnum)Enum.ToObject(typeof(OrderStatusEnum), orderStatusId);
 
             PaymentStatusEnum? paymentStatus = null;
-            int paymentStatusID = int.Parse(ddlPaymentStatus.SelectedItem.Value);
-            if (paymentStatusID > 0)
-                paymentStatus = (PaymentStatusEnum)Enum.ToObject(typeof(PaymentStatusEnum), paymentStatusID);
+            int paymentStatusId = int.Parse(ddlPaymentStatus.SelectedItem.Value);
+            if (paymentStatusId > 0)
+                paymentStatus = (PaymentStatusEnum)Enum.ToObject(typeof(PaymentStatusEnum), paymentStatusId);
 
             gvOrders.DataSource = OrderManager.OrderProductVariantReport(startDate, endDate, orderStatus, paymentStatus);
             gvOrders.DataBind();
@@ -108,23 +108,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public string GetProductURL(int ProductVariantID)
+        public string GetProductUrl(int productVariantId)
         {
             string result = string.Empty;
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
-                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantID.ToString();
+                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantId.ToString();
             else
-                result = "Not available. Product variant ID=" + productVariant.ProductVariantID.ToString();
+                result = "Not available. Product variant ID=" + productVariantId.ToString();
             return result;
         }
 
-        public string GetProductVariantName(int ProductVariantID)
+        public string GetProductVariantName(int productVariantId)
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
                 return productVariant.FullProductName;
-            return "Not available. ID=" + ProductVariantID.ToString();
+            return "Not available. ID=" + productVariantId.ToString();
         }
     }
 }

@@ -39,119 +39,120 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         /// <summary>
         /// Gets a discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
+        /// <param name="discountId">Discount identifier</param>
         /// <returns>Discount</returns>
-        public abstract DBDiscount GetDiscountByID(int DiscountID);
+        public abstract DBDiscount GetDiscountById(int discountId);
 
         /// <summary>
         /// Gets all discounts
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="DiscountTypeID">Discount type identifier; null to load all discount</param>
+        /// <param name="discountTypeId">Discount type identifier; null to load all discount</param>
         /// <returns>Discount collection</returns>
-        public abstract DBDiscountCollection GetAllDiscounts(bool showHidden, int? DiscountTypeID);
+        public abstract DBDiscountCollection GetAllDiscounts(bool showHidden, int? discountTypeId);
 
         /// <summary>
         /// Inserts a discount
         /// </summary>
-        /// <param name="DiscountTypeID">The discount type identifier</param>
-        /// <param name="DiscountRequirementID">The discount requirement identifier</param>
-        /// <param name="DiscountLimitationID">The discount limitation identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="DiscountPercentage">The discount percentage</param>
-        /// <param name="DiscountAmount">The discount amount</param>
-        /// <param name="StartDate">The discount start date and time</param>
-        /// <param name="EndDate">The discount end date and time</param>
-        /// <param name="RequiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="CouponCode">The coupon code</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="discountTypeId">The discount type identifier</param>
+        /// <param name="discountRequirementId">The discount requirement identifier</param>
+        /// <param name="discountLimitationId">The discount limitation identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="discountPercentage">The discount percentage</param>
+        /// <param name="discountAmount">The discount amount</param>
+        /// <param name="startDate">The discount start date and time</param>
+        /// <param name="endDate">The discount end date and time</param>
+        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
+        /// <param name="couponCode">The coupon code</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>Discount</returns>
-        public abstract DBDiscount InsertDiscount(int DiscountTypeID, int DiscountRequirementID, 
-            int DiscountLimitationID, string Name, bool UsePercentage, 
-            decimal DiscountPercentage, decimal DiscountAmount, DateTime StartDate, 
-            DateTime EndDate, bool RequiresCouponCode, string CouponCode, bool Deleted);
+        public abstract DBDiscount InsertDiscount(int discountTypeId, 
+            int discountRequirementId, int discountLimitationId, 
+            string name, bool usePercentage, decimal discountPercentage, 
+            decimal discountAmount, DateTime startDate, DateTime endDate, 
+            bool requiresCouponCode, string couponCode, bool deleted);
 
         /// <summary>
         /// Updates the discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
-        /// <param name="DiscountTypeID">The discount type identifier</param>
-        /// <param name="DiscountRequirementID">The discount requirement identifier</param>
-        /// <param name="DiscountLimitationID">The discount limitation identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="DiscountPercentage">The discount percentage</param>
-        /// <param name="DiscountAmount">The discount amount</param>
-        /// <param name="StartDate">The discount start date and time</param>
-        /// <param name="EndDate">The discount end date and time</param>
-        /// <param name="RequiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="CouponCode">The coupon code</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="discountId">Discount identifier</param>
+        /// <param name="discountTypeId">The discount type identifier</param>
+        /// <param name="discountRequirementId">The discount requirement identifier</param>
+        /// <param name="discountLimitationId">The discount limitation identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="discountPercentage">The discount percentage</param>
+        /// <param name="discountAmount">The discount amount</param>
+        /// <param name="startDate">The discount start date and time</param>
+        /// <param name="endDate">The discount end date and time</param>
+        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
+        /// <param name="couponCode">The coupon code</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>Discount</returns>
-        public abstract DBDiscount UpdateDiscount(int DiscountID, int DiscountTypeID, 
-            int DiscountRequirementID, int DiscountLimitationID, string Name, 
-            bool UsePercentage, decimal DiscountPercentage, decimal DiscountAmount,
-            DateTime StartDate, DateTime EndDate, bool RequiresCouponCode, 
-            string CouponCode, bool Deleted);
+        public abstract DBDiscount UpdateDiscount(int discountId, int discountTypeId,
+            int discountRequirementId, int discountLimitationId,
+            string name, bool usePercentage, decimal discountPercentage,
+            decimal discountAmount, DateTime startDate, DateTime endDate,
+            bool requiresCouponCode, string couponCode, bool deleted);
 
         /// <summary>
         /// Adds a discount to a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public abstract void AddDiscountToProductVariant(int ProductVariantID, int DiscountID);
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public abstract void AddDiscountToProductVariant(int productVariantId, int discountId);
 
         /// <summary>
         /// Removes a discount from a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public abstract void RemoveDiscountFromProductVariant(int ProductVariantID, int DiscountID);
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public abstract void RemoveDiscountFromProductVariant(int productVariantId, int discountId);
 
         /// <summary>
         /// Gets a discount collection of a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Discount collection</returns>
-        public abstract DBDiscountCollection GetDiscountsByProductVariantID(int ProductVariantID, bool showHidden);
+        public abstract DBDiscountCollection GetDiscountsByProductVariantId(int productVariantId, bool showHidden);
 
         /// <summary>
         /// Adds a discount to a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public abstract void AddDiscountToCategory(int CategoryID, int DiscountID);
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public abstract void AddDiscountToCategory(int categoryId, int discountId);
 
         /// <summary>
         /// Removes a discount from a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public abstract void RemoveDiscountFromCategory(int CategoryID, int DiscountID);
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public abstract void RemoveDiscountFromCategory(int categoryId, int discountId);
 
         /// <summary>
         /// Gets a discount collection of a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Discount collection</returns>
-        public abstract DBDiscountCollection GetDiscountsByCategoryID(int CategoryID, bool showHidden);
+        public abstract DBDiscountCollection GetDiscountsByCategoryId(int categoryId, bool showHidden);
 
         /// <summary>
         /// Adds a discount requirement
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public abstract void AddDiscountRestriction(int ProductVariantID, int DiscountID);
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public abstract void AddDiscountRestriction(int productVariantId, int discountId);
 
         /// <summary>
         /// Removes discount requirement
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public abstract void RemoveDiscountRestriction(int ProductVariantID, int DiscountID);
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public abstract void RemoveDiscountRestriction(int productVariantId, int discountId);
 
         #endregion
 
@@ -178,51 +179,52 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         #endregion
 
         #region Discount History
+
         /// <summary>
         /// Deletes a discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">Discount usage history entry identifier</param>
-        public abstract void DeleteDiscountUsageHistory(int DiscountUsageHistoryID);
+        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
+        public abstract void DeleteDiscountUsageHistory(int discountUsageHistoryId);
 
         /// <summary>
         /// Gets a discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">Discount usage history entry identifier</param>
+        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
         /// <returns>Discount usage history entry</returns>
-        public abstract DBDiscountUsageHistory GetDiscountUsageHistoryByID(int DiscountUsageHistoryID);
+        public abstract DBDiscountUsageHistory GetDiscountUsageHistoryById(int discountUsageHistoryId);
 
         /// <summary>
         /// Gets all discount usage history entries
         /// </summary>
-        /// <param name="DiscountID">Discount type identifier; null to load all</param>
-        /// <param name="CustomerID">Customer identifier; null to load all</param>
-        /// <param name="OrderID">Order identifier; null to load all</param>
+        /// <param name="discountId">Discount type identifier; null to load all</param>
+        /// <param name="customerId">Customer identifier; null to load all</param>
+        /// <param name="orderId">Order identifier; null to load all</param>
         /// <returns>Discount usage history entries</returns>
-        public abstract DBDiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? DiscountID,
-            int? CustomerID, int? OrderID);
+        public abstract DBDiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? discountId,
+            int? customerId, int? orderId);
 
         /// <summary>
         /// Inserts a discount usage history entry
         /// </summary>
-        /// <param name="DiscountID">Discount type identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="discountId">Discount type identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Discount usage history entry</returns>
-        public abstract DBDiscountUsageHistory InsertDiscountUsageHistory(int DiscountID,
-            int CustomerID, int OrderID, DateTime CreatedOn);
+        public abstract DBDiscountUsageHistory InsertDiscountUsageHistory(int discountId,
+            int customerId, int orderId, DateTime createdOn);
 
         /// <summary>
         /// Updates the discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">discount usage history entry identifier</param>
-        /// <param name="DiscountID">Discount type identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
-        /// <returns>Discount</returns>
-        public abstract DBDiscountUsageHistory UpdateDiscountUsageHistory(int DiscountUsageHistoryID, int DiscountID,
-            int CustomerID, int OrderID, DateTime CreatedOn);
+        /// <param name="discountUsageHistoryId">discount usage history entry identifier</param>
+        /// <param name="discountId">Discount type identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Discount usage history entry</returns>
+        public abstract DBDiscountUsageHistory UpdateDiscountUsageHistory(int discountUsageHistoryId,
+            int discountId, int customerId, int orderId, DateTime createdOn);
         
         #endregion
 

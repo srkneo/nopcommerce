@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            string url = SEOHelper.GetForumSearchURL(txtSearchTerm.Text);
+            string url = SEOHelper.GetForumSearchUrl(txtSearchTerm.Text);
             Response.Redirect(url);
         }
 
@@ -148,7 +148,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var hlTopic = e.Item.FindControl("hlTopic") as HyperLink;
                 if (hlTopic != null)
                 {
-                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicURL(forumTopic.ForumTopicID);
+                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
                     hlTopic.Text = Server.HtmlEncode(forumTopic.Subject);
                 }
 
@@ -158,7 +158,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if(customer != null && CustomerManager.AllowViewingProfiles && !customer.IsGuest)
                     {
                         hlTopicStarter.Text = Server.HtmlEncode(CustomerManager.FormatUserName(customer));
-                        hlTopicStarter.NavigateUrl = SEOHelper.GetUserProfileURL(customer.CustomerID);
+                        hlTopicStarter.NavigateUrl = SEOHelper.GetUserProfileUrl(customer.CustomerId);
                     }
                     else
                     {

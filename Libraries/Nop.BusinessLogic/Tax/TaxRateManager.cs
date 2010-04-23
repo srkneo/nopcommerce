@@ -58,10 +58,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return null;
 
             var item = new TaxRate();
-            item.TaxRateID = dbItem.TaxRateID;
-            item.TaxCategoryID = dbItem.TaxCategoryID;
-            item.CountryID = dbItem.CountryID;
-            item.StateProvinceID = dbItem.StateProvinceID;
+            item.TaxRateId = dbItem.TaxRateId;
+            item.TaxCategoryId = dbItem.TaxCategoryId;
+            item.CountryId = dbItem.CountryId;
+            item.StateProvinceId = dbItem.StateProvinceId;
             item.Zip = dbItem.Zip;
             item.Percentage = dbItem.Percentage;
 
@@ -73,10 +73,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Deletes a tax rate
         /// </summary>
-        /// <param name="TaxRateID">Tax rate identifier</param>
-        public static void DeleteTaxRate(int TaxRateID)
+        /// <param name="taxRateId">Tax rate identifier</param>
+        public static void DeleteTaxRate(int taxRateId)
         {
-            DBProviderManager<DBTaxRateProvider>.Provider.DeleteTaxRate(TaxRateID);
+            DBProviderManager<DBTaxRateProvider>.Provider.DeleteTaxRate(taxRateId);
             if (TaxRateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
@@ -86,21 +86,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Gets a tax rate
         /// </summary>
-        /// <param name="TaxRateID">Tax rate identifier</param>
+        /// <param name="taxRateId">Tax rate identifier</param>
         /// <returns>Tax rate</returns>
-        public static TaxRate GetTaxRateByID(int TaxRateID)
+        public static TaxRate GetTaxRateById(int taxRateId)
         {
-            if (TaxRateID == 0)
+            if (taxRateId == 0)
                 return null;
 
-            string key = string.Format(TAXRATE_BY_ID_KEY, TaxRateID);
+            string key = string.Format(TAXRATE_BY_ID_KEY, taxRateId);
             object obj2 = NopCache.Get(key);
             if (TaxRateManager.CacheEnabled && (obj2 != null))
             {
                 return (TaxRate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.GetTaxRateByID(TaxRateID);
+            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.GetTaxRateById(taxRateId);
             var taxRate = DBMapping(dbItem);
 
             if (TaxRateManager.CacheEnabled)
@@ -137,33 +137,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Gets all tax rates by params
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="Zip">The zip</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zip">The zip</param>
         /// <returns>Tax rate collection</returns>
-        public static TaxRateCollection GetAllTaxRates(int TaxCategoryID, int CountryID,
-            int StateProvinceID, string Zip)
+        public static TaxRateCollection GetAllTaxRates(int taxCategoryId, int countryId,
+            int stateProvinceId, string zip)
         {
-            if (Zip == null)
-                Zip = string.Empty;
-            if (!String.IsNullOrEmpty(Zip))
-                Zip = Zip.Trim();
+            if (zip == null)
+                zip = string.Empty;
+            if (!String.IsNullOrEmpty(zip))
+                zip = zip.Trim();
 
-            var existingRates = GetAllTaxRates().FindTaxRates(CountryID, TaxCategoryID);
+            var existingRates = GetAllTaxRates().FindTaxRates(countryId, taxCategoryId);
 
             //filter by state/province
             var matchedByStateProvince = new TaxRateCollection();
             foreach (var taxRate in existingRates)
             {
-                if (StateProvinceID == taxRate.StateProvinceID)
+                if (stateProvinceId == taxRate.StateProvinceId)
                     matchedByStateProvince.Add(taxRate);
             }
             if (matchedByStateProvince.Count == 0)
             {
                 foreach (var taxRate in existingRates)
                 {
-                    if (taxRate.StateProvinceID == 0)
+                    if (taxRate.StateProvinceId == 0)
                         matchedByStateProvince.Add(taxRate);
                 }
             }
@@ -172,7 +172,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var matchedByZip = new TaxRateCollection();
             foreach (var taxRate in matchedByStateProvince)
             {
-                if (Zip.ToLower() == taxRate.Zip.ToLower())
+                if (zip.ToLower() == taxRate.Zip.ToLower())
                     matchedByZip.Add(taxRate);
             }
             if (matchedByZip.Count == 0)
@@ -190,21 +190,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Inserts a tax rate
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="Zip">The zip</param>
-        /// <param name="Percentage">The percentage</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zip">The zip</param>
+        /// <param name="percentage">The percentage</param>
         /// <returns>Tax rate</returns>
-        public static TaxRate InsertTaxRate(int TaxCategoryID, int CountryID,
-            int StateProvinceID, string Zip, decimal Percentage)
+        public static TaxRate InsertTaxRate(int taxCategoryId, int countryId,
+            int stateProvinceId, string zip, decimal percentage)
         {
-            if (Zip == null)
-                Zip = string.Empty;
-            if (!String.IsNullOrEmpty(Zip))
-                Zip = Zip.Trim();
+            if (zip == null)
+                zip = string.Empty;
+            if (!String.IsNullOrEmpty(zip))
+                zip = zip.Trim();
 
-            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.InsertTaxRate(TaxCategoryID, CountryID, StateProvinceID, Zip, Percentage);
+            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.InsertTaxRate(taxCategoryId, countryId, stateProvinceId, zip, percentage);
             var taxRate = DBMapping(dbItem);
 
             if (TaxRateManager.CacheEnabled)
@@ -218,22 +218,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Updates the tax rate
         /// </summary>
-        /// <param name="TaxRateID">The tax rate identifier</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="Zip">The zip</param>
-        /// <param name="Percentage">The percentage</param>
+        /// <param name="taxRateId">The tax rate identifier</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zip">The zip</param>
+        /// <param name="percentage">The percentage</param>
         /// <returns>Tax rate</returns>
-        public static TaxRate UpdateTaxRate(int TaxRateID, int TaxCategoryID, int CountryID,
-            int StateProvinceID, string Zip, decimal Percentage)
+        public static TaxRate UpdateTaxRate(int taxRateId,
+            int taxCategoryId, int countryId, int stateProvinceId,
+            string zip, decimal percentage)
         {
-            if (Zip == null)
-                Zip = string.Empty;
-            if (!String.IsNullOrEmpty(Zip))
-                Zip = Zip.Trim();
+            if (zip == null)
+                zip = string.Empty;
+            if (!String.IsNullOrEmpty(zip))
+                zip = zip.Trim();
 
-            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.UpdateTaxRate(TaxRateID, TaxCategoryID, CountryID, StateProvinceID, Zip, Percentage);
+            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.UpdateTaxRate(taxRateId, 
+                taxCategoryId, countryId, stateProvinceId, zip, percentage);
             var taxRate = DBMapping(dbItem);
 
             if (TaxRateManager.CacheEnabled)

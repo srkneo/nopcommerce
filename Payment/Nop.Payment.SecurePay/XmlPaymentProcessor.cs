@@ -34,21 +34,21 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SecurePay
 		/// </summary>
 		/// <param name="paymentInfo">Payment info required for an order processing</param>
 		/// <param name="customer">Customer</param>
-		/// <param name="OrderGuid">Unique order identifier</param>
+		/// <param name="orderGuid">Unique order identifier</param>
 		/// <param name="processPaymentResult">Process payment result</param>
-		public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+		public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
 		{
-            XmlTransaction sxml = new XmlTransaction(XmlPaymentSettings.TestMode ? XmlTransaction.MODE_TEST : XmlTransaction.MODE_LIVE, SecurePaySettings.MerchantID, SecurePaySettings.MerchantPassword, ID);
+            XmlTransaction sxml = new XmlTransaction(XmlPaymentSettings.TestMode ? XmlTransaction.MODE_TEST : XmlTransaction.MODE_LIVE, SecurePaySettings.MerchantId, SecurePaySettings.MerchantPassword, ID);
 			bool success = false;
 			string code = "";
 
             if(XmlPaymentSettings.AuthorizeOnly)
 			{
-				success = sxml.processPreauth(paymentInfo.OrderTotal, OrderGuid.ToString(), paymentInfo.CreditCardNumber, paymentInfo.CreditCardExpireMonth.ToString("D2"), paymentInfo.CreditCardExpireYear.ToString().Substring(2, 2), paymentInfo.CreditCardCVV2.ToString());
+				success = sxml.processPreauth(paymentInfo.OrderTotal, orderGuid.ToString(), paymentInfo.CreditCardNumber, paymentInfo.CreditCardExpireMonth.ToString("D2"), paymentInfo.CreditCardExpireYear.ToString().Substring(2, 2), paymentInfo.CreditCardCvv2.ToString());
 			}
 			else
 			{
-				success = sxml.processCredit(paymentInfo.OrderTotal, OrderGuid.ToString(), paymentInfo.CreditCardNumber, paymentInfo.CreditCardExpireMonth.ToString("D2"), paymentInfo.CreditCardExpireYear.ToString().Substring(2, 2), paymentInfo.CreditCardCVV2.ToString());
+				success = sxml.processCredit(paymentInfo.OrderTotal, orderGuid.ToString(), paymentInfo.CreditCardNumber, paymentInfo.CreditCardExpireMonth.ToString("D2"), paymentInfo.CreditCardExpireYear.ToString().Substring(2, 2), paymentInfo.CreditCardCvv2.ToString());
 			}
 
 			code = sxml["response_code"];
@@ -63,13 +63,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SecurePay
                 if(XmlPaymentSettings.AuthorizeOnly)
                 {
                     processPaymentResult.AuthorizationTransactionCode = (XmlPaymentSettings.AuthorizeOnly ? sxml["preauth_id"] : "");
-                    processPaymentResult.AuthorizationTransactionID = sxml["transaction_id"];
+                    processPaymentResult.AuthorizationTransactionId = sxml["transaction_id"];
                     processPaymentResult.AuthorizationTransactionResult = String.Format("Approved ({0})", code);
                     processPaymentResult.PaymentStatus = PaymentStatusEnum.Authorized;
                 }
                 else
                 {
-                    processPaymentResult.CaptureTransactionID = sxml["transaction_id"];
+                    processPaymentResult.CaptureTransactionId = sxml["transaction_id"];
                     processPaymentResult.CaptureTransactionResult = String.Format("Approved ({0})", code);
                     processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
                 }
@@ -102,11 +102,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SecurePay
 		/// <param name="processPaymentResult">Process payment result</param>
 		public void Capture(Order order, ref ProcessPaymentResult processPaymentResult)
 		{
-            XmlTransaction sxml = new XmlTransaction(XmlPaymentSettings.TestMode ? XmlTransaction.MODE_TEST : XmlTransaction.MODE_LIVE, SecurePaySettings.MerchantID, SecurePaySettings.MerchantPassword, ID);
+            XmlTransaction sxml = new XmlTransaction(XmlPaymentSettings.TestMode ? XmlTransaction.MODE_TEST : XmlTransaction.MODE_LIVE, SecurePaySettings.MerchantId, SecurePaySettings.MerchantPassword, ID);
 			bool success = false;
 			string code = "";
 
-			success = sxml.processAdvice(order.OrderTotal,order.OrderGUID.ToString(),processPaymentResult.AuthorizationTransactionCode);
+			success = sxml.processAdvice(order.OrderTotal,order.OrderGuid.ToString(),processPaymentResult.AuthorizationTransactionCode);
 			
 			code = sxml["response_code"];
 
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SecurePay
 			}
 			else
 			{
-				processPaymentResult.CaptureTransactionID = sxml["transaction_id"];
+				processPaymentResult.CaptureTransactionId = sxml["transaction_id"];
                 processPaymentResult.CaptureTransactionResult = String.Format("Approved ({0})", code);
 
 				processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
@@ -126,11 +126,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SecurePay
 
         public void Refund(Order order, ref CancelPaymentResult cancelPaymentResult)
         {
-            XmlTransaction sxml = new XmlTransaction(XmlPaymentSettings.TestMode ? XmlTransaction.MODE_TEST : XmlTransaction.MODE_LIVE, SecurePaySettings.MerchantID, SecurePaySettings.MerchantPassword, ID);
+            XmlTransaction sxml = new XmlTransaction(XmlPaymentSettings.TestMode ? XmlTransaction.MODE_TEST : XmlTransaction.MODE_LIVE, SecurePaySettings.MerchantId, SecurePaySettings.MerchantPassword, ID);
             bool success = false;
             string code = "";
 
-            success = sxml.processRefund(order.OrderTotal, order.OrderGUID.ToString(), cancelPaymentResult.CaptureTransactionID);
+            success = sxml.processRefund(order.OrderTotal, order.OrderGuid.ToString(), cancelPaymentResult.CaptureTransactionId);
 
             code = sxml["response_code"];
 
@@ -150,7 +150,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SecurePay
             throw new NotImplementedException();
         }
 
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

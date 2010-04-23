@@ -15,7 +15,7 @@
                 <ContentTemplate>
                     <div>
                         <asp:GridView ID="gvProductVariantAttributes" runat="server" AutoGenerateColumns="false"
-                            DataKeyNames="ProductVariantAttributeID" OnRowDeleting="gvProductVariantAttributes_RowDeleting"
+                            DataKeyNames="ProductVariantAttributeId" OnRowDeleting="gvProductVariantAttributes_RowDeleting"
                             OnRowDataBound="gvProductVariantAttributes_RowDataBound" OnRowCommand="gvProductVariantAttributes_RowCommand"
                             Width="100%">
                             <Columns>
@@ -23,7 +23,7 @@
                                     ItemStyle-Width="20%">
                                     <ItemTemplate>
                                         <asp:DropDownList ID="ddlProductAttribute" runat="server" />
-                                        <asp:HiddenField ID="hfProductVariantAttributeID" runat="server" Value='<%# Eval("ProductVariantAttributeID") %>' />
+                                        <asp:HiddenField ID="hfProductVariantAttributeId" runat="server" Value='<%# Eval("ProductVariantAttributeId") %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantAttributes.TextPrompt %>"
@@ -160,7 +160,7 @@
                 <ContentTemplate>
                     <asp:Panel runat="server" ID="pnlCombinations">
                         <div>
-                            <asp:GridView ID="gvCombinations" runat="server" AutoGenerateColumns="false" DataKeyNames="ProductVariantAttributeCombinationID"
+                            <asp:GridView ID="gvCombinations" runat="server" AutoGenerateColumns="false" DataKeyNames="ProductVariantAttributeCombinationId"
                                 OnRowDeleting="gvCombinations_RowDeleting" OnRowDataBound="gvCombinations_RowDataBound"
                                 OnRowCommand="gvCombinations_RowCommand" Width="100%">
                                 <Columns>
@@ -170,7 +170,7 @@
                                             <asp:Label runat="server" ID="lblAttributes"></asp:Label>
                                             <br />
                                             <asp:Label runat="server" ID="lblWarnings" Style="color: Red;"></asp:Label>
-                                            <asp:HiddenField ID="hfProductVariantAttributeCombinationID" runat="server" Value='<%# Eval("ProductVariantAttributeCombinationID") %>' />
+                                            <asp:HiddenField ID="hfProductVariantAttributeCombinationId" runat="server" Value='<%# Eval("ProductVariantAttributeCombinationId") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantAttributes.CombinationsGrid.StockQuantity %>"

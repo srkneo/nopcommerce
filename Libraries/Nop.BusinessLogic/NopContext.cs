@@ -39,9 +39,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         #endregion
 
         #region Fields
-        private Customer currentCustomer;
-        private bool? isAdmin;
-        private HttpContext context = HttpContext.Current;
+        private Customer _currentCustomer;
+        private bool? _isAdmin;
+        private HttpContext _context = HttpContext.Current;
         #endregion
 
         #region Ctor
@@ -62,19 +62,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         private CustomerSession SaveSessionToDatabase()
         {
             var sessionId = Guid.NewGuid();
-            while (CustomerManager.GetCustomerSessionByGUID(sessionId) != null)
+            while (CustomerManager.GetCustomerSessionByGuid(sessionId) != null)
                 sessionId = Guid.NewGuid();
             var session = new CustomerSession();
-            int CustomerID = 0;
+            int CustomerId = 0;
             if (this.User != null)
             {
-                CustomerID = this.User.CustomerID;
+                CustomerId = this.User.CustomerId;
             }
-            session.CustomerSessionGUID = sessionId;
-            session.CustomerID = CustomerID;
+            session.CustomerSessionGuid = sessionId;
+            session.CustomerId = CustomerId;
             session.LastAccessed = DateTime.UtcNow;
             session.IsExpired = false;
-            session = CustomerManager.SaveCustomerSession(session.CustomerSessionGUID, session.CustomerID, session.LastAccessed, session.IsExpired);
+            session = CustomerManager.SaveCustomerSession(session.CustomerSessionGuid, session.CustomerId, session.LastAccessed, session.IsExpired);
             return session;
         }
 
@@ -102,7 +102,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                 byId = (CustomerSession)obj2;
             if ((byId == null) && (sessionId.HasValue))
             {
-                byId = CustomerManager.GetCustomerSessionByGUID(sessionId.Value);
+                byId = CustomerManager.GetCustomerSessionByGuid(sessionId.Value);
                 return byId;
             }
             if (byId == null && createInDatabase)
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                 customerSessionCookieValue = HttpContext.Current.Request.Cookies[CONST_CUSTOMERSESSIONCOOKIE].Value;
             if ((byId) == null && (!string.IsNullOrEmpty(customerSessionCookieValue)))
             {
-                var dbCustomerSession = CustomerManager.GetCustomerSessionByGUID(new Guid(customerSessionCookieValue));
+                var dbCustomerSession = CustomerManager.GetCustomerSessionByGuid(new Guid(customerSessionCookieValue));
                 byId = dbCustomerSession;
             }
             Current[CONST_CUSTOMERSESSION] = byId;
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         public void SessionSaveToClient()
         {
             if (HttpContext.Current != null && this.Session != null)
-                SetCookie(HttpContext.Current.ApplicationInstance, CONST_CUSTOMERSESSIONCOOKIE, this.Session.CustomerSessionGUID.ToString());
+                SetCookie(HttpContext.Current.ApplicationInstance, CONST_CUSTOMERSESSIONCOOKIE, this.Session.CustomerSessionGuid.ToString());
         }
 
         /// <summary>
@@ -194,15 +194,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         {
             get
             {
-                if (!isAdmin.HasValue)
+                if (!_isAdmin.HasValue)
                 {
-                    isAdmin = CommonHelper.IsAdmin();
+                    _isAdmin = CommonHelper.IsAdmin();
                 }
-                return isAdmin.Value;
+                return _isAdmin.Value;
             }
             set
             {
-                isAdmin = value;
+                _isAdmin = value;
             }
         }
 
@@ -215,23 +215,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         {
             get
             {
-                if (this.context == null)
+                if (this._context == null)
                 {
                     return null;
                 }
 
-                if (this.context.Items[key] != null)
+                if (this._context.Items[key] != null)
                 {
-                    return this.context.Items[key];
+                    return this._context.Items[key];
                 }
                 return null;
             }
             set
             {
-                if (this.context != null)
+                if (this._context != null)
                 {
-                    this.context.Items.Remove(key);
-                    this.context.Items.Add(key, value);
+                    this._context.Items.Remove(key);
+                    this._context.Items.Add(key, value);
 
                 }
             }
@@ -259,11 +259,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         {
             get
             {
-                return this.currentCustomer;
+                return this._currentCustomer;
             }
             set
             {
-                this.currentCustomer = value;
+                this._currentCustomer = value;
             }
         }
 
@@ -301,15 +301,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                     var customerCurrency = customer.Currency;
                     if (customerCurrency != null)
                         foreach (Currency _currency in publishedCurrencies)
-                            if (_currency.CurrencyID == customerCurrency.CurrencyID)
+                            if (_currency.CurrencyId == customerCurrency.CurrencyId)
                                 return customerCurrency;
                 }
                 else if (CommonHelper.GetCookieInt("Nop.CustomerCurrency") > 0)
                 {
-                    var customerCurrency = CurrencyManager.GetCurrencyByID(CommonHelper.GetCookieInt("Nop.CustomerCurrency"));
+                    var customerCurrency = CurrencyManager.GetCurrencyById(CommonHelper.GetCookieInt("Nop.CustomerCurrency"));
                     if (customerCurrency != null)
                         foreach (Currency _currency in publishedCurrencies)
-                            if (_currency.CurrencyID == customerCurrency.CurrencyID)
+                            if (_currency.CurrencyId == customerCurrency.CurrencyId)
                                 return customerCurrency;
                 }
                 foreach (var _currency in publishedCurrencies)
@@ -323,22 +323,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                 var customer = NopContext.Current.User;
                 if (customer != null)
                 {
-                    customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
-                        customer.Email, customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                        customer.BillingAddressID, customer.ShippingAddressID,
-                        customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
+                    customer = CustomerManager.UpdateCustomer(customer.CustomerId, customer.CustomerGuid,
+                        customer.Email, customer.Username, customer.PasswordHash,
+                        customer.SaltKey, customer.AffiliateId,
+                        customer.BillingAddressId, customer.ShippingAddressId,
+                        customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
                         customer.GiftCardCouponCodes, customer.CheckoutAttributes,
-                        customer.LanguageID, value.CurrencyID, customer.TaxDisplayType,
+                        customer.LanguageId, value.CurrencyId, customer.TaxDisplayType,
                         customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                         customer.IsForumModerator, customer.TotalForumPosts,
                         customer.Signature, customer.AdminComment, customer.Active,
-                        customer.Deleted, customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                        customer.Deleted, customer.RegistrationDate, 
+                        customer.TimeZoneId, customer.AvatarId);
 
                     NopContext.Current.User = customer;
                 }
                 if (!NopContext.Current.IsAdmin)
                 {
-                    CommonHelper.SetCookie("Nop.CustomerCurrency", value.CurrencyID.ToString(), new TimeSpan(365, 0, 0, 0, 0));
+                    CommonHelper.SetCookie("Nop.CustomerCurrency", value.CurrencyId.ToString(), new TimeSpan(365, 0, 0, 0, 0));
                 }
             }
         }
@@ -360,7 +362,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                 }
                 else if (CommonHelper.GetCookieInt("Nop.CustomerLanguage") > 0)
                 {
-                    var customerLanguage = LanguageManager.GetLanguageByID(CommonHelper.GetCookieInt("Nop.CustomerLanguage"));
+                    var customerLanguage = LanguageManager.GetLanguageById(CommonHelper.GetCookieInt("Nop.CustomerLanguage"));
                     if (customerLanguage != null)
                         if (customerLanguage != null && customerLanguage.Published)
                             return customerLanguage;
@@ -377,21 +379,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                 var customer = NopContext.Current.User;
                 if (customer != null)
                 {
-                    customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
-                        customer.Email, customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                        customer.BillingAddressID, customer.ShippingAddressID,
-                        customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
+                    customer = CustomerManager.UpdateCustomer(customer.CustomerId, 
+                        customer.CustomerGuid, customer.Email, customer.Username, 
+                        customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
+                        customer.BillingAddressId, customer.ShippingAddressId,
+                        customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
                         customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
-                        value.LanguageID, customer.CurrencyID, customer.TaxDisplayType,
+                        value.LanguageId, customer.CurrencyId, customer.TaxDisplayType,
                         customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                         customer.IsForumModerator, customer.TotalForumPosts,
                         customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, customer.RegistrationDate,
-                        customer.TimeZoneID, customer.AvatarID);
+                        customer.TimeZoneId, customer.AvatarId);
 
                     NopContext.Current.User = customer;
                 }
 
-                CommonHelper.SetCookie("Nop.CustomerLanguage", value.LanguageID.ToString(), new TimeSpan(365, 0, 0, 0, 0));
+                CommonHelper.SetCookie("Nop.CustomerLanguage", value.LanguageId.ToString(), new TimeSpan(365, 0, 0, 0, 0));
             }
         }
 
@@ -414,9 +417,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                     {
                         return customer.TaxDisplayType;
                     }
-                    else if (CommonHelper.GetCookieInt("Nop.TaxDisplayTypeID") > 0)
+                    else if (CommonHelper.GetCookieInt("Nop.TaxDisplayTypeId") > 0)
                     {
-                        return (TaxDisplayTypeEnum)Enum.ToObject(typeof(TaxDisplayTypeEnum), CommonHelper.GetCookieInt("Nop.TaxDisplayTypeID"));
+                        return (TaxDisplayTypeEnum)Enum.ToObject(typeof(TaxDisplayTypeEnum), CommonHelper.GetCookieInt("Nop.TaxDisplayTypeId"));
                     }
                 }
                 return TaxManager.TaxDisplayType;
@@ -429,20 +432,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic
                 var customer = NopContext.Current.User;
                 if (customer != null)
                 {
-                    customer = CustomerManager.UpdateCustomer(customer.CustomerID, customer.CustomerGUID,
-                        customer.Email, customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateID,
-                        customer.BillingAddressID, customer.ShippingAddressID,
-                        customer.LastPaymentMethodID, customer.LastAppliedCouponCode,
+                    customer = CustomerManager.UpdateCustomer(customer.CustomerId, customer.CustomerGuid,
+                        customer.Email, customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
+                        customer.BillingAddressId, customer.ShippingAddressId,
+                        customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
                         customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
-                        customer.LanguageID, customer.CurrencyID, value,
+                        customer.LanguageId, customer.CurrencyId, value,
                         customer.IsTaxExempt, customer.IsAdmin, customer.IsGuest,
                         customer.IsForumModerator, customer.TotalForumPosts,
                         customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
-                        customer.RegistrationDate, customer.TimeZoneID, customer.AvatarID);
+                        customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
                 }
                 if (!NopContext.Current.IsAdmin)
                 {
-                    CommonHelper.SetCookie("Nop.TaxDisplayTypeID", ((int)value).ToString(), new TimeSpan(365, 0, 0, 0, 0));
+                    CommonHelper.SetCookie("Nop.TaxDisplayTypeId", ((int)value).ToString(), new TimeSpan(365, 0, 0, 0, 0));
                 }
             }
         }

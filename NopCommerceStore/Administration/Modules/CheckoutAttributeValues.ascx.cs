@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeByID(this.CheckoutAttributeID, 0);
+            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
             if (checkoutAttribute != null)
             {
                 if (checkoutAttribute.ShouldHaveValues)
@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         rptrLanguageDivs.DataBind();
                     }
 
-                    var values = CheckoutAttributeManager.GetCheckoutAttributeValues(checkoutAttribute.CheckoutAttributeID, 0);
+                    var values = CheckoutAttributeManager.GetCheckoutAttributeValues(checkoutAttribute.CheckoutAttributeId, 0);
                     if (values.Count > 0)
                     {
                         gvValues.Visible = true;
@@ -104,24 +104,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeByID(this.CheckoutAttributeID, 0);
+                var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
                 if (checkoutAttribute != null)
                 {
-                    var cav = CheckoutAttributeManager.InsertCheckoutAttributeValue(checkoutAttribute.CheckoutAttributeID,
+                    var cav = CheckoutAttributeManager.InsertCheckoutAttributeValue(checkoutAttribute.CheckoutAttributeId,
                         txtNewName.Text, txtNewPriceAdjustment.Value, txtNewWeightAdjustment.Value,
                         cbNewIsPreSelected.Checked, txtNewDisplayOrder.Value);
 
-                    saveLocalizableContent(cav);
+                    SaveLocalizableContent(cav);
 
-                    //BindData();
-
-                    //txtNewName.Text = string.Empty;
-                    //txtNewPriceAdjustment.Value = 0;
-                    //txtNewWeightAdjustment.Value = 0;
-                    //txtNewDisplayOrder.Value = 1;
                     if (checkoutAttribute != null)
                     {
-                        string url = string.Format("CheckoutAttributeDetails.aspx?CheckoutAttributeID={0}&TabID={1}", checkoutAttribute.CheckoutAttributeID, "pnlValues");
+                        string url = string.Format("CheckoutAttributeDetails.aspx?CheckoutAttributeID={0}&TabID={1}", checkoutAttribute.CheckoutAttributeId, "pnlValues");
                         Response.Redirect(url);
                     }
                 }
@@ -132,7 +126,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected void saveLocalizableContent(CheckoutAttributeValue cav)
+        protected void SaveLocalizableContent(CheckoutAttributeValue cav)
         {
             if (cav == null)
                 return;
@@ -147,34 +141,34 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtNewLocalizedName = (TextBox)item.FindControl("txtNewLocalizedName");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtNewLocalizedName.Text;
 
                     bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
 
-                    var content = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIDAndLanguageID(cav.CheckoutAttributeValueID, languageID);
+                    var content = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIdAndLanguageId(cav.CheckoutAttributeValueId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = CheckoutAttributeManager.InsertCheckoutAttributeValueLocalized(cav.CheckoutAttributeValueID,
-                                   languageID, name);
+                            content = CheckoutAttributeManager.InsertCheckoutAttributeValueLocalized(cav.CheckoutAttributeValueId,
+                                   languageId, name);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = CheckoutAttributeManager.UpdateCheckoutAttributeValueLocalized(content.CheckoutAttributeValueLocalizedID,
-                                content.CheckoutAttributeValueID, languageID, name);
+                            content = CheckoutAttributeManager.UpdateCheckoutAttributeValueLocalized(content.CheckoutAttributeValueLocalizedId,
+                                content.CheckoutAttributeValueId, languageId, name);
                         }
                     }
                 }
             }
         }
 
-        protected void saveLocalizableContentGrid(CheckoutAttributeValue cav)
+        protected void SaveLocalizableContentGrid(CheckoutAttributeValue cav)
         {
             if (cav == null)
                 return;
@@ -187,9 +181,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Repeater rptrLanguageDivs2 = row.FindControl("rptrLanguageDivs2") as Repeater;
                 if (rptrLanguageDivs2 != null)
                 {
-                    HiddenField hfCheckoutAttributeValueID = row.FindControl("hfCheckoutAttributeValueID") as HiddenField;
-                    int cavID = int.Parse(hfCheckoutAttributeValueID.Value);
-                    if (cavID == cav.CheckoutAttributeValueID)
+                    HiddenField hfCheckoutAttributeValueId = row.FindControl("hfCheckoutAttributeValueId") as HiddenField;
+                    int cavId = int.Parse(hfCheckoutAttributeValueId.Value);
+                    if (cavId == cav.CheckoutAttributeValueId)
                     {
                         foreach (RepeaterItem item in rptrLanguageDivs2.Items)
                         {
@@ -198,27 +192,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                                 var txtLocalizedName = (TextBox)item.FindControl("txtLocalizedName");
                                 var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                                int languageID = int.Parse(lblLanguageId.Text);
+                                int languageId = int.Parse(lblLanguageId.Text);
                                 string name = txtLocalizedName.Text;
 
                                 bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
 
-                                var content = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIDAndLanguageID(cav.CheckoutAttributeValueID, languageID);
+                                var content = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIdAndLanguageId(cav.CheckoutAttributeValueId, languageId);
                                 if (content == null)
                                 {
-                                    if (!allFieldsAreEmpty && languageID > 0)
+                                    if (!allFieldsAreEmpty && languageId > 0)
                                     {
                                         //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                                        content = CheckoutAttributeManager.InsertCheckoutAttributeValueLocalized(cav.CheckoutAttributeValueID,
-                                            languageID, name);
+                                        content = CheckoutAttributeManager.InsertCheckoutAttributeValueLocalized(cav.CheckoutAttributeValueId,
+                                            languageId, name);
                                     }
                                 }
                                 else
                                 {
-                                    if (languageID > 0)
+                                    if (languageId > 0)
                                     {
-                                        content = CheckoutAttributeManager.UpdateCheckoutAttributeValueLocalized(content.CheckoutAttributeValueLocalizedID,
-                                            content.CheckoutAttributeValueID, languageID, name);
+                                        content = CheckoutAttributeManager.UpdateCheckoutAttributeValueLocalized(content.CheckoutAttributeValueLocalizedId,
+                                            content.CheckoutAttributeValueId, languageId, name);
                                     }
                                 }
                             }
@@ -240,29 +234,29 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvValues.Rows[index];
 
-                HiddenField hfCheckoutAttributeValueID = row.FindControl("hfCheckoutAttributeValueID") as HiddenField;
+                HiddenField hfCheckoutAttributeValueId = row.FindControl("hfCheckoutAttributeValueId") as HiddenField;
                 SimpleTextBox txtName = row.FindControl("txtName") as SimpleTextBox;
                 DecimalTextBox txtPriceAdjustment = row.FindControl("txtPriceAdjustment") as DecimalTextBox;
                 DecimalTextBox txtWeightAdjustment = row.FindControl("txtWeightAdjustment") as DecimalTextBox;
                 CheckBox cbIsPreSelected = row.FindControl("cbIsPreSelected") as CheckBox;
                 NumericTextBox txtDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
 
-                int cavID = int.Parse(hfCheckoutAttributeValueID.Value);
+                int cavId = int.Parse(hfCheckoutAttributeValueId.Value);
                 string name = txtName.Text;
                 decimal priceAdjustment = txtPriceAdjustment.Value;
                 decimal weightAdjustment = txtWeightAdjustment.Value;
                 bool isPreSelected = cbIsPreSelected.Checked;
                 int displayOrder = txtDisplayOrder.Value;
 
-                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueByID(cavID, 0);
+                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueById(cavId, 0);
 
                 if (cav != null)
                 {
-                    cav = CheckoutAttributeManager.UpdateCheckoutAttributeValue(cav.CheckoutAttributeValueID,
-                        cav.CheckoutAttributeID, name,
+                    cav = CheckoutAttributeManager.UpdateCheckoutAttributeValue(cav.CheckoutAttributeValueId,
+                        cav.CheckoutAttributeId, name,
                         priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
 
-                    saveLocalizableContentGrid(cav);
+                    SaveLocalizableContentGrid(cav);
                 }
                 BindData();
             }
@@ -270,8 +264,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvValues_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int cavID = (int)gvValues.DataKeys[e.RowIndex]["CheckoutAttributeValueID"];
-            CheckoutAttributeManager.DeleteCheckoutAttributeValue(cavID);
+            int cavId = (int)gvValues.DataKeys[e.RowIndex]["CheckoutAttributeValueId"];
+            CheckoutAttributeManager.DeleteCheckoutAttributeValue(cavId);
             BindData();
         }
 
@@ -304,14 +298,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 var txtLocalizedName = (TextBox)e.Item.FindControl("txtLocalizedName");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
-                var hfCheckoutAttributeValueID = (HiddenField)e.Item.Parent.Parent.FindControl("hfCheckoutAttributeValueID");
+                var hfCheckoutAttributeValueId = (HiddenField)e.Item.Parent.Parent.FindControl("hfCheckoutAttributeValueId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
-                int cavID = Convert.ToInt32(hfCheckoutAttributeValueID.Value);
-                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueByID(cavID, 0);
+                int languageId = int.Parse(lblLanguageId.Text);
+                int cavId = Convert.ToInt32(hfCheckoutAttributeValueId.Value);
+                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueById(cavId, 0);
                 if (cav != null)
                 {
-                    var content = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIDAndLanguageID(cavID, languageID);
+                    var content = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIdAndLanguageId(cavId, languageId);
                     if (content != null)
                     {
                         txtLocalizedName.Text = content.Name;
@@ -327,11 +321,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             lErrorTitle.Text = exc.Message;
         }
 
-        public int CheckoutAttributeID
+        public int CheckoutAttributeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CheckoutAttributeID");
+                return CommonHelper.QueryStringInt("CheckoutAttributeId");
             }
         }
 

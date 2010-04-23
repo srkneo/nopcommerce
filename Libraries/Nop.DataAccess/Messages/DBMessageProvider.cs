@@ -37,9 +37,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Gets a message template by template identifier
         /// </summary>
-        /// <param name="MessageTemplateID">Message template identifier</param>
+        /// <param name="messageTemplateId">Message template identifier</param>
         /// <returns>Message template</returns>
-        public abstract DBMessageTemplate GetMessageTemplateByID(int MessageTemplateID);
+        public abstract DBMessageTemplate GetMessageTemplateById(int messageTemplateId);
 
         /// <summary>
         /// Gets all message templates
@@ -50,182 +50,186 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Gets a localized message template by identifier
         /// </summary>
-        /// <param name="LocalizedMessageTemplateID">Localized message template identifier</param>
+        /// <param name="localizedMessageTemplateId">Localized message template identifier</param>
         /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate GetLocalizedMessageTemplateByID(int LocalizedMessageTemplateID);
+        public abstract DBLocalizedMessageTemplate GetLocalizedMessageTemplateById(int localizedMessageTemplateId);
 
         /// <summary>
         /// Gets a localized message template by name and language identifier
         /// </summary>
-        /// <param name="Name">Message template name</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="name">Message template name</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate GetLocalizedMessageTemplate(string Name, int LanguageID);
+        public abstract DBLocalizedMessageTemplate GetLocalizedMessageTemplate(string name, 
+            int languageId);
 
         /// <summary>
         /// Deletes a localized message template
         /// </summary>
-        /// <param name="LocalizedMessageTemplateID">Message template identifier</param>
-        public abstract void DeleteLocalizedMessageTemplate(int LocalizedMessageTemplateID);
+        /// <param name="localizedMessageTemplateId">Message template identifier</param>
+        public abstract void DeleteLocalizedMessageTemplate(int localizedMessageTemplateId);
 
         /// <summary>
         /// Gets all localized message templates
         /// </summary>
-        /// <param name="MessageTemplatesName">Message template name</param>
+        /// <param name="messageTemplateName">Message template name</param>
         /// <returns>Localized message template collection</returns>
-        public abstract DBLocalizedMessageTemplateCollection GetAllLocalizedMessageTemplates(string MessageTemplatesName);
+        public abstract DBLocalizedMessageTemplateCollection GetAllLocalizedMessageTemplates(string messageTemplateName);
 
         /// <summary>
         /// Inserts a localized message template
         /// </summary>
-        /// <param name="MessageTemplateID">The message template identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="IsActive">A value indicating whether the message template is active</param>
+        /// <param name="messageTemplateId">The message template identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="bccEmailAddresses">The BCC Email addresses</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="isActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate InsertLocalizedMessageTemplate(int MessageTemplateID,
-            int LanguageID, string BCCEmailAddresses, string Subject, string Body, bool IsActive);
+        public abstract DBLocalizedMessageTemplate InsertLocalizedMessageTemplate(int messageTemplateId,
+            int languageId, string bccEmailAddresses, string subject, string body, bool isActive);
 
         /// <summary>
         /// Updates the localized message template
         /// </summary>
-        /// <param name="MessageTemplateLocalizedID">The localized message template identifier</param>
-        /// <param name="MessageTemplateID">The message template identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BCCEmailAddresses">The BCC Email addresses</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="IsActive">A value indicating whether the message template is active</param>
+        /// <param name="messageTemplateLocalizedId">The localized message template identifier</param>
+        /// <param name="messageTemplateId">The message template identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="bccEmailAddresses">The BCC Email addresses</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="isActive">A value indicating whether the message template is active</param>
         /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate UpdateLocalizedMessageTemplate(int MessageTemplateLocalizedID,
-            int MessageTemplateID, int LanguageID, string BCCEmailAddresses,
-            string Subject, string Body, bool IsActive);
+        public abstract DBLocalizedMessageTemplate UpdateLocalizedMessageTemplate(int messageTemplateLocalizedId,
+            int messageTemplateId, int languageId, string bccEmailAddresses, 
+            string subject, string body, bool isActive);
 
         /// <summary>
         /// Gets a queued email by identifier
         /// </summary>
-        /// <param name="QueuedEmailID">Email item identifier</param>
+        /// <param name="queuedEmailId">Email item identifier</param>
         /// <returns>Email item</returns>
-        public abstract DBQueuedEmail GetQueuedEmailByID(int QueuedEmailID);
+        public abstract DBQueuedEmail GetQueuedEmailById(int queuedEmailId);
 
         /// <summary>
         /// Deletes a queued email
         /// </summary>
-        /// <param name="QueuedEmailID">Email item identifier</param>
-        public abstract void DeleteQueuedEmail(int QueuedEmailID);
+        /// <param name="queuedEmailId">Email item identifier</param>
+        public abstract void DeleteQueuedEmail(int queuedEmailId);
 
         /// <summary>
         /// Gets all queued emails
         /// </summary>
-        /// <param name="FromEmail">From Email</param>
-        /// <param name="ToEmail">To Email</param>
-        /// <param name="StartTime">The start time</param>
-        /// <param name="EndTime">The end time</param>
-        /// <param name="QueuedEmailCount">Email item count. 0 if you want to get all items</param>
-        /// <param name="LoadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
-        /// <param name="MaxSendTries">Maximum send tries</param>
+        /// <param name="fromEmail">From Email</param>
+        /// <param name="toEmail">To Email</param>
+        /// <param name="startTime">The start time</param>
+        /// <param name="endTime">The end time</param>
+        /// <param name="queuedEmailCount">Email item count. 0 if you want to get all items</param>
+        /// <param name="loadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
+        /// <param name="maxSendTries">Maximum send tries</param>
         /// <returns>Email item collection</returns>
-        public abstract DBQueuedEmailCollection GetAllQueuedEmails(string FromEmail,
-            string ToEmail, DateTime? StartTime, DateTime? EndTime,
-            int QueuedEmailCount, bool LoadNotSentItemsOnly, int MaxSendTries);
+        public abstract DBQueuedEmailCollection GetAllQueuedEmails(string fromEmail,
+            string toEmail, DateTime? startTime, DateTime? endTime,
+            int queuedEmailCount, bool loadNotSentItemsOnly, int maxSendTries);
 
         /// <summary>
         /// Inserts a queued email
         /// </summary>
-        /// <param name="Priority">The priority</param>
-        /// <param name="From">From</param>
-        /// <param name="FromName">From name</param>
-        /// <param name="To">To</param>
-        /// <param name="ToName">To name</param>
-        /// <param name="Cc">Cc</param>
-        /// <param name="Bcc">Bcc</param>
-        /// <param name="Subject">Subject</param>
-        /// <param name="Body">Body</param>
-        /// <param name="CreatedOn">The date and time of item creation</param>
-        /// <param name="SendTries">The send tries</param>
-        /// <param name="SentOn">The sent date and time. Null if email is not sent yet</param>
+        /// <param name="priority">The priority</param>
+        /// <param name="from">From</param>
+        /// <param name="fromName">From name</param>
+        /// <param name="to">To</param>
+        /// <param name="toName">To name</param>
+        /// <param name="cc">Cc</param>
+        /// <param name="bcc">Bcc</param>
+        /// <param name="subject">Subject</param>
+        /// <param name="body">Body</param>
+        /// <param name="createdOn">The date and time of item creation</param>
+        /// <param name="sendTries">The send tries</param>
+        /// <param name="sentOn">The sent date and time. Null if email is not sent yet</param>
         /// <returns>Queued email</returns>
-        public abstract DBQueuedEmail InsertQueuedEmail(int Priority, string From,
-            string FromName, string To, string ToName, string Cc, string Bcc,
-            string Subject, string Body, DateTime CreatedOn, int SendTries, DateTime? SentOn);
+        public abstract DBQueuedEmail InsertQueuedEmail(int priority, string from,
+            string fromName, string to, string toName, string cc, string bcc,
+            string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn);
 
         /// <summary>
         /// Updates a queued email
         /// </summary>
-        /// <param name="QueuedEmailID">Email item identifier</param>
-        /// <param name="Priority">The priority</param>
-        /// <param name="From">From</param>
-        /// <param name="FromName">From name</param>
-        /// <param name="To">To</param>
-        /// <param name="ToName">To name</param>
-        /// <param name="Cc">Cc</param>
-        /// <param name="Bcc">Bcc</param>
-        /// <param name="Subject">Subject</param>
-        /// <param name="Body">Body</param>
-        /// <param name="CreatedOn">The date and time of item creation</param>
-        /// <param name="SendTries">The send tries</param>
-        /// <param name="SentOn">The sent date and time. Null if email is not sent yet</param>
+        /// <param name="queuedEmailId">Email item identifier</param>
+        /// <param name="priority">The priority</param>
+        /// <param name="from">From</param>
+        /// <param name="fromName">From name</param>
+        /// <param name="to">To</param>
+        /// <param name="toName">To name</param>
+        /// <param name="cc">Cc</param>
+        /// <param name="bcc">Bcc</param>
+        /// <param name="subject">Subject</param>
+        /// <param name="body">Body</param>
+        /// <param name="createdOn">The date and time of item creation</param>
+        /// <param name="sendTries">The send tries</param>
+        /// <param name="sentOn">The sent date and time. Null if email is not sent yet</param>
         /// <returns>Queued email</returns>
-        public abstract DBQueuedEmail UpdateQueuedEmail(int QueuedEmailID, int Priority, string From,
-            string FromName, string To, string ToName, string Cc, string Bcc,
-            string Subject, string Body, DateTime CreatedOn, int SendTries, DateTime? SentOn);
+        public abstract DBQueuedEmail UpdateQueuedEmail(int queuedEmailId, 
+            int priority, string from,
+            string fromName, string to, string toName, string cc, string bcc,
+            string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn);
 
         /// <summary>
         /// Inserts the new newsletter subscription
         /// </summary>
-        /// <param name="NewsLetterSubscriptionGuid">The newsletter subscription GUID</param>
-        /// <param name="Email">The subscriber email</param>
-        /// <param name="IsActive">A value indicating whether subscription is active</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsLetterSubscriptionGuid">The newsletter subscription GUID</param>
+        /// <param name="email">The subscriber email</param>
+        /// <param name="isActive">A value indicating whether subscription is active</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public abstract DBNewsLetterSubscription InsertNewsLetterSubscription(Guid NewsLetterSubscriptionGuid, string Email, bool IsActive, DateTime CreatedOn);
+        public abstract DBNewsLetterSubscription InsertNewsLetterSubscription(Guid newsLetterSubscriptionGuid, 
+            string email, bool isActive, DateTime createdOn);
 
         /// <summary>
         /// Gets the newsletter subscription by newsletter subscription identifier
         /// </summary>
-        /// <param name="NewsLetterSubscriptionID">The newsletter subscription identifier</param>
+        /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public abstract DBNewsLetterSubscription GetNewsLetterSubscriptionByID(int NewsLetterSubscriptionID);
+        public abstract DBNewsLetterSubscription GetNewsLetterSubscriptionById(int newsLetterSubscriptionId);
 
         /// <summary>
         /// Gets the newsletter subscription by newsletter subscription GUID
         /// </summary>
-        /// <param name="NewsLetterSubscriptionGuid">The newsletter subscription GUID</param>
+        /// <param name="newsLetterSubscriptionGuid">The newsletter subscription GUID</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public abstract DBNewsLetterSubscription GetNewsLetterSubscriptionByGUID(Guid NewsLetterSubscriptionGuid);
+        public abstract DBNewsLetterSubscription GetNewsLetterSubscriptionByGuid(Guid newsLetterSubscriptionGuid);
 
         /// <summary>
         /// Gets the newsletter subscription by email
         /// </summary>
-        /// <param name="Email">The Email</param>
+        /// <param name="email">The Email</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public abstract DBNewsLetterSubscription GetNewsLetterSubscriptionByEmail(string Email);
+        public abstract DBNewsLetterSubscription GetNewsLetterSubscriptionByEmail(string email);
 
         /// <summary>
         /// Gets the newsletter subscription collection
         /// </summary>
-        /// <param name="ShowHidden">A value indicating whether the not active subscriptions should be loaded</param>
+        /// <param name="showHidden">A value indicating whether the not active subscriptions should be loaded</param>
         /// <returns>NewsLetterSubscription entity collection</returns>
-        public abstract DBNewsLetterSubscriptionCollection GetAllNewsLetterSubscriptions(bool ShowHidden);
+        public abstract DBNewsLetterSubscriptionCollection GetAllNewsLetterSubscriptions(bool showHidden);
 
         /// <summary>
         /// Updates the newsletter subscription
         /// </summary>
-        /// <param name="NewsLetterSubscriptionID">The newsletter subscription identifier</param>
-        /// <param name="NewsLetterSubscriptionGuid">The newsletter subscription GUID</param>
-        /// <param name="Email">The subscriber email</param>
-        /// <param name="IsActive">A value indicating whether subscription is active</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
+        /// <param name="newsLetterSubscriptionGuid">The newsletter subscription GUID</param>
+        /// <param name="email">The subscriber email</param>
+        /// <param name="isActive">A value indicating whether subscription is active</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public abstract DBNewsLetterSubscription UpdateNewsLetterSubscription(int NewsLetterSubscriptionID, Guid NewsLetterSubscriptionGuid, string Email, bool IsActive, DateTime CreatedOn);
+        public abstract DBNewsLetterSubscription UpdateNewsLetterSubscription(int newsLetterSubscriptionId, 
+            Guid newsLetterSubscriptionGuid, string email, bool isActive, DateTime createdOn);
 
         /// <summary>
         /// Deletes the newsletter subscription
         /// </summary>
-        /// <param name="NewsLetterSubscriptionID">The newsletter subscription identifier</param>
-        public abstract void DeleteNewsLetterSubscription(int NewsLetterSubscriptionID);
+        /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
+        public abstract void DeleteNewsLetterSubscription(int newsLetterSubscriptionId);
         #endregion
     }
 }

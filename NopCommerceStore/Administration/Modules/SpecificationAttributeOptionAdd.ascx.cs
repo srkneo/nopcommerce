@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         protected void BindData()
         {
-            hlBack.NavigateUrl = "~/Administration/SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + SpecificationAttributeID;
+            hlBack.NavigateUrl = "~/Administration/SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + SpecificationAttributeId;
 
             if (this.HasLocalizableContent)
             {
@@ -68,9 +68,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    SpecificationAttributeOption sao = SpecificationAttributeManager.InsertSpecificationAttributeOption(SpecificationAttributeID, txtNewOptionName.Text, txtNewOptionDisplayOrder.Value);
-                    saveLocalizableContent(sao);
-                    Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + sao.SpecificationAttributeID.ToString());
+                    SpecificationAttributeOption sao = SpecificationAttributeManager.InsertSpecificationAttributeOption(SpecificationAttributeId, txtNewOptionName.Text, txtNewOptionDisplayOrder.Value);
+                    SaveLocalizableContent(sao);
+                    Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + sao.SpecificationAttributeId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected void saveLocalizableContent(SpecificationAttributeOption sao)
+        protected void SaveLocalizableContent(SpecificationAttributeOption sao)
         {
             if (sao == null)
                 return;
@@ -94,27 +94,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtNewLocalizedOptionName = (TextBox)item.FindControl("txtNewLocalizedOptionName");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtNewLocalizedOptionName.Text;
 
                     bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
 
-                    var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIDAndLanguageID(sao.SpecificationAttributeOptionID, languageID);
+                    var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIdAndLanguageId(sao.SpecificationAttributeOptionId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = SpecificationAttributeManager.InsertSpecificationAttributeOptionLocalized(sao.SpecificationAttributeOptionID,
-                                   languageID, name);
+                            content = SpecificationAttributeManager.InsertSpecificationAttributeOptionLocalized(sao.SpecificationAttributeOptionId,
+                                   languageId, name);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = SpecificationAttributeManager.UpdateSpecificationAttributeOptionLocalized(content.SpecificationAttributeOptionLocalizedID, 
-                                content.SpecificationAttributeOptionID, languageID, name);
+                            content = SpecificationAttributeManager.UpdateSpecificationAttributeOptionLocalized(content.SpecificationAttributeOptionLocalizedId, 
+                                content.SpecificationAttributeOptionId, languageId, name);
                         }
                     }
                 }
@@ -126,11 +126,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             
         }
 
-        public int SpecificationAttributeID
+        public int SpecificationAttributeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("SpecificationAttributeID");
+                return CommonHelper.QueryStringInt("SpecificationAttributeId");
             }
         }
     }

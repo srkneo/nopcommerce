@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
     public class HostedPaymentProcessor : IPaymentMethod
     {
         #region Methods
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -78,7 +78,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
             }
 
             //gift cards
-            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderID);
+            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             foreach (var gcuh in gcuhC)
             {
                 sb.AppendFormat("Row{0}AmountExVAT={1}&", rowNumber, -gcuh.UsedValue);
@@ -111,7 +111,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
                 rowNumber++;
             }
 
-            sb.AppendFormat("{0}={1}&", "OrderId", order.OrderID);
+            sb.AppendFormat("{0}={1}&", "OrderId", order.OrderId);
             sb.AppendFormat("{0}={1}&", "PaymentMethod", HostedPaymentSettings.PaymentMethod);
             sb.AppendFormat("{0}={1}&", "ResponseURL", HttpUtility.UrlEncode(String.Format("{0}SveaHostedPaymentReturn.aspx", CommonHelper.GetStoreHost(false)), Encoding.UTF8));
             sb.AppendFormat("{0}={1}&", "CancelURL", HttpUtility.UrlEncode(String.Format("{0}Checkout.aspx", CommonHelper.GetStoreHost(false)), Encoding.UTF8));
@@ -152,9 +152,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

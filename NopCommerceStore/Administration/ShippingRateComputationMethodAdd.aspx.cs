@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                         txtDescription.Text, txtConfigureTemplatePath.Text, 
                         txtClassName.Text, cbActive.Checked, txtDisplayOrder.Value);
 
-                    Response.Redirect("ShippingRateComputationMethodDetails.aspx?ShippingRateComputationMethodID=" + shippingRateComputationMethod.ShippingRateComputationMethodID.ToString());
+                    Response.Redirect("ShippingRateComputationMethodDetails.aspx?ShippingRateComputationMethodID=" + shippingRateComputationMethod.ShippingRateComputationMethodId.ToString());
                 }
                 catch (Exception exc)
                 {

@@ -62,12 +62,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     foreach (GridViewRow row in gvActivityTypes.Rows)
                     {
-                        HiddenField hfActivityLogTypeID = row.FindControl("hfActivityLogTypeID") as HiddenField;    
+                        HiddenField hfActivityLogTypeId = row.FindControl("hfActivityLogTypeId") as HiddenField;    
                         CheckBox cbEnabled = row.FindControl("cbEnabled") as CheckBox;
                             
-                        int activityLogTypeID = Int32.Parse(hfActivityLogTypeID.Value);
+                        int activityLogTypeId = Int32.Parse(hfActivityLogTypeId.Value);
 
-                        CustomerActivityManager.UpdateActivityType(activityLogTypeID, cbEnabled.Checked);
+                        CustomerActivityManager.UpdateActivityType(activityLogTypeId, cbEnabled.Checked);
                     }
                 }
                 catch (Exception exc)

@@ -283,7 +283,7 @@ namespace NopSolutions.NopCommerce.Controls
         /// <returns>Url</returns>
         protected virtual string GetPageNavigateUrl(int pageIndex)
         {
-            return CommonHelper.ModifyQueryString(CommonHelper.GetThisPageURL(true), this.QueryStringProperty + "=" + pageIndex.ToString(), null);
+            return CommonHelper.ModifyQueryString(CommonHelper.GetThisPageUrl(true), this.QueryStringProperty + "=" + pageIndex.ToString(), null);
         }
 
         /// <summary>

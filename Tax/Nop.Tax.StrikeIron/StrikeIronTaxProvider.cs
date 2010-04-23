@@ -40,19 +40,19 @@ namespace NopSolutions.NopCommerce.Tax
         /// Gets tax rate
         /// </summary>
         /// <param name="calculateTaxRequest">Tax calculation request</param>
-        /// <param name="Error">Error</param>
+        /// <param name="error">Error</param>
         /// <returns>Tax</returns>
-        public decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string Error)
+        public decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string error)
         {
             var address = calculateTaxRequest.Address;
             if (address == null)
             {
-                Error = "Billing address is not set";
+                error = "Billing address is not set";
                 return 0;
             }
             if (address.Country == null)
             {
-                Error = "Country is not set";
+                error = "Country is not set";
                 return 0;
             }
 
@@ -61,38 +61,38 @@ namespace NopSolutions.NopCommerce.Tax
             // UserID/Password combination or a License Key.  If you wish to use a License Key, 
             // assign this value to the UserID field and set the Password field to null.
             //**************************************************************************************************************
-            string UserID = SettingManager.GetSettingValue("Tax.TaxProvider.StrikeIron.UserID");
-            string Password = SettingManager.GetSettingValue("Tax.TaxProvider.StrikeIron.Password");
+            string userID = SettingManager.GetSettingValue("Tax.TaxProvider.StrikeIron.UserID");
+            string password = SettingManager.GetSettingValue("Tax.TaxProvider.StrikeIron.Password");
             //if (Password == " " || !String.IsNullOrEmpty(Password))
             //    Password = String.Empty;
             //**************************************************************************************************************
 
             decimal taxRate = decimal.Zero;
-            if (address.Country.TwoLetterISOCode.ToLower() == "us")
+            if (address.Country.TwoLetterIsoCode.ToLower() == "us")
             {
                 if (String.IsNullOrEmpty(address.ZipPostalCode))
                 {
-                    Error = "Zip is not provided";
+                    error = "Zip is not provided";
                     return 0;
                 }
-                taxRate = GetTaxRateUSA(address.ZipPostalCode, UserID, Password, ref Error);
+                taxRate = GetTaxRateUSA(address.ZipPostalCode, userID, password, ref error);
             }
-            else if (address.Country.TwoLetterISOCode.ToLower() == "ca")
+            else if (address.Country.TwoLetterIsoCode.ToLower() == "ca")
             {
                 if (address.StateProvince == null)
                 {
-                    Error = "Province is not set";
+                    error = "Province is not set";
                     return 0;
                 }
-                taxRate = GetTaxRateCanada(address.StateProvince.Abbreviation, UserID, Password, ref Error);
+                taxRate = GetTaxRateCanada(address.StateProvince.Abbreviation, userID, password, ref error);
             }
             else
             {
-                Error = "Tax can be calculated only for USA zip or Canada province";
+                error = "Tax can be calculated only for USA zip or Canada province";
                 return 0;
             }
 
-            if (String.IsNullOrEmpty(Error))
+            if (String.IsNullOrEmpty(error))
             {
                 return taxRate * 100;
             }
@@ -106,11 +106,12 @@ namespace NopSolutions.NopCommerce.Tax
         /// Gets a tax rate
         /// </summary>
         /// <param name="zipCode">zip</param>
-        /// <param name="UserID">UserID</param>
-        /// <param name="Password">Password</param>
-        /// <param name="Error">Error</param>
+        /// <param name="userID">UserID</param>
+        /// <param name="password">Password</param>
+        /// <param name="error">Error</param>
         /// <returns>Tax rate</returns>
-        public decimal GetTaxRateUSA(string zipCode, string UserID, string Password, ref string Error)
+        public decimal GetTaxRateUSA(string zipCode, string userID, 
+            string password, ref string error)
         {
             decimal result = decimal.Zero;
             string key = string.Format(TAXRATEUSA_KEY, zipCode);
@@ -125,8 +126,8 @@ namespace NopSolutions.NopCommerce.Tax
                 NopSolutions.NopCommerce.Tax.TaxDataBasic.TaxDataBasic taxService = new NopSolutions.NopCommerce.Tax.TaxDataBasic.TaxDataBasic();
                 taxService.LicenseInfoValue = new LicenseInfo();
                 taxService.LicenseInfoValue.RegisteredUser = new RegisteredUser();
-                taxService.LicenseInfoValue.RegisteredUser.UserID = UserID;
-                taxService.LicenseInfoValue.RegisteredUser.Password = Password;
+                taxService.LicenseInfoValue.RegisteredUser.UserID = userID;
+                taxService.LicenseInfoValue.RegisteredUser.Password = password;
 
                 /// The GetTaxRateUS operation can now be called.  The output type for this operation is SIWSOutputOfTaxRateUSAData.
                 /// Note that for simplicity, there is no error handling in this sample project.  In a production environment, any
@@ -170,12 +171,12 @@ namespace NopSolutions.NopCommerce.Tax
                 else
                 {
                     // StrikeIron does not return SoapFault for invalid data when it cannot find a zipcode. 
-                    Error = String.Format("[{0}] - {1}", wsOutput.ServiceStatus.StatusNbr.ToString(), wsOutput.ServiceStatus.StatusDescription);
+                    error = String.Format("[{0}] - {1}", wsOutput.ServiceStatus.StatusNbr.ToString(), wsOutput.ServiceStatus.StatusDescription);
                 }
             }
             catch (Exception ex)
             {
-                Error = ex.Message;
+                error = ex.Message;
             }
 
             if (StrikeIronTaxProvider.CacheEnabled)
@@ -190,11 +191,12 @@ namespace NopSolutions.NopCommerce.Tax
         /// Gets a tax rate
         /// </summary>
         /// <param name="province">province</param>
-        /// <param name="UserID">UserID</param>
-        /// <param name="Password">Password</param>
-        /// <param name="Error">Error</param>
+        /// <param name="userID">UserID</param>
+        /// <param name="password">Password</param>
+        /// <param name="error">Error</param>
         /// <returns>Tax rate</returns>
-        public decimal GetTaxRateCanada(string province, string UserID, string Password, ref string Error)
+        public decimal GetTaxRateCanada(string province, string userID, 
+            string password, ref string error)
         {
             decimal result = decimal.Zero;
             string key = string.Format(TAXRATECANADA_KEY, province);
@@ -209,8 +211,8 @@ namespace NopSolutions.NopCommerce.Tax
                 NopSolutions.NopCommerce.Tax.TaxDataBasic.TaxDataBasic taxService = new NopSolutions.NopCommerce.Tax.TaxDataBasic.TaxDataBasic();
                 taxService.LicenseInfoValue = new LicenseInfo();
                 taxService.LicenseInfoValue.RegisteredUser = new RegisteredUser();
-                taxService.LicenseInfoValue.RegisteredUser.UserID = UserID;
-                taxService.LicenseInfoValue.RegisteredUser.Password = Password;
+                taxService.LicenseInfoValue.RegisteredUser.UserID = userID;
+                taxService.LicenseInfoValue.RegisteredUser.Password = password;
 
                 /// The GetTaxRateCanada operation can now be called.  The output type for this operation is SIWSOutputOfTaxRateCanadaData.
                 /// Note that for simplicity, there is no error handling in this sample project.  In a production environment, any
@@ -246,12 +248,12 @@ namespace NopSolutions.NopCommerce.Tax
                 else
                 {
                     // StrikeIron does not return SoapFault for invalid data when it cannot find a zipcode. 
-                    Error = String.Format("[{0}] - {1}", wsOutput.ServiceStatus.StatusNbr.ToString(), wsOutput.ServiceStatus.StatusDescription);
+                    error = String.Format("[{0}] - {1}", wsOutput.ServiceStatus.StatusNbr.ToString(), wsOutput.ServiceStatus.StatusDescription);
                 }
             }
             catch (Exception ex)
             {
-                Error = ex.Message;
+                error = ex.Message;
             }
 
             if (StrikeIronTaxProvider.CacheEnabled)

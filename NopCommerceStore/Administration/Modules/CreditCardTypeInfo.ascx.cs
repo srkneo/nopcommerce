@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            CreditCardType creditCardType = CreditCardTypeManager.GetCreditCardTypeByID(this.CreditCardTypeID);
+            CreditCardType creditCardType = CreditCardTypeManager.GetCreditCardTypeById(this.CreditCardTypeId);
             if (creditCardType != null)
             {
                 this.txtName.Text = creditCardType.Name;
@@ -50,10 +50,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public CreditCardType SaveInfo()
         {
-            CreditCardType creditCardType = CreditCardTypeManager.GetCreditCardTypeByID(this.CreditCardTypeID);
+            CreditCardType creditCardType = CreditCardTypeManager.GetCreditCardTypeById(this.CreditCardTypeId);
             if (creditCardType != null)
             {
-                creditCardType = CreditCardTypeManager.UpdateCreditCardType(creditCardType.CreditCardTypeID, txtName.Text,
+                creditCardType = CreditCardTypeManager.UpdateCreditCardType(creditCardType.CreditCardTypeId, txtName.Text,
                    txtSystemKeyword.Text, txtDisplayOrder.Value, creditCardType.Deleted);
             }
             else
@@ -64,11 +64,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return creditCardType;
         }
 
-        public int CreditCardTypeID
+        public int CreditCardTypeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CreditCardTypeID");
+                return CommonHelper.QueryStringInt("CreditCardTypeId");
             }
         }
     }

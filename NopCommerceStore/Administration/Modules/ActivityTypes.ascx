@@ -19,7 +19,7 @@
             <asp:BoundField DataField="Name" HeaderText="<% $NopResources:Admin.ActivityLogType.Name %>"/>
             <asp:TemplateField HeaderText="<% $NopResources:Admin.ActivityLogType.Enabled %>" >
                 <ItemTemplate>
-                    <asp:HiddenField runat="server" ID="hfActivityLogTypeID" Value='<%#Eval("ActivityLogTypeID")%>' />
+                    <asp:HiddenField runat="server" ID="hfActivityLogTypeId" Value='<%#Eval("ActivityLogTypeId")%>' />
                     <asp:CheckBox ID="cbEnabled" runat="server" Checked='<%#Eval("Enabled")%>' />
                 </ItemTemplate>
             </asp:TemplateField>

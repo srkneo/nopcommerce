@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets or sets the localized specification attribute option identifier
         /// </summary>
-        public int SpecificationAttributeOptionLocalizedID { get; set; }
+        public int SpecificationAttributeOptionLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the specification attribute option identifier
         /// </summary>
-        public int SpecificationAttributeOptionID { get; set; }
+        public int SpecificationAttributeOptionId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

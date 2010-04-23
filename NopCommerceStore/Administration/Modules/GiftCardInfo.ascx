@@ -150,8 +150,6 @@
                         <asp:GridView ID="gvUsageHistory" runat="server" AutoGenerateColumns="False" Width="100%"
                             OnPageIndexChanging="gvUsageHistory_PageIndexChanging" AllowPaging="true" PageSize="15">
                             <Columns>
-                                <asp:BoundField DataField="GiftCardUsageHistoryID" HeaderText="Gift Card Usage History ID"
-                                    Visible="false"></asp:BoundField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.GiftCardInfo.UsageHistory.UsedValueColumn %>"
                                     ItemStyle-Width="20%">
                                     <ItemTemplate>
@@ -167,7 +165,7 @@
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.GiftCardInfo.UsageHistory.OrderColumn %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderID")%>">
+                                        <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderId")%>">
                                             <%#GetLocaleResourceString("Admin.GiftCardInfo.UsageHistory.OrderColumn.View")%>
                                         </a>
                                     </ItemTemplate>

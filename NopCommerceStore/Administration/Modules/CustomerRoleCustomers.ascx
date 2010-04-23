@@ -5,17 +5,16 @@
         <td colspan="2" width="100%">
             <asp:GridView ID="gvCustomers" runat="server" AutoGenerateColumns="False" Width="100%">
                 <Columns>
-                    <asp:BoundField DataField="CustomerID" HeaderText="CustomerID" Visible="False"></asp:BoundField>
                     <asp:TemplateField HeaderText="Email" ItemStyle-Width="45%">
                         <ItemTemplate>
-                            <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerID")%>" title="View customer details">
+                            <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerId")%>" title="View customer details">
                                 <%#Server.HtmlEncode(Eval("Email").ToString())%>
                             </a>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Name" ItemStyle-Width="45%">
                         <ItemTemplate>
-                            <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerID")%>" title="View customer details">
+                            <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerId")%>" title="View customer details">
                                 <%#Server.HtmlEncode(Eval("FullName").ToString())%>
                             </a>
                         </ItemTemplate>
@@ -23,7 +22,7 @@
                     <asp:TemplateField HeaderText="View" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerID")%>" title="View customer details">
+                            <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerId")%>" title="View customer details">
                                 View</a>
                         </ItemTemplate>
                     </asp:TemplateField>

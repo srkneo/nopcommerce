@@ -12,7 +12,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Beanstream
         {
             if(!Page.IsPostBack)
             {
-                txtMerchantID.Text = HostedPaymentSettings.MerchantID;
+                txtMerchantId.Text = HostedPaymentSettings.MerchantId;
                 txtGatewayUrl.Text = HostedPaymentSettings.GatewayUrl;
                 txtAdditionalFee.Value = HostedPaymentSettings.AdditionalFee;
             }
@@ -20,7 +20,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Beanstream
 
         public void Save()
         {
-            HostedPaymentSettings.MerchantID = txtMerchantID.Text;
+            HostedPaymentSettings.MerchantId = txtMerchantId.Text;
             HostedPaymentSettings.GatewayUrl = txtGatewayUrl.Text;
             HostedPaymentSettings.AdditionalFee = txtAdditionalFee.Value;
         }

@@ -82,9 +82,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
 
@@ -106,10 +106,10 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWay
             eWAYRequest.PurchaserEmailAddress = paymentInfo.BillingAddress.Email;
             eWAYRequest.PurchaserAddress = paymentInfo.BillingAddress.Address1;
             eWAYRequest.PurchaserPostalCode = paymentInfo.BillingAddress.ZipPostalCode;
-            eWAYRequest.InvoiceReference = OrderGuid.ToString();
-            eWAYRequest.InvoiceDescription = SettingManager.GetSettingValue("Common.StoreName") + ". Order #" + OrderGuid.ToString();
-            eWAYRequest.TransactionNumber = OrderGuid.ToString();
-            eWAYRequest.CVN = paymentInfo.CreditCardCVV2;
+            eWAYRequest.InvoiceReference = orderGuid.ToString();
+            eWAYRequest.InvoiceDescription = SettingManager.GetSettingValue("Common.StoreName") + ". Order #" + orderGuid.ToString();
+            eWAYRequest.TransactionNumber = orderGuid.ToString();
+            eWAYRequest.CVN = paymentInfo.CreditCardCvv2;
             eWAYRequest.EwayOption1 = string.Empty;
             eWAYRequest.EwayOption2 = string.Empty;
             eWAYRequest.EwayOption3 = string.Empty;
@@ -124,7 +124,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWay
                 {
                     processPaymentResult.AuthorizationTransactionCode = eWAYResponse.AuthorisationCode;
                     processPaymentResult.AuthorizationTransactionResult = eWAYResponse.InvoiceReference;
-                    processPaymentResult.AuthorizationTransactionID = eWAYResponse.TransactionNumber;
+                    processPaymentResult.AuthorizationTransactionId = eWAYResponse.TransactionNumber;
                     processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
                     //processPaymentResult.AuthorizationDate = DateTime.Now;
                 }
@@ -196,9 +196,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

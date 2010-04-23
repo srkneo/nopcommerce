@@ -57,10 +57,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
         private void BindData()
         {
             Customer toCustomer = null;
-            var replyToPM = ForumManager.GetPrivateMessageByID(this.ReplyToMessageID);
+            var replyToPM = ForumManager.GetPrivateMessageById(this.ReplyToMessageId);
             if (replyToPM != null)
             {
-                if (replyToPM.ToUserID == NopContext.Current.User.CustomerID || replyToPM.FromUserID == NopContext.Current.User.CustomerID)
+                if (replyToPM.ToUserId == NopContext.Current.User.CustomerId || replyToPM.FromUserId == NopContext.Current.User.CustomerId)
                 {
                     toCustomer = replyToPM.FromUser;
                     txtSubject.Text = string.Format("Re: {0}", replyToPM.Subject);
@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             else
             {
-                toCustomer = CustomerManager.GetCustomerByID(this.ToCustomerID);
+                toCustomer = CustomerManager.GetCustomerById(this.ToCustomerId);
             }
 
             if (toCustomer == null || toCustomer.IsGuest)
@@ -97,10 +97,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     throw new NopException(GetLocaleResourceString("PrivateMessages.MessageCannotBeEmpty"));
 
                 Customer toCustomer = null;
-                var replyToPM = ForumManager.GetPrivateMessageByID(this.ReplyToMessageID);
+                var replyToPM = ForumManager.GetPrivateMessageById(this.ReplyToMessageId);
                 if (replyToPM != null)
                 {
-                    if (replyToPM.ToUserID == NopContext.Current.User.CustomerID || replyToPM.FromUserID == NopContext.Current.User.CustomerID)
+                    if (replyToPM.ToUserId == NopContext.Current.User.CustomerId || replyToPM.FromUserId == NopContext.Current.User.CustomerId)
                     {
                         toCustomer = replyToPM.FromUser;
                     }
@@ -111,7 +111,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 else
                 {
-                    toCustomer = CustomerManager.GetCustomerByID(this.ToCustomerID);
+                    toCustomer = CustomerManager.GetCustomerById(this.ToCustomerId);
                 }
 
                 if (toCustomer == null || toCustomer.IsGuest)
@@ -119,7 +119,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
                 }
 
-                var pm = ForumManager.InsertPrivateMessage(NopContext.Current.User.CustomerID, toCustomer.CustomerID,
+                var pm = ForumManager.InsertPrivateMessage(NopContext.Current.User.CustomerId, toCustomer.CustomerId,
                     subject, message, false, false, false, DateTime.Now);
 
                 Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx?tab=sent");
@@ -136,15 +136,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
             Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx");
         }
 
-        public int ToCustomerID
+        public int ToCustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ToID");
+                return CommonHelper.QueryStringInt("ToId");
             }
         }
 
-        public int ReplyToMessageID
+        public int ReplyToMessageId
         {
             get
             {

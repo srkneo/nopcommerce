@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             LanguageCollection languages = LanguageManager.GetAllLanguages();
             foreach (Language language in languages)
             {
-                ListItem item2 = new ListItem(language.Name, language.LanguageID.ToString());
+                ListItem item2 = new ListItem(language.Name, language.LanguageId.ToString());
                 this.ddlLanguage.Items.Add(item2);
             }
         }
 
         private void BindData()
         {
-            News news = NewsManager.GetNewsByID(this.NewsID);
+            News news = NewsManager.GetNewsById(this.NewsId);
             if (news != null)
             {
-                CommonHelper.SelectListItem(this.ddlLanguage, news.LanguageID);
+                CommonHelper.SelectListItem(this.ddlLanguage, news.LanguageId);
                 this.txtTitle.Text = news.Title;
                 this.txtShort.Text = news.Short;
                 this.txtFull.Content = news.Full;
@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     this.hlViewComments.Visible = true;
                     this.hlViewComments.Text = string.Format(GetLocaleResourceString("Admin.NewsInfo.ViewComments"), newsComments.Count);
-                    this.hlViewComments.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "NewsComments.aspx?NewsID=" + news.NewsID;
+                    this.hlViewComments.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "NewsComments.aspx?NewsID=" + news.NewsId;
                 }
                 else
                     this.hlViewComments.Visible = false;
@@ -86,10 +86,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public News SaveInfo()
         {
-            News news = NewsManager.GetNewsByID(NewsID);
+            News news = NewsManager.GetNewsById(NewsId);
             if (news != null)
             {
-                news = NewsManager.UpdateNews(NewsID, int.Parse(this.ddlLanguage.SelectedItem.Value),
+                news = NewsManager.UpdateNews(NewsId, int.Parse(this.ddlLanguage.SelectedItem.Value),
                     txtTitle.Text, txtShort.Text, txtFull.Content,
                     cbPublished.Checked, cbAllowComments.Checked, news.CreatedOn);
             }
@@ -102,11 +102,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return news;
         }
 
-        public int NewsID
+        public int NewsId
         {
             get
             {
-                return CommonHelper.QueryStringInt("NewsID");
+                return CommonHelper.QueryStringInt("NewsId");
             }
         }
     }

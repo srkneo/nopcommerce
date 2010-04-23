@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Warehouse warehouse = ctrlWarehouseInfo.SaveInfo();
-                    Response.Redirect("WarehouseDetails.aspx?WarehouseID=" + warehouse.WarehouseID.ToString());
+                    Response.Redirect("WarehouseDetails.aspx?WarehouseID=" + warehouse.WarehouseId.ToString());
                 }
                 catch (Exception exc)
                 {

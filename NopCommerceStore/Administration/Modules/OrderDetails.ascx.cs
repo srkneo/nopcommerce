@@ -48,24 +48,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Order order = OrderManager.GetOrderByID(this.OrderID);
+            Order order = OrderManager.GetOrderById(this.OrderId);
             if (order != null && !order.Deleted)
             {
-                this.lblOrderStatus.Text = OrderManager.GetOrderStatusName(order.OrderStatusID);
+                this.lblOrderStatus.Text = OrderManager.GetOrderStatusName(order.OrderStatusId);
                 this.CancelOrderButton.Visible = OrderManager.CanCancelOrder(order);
-                this.lblOrderID.Text = order.OrderID.ToString();
-                this.lblOrderGUID.Text = order.OrderGUID.ToString();
+                this.lblOrderId.Text = order.OrderId.ToString();
+                this.lblOrderGuid.Text = order.OrderGuid.ToString();
 
                 Customer customer = order.Customer;
                 if (customer != null)
                 {
                     if (customer.IsGuest)
                     {
-                        this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.OrderDetails.Guest"));
+                        this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.OrderDetails.Guest"));
                     }
                     else
                     {
-                        this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                        this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                     }
                 }
                 else
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Affiliate affiliate = order.Affiliate;
                 if (affiliate != null)
                 {
-                    this.lblAffiliate.Text = string.Format("<a href=\"AffiliateDetails.aspx?AffiliateID={0}\">{1}</a>", affiliate.AffiliateID, Server.HtmlEncode(affiliate.FullName));
+                    this.lblAffiliate.Text = string.Format("<a href=\"AffiliateDetails.aspx?AffiliateID={0}\">{1}</a>", affiliate.AffiliateId, Server.HtmlEncode(affiliate.FullName));
                     this.divAffiliate.Visible = true;
                 }
                 else
@@ -145,7 +145,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
 
                 //cvv
-                string cardCVV2Decrypted = SecurityHelper.Decrypt(order.CardCVV2);
+                string cardCVV2Decrypted = SecurityHelper.Decrypt(order.CardCvv2);
                 this.lblCardCVV2.Text = Server.HtmlEncode(cardCVV2Decrypted);
 
                 //expiry date
@@ -188,7 +188,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pnlCardExpiryYear.Visible = false;
             }
 
-            PaymentMethod pm = PaymentMethodManager.GetPaymentMethodByID(order.PaymentMethodID);
+            PaymentMethod pm = PaymentMethodManager.GetPaymentMethodById(order.PaymentMethodId);
             if (pm != null && pm.SystemKeyword == "PURCHASEORDER")
             {
                 this.lblPONumber.Text = Server.HtmlEncode(order.PurchaseOrderNumber);
@@ -198,7 +198,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pnlPONumber.Visible = false;
             }
             this.lblPaymentMethodName.Text = Server.HtmlEncode(order.PaymentMethodName);
-            this.lblPaymentStatus.Text = PaymentStatusManager.GetPaymentStatusName(order.PaymentStatusID);
+            this.lblPaymentStatus.Text = PaymentStatusManager.GetPaymentStatusName(order.PaymentStatusId);
             this.btnCapture.Visible = OrderManager.CanCapture(order);
             this.btnMarkAsPaid.Visible = OrderManager.CanMarkOrderAsPaid(order);
             this.btnRefund.Visible = OrderManager.CanRefund(order);
@@ -509,7 +509,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             
             
             //gift cards
-            GiftCardUsageHistoryCollection gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderID);
+            GiftCardUsageHistoryCollection gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             if (gcuhC.Count > 0)
             {
                 rptrGiftCards.Visible = true;
@@ -530,7 +530,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindOrderNotes()
         {
-            Order order = OrderManager.GetOrderByID(this.OrderID);
+            Order order = OrderManager.GetOrderById(this.OrderId);
             BindOrderNotes(order);
         }
 
@@ -570,7 +570,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.Ship(this.OrderID, true);
+                OrderManager.Ship(this.OrderId, true);
                 BindData();
             }
             catch (Exception exc)
@@ -583,7 +583,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.CancelOrder(this.OrderID, true);
+                OrderManager.CancelOrder(this.OrderId, true);
                 BindData();
             }
             catch (Exception exc)
@@ -596,13 +596,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Order order = OrderManager.GetOrderByID(this.OrderID);
+                Order order = OrderManager.GetOrderById(this.OrderId);
 
-                string fileName = string.Format("order_{0}_{1}.pdf", order.OrderGUID, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+                string fileName = string.Format("order_{0}_{1}.pdf", order.OrderGuid, DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
                 string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
 
-                PDFHelper.PrintOrderToPDF(order, NopContext.Current.WorkingLanguage.LanguageID, filePath);
-                CommonHelper.WriteResponsePDF(filePath, fileName);
+                PDFHelper.PrintOrderToPdf(order, NopContext.Current.WorkingLanguage.LanguageId, filePath);
+                CommonHelper.WriteResponsePdf(filePath, fileName);
             }
             catch (Exception ex)
             {
@@ -614,7 +614,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.MarkOrderAsDeleted(this.OrderID);
+                OrderManager.MarkOrderAsDeleted(this.OrderId);
                 Response.Redirect("Orders.aspx");
             }
             catch (Exception exc)
@@ -628,7 +628,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 string error = string.Empty;
-                OrderManager.Capture(this.OrderID, ref error);
+                OrderManager.Capture(this.OrderId, ref error);
                 if (String.IsNullOrEmpty(error))
                 {
                     BindData();
@@ -648,7 +648,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.MarkOrderAsPaid(this.OrderID);
+                OrderManager.MarkOrderAsPaid(this.OrderId);
                 BindData();
             }
             catch (Exception exc)
@@ -662,7 +662,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 string error = string.Empty;
-                OrderManager.Refund(this.OrderID, ref error);
+                OrderManager.Refund(this.OrderId, ref error);
                 if (String.IsNullOrEmpty(error))
                 {
                     BindData();
@@ -682,7 +682,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.RefundOffline(this.OrderID);
+                OrderManager.RefundOffline(this.OrderId);
                 BindData();
             }
             catch (Exception exc)
@@ -696,7 +696,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 string error = string.Empty;
-                OrderManager.Void(this.OrderID, ref error);
+                OrderManager.Void(this.OrderId, ref error);
                 if (String.IsNullOrEmpty(error))
                 {
                     BindData();
@@ -716,7 +716,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.VoidOffline(this.OrderID);
+                OrderManager.VoidOffline(this.OrderId);
                 BindData();
             }
             catch (Exception exc)
@@ -729,7 +729,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                OrderManager.SetOrderTrackingNumber(this.OrderID, txtTrackingNumber.Text);
+                OrderManager.SetOrderTrackingNumber(this.OrderId, txtTrackingNumber.Text);
                 BindData();
             }
             catch (Exception exc)
@@ -742,7 +742,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Order order = OrderManager.GetOrderByID(OrderID);
+                Order order = OrderManager.GetOrderById(this.OrderId);
                 if(order != null)
                 {
                     OrderCollection orderCollection = new OrderCollection();
@@ -751,9 +751,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string fileName = String.Format("packagingslip_{0}_{1}.pdf", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                     string filePath = String.Format("{0}files\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
 
-                    PDFHelper.PrintPackagingSlipsToPDF(orderCollection, filePath);
+                    PDFHelper.PrintPackagingSlipsToPdf(orderCollection, filePath);
 
-                    CommonHelper.WriteResponsePDF(filePath, fileName);
+                    CommonHelper.WriteResponsePdf(filePath, fileName);
                 }
             }
             catch(Exception ex)
@@ -764,7 +764,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BtnBanByCustomerIP_OnClick(object sender, EventArgs e)
         {
-            Order order = OrderManager.GetOrderByID(OrderID);
+            Order order = OrderManager.GetOrderById(this.OrderId);
             if(order != null && !String.IsNullOrEmpty(order.CustomerIP))
             {
                 BannedIpAddress banItem = new BannedIpAddress();
@@ -786,7 +786,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 bool displayToCustomer = cbNewDisplayToCustomer.Checked;
 
-                OrderNote orderNote = OrderManager.InsertOrderNote(this.OrderID, note, displayToCustomer, DateTime.Now);
+                OrderNote orderNote = OrderManager.InsertOrderNote(this.OrderId, note, displayToCustomer, DateTime.Now);
                 BindData();
                 txtNewOrderNote.Text = string.Empty;
             }
@@ -798,8 +798,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvOrderNotes_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int orderNoteID = (int)gvOrderNotes.DataKeys[e.RowIndex]["OrderNoteID"];
-            OrderManager.DeleteOrderNote(orderNoteID);
+            int orderNoteId = (int)gvOrderNotes.DataKeys[e.RowIndex]["OrderNoteId"];
+            OrderManager.DeleteOrderNote(orderNoteId);
             BindOrderNotes();
         }
 
@@ -810,25 +810,25 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 //download activation
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvOrderProductVariants.Rows[index];
-                HiddenField hfOrderProductVariantID = row.FindControl("hfOrderProductVariantID") as HiddenField;
+                HiddenField hfOrderProductVariantId = row.FindControl("hfOrderProductVariantId") as HiddenField;
 
-                int orderProductVariantID = int.Parse(hfOrderProductVariantID.Value);
-                OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantByID(orderProductVariantID);
+                int orderProductVariantId = int.Parse(hfOrderProductVariantId.Value);
+                OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantById(orderProductVariantId);
 
                 if (orderProductVariant != null)
                 {
-                    orderProductVariant = OrderManager.UpdateOrderProductVariant(orderProductVariant.OrderProductVariantID,
-                        orderProductVariant.OrderProductVariantGUID, orderProductVariant.OrderID,
-                        orderProductVariant.ProductVariantID,
+                    orderProductVariant = OrderManager.UpdateOrderProductVariant(orderProductVariant.OrderProductVariantId,
+                        orderProductVariant.OrderProductVariantGuid, orderProductVariant.OrderId,
+                        orderProductVariant.ProductVariantId,
                         orderProductVariant.UnitPriceInclTax, orderProductVariant.UnitPriceExclTax,
                         orderProductVariant.PriceInclTax, orderProductVariant.PriceExclTax,
                         orderProductVariant.UnitPriceInclTaxInCustomerCurrency, orderProductVariant.UnitPriceExclTaxInCustomerCurrency,
                         orderProductVariant.PriceInclTaxInCustomerCurrency, orderProductVariant.PriceExclTaxInCustomerCurrency,
-                        orderProductVariant.AttributeDescription, orderProductVariant.AttributesXML,
+                        orderProductVariant.AttributeDescription, orderProductVariant.AttributesXml,
                         orderProductVariant.Quantity,
                         orderProductVariant.DiscountAmountInclTax, orderProductVariant.DiscountAmountExclTax,
                         orderProductVariant.DownloadCount, !orderProductVariant.IsDownloadActivated,
-                        orderProductVariant.LicenseDownloadID);
+                        orderProductVariant.LicenseDownloadId);
                 }
 
             }
@@ -837,21 +837,21 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 //remove license download
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvOrderProductVariants.Rows[index];
-                HiddenField hfOrderProductVariantID = row.FindControl("hfOrderProductVariantID") as HiddenField;
+                HiddenField hfOrderProductVariantId = row.FindControl("hfOrderProductVariantId") as HiddenField;
 
-                int orderProductVariantID = int.Parse(hfOrderProductVariantID.Value);
-                OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantByID(orderProductVariantID);
+                int orderProductVariantId = int.Parse(hfOrderProductVariantId.Value);
+                OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantById(orderProductVariantId);
 
                 if (orderProductVariant != null)
                 {
-                    orderProductVariant = OrderManager.UpdateOrderProductVariant(orderProductVariant.OrderProductVariantID,
-                        orderProductVariant.OrderProductVariantGUID, orderProductVariant.OrderID,
-                        orderProductVariant.ProductVariantID,
+                    orderProductVariant = OrderManager.UpdateOrderProductVariant(orderProductVariant.OrderProductVariantId,
+                        orderProductVariant.OrderProductVariantGuid, orderProductVariant.OrderId,
+                        orderProductVariant.ProductVariantId,
                         orderProductVariant.UnitPriceInclTax, orderProductVariant.UnitPriceExclTax,
                         orderProductVariant.PriceInclTax, orderProductVariant.PriceExclTax,
                         orderProductVariant.UnitPriceInclTaxInCustomerCurrency, orderProductVariant.UnitPriceExclTaxInCustomerCurrency,
                         orderProductVariant.PriceInclTaxInCustomerCurrency, orderProductVariant.PriceExclTaxInCustomerCurrency,
-                        orderProductVariant.AttributeDescription, orderProductVariant.AttributesXML, 
+                        orderProductVariant.AttributeDescription, orderProductVariant.AttributesXml, 
                         orderProductVariant.Quantity,
                         orderProductVariant.DiscountAmountInclTax, orderProductVariant.DiscountAmountExclTax,
                         orderProductVariant.DownloadCount, orderProductVariant.IsDownloadActivated, 0);
@@ -862,10 +862,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 //upload new license
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvOrderProductVariants.Rows[index];
-                HiddenField hfOrderProductVariantID = row.FindControl("hfOrderProductVariantID") as HiddenField;
+                HiddenField hfOrderProductVariantId = row.FindControl("hfOrderProductVariantId") as HiddenField;
 
-                int orderProductVariantID = int.Parse(hfOrderProductVariantID.Value);
-                OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantByID(orderProductVariantID);
+                int orderProductVariantId = int.Parse(hfOrderProductVariantId.Value);
+                OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantById(orderProductVariantId);
 
 
                 FileUpload fuLicenseDownload = row.FindControl("fuLicenseDownload") as FileUpload;
@@ -882,17 +882,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     if (orderProductVariant != null)
                     {
-                        orderProductVariant = OrderManager.UpdateOrderProductVariant(orderProductVariant.OrderProductVariantID,
-                            orderProductVariant.OrderProductVariantGUID, orderProductVariant.OrderID,
-                            orderProductVariant.ProductVariantID,
+                        orderProductVariant = OrderManager.UpdateOrderProductVariant(orderProductVariant.OrderProductVariantId,
+                            orderProductVariant.OrderProductVariantGuid, orderProductVariant.OrderId,
+                            orderProductVariant.ProductVariantId,
                             orderProductVariant.UnitPriceInclTax, orderProductVariant.UnitPriceExclTax,
                             orderProductVariant.PriceInclTax, orderProductVariant.PriceExclTax,
                             orderProductVariant.UnitPriceInclTaxInCustomerCurrency, orderProductVariant.UnitPriceExclTaxInCustomerCurrency,
                             orderProductVariant.PriceInclTaxInCustomerCurrency, orderProductVariant.PriceExclTaxInCustomerCurrency,
-                            orderProductVariant.AttributeDescription, orderProductVariant.AttributesXML, 
+                            orderProductVariant.AttributeDescription, orderProductVariant.AttributesXml, 
                             orderProductVariant.Quantity,
                             orderProductVariant.DiscountAmountInclTax, orderProductVariant.DiscountAmountExclTax,
-                            orderProductVariant.DownloadCount, orderProductVariant.IsDownloadActivated, licenseDownload.DownloadID);
+                            orderProductVariant.DownloadCount, orderProductVariant.IsDownloadActivated, licenseDownload.DownloadId);
                     }
                 }
             }
@@ -967,24 +967,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
         }
-        
-        public string GetProductURL(int ProductVariantID)
+
+        public string GetProductUrl(int productVariantId)
         {
             string result = string.Empty;
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
-                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantID.ToString();
+                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantId.ToString();
             else
-                result = "Not available. Product variant ID=" + productVariant.ProductVariantID.ToString();
+                result = "Not available. Product variant ID=" + productVariant.ProductVariantId.ToString();
             return result;
         }
 
-        public string GetProductVariantName(int ProductVariantID)
+        public string GetProductVariantName(int productVariantId)
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
                 return productVariant.FullProductName;
-            return "Not available. ID=" + ProductVariantID.ToString();
+            return "Not available. ID=" + productVariantId.ToString();
         }
 
         public string GetAttributeDescription(OrderProductVariant opv)
@@ -995,7 +995,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return result;
         }
 
-        public string GetDownloadURL(OrderProductVariant orderProductVariant)
+        public string GetDownloadUrl(OrderProductVariant orderProductVariant)
         {
             string result = string.Empty;
             ProductVariant productVariant = orderProductVariant.ProductVariant;
@@ -1011,7 +1011,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
             else
-                result = "Not available. Product variant ID = " + orderProductVariant.ProductVariantID.ToString();
+                result = "Not available. Product variant ID = " + orderProductVariant.ProductVariantId.ToString();
             return result;
         }
 
@@ -1129,11 +1129,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return result;
         }
 
-        public int OrderID
+        public int OrderId
         {
             get
             {
-                return CommonHelper.QueryStringInt("OrderID");
+                return CommonHelper.QueryStringInt("OrderId");
             }
         }
     }

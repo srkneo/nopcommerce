@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         private void BindRecurringPayments()
         {
-            var recurringPayments = OrderManager.SearchRecurringPayments(NopContext.Current.User.CustomerID,
+            var recurringPayments = OrderManager.SearchRecurringPayments(NopContext.Current.User.CustomerId,
                 0, null);
             if (recurringPayments.Count > 0)
             {
@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var initialOrder = recurringPayment.InitialOrder;
             if (initialOrder != null)
             {
-                initialOrderInfo = string.Format("<a href=\"{0}orderdetails.aspx?orderid={1}\">{2}</a>", CommonHelper.GetStoreLocation(), initialOrder.OrderID, string.Format(GetLocaleResourceString("Order.RecurringPayments.InitialOrder.View"), initialOrder.OrderID));
+                initialOrderInfo = string.Format("<a href=\"{0}orderdetails.aspx?orderid={1}\">{2}</a>", CommonHelper.GetStoreLocation(), initialOrder.OrderId, string.Format(GetLocaleResourceString("Order.RecurringPayments.InitialOrder.View"), initialOrder.OrderId));
             }
             return initialOrderInfo;
         }
@@ -113,8 +113,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnOrderDetails_Click(object sender, CommandEventArgs e)
         {
-            int orderID = Convert.ToInt32(e.CommandArgument);
-            Response.Redirect(string.Format("~/orderdetails.aspx?orderid={0}", orderID));
+            int orderId = Convert.ToInt32(e.CommandArgument);
+            Response.Redirect(string.Format("~/orderdetails.aspx?orderid={0}", orderId));
         }
         
         protected void gvRecurringPayments_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -124,13 +124,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 var row = gvRecurringPayments.Rows[index];
 
-                var hfRecurringPaymentID = row.FindControl("hfRecurringPaymentID") as HiddenField;
+                var hfRecurringPaymentId = row.FindControl("hfRecurringPaymentId") as HiddenField;
 
-                int recurringPaymentID = int.Parse(hfRecurringPaymentID.Value);
-                var rp = OrderManager.GetRecurringPaymentByID(recurringPaymentID);
+                int recurringPaymentId = int.Parse(hfRecurringPaymentId.Value);
+                var rp = OrderManager.GetRecurringPaymentById(recurringPaymentId);
                 if (OrderManager.CanCancelRecurringPayment(NopContext.Current.User, rp))
                 {
-                    rp = OrderManager.CancelRecurringPayment(rp.RecurringPaymentID);
+                    rp = OrderManager.CancelRecurringPayment(rp.RecurringPaymentId);
                 }
                 BindRecurringPayments();
             }

@@ -12,7 +12,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <summary>
         /// Gets or sets the newsletter subscription identifier
         /// </summary>
-        public int NewsLetterSubscriptionID
+        public int NewsLetterSubscriptionId
         {
             get;
             set;
@@ -53,7 +53,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             get;
             set;
         }
+        #endregion
 
+        #region Custom Properties
+        
         /// <summary>
         /// Gets the customer associated with email
         /// </summary>
@@ -64,6 +67,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                 return CustomerManager.GetCustomerByEmail(Email);
             }
         }
+
         #endregion
     }
 }

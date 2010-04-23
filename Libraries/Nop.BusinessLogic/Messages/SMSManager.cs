@@ -36,14 +36,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             {
                 using(var svc = new PushServerWS())
                 {
-                    string authRsp = svc.auth(Int32.Parse(ClickatellAPIID), ClickatellUsername, ClickatellPassword);
-                    if(!authRsp.StartsWith("OK"))
+                    string authRsp = svc.auth(Int32.Parse(ClickatellAPIId), 
+                        ClickatellUsername, ClickatellPassword);
+                    if(!authRsp.ToUpperInvariant().StartsWith("OK"))
                     {
                         throw new NopException(authRsp);
                     }
                     string ssid = authRsp.Substring(4);
-                    string[] sndRsp = svc.sendmsg(ssid, Int32.Parse(ClickatellAPIID), ClickatellUsername, ClickatellPassword, new string[1] { phone }, String.Empty, text, 0, 0, 0, 0, 0, 0, 0, 0, 0, String.Empty, 0, String.Empty, String.Empty, String.Empty, 0);
-                    if(!sndRsp[0].StartsWith("ID"))
+                    string[] sndRsp = svc.sendmsg(ssid, 
+                        Int32.Parse(ClickatellAPIId), ClickatellUsername, 
+                        ClickatellPassword, new string[1] { phone }, 
+                        String.Empty, text, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                        String.Empty, 0, String.Empty, String.Empty, String.Empty, 0);
+
+                    if (!sndRsp[0].ToUpperInvariant().StartsWith("ID"))
                     {
                         throw new NopException(sndRsp[0]);
                     }
@@ -67,7 +73,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             if(order == null)
                 return false;
 
-            return Send(String.Format("New order(#{0}) has been placed.", order.OrderID));
+            return Send(String.Format("New order(#{0}) has been placed.", order.OrderId));
         }
         #endregion
 
@@ -105,7 +111,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <summary>
         /// Gets or sets the Clickatell API ID
         /// </summary>
-        public static string ClickatellAPIID
+        public static string ClickatellAPIId
         {
             get
             {

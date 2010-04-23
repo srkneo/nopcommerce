@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Forum forum = ctrlForumInfo.SaveInfo();
-                    Response.Redirect("ForumDetails.aspx?ForumID=" + forum.ForumID.ToString());
+                    Response.Redirect("ForumDetails.aspx?ForumID=" + forum.ForumId.ToString());
                 }
                 catch (Exception exc)
                 {

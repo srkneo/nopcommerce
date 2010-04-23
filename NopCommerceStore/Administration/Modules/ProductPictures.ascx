@@ -4,14 +4,14 @@
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <asp:Panel runat="server" ID="pnlData">
-    <asp:GridView ID="gvwImages" runat="server" AutoGenerateColumns="false" DataKeyNames="ProductPictureID"
+    <asp:GridView ID="gvwImages" runat="server" AutoGenerateColumns="false" DataKeyNames="ProductPictureId"
         OnRowDeleting="gvwImages_RowDeleting" OnRowDataBound="gvwImages_RowDataBound"
         OnRowCommand="gvwImages_RowCommand" Width="100%">
         <Columns>
             <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductPictures.Image %>" ItemStyle-Width="50%">
                 <ItemTemplate>
                     <asp:Image ID="iProductPicture" runat="server" AlternateText="pic" />
-                    <asp:HiddenField ID="hfProductPictureID" runat="server" Value='<%# Eval("ProductPictureID") %>' />
+                    <asp:HiddenField ID="hfProductPictureId" runat="server" Value='<%# Eval("ProductPictureId") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductPictures.DisplayOrder %>"

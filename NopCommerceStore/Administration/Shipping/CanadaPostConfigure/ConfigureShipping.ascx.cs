@@ -34,14 +34,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.CanadaPostConfigu
 
         private void BindData()
         {
-            txtCustomerID.Text = SettingManager.GetSettingValue("ShippingRateComputationMethod.CanadaPost.CustomerID");
+            txtCustomerId.Text = SettingManager.GetSettingValue("ShippingRateComputationMethod.CanadaPost.CustomerId");
             txtURL.Text = SettingManager.GetSettingValue("ShippingRateComputationMethod.CanadaPost.URL");
             txtPort.Text = SettingManager.GetSettingValue("ShippingRateComputationMethod.CanadaPost.Port");
         }
 
         public void Save()
         {
-            SettingManager.SetParam("ShippingRateComputationMethod.CanadaPost.CustomerID", txtCustomerID.Text);
+            SettingManager.SetParam("ShippingRateComputationMethod.CanadaPost.CustomerId", txtCustomerId.Text);
             SettingManager.SetParam("ShippingRateComputationMethod.CanadaPost.URL", txtURL.Text);
             SettingManager.SetParam("ShippingRateComputationMethod.CanadaPost.Port", txtPort.Text);
         }

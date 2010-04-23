@@ -11,7 +11,7 @@
                 <asp:Literal runat="server" ID="lErrorTitle" EnableViewState="false" />
             </asp:Panel>
             <div>
-                <asp:GridView ID="gvValues" runat="server" AutoGenerateColumns="false" DataKeyNames="CheckoutAttributeValueID"
+                <asp:GridView ID="gvValues" runat="server" AutoGenerateColumns="false" DataKeyNames="CheckoutAttributeValueId"
                     OnRowDeleting="gvValues_RowDeleting" OnRowDataBound="gvValues_RowDataBound" OnRowCommand="gvValues_RowCommand"
                     Width="100%">
                     <Columns>
@@ -28,7 +28,7 @@
                                         <%} %><nopCommerce:SimpleTextBox runat="server" CssClass="adminInput" ID="txtName"
                                             ValidationGroup="CheckoutAttributeValue" ErrorMessage="<% $NopResources:Admin.CheckoutAttributeInfo.Name.ErrorMessage %>"
                                             Text='<%# Eval("Name") %>' Width="100%"></nopCommerce:SimpleTextBox>
-                                        <asp:HiddenField ID="hfCheckoutAttributeValueID" runat="server" Value='<%# Eval("CheckoutAttributeValueID") %>' />
+                                        <asp:HiddenField ID="hfCheckoutAttributeValueId" runat="server" Value='<%# Eval("CheckoutAttributeValueId") %>' />
                                     </div>
                                 </div>
                                 <%if (this.HasLocalizableContent)
@@ -43,7 +43,7 @@
                                             </div>
                                             <div style="width: 75%; float: left;">
                                                 <asp:TextBox runat="server" ID="txtLocalizedName" CssClass="adminInput" Width="100%" />
-                                                <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                                                <asp:Label ID="lblLanguageId" runat="server" Text='<%#Eval("LanguageId") %>' Visible="false"></asp:Label>
                                             </div>
                                         </div>
                                     </ItemTemplate>
@@ -159,7 +159,7 @@
                 <div id="idTab_ValueNew<%# Container.ItemIndex+2 %>" class="tab">
                     <i>
                         <%=GetLocaleResourceString("Admin.Localizable.EmptyFieldNote")%></i>
-                    <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                    <asp:Label ID="lblLanguageId" runat="server" Text='<%#Eval("LanguageId") %>' Visible="false"></asp:Label>
                     <table class="adminContent">
                         <tr>
                             <td class="adminTitle">

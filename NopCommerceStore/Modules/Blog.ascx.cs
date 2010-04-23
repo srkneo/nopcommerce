@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             int totalRecords = 0;
             int pageSize = BlogManager.PostsPageSize;
 
-            var blogPosts = BlogManager.GetAllBlogPosts(NopContext.Current.WorkingLanguage.LanguageID, pageSize, CurrentPageIndex, out totalRecords);
+            var blogPosts = BlogManager.GetAllBlogPosts(NopContext.Current.WorkingLanguage.LanguageId, pageSize, CurrentPageIndex, out totalRecords);
             if(blogPosts.Count > 0)
             {
                 this.postsPager.PageSize = pageSize;
@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected string GetBlogRSSUrl()
         {
-            return SEOHelper.GetBlogRssURL();
+            return SEOHelper.GetBlogRssUrl();
         }
 
 

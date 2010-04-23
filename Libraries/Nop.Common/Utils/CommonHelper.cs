@@ -42,50 +42,50 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Verifies that a string is in valid e-mail format
         /// </summary>
-        /// <param name="Email">Email to verify</param>
+        /// <param name="email">Email to verify</param>
         /// <returns>true if the string is a valid e-mail address and false if it's not</returns>
-        public static bool IsValidEmail(string Email)
+        public static bool IsValidEmail(string email)
         {
             bool result = false;
-            if (String.IsNullOrEmpty(Email))
+            if (String.IsNullOrEmpty(email))
                 return result;
-            Email = Email.Trim();
-            result = Regex.IsMatch(Email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+            email = email.Trim();
+            result = Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
             return result;
         }
 
         /// <summary>
         /// Gets query string value by name
         /// </summary>
-        /// <param name="Name">Parameter name</param>
+        /// <param name="name">Parameter name</param>
         /// <returns>Query string value</returns>
-        public static string QueryString(string Name)
+        public static string QueryString(string name)
         {
             string result = string.Empty;
-            if (HttpContext.Current != null && HttpContext.Current.Request.QueryString[Name] != null)
-                result = HttpContext.Current.Request.QueryString[Name].ToString();
+            if (HttpContext.Current != null && HttpContext.Current.Request.QueryString[name] != null)
+                result = HttpContext.Current.Request.QueryString[name].ToString();
             return result;
         }
 
         /// <summary>
         /// Gets boolean value from query string 
         /// </summary>
-        /// <param name="Name">Parameter name</param>
+        /// <param name="name">Parameter name</param>
         /// <returns>Query string value</returns>
-        public static bool QueryStringBool(string Name)
+        public static bool QueryStringBool(string name)
         {
-            string resultStr = QueryString(Name).ToUpperInvariant();
+            string resultStr = QueryString(name).ToUpperInvariant();
             return (resultStr == "YES" || resultStr == "TRUE" || resultStr == "1");
         }
 
         /// <summary>
         /// Gets integer value from query string 
         /// </summary>
-        /// <param name="Name">Parameter name</param>
+        /// <param name="name">Parameter name</param>
         /// <returns>Query string value</returns>
-        public static int QueryStringInt(string Name)
+        public static int QueryStringInt(string name)
         {
-            string resultStr = QueryString(Name).ToUpperInvariant();
+            string resultStr = QueryString(name).ToUpperInvariant();
             int result;
             Int32.TryParse(resultStr, out result);
             return result;
@@ -94,27 +94,27 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Gets integer value from query string 
         /// </summary>
-        /// <param name="Name">Parameter name</param>
-        /// <param name="DefaultValue">Default value</param>
+        /// <param name="name">Parameter name</param>
+        /// <param name="defaultValue">Default value</param>
         /// <returns>Query string value</returns>
-        public static int QueryStringInt(string Name, int DefaultValue)
+        public static int QueryStringInt(string name, int defaultValue)
         {
-            string resultStr = QueryString(Name).ToUpperInvariant();
+            string resultStr = QueryString(name).ToUpperInvariant();
             if (resultStr.Length > 0)
             {
                 return Int32.Parse(resultStr);
             }
-            return DefaultValue;
+            return defaultValue;
         }
 
         /// <summary>
         /// Gets GUID value from query string 
         /// </summary>
-        /// <param name="Name">Parameter name</param>
+        /// <param name="name">Parameter name</param>
         /// <returns>Query string value</returns>
-        public static Guid? QueryStringGUID(string Name)
+        public static Guid? QueryStringGuid(string name)
         {
-            string resultStr = QueryString(Name).ToUpperInvariant();
+            string resultStr = QueryString(name).ToUpperInvariant();
             Guid? result = null;
             try
             {
@@ -129,13 +129,13 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Gets Form String
         /// </summary>
-        /// <param name="Name"></param>
-        /// <returns></returns>
-        public static string GetFormString(string Name)
+        /// <param name="name"></param>
+        /// <returns>Result</returns>
+        public static string GetFormString(string name)
         {
             string result = string.Empty;
-            if (HttpContext.Current != null && HttpContext.Current.Request[Name] != null)
-                result = HttpContext.Current.Request[Name].ToString();
+            if (HttpContext.Current != null && HttpContext.Current.Request[name] != null)
+                result = HttpContext.Current.Request[name].ToString();
             return result;
         }
 
@@ -144,8 +144,8 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// </summary>
         /// <param name="page">Page</param>
         /// <param name="httpEquiv">Http Equiv</param>
-        /// <param name="Content">Content</param>
-        public static void SetMetaHttpEquiv(Page page, string httpEquiv, string Content)
+        /// <param name="content">Content</param>
+        public static void SetMetaHttpEquiv(Page page, string httpEquiv, string content)
         {
             if (page.Header == null)
                 return;
@@ -154,13 +154,13 @@ namespace NopSolutions.NopCommerce.Common.Utils
             if (page.Header.FindControl("meta" + httpEquiv) != null)
             {
                 meta = (HtmlMeta)page.Header.FindControl("meta" + httpEquiv);
-                meta.Content = Content;
+                meta.Content = content;
             }
             else
             {
                 meta.ID = "meta" + httpEquiv;
                 meta.HttpEquiv = httpEquiv;
-                meta.Content = Content;
+                meta.Content = content;
                 page.Header.Controls.Add(meta);
             }
         }
@@ -168,18 +168,18 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Selects item
         /// </summary>
-        /// <param name="List">List</param>
-        /// <param name="Value">Value to select</param>
-        public static void SelectListItem(DropDownList List, object Value)
+        /// <param name="list">List</param>
+        /// <param name="value">Value to select</param>
+        public static void SelectListItem(DropDownList list, object value)
         {
-            if (List.Items.Count != 0)
+            if (list.Items.Count != 0)
             {
-                var selectedItem = List.SelectedItem;
+                var selectedItem = list.SelectedItem;
                 if (selectedItem != null)
                     selectedItem.Selected = false;
-                if (Value != null)
+                if (value != null)
                 {
-                    selectedItem = List.Items.FindByValue(Value.ToString());
+                    selectedItem = list.Items.FindByValue(value.ToString());
                     if (selectedItem != null)
                         selectedItem.Selected = true;
                 }
@@ -189,21 +189,21 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Gets server variable by name
         /// </summary>
-        /// <param name="Name">Name</param>
+        /// <param name="name">Name</param>
         /// <returns>Server variable</returns>
-        public static string ServerVariables(string Name)
+        public static string ServerVariables(string name)
         {
-            string tmpS = String.Empty;
+            string tmpS = string.Empty;
             try
             {
-                if (HttpContext.Current.Request.ServerVariables[Name] != null)
+                if (HttpContext.Current.Request.ServerVariables[name] != null)
                 {
-                    tmpS = HttpContext.Current.Request.ServerVariables[Name].ToString();
+                    tmpS = HttpContext.Current.Request.ServerVariables[name].ToString();
                 }
             }
             catch
             {
-                tmpS = String.Empty;
+                tmpS = string.Empty;
             }
             return tmpS;
         }
@@ -214,14 +214,14 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <returns>A value indicating whether requested page is an admin page</returns>
         public static bool IsAdmin()
         {
-            string thisPageURL = GetThisPageURL(false);
-            if (string.IsNullOrEmpty(thisPageURL))
+            string thisPageUrl = GetThisPageUrl(false);
+            if (string.IsNullOrEmpty(thisPageUrl))
                 return false;
 
             string adminUrl1 = GetStoreLocation(false) + "administration";
             string adminUrl2 = GetStoreLocation(true) + "administration";            
-            bool flag1 = thisPageURL.ToLowerInvariant().StartsWith(adminUrl1.ToLower());
-            bool flag2 = thisPageURL.ToLowerInvariant().StartsWith(adminUrl2.ToLower());
+            bool flag1 = thisPageUrl.ToLowerInvariant().StartsWith(adminUrl1.ToLower());
+            bool flag2 = thisPageUrl.ToLowerInvariant().StartsWith(adminUrl2.ToLower());
             bool isAdmin = flag1 || flag2;
             return isAdmin;
         }
@@ -248,7 +248,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// Gets this page name
         /// </summary>
         /// <returns></returns>
-        public static string GetThisPageURL(bool includeQueryString)
+        public static string GetThisPageUrl(bool includeQueryString)
         {
             string URL = string.Empty;
             if (HttpContext.Current == null)
@@ -283,11 +283,11 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Gets store location
         /// </summary>
-        /// <param name="UseSSL">Use SSL</param>
+        /// <param name="useSsl">Use SSL</param>
         /// <returns>Store location</returns>
-        public static string GetStoreLocation(bool UseSSL)
+        public static string GetStoreLocation(bool useSsl)
         {
-            string result = GetStoreHost(UseSSL);
+            string result = GetStoreHost(useSsl);
             if (result.EndsWith("/"))
                 result = result.Substring(0, result.Length - 1);
             result = result + HttpContext.Current.Request.ApplicationPath;
@@ -310,11 +310,11 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Gets store admin location
         /// </summary>
-        /// <param name="UseSSL">Use SSL</param>
+        /// <param name="useSsl">Use SSL</param>
         /// <returns>Store admin location</returns>
-        public static string GetStoreAdminLocation(bool UseSSL)
+        public static string GetStoreAdminLocation(bool useSsl)
         {
-            string result = GetStoreLocation(UseSSL);
+            string result = GetStoreLocation(useSsl);
             result += "Administration/";
 
             return result.ToLowerInvariant();
@@ -323,15 +323,15 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Gets store host location
         /// </summary>
-        /// <param name="UseSSL">Use SSL</param>
+        /// <param name="useSsl">Use SSL</param>
         /// <returns>Store host location</returns>
-        public static string GetStoreHost(bool UseSSL)
+        public static string GetStoreHost(bool useSsl)
         {
             string result = "http://" + ServerVariables("HTTP_HOST");
             if (!result.EndsWith("/"))
                 result += "/";
 
-            if (UseSSL)
+            if (useSsl)
             {
                 if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["SharedSSL"]))
                 {
@@ -361,10 +361,10 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Reloads current page
         /// </summary>
-        /// <param name="UseSSL">Use SSL</param>
-        public static void ReloadCurrentPage(bool UseSSL)
+        /// <param name="useSsl">Use SSL</param>
+        public static void ReloadCurrentPage(bool useSsl)
         {
-            string storeHost = GetStoreHost(UseSSL);
+            string storeHost = GetStoreHost(useSsl);
             if (storeHost.EndsWith("/"))
                 storeHost = storeHost.Substring(0, storeHost.Length - 1);
             string url = storeHost + HttpContext.Current.Request.RawUrl;
@@ -537,7 +537,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Ensures that requested page is secured (https://)
         /// </summary>
-        public static void EnsureSSL()
+        public static void EnsureSsl()
         {
             if (!IsCurrentConnectionSecured())
             {
@@ -557,7 +557,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Ensures that requested page is not secured (http://)
         /// </summary>
-        public static void EnsureNonSSL()
+        public static void EnsureNonSsl()
         {
             if (IsCurrentConnectionSecured())
             {
@@ -597,7 +597,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         {
             if (HttpContext.Current.Request.Cookies[cookieName] == null)
             {
-                return String.Empty;
+                return string.Empty;
             }
             try
             {
@@ -608,7 +608,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
             }
             catch
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 
@@ -644,7 +644,8 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <param name="valueName">Name</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns>Result</returns>
-        public static bool ConfigGetBooleanValue(NameValueCollection config, string valueName, bool defaultValue)
+        public static bool ConfigGetBooleanValue(NameValueCollection config, 
+            string valueName, bool defaultValue)
         {
             bool result;
             string str1 = config[valueName];
@@ -664,7 +665,8 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <param name="zeroAllowed">Zero allowed</param>
         /// <param name="maxValueAllowed">Max value allowed</param>
         /// <returns>Result</returns>
-        public static int ConfigGetIntValue(NameValueCollection config, string valueName, int defaultValue, bool zeroAllowed, int maxValueAllowed)
+        public static int ConfigGetIntValue(NameValueCollection config, 
+            string valueName, int defaultValue, bool zeroAllowed, int maxValueAllowed)
         {
             int result;
             string str1 = config[valueName];
@@ -691,8 +693,8 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// Write XML to response
         /// </summary>
         /// <param name="xml">XML</param>
-        /// <param name="Filename">Filename</param>
-        public static void WriteResponseXML(string xml, string Filename)
+        /// <param name="fileName">Filename</param>
+        public static void WriteResponseXml(string xml, string fileName)
         {
             if(!String.IsNullOrEmpty(xml))
             {
@@ -707,7 +709,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
                 response.Clear();
                 response.Charset = "utf-8";
                 response.ContentType = "text/xml";
-                response.AddHeader("content-disposition", string.Format("attachment; filename={0}", Filename));
+                response.AddHeader("content-disposition", string.Format("attachment; filename={0}", fileName));
                 response.BinaryWrite(Encoding.UTF8.GetBytes(document.InnerXml));
                 response.End();
             }
@@ -717,8 +719,8 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// Write text to response
         /// </summary>
         /// <param name="txt">text</param>
-        /// <param name="Filename">Filename</param>
-        public static void WriteResponseTXT(string txt, string Filename)
+        /// <param name="fileName">Filename</param>
+        public static void WriteResponseTxt(string txt, string fileName)
         {
             if (!String.IsNullOrEmpty(txt))
             {
@@ -726,7 +728,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
                 response.Clear();
                 response.Charset = "utf-8";
                 response.ContentType = "text/plain";
-                response.AddHeader("content-disposition", string.Format("attachment; filename={0}", Filename));
+                response.AddHeader("content-disposition", string.Format("attachment; filename={0}", fileName));
                 response.BinaryWrite(Encoding.UTF8.GetBytes(txt));
                 response.End();
             }
@@ -737,7 +739,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// </summary>
         /// <param name="filePath">File path</param>
         /// <param name="targetFileName">Target file name</param>
-        public static void WriteResponseXLS(string filePath, string targetFileName)
+        public static void WriteResponseXls(string filePath, string targetFileName)
         {
             if (!String.IsNullOrEmpty(filePath))
             {
@@ -757,7 +759,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <param name="filePath">File napathme</param>
         /// <param name="targetFileName">Target file name</param>
         /// <remarks>For BeatyStore project</remarks>
-        public static void WriteResponsePDF(string filePath, string targetFileName)
+        public static void WriteResponsePdf(string filePath, string targetFileName)
         {
             if (!String.IsNullOrEmpty(filePath))
             {
@@ -774,26 +776,26 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Generate random digit code
         /// </summary>
-        /// <param name="Length">Length</param>
+        /// <param name="length">Length</param>
         /// <returns>Result string</returns>
-        public static string GenerateRandomDigitCode(int Length)
+        public static string GenerateRandomDigitCode(int length)
         {
             var random = new Random();
-            string s = "";
-            for (int i = 0; i < Length; i++)
-                s = String.Concat(s, random.Next(10).ToString());
-            return s;
+            string str = string.Empty;
+            for (int i = 0; i < length; i++)
+                str = String.Concat(str, random.Next(10).ToString());
+            return str;
         }
 
         /// <summary>
         /// Convert enum for front-end
         /// </summary>
-        /// <param name="s">Input string</param>
+        /// <param name="str">Input string</param>
         /// <returns>Covnerted string</returns>
-        public static string ConvertEnum(string s)
+        public static string ConvertEnum(string str)
         {
             string result = string.Empty;
-            char[] letters = s.ToCharArray();
+            char[] letters = str.ToCharArray();
             foreach (char c in letters)
                 if (c.ToString() != c.ToString().ToLower())
                     result += " " + c.ToString();
@@ -805,13 +807,13 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// <summary>
         /// Fills drop down list with values of enumaration
         /// </summary>
-        /// <param name="List">Dropdownlist</param>
+        /// <param name="list">Dropdownlist</param>
         /// <param name="enumType">Enumeration</param>
-        public static void FillDropDownWithEnum(DropDownList List, Type enumType)
+        public static void FillDropDownWithEnum(DropDownList list, Type enumType)
         {
-            if (List == null)
+            if (list == null)
             {
-                throw new ArgumentNullException("List");
+                throw new ArgumentNullException("list");
             }
             if (enumType == null)
             {
@@ -822,13 +824,13 @@ namespace NopSolutions.NopCommerce.Common.Utils
                 throw new ArgumentException("enumType must be enum type");
             }
 
-            List.Items.Clear();
+            list.Items.Clear();
             string[] strArray = Enum.GetNames(enumType);
             foreach (string str2 in strArray)
             {
                 int enumValue = (int)Enum.Parse(enumType, str2, true);
                 ListItem ddlItem = new ListItem(CommonHelper.ConvertEnum(str2), enumValue.ToString());
-                List.Items.Add(ddlItem);
+                list.Items.Add(ddlItem);
             }
         }
 

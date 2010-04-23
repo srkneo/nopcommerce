@@ -9,6 +9,7 @@ namespace NopSolutions.NopCommerce.Common
     /// <summary>
     /// Represents errors that occur during application execution
     /// </summary>
+    [Serializable]
     public class NopException : Exception
     {
         /// <summary>

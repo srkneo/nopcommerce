@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <td class="adminTitle">
-                        <nopCommerce:ToolTipLabel runat="server" ID="lblPricelistGUID" Text="<% $NopResources:Admin.PricelistInfo.PricelistGUID %>"
+                        <nopCommerce:ToolTipLabel runat="server" ID="lblPricelistGuid" Text="<% $NopResources:Admin.PricelistInfo.PricelistGUID %>"
                             ToolTip="<% $NopResources:Admin.PricelistInfo.PricelistGUID.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
@@ -190,8 +190,8 @@
                         <ItemTemplate>
                             <asp:CheckBox ID="chkSelected" runat="server" />
                             <asp:Label ID="lblFullProductName" runat="server" Text='<%# Eval("FullProductName") %>' />
-                            <asp:HiddenField ID="hfProductVariantPricelistID" runat="server" />
-                            <asp:HiddenField ID="hfProductVariantID" runat="server" Value='<%# Eval("ProductVariantID") %>' />
+                            <asp:HiddenField ID="hfProductVariantPricelistId" runat="server" />
+                            <asp:HiddenField ID="hfProductVariantId" runat="server" Value='<%# Eval("ProductVariantId") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.PricelistInfo.ProductVariants.PriceAdjustmentType %>">

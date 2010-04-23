@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -64,17 +64,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets or sets the two letter ISO code
         /// </summary>
-        public string TwoLetterISOCode { get; set; }
+        public string TwoLetterIsoCode { get; set; }
 
         /// <summary>
         /// Gets or sets the three letter ISO code
         /// </summary>
-        public string ThreeLetterISOCode { get; set; }
+        public string ThreeLetterIsoCode { get; set; }
 
         /// <summary>
         /// Gets or sets the numeric ISO code
         /// </summary>
-        public int NumericISOCode { get; set; }
+        public int NumericIsoCode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the entity is published
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             get
             {
-                return StateProvinceManager.GetStateProvincesByCountryID(CountryID);
+                return StateProvinceManager.GetStateProvincesByCountryId(this.CountryId);
             }
         }
 

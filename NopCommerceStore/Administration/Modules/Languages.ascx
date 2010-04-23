@@ -12,8 +12,6 @@
 </div>
 <asp:GridView ID="gvLanguages" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="LanguageID" HeaderText="Language ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Languages.Name %>" ItemStyle-Width="25%">
             <ItemTemplate>
                  <%#Server.HtmlEncode(Eval("Name").ToString())%> <asp:Image runat="server" ID="imgCFlag" Visible='<%# !String.IsNullOrEmpty(Eval("IconURL").ToString()) %>'
@@ -26,7 +24,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Languages.ViewResources %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="LocaleStringResources.aspx?LanguageID=<%#Eval("LanguageID")%>" title="<%#GetLocaleResourceString("Admin.Languages.ViewResources.Tooltip")%>">
+                <a href="LocaleStringResources.aspx?LanguageID=<%#Eval("LanguageId")%>" title="<%#GetLocaleResourceString("Admin.Languages.ViewResources.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Languages.ViewResources")%></a>
             </ItemTemplate>
         </asp:TemplateField>
@@ -43,7 +41,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Languages.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="LanguageDetails.aspx?LanguageID=<%#Eval("LanguageID")%>" title="<%#GetLocaleResourceString("Admin.Languages.Edit.Tooltip")%>">
+                <a href="LanguageDetails.aspx?LanguageID=<%#Eval("LanguageId")%>" title="<%#GetLocaleResourceString("Admin.Languages.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Languages.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

@@ -29,7 +29,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if(NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -43,17 +43,17 @@ namespace NopSolutions.NopCommerce.Web
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                Guid? guid = CommonHelper.QueryStringGUID("order_no");
+                Guid? guid = CommonHelper.QueryStringGuid("order_no");
                 if(!guid.HasValue)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
-                Order order = OrderManager.GetOrderByGUID(guid.Value);
+                Order order = OrderManager.GetOrderByGuid(guid.Value);
                 if(order == null)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
-                if(NopContext.Current.User.CustomerID != order.CustomerID)
+                if(NopContext.Current.User.CustomerId != order.CustomerId)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
@@ -62,12 +62,12 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     if(OrderManager.CanMarkOrderAsAuthorized(order))
                     {
-                        OrderManager.MarkAsAuthorized(order.OrderID);
+                        OrderManager.MarkAsAuthorized(order.OrderId);
                     }
                 }
                 else if(OrderManager.CanMarkOrderAsPaid(order))
                 {
-                    OrderManager.MarkOrderAsPaid(order.OrderID);
+                    OrderManager.MarkOrderAsPaid(order.OrderId);
                 }
                 Response.Redirect("~/checkoutcompleted.aspx");
             }

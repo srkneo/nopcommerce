@@ -42,25 +42,35 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
 
         #region Utilities
 
-        protected int PoundsToOunces(int Pounds)
+        /// <summary>
+        /// Convert pounds to ounces
+        /// </summary>
+        /// <param name="pounds"></param>
+        /// <returns></returns>
+        protected int PoundsToOunces(int pounds)
         {
-            return Convert.ToInt32(Pounds * 16M);
+            return Convert.ToInt32(pounds * 16M);
         }
 
-        protected bool IsDomesticRequest(ShipmentPackage ShipmentPackage)
+        /// <summary>
+        /// Is a request domestic
+        /// </summary>
+        /// <param name="shipmentPackage">Shipment package</param>
+        /// <returns>Rsult</returns>
+        protected bool IsDomesticRequest(ShipmentPackage shipmentPackage)
         {
             //Origin Country must be USA, Collect USA from list of countries
             bool result = true;
-            if (ShipmentPackage != null &&
-                ShipmentPackage.ShippingAddress != null &&
-                ShipmentPackage.ShippingAddress.Country != null)
+            if (shipmentPackage != null &&
+                shipmentPackage.ShippingAddress != null &&
+                shipmentPackage.ShippingAddress.Country != null)
             {
-                result = ShipmentPackage.ShippingAddress.Country.ThreeLetterISOCode == "USA";
+                result = shipmentPackage.ShippingAddress.Country.ThreeLetterIsoCode == "USA";
             }
             return result;
         }
 
-        private string CreateRequest(string Username, string Password, ShipmentPackage ShipmentPackage)
+        private string CreateRequest(string username, string password, ShipmentPackage shipmentPackage)
         {
             var usedMeasureWeight = MeasureManager.GetMeasureWeightBySystemKeyword(MEASUREWEIGHTSYSTEMKEYWORD);
             if (usedMeasureWeight == null)
@@ -70,10 +80,10 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
             if (usedMeasureDimension == null)
                 throw new NopException(string.Format("USPS shipping service. Could not load \"{0}\" measure dimension", MEASUREDIMENSIONSYSTEMKEYWORD));
 
-            int length = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalLength(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
-            int height = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalHeight(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
-            int width = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalWidth(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
-            int weight = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items, ShipmentPackage.Customer), MeasureManager.BaseWeightIn, usedMeasureWeight)));
+            int length = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(shipmentPackage.GetTotalLength(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
+            int height = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(shipmentPackage.GetTotalHeight(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
+            int width = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(shipmentPackage.GetTotalWidth(), MeasureManager.BaseDimensionIn, usedMeasureDimension)));
+            int weight = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(shipmentPackage.Items, shipmentPackage.Customer), MeasureManager.BaseWeightIn, usedMeasureWeight)));
             if (length < 1)
                 length = 1;
             if (height < 1)
@@ -84,8 +94,8 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
                 weight = 1;
 
 
-            string zipPostalCodeFrom = ShipmentPackage.ZipPostalCodeFrom;
-            string zipPostalCodeTo = ShipmentPackage.ShippingAddress.ZipPostalCode;
+            string zipPostalCodeFrom = shipmentPackage.ZipPostalCodeFrom;
+            string zipPostalCodeTo = shipmentPackage.ShippingAddress.ZipPostalCode;
 
             //valid values for testing. http://testing.shippingapis.com/ShippingAPITest.dll
             //Zip to = "20008"; Zip from ="10022"; weight = 2;
@@ -99,12 +109,12 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
 
             string requestString = string.Empty;
 
-            bool isDomestic = IsDomesticRequest(ShipmentPackage);
+            bool isDomestic = IsDomesticRequest(shipmentPackage);
             if (isDomestic)
             {
                 #region domestic request
                 var sb = new StringBuilder();
-                sb.AppendFormat("<RateV3Request USERID=\"{0}\" PASSWORD=\"{1}\">", Username, Password);
+                sb.AppendFormat("<RateV3Request USERID=\"{0}\" PASSWORD=\"{1}\">", username, password);
 
                 var xmlStrings = new USPSStrings(); // Create new instance with string array
 
@@ -190,7 +200,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
             {
                 #region international request
                 var sb = new StringBuilder();
-                sb.AppendFormat("<IntlRateRequest USERID=\"{0}\" PASSWORD=\"{1}\">", Username, Password);
+                sb.AppendFormat("<IntlRateRequest USERID=\"{0}\" PASSWORD=\"{1}\">", username, password);
 
                 if ((!IsPackageTooHeavy(pounds)) && (!IsPackageTooLarge(length, height, width)))
                 {
@@ -209,7 +219,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
                     sb.Append("<POBoxFlag>N</POBoxFlag>");
                     sb.Append("<GiftFlag>N</GiftFlag>");
                     sb.Append("</GXG>");
-                    sb.AppendFormat("<Country>{0}</Country>", ShipmentPackage.ShippingAddress.Country.Name);
+                    sb.AppendFormat("<Country>{0}</Country>", shipmentPackage.ShippingAddress.Country.Name);
 
                     sb.Append("</Package>");
                 }
@@ -263,7 +273,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
                         sb.Append("<POBoxFlag>N</POBoxFlag>");
                         sb.Append("<GiftFlag>N</GiftFlag>");
                         sb.Append("</GXG>");
-                        sb.AppendFormat("<Country>{0}</Country>", ShipmentPackage.ShippingAddress.Country.Name);
+                        sb.AppendFormat("<Country>{0}</Country>", shipmentPackage.ShippingAddress.Country.Name);
 
                         sb.Append("</Package>");
                     }
@@ -278,10 +288,10 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
             return requestString;
         }
 
-        private string DoRequest(string URL, string RequestString)
+        private string DoRequest(string url, string requestString)
         {
-            byte[] bytes = new ASCIIEncoding().GetBytes(RequestString);
-            var request = (HttpWebRequest)WebRequest.Create(URL);
+            byte[] bytes = new ASCIIEncoding().GetBytes(requestString);
+            var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = bytes.Length;
@@ -413,20 +423,20 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment option</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shipmentPackage">Shipment package</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage ShipmentPackage, ref string Error)
+        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
             var shippingOptions = new ShippingOptionCollection();
 
-            if (ShipmentPackage == null)
+            if (shipmentPackage == null)
                 throw new ArgumentNullException("ShipmentPackage");
-            if (ShipmentPackage.Items == null)
-                throw new NopSolutions.NopCommerce.Common.NopException("No shipment items");
-            if (ShipmentPackage.ShippingAddress == null)
+            if (shipmentPackage.Items == null)
+                throw new NopException("No shipment items");
+            if (shipmentPackage.ShippingAddress == null)
             {
-                Error = "Shipping address is not set";
+                error = "Shipping address is not set";
                 return shippingOptions;
             }
 
@@ -434,13 +444,13 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
             string username = SettingManager.GetSettingValue("ShippingRateComputationMethod.USPS.Username");
             string password = SettingManager.GetSettingValue("ShippingRateComputationMethod.USPS.Password");
             decimal additionalHandlingCharge = SettingManager.GetSettingValueDecimalNative("ShippingRateComputationMethod.USPS.AdditionalHandlingCharge");
-            ShipmentPackage.ZipPostalCodeFrom = SettingManager.GetSettingValue("ShippingRateComputationMethod.USPS.DefaultShippedFromZipPostalCode");
+            shipmentPackage.ZipPostalCodeFrom = SettingManager.GetSettingValue("ShippingRateComputationMethod.USPS.DefaultShippedFromZipPostalCode");
 
 
-            bool isDomestic = IsDomesticRequest(ShipmentPackage);
-            string requestString = CreateRequest(username, password, ShipmentPackage);
+            bool isDomestic = IsDomesticRequest(shipmentPackage);
+            string requestString = CreateRequest(username, password, shipmentPackage);
             string responseXML = DoRequest(url, requestString);
-            shippingOptions = ParseResponse(responseXML, isDomestic, ref Error);
+            shippingOptions = ParseResponse(responseXML, isDomestic, ref error);
             foreach (var shippingOption in shippingOptions)
             {
                 if (!shippingOption.Name.ToLower().StartsWith("usps"))
@@ -448,17 +458,17 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
                 shippingOption.Rate += additionalHandlingCharge;
             }
 
-            if (String.IsNullOrEmpty(Error) && shippingOptions.Count == 0)
-                Error = "Shipping options could not be loaded";
+            if (String.IsNullOrEmpty(error) && shippingOptions.Count == 0)
+                error = "Shipping options could not be loaded";
             return shippingOptions;
         }
 
         /// <summary>
         /// Gets fixed shipping rate (if shipping rate computation method allows it and the rate can be calculated before checkout).
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
+        /// <param name="shipmentPackage">Shipment package</param>
         /// <returns>Fixed shipping rate; or null if shipping rate could not be calculated before checkout</returns>
-        public decimal? GetFixedRate(ShipmentPackage ShipmentPackage)
+        public decimal? GetFixedRate(ShipmentPackage shipmentPackage)
         {
             return null;
         }

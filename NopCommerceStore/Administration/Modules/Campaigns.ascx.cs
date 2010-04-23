@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                             sb.AppendLine(",");
                     }
                     string result = sb.ToString();
-                    CommonHelper.WriteResponseTXT(result, fileName);
+                    CommonHelper.WriteResponseTxt(result, fileName);
                 }
                 catch (Exception exc)
                 {

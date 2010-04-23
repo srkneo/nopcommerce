@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     CategoryTemplate categoryTemplate = ctrlCategoryTemplateInfo.SaveInfo();
-                    Response.Redirect("CategoryTemplateDetails.aspx?CategoryTemplateID=" + categoryTemplate.CategoryTemplateID.ToString());
+                    Response.Redirect("CategoryTemplateDetails.aspx?CategoryTemplateID=" + categoryTemplate.CategoryTemplateId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                TemplateManager.DeleteCategoryTemplate(this.CategoryTemplateID);
+                TemplateManager.DeleteCategoryTemplate(this.CategoryTemplateId);
                 Response.Redirect("CategoryTemplates.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CategoryTemplateID
+        public int CategoryTemplateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryTemplateID");
+                return CommonHelper.QueryStringInt("CategoryTemplateId");
             }
         }
     }

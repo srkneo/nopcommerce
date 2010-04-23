@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Gets or sets the tax provider identifier
         /// </summary>
-        public int TaxProviderID { get; set; }
+        public int TaxProviderId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             get
             {
                 TaxProvider activeTaxProvider = TaxManager.ActiveTaxProvider;
-                return ((activeTaxProvider != null && activeTaxProvider.TaxProviderID == TaxProviderID));
+                return ((activeTaxProvider != null && activeTaxProvider.TaxProviderId == this.TaxProviderId));
             }
         }
         #endregion

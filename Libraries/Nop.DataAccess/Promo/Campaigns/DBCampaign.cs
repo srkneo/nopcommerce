@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Campaigns
         /// <summary>
         /// Gets or sets the campaign identifier
         /// </summary>
-        public int CampaignID { get; set; }
+        public int CampaignId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

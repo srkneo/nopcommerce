@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
     /// <summary>
     /// Customer provider for SQL Server
     /// </summary>
-    public partial class SQLCustomerProvider : DBCustomerProvider
+    public partial class SqlCustomerProvider : DBCustomerProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,91 +36,91 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         #region Utilities
         private DBAddress GetAddressFromReader(IDataReader dataReader)
         {
-            DBAddress address = new DBAddress();
-            address.AddressID = NopSqlDataHelper.GetInt(dataReader, "AddressID");
-            address.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            address.IsBillingAddress = NopSqlDataHelper.GetBoolean(dataReader, "IsBillingAddress");
-            address.FirstName = NopSqlDataHelper.GetString(dataReader, "FirstName");
-            address.LastName = NopSqlDataHelper.GetString(dataReader, "LastName");
-            address.PhoneNumber = NopSqlDataHelper.GetString(dataReader, "PhoneNumber");
-            address.Email = NopSqlDataHelper.GetString(dataReader, "Email");
-            address.FaxNumber = NopSqlDataHelper.GetString(dataReader, "FaxNumber");
-            address.Company = NopSqlDataHelper.GetString(dataReader, "Company");
-            address.Address1 = NopSqlDataHelper.GetString(dataReader, "Address1");
-            address.Address2 = NopSqlDataHelper.GetString(dataReader, "Address2");
-            address.City = NopSqlDataHelper.GetString(dataReader, "City");
-            address.StateProvinceID = NopSqlDataHelper.GetInt(dataReader, "StateProvinceID");
-            address.ZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ZipPostalCode");
-            address.CountryID = NopSqlDataHelper.GetInt(dataReader, "CountryID");
-            address.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            address.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return address;
+            var item = new DBAddress();
+            item.AddressId = NopSqlDataHelper.GetInt(dataReader, "AddressID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.IsBillingAddress = NopSqlDataHelper.GetBoolean(dataReader, "IsBillingAddress");
+            item.FirstName = NopSqlDataHelper.GetString(dataReader, "FirstName");
+            item.LastName = NopSqlDataHelper.GetString(dataReader, "LastName");
+            item.PhoneNumber = NopSqlDataHelper.GetString(dataReader, "PhoneNumber");
+            item.Email = NopSqlDataHelper.GetString(dataReader, "Email");
+            item.FaxNumber = NopSqlDataHelper.GetString(dataReader, "FaxNumber");
+            item.Company = NopSqlDataHelper.GetString(dataReader, "Company");
+            item.Address1 = NopSqlDataHelper.GetString(dataReader, "Address1");
+            item.Address2 = NopSqlDataHelper.GetString(dataReader, "Address2");
+            item.City = NopSqlDataHelper.GetString(dataReader, "City");
+            item.StateProvinceId = NopSqlDataHelper.GetInt(dataReader, "StateProvinceID");
+            item.ZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ZipPostalCode");
+            item.CountryId = NopSqlDataHelper.GetInt(dataReader, "CountryID");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
 
         private DBCustomer GetCustomerFromReader(IDataReader dataReader)
         {
-            DBCustomer customer = new DBCustomer();
-            customer.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            customer.CustomerGUID = NopSqlDataHelper.GetGuid(dataReader, "CustomerGUID");
-            customer.Email = NopSqlDataHelper.GetString(dataReader, "Email");
-            customer.Username = NopSqlDataHelper.GetString(dataReader, "Username");
-            customer.PasswordHash = NopSqlDataHelper.GetString(dataReader, "PasswordHash");
-            customer.SaltKey = NopSqlDataHelper.GetString(dataReader, "SaltKey");
-            customer.AffiliateID = NopSqlDataHelper.GetInt(dataReader, "AffiliateID");
-            customer.BillingAddressID = NopSqlDataHelper.GetInt(dataReader, "BillingAddressID");
-            customer.ShippingAddressID = NopSqlDataHelper.GetInt(dataReader, "ShippingAddressID");
-            customer.LastPaymentMethodID = NopSqlDataHelper.GetInt(dataReader, "LastPaymentMethodID");
-            customer.LastAppliedCouponCode = NopSqlDataHelper.GetString(dataReader, "LastAppliedCouponCode");
-            customer.GiftCardCouponCodes = NopSqlDataHelper.GetString(dataReader, "GiftCardCouponCodes");
-            customer.CheckoutAttributes = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributes");
-            customer.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            customer.CurrencyID = NopSqlDataHelper.GetInt(dataReader, "CurrencyID");
-            customer.TaxDisplayTypeID = NopSqlDataHelper.GetInt(dataReader, "TaxDisplayTypeID");
-            customer.IsAdmin = NopSqlDataHelper.GetBoolean(dataReader, "IsAdmin");
-            customer.IsTaxExempt = NopSqlDataHelper.GetBoolean(dataReader, "IsTaxExempt");
-            customer.IsGuest = NopSqlDataHelper.GetBoolean(dataReader, "IsGuest");
-            customer.IsForumModerator = NopSqlDataHelper.GetBoolean(dataReader, "IsForumModerator");
-            customer.TotalForumPosts = NopSqlDataHelper.GetInt(dataReader, "TotalForumPosts");
-            customer.Signature = NopSqlDataHelper.GetString(dataReader, "Signature");
-            customer.AdminComment = NopSqlDataHelper.GetString(dataReader, "AdminComment");
-            customer.Active = NopSqlDataHelper.GetBoolean(dataReader, "Active");
-            customer.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            customer.RegistrationDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "RegistrationDate");
-            customer.TimeZoneID = NopSqlDataHelper.GetString(dataReader, "TimeZoneID");
-            customer.AvatarID = NopSqlDataHelper.GetInt(dataReader, "AvatarID");
-            return customer;
+            var item = new DBCustomer();
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.CustomerGuid = NopSqlDataHelper.GetGuid(dataReader, "CustomerGUID");
+            item.Email = NopSqlDataHelper.GetString(dataReader, "Email");
+            item.Username = NopSqlDataHelper.GetString(dataReader, "Username");
+            item.PasswordHash = NopSqlDataHelper.GetString(dataReader, "PasswordHash");
+            item.SaltKey = NopSqlDataHelper.GetString(dataReader, "SaltKey");
+            item.AffiliateId = NopSqlDataHelper.GetInt(dataReader, "AffiliateID");
+            item.BillingAddressId = NopSqlDataHelper.GetInt(dataReader, "BillingAddressID");
+            item.ShippingAddressId = NopSqlDataHelper.GetInt(dataReader, "ShippingAddressID");
+            item.LastPaymentMethodId = NopSqlDataHelper.GetInt(dataReader, "LastPaymentMethodID");
+            item.LastAppliedCouponCode = NopSqlDataHelper.GetString(dataReader, "LastAppliedCouponCode");
+            item.GiftCardCouponCodes = NopSqlDataHelper.GetString(dataReader, "GiftCardCouponCodes");
+            item.CheckoutAttributes = NopSqlDataHelper.GetString(dataReader, "CheckoutAttributes");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.CurrencyId = NopSqlDataHelper.GetInt(dataReader, "CurrencyID");
+            item.TaxDisplayTypeId = NopSqlDataHelper.GetInt(dataReader, "TaxDisplayTypeID");
+            item.IsAdmin = NopSqlDataHelper.GetBoolean(dataReader, "IsAdmin");
+            item.IsTaxExempt = NopSqlDataHelper.GetBoolean(dataReader, "IsTaxExempt");
+            item.IsGuest = NopSqlDataHelper.GetBoolean(dataReader, "IsGuest");
+            item.IsForumModerator = NopSqlDataHelper.GetBoolean(dataReader, "IsForumModerator");
+            item.TotalForumPosts = NopSqlDataHelper.GetInt(dataReader, "TotalForumPosts");
+            item.Signature = NopSqlDataHelper.GetString(dataReader, "Signature");
+            item.AdminComment = NopSqlDataHelper.GetString(dataReader, "AdminComment");
+            item.Active = NopSqlDataHelper.GetBoolean(dataReader, "Active");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            item.RegistrationDate = NopSqlDataHelper.GetUtcDateTime(dataReader, "RegistrationDate");
+            item.TimeZoneId = NopSqlDataHelper.GetString(dataReader, "TimeZoneID");
+            item.AvatarId = NopSqlDataHelper.GetInt(dataReader, "AvatarID");
+            return item;
         }
 
         private DBCustomerAttribute GetCustomerAttributeFromReader(IDataReader dataReader)
         {
-            DBCustomerAttribute customerAttribute = new DBCustomerAttribute();
-            customerAttribute.CustomerAttributeID = NopSqlDataHelper.GetInt(dataReader, "CustomerAttributeID");
-            customerAttribute.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            customerAttribute.Key = NopSqlDataHelper.GetString(dataReader, "Key");
-            customerAttribute.Value = NopSqlDataHelper.GetString(dataReader, "Value");
-            return customerAttribute;
+            var item = new DBCustomerAttribute();
+            item.CustomerAttributeId = NopSqlDataHelper.GetInt(dataReader, "CustomerAttributeID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.Key = NopSqlDataHelper.GetString(dataReader, "Key");
+            item.Value = NopSqlDataHelper.GetString(dataReader, "Value");
+            return item;
         }
 
         private DBCustomerRole GetCustomerRoleFromReader(IDataReader dataReader)
         {
-            DBCustomerRole customerRole = new DBCustomerRole();
-            customerRole.CustomerRoleID = NopSqlDataHelper.GetInt(dataReader, "CustomerRoleID");
-            customerRole.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            customerRole.FreeShipping = NopSqlDataHelper.GetBoolean(dataReader, "FreeShipping");
-            customerRole.TaxExempt = NopSqlDataHelper.GetBoolean(dataReader, "TaxExempt");
-            customerRole.Active = NopSqlDataHelper.GetBoolean(dataReader, "Active");
-            customerRole.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            return customerRole;
+            var item = new DBCustomerRole();
+            item.CustomerRoleId = NopSqlDataHelper.GetInt(dataReader, "CustomerRoleID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.FreeShipping = NopSqlDataHelper.GetBoolean(dataReader, "FreeShipping");
+            item.TaxExempt = NopSqlDataHelper.GetBoolean(dataReader, "TaxExempt");
+            item.Active = NopSqlDataHelper.GetBoolean(dataReader, "Active");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            return item;
         }
 
         private DBCustomerSession GetCustomerSessionFromReader(IDataReader dataReader)
         {
-            DBCustomerSession customerSession = new DBCustomerSession();
-            customerSession.CustomerSessionGUID = NopSqlDataHelper.GetGuid(dataReader, "CustomerSessionGUID");
-            customerSession.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            customerSession.LastAccessed = NopSqlDataHelper.GetUtcDateTime(dataReader, "LastAccessed");
-            customerSession.IsExpired = NopSqlDataHelper.GetBoolean(dataReader, "IsExpired");
-            return customerSession;
+            var item = new DBCustomerSession();
+            item.CustomerSessionGuid = NopSqlDataHelper.GetGuid(dataReader, "CustomerSessionGUID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.LastAccessed = NopSqlDataHelper.GetUtcDateTime(dataReader, "LastAccessed");
+            item.IsExpired = NopSqlDataHelper.GetBoolean(dataReader, "IsExpired");
+            return item;
         }
         #endregion
 
@@ -163,51 +163,51 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Deletes an address by address identifier 
         /// </summary>
-        /// <param name="AddressID">Address identifier</param>
-        public override void DeleteAddress(int AddressID)
+        /// <param name="addressId">Address identifier</param>
+        public override void DeleteAddress(int addressId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AddressDelete");
-            db.AddInParameter(dbCommand, "AddressID", DbType.Int32, AddressID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "AddressID", DbType.Int32, addressId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets an address by address identifier
         /// </summary>
-        /// <param name="AddressID">Address identifier</param>
+        /// <param name="addressId">Address identifier</param>
         /// <returns>Address</returns>
-        public override DBAddress GetAddressByID(int AddressID)
+        public override DBAddress GetAddressById(int addressId)
         {
-            DBAddress address = null;
+            DBAddress item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AddressLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "AddressID", DbType.Int32, AddressID);
+            db.AddInParameter(dbCommand, "AddressID", DbType.Int32, addressId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    address = GetAddressFromReader(dataReader);
+                    item = GetAddressFromReader(dataReader);
                 }
             }
-            return address;
+            return item;
         }
 
         /// <summary>
         /// Gets a collection of addresses by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="GetBillingAddresses">Gets or sets a value indicating whether the addresses are billing or shipping</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="getBillingAddresses">Gets or sets a value indicating whether the addresses are billing or shipping</param>
         /// <returns>A collection of addresses</returns>
-        public override DBAddressCollection GetAddressesByCustomerID(int CustomerID, bool GetBillingAddresses)
+        public override DBAddressCollection GetAddressesByCustomerId(int customerId, bool getBillingAddresses)
         {
             var result = new DBAddressCollection();
-            if (CustomerID == 0)
+            if (customerId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AddressLoadByCustomerID");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "GetBillingAddresses", DbType.Boolean, GetBillingAddresses);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "GetBillingAddresses", DbType.Boolean, getBillingAddresses);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -222,141 +222,143 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Inserts an address
         /// </summary>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="IsBillingAddress">A value indicating whether the address is billing or shipping</param>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="isBillingAddress">A value indicating whether the address is billing or shipping</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>An address</returns>
-        public override DBAddress InsertAddress(int CustomerID, bool IsBillingAddress, string FirstName, string LastName,
-            string PhoneNumber, string Email, string FaxNumber, string Company, string Address1,
-            string Address2, string City, int StateProvinceID, string ZipPostalCode,
-            int CountryID, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBAddress InsertAddress(int customerId, bool isBillingAddress,
+            string firstName, string lastName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, int stateProvinceId, string zipPostalCode,
+            int countryId, DateTime createdOn, DateTime updatedOn)
         {
-            DBAddress address = null;
+            DBAddress item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AddressInsert");
             db.AddOutParameter(dbCommand, "AddressID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "IsBillingAddress", DbType.Boolean, IsBillingAddress);
-            db.AddInParameter(dbCommand, "FirstName", DbType.String, FirstName);
-            db.AddInParameter(dbCommand, "LastName", DbType.String, LastName);
-            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, PhoneNumber);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, FaxNumber);
-            db.AddInParameter(dbCommand, "Company", DbType.String, Company);
-            db.AddInParameter(dbCommand, "Address1", DbType.String, Address1);
-            db.AddInParameter(dbCommand, "Address2", DbType.String, Address2);
-            db.AddInParameter(dbCommand, "City", DbType.String, City);
-            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, StateProvinceID);
-            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, ZipPostalCode);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "IsBillingAddress", DbType.Boolean, isBillingAddress);
+            db.AddInParameter(dbCommand, "FirstName", DbType.String, firstName);
+            db.AddInParameter(dbCommand, "LastName", DbType.String, lastName);
+            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, phoneNumber);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, faxNumber);
+            db.AddInParameter(dbCommand, "Company", DbType.String, company);
+            db.AddInParameter(dbCommand, "Address1", DbType.String, address1);
+            db.AddInParameter(dbCommand, "Address2", DbType.String, address2);
+            db.AddInParameter(dbCommand, "City", DbType.String, city);
+            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, stateProvinceId);
+            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, zipPostalCode);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int AddressID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@AddressID"));
-                address = GetAddressByID(AddressID);
+                int addressId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@AddressID"));
+                item = GetAddressById(addressId);
             }
-            return address;
+            return item;
         }
 
         /// <summary>
         /// Updates the address
         /// </summary>
-        /// <param name="AddressID">The address identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="IsBillingAddress">A value indicating whether the address is billing or shipping</param>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="addressId">The address identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="isBillingAddress">A value indicating whether the address is billing or shipping</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>An address</returns>
-        public override DBAddress UpdateAddress(int AddressID, int CustomerID, bool IsBillingAddress, string FirstName, string LastName,
-            string PhoneNumber, string Email, string FaxNumber, string Company,
-            string Address1, string Address2, string City, int StateProvinceID,
-            string ZipPostalCode, int CountryID, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBAddress UpdateAddress(int addressId, int customerId,
+            bool isBillingAddress, string firstName, string lastName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, int stateProvinceId, string zipPostalCode,
+            int countryId, DateTime createdOn, DateTime updatedOn)
         {
-            DBAddress address = null;
+            DBAddress item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AddressUpdate");
-            db.AddInParameter(dbCommand, "AddressID", DbType.Int32, AddressID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "IsBillingAddress", DbType.Boolean, IsBillingAddress);
-            db.AddInParameter(dbCommand, "FirstName", DbType.String, FirstName);
-            db.AddInParameter(dbCommand, "LastName", DbType.String, LastName);
-            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, PhoneNumber);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, FaxNumber);
-            db.AddInParameter(dbCommand, "Company", DbType.String, Company);
-            db.AddInParameter(dbCommand, "Address1", DbType.String, Address1);
-            db.AddInParameter(dbCommand, "Address2", DbType.String, Address2);
-            db.AddInParameter(dbCommand, "City", DbType.String, City);
-            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, StateProvinceID);
-            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, ZipPostalCode);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "AddressID", DbType.Int32, addressId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "IsBillingAddress", DbType.Boolean, isBillingAddress);
+            db.AddInParameter(dbCommand, "FirstName", DbType.String, firstName);
+            db.AddInParameter(dbCommand, "LastName", DbType.String, lastName);
+            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, phoneNumber);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, faxNumber);
+            db.AddInParameter(dbCommand, "Company", DbType.String, company);
+            db.AddInParameter(dbCommand, "Address1", DbType.String, address1);
+            db.AddInParameter(dbCommand, "Address2", DbType.String, address2);
+            db.AddInParameter(dbCommand, "City", DbType.String, city);
+            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, stateProvinceId);
+            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, zipPostalCode);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                address = GetAddressByID(AddressID);
+                item = GetAddressById(addressId);
 
-            return address;
+            return item;
         }
 
         /// <summary>
         /// Gets all customers
         /// </summary>
-        /// <param name="RegistrationFrom">Customer registration from; null to load all customers</param>
-        /// <param name="RegistrationTo">Customer registration to; null to load all customers</param>
-        /// <param name="Email">Customer Email</param>
-        /// <param name="Username">Customer username</param>
-        /// <param name="DontLoadGuestCustomers">A value indicating whether to don't load guest customers</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="registrationFrom">Customer registration from; null to load all customers</param>
+        /// <param name="registrationTo">Customer registration to; null to load all customers</param>
+        /// <param name="email">Customer Email</param>
+        /// <param name="username">Customer username</param>
+        /// <param name="dontLoadGuestCustomers">A value indicating whether to don't load guest customers</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Customer collection</returns>
-        public override DBCustomerCollection GetAllCustomers(DateTime? RegistrationFrom, DateTime? RegistrationTo,
-            string Email, string Username, bool DontLoadGuestCustomers,
-            int PageSize, int PageIndex, out int TotalRecords)
+        public override DBCustomerCollection GetAllCustomers(DateTime? registrationFrom,
+            DateTime? registrationTo, string email, string username,
+            bool dontLoadGuestCustomers, int pageSize, int pageIndex, out int totalRecords)
         {
-            TotalRecords = 0;
+            totalRecords = 0;
             var result = new DBCustomerCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerLoadAll");
-            if (RegistrationFrom.HasValue)
-                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, RegistrationFrom.Value);
+            if (registrationFrom.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, registrationFrom.Value);
             else
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
-            if (RegistrationTo.HasValue)
-                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, RegistrationTo.Value);
+            if (registrationTo.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, registrationTo.Value);
             else
                 db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "Username", DbType.String, Username);
-            db.AddInParameter(dbCommand, "DontLoadGuestCustomers", DbType.Boolean, DontLoadGuestCustomers);
-            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
-            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, PageIndex);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "Username", DbType.String, username);
+            db.AddInParameter(dbCommand, "DontLoadGuestCustomers", DbType.Boolean, dontLoadGuestCustomers);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, pageIndex);
             db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -366,7 +368,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
                     result.Add(item);
                 }
             }
-            TotalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
+            totalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
 
             return result;
         }
@@ -374,16 +376,16 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets all customers by affiliate identifier
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Customer collection</returns>
-        public override DBCustomerCollection GetAffiliatedCustomers(int AffiliateID)
+        public override DBCustomerCollection GetAffiliatedCustomers(int affiliateId)
         {
             var result = new DBCustomerCollection();
-            if (AffiliateID == 0)
+            if (affiliateId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerLoadByAffiliateID");
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -399,18 +401,18 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets all customers by customer role id
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer collection</returns>
-        public override DBCustomerCollection GetCustomersByCustomerRoleID(int CustomerRoleID, bool showHidden)
+        public override DBCustomerCollection GetCustomersByCustomerRoleId(int customerRoleId, bool showHidden)
         {
             var result = new DBCustomerCollection();
-            if (CustomerRoleID == 0)
+            if (customerRoleId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerLoadByCustomerRoleID");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -426,305 +428,306 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets a customer by email
         /// </summary>
-        /// <param name="Email">Customer Email</param>
+        /// <param name="email">Customer Email</param>
         /// <returns>A customer</returns>
-        public override DBCustomer GetCustomerByEmail(string Email)
+        public override DBCustomer GetCustomerByEmail(string email)
         {
-            DBCustomer customer = null;
+            DBCustomer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerLoadByEmail");
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customer = GetCustomerFromReader(dataReader);
+                    item = GetCustomerFromReader(dataReader);
                 }
             }
 
-            return customer;
+            return item;
         }
 
         /// <summary>
-        /// Gets a customer by email
+        /// Gets a customer by username
         /// </summary>
-        /// <param name="Username">Customer username</param>
+        /// <param name="username">Customer username</param>
         /// <returns>A customer</returns>
-        public override DBCustomer GetCustomerByUsername(string Username)
+        public override DBCustomer GetCustomerByUsername(string username)
         {
-            DBCustomer customer = null;
+            DBCustomer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerLoadByUsername");
-            db.AddInParameter(dbCommand, "Username", DbType.String, Username);
+            db.AddInParameter(dbCommand, "Username", DbType.String, username);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customer = GetCustomerFromReader(dataReader);
+                    item = GetCustomerFromReader(dataReader);
                 }
             }
 
-            return customer;
+            return item;
         }
 
         /// <summary>
         /// Gets a customer
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>A customer</returns>
-        public override DBCustomer GetCustomerByID(int CustomerID)
+        public override DBCustomer GetCustomerById(int customerId)
         {
-            DBCustomer customer = null;
-            if (CustomerID == 0)
-                return customer;
+            DBCustomer item = null;
+            if (customerId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customer = GetCustomerFromReader(dataReader);
+                    item = GetCustomerFromReader(dataReader);
                 }
             }
 
-            return customer;
+            return item;
         }
 
         /// <summary>
         /// Gets a customer by GUID
         /// </summary>
-        /// <param name="CustomerGUID">Customer GUID</param>
+        /// <param name="customerGuid">Customer GUID</param>
         /// <returns>A customer</returns>
-        public override DBCustomer GetCustomerByGUID(Guid CustomerGUID)
+        public override DBCustomer GetCustomerByGuid(Guid customerGuid)
         {
-            DBCustomer customer = null;
+            DBCustomer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerLoadByGUID");
-            db.AddInParameter(dbCommand, "CustomerGUID", DbType.Guid, CustomerGUID);
+            db.AddInParameter(dbCommand, "CustomerGUID", DbType.Guid, customerGuid);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customer = GetCustomerFromReader(dataReader);
+                    item = GetCustomerFromReader(dataReader);
                 }
             }
 
-            return customer;
+            return item;
         }
 
         /// <summary>
         /// Adds a customer
         /// </summary>
-        /// <param name="CustomerGUID">The customer identifier</param>
-        /// <param name="Email">The email</param>
-        /// <param name="Username">The username</param>
+        /// <param name="customerGuid">The customer identifier</param>
+        /// <param name="email">The email</param>
+        /// <param name="username">The username</param>
         /// <param name="passwordHash">The password hash</param>
         /// <param name="saltKey">The salt key</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="BillingAddressID">The billing address identifier</param>
-        /// <param name="ShippingAddressID">The shipping address identifier</param>
-        /// <param name="LastPaymentMethodID">The last payment method identifier</param>
-        /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
-        /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
-        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="CurrencyID">The currency identifier</param>
-        /// <param name="TaxDisplayTypeID">The tax display type identifier</param>
-        /// <param name="IsTaxExempt">A value indicating whether the customer is tax exempt</param>
-        /// <param name="IsAdmin">A value indicating whether the customer is administrator</param>
-        /// <param name="IsGuest">A value indicating whether the customer is guest</param>
-        /// <param name="IsForumModerator">A value indicating whether the customer is forum moderator</param>
-        /// <param name="TotalForumPosts">A forum post count</param>
-        /// <param name="Signature">Signature</param>
-        /// <param name="AdminComment">Admin comment</param>
-        /// <param name="Active">A value indicating whether the customer is active</param>
-        /// <param name="Deleted">A value indicating whether the customer has been deleted</param>
-        /// <param name="RegistrationDate">The date and time of customer registration</param>
-        /// <param name="TimeZoneID">The time zone identifier</param>
-        /// <param name="AvatarID">The avatar identifier</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="billingAddressId">The billing address identifier</param>
+        /// <param name="shippingAddressId">The shipping address identifier</param>
+        /// <param name="lastPaymentMethodId">The last payment method identifier</param>
+        /// <param name="lastAppliedCouponCode">The last applied coupon code</param>
+        /// <param name="giftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="checkoutAttributes">The selected checkout attributes</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="currencyId">The currency identifier</param>
+        /// <param name="taxDisplayTypeId">The tax display type identifier</param>
+        /// <param name="isTaxExempt">A value indicating whether the customer is tax exempt</param>
+        /// <param name="isAdmin">A value indicating whether the customer is administrator</param>
+        /// <param name="isGuest">A value indicating whether the customer is guest</param>
+        /// <param name="isForumModerator">A value indicating whether the customer is forum moderator</param>
+        /// <param name="totalForumPosts">A forum post count</param>
+        /// <param name="signature">Signature</param>
+        /// <param name="adminComment">Admin comment</param>
+        /// <param name="active">A value indicating whether the customer is active</param>
+        /// <param name="deleted">A value indicating whether the customer has been deleted</param>
+        /// <param name="registrationDate">The date and time of customer registration</param>
+        /// <param name="timeZoneId">The time zone identifier</param>
+        /// <param name="avatarId">The avatar identifier</param>
         /// <returns>A customer</returns>
-        public override DBCustomer AddCustomer(Guid CustomerGUID, string Email,
-            string Username, string passwordHash, string saltKey,
-            int AffiliateID, int BillingAddressID,
-            int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes,
-            string CheckoutAttributes, int LanguageID, int CurrencyID,
-            int TaxDisplayTypeID, bool IsTaxExempt, bool IsAdmin,
-            bool IsGuest, bool IsForumModerator, int TotalForumPosts, string Signature, string AdminComment,
-            bool Active, bool Deleted, DateTime RegistrationDate, string TimeZoneID, int AvatarID)
+        public override DBCustomer AddCustomer(Guid customerGuid, string email,
+            string username, string passwordHash, string saltKey,
+            int affiliateId, int billingAddressId,
+            int shippingAddressId, int lastPaymentMethodId,
+            string lastAppliedCouponCode, string giftCardCouponCodes,
+            string checkoutAttributes, int languageId,
+            int currencyId, int taxDisplayTypeId,
+            bool isTaxExempt, bool isAdmin, bool isGuest, bool isForumModerator,
+            int totalForumPosts, string signature, string adminComment, bool active,
+            bool deleted, DateTime registrationDate, string timeZoneId, int avatarId)
         {
-            DBCustomer customer = null;
+            DBCustomer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerInsert");
             db.AddOutParameter(dbCommand, "CustomerID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CustomerGUID", DbType.Guid, CustomerGUID);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "Username", DbType.String, Username);
+            db.AddInParameter(dbCommand, "CustomerGUID", DbType.Guid, customerGuid);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "Username", DbType.String, username);
             db.AddInParameter(dbCommand, "PasswordHash", DbType.String, passwordHash);
             db.AddInParameter(dbCommand, "SaltKey", DbType.String, saltKey);
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
-            db.AddInParameter(dbCommand, "BillingAddressID", DbType.Int32, BillingAddressID);
-            db.AddInParameter(dbCommand, "ShippingAddressID", DbType.Int32, ShippingAddressID);
-            db.AddInParameter(dbCommand, "LastPaymentMethodID", DbType.Int32, LastPaymentMethodID);
-            db.AddInParameter(dbCommand, "LastAppliedCouponCode", DbType.String, LastAppliedCouponCode);
-            db.AddInParameter(dbCommand, "GiftCardCouponCodes", DbType.Xml, GiftCardCouponCodes);
-            db.AddInParameter(dbCommand, "CheckoutAttributes", DbType.Xml, CheckoutAttributes);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, CurrencyID);
-            db.AddInParameter(dbCommand, "TaxDisplayTypeID", DbType.Int32, TaxDisplayTypeID);
-            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, IsTaxExempt);
-            db.AddInParameter(dbCommand, "IsAdmin", DbType.Boolean, IsAdmin);
-            db.AddInParameter(dbCommand, "IsGuest", DbType.Boolean, IsGuest);
-            db.AddInParameter(dbCommand, "IsForumModerator", DbType.Boolean, IsForumModerator);
-            db.AddInParameter(dbCommand, "TotalForumPosts", DbType.Int32, TotalForumPosts);
-            db.AddInParameter(dbCommand, "Signature", DbType.String, Signature);
-            db.AddInParameter(dbCommand, "AdminComment", DbType.String, AdminComment);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, Active);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "RegistrationDate", DbType.DateTime, RegistrationDate);
-            db.AddInParameter(dbCommand, "TimeZoneID", DbType.String, TimeZoneID);
-            db.AddInParameter(dbCommand, "AvatarID", DbType.Int32, AvatarID);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
+            db.AddInParameter(dbCommand, "BillingAddressID", DbType.Int32, billingAddressId);
+            db.AddInParameter(dbCommand, "ShippingAddressID", DbType.Int32, shippingAddressId);
+            db.AddInParameter(dbCommand, "LastPaymentMethodID", DbType.Int32, lastPaymentMethodId);
+            db.AddInParameter(dbCommand, "LastAppliedCouponCode", DbType.String, lastAppliedCouponCode);
+            db.AddInParameter(dbCommand, "GiftCardCouponCodes", DbType.Xml, giftCardCouponCodes);
+            db.AddInParameter(dbCommand, "CheckoutAttributes", DbType.Xml, checkoutAttributes);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, currencyId);
+            db.AddInParameter(dbCommand, "TaxDisplayTypeID", DbType.Int32, taxDisplayTypeId);
+            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, isTaxExempt);
+            db.AddInParameter(dbCommand, "IsAdmin", DbType.Boolean, isAdmin);
+            db.AddInParameter(dbCommand, "IsGuest", DbType.Boolean, isGuest);
+            db.AddInParameter(dbCommand, "IsForumModerator", DbType.Boolean, isForumModerator);
+            db.AddInParameter(dbCommand, "TotalForumPosts", DbType.Int32, totalForumPosts);
+            db.AddInParameter(dbCommand, "Signature", DbType.String, signature);
+            db.AddInParameter(dbCommand, "AdminComment", DbType.String, adminComment);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, active);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "RegistrationDate", DbType.DateTime, registrationDate);
+            db.AddInParameter(dbCommand, "TimeZoneID", DbType.String, timeZoneId);
+            db.AddInParameter(dbCommand, "AvatarID", DbType.Int32, avatarId);
 
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CustomerID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerID"));
-                customer = GetCustomerByID(CustomerID);
+                int customerId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerID"));
+                item = GetCustomerById(customerId);
             }
 
-            return customer;
+            return item;
         }
 
         /// <summary>
         /// Updates the customer
         /// </summary>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CustomerGUID">The customer identifier</param>
-        /// <param name="Email">The email</param>
-        /// <param name="Username">The username</param>
-        /// <param name="PasswordHash">The password hash</param>
-        /// <param name="SaltKey">The salk key</param>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="BillingAddressID">The billing address identifier</param>
-        /// <param name="ShippingAddressID">The shipping address identifier</param>
-        /// <param name="LastPaymentMethodID">The last payment method identifier</param>
-        /// <param name="LastAppliedCouponCode">The last applied coupon code</param>
-        /// <param name="GiftCardCouponCodes">The applied gift card coupon code</param>
-        /// <param name="CheckoutAttributes">The selected checkout attributes</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="CurrencyID">The currency identifier</param>
-        /// <param name="TaxDisplayTypeID">The tax display type identifier</param>
-        /// <param name="IsTaxExempt">A value indicating whether the customer is tax exempt</param>
-        /// <param name="IsAdmin">A value indicating whether the customer is administrator</param>
-        /// <param name="IsGuest">A value indicating whether the customer is guest</param>
-        /// <param name="IsForumModerator">A value indicating whether the customer is forum moderator</param>
-        /// <param name="TotalForumPosts">A forum post count</param>
-        /// <param name="Signature">Signature</param>
-        /// <param name="AdminComment">Admin comment</param>
-        /// <param name="Active">A value indicating whether the customer is active</param>
-        /// <param name="Deleted">A value indicating whether the customer has been deleted</param>
-        /// <param name="RegistrationDate">The date and time of customer registration</param>
-        /// <param name="TimeZoneID">The time zone identifier</param>
-        /// <param name="AvatarID">The avatar identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="customerGuid">The customer identifier</param>
+        /// <param name="email">The email</param>
+        /// <param name="username">The username</param>
+        /// <param name="passwordHash">The password hash</param>
+        /// <param name="saltKey">The salt key</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="billingAddressId">The billing address identifier</param>
+        /// <param name="shippingAddressId">The shipping address identifier</param>
+        /// <param name="lastPaymentMethodId">The last payment method identifier</param>
+        /// <param name="lastAppliedCouponCode">The last applied coupon code</param>
+        /// <param name="giftCardCouponCodes">The applied gift card coupon code</param>
+        /// <param name="checkoutAttributes">The selected checkout attributes</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="currencyId">The currency identifier</param>
+        /// <param name="taxDisplayTypeId">The tax display type identifier</param>
+        /// <param name="isTaxExempt">A value indicating whether the customer is tax exempt</param>
+        /// <param name="isAdmin">A value indicating whether the customer is administrator</param>
+        /// <param name="isGuest">A value indicating whether the customer is guest</param>
+        /// <param name="isForumModerator">A value indicating whether the customer is forum moderator</param>
+        /// <param name="totalForumPosts">A forum post count</param>
+        /// <param name="signature">Signature</param>
+        /// <param name="adminComment">Admin comment</param>
+        /// <param name="active">A value indicating whether the customer is active</param>
+        /// <param name="deleted">A value indicating whether the customer has been deleted</param>
+        /// <param name="registrationDate">The date and time of customer registration</param>
+        /// <param name="timeZoneId">The time zone identifier</param>
+        /// <param name="avatarId">The avatar identifier</param>
         /// <returns>A customer</returns>
-        public override DBCustomer UpdateCustomer(int CustomerID, Guid CustomerGUID, string Email,
-            string Username, string PasswordHash, string SaltKey,
-            int AffiliateID, int BillingAddressID,
-            int ShippingAddressID, int LastPaymentMethodID,
-            string LastAppliedCouponCode, string GiftCardCouponCodes,
-            string CheckoutAttributes, int LanguageID,
-            int CurrencyID, int TaxDisplayTypeID, bool IsTaxExempt, 
-            bool IsAdmin, bool IsGuest, bool IsForumModerator,
-            int TotalForumPosts, string Signature, string AdminComment, bool Active,
-            bool Deleted, DateTime RegistrationDate, string TimeZoneID, int AvatarID)
+        public override DBCustomer UpdateCustomer(int customerId,
+            Guid customerGuid, string email,
+            string username, string passwordHash, string saltKey,
+            int affiliateId, int billingAddressId,
+            int shippingAddressId, int lastPaymentMethodId,
+            string lastAppliedCouponCode, string giftCardCouponCodes,
+            string checkoutAttributes, int languageId,
+            int currencyId, int taxDisplayTypeId,
+            bool isTaxExempt, bool isAdmin, bool isGuest, bool isForumModerator,
+            int totalForumPosts, string signature, string adminComment, bool active,
+            bool deleted, DateTime registrationDate, string timeZoneId, int avatarId)
         {
-            DBCustomer customer = null;
+            DBCustomer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerUpdate");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CustomerGUID", DbType.Guid, CustomerGUID);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "Username", DbType.String, Username);
-            db.AddInParameter(dbCommand, "PasswordHash", DbType.String, PasswordHash);
-            db.AddInParameter(dbCommand, "SaltKey", DbType.String, SaltKey);
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
-            db.AddInParameter(dbCommand, "BillingAddressID", DbType.Int32, BillingAddressID);
-            db.AddInParameter(dbCommand, "ShippingAddressID", DbType.Int32, ShippingAddressID);
-            db.AddInParameter(dbCommand, "LastPaymentMethodID", DbType.Int32, LastPaymentMethodID);
-            db.AddInParameter(dbCommand, "LastAppliedCouponCode", DbType.String, LastAppliedCouponCode);
-            db.AddInParameter(dbCommand, "GiftCardCouponCodes", DbType.Xml, GiftCardCouponCodes);
-            db.AddInParameter(dbCommand, "CheckoutAttributes", DbType.Xml, CheckoutAttributes);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, CurrencyID);
-            db.AddInParameter(dbCommand, "TaxDisplayTypeID", DbType.Int32, TaxDisplayTypeID);
-            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, IsTaxExempt);
-            db.AddInParameter(dbCommand, "IsAdmin", DbType.Boolean, IsAdmin);
-            db.AddInParameter(dbCommand, "IsGuest", DbType.Boolean, IsGuest);
-            db.AddInParameter(dbCommand, "IsForumModerator", DbType.Boolean, IsForumModerator);
-            db.AddInParameter(dbCommand, "TotalForumPosts", DbType.Int32, TotalForumPosts);
-            db.AddInParameter(dbCommand, "Signature", DbType.String, Signature);
-            db.AddInParameter(dbCommand, "AdminComment", DbType.String, AdminComment);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, Active);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "RegistrationDate", DbType.DateTime, RegistrationDate);
-            db.AddInParameter(dbCommand, "TimeZoneID", DbType.String, TimeZoneID);
-            db.AddInParameter(dbCommand, "AvatarID", DbType.Int32, AvatarID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CustomerGUID", DbType.Guid, customerGuid);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "Username", DbType.String, username);
+            db.AddInParameter(dbCommand, "PasswordHash", DbType.String, passwordHash);
+            db.AddInParameter(dbCommand, "SaltKey", DbType.String, saltKey);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
+            db.AddInParameter(dbCommand, "BillingAddressID", DbType.Int32, billingAddressId);
+            db.AddInParameter(dbCommand, "ShippingAddressID", DbType.Int32, shippingAddressId);
+            db.AddInParameter(dbCommand, "LastPaymentMethodID", DbType.Int32, lastPaymentMethodId);
+            db.AddInParameter(dbCommand, "LastAppliedCouponCode", DbType.String, lastAppliedCouponCode);
+            db.AddInParameter(dbCommand, "GiftCardCouponCodes", DbType.Xml, giftCardCouponCodes);
+            db.AddInParameter(dbCommand, "CheckoutAttributes", DbType.Xml, checkoutAttributes);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "CurrencyID", DbType.Int32, currencyId);
+            db.AddInParameter(dbCommand, "TaxDisplayTypeID", DbType.Int32, taxDisplayTypeId);
+            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, isTaxExempt);
+            db.AddInParameter(dbCommand, "IsAdmin", DbType.Boolean, isAdmin);
+            db.AddInParameter(dbCommand, "IsGuest", DbType.Boolean, isGuest);
+            db.AddInParameter(dbCommand, "IsForumModerator", DbType.Boolean, isForumModerator);
+            db.AddInParameter(dbCommand, "TotalForumPosts", DbType.Int32, totalForumPosts);
+            db.AddInParameter(dbCommand, "Signature", DbType.String, signature);
+            db.AddInParameter(dbCommand, "AdminComment", DbType.String, adminComment);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, active);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "RegistrationDate", DbType.DateTime, registrationDate);
+            db.AddInParameter(dbCommand, "TimeZoneID", DbType.String, timeZoneId);
+            db.AddInParameter(dbCommand, "AvatarID", DbType.Int32, avatarId);
 
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                customer = GetCustomerByID(CustomerID);
+                item = GetCustomerById(customerId);
             }
 
-            return customer;
+            return item;
         }
 
         /// <summary>
         /// Deletes a customer attribute
         /// </summary>
-        /// <param name="CustomerAttributeID">Customer attribute identifier</param>
-        public override void DeleteCustomerAttribute(int CustomerAttributeID)
+        /// <param name="customerAttributeId">Customer attribute identifier</param>
+        public override void DeleteCustomerAttribute(int customerAttributeId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeDelete");
-            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, CustomerAttributeID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, customerAttributeId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a customer attribute
         /// </summary>
-        /// <param name="CustomerAttributeID">Customer attribute identifier</param>
+        /// <param name="customerAttributeId">Customer attribute identifier</param>
         /// <returns>A customer attribute</returns>
-        public override DBCustomerAttribute GetCustomerAttributeByID(int CustomerAttributeID)
+        public override DBCustomerAttribute GetCustomerAttributeById(int customerAttributeId)
         {
-
-            DBCustomerAttribute customerAttribute = null;
+            DBCustomerAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, CustomerAttributeID);
+            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, customerAttributeId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customerAttribute = GetCustomerAttributeFromReader(dataReader);
+                    item = GetCustomerAttributeFromReader(dataReader);
                 }
             }
-            return customerAttribute;
+            return item;
         }
 
         /// <summary>
         /// Gets a collection of customer attributes by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Customer attributes</returns>
-        public override DBCustomerAttributeCollection GetCustomerAttributesByCustomerID(int CustomerID)
+        public override DBCustomerAttributeCollection GetCustomerAttributesByCustomerId(int customerId)
         {
             var result = new DBCustomerAttributeCollection();
-            if (CustomerID == 0)
+            if (customerId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeLoadAllByCustomerID");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -739,65 +742,67 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Inserts a customer attribute
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="Key">An attribute key</param>
-        /// <param name="Value">An attribute value</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="key">An attribute key</param>
+        /// <param name="value">An attribute value</param>
         /// <returns>A customer attribute</returns>
-        public override DBCustomerAttribute InsertCustomerAttribute(int CustomerID, string Key, string Value)
+        public override DBCustomerAttribute InsertCustomerAttribute(int customerId,
+            string key, string value)
         {
-            DBCustomerAttribute customerAttribute = null;
+            DBCustomerAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeInsert");
             db.AddOutParameter(dbCommand, "CustomerAttributeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "Key", DbType.String, Key);
-            db.AddInParameter(dbCommand, "Value", DbType.String, Value);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "Key", DbType.String, key);
+            db.AddInParameter(dbCommand, "Value", DbType.String, value);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CustomerAttributeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerAttributeID"));
-                customerAttribute = GetCustomerAttributeByID(CustomerAttributeID);
+                int customerAttributeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerAttributeID"));
+                item = GetCustomerAttributeById(customerAttributeId);
             }
-            return customerAttribute;
+            return item;
         }
 
         /// <summary>
         /// Updates the customer attribute
         /// </summary>
-        /// <param name="CustomerAttributeID">Customer attribute identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="Key">An attribute key</param>
-        /// <param name="Value">An attribute value</param>
+        /// <param name="customerAttributeId">Customer attribute identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="key">An attribute key</param>
+        /// <param name="value">An attribute value</param>
         /// <returns>A customer attribute</returns>
-        public override DBCustomerAttribute UpdateCustomerAttribute(int CustomerAttributeID, int CustomerID, string Key, string Value)
+        public override DBCustomerAttribute UpdateCustomerAttribute(int customerAttributeId,
+            int customerId, string key, string value)
         {
-            DBCustomerAttribute customerAttribute = null;
+            DBCustomerAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeUpdate");
-            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, CustomerAttributeID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "Key", DbType.String, Key);
-            db.AddInParameter(dbCommand, "Value", DbType.String, Value);
+            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, customerAttributeId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "Key", DbType.String, key);
+            db.AddInParameter(dbCommand, "Value", DbType.String, value);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                customerAttribute = GetCustomerAttributeByID(CustomerAttributeID);
+                item = GetCustomerAttributeById(customerAttributeId);
 
-            return customerAttribute;
+            return item;
         }
 
         /// <summary>
         /// Gets customer roles by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer role collection</returns>
-        public override DBCustomerRoleCollection GetCustomerRolesByCustomerID(int CustomerID, bool showHidden)
+        public override DBCustomerRoleCollection GetCustomerRolesByCustomerId(int customerId, bool showHidden)
         {
             var result = new DBCustomerRoleCollection();
-            if (CustomerID == 0)
+            if (customerId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRoleLoadByCustomerID");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -813,6 +818,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets all customer roles
         /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer role collection</returns>
         public override DBCustomerRoleCollection GetAllCustomerRoles(bool showHidden)
         {
@@ -835,152 +841,152 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets a customer role
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
         /// <returns>Customer role</returns>
-        public override DBCustomerRole GetCustomerRoleByID(int CustomerRoleID)
+        public override DBCustomerRole GetCustomerRoleById(int customerRoleId)
         {
-            DBCustomerRole customerRole = null;
-            if (CustomerRoleID == 0)
-                return customerRole;
+            DBCustomerRole item = null;
+            if (customerRoleId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRoleLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customerRole = GetCustomerRoleFromReader(dataReader);
+                    item = GetCustomerRoleFromReader(dataReader);
                 }
             }
-            return customerRole;
+            return item;
         }
 
         /// <summary>
         /// Inserts a customer role
         /// </summary>
-        /// <param name="Name">The customer role name</param>
-        /// <param name="FreeShipping">A value indicating whether the customer role is marked as free shiping</param>
-        /// <param name="TaxExempt">A value indicating whether the customer role is marked as tax exempt</param>
-        /// <param name="Active">A value indicating whether the customer role is active</param>
-        /// <param name="Deleted">A value indicating whether the customer role has been deleted</param>
+        /// <param name="name">The customer role name</param>
+        /// <param name="freeShipping">A value indicating whether the customer role is marked as free shiping</param>
+        /// <param name="taxExempt">A value indicating whether the customer role is marked as tax exempt</param>
+        /// <param name="active">A value indicating whether the customer role is active</param>
+        /// <param name="deleted">A value indicating whether the customer role has been deleted</param>
         /// <returns>Customer role</returns>
-        public override DBCustomerRole InsertCustomerRole(string Name, bool FreeShipping, 
-            bool TaxExempt, bool Active, bool Deleted)
+        public override DBCustomerRole InsertCustomerRole(string name,
+            bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
-            DBCustomerRole customerRole = null;
+            DBCustomerRole item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRoleInsert");
             db.AddOutParameter(dbCommand, "CustomerRoleID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "FreeShipping", DbType.Boolean, FreeShipping);
-            db.AddInParameter(dbCommand, "TaxExempt", DbType.Boolean, TaxExempt);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, Active);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "FreeShipping", DbType.Boolean, freeShipping);
+            db.AddInParameter(dbCommand, "TaxExempt", DbType.Boolean, taxExempt);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, active);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CustomerRoleID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerRoleID"));
-                customerRole = GetCustomerRoleByID(CustomerRoleID);
+                int customerRoleId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerRoleID"));
+                item = GetCustomerRoleById(customerRoleId);
             }
-            return customerRole;
+            return item;
         }
 
         /// <summary>
         /// Updates the customer role
         /// </summary>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="Name">The customer role name</param>
-        /// <param name="FreeShipping">A value indicating whether the customer role is marked as free shiping</param>
-        /// <param name="TaxExempt">A value indicating whether the customer role is marked as tax exempt</param>
-        /// <param name="Active">A value indicating whether the customer role is active</param>
-        /// <param name="Deleted">A value indicating whether the customer role has been deleted</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="name">The customer role name</param>
+        /// <param name="freeShipping">A value indicating whether the customer role is marked as free shiping</param>
+        /// <param name="taxExempt">A value indicating whether the customer role is marked as tax exempt</param>
+        /// <param name="active">A value indicating whether the customer role is active</param>
+        /// <param name="deleted">A value indicating whether the customer role has been deleted</param>
         /// <returns>Customer role</returns>
-        public override DBCustomerRole UpdateCustomerRole(int CustomerRoleID, string Name,
-           bool FreeShipping, bool TaxExempt, bool Active, bool Deleted)
+        public override DBCustomerRole UpdateCustomerRole(int customerRoleId, string name,
+            bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
-            DBCustomerRole customerRole = null;
+            DBCustomerRole item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRoleUpdate");
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "FreeShipping", DbType.Boolean, FreeShipping);
-            db.AddInParameter(dbCommand, "TaxExempt", DbType.Boolean, TaxExempt);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, Active);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "FreeShipping", DbType.Boolean, freeShipping);
+            db.AddInParameter(dbCommand, "TaxExempt", DbType.Boolean, taxExempt);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, active);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                customerRole = GetCustomerRoleByID(CustomerRoleID);
+                item = GetCustomerRoleById(customerRoleId);
 
-            return customerRole;
+            return item;
         }
 
         /// <summary>
         /// Adds a customer to role
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        public override void AddCustomerToRole(int CustomerID, int CustomerRoleID)
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
+        public override void AddCustomerToRole(int customerId, int customerRoleId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Customer_CustomerRole_MappingInsert");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Removes a customer from role
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        public override void RemoveCustomerFromRole(int CustomerID, int CustomerRoleID)
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="customerRoleId">Customer role identifier</param>
+        public override void RemoveCustomerFromRole(int customerId, int customerRoleId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Customer_CustomerRole_MappingDelete");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Adds a discount to a customer role
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void AddDiscountToCustomerRole(int CustomerRoleID, int DiscountID)
+        /// <param name="customerRoleId">Customer role identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void AddDiscountToCustomerRole(int customerRoleId, int discountId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_Discount_MappingInsert");
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Removes a discount from a customer role
         /// </summary>
-        /// <param name="CustomerRoleID">Customer role identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public override void RemoveDiscountFromCustomerRole(int CustomerRoleID, int DiscountID)
+        /// <param name="customerRoleId">Customer role identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public override void RemoveDiscountFromCustomerRole(int customerRoleId, int discountId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_Discount_MappingDelete");
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, CustomerRoleID);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
+            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a customer roles assigned to discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
+        /// <param name="discountId">Discount identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer roles</returns>
-        public override DBCustomerRoleCollection GetCustomerRolesByDiscountID(int DiscountID, bool showHidden)
+        public override DBCustomerRoleCollection GetCustomerRolesByDiscountId(int discountId, bool showHidden)
         {
             var result = new DBCustomerRoleCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRoleLoadByDiscountID");
+            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, DiscountID);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -996,69 +1002,69 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets a customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
+        /// <param name="customerSessionGuid">Customer session GUID</param>
         /// <returns>Customer session</returns>
-        public override DBCustomerSession GetCustomerSessionByGUID(Guid CustomerSessionGUID)
+        public override DBCustomerSession GetCustomerSessionByGuid(Guid customerSessionGuid)
         {
-            DBCustomerSession customerSession = null;
+            DBCustomerSession item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
+            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customerSession = GetCustomerSessionFromReader(dataReader);
+                    item = GetCustomerSessionFromReader(dataReader);
                 }
             }
 
-            return customerSession;
+            return item;
         }
 
         /// <summary>
         /// Gets a customer session by customer identifier
         /// </summary>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Customer session</returns>
-        public override DBCustomerSession GetCustomerSessionByCustomerID(int CustomerID)
+        public override DBCustomerSession GetCustomerSessionByCustomerId(int customerId)
         {
-            DBCustomerSession customerSession = null;
+            DBCustomerSession item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionLoadByCustomerID");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    customerSession = GetCustomerSessionFromReader(dataReader);
+                    item = GetCustomerSessionFromReader(dataReader);
                 }
             }
 
-            return customerSession;
+            return item;
         }
 
         /// <summary>
         /// Deletes a customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
-        public override void DeleteCustomerSession(Guid CustomerSessionGUID)
+        /// <param name="customerSessionGuid">Customer session GUID</param>
+        public override void DeleteCustomerSession(Guid customerSessionGuid)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionDelete");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Deletes all expired customer sessions
         /// </summary>
-        /// <param name="OlderThan">Older than date and time</param>
-        public override void DeleteExpiredCustomerSessions(DateTime OlderThan)
+        /// <param name="olderThan">Older than date and time</param>
+        public override void DeleteExpiredCustomerSessions(DateTime olderThan)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionDeleteExpired");
-            db.AddInParameter(dbCommand, "OlderThan", DbType.DateTime, OlderThan);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "OlderThan", DbType.DateTime, olderThan);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -1085,48 +1091,50 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Inserts a customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="LastAccessed">The last accessed date and time</param>
-        /// <param name="IsExpired">A value indicating whether the customer session is expired</param>
+        /// <param name="customerSessionGuid">Customer session GUID</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="lastAccessed">The last accessed date and time</param>
+        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
         /// <returns>Customer session</returns>
-        public override DBCustomerSession InsertCustomerSession(Guid CustomerSessionGUID, int CustomerID, DateTime LastAccessed, bool IsExpired)
+        public override DBCustomerSession InsertCustomerSession(Guid customerSessionGuid, 
+            int customerId, DateTime lastAccessed, bool isExpired)
         {
-            DBCustomerSession customerSession = null;
+            DBCustomerSession item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionInsert");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "LastAccessed", DbType.DateTime, LastAccessed);
-            db.AddInParameter(dbCommand, "IsExpired", DbType.Boolean, IsExpired);
+            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "LastAccessed", DbType.DateTime, lastAccessed);
+            db.AddInParameter(dbCommand, "IsExpired", DbType.Boolean, isExpired);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                customerSession = GetCustomerSessionByGUID(CustomerSessionGUID);
+                item = GetCustomerSessionByGuid(customerSessionGuid);
             }
-            return customerSession;
+            return item;
         }
 
         /// <summary>
         /// Updates the customer session
         /// </summary>
-        /// <param name="CustomerSessionGUID">Customer session GUID</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="LastAccessed">The last accessed date and time</param>
-        /// <param name="IsExpired">A value indicating whether the customer session is expired</param>
+        /// <param name="customerSessionGuid">Customer session GUID</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="lastAccessed">The last accessed date and time</param>
+        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
         /// <returns>Customer session</returns>
-        public override DBCustomerSession UpdateCustomerSession(Guid CustomerSessionGUID, int CustomerID, DateTime LastAccessed, bool IsExpired)
+        public override DBCustomerSession UpdateCustomerSession(Guid customerSessionGuid, 
+            int customerId, DateTime lastAccessed, bool isExpired)
         {
-            DBCustomerSession customerSession = null;
+            DBCustomerSession item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionUpdate");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "LastAccessed", DbType.DateTime, LastAccessed);
-            db.AddInParameter(dbCommand, "IsExpired", DbType.Boolean, IsExpired);
+            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "LastAccessed", DbType.DateTime, lastAccessed);
+            db.AddInParameter(dbCommand, "IsExpired", DbType.Boolean, isExpired);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                customerSession = GetCustomerSessionByGUID(CustomerSessionGUID);
+                item = GetCustomerSessionByGuid(customerSessionGuid);
 
-            return customerSession;
+            return item;
         }
 
         /// <summary>
@@ -1136,11 +1144,10 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <returns>Int</returns>
         public override int GetRegisteredCustomersReport(DateTime dateFrom)
         {
-            int count;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRegisteredReport");
             db.AddInParameter(dbCommand, "Date", DbType.DateTime, dateFrom);
-            return count = (int)db.ExecuteScalar(dbCommand);
+            return (int)db.ExecuteScalar(dbCommand);
         }
         #endregion
     }

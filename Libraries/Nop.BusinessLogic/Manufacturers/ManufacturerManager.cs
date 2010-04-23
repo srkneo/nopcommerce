@@ -63,15 +63,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return null;
 
             var item = new Manufacturer();
-            item.ManufacturerID = dbItem.ManufacturerID;
+            item.ManufacturerId = dbItem.ManufacturerId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
-            item.TemplateID = dbItem.TemplateID;
+            item.TemplateId = dbItem.TemplateId;
             item.MetaKeywords = dbItem.MetaKeywords;
             item.MetaDescription = dbItem.MetaDescription;
             item.MetaTitle = dbItem.MetaTitle;
             item.SEName = dbItem.SEName;
-            item.PictureID = dbItem.PictureID;
+            item.PictureId = dbItem.PictureId;
             item.PageSize = dbItem.PageSize;
             item.PriceRanges = dbItem.PriceRanges;
             item.Published = dbItem.Published;
@@ -89,9 +89,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return null;
 
             var item = new ManufacturerLocalized();
-            item.ManufacturerLocalizedID = dbItem.ManufacturerLocalizedID;
-            item.ManufacturerID = dbItem.ManufacturerID;
-            item.LanguageID = dbItem.LanguageID;
+            item.ManufacturerLocalizedId = dbItem.ManufacturerLocalizedId;
+            item.ManufacturerId = dbItem.ManufacturerId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
             item.MetaKeywords = dbItem.MetaKeywords;
@@ -123,9 +123,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return null;
 
             var item = new ProductManufacturer();
-            item.ProductManufacturerID = dbItem.ProductManufacturerID;
-            item.ProductID = dbItem.ProductID;
-            item.ManufacturerID = dbItem.ManufacturerID;
+            item.ProductManufacturerId = dbItem.ProductManufacturerId;
+            item.ProductId = dbItem.ProductId;
+            item.ManufacturerId = dbItem.ManufacturerId;
             item.IsFeaturedProduct = dbItem.IsFeaturedProduct;
             item.DisplayOrder = dbItem.DisplayOrder;
 
@@ -137,16 +137,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Marks a manufacturer as deleted
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifer</param>
-        public static void MarkManufacturerAsDeleted(int ManufacturerID)
+        /// <param name="manufacturerId">Manufacturer identifer</param>
+        public static void MarkManufacturerAsDeleted(int manufacturerId)
         {
-            var manufacturer = GetManufacturerByID(ManufacturerID);
+            var manufacturer = GetManufacturerById(manufacturerId);
             if (manufacturer != null)
             {
-                manufacturer = UpdateManufacturer(manufacturer.ManufacturerID, manufacturer.Name, manufacturer.Description,
-                    manufacturer.TemplateID, manufacturer.MetaKeywords,
+                manufacturer = UpdateManufacturer(manufacturer.ManufacturerId, manufacturer.Name, manufacturer.Description,
+                    manufacturer.TemplateId, manufacturer.MetaKeywords,
                     manufacturer.MetaDescription, manufacturer.MetaTitle,
-                    manufacturer.SEName, manufacturer.PictureID, manufacturer.PageSize,
+                    manufacturer.SEName, manufacturer.PictureId, manufacturer.PageSize,
                     manufacturer.PriceRanges, manufacturer.Published,
                     true, manufacturer.DisplayOrder, manufacturer.CreatedOn, manufacturer.UpdatedOn);
             }
@@ -155,14 +155,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Removes a manufacturer picture
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        public static void RemoveManufacturerPicture(int ManufacturerID)
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        public static void RemoveManufacturerPicture(int manufacturerId)
         {
-            var manufacturer = GetManufacturerByID(ManufacturerID);
+            var manufacturer = GetManufacturerById(manufacturerId);
             if (manufacturer != null)
             {
-                UpdateManufacturer(manufacturer.ManufacturerID, manufacturer.Name, manufacturer.Description,
-                    manufacturer.TemplateID, manufacturer.MetaKeywords,
+                UpdateManufacturer(manufacturer.ManufacturerId, manufacturer.Name, manufacturer.Description,
+                    manufacturer.TemplateId, manufacturer.MetaKeywords,
                     manufacturer.MetaDescription, manufacturer.MetaTitle,
                     manufacturer.SEName, 0, manufacturer.PageSize, manufacturer.PriceRanges,
                     manufacturer.Published, manufacturer.Deleted, manufacturer.DisplayOrder, 
@@ -189,7 +189,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
             return GetAllManufacturers(showHidden, languageId);
         }
 
@@ -197,18 +197,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// Gets all manufacturers
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer collection</returns>
-        public static ManufacturerCollection GetAllManufacturers(bool showHidden, int LanguageID)
+        public static ManufacturerCollection GetAllManufacturers(bool showHidden, int languageId)
         {
-            string key = string.Format(MANUFACTURERS_ALL_KEY, showHidden, LanguageID);
+            string key = string.Format(MANUFACTURERS_ALL_KEY, showHidden, languageId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.ManufacturersCacheEnabled && (obj2 != null))
             {
                 return (ManufacturerCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetAllManufacturers(showHidden, LanguageID);
+            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetAllManufacturers(showHidden, languageId);
             var manufacturerCollection = DBMapping(dbCollection);
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
@@ -221,35 +221,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets a manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
         /// <returns>Manufacturer</returns>
-        public static Manufacturer GetManufacturerByID(int ManufacturerID)
+        public static Manufacturer GetManufacturerById(int manufacturerId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetManufacturerByID(ManufacturerID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetManufacturerById(manufacturerId, languageId);
         }
         
         /// <summary>
         /// Gets a manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer</returns>
-        public static Manufacturer GetManufacturerByID(int ManufacturerID, int LanguageID)
+        public static Manufacturer GetManufacturerById(int manufacturerId, int languageId)
         {
-            if (ManufacturerID == 0)
+            if (manufacturerId == 0)
                 return null;
 
-            string key = string.Format(MANUFACTURERS_BY_ID_KEY, ManufacturerID, LanguageID);
+            string key = string.Format(MANUFACTURERS_BY_ID_KEY, manufacturerId, languageId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.ManufacturersCacheEnabled && (obj2 != null))
             {
                 return (Manufacturer)obj2;
             }
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerByID(ManufacturerID, LanguageID);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerById(manufacturerId, languageId);
             var manufacturer = DBMapping(dbItem);
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
@@ -262,34 +262,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Inserts a manufacturer
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="PictureID">The parent picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="pictureId">The parent picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer</returns>
-        public static Manufacturer InsertManufacturer(string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Manufacturer InsertManufacturer(string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int pictureId, int pageSize, string priceRanges,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertManufacturer(Name, Description,
-                TemplateID, MetaKeywords, MetaDescription, MetaTitle,
-                SEName, PictureID, PageSize, PriceRanges, Published, Deleted,
-                DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertManufacturer(name, 
+                description, templateId, metaKeywords, metaDescription, metaTitle,
+                seName, pictureId, pageSize, priceRanges, published, deleted,
+                displayOrder, createdOn, updatedOn);
             var manufacturer = DBMapping(dbItem);
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
@@ -304,35 +305,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Updates the manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="PictureID">The parent picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="pictureId">The parent picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer</returns>
-        public static Manufacturer UpdateManufacturer(int ManufacturerID, string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Manufacturer UpdateManufacturer(int manufacturerId,
+            string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int pictureId, int pageSize, string priceRanges,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateManufacturer(ManufacturerID, Name, Description,
-                TemplateID, MetaKeywords, MetaDescription, MetaTitle,
-                SEName, PictureID, PageSize, PriceRanges, Published, Deleted,
-                DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateManufacturer(manufacturerId,
+                name, description, templateId, metaKeywords, metaDescription, metaTitle,
+                seName, pictureId, pageSize, priceRanges, published, deleted,
+                displayOrder, createdOn, updatedOn);
             var manufacturer = DBMapping(dbItem);
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
@@ -347,14 +350,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets localized manufacturer by id
         /// </summary>
-        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
+        /// <param name="manufacturerLocalizedId">Localized manufacturer identifier</param>
         /// <returns>Manufacturer content</returns>
-        public static ManufacturerLocalized GetManufacturerLocalizedByID(int ManufacturerLocalizedID)
+        public static ManufacturerLocalized GetManufacturerLocalizedById(int manufacturerLocalizedId)
         {
-            if (ManufacturerLocalizedID == 0)
+            if (manufacturerLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerLocalizedByID(ManufacturerLocalizedID);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerLocalizedById(manufacturerLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -362,15 +365,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets localized manufacturer by manufacturer id and language id
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer content</returns>
-        public static ManufacturerLocalized GetManufacturerLocalizedByManufacturerIDAndLanguageID(int ManufacturerID, int LanguageID)
+        public static ManufacturerLocalized GetManufacturerLocalizedByManufacturerIdAndLanguageId(int manufacturerId, int languageId)
         {
-            if (ManufacturerID == 0 || LanguageID == 0)
+            if (manufacturerId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerLocalizedByManufacturerIDAndLanguageID(ManufacturerID, LanguageID);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerLocalizedByManufacturerIdAndLanguageId(manufacturerId, languageId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -378,22 +381,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Inserts a localized manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>ManufacturerContent</returns>
-        public static ManufacturerLocalized InsertManufacturerLocalized(int ManufacturerID,
-            int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se name text</param>
+        /// <returns>Manufacturer content</returns>
+        public static ManufacturerLocalized InsertManufacturerLocalized(int manufacturerId,
+            int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertManufacturerLocalized(ManufacturerID,
-            LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertManufacturerLocalized(manufacturerId,
+                languageId, name, description, metaKeywords, metaDescription, metaTitle, seName);
             var item = DBMapping(dbItem);
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
@@ -407,23 +409,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Update a localized manufacturer
         /// </summary>
-        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>ManufacturerContent</returns>
-        public static ManufacturerLocalized UpdateManufacturerLocalized(int ManufacturerLocalizedID,
-            int ManufacturerID, int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="manufacturerLocalizedId">Localized manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se name text</param>
+        /// <returns>Manufacturer content</returns>
+        public static ManufacturerLocalized UpdateManufacturerLocalized(int manufacturerLocalizedId,
+            int manufacturerId, int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateManufacturerLocalized(ManufacturerLocalizedID,
-                ManufacturerID, LanguageID, Name, Description, MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateManufacturerLocalized(manufacturerLocalizedId,
+                manufacturerId, languageId, name, description, metaKeywords, 
+                metaDescription, metaTitle, seName);
             var item = DBMapping(dbItem);
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
@@ -437,13 +439,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Deletes a product manufacturer mapping
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifer</param>
-        public static void DeleteProductManufacturer(int ProductManufacturerID)
+        /// <param name="productManufacturerId">Product manufacturer mapping identifer</param>
+        public static void DeleteProductManufacturer(int productManufacturerId)
         {
-            if (ProductManufacturerID == 0)
+            if (productManufacturerId == 0)
                 return;
 
-            DBProviderManager<DBManufacturerProvider>.Provider.DeleteProductManufacturer(ProductManufacturerID);
+            DBProviderManager<DBManufacturerProvider>.Provider.DeleteProductManufacturer(productManufacturerId);
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
@@ -455,22 +457,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets product manufacturer collection
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
         /// <returns>Product manufacturer collection</returns>
-        public static ProductManufacturerCollection GetProductManufacturersByManufacturerID(int ManufacturerID)
+        public static ProductManufacturerCollection GetProductManufacturersByManufacturerId(int manufacturerId)
         {
-            if (ManufacturerID == 0)
+            if (manufacturerId == 0)
                 return new ProductManufacturerCollection();
 
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(PRODUCTMANUFACTURERS_ALLBYMANUFACTURERID_KEY, showHidden, ManufacturerID);
+            string key = string.Format(PRODUCTMANUFACTURERS_ALLBYMANUFACTURERID_KEY, showHidden, manufacturerId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductManufacturerCollection)obj2;
             }
-
-            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByManufacturerID(ManufacturerID, showHidden);
+            
+            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByManufacturerId(manufacturerId, showHidden);
             var productManufacturerCollection = DBMapping(dbCollection);
 
             if (ManufacturerManager.MappingsCacheEnabled)
@@ -483,22 +485,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets a product manufacturer mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product manufacturer mapping collection</returns>
-        public static ProductManufacturerCollection GetProductManufacturersByProductID(int ProductID)
+        public static ProductManufacturerCollection GetProductManufacturersByProductId(int productId)
         {
-            if (ProductID == 0)
+            if (productId == 0)
                 return new ProductManufacturerCollection();
 
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(PRODUCTMANUFACTURERS_ALLBYPRODUCTID_KEY, showHidden, ProductID);
+            string key = string.Format(PRODUCTMANUFACTURERS_ALLBYPRODUCTID_KEY, showHidden, productId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductManufacturerCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByProductID(ProductID, showHidden);
+            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByProductId(productId, showHidden);
             var productManufacturerCollection = DBMapping(dbCollection);
 
             if (ManufacturerManager.MappingsCacheEnabled)
@@ -511,21 +513,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets a product manufacturer mapping 
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifier</param>
+        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
         /// <returns>Product manufacturer mapping</returns>
-        public static ProductManufacturer GetProductManufacturerByID(int ProductManufacturerID)
+        public static ProductManufacturer GetProductManufacturerById(int productManufacturerId)
         {
-            if (ProductManufacturerID == 0)
+            if (productManufacturerId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTMANUFACTURERS_BY_ID_KEY, ProductManufacturerID);
+            string key = string.Format(PRODUCTMANUFACTURERS_BY_ID_KEY, productManufacturerId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductManufacturer)obj2;
             }
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturerByID(ProductManufacturerID);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturerById(productManufacturerId);
             var productManufacturer = DBMapping(dbItem);
 
             if (ManufacturerManager.MappingsCacheEnabled)
@@ -538,16 +540,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Inserts a product manufacturer mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product manufacturer mapping </returns>
-        public static ProductManufacturer InsertProductManufacturer(int ProductID, int ManufacturerID,
-           bool IsFeaturedProduct, int DisplayOrder)
+        public static ProductManufacturer InsertProductManufacturer(int productId, 
+            int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertProductManufacturer(ProductID,
-                ManufacturerID, IsFeaturedProduct, DisplayOrder);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertProductManufacturer(productId,
+                manufacturerId, isFeaturedProduct, displayOrder);
             var productManufacturer = DBMapping(dbItem);
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
@@ -562,17 +564,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Updates the product manufacturer mapping
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product manufacturer mapping </returns>
-        public static ProductManufacturer UpdateProductManufacturer(int ProductManufacturerID, int ProductID, int ManufacturerID,
-           bool IsFeaturedProduct, int DisplayOrder)
+        public static ProductManufacturer UpdateProductManufacturer(int productManufacturerId,
+            int productId, int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateProductManufacturer(ProductManufacturerID,
-                ProductID, ManufacturerID, IsFeaturedProduct, DisplayOrder);
+            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateProductManufacturer(productManufacturerId,
+                productId, manufacturerId, isFeaturedProduct, displayOrder);
             var productManufacturer = DBMapping(dbItem);
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)

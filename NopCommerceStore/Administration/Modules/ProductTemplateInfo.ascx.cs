@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductTemplate productTemplate = TemplateManager.GetProductTemplateByID(this.ProductTemplateID);
+            ProductTemplate productTemplate = TemplateManager.GetProductTemplateById(this.ProductTemplateId);
             if (productTemplate != null)
             {
                 this.txtName.Text = productTemplate.Name;
@@ -60,11 +60,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public ProductTemplate SaveInfo()
         {
-            ProductTemplate productTemplate = TemplateManager.GetProductTemplateByID(this.ProductTemplateID);
+            ProductTemplate productTemplate = TemplateManager.GetProductTemplateById(this.ProductTemplateId);
 
             if (productTemplate != null)
             {
-                productTemplate = TemplateManager.UpdateProductTemplate(productTemplate.ProductTemplateID, txtName.Text,
+                productTemplate = TemplateManager.UpdateProductTemplate(productTemplate.ProductTemplateId, txtName.Text,
                     txtTemplatePath.Text, txtDisplayOrder.Value, productTemplate.CreatedOn, DateTime.Now);
             }
             else
@@ -79,11 +79,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         }
 
 
-        public int ProductTemplateID
+        public int ProductTemplateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductTemplateID");
+                return CommonHelper.QueryStringInt("ProductTemplateId");
             }
         }
     }

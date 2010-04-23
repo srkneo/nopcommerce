@@ -34,360 +34,370 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
     public abstract partial class DBProductProvider : BaseDBProvider
     {
         #region Methods
-        /// <summary>
-        /// Gets all products
-        /// </summary>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <returns>Product collection</returns>
-        public abstract DBProductCollection GetAllProducts(bool showHidden, int LanguageID);
 
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="FeaturedProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
-        /// <param name="PriceMin">Minimum price</param>
-        /// <param name="PriceMax">Maximum price</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="SearchDescriptions">A value indicating whether to search in descriptions</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
-        /// <param name="LanguageID">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product collection</returns>
-        public abstract DBProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
-            bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax, string Keywords, bool SearchDescriptions,
-            int PageSize, int PageIndex, List<int> FilteredSpecs, int LanguageID, bool showHidden, out int TotalRecords);
+        public abstract DBProductCollection GetAllProducts(bool showHidden, int languageId);
+
+        /// <summary>
+        /// Gets all products
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="priceMin">Minimum price</param>
+        /// <param name="priceMax">Maximum price</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="searchDescriptions">A value indicating whether to search in descriptions</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Product collection</returns>
+        public abstract DBProductCollection GetAllProducts(int categoryId, int manufacturerId,
+            bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
+            string keywords, bool searchDescriptions,
+            int pageSize, int pageIndex, List<int> filteredSpecs, 
+            int languageId, bool showHidden, out int totalRecords);
 
         /// <summary>
         /// Gets all products displayed on the home page
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product collection</returns>
         public abstract DBProductCollection GetAllProductsDisplayedOnHomePage(bool showHidden,
-            int LanguageID);
+            int languageId);
 
         /// <summary>
-        /// Gets product
+        /// Gets a product
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product</returns>
-        public abstract DBProduct GetProductByID(int ProductID, int LanguageID);
+        public abstract DBProduct GetProductById(int productId, int languageId);
 
         /// <summary>
         /// Inserts a product
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ProductTypeID">The product type identifier</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="ShowOnHomePage">A value indicating whether to show the product on the home page</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="AllowCustomerReviews">A value indicating whether the product allows customer reviews</param>
-        /// <param name="AllowCustomerRatings">A value indicating whether the product allows customer ratings</param>
-        /// <param name="RatingSum">The rating sum</param>
-        /// <param name="TotalRatingVotes">The total rating votes</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of product creation</param>
-        /// <param name="UpdatedOn">The date and time of product update</param>
+        /// <param name="name">The name</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="productTypeId">The product type identifier</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="showOnHomePage">A value indicating whether to show the product on the home page</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="allowCustomerReviews">A value indicating whether the product allows customer reviews</param>
+        /// <param name="allowCustomerRatings">A value indicating whether the product allows customer ratings</param>
+        /// <param name="ratingSum">The rating sum</param>
+        /// <param name="totalRatingVotes">The total rating votes</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of product creation</param>
+        /// <param name="updatedOn">The date and time of product update</param>
         /// <returns>Product</returns>
-        public abstract DBProduct InsertProduct(string Name, string ShortDescription, string FullDescription,
-            string AdminComment, int ProductTypeID, int TemplateID, bool ShowOnHomePage,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, bool AllowCustomerReviews, bool AllowCustomerRatings, int RatingSum,
-            int TotalRatingVotes, bool Published, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBProduct InsertProduct(string name, string shortDescription, 
+            string fullDescription, string adminComment, int productTypeId, 
+            int templateId, bool showOnHomePage,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName, bool allowCustomerReviews, bool allowCustomerRatings, 
+            int ratingSum,  int totalRatingVotes, bool published, 
+            bool deleted, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the product
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ProductTypeID">The product type identifier</param>
-        /// <param name="ShowOnHomePage">A value indicating whether to show the product on the home page</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="AllowCustomerReviews">A value indicating whether the product allows customer reviews</param>
-        /// <param name="AllowCustomerRatings">A value indicating whether the product allows customer ratings</param>
-        /// <param name="RatingSum">The rating sum</param>
-        /// <param name="TotalRatingVotes">The total rating votes</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of product creation</param>
-        /// <param name="UpdatedOn">The date and time of product update</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="productTypeId">The product type identifier</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="showOnHomePage">A value indicating whether to show the product on the home page</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="allowCustomerReviews">A value indicating whether the product allows customer reviews</param>
+        /// <param name="allowCustomerRatings">A value indicating whether the product allows customer ratings</param>
+        /// <param name="ratingSum">The rating sum</param>
+        /// <param name="totalRatingVotes">The total rating votes</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of product creation</param>
+        /// <param name="updatedOn">The date and time of product update</param>
         /// <returns>Product</returns>
-        public abstract DBProduct UpdateProduct(int ProductID, string Name, string ShortDescription,
-            string FullDescription, string AdminComment, int ProductTypeID, int TemplateID,
-            bool ShowOnHomePage, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, bool AllowCustomerReviews, bool AllowCustomerRatings,
-            int RatingSum, int TotalRatingVotes,
-            bool Published, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBProduct UpdateProduct(int productId, 
+            string name, string shortDescription,
+            string fullDescription, string adminComment, int productTypeId,
+            int templateId, bool showOnHomePage,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName, bool allowCustomerReviews, bool allowCustomerRatings,
+            int ratingSum, int totalRatingVotes, bool published,
+            bool deleted, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Gets localized product by id
         /// </summary>
-        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <param name="productLocalizedId">Localized product identifier</param>
         /// <returns>Product content</returns>
-        public abstract DBProductLocalized GetProductLocalizedByID(int ProductLocalizedID);
+        public abstract DBProductLocalized GetProductLocalizedById(int productLocalizedId);
 
         /// <summary>
         /// Gets localized product by product id and language id
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product content</returns>
-        public abstract DBProductLocalized GetProductLocalizedByProductIDAndLanguageID(int ProductID, int LanguageID);
+        public abstract DBProductLocalized GetProductLocalizedByProductIdAndLanguageId(int productId, int languageId);
 
         /// <summary>
         /// Inserts a localized product
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBProductContent</returns>
-        public abstract DBProductLocalized InsertProductLocalized(int ProductID,
-            int LanguageID, string Name, string ShortDescription, string FullDescription,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName);
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Product content</returns>
+        public abstract DBProductLocalized InsertProductLocalized(int productId,
+            int languageId, string name, string shortDescription, string fullDescription,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName);
 
         /// <summary>
         /// Update a localized product
         /// </summary>
-        /// <param name="ProductLocalizedID">Localized product identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBProductContent</returns>
-        public abstract DBProductLocalized UpdateProductLocalized(int ProductLocalizedID,
-            int ProductID, int LanguageID, string Name, string ShortDescription, string FullDescription,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName);
+        /// <param name="productLocalizedId">Localized product identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Product content</returns>
+        public abstract DBProductLocalized UpdateProductLocalized(int productLocalizedId, 
+            int productId, int languageId, string name, string shortDescription, 
+            string fullDescription, string metaKeywords, string metaDescription, 
+            string metaTitle, string seName);
 
         /// <summary>
         /// Gets localized product variant by id
         /// </summary>
-        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <param name="productVariantLocalizedId">Localized product variant identifier</param>
         /// <returns>Product variant content</returns>
-        public abstract DBProductVariantLocalized GetProductVariantLocalizedByID(int ProductVariantLocalizedID);
+        public abstract DBProductVariantLocalized GetProductVariantLocalizedById(int productVariantLocalizedId);
 
         /// <summary>
         /// Gets localized product variant by product variant id and language id
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant content</returns>
-        public abstract DBProductVariantLocalized GetProductVariantLocalizedByProductVariantIDAndLanguageID(int ProductVariantID, int LanguageID);
+        public abstract DBProductVariantLocalized GetProductVariantLocalizedByProductVariantIdAndLanguageId(int productVariantId, int languageId);
 
         /// <summary>
         /// Inserts a localized product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>DBProductVariantLocalized</returns>
-        public abstract DBProductVariantLocalized InsertProductVariantLocalized(int ProductVariantID,
-            int LanguageID, string Name, string Description);
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product variant content</returns>
+        public abstract DBProductVariantLocalized InsertProductVariantLocalized(int productVariantId,
+            int languageId, string name, string description);
 
         /// <summary>
         /// Update a localized product variant
         /// </summary>
-        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>DBProductVariantContent</returns>
-        public abstract DBProductVariantLocalized UpdateProductVariantLocalized(int ProductVariantLocalizedID,
-            int ProductVariantID, int LanguageID, string Name, string Description);
+        /// <param name="productVariantLocalizedId">Localized product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product variant content</returns>
+        public abstract DBProductVariantLocalized UpdateProductVariantLocalized(int productVariantLocalizedId,
+            int productVariantId, int languageId, string name, string description);
 
         /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public abstract DBProductCollection GetProductsAlsoPurchasedByID(int ProductID, int LanguageID,
-            bool showHidden, int PageSize, int PageIndex, out int TotalRecords);
+        public abstract DBProductCollection GetProductsAlsoPurchasedById(int productId, 
+            int languageId, bool showHidden, int pageSize, int pageIndex, out int totalRecords);
 
         /// <summary>
         /// Sets a product rating
         /// </summary>
-        /// <param name="ProductID">Product identifer</param>
-        /// <param name="CustomerID">Customer identifer</param>
-        /// <param name="Rating">Rating</param>
-        /// <param name="RatedOn">Rating was created on</param>
-        public abstract void SetProductRating(int ProductID, int CustomerID, int Rating, DateTime RatedOn);
+        /// <param name="productId">Product identifer</param>
+        /// <param name="customerId">Customer identifer</param>
+        /// <param name="rating">Rating</param>
+        /// <param name="ratedOn">Rating was created on</param>
+        public abstract void SetProductRating(int productId, int customerId, 
+            int rating, DateTime ratedOn);
 
         /// <summary>
         /// Gets a recently added products list
         /// </summary>
-        /// <param name="Number">Number of products to load</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="number">Number of products to load</param>
+        /// <param name="languageId">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Recently added products list</returns>
-        public abstract DBProductCollection GetRecentlyAddedProducts(int Number,
-            int LanguageID, bool showHidden);
+        public abstract DBProductCollection GetRecentlyAddedProducts(int number,
+            int languageId, bool showHidden);
 
         /// <summary>
         /// Deletes a product picture mapping
         /// </summary>
-        /// <param name="ProductPictureID">Product picture mapping identifier</param>
-        public abstract void DeleteProductPicture(int ProductPictureID);
+        /// <param name="productPictureId">Product picture mapping identifier</param>
+        public abstract void DeleteProductPicture(int productPictureId);
 
         /// <summary>
         /// Gets a product picture mapping
         /// </summary>
-        /// <param name="ProductPictureID">Product picture mapping identifier</param>
+        /// <param name="productPictureId">Product picture mapping identifier</param>
         /// <returns>Product picture mapping</returns>
-        public abstract DBProductPicture GetProductPictureByID(int ProductPictureID);
+        public abstract DBProductPicture GetProductPictureById(int productPictureId);
 
         /// <summary>
         /// Inserts a product picture mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="PictureID">Picture identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="pictureId">Picture identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product picture mapping</returns>
-        public abstract DBProductPicture InsertProductPicture(int ProductID,
-          int PictureID, int DisplayOrder);
+        public abstract DBProductPicture InsertProductPicture(int productId,
+          int pictureId, int displayOrder);
 
         /// <summary>
         /// Updates the product picture mapping
         /// </summary>
-        /// <param name="ProductPictureID">Product picture mapping identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="PictureID">Picture identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productPictureId">Product picture mapping identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="pictureId">Picture identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product picture mapping</returns>
-        public abstract DBProductPicture UpdateProductPicture(int ProductPictureID, int ProductID,
-            int PictureID, int DisplayOrder);
+        public abstract DBProductPicture UpdateProductPicture(int productPictureId,
+            int productId, int pictureId, int displayOrder);
 
         /// <summary>
         /// Gets all product picture mappings by product identifier
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product picture mapping collection</returns>
-        public abstract DBProductPictureCollection GetProductPicturesByProductID(int ProductID);
+        public abstract DBProductPictureCollection GetProductPicturesByProductId(int productId);
 
         /// <summary>
         /// Gets a product review
         /// </summary>
-        /// <param name="ProductReviewID">Product review identifier</param>
+        /// <param name="productReviewId">Product review identifier</param>
         /// <returns>Product review</returns>
-        public abstract DBProductReview GetProductReviewByID(int ProductReviewID);
+        public abstract DBProductReview GetProductReviewById(int productReviewId);
 
         /// <summary>
         /// Gets a product review collection by product identifier
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product review collection</returns>
-        public abstract DBProductReviewCollection GetProductReviewByProductID(int ProductID, bool showHidden);
+        public abstract DBProductReviewCollection GetProductReviewByProductId(int productId, bool showHidden);
 
         /// <summary>
         /// Deletes a product review
         /// </summary>
-        /// <param name="ProductReviewID">Product review identifier</param>
-        public abstract void DeleteProductReview(int ProductReviewID);
+        /// <param name="productReviewId">Product review identifier</param>
+        public abstract void DeleteProductReview(int productReviewId);
 
         /// <summary>
         /// Gets all product reviews
         /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product review collection</returns>
         public abstract DBProductReviewCollection GetAllProductReviews(bool showHidden);
 
         /// <summary>
         /// Inserts a product review
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The review title</param>
-        /// <param name="ReviewText">The review text</param>
-        /// <param name="Rating">The review rating</param>
-        /// <param name="HelpfulYesTotal">Review helpful votes total</param>
-        /// <param name="HelpfulNoTotal">Review not helpful votes total</param>
-        /// <param name="IsApproved">A value indicating whether the product review is approved</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The review title</param>
+        /// <param name="reviewText">The review text</param>
+        /// <param name="rating">The review rating</param>
+        /// <param name="helpfulYesTotal">Review helpful votes total</param>
+        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
+        /// <param name="isApproved">A value indicating whether the product review is approved</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public abstract DBProductReview InsertProductReview(int ProductID, int CustomerID, string Title,
-            string ReviewText, int Rating, int HelpfulYesTotal,
-            int HelpfulNoTotal, bool IsApproved, DateTime CreatedOn);
+        public abstract DBProductReview InsertProductReview(int productId, int customerId, string title,
+            string reviewText, int rating, int helpfulYesTotal,
+            int helpfulNoTotal, bool isApproved, DateTime createdOn);
 
         /// <summary>
         /// Updates the product review
         /// </summary>
-        /// <param name="ProductReviewID">The product review identifier</param>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The review title</param>
-        /// <param name="ReviewText">The review text</param>
-        /// <param name="Rating">The review rating</param>
-        /// <param name="HelpfulYesTotal">Review helpful votes total</param>
-        /// <param name="HelpfulNoTotal">Review not helpful votes total</param>
-        /// <param name="IsApproved">A value indicating whether the product review is approved</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="productReviewId">The product review identifier</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The review title</param>
+        /// <param name="reviewText">The review text</param>
+        /// <param name="rating">The review rating</param>
+        /// <param name="helpfulYesTotal">Review helpful votes total</param>
+        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
+        /// <param name="isApproved">A value indicating whether the product review is approved</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public abstract DBProductReview UpdateProductReview(int ProductReviewID, int ProductID,
-            int CustomerID, string Title, string ReviewText, int Rating, int HelpfulYesTotal,
-            int HelpfulNoTotal, bool IsApproved, DateTime CreatedOn);
+        public abstract DBProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string title,
+            string reviewText, int rating, int helpfulYesTotal,
+            int helpfulNoTotal, bool isApproved, DateTime createdOn);
 
         /// <summary>
         /// Sets a product rating helpfulness
         /// </summary>
-        /// <param name="ProductReviewID">Product review identifer</param>
-        /// <param name="CustomerID">Customer identifer</param>
-        /// <param name="WasHelpful">A value indicating whether the product review was helpful or not </param>
-        public abstract void SetProductRatingHelpfulness(int ProductReviewID,
-            int CustomerID, bool WasHelpful);
+        /// <param name="productReviewId">Product review identifer</param>
+        /// <param name="customerId">Customer identifer</param>
+        /// <param name="wasHelpful">A value indicating whether the product review was helpful or not </param>
+        public abstract void SetProductRatingHelpfulness(int productReviewId,
+            int customerId, bool wasHelpful);
 
         /// <summary>
         /// Gets a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant</returns>
-        public abstract DBProductVariant GetProductVariantByID(int ProductVariantID, int LanguageID);
+        public abstract DBProductVariant GetProductVariantById(int productVariantId, 
+            int languageId);
 
         /// <summary>
         /// Gets a product variant by SKU
         /// </summary>
-        /// <param name="SKU">SKU</param>
+        /// <param name="sku">SKU</param>
         /// <returns>Product variant</returns>
-        public abstract DBProductVariant GetProductVariantBySKU(string SKU);
+        public abstract DBProductVariant GetProductVariantBySKU(string sku);
 
         /// <summary>
         /// Get low stock product variants
@@ -398,221 +408,225 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Inserts a product variant
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SKU">The SKU</param>
-        /// <param name="Description">The description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
-        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
-        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
-        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
-        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
-        /// <param name="DownloadActivationType">The download activation type</param>
-        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
-        /// <param name="SampleDownloadID">The sample download identifier</param>
-        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
-        /// <param name="UserAgreementText">The text of user agreement</param>
-        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
-        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
-        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
-        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
-        /// <param name="MinStockQuantity">The minimum stock quantity</param>
-        /// <param name="LowStockActivityID">The low stock activity identifier</param>
-        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
-        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
-        /// <param name="WarehouseId">The warehouse identifier</param>
-        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
-        /// <param name="Price">The price</param>
-        /// <param name="OldPrice">The old price</param>
-        /// <param name="ProductCost">The product cost</param>
-        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
-        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
-        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
-        /// <param name="Weight">The weight</param>
-        /// <param name="Length">The length</param>
-        /// <param name="Width">The width</param>
-        /// <param name="Height">The height</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="AvailableStartDateTime">The available start date and time</param>
-        /// <param name="AvailableEndDateTime">The available end date and time</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="sku">The SKU</param>
+        /// <param name="description">The description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="manufacturerPartNumber">The manufacturer part number</param>
+        /// <param name="isGiftCard">A value indicating whether the product variant is gift card</param>
+        /// <param name="isDownload">A value indicating whether the product variant is download</param>
+        /// <param name="downloadId">The download identifier</param>
+        /// <param name="unlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
+        /// <param name="maxNumberOfDownloads">The maximum number of downloads</param>
+        /// <param name="downloadExpirationDays">The number of days during customers keeps access to the file</param>
+        /// <param name="downloadActivationType">The download activation type</param>
+        /// <param name="hasSampleDownload">The value indicating whether the product variant has a sample download file</param>
+        /// <param name="sampleDownloadId">The sample download identifier</param>
+        /// <param name="hasUserAgreement">A value indicating whether the product variant has a user agreement</param>
+        /// <param name="userAgreementText">The text of user agreement</param>
+        /// <param name="isRecurring">A value indicating whether the product variant is recurring</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="isShipEnabled">A value indicating whether the entity is ship enabled</param>
+        /// <param name="isFreeShipping">A value indicating whether the entity is free shipping</param>
+        /// <param name="additionalShippingCharge">The additional shipping charge</param>
+        /// <param name="isTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="manageInventory">The value indicating how to manage inventory</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="displayStockAvailability">The value indicating whether to display stock availability</param>
+        /// <param name="minStockQuantity">The minimum stock quantity</param>
+        /// <param name="lowStockActivityId">The low stock activity identifier</param>
+        /// <param name="notifyAdminForQuantityBelow">The quantity when admin should be notified</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="orderMinimumQuantity">The order minimum quantity</param>
+        /// <param name="orderMaximumQuantity">The order maximum quantity</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
+        /// <param name="disableBuyButton">A value indicating whether to disable buy button</param>
+        /// <param name="price">The price</param>
+        /// <param name="oldPrice">The old price</param>
+        /// <param name="productCost">The product cost</param>
+        /// <param name="customerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="minimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="maximumCustomerEnteredPrice">The maximum price entered by a customer</param>
+        /// <param name="weight">The weight</param>
+        /// <param name="length">The length</param>
+        /// <param name="width">The width</param>
+        /// <param name="height">The height</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="availableStartDateTime">The available start date and time</param>
+        /// <param name="availableEndDateTime">The available end date and time</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product variant</returns>
-        public abstract DBProductVariant InsertProductVariant(int ProductID,
-            string Name, string SKU,
-            string Description, string AdminComment, string ManufacturerPartNumber, 
-            bool IsGiftCard, bool IsDownload, int DownloadID, bool UnlimitedDownloads, 
-            int MaxNumberOfDownloads, int? DownloadExpirationDays,
-            int DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, 
-            string UserAgreementText, bool IsRecurring,
-            int CycleLength, int CyclePeriod, int TotalCycles,
-            bool IsShipEnabled, bool IsFreeShipping,
-            decimal AdditionalShippingCharge, bool IsTaxExempt, int TaxCategoryID,
-            int ManageInventory, int StockQuantity, bool DisplayStockAvailability,
-            int MinStockQuantity, int LowStockActivityID,
-            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
-            int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, 
-            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice, 
-            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
-            decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
-            DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
-            bool Published, bool Deleted, int DisplayOrder, 
-            DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBProductVariant InsertProductVariant(int productId,
+            string name, string sku,
+            string description, string adminComment, string manufacturerPartNumber, 
+            bool isGiftCard, bool isDownload, int downloadId, bool unlimitedDownloads, 
+            int maxNumberOfDownloads, int? downloadExpirationDays,
+            int downloadActivationType, bool hasSampleDownload,
+            int sampleDownloadId, bool hasUserAgreement, 
+            string userAgreementText, bool isRecurring,
+            int cycleLength, int cyclePeriod, int totalCycles,
+            bool isShipEnabled, bool isFreeShipping,
+            decimal additionalShippingCharge, bool isTaxExempt, int taxCategoryId,
+            int manageInventory, int stockQuantity, bool displayStockAvailability,
+            int minStockQuantity, int lowStockActivityId,
+            int notifyAdminForQuantityBelow, bool allowOutOfStockOrders,
+            int orderMinimumQuantity, int orderMaximumQuantity,
+            int warehouseId, bool disableBuyButton, decimal price, 
+            decimal oldPrice, decimal productCost, bool customerEntersPrice, 
+            decimal minimumCustomerEnteredPrice, decimal maximumCustomerEnteredPrice,
+            decimal weight, decimal length, decimal width, decimal height, int pictureId,
+            DateTime? availableStartDateTime, DateTime? availableEndDateTime,
+            bool published, bool deleted, int displayOrder, 
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the product variant
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SKU">The SKU</param>
-        /// <param name="Description">The description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
-        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
-        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
-        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
-        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
-        /// <param name="DownloadActivationType">The download activation type</param>
-        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
-        /// <param name="SampleDownloadID">The sample download identifier</param>
-        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
-        /// <param name="UserAgreementText">The text of user agreement</param>
-        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
-        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
-        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
-        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
-        /// <param name="MinStockQuantity">The minimum stock quantity</param>
-        /// <param name="LowStockActivityID">The low stock activity identifier</param>
-        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
-        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
-        /// <param name="WarehouseId">The warehouse identifier</param>
-        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
-        /// <param name="Price">The price</param>
-        /// <param name="OldPrice">The old price</param>
-        /// <param name="ProductCost">The product cost</param>
-        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
-        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
-        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
-        /// <param name="Weight">The weight</param>
-        /// <param name="Length">The length</param>
-        /// <param name="Width">The width</param>
-        /// <param name="Height">The height</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="AvailableStartDateTime">The available start date and time</param>
-        /// <param name="AvailableEndDateTime">The available end date and time</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="sku">The SKU</param>
+        /// <param name="description">The description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="manufacturerPartNumber">The manufacturer part number</param>
+        /// <param name="isGiftCard">A value indicating whether the product variant is gift card</param>
+        /// <param name="isDownload">A value indicating whether the product variant is download</param>
+        /// <param name="downloadId">The download identifier</param>
+        /// <param name="unlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
+        /// <param name="maxNumberOfDownloads">The maximum number of downloads</param>
+        /// <param name="downloadExpirationDays">The number of days during customers keeps access to the file</param>
+        /// <param name="downloadActivationType">The download activation type</param>
+        /// <param name="hasSampleDownload">The value indicating whether the product variant has a sample download file</param>
+        /// <param name="sampleDownloadId">The sample download identifier</param>
+        /// <param name="hasUserAgreement">A value indicating whether the product variant has a user agreement</param>
+        /// <param name="userAgreementText">The text of user agreement</param>
+        /// <param name="isRecurring">A value indicating whether the product variant is recurring</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="isShipEnabled">A value indicating whether the entity is ship enabled</param>
+        /// <param name="isFreeShipping">A value indicating whether the entity is free shipping</param>
+        /// <param name="additionalShippingCharge">The additional shipping charge</param>
+        /// <param name="isTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="manageInventory">The value indicating how to manage inventory</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="displayStockAvailability">The value indicating whether to display stock availability</param>
+        /// <param name="minStockQuantity">The minimum stock quantity</param>
+        /// <param name="lowStockActivityId">The low stock activity identifier</param>
+        /// <param name="notifyAdminForQuantityBelow">The quantity when admin should be notified</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="orderMinimumQuantity">The order minimum quantity</param>
+        /// <param name="orderMaximumQuantity">The order maximum quantity</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
+        /// <param name="disableBuyButton">A value indicating whether to disable buy button</param>
+        /// <param name="price">The price</param>
+        /// <param name="oldPrice">The old price</param>
+        /// <param name="productCost">The product cost</param>
+        /// <param name="customerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="minimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="maximumCustomerEnteredPrice">The maximum price entered by a customer</param>
+        /// <param name="weight">The weight</param>
+        /// <param name="length">The length</param>
+        /// <param name="width">The width</param>
+        /// <param name="height">The height</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="availableStartDateTime">The available start date and time</param>
+        /// <param name="availableEndDateTime">The available end date and time</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product variant</returns>
-        public abstract DBProductVariant UpdateProductVariant(int ProductVariantID, 
-            int ProductID, string Name, string SKU, string Description, string AdminComment,
-            string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
-            bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
-            int DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, 
-            bool IsRecurring,  int CycleLength, int CyclePeriod, int TotalCycles, 
-            bool IsShipEnabled, bool IsFreeShipping, decimal AdditionalShippingCharge,
-            bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
-            int StockQuantity, bool DisplayStockAvailability, int MinStockQuantity, int LowStockActivityID,
-            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
-            int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price,
-            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice,
-            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
-            decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
-            DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
-            bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBProductVariant UpdateProductVariant(int productVariantId, 
+            int productId, string name, string sku,
+            string description, string adminComment, string manufacturerPartNumber,
+            bool isGiftCard, bool isDownload, int downloadId, bool unlimitedDownloads,
+            int maxNumberOfDownloads, int? downloadExpirationDays,
+            int downloadActivationType, bool hasSampleDownload,
+            int sampleDownloadId, bool hasUserAgreement,
+            string userAgreementText, bool isRecurring,
+            int cycleLength, int cyclePeriod, int totalCycles,
+            bool isShipEnabled, bool isFreeShipping,
+            decimal additionalShippingCharge, bool isTaxExempt, int taxCategoryId,
+            int manageInventory, int stockQuantity, bool displayStockAvailability,
+            int minStockQuantity, int lowStockActivityId,
+            int notifyAdminForQuantityBelow, bool allowOutOfStockOrders,
+            int orderMinimumQuantity, int orderMaximumQuantity,
+            int warehouseId, bool disableBuyButton, decimal price,
+            decimal oldPrice, decimal productCost, bool customerEntersPrice,
+            decimal minimumCustomerEnteredPrice, decimal maximumCustomerEnteredPrice,
+            decimal weight, decimal length, decimal width, decimal height, int pictureId,
+            DateTime? availableStartDateTime, DateTime? availableEndDateTime,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Gets product variants by product identifier
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public abstract DBProductVariantCollection GetProductVariantsByProductID(int ProductID,
-            int LanguageID, bool showHidden);
+        public abstract DBProductVariantCollection GetProductVariantsByProductId(int productId,
+            int languageId, bool showHidden);
 
         /// <summary>
         /// Gets restricted product variants by discount identifier
         /// </summary>
-        /// <param name="DiscountID">The discount identifier</param>
+        /// <param name="discountId">The discount identifier</param>
         /// <returns>Product variant collection</returns>
-        public abstract DBProductVariantCollection GetProductVariantsRestrictedByDiscountID(int DiscountID);
+        public abstract DBProductVariantCollection GetProductVariantsRestrictedByDiscountId(int discountId);
 
         /// <summary>
         /// Deletes a related product
         /// </summary>
-        /// <param name="RelatedProductID">Related product identifer</param>
-        public abstract void DeleteRelatedProduct(int RelatedProductID);
+        /// <param name="relatedProductId">Related product identifer</param>
+        public abstract void DeleteRelatedProduct(int relatedProductId);
 
         /// <summary>
         /// Gets a related product collection by product identifier
         /// </summary>
-        /// <param name="ProductID1">The first product identifier</param>
+        /// <param name="productId1">The first product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Related product collection</returns>
-        public abstract DBRelatedProductCollection GetRelatedProductsByProductID1(int ProductID1, bool showHidden);
+        public abstract DBRelatedProductCollection GetRelatedProductsByProductId1(int productId1, bool showHidden);
 
         /// <summary>
         /// Gets a related product
         /// </summary>
-        /// <param name="RelatedProductID">Related product identifer</param>
+        /// <param name="relatedProductId">Related product identifer</param>
         /// <returns></returns>
-        public abstract DBRelatedProduct GetRelatedProductByID(int RelatedProductID);
+        public abstract DBRelatedProduct GetRelatedProductById(int relatedProductId);
 
         /// <summary>
         /// Inserts a related product
         /// </summary>
-        /// <param name="ProductID1">The first product identifier</param>
-        /// <param name="ProductID2">The second product identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId1">The first product identifier</param>
+        /// <param name="productId2">The second product identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Related product</returns>
-        public abstract DBRelatedProduct InsertRelatedProduct(int ProductID1, int ProductID2, int DisplayOrder);
+        public abstract DBRelatedProduct InsertRelatedProduct(int productId1, int productId2, int displayOrder);
 
         /// <summary>
         /// Updates a related product
         /// </summary>
-        /// <param name="RelatedProductID">The related product identifier</param>
-        /// <param name="ProductID1">The first product identifier</param>
-        /// <param name="ProductID2">The second product identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="relatedProductId">The related product identifier</param>
+        /// <param name="productId1">The first product identifier</param>
+        /// <param name="productId2">The second product identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Related product</returns>
-        public abstract DBRelatedProduct UpdateRelatedProduct(int RelatedProductID, int ProductID1, int ProductID2,
-            int DisplayOrder);
+        public abstract DBRelatedProduct UpdateRelatedProduct(int relatedProductId, 
+            int productId1, int productId2, int displayOrder);
 
         /// <summary>
         /// Gets all product types
@@ -623,16 +637,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets a product type
         /// </summary>
-        /// <param name="ProductTypeID">Product type identifier</param>
+        /// <param name="productTypeId">Product type identifier</param>
         /// <returns>Product type</returns>
-        public abstract DBProductType GetProductTypeByID(int ProductTypeID);
+        public abstract DBProductType GetProductTypeById(int productTypeId);
 
         /// <summary>
         /// Gets all product variants directly assigned to a pricelist
         /// </summary>
-        /// <param name="PricelistID"></param>
-        /// <returns></returns>
-        public abstract DBProductVariantCollection GetProductVariantsByPricelistID(int PricelistID);
+        /// <param name="pricelistId">Pricelist identifier</param>
+        /// <returns>Product variants</returns>
+        public abstract DBProductVariantCollection GetProductVariantsByPricelistId(int pricelistId);
 
         /// <summary>
         /// Gets a collection of all available pricelists
@@ -641,211 +655,215 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         public abstract DBPricelistCollection GetAllPricelists();
 
         /// <summary>
-        /// Gets a Pricelist
+        /// Gets a pricelist
         /// </summary>
-        /// <param name="PricelistID">Pricelist identifier</param>
+        /// <param name="pricelistId">Pricelist identifier</param>
         /// <returns>Pricelist</returns>
-        public abstract DBPricelist GetPricelistByID(int PricelistID);
+        public abstract DBPricelist GetPricelistById(int pricelistId);
 
         /// <summary>
         /// Gets a pricelist
         /// </summary>
-        /// <param name="PricelistGUID">Pricelist GUID</param>
+        /// <param name="pricelistGuid">Pricelist GUID</param>
         /// <returns>Pricelist</returns>
-        public abstract DBPricelist GetPricelistByGUID(string PricelistGUID);
+        public abstract DBPricelist GetPricelistByGuid(string pricelistGuid);
 
         /// <summary>
         /// Inserts a pricelist
         /// </summary>
-        /// <param name="ExportModeID">Mode of list creation identifier</param>
-        /// <param name="ExportTypeID">Export type identifier</param>
-        /// <param name="AffiliateID">Affiliate connected to this pricelist (optional), links will be created with AffiliateID</param>
-        /// <param name="DisplayName">Displayedname</param>
-        /// <param name="ShortName">shortname to identify the pricelist</param>
-        /// <param name="PricelistGuid">unique identifier to get pricelist "anonymous"</param>
-        /// <param name="CacheTime">how long will the pricelist be in cached before new creation</param>
-        /// <param name="FormatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
-        /// <param name="Description">Displayed description</param>
-        /// <param name="AdminNotes">Admin can put some notes here, not displayed in public</param>
-        /// <param name="Header">Headerline of the exported file (plain text)</param>
-        /// <param name="Body">template for an exportet productvariant, uses delimiters and replacement strings</param>
-        /// <param name="Footer">Footer line of the exportet file (plain text)</param>
-        /// <param name="PriceAdjustmentTypeID">Type of price adjustment identifier</param>
-        /// <param name="PriceAdjustment">price will be adjusted by this amount</param>
-        /// <param name="OverrideIndivAdjustment">Use individual adjustment, if available, or override</param>
-        /// <param name="CreatedOn">When was this record originally created</param>
-        /// <param name="UpdatedOn">Last time this record was updated</param>
+        /// <param name="exportModeId">Mode of list creation identifier</param>
+        /// <param name="exportTypeId">Export type identifier</param>
+        /// <param name="affiliateId">Affiliate connected to this pricelist (optional), links will be created with AffiliateId</param>
+        /// <param name="displayName">Displayedname</param>
+        /// <param name="shortName">shortname to identify the pricelist</param>
+        /// <param name="pricelistGuid">unique identifier to get pricelist "anonymous"</param>
+        /// <param name="cacheTime">how long will the pricelist be in cached before new creation</param>
+        /// <param name="formatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
+        /// <param name="description">Displayed description</param>
+        /// <param name="adminNotes">Admin can put some notes here, not displayed in public</param>
+        /// <param name="header">Headerline of the exported file (plain text)</param>
+        /// <param name="body">template for an exportet productvariant, uses delimiters and replacement strings</param>
+        /// <param name="footer">Footer line of the exportet file (plain text)</param>
+        /// <param name="priceAdjustmentTypeId">Type of price adjustment identifier</param>
+        /// <param name="priceAdjustment">price will be adjusted by this amount</param>
+        /// <param name="overrideIndivAdjustment">Use individual adjustment, if available, or override</param>
+        /// <param name="createdOn">When was this record originally created</param>
+        /// <param name="updatedOn">Last time this record was updated</param>
         /// <returns>Pricelist</returns>
-        public abstract DBPricelist InsertPricelist(int ExportModeID, int ExportTypeID, int? AffiliateID,
-            string DisplayName, string ShortName, string PricelistGuid, int CacheTime, string FormatLocalization,
-            string Description, string AdminNotes,
-            string Header, string Body, string Footer,
-            int PriceAdjustmentTypeID, decimal PriceAdjustment, bool OverrideIndivAdjustment,
-            DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBPricelist InsertPricelist(int exportModeId,
+            int exportTypeId, int? affiliateId, string displayName, 
+            string shortName, string pricelistGuid, int cacheTime,
+            string formatLocalization, string description, string adminNotes,
+            string header, string body, string footer,
+            int priceAdjustmentTypeId, decimal priceAdjustment, bool overrideIndivAdjustment,
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the Pricelist
         /// </summary>
-        /// <param name="PricelistID">Unique Identifier</param>
-        /// <param name="ExportModeID">Mode of list creation identifier</param>
-        /// <param name="ExportTypeID">Export type identifier</param>
-        /// <param name="AffiliateID">Affiliate connected to this pricelist (optional), links will be created with AffiliateID</param>
-        /// <param name="DisplayName">Displayedname</param>
-        /// <param name="ShortName">shortname to identify the pricelist</param>
-        /// <param name="PricelistGuid">unique identifier to get pricelist "anonymous"</param>
-        /// <param name="CacheTime">how long will the pricelist be in cached before new creation</param>
-        /// <param name="FormatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
-        /// <param name="Description">Displayed description</param>
-        /// <param name="AdminNotes">Admin can put some notes here, not displayed in public</param>
-        /// <param name="Header">Headerline of the exported file (plain text)</param>
-        /// <param name="Body">template for an exportet productvariant, uses delimiters and replacement strings</param>
-        /// <param name="Footer">Footer line of the exportet file (plain text)</param>
-        /// <param name="PriceAdjustmentTypeID">Type of price adjustment identifier</param>
-        /// <param name="PriceAdjustment">price will be adjusted by this amount</param>
-        /// <param name="OverrideIndivAdjustment">use individual adjustment, if available, or override</param>
-        /// <param name="CreatedOn">When was this record originally created</param>
-        /// <param name="UpdatedOn">Last time this recordset was updated</param>
+        /// <param name="pricelistId">Unique Identifier</param>
+        /// <param name="exportModeId">Mode of list creation identifier</param>
+        /// <param name="exportTypeId">Export type identifier</param>
+        /// <param name="affiliateId">Affiliate connected to this pricelist (optional), links will be created with AffiliateId</param>
+        /// <param name="displayName">Displayedname</param>
+        /// <param name="shortName">shortname to identify the pricelist</param>
+        /// <param name="pricelistGuid">unique identifier to get pricelist "anonymous"</param>
+        /// <param name="cacheTime">how long will the pricelist be in cached before new creation</param>
+        /// <param name="formatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
+        /// <param name="description">Displayed description</param>
+        /// <param name="adminNotes">Admin can put some notes here, not displayed in public</param>
+        /// <param name="header">Headerline of the exported file (plain text)</param>
+        /// <param name="body">template for an exportet productvariant, uses delimiters and replacement strings</param>
+        /// <param name="footer">Footer line of the exportet file (plain text)</param>
+        /// <param name="priceAdjustmentTypeId">Type of price adjustment identifier</param>
+        /// <param name="priceAdjustment">price will be adjusted by this amount</param>
+        /// <param name="overrideIndivAdjustment">Use individual adjustment, if available, or override</param>
+        /// <param name="createdOn">When was this record originally created</param>
+        /// <param name="updatedOn">Last time this record was updated</param>
         /// <returns>Pricelist</returns>
-        public abstract DBPricelist UpdatePricelist(int PricelistID, int ExportModeID, int ExportTypeID, int? AffiliateID,
-            string DisplayName, string ShortName, string PricelistGuid, int CacheTime, string FormatLocalization,
-            string Description, string AdminNotes,
-            string Header, string Body, string Footer,
-            int PriceAdjustmentTypeID, decimal PriceAdjustment, bool OverrideIndivAdjustment,
-            DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBPricelist UpdatePricelist(int pricelistId, int exportModeId,
+            int exportTypeId, int? affiliateId, string displayName,
+            string shortName, string pricelistGuid, int cacheTime,
+            string formatLocalization, string description, string adminNotes,
+            string header, string body, string footer,
+            int priceAdjustmentTypeId, decimal priceAdjustment, bool overrideIndivAdjustment,
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
-        /// Deletes a Pricelist
+        /// Deletes a pricelist
         /// </summary>
-        /// <param name="PricelistID">The PricelistID of the item to be deleted</param>
-        public abstract void DeletePricelist(int PricelistID);
+        /// <param name="pricelistId">Pricelist identifier</param>
+        public abstract void DeletePricelist(int pricelistId);
 
         /// <summary>
-        /// Deletes a ProductVariantPricelist
+        /// Deletes a product variant pricelist
         /// </summary>
-        /// <param name="ProductVariantPricelistID">ProductVariantPricelist identifier</param>
-        public abstract void DeleteProductVariantPricelist(int ProductVariantPricelistID);
+        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
+        public abstract void DeleteProductVariantPricelist(int productVariantPricelistId);
 
         /// <summary>
         /// Gets a ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantPricelistID">ProductVariantPricelist identifier</param>
+        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
         /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist GetProductVariantPricelistByID(int ProductVariantPricelistID);
+        public abstract DBProductVariantPricelist GetProductVariantPricelistById(int productVariantPricelistId);
 
         /// <summary>
         /// Gets ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantID">ProductVariant identifier</param>
-        /// <param name="PricelistID">Pricelist identifier</param>
+        /// <param name="productVariantId">ProductVariant identifier</param>
+        /// <param name="pricelistId">Pricelist identifier</param>
         /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist GetProductVariantPricelist(int ProductVariantID, int PricelistID);
+        public abstract DBProductVariantPricelist GetProductVariantPricelist(int productVariantId, int pricelistId);
 
         /// <summary>
         /// Inserts a ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifer</param>
-        /// <param name="PricelistID">The pricelist identifier</param>
-        /// <param name="PriceAdjustmentTypeID">Price adjustment type identifier</param>
-        /// <param name="PriceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productVariantId">The product variant identifer</param>
+        /// <param name="pricelistId">The pricelist identifier</param>
+        /// <param name="priceAdjustmentTypeId">Price adjustment type identifier</param>
+        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist InsertProductVariantPricelist(int ProductVariantID,
-            int PricelistID, int PriceAdjustmentTypeID, decimal PriceAdjustment,
-            DateTime UpdatedOn);
+        public abstract DBProductVariantPricelist InsertProductVariantPricelist(int productVariantId,
+            int pricelistId, int priceAdjustmentTypeId, decimal priceAdjustment,
+            DateTime updatedOn);
 
         /// <summary>
         /// Updates the ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantPricelistID">The product variant pricelist identifier</param>
-        /// <param name="ProductVariantID">The product variant identifer</param>
-        /// <param name="PricelistID">The pricelist identifier</param>
-        /// <param name="PriceAdjustmentTypeID">Price adjustment type identifier</param>
-        /// <param name="PriceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productVariantPricelistId">The product variant pricelist identifier</param>
+        /// <param name="productVariantId">The product variant identifer</param>
+        /// <param name="pricelistId">The pricelist identifier</param>
+        /// <param name="priceAdjustmentTypeId">Price adjustment type identifier</param>
+        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist UpdateProductVariantPricelist(int ProductVariantPricelistID, int ProductVariantID,
-            int PricelistID, int PriceAdjustmentTypeID, decimal PriceAdjustment,
-            DateTime UpdatedOn);
+        public abstract DBProductVariantPricelist UpdateProductVariantPricelist(int productVariantPricelistId, 
+            int productVariantId, int pricelistId, int priceAdjustmentTypeId, 
+            decimal priceAdjustment, DateTime updatedOn);
 
         /// <summary>
         /// Gets a tier price
         /// </summary>
-        /// <param name="TierPriceID">Tier price identifier</param>
+        /// <param name="tierPriceId">Tier price identifier</param>
         /// <returns>Tier price</returns>
-        public abstract DBTierPrice GetTierPriceByID(int TierPriceID);
+        public abstract DBTierPrice GetTierPriceById(int tierPriceId);
 
         /// <summary>
         /// Gets tier prices by product variant identifier
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Tier price collection</returns>
-        public abstract DBTierPriceCollection GetTierPricesByProductVariantID(int ProductVariantID);
+        public abstract DBTierPriceCollection GetTierPricesByProductVariantId(int productVariantId);
 
         /// <summary>
         /// Deletes a tier price
         /// </summary>
-        /// <param name="TierPriceID">Tier price identifier</param>
-        public abstract void DeleteTierPrice(int TierPriceID);
+        /// <param name="tierPriceId">Tier price identifier</param>
+        public abstract void DeleteTierPrice(int tierPriceId);
 
         /// <summary>
         /// Inserts a tier price
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="Price">The price</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="price">The price</param>
         /// <returns>Tier price</returns>
-        public abstract DBTierPrice InsertTierPrice(int ProductVariantID, int Quantity, decimal Price);
+        public abstract DBTierPrice InsertTierPrice(int productVariantId, 
+            int quantity, decimal price);
 
         /// <summary>
         /// Updates the tier price
         /// </summary>
-        /// <param name="TierPriceID">The tier price identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="Price">The price</param>
+        /// <param name="tierPriceId">The tier price identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="price">The price</param>
         /// <returns>Tier price</returns>
-        public abstract DBTierPrice UpdateTierPrice(int TierPriceID, int ProductVariantID, int Quantity, decimal Price);
+        public abstract DBTierPrice UpdateTierPrice(int tierPriceId,
+            int productVariantId, int quantity, decimal price);
 
         /// <summary>
         /// Deletes a product price by customer role by identifier 
         /// </summary>
-        /// <param name="CustomerRoleProductPriceID">The identifier</param>
-        public abstract void DeleteCustomerRoleProductPrice(int CustomerRoleProductPriceID);
+        /// <param name="customerRoleProductPriceId">The identifier</param>
+        public abstract void DeleteCustomerRoleProductPrice(int customerRoleProductPriceId);
 
         /// <summary>
         /// Gets a product price by customer role by identifier 
         /// </summary>
-        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <param name="customerRoleProductPriceId">The identifier</param>
         /// <returns>Product price by customer role by identifier </returns>
-        public abstract DBCustomerRoleProductPrice GetCustomerRoleProductPriceByID(int CustomerRoleProductPriceID);
+        public abstract DBCustomerRoleProductPrice GetCustomerRoleProductPriceById(int customerRoleProductPriceId);
 
         /// <summary>
         /// Gets a collection of product prices by customer role
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>A collection of product prices by customer role</returns>
-        public abstract DBCustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int ProductVariantID);
+        public abstract DBCustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int productVariantId);
 
         /// <summary>
         /// Inserts a product price by customer role
         /// </summary>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Price">The price</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="price">The price</param>
         /// <returns>A product price by customer role</returns>
-        public abstract DBCustomerRoleProductPrice InsertCustomerRoleProductPrice(int CustomerRoleID, 
-            int ProductVariantID, decimal Price);
+        public abstract DBCustomerRoleProductPrice InsertCustomerRoleProductPrice(int customerRoleId, 
+            int productVariantId, decimal price);
 
         /// <summary>
         /// Updates a product price by customer role
         /// </summary>
-        /// <param name="CustomerRoleProductPriceID">The identifier</param>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Price">The price</param>
+        /// <param name="customerRoleProductPriceId">The identifier</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="price">The price</param>
         /// <returns>A product price by customer role</returns>
-        public abstract DBCustomerRoleProductPrice UpdateCustomerRoleProductPrice(int CustomerRoleProductPriceID,
-            int CustomerRoleID, int ProductVariantID, decimal Price);
+        public abstract DBCustomerRoleProductPrice UpdateCustomerRoleProductPrice(int customerRoleProductPriceId,
+            int customerRoleId, int productVariantId, decimal price);
 
         #endregion
     }

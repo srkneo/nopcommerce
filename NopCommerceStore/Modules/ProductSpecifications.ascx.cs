@@ -41,10 +41,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
-                var productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID, null, true);
+                var productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product.ProductId, null, true);
                 if (productSpecificationAttributes.Count > 0)
                 {
                     this.Visible = true;
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 this.Visible = false;
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

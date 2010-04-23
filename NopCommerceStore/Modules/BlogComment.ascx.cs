@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogComment.CreatedOn).ToString();
                 lblComment.Text = BlogManager.FormatCommentText(blogComment.CommentText);
-                lblBlogCommentID.Text = blogComment.BlogCommentID.ToString();
+                lblBlogCommentId.Text = blogComment.BlogCommentId.ToString();
 
                 var customer = blogComment.Customer;
                 if (customer != null)
@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if (CustomerManager.AllowViewingProfiles)
                     {
                         hlUser.Text = Server.HtmlEncode(CustomerManager.FormatUserName(customer));
-                        hlUser.NavigateUrl = SEOHelper.GetUserProfileURL(customer.CustomerID);
+                        hlUser.NavigateUrl = SEOHelper.GetUserProfileUrl(customer.CustomerId);
                         lblUser.Visible = false;
                     }
                     else

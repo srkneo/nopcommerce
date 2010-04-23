@@ -42,23 +42,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets or sets the discount identifier
         /// </summary>
-        public int DiscountID { get; set; }
+        public int DiscountId { get; set; }
 
         /// <summary>
         /// Gets or sets the discount type identifier
         /// </summary>
-        public int DiscountTypeID { get; set; }
+        public int DiscountTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the discount requirement identifier
         /// </summary>
-        public int DiscountRequirementID { get; set; }
+        public int DiscountRequirementId { get; set; }
 
         /// <summary>
         /// Gets or sets the discount limitation identifier
         /// </summary>
-        public int DiscountLimitationID { get; set; }
-                
+        public int DiscountLimitationId { get; set; }
+
         /// <summary>
         /// Gets or sets the name
         /// </summary>
@@ -120,13 +120,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets a value indicating whether the discount is active now
         /// </summary>
-        /// <param name="CouponCodeToValidate">Coupon code to validate</param>
+        /// <param name="couponCodeToValidate">Coupon code to validate</param>
         /// <returns>A value indicating whether the discount is active now</returns>
-        public bool IsActive(string CouponCodeToValidate)
+        public bool IsActive(string couponCodeToValidate)
         {
             if (this.RequiresCouponCode && !String.IsNullOrEmpty(this.CouponCode))
             {
-                if (CouponCodeToValidate != this.CouponCode)
+                if (couponCodeToValidate != this.CouponCode)
                     return false;
             }
             DateTime now = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
@@ -188,8 +188,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                     {
                         if (customer != null)
                         {
-                            ProductVariantCollection restrictedProductVariants = ProductManager.GetProductVariantsRestrictedByDiscountID(this.DiscountID);
-                            OrderProductVariantCollection purchasedProductVariants = OrderManager.GetAllOrderProductVariants(null, customer.CustomerID, null, null, OrderStatusEnum.Complete, null, null);
+                            ProductVariantCollection restrictedProductVariants = ProductManager.GetProductVariantsRestrictedByDiscountId(this.DiscountId);
+                            OrderProductVariantCollection purchasedProductVariants = OrderManager.GetAllOrderProductVariants(null, customer.CustomerId, null, null, OrderStatusEnum.Complete, null, null);
 
                             bool allFound = true;
                             foreach (ProductVariant restrictedPV in restrictedProductVariants)
@@ -197,7 +197,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                                 bool found1 = false;
                                 foreach (OrderProductVariant purchasedPV in purchasedProductVariants)
                                 {
-                                    if (restrictedPV.ProductVariantID == purchasedPV.ProductVariantID)
+                                    if (restrictedPV.ProductVariantId == purchasedPV.ProductVariantId)
                                     {
                                         found1 = true;
                                         break;
@@ -220,15 +220,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                     {
                         if (customer != null)
                         {
-                            ProductVariantCollection restrictedProductVariants = ProductManager.GetProductVariantsRestrictedByDiscountID(this.DiscountID);
-                            OrderProductVariantCollection purchasedProductVariants = OrderManager.GetAllOrderProductVariants(null, customer.CustomerID, null, null, OrderStatusEnum.Complete, null, null);
+                            ProductVariantCollection restrictedProductVariants = ProductManager.GetProductVariantsRestrictedByDiscountId(this.DiscountId);
+                            OrderProductVariantCollection purchasedProductVariants = OrderManager.GetAllOrderProductVariants(null, customer.CustomerId, null, null, OrderStatusEnum.Complete, null, null);
 
                             bool found = false;
                             foreach (ProductVariant restrictedPV in restrictedProductVariants)
                             {
                                 foreach (OrderProductVariant purchasedPV in purchasedProductVariants)
                                 {
-                                    if (restrictedPV.ProductVariantID == purchasedPV.ProductVariantID)
+                                    if (restrictedPV.ProductVariantId == purchasedPV.ProductVariantId)
                                     {
                                         found = true;
                                         break;
@@ -268,7 +268,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                     break;
                 case DiscountLimitationEnum.OneTimeOnly:
                     {
-                        DiscountUsageHistoryCollection usageHistory = DiscountManager.GetAllDiscountUsageHistoryEntries(this.DiscountID, null, null);
+                        DiscountUsageHistoryCollection usageHistory = DiscountManager.GetAllDiscountUsageHistoryEntries(this.DiscountId, null, null);
                         return usageHistory.Count < 1;
                     }
                     break;
@@ -276,7 +276,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                     {
                         if (customer != null)
                         {
-                            DiscountUsageHistoryCollection usageHistory = DiscountManager.GetAllDiscountUsageHistoryEntries(this.DiscountID, customer.CustomerID, null);
+                            DiscountUsageHistoryCollection usageHistory = DiscountManager.GetAllDiscountUsageHistoryEntries(this.DiscountId, customer.CustomerId, null);
                             return usageHistory.Count < 1;
                         }
                         else
@@ -303,11 +303,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             get
             {
-                return (DiscountTypeEnum)DiscountTypeID;
+                return (DiscountTypeEnum)this.DiscountTypeId;
             }
             set
             {
-                DiscountTypeID = (int)value;
+                this.DiscountTypeId = (int)value;
             }
         }
 
@@ -318,11 +318,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             get
             {
-                return (DiscountRequirementEnum)DiscountRequirementID;
+                return (DiscountRequirementEnum)this.DiscountRequirementId;
             }
             set
             {
-                DiscountRequirementID = (int)value;
+                this.DiscountRequirementId = (int)value;
             }
         }
 
@@ -333,11 +333,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             get
             {
-                return (DiscountLimitationEnum)DiscountLimitationID;
+                return (DiscountLimitationEnum)this.DiscountLimitationId;
             }
             set
             {
-                DiscountLimitationID = (int)value;
+                this.DiscountLimitationId = (int)value;
             }
         }
 
@@ -348,7 +348,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             get
             {
-                return CustomerManager.GetCustomerRolesByDiscountID(DiscountID);
+                return CustomerManager.GetCustomerRolesByDiscountId(this.DiscountId);
             }
         }
         #endregion

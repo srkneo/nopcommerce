@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         /// <summary>
         /// Gets or sets the download identifier
         /// </summary>
-        public int DownloadID { get; set; }
+        public int DownloadId { get; set; }
 
         /// <summary>
         /// Gets a sets a value indicating whether DownloadURL property should be used
         /// </summary>
-        public bool UseDownloadURL { get; set; }
+        public bool UseDownloadUrl { get; set; }
 
         /// <summary>
         /// Gets a sets a download URL
         /// </summary>
-        public string DownloadURL { get; set; }
+        public string DownloadUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the download binary

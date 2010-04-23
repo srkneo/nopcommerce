@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Manufacturer manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID, 0);
+            Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
 
             if (this.HasLocalizableContent)
             {
@@ -79,26 +79,26 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         
         public void SaveInfo()
         {
-            SaveInfo(this.ManufacturerID);
+            SaveInfo(this.ManufacturerId);
         }
 
-        public void SaveInfo(int manID)
+        public void SaveInfo(int manId)
         {
-            Manufacturer manufacturer = ManufacturerManager.GetManufacturerByID(manID, 0);
+            Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(manId, 0);
 
             if (manufacturer != null)
             {
-                manufacturer = ManufacturerManager.UpdateManufacturer(manufacturer.ManufacturerID, manufacturer.Name, manufacturer.Description,
-                   manufacturer.TemplateID, txtMetaKeywords.Text, txtMetaDescription.Text,
-                   txtMetaTitle.Text, txtSEName.Text, manufacturer.PictureID, txtPageSize.Value,
+                manufacturer = ManufacturerManager.UpdateManufacturer(manufacturer.ManufacturerId, manufacturer.Name, manufacturer.Description,
+                   manufacturer.TemplateId, txtMetaKeywords.Text, txtMetaDescription.Text,
+                   txtMetaTitle.Text, txtSEName.Text, manufacturer.PictureId, txtPageSize.Value,
                    manufacturer.PriceRanges, manufacturer.Published,
                    manufacturer.Deleted, manufacturer.DisplayOrder, manufacturer.CreatedOn, manufacturer.UpdatedOn);
             }
 
-            saveLocalizableContent(manufacturer);
+            SaveLocalizableContent(manufacturer);
         }
 
-        protected void saveLocalizableContent(Manufacturer manufacturer)
+        protected void SaveLocalizableContent(Manufacturer manufacturer)
         {
             if (manufacturer == null)
                 return;
@@ -116,7 +116,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedSEName = (TextBox)item.FindControl("txtLocalizedSEName");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string metaKeywords = txtLocalizedMetaKeywords.Text;
                     string metaDescription = txtLocalizedMetaDescription.Text;
                     string metaTitle = txtLocalizedMetaTitle.Text;
@@ -127,23 +127,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         string.IsNullOrEmpty(metaTitle) &&
                         string.IsNullOrEmpty(seName));
 
-                    var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIDAndLanguageID(manufacturer.ManufacturerID, languageID);
+                    var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIdAndLanguageId(manufacturer.ManufacturerId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = ManufacturerManager.InsertManufacturerLocalized(manufacturer.ManufacturerID,
-                                   languageID, string.Empty, string.Empty,
+                            content = ManufacturerManager.InsertManufacturerLocalized(manufacturer.ManufacturerId,
+                                   languageId, string.Empty, string.Empty,
                                    metaKeywords, metaDescription, metaTitle, seName);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = ManufacturerManager.UpdateManufacturerLocalized(content.ManufacturerLocalizedID, content.ManufacturerID,
-                                languageID, content.Name, content.Description,
+                            content = ManufacturerManager.UpdateManufacturerLocalized(content.ManufacturerLocalizedId, content.ManufacturerId,
+                                languageId, content.Name, content.Description,
                                 metaKeywords, metaDescription,
                                 metaTitle, seName);
                         }
@@ -162,9 +162,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedSEName = (TextBox)e.Item.FindControl("txtLocalizedSEName");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIDAndLanguageID(this.ManufacturerID, languageID);
+                var content = ManufacturerManager.GetManufacturerLocalizedByManufacturerIdAndLanguageId(this.ManufacturerId, languageId);
                 if (content != null)
                 {
                     txtLocalizedMetaKeywords.Text = content.MetaKeywords;
@@ -175,11 +175,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
         
-        public int ManufacturerID
+        public int ManufacturerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ManufacturerID");
+                return CommonHelper.QueryStringInt("ManufacturerId");
             }
         }
     }

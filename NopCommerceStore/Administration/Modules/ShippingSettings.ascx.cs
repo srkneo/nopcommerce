@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CountryCollection countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlShippingOriginCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -63,12 +63,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void FillStateProvinceDropDowns()
         {
             this.ddlShippingOriginStateProvince.Items.Clear();
-            int countryID = int.Parse(this.ddlShippingOriginCountry.SelectedItem.Value);
+            int countryId = int.Parse(this.ddlShippingOriginCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
-                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceID.ToString());
+                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
                 this.ddlShippingOriginStateProvince.Items.Add(ddlStateProviceItem2);
             }
             if (stateProvinceCollection.Count == 0)
@@ -85,9 +85,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             Address shippingOriginAddress = ShippingManager.ShippingOrigin;
             this.FillCountryDropDowns();
-            CommonHelper.SelectListItem(this.ddlShippingOriginCountry, shippingOriginAddress.CountryID);
+            CommonHelper.SelectListItem(this.ddlShippingOriginCountry, shippingOriginAddress.CountryId);
             this.FillStateProvinceDropDowns();
-            CommonHelper.SelectListItem(this.ddlShippingOriginStateProvince, shippingOriginAddress.StateProvinceID);
+            CommonHelper.SelectListItem(this.ddlShippingOriginStateProvince, shippingOriginAddress.StateProvinceId);
             txtShippingOriginZipPostalCode.Text = shippingOriginAddress.ZipPostalCode;
         }
 
@@ -106,8 +106,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParamNative("Shipping.FreeShippingOverX.Value", txtFreeShippingOverX.Value);
 
                     Address shippingOriginAddress = new Address();
-                    shippingOriginAddress.CountryID = int.Parse(this.ddlShippingOriginCountry.SelectedItem.Value);
-                    shippingOriginAddress.StateProvinceID = int.Parse(this.ddlShippingOriginStateProvince.SelectedItem.Value);
+                    shippingOriginAddress.CountryId = int.Parse(this.ddlShippingOriginCountry.SelectedItem.Value);
+                    shippingOriginAddress.StateProvinceId = int.Parse(this.ddlShippingOriginStateProvince.SelectedItem.Value);
                     shippingOriginAddress.ZipPostalCode = txtShippingOriginZipPostalCode.Text;
                     ShippingManager.ShippingOrigin = shippingOriginAddress;
                     

@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
     /// <summary>
     /// Template provider for SQL Server
     /// </summary>
-    public partial class SQLTemplateProvider : DBTemplateProvider
+    public partial class SqlTemplateProvider : DBTemplateProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -37,38 +37,38 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
 
         private DBCategoryTemplate GetCategoryTemplateFromReader(IDataReader dataReader)
         {
-            DBCategoryTemplate categoryTemplate = new DBCategoryTemplate();
-            categoryTemplate.CategoryTemplateID = NopSqlDataHelper.GetInt(dataReader, "CategoryTemplateID");
-            categoryTemplate.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            categoryTemplate.TemplatePath = NopSqlDataHelper.GetString(dataReader, "TemplatePath");
-            categoryTemplate.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            categoryTemplate.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            categoryTemplate.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return categoryTemplate;
+            var item = new DBCategoryTemplate();
+            item.CategoryTemplateId = NopSqlDataHelper.GetInt(dataReader, "CategoryTemplateID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.TemplatePath = NopSqlDataHelper.GetString(dataReader, "TemplatePath");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
 
         private DBProductTemplate GetProductTemplateFromReader(IDataReader dataReader)
         {
-            DBProductTemplate productTemplate = new DBProductTemplate();
-            productTemplate.ProductTemplateID = NopSqlDataHelper.GetInt(dataReader, "ProductTemplateID");
-            productTemplate.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            productTemplate.TemplatePath = NopSqlDataHelper.GetString(dataReader, "TemplatePath");
-            productTemplate.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            productTemplate.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            productTemplate.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return productTemplate;
+            var item = new DBProductTemplate();
+            item.ProductTemplateId = NopSqlDataHelper.GetInt(dataReader, "ProductTemplateID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.TemplatePath = NopSqlDataHelper.GetString(dataReader, "TemplatePath");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
 
         private DBManufacturerTemplate GetManufacturerTemplateFromReader(IDataReader dataReader)
         {
-            DBManufacturerTemplate manufacturerTemplate = new DBManufacturerTemplate();
-            manufacturerTemplate.ManufacturerTemplateID = NopSqlDataHelper.GetInt(dataReader, "ManufacturerTemplateID");
-            manufacturerTemplate.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            manufacturerTemplate.TemplatePath = NopSqlDataHelper.GetString(dataReader, "TemplatePath");
-            manufacturerTemplate.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            manufacturerTemplate.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            manufacturerTemplate.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return manufacturerTemplate;
+            var item = new DBManufacturerTemplate();
+            item.ManufacturerTemplateId = NopSqlDataHelper.GetInt(dataReader, "ManufacturerTemplateID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.TemplatePath = NopSqlDataHelper.GetString(dataReader, "TemplatePath");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
         #endregion
 
@@ -111,17 +111,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Deletes a category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
-        public override void DeleteCategoryTemplate(int CategoryTemplateID)
+        /// <param name="categoryTemplateId">Category template identifier</param>
+        public override void DeleteCategoryTemplate(int categoryTemplateId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DBCategoryTemplate categoryTemplate = GetCategoryTemplateByID(CategoryTemplateID);
-            if (categoryTemplate != null)
-            {
-                DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryTemplateDelete");
-                db.AddInParameter(dbCommand, "CategoryTemplateID", DbType.Int32, CategoryTemplateID);
-                int retValue = db.ExecuteNonQuery(dbCommand);
-            }
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryTemplateDelete");
+            db.AddInParameter(dbCommand, "CategoryTemplateID", DbType.Int32, categoryTemplateId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -148,98 +144,93 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Gets a category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
+        /// <param name="categoryTemplateId">Category template identifier</param>
         /// <returns>A category template</returns>
-        public override DBCategoryTemplate GetCategoryTemplateByID(int CategoryTemplateID)
+        public override DBCategoryTemplate GetCategoryTemplateById(int categoryTemplateId)
         {
-            DBCategoryTemplate categoryTemplate = null;
-            if (CategoryTemplateID == 0)
-                return categoryTemplate;
+            DBCategoryTemplate item = null;
+            if (categoryTemplateId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryTemplateLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CategoryTemplateID", DbType.Int32, CategoryTemplateID);
+            db.AddInParameter(dbCommand, "CategoryTemplateID", DbType.Int32, categoryTemplateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    categoryTemplate = GetCategoryTemplateFromReader(dataReader);
+                    item = GetCategoryTemplateFromReader(dataReader);
                 }
             }
-            return categoryTemplate;
+            return item;
         }
 
         /// <summary>
         /// Inserts a category template
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A category template</returns>
-        public override DBCategoryTemplate InsertCategoryTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBCategoryTemplate InsertCategoryTemplate(string name,
+            string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            DBCategoryTemplate categoryTemplate = null;
+            DBCategoryTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryTemplateInsert");
             db.AddOutParameter(dbCommand, "CategoryTemplateID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, TemplatePath);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, templatePath);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CategoryTemplateID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryTemplateID"));
-                categoryTemplate = GetCategoryTemplateByID(CategoryTemplateID);
+                int categoryTemplateId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryTemplateID"));
+                item = GetCategoryTemplateById(categoryTemplateId);
             }
-            return categoryTemplate;
+            return item;
         }
 
         /// <summary>
         /// Updates the category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="categoryTemplateId">Category template identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A category template</returns>
-        public override DBCategoryTemplate UpdateCategoryTemplate(int CategoryTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBCategoryTemplate UpdateCategoryTemplate(int categoryTemplateId,
+            string name, string templatePath, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBCategoryTemplate categoryTemplate = null;
+            DBCategoryTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryTemplateUpdate");
-            db.AddInParameter(dbCommand, "CategoryTemplateID", DbType.Int32, CategoryTemplateID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, TemplatePath);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "CategoryTemplateID", DbType.Int32, categoryTemplateId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, templatePath);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                categoryTemplate = GetCategoryTemplateByID(CategoryTemplateID);
-
-
-            return categoryTemplate;
+                item = GetCategoryTemplateById(categoryTemplateId);
+            return item;
         }
-        
+
         /// <summary>
         /// Deletes a manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifier</param>
-        public override void DeleteManufacturerTemplate(int ManufacturerTemplateID)
+        /// <param name="manufacturerTemplateId">Manufacturer template identifier</param>
+        public override void DeleteManufacturerTemplate(int manufacturerTemplateId)
         {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DBManufacturerTemplate manufacturerTemplate = GetManufacturerTemplateByID(ManufacturerTemplateID);
-            if (manufacturerTemplate != null)
-            {
-                DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerTemplateDelete");
-                db.AddInParameter(dbCommand, "ManufacturerTemplateID", DbType.Int32, ManufacturerTemplateID);
-                int retValue = db.ExecuteNonQuery(dbCommand);
-            }
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString); 
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerTemplateDelete");
+            db.AddInParameter(dbCommand, "ManufacturerTemplateID", DbType.Int32, manufacturerTemplateId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -266,97 +257,94 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Gets a manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifier</param>
+        /// <param name="manufacturerTemplateId">Manufacturer template identifier</param>
         /// <returns>Manufacturer template</returns>
-        public override DBManufacturerTemplate GetManufacturerTemplateByID(int ManufacturerTemplateID)
+        public override DBManufacturerTemplate GetManufacturerTemplateById(int manufacturerTemplateId)
         {
-            DBManufacturerTemplate manufacturerTemplate = null;
-            if (ManufacturerTemplateID == 0)
-                return manufacturerTemplate;
+            DBManufacturerTemplate item = null;
+            if (manufacturerTemplateId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerTemplateLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ManufacturerTemplateID", DbType.Int32, ManufacturerTemplateID);
+            db.AddInParameter(dbCommand, "ManufacturerTemplateID", DbType.Int32, manufacturerTemplateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    manufacturerTemplate = GetManufacturerTemplateFromReader(dataReader);
+                    item = GetManufacturerTemplateFromReader(dataReader);
                 }
             }
-            return manufacturerTemplate;
+            return item;
         }
 
         /// <summary>
         /// Inserts a manufacturer template
         /// </summary>
-        /// <param name="Name">The manufacturer template identifier</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The manufacturer template identifier</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer template</returns>
-        public override DBManufacturerTemplate InsertManufacturerTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBManufacturerTemplate InsertManufacturerTemplate(string name,
+            string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            DBManufacturerTemplate manufacturerTemplate = null;
+            DBManufacturerTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerTemplateInsert");
             db.AddOutParameter(dbCommand, "ManufacturerTemplateID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, TemplatePath);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, templatePath);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ManufacturerTemplateID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerTemplateID"));
-                manufacturerTemplate = GetManufacturerTemplateByID(ManufacturerTemplateID);
+                int manufacturerTemplateId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerTemplateID"));
+                item = GetManufacturerTemplateById(manufacturerTemplateId);
             }
-            return manufacturerTemplate;
+            return item;
         }
 
         /// <summary>
         /// Updates the manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifer</param>
-        /// <param name="Name">The manufacturer template identifier</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="manufacturerTemplateId">Manufacturer template identifer</param>
+        /// <param name="name">The manufacturer template identifier</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer template</returns>
-        public override DBManufacturerTemplate UpdateManufacturerTemplate(int ManufacturerTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBManufacturerTemplate UpdateManufacturerTemplate(int manufacturerTemplateId,
+            string name, string templatePath, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBManufacturerTemplate manufacturerTemplate = null;
+            DBManufacturerTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerTemplateUpdate");
-            db.AddInParameter(dbCommand, "ManufacturerTemplateID", DbType.Int32, ManufacturerTemplateID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, TemplatePath);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "ManufacturerTemplateID", DbType.Int32, manufacturerTemplateId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, templatePath);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                manufacturerTemplate = GetManufacturerTemplateByID(ManufacturerTemplateID);
+                item = GetManufacturerTemplateById(manufacturerTemplateId);
 
-            return manufacturerTemplate;
+            return item;
         }
 
         /// <summary>
         /// Deletes a product template
         /// </summary>
-        /// <param name="ProductTemplateID">Product template identifier</param>
-        public override void DeleteProductTemplate(int ProductTemplateID)
+        /// <param name="productTemplateId">Product template identifier</param>
+        public override void DeleteProductTemplate(int productTemplateId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DBProductTemplate productTemplate = GetProductTemplateByID(ProductTemplateID);
-            if (productTemplate != null)
-            {
-                DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTemplateDelete");
-                db.AddInParameter(dbCommand, "ProductTemplateID", DbType.Int32, ProductTemplateID);
-                int retValue = db.ExecuteNonQuery(dbCommand);
-            }
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTemplateDelete");
+            db.AddInParameter(dbCommand, "ProductTemplateID", DbType.Int32, productTemplateId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -383,82 +371,82 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Gets a product template
         /// </summary>
-        /// <param name="ProductTemplateID">Product template identifier</param>
+        /// <param name="productTemplateId">Product template identifier</param>
         /// <returns>Product template</returns>
-        public override DBProductTemplate GetProductTemplateByID(int ProductTemplateID)
+        public override DBProductTemplate GetProductTemplateById(int productTemplateId)
         {
-            DBProductTemplate productTemplate = null;
-            if (ProductTemplateID == 0)
-                return productTemplate;
+            DBProductTemplate item = null;
+            if (productTemplateId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTemplateLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductTemplateID", DbType.Int32, ProductTemplateID);
+            db.AddInParameter(dbCommand, "ProductTemplateID", DbType.Int32, productTemplateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    productTemplate = GetProductTemplateFromReader(dataReader);
+                    item = GetProductTemplateFromReader(dataReader);
                 }
             }
-            return productTemplate;
+            return item;
         }
 
         /// <summary>
         /// Inserts a product template
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product template</returns>
-        public override DBProductTemplate InsertProductTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBProductTemplate InsertProductTemplate(string name, string templatePath,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            DBProductTemplate productTemplate = null;
+            DBProductTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTemplateInsert");
             db.AddOutParameter(dbCommand, "ProductTemplateID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, TemplatePath);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, templatePath);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductTemplateID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductTemplateID"));
-                productTemplate = GetProductTemplateByID(ProductTemplateID);
+                int productTemplateId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductTemplateID"));
+                item = GetProductTemplateById(productTemplateId);
             }
-            return productTemplate;
+            return item;
         }
 
         /// <summary>
         /// Updates the product template
         /// </summary>
-        /// <param name="ProductTemplateID">The product template identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productTemplateId">The product template identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product template</returns>
-        public override DBProductTemplate UpdateProductTemplate(int ProductTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBProductTemplate UpdateProductTemplate(int productTemplateId,
+            string name, string templatePath, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBProductTemplate productTemplate = null;
+            DBProductTemplate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTemplateUpdate");
-            db.AddInParameter(dbCommand, "ProductTemplateID", DbType.Int32, ProductTemplateID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, TemplatePath);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "ProductTemplateID", DbType.Int32, productTemplateId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TemplatePath", DbType.String, templatePath);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productTemplate = GetProductTemplateByID(ProductTemplateID);
+                item = GetProductTemplateById(productTemplateId);
 
-
-            return productTemplate;
+            return item;
         }
 
         #endregion

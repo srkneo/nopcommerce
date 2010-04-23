@@ -18,12 +18,10 @@
 </div>
 <asp:GridView ID="gvCurrencies" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="CurrencyID" HeaderText="Currency ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Currencies.Name %>" ItemStyle-Width="20%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
-                <asp:HiddenField runat="server" ID="hfCurrencyID" Value='<%#Eval("CurrencyID")%>' />
+                <asp:HiddenField runat="server" ID="hfCurrencyId" Value='<%#Eval("CurrencyId")%>' />
             </ItemTemplate>
         </asp:TemplateField>
         <asp:BoundField DataField="CurrencyCode" HeaderText="<% $NopResources:Admin.Currencies.CurrencyCode %>"
@@ -63,7 +61,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Currencies.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="7%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="CurrencyDetails.aspx?CurrencyID=<%#Eval("CurrencyID")%>" title="<%#GetLocaleResourceString("Admin.Currencies.Edit.Tooltip")%>">
+                <a href="CurrencyDetails.aspx?CurrencyID=<%#Eval("CurrencyId")%>" title="<%#GetLocaleResourceString("Admin.Currencies.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Currencies.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

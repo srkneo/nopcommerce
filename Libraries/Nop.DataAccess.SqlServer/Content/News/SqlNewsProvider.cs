@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
     /// <summary>
     /// News provider for SQL Server
     /// </summary>
-    public partial class SQLNewsProvider : DBNewsProvider
+    public partial class SqlNewsProvider : DBNewsProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,28 +36,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         #region Utilities
         private DBNews GetNewsFromReader(IDataReader dataReader)
         {
-            DBNews news = new DBNews();
-            news.NewsID = NopSqlDataHelper.GetInt(dataReader, "NewsID");
-            news.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            news.Title = NopSqlDataHelper.GetString(dataReader, "Title");
-            news.Short = NopSqlDataHelper.GetString(dataReader, "Short");
-            news.Full = NopSqlDataHelper.GetString(dataReader, "Full");
-            news.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
-            news.AllowComments = NopSqlDataHelper.GetBoolean(dataReader, "AllowComments");
-            news.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return news;
+            var item = new DBNews();
+            item.NewsId = NopSqlDataHelper.GetInt(dataReader, "NewsID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Title = NopSqlDataHelper.GetString(dataReader, "Title");
+            item.Short = NopSqlDataHelper.GetString(dataReader, "Short");
+            item.Full = NopSqlDataHelper.GetString(dataReader, "Full");
+            item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
+            item.AllowComments = NopSqlDataHelper.GetBoolean(dataReader, "AllowComments");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         private DBNewsComment GetNewsCommentFromReader(IDataReader dataReader)
         {
-            DBNewsComment newsComment = new DBNewsComment();
-            newsComment.NewsCommentID = NopSqlDataHelper.GetInt(dataReader, "NewsCommentID");
-            newsComment.NewsID = NopSqlDataHelper.GetInt(dataReader, "NewsID");
-            newsComment.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            newsComment.Title = NopSqlDataHelper.GetString(dataReader, "Title");
-            newsComment.Comment = NopSqlDataHelper.GetString(dataReader, "Comment");
-            newsComment.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return newsComment;
+            var item = new DBNewsComment();
+            item.NewsCommentId = NopSqlDataHelper.GetInt(dataReader, "NewsCommentID");
+            item.NewsId = NopSqlDataHelper.GetInt(dataReader, "NewsID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.Title = NopSqlDataHelper.GetString(dataReader, "Title");
+            item.Comment = NopSqlDataHelper.GetString(dataReader, "Comment");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
         #endregion
 
@@ -100,50 +100,51 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Gets a news
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
+        /// <param name="newsId">The news identifier</param>
         /// <returns>News</returns>
-        public override DBNews GetNewsByID(int NewsID)
+        public override DBNews GetNewsById(int newsId)
         {
-            DBNews news = null;
+            DBNews item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, NewsID);
+            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    news = GetNewsFromReader(dataReader);
+                    item = GetNewsFromReader(dataReader);
                 }
             }
-            return news;
+            return item;
         }
 
         /// <summary>
         /// Deletes a news
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        public override void DeleteNews(int NewsID)
+        /// <param name="newsId">The news identifier</param>
+        public override void DeleteNews(int newsId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsDelete");
-            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, NewsID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets news item collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="NewsCount">News item count. 0 if you want to get all news</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="newsCount">News item count. 0 if you want to get all news</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>News item collection</returns>
-        public override DBNewsCollection GetNews(int LanguageID, int NewsCount, bool showHidden)
+        public override DBNewsCollection GetNews(int languageId, 
+            int newsCount, bool showHidden)
         {
             var result = new DBNewsCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLoadAll");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "NewsCount", DbType.Int32, NewsCount);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "NewsCount", DbType.Int32, newsCount);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -160,100 +161,101 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Inserts a news item
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The news title</param>
-        /// <param name="Short">The short text</param>
-        /// <param name="Full">The full text</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="AllowComments">A value indicating whether the entity allows comments</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The news title</param>
+        /// <param name="shortText">The short text</param>
+        /// <param name="fullText">The full text</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="allowComments">A value indicating whether the entity allows comments</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News item</returns>
-        public override DBNews InsertNews(int LanguageID, string Title, string Short,
-            string Full, bool Published, bool AllowComments, DateTime CreatedOn)
+        public override DBNews InsertNews(int languageId, string title, string shortText,
+            string fullText, bool published, bool allowComments, DateTime createdOn)
         {
-            DBNews news = null;
+            DBNews item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsInsert");
             db.AddOutParameter(dbCommand, "NewsID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Title", DbType.String, Title);
-            db.AddInParameter(dbCommand, "Short", DbType.String, Short);
-            db.AddInParameter(dbCommand, "Full", DbType.String, Full);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "AllowComments", DbType.Boolean, AllowComments);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Title", DbType.String, title);
+            db.AddInParameter(dbCommand, "Short", DbType.String, shortText);
+            db.AddInParameter(dbCommand, "Full", DbType.String, fullText);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "AllowComments", DbType.Boolean, allowComments);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int NewsID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@NewsID"));
-                news = GetNewsByID(NewsID);
+                int newsId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@NewsID"));
+                item = GetNewsById(newsId);
             }
-            return news;
+            return item;
         }
 
         /// <summary>
         /// Updates the news item
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The news title</param>
-        /// <param name="Short">The short text</param>
-        /// <param name="Full">The full text</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="AllowComments">A value indicating whether the entity allows comments</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The news title</param>
+        /// <param name="shortText">The short text</param>
+        /// <param name="fullText">The full text</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="allowComments">A value indicating whether the entity allows comments</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News item</returns>
-        public override DBNews UpdateNews(int NewsID, int LanguageID, string Title, string Short,
-            string Full, bool Published, bool AllowComments, DateTime CreatedOn)
+        public override DBNews UpdateNews(int newsId, int languageId,
+            string title, string shortText, string fullText, 
+            bool published, bool allowComments, DateTime createdOn)
         {
-            DBNews news = null;
+            DBNews item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsUpdate");
-            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, NewsID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Title", DbType.String, Title);
-            db.AddInParameter(dbCommand, "Short", DbType.String, Short);
-            db.AddInParameter(dbCommand, "Full", DbType.String, Full);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "AllowComments", DbType.Boolean, AllowComments);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Title", DbType.String, title);
+            db.AddInParameter(dbCommand, "Short", DbType.String, shortText);
+            db.AddInParameter(dbCommand, "Full", DbType.String, fullText);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "AllowComments", DbType.Boolean, allowComments);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                news = GetNewsByID(NewsID);
+                item = GetNewsById(newsId);
 
-            return news;
+            return item;
         }
 
         /// <summary>
         /// Gets a news comment
         /// </summary>
-        /// <param name="NewsCommentID">News comment identifer</param>
+        /// <param name="newsCommentId">News comment identifer</param>
         /// <returns>News comment</returns>
-        public override DBNewsComment GetNewsCommentByID(int NewsCommentID)
+        public override DBNewsComment GetNewsCommentById(int newsCommentId)
         {
-            DBNewsComment newsComment = null;
+            DBNewsComment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsCommentLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "NewsCommentID", DbType.Int32, NewsCommentID);
+            db.AddInParameter(dbCommand, "NewsCommentID", DbType.Int32, newsCommentId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    newsComment = GetNewsCommentFromReader(dataReader);
+                    item = GetNewsCommentFromReader(dataReader);
                 }
             }
-            return newsComment;
+            return item;
         }
 
         /// <summary>
         /// Gets a news comment collection by news identifier
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
+        /// <param name="newsId">The news identifier</param>
         /// <returns>News comment collection</returns>
-        public override DBNewsCommentCollection GetNewsCommentsByNewsID(int NewsID)
+        public override DBNewsCommentCollection GetNewsCommentsByNewsId(int newsId)
         {
             var result = new DBNewsCommentCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsCommentLoadByNewsID");
-            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, NewsID);
+            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -268,13 +270,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Deletes a news comment
         /// </summary>
-        /// <param name="NewsCommentID">The news comment identifier</param>
-        public override void DeleteNewsComment(int NewsCommentID)
+        /// <param name="newsCommentId">The news comment identifier</param>
+        public override void DeleteNewsComment(int newsCommentId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsCommentDelete");
-            db.AddInParameter(dbCommand, "NewsCommentID", DbType.Int32, NewsCommentID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "NewsCommentID", DbType.Int32, newsCommentId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -301,59 +303,60 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Inserts a news comment
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public override DBNewsComment InsertNewsComment(int NewsID, int CustomerID, string Title,
-            string Comment, DateTime CreatedOn)
+        public override DBNewsComment InsertNewsComment(int newsId, int customerId, 
+            string title, string comment, DateTime createdOn)
         {
-            DBNewsComment newsComment = null;
+            DBNewsComment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsCommentInsert");
             db.AddOutParameter(dbCommand, "NewsCommentID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, NewsID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "Title", DbType.String, Title);
-            db.AddInParameter(dbCommand, "Comment", DbType.String, Comment);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "Title", DbType.String, title);
+            db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int NewsCommentID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@NewsCommentID"));
-                newsComment = GetNewsCommentByID(NewsCommentID);
+                int newsCommentId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@NewsCommentID"));
+                item = GetNewsCommentById(newsCommentId);
             }
-            return newsComment;
+            return item;
         }
 
         /// <summary>
         /// Updates the news comment
         /// </summary>
-        /// <param name="NewsCommentID">The news comment identifier</param>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsCommentId">The news comment identifier</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public override DBNewsComment UpdateNewsComment(int NewsCommentID, int NewsID, int CustomerID, string Title,
-            string Comment, DateTime CreatedOn)
+        public override DBNewsComment UpdateNewsComment(int newsCommentId, 
+            int newsId, int customerId, string title,
+            string comment, DateTime createdOn)
         {
-            DBNewsComment newsComment = null;
+            DBNewsComment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsCommentUpdate");
-            db.AddInParameter(dbCommand, "NewsCommentID", DbType.Int32, NewsCommentID);
-            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, NewsID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "Title", DbType.String, Title);
-            db.AddInParameter(dbCommand, "Comment", DbType.String, Comment);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "NewsCommentID", DbType.Int32, newsCommentId);
+            db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "Title", DbType.String, title);
+            db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
 
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                newsComment = GetNewsCommentByID(NewsCommentID);
+                item = GetNewsCommentById(newsCommentId);
 
-            return newsComment;
+            return item;
         }
         #endregion
     }

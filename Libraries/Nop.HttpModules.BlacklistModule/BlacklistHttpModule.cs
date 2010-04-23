@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.HttpModules
                         }
                     }
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                 }
             }

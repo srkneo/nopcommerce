@@ -39,14 +39,14 @@ namespace NopSolutions.NopCommerce.Web
 
         private void CreateChildControlsTree()
         {
-            product = ProductManager.GetProductByID(this.ProductID);
+            product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 Control child = null;
 
                 ProductTemplate productTemplate = product.ProductTemplate;
                 if (productTemplate == null)
-                    throw new NopException(string.Format("Product template path can not be empty. Product ID={0}", product.ProductID));
+                    throw new NopException(string.Format("Product template path can not be empty. Product ID={0}", product.ProductId));
 
                 child = base.LoadControl(productTemplate.TemplatePath);
                 this.ProductPlaceHolder.Controls.Add(child);
@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
             }
 
             if (product == null || product.Deleted)
@@ -80,16 +80,16 @@ namespace NopSolutions.NopCommerce.Web
 
             if (!Page.IsPostBack)
             {
-                ProductManager.AddProductToRecentlyViewedList(product.ProductID);
-                NopContext.Current.LastProductPageVisited = CommonHelper.GetThisPageURL(true);
+                ProductManager.AddProductToRecentlyViewedList(product.ProductId);
+                NopContext.Current.LastProductPageVisited = CommonHelper.GetThisPageUrl(true);
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

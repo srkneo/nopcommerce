@@ -38,22 +38,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Gets or sets the tax rate identifier
         /// </summary>
-        public int TaxRateID { get; set; }
+        public int TaxRateId { get; set; }
 
         /// <summary>
         /// Gets or sets the tax category identifier
         /// </summary>
-        public int TaxCategoryID { get; set; }
+        public int TaxCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the state/province identifier
         /// </summary>
-        public int StateProvinceID { get; set; }
+        public int StateProvinceId { get; set; }
 
         /// <summary>
         /// Gets or sets the zip
@@ -64,6 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// Gets or sets the percentage
         /// </summary>
         public decimal Percentage { get; set; }
+
         #endregion 
 
         #region Custom Properties
@@ -75,7 +76,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         {
             get
             {
-                return TaxCategoryManager.GetTaxCategoryByID(TaxCategoryID);
+                return TaxCategoryManager.GetTaxCategoryById(this.TaxCategoryId);
             }
         }
 
@@ -86,7 +87,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         {
             get
             {
-                return CountryManager.GetCountryByID(CountryID);
+                return CountryManager.GetCountryById(this.CountryId);
             }
         }
 
@@ -97,7 +98,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         {
             get
             {
-                return StateProvinceManager.GetStateProvinceByID(StateProvinceID);
+                return StateProvinceManager.GetStateProvinceById(this.StateProvinceId);
             }
         }
 

@@ -3,7 +3,7 @@
 <div class="poll-block">
     <asp:Label ID="lblPollName" runat="server" CssClass="poll-display-text"></asp:Label>
     <asp:Panel ID="pnlTakePoll" runat="server" CssClass="poll-take-poll">
-        <asp:RadioButtonList ID="rblPollAnswers" runat="server" DataTextField="Name" DataValueField="PollAnswerID">
+        <asp:RadioButtonList ID="rblPollAnswers" runat="server" DataTextField="Name" DataValueField="PollAnswerId">
         </asp:RadioButtonList>
         <asp:Button ID="btnSubmitVoteRecord" runat="server" OnClick="btnSubmitVoteRecord_Click"
             Text="<% $NopResources:Polls.SubmitVoteRecordButton %>" CssClass="submitpollvotebutton" />
@@ -11,7 +11,7 @@
             Display="Dynamic" ErrorMessage="<% $NopResources:Polls.SelectAnOption %>" ToolTip="<% $NopResources:Polls.SelectAnOption %>"></asp:RequiredFieldValidator>
     </asp:Panel>
     <asp:Panel ID="pnlPollResults" runat="server" CssClass="poll-results">
-        <asp:DataList ID="dlResults" runat="server" DataKeyField="PollAnswerID" OnItemDataBound="dlResults_ItemDataBound">
+        <asp:DataList ID="dlResults" runat="server" DataKeyField="PollAnswerId" OnItemDataBound="dlResults_ItemDataBound">
             <ItemTemplate>
                 <%# Eval("Name") %>
                 (<%# Eval("Count") %>

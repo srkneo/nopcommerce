@@ -27,14 +27,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Finds a ProductManufacturer item by specified identifiers
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ManufacturerID">Manufactureridentifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="manufacturerId">Manufactureridentifier</param>
         /// <returns>Found item instance</returns>
-        public ProductManufacturer FindProductManufacturer(int ProductID, int ManufacturerID)
+        public ProductManufacturer FindProductManufacturer(int productId, int manufacturerId)
         {
             #region Methods
             foreach (ProductManufacturer productManufacturer in this)
-                if (productManufacturer.ProductID == ProductID && productManufacturer.ManufacturerID == ManufacturerID)
+                if (productManufacturer.ProductId == productId && productManufacturer.ManufacturerId == manufacturerId)
                     return productManufacturer;
             return null;
             #endregion

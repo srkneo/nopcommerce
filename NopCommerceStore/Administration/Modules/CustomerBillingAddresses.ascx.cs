@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Customer customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer != null)
             {
                 AddressCollection billingAddressCollection = customer.BillingAddresses;
@@ -61,14 +61,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void AddBillingAddress_Click(object sender, EventArgs e)
         {
-            Response.Redirect(string.Format("AddressAdd.aspx?CustomerID={0}&IsBillingAddress={1}", CustomerID, true));
+            Response.Redirect(string.Format("AddressAdd.aspx?CustomerID={0}&IsBillingAddress={1}", CustomerId, true));
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
     }

@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.eWayUK
 
         private void BindData()
         {
-            txtCustomerID.Text = SettingManager.GetSettingValue("PaymentMethod.eWayUK.CustomerID");
+            txtCustomerId.Text = SettingManager.GetSettingValue("PaymentMethod.eWayUK.CustomerId");
             txtUsername.Text = SettingManager.GetSettingValue("PaymentMethod.eWayUK.Username");
             txtPaymentPage.Text = SettingManager.GetSettingValue("PaymentMethod.eWayUK.PaymentPage");
             txtAdditionalFee.Value = SettingManager.GetSettingValueDecimalNative("PaymentMethod.eWayUK.AdditionalFee");
@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.eWayUK
 
         public void Save()
         {
-            SettingManager.SetParam("PaymentMethod.eWayUK.CustomerID", txtCustomerID.Text);
+            SettingManager.SetParam("PaymentMethod.eWayUK.CustomerId", txtCustomerId.Text);
             SettingManager.SetParam("PaymentMethod.eWayUK.Username", txtUsername.Text);
             SettingManager.SetParam("PaymentMethod.eWayUK.PaymentPage", txtPaymentPage.Text);
             SettingManager.SetParamNative("PaymentMethod.eWayUK.AdditionalFee", txtAdditionalFee.Value);

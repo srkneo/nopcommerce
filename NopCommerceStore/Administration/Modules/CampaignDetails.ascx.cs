@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     Campaign campaign = ctrlCampaignInfo.SaveInfo();
 
-                    Response.Redirect("CampaignDetails.aspx?CampaignID=" + campaign.CampaignID.ToString());
+                    Response.Redirect("CampaignDetails.aspx?CampaignID=" + campaign.CampaignId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                CampaignManager.DeleteCampaign(this.CampaignID);
+                CampaignManager.DeleteCampaign(this.CampaignId);
                 Response.Redirect("Campaigns.aspx");
             }
             catch (Exception exc)
@@ -63,11 +63,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CampaignID
+        public int CampaignId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CampaignID");
+                return CommonHelper.QueryStringInt("CampaignId");
             }
         }
     }

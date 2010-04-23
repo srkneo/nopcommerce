@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Language language = LanguageManager.GetLanguageByID(this.LanguageID);
-            Topic topic = TopicManager.GetTopicByID(this.TopicID);
+            Language language = LanguageManager.GetLanguageById(this.LanguageId);
+            Topic topic = TopicManager.GetTopicById(this.TopicId);
             if (language != null && topic != null)
             {
                 this.lblLanguage.Text = language.Name;
                 this.lblTopic.Text = topic.Name;
-                LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, this.LanguageID);
+                LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, this.LanguageId);
                 if (localizedTopic != null)
                 {
                     this.txtTitle.Text = localizedTopic.Title;
-                    string topicURL = SEOHelper.GetTopicUrl(localizedTopic.TopicID, localizedTopic.Title);
+                    string topicURL = SEOHelper.GetTopicUrl(localizedTopic.TopicId, localizedTopic.Title);
                     this.hlURL.NavigateUrl = topicURL;
                     this.hlURL.Text = topicURL;
                     this.txtBody.Content = localizedTopic.Body;
@@ -86,24 +86,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    Topic topic = TopicManager.GetTopicByID(this.TopicID);
+                    Topic topic = TopicManager.GetTopicById(this.TopicId);
                     if (topic != null)
                     {
                         DateTime nowDT = DateTime.Now;
-                        LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, this.LanguageID);
+                        LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, this.LanguageId);
                         if (localizedTopic != null)
                         {
-                            localizedTopic = TopicManager.UpdateLocalizedTopic(localizedTopic.TopicLocalizedID,
-                                localizedTopic.TopicID, localizedTopic.LanguageID, txtTitle.Text, txtBody.Content,
+                            localizedTopic = TopicManager.UpdateLocalizedTopic(localizedTopic.TopicLocalizedId,
+                                localizedTopic.TopicId, localizedTopic.LanguageId, txtTitle.Text, txtBody.Content,
                                 localizedTopic.CreatedOn, nowDT, txtMetaKeywords.Text, txtMetaDescription.Text, txtMetaTitle.Text);
-                            Response.Redirect("TopicLocalizedDetails.aspx?TopicID=" + localizedTopic.TopicID.ToString() + "&LanguageID=" + localizedTopic.LanguageID.ToString());
+                            Response.Redirect("TopicLocalizedDetails.aspx?TopicID=" + localizedTopic.TopicId.ToString() + "&LanguageID=" + localizedTopic.LanguageId.ToString());
                         }
                         else
                         {
-                            localizedTopic = TopicManager.InsertLocalizedTopic(this.TopicID,
-                                this.LanguageID, txtTitle.Text, txtBody.Content, nowDT, nowDT,
+                            localizedTopic = TopicManager.InsertLocalizedTopic(this.TopicId,
+                                this.LanguageId, txtTitle.Text, txtBody.Content, nowDT, nowDT,
                                 txtMetaKeywords.Text, txtMetaDescription.Text, txtMetaTitle.Text);
-                            Response.Redirect("TopicLocalizedDetails.aspx?TopicID=" + this.TopicID.ToString() + "&LanguageID=" + this.LanguageID.ToString());
+                            Response.Redirect("TopicLocalizedDetails.aspx?TopicID=" + this.TopicId.ToString() + "&LanguageID=" + this.LanguageId.ToString());
                         }
                     }
                     else
@@ -120,12 +120,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Topic topic = TopicManager.GetTopicByID(this.TopicID);
+                Topic topic = TopicManager.GetTopicById(this.TopicId);
                 if (topic != null)
                 {
-                    LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, this.LanguageID);
+                    LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, this.LanguageId);
                     if (localizedTopic != null)
-                        TopicManager.DeleteLocalizedTopic(localizedTopic.TopicLocalizedID);
+                        TopicManager.DeleteLocalizedTopic(localizedTopic.TopicLocalizedId);
                 }
 
                 Response.Redirect("Topics.aspx");
@@ -136,19 +136,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int TopicID
+        public int TopicId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TopicID");
+                return CommonHelper.QueryStringInt("TopicId");
             }
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

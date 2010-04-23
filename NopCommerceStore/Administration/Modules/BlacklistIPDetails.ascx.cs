@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     BannedIpAddress ipAddress = ctrlBlacklist.SaveBannedIpAddressInfo();
-                    Response.Redirect("BlacklistIPDetails.aspx?BannedIpAddressID=" + ipAddress.BannedIpAddressID.ToString());
+                    Response.Redirect("BlacklistIPDetails.aspx?BannedIpAddressID=" + ipAddress.BannedIpAddressId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                IpBlacklistManager.DeleteBannedIpAddress(BannedIpAddressID);
+                IpBlacklistManager.DeleteBannedIpAddress(this.BannedIpAddressId);
                 Response.Redirect("Blacklist.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int BannedIpAddressID
+        public int BannedIpAddressId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BannedIpAddressID");
+                return CommonHelper.QueryStringInt("BannedIpAddressId");
             }
         }
     }

@@ -10,7 +10,7 @@
         <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True" />
     </Fields>
 </asp:DataPager>
-<asp:ListView ID="lvNewsComments" runat="server" DataKeyNames="NewsCommentID" OnPagePropertiesChanging="lvNewsComments_OnPagePropertiesChanging">
+<asp:ListView ID="lvNewsComments" runat="server" DataKeyNames="NewsCommentId" OnPagePropertiesChanging="lvNewsComments_OnPagePropertiesChanging">
     <LayoutTemplate>
         <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
     </LayoutTemplate>
@@ -26,18 +26,18 @@
         <p>
             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
             -
-            <%#GetCustomerInfo (Convert.ToInt32(Eval("CustomerID")))%>
+            <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
         </p>
         <p>
-            <a href="NewsDetails.aspx?NewsID=<%#Eval("NewsID")%>">
+            <a href="NewsDetails.aspx?NewsID=<%#Eval("NewsId")%>">
                 <%#Server.HtmlEncode(((News)Eval("News")).Title)%></a>
         </p>
         <asp:Button runat="server" ID="btnEditNewsComment" CssClass="adminButton" Text="<% $NopResources:Admin.NewsComments.EditButton.Text %>"
             ToolTip="<% $NopResources:Admin.NewsComments.EditButton.Tooltip %>" CommandName="Edit"
-            OnCommand="btnEditNewsComment_Click" CommandArgument='<%#Eval("NewsCommentID")%>' />
+            OnCommand="btnEditNewsComment_Click" CommandArgument='<%#Eval("NewsCommentId")%>' />
         <asp:Button runat="server" ID="btnDeleteNewsComment" CssClass="adminButton" Text="<% $NopResources:Admin.NewsComments.Delete.Text %>"
             ToolTip="<% $NopResources:Admin.NewsComments.Delete.Tooltip %>" CommandName="Delete"
-            OnCommand="btnDeleteNewsComment_Click" CommandArgument='<%#Eval("NewsCommentID")%>' />
+            OnCommand="btnDeleteNewsComment_Click" CommandArgument='<%#Eval("NewsCommentId")%>' />
     </ItemTemplate>
     <ItemSeparatorTemplate>
         <hr />

@@ -129,8 +129,8 @@
 
     function toggleManageStock() {
         var selectedManageInventoryMethod = document.getElementById('<%=ddlManageStock.ClientID %>');
-        var selectedManageInventoryMethodID = selectedManageInventoryMethod.options[selectedManageInventoryMethod.selectedIndex].value;
-        if (selectedManageInventoryMethodID == 0) {
+        var selectedManageInventoryMethodId = selectedManageInventoryMethod.options[selectedManageInventoryMethod.selectedIndex].value;
+        if (selectedManageInventoryMethodId == 0) {
             $('#pnlStockQuantity').hide();
             $('#pnlDisplayStockAvailability').hide();
             $('#pnlMinStockQuantity').hide();
@@ -138,7 +138,7 @@
             $('#pnlNotifyForQuantityBelow').hide();
             $('#pnlAllowOutOfStockOrders').hide();
         }
-        else if (selectedManageInventoryMethodID == 1) {
+        else if (selectedManageInventoryMethodId == 1) {
             $('#pnlStockQuantity').show();
             $('#pnlDisplayStockAvailability').show();
             $('#pnlMinStockQuantity').show();
@@ -212,7 +212,7 @@
             <div id="idTab_Info<%# Container.ItemIndex+2 %>" class="tab">
                 <i>
                     <%=GetLocaleResourceString("Admin.Localizable.EmptyFieldNote")%></i>
-                <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                <asp:Label ID="lblLanguageId" runat="server" Text='<%#Eval("LanguageId") %>' Visible="false"></asp:Label>
                 <table class="adminContent">
                     <tr>
                         <td class="adminTitle">

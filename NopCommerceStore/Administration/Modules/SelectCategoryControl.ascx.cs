@@ -30,18 +30,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             BindData(0, "--");
         }
 
-        public void BindData(int ForParentEntityID, string prefix)
+        public void BindData(int forParentEntityId, string prefix)
         {
-            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(ForParentEntityID);
+            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(forParentEntityId);
 
             foreach (Category category in categoryCollection)
             {
-                ListItem item = new ListItem(prefix + category.Name, category.CategoryID.ToString());
+                ListItem item = new ListItem(prefix + category.Name, category.CategoryId.ToString());
                 this.ddlCategories.Items.Add(item);
-                if (category.CategoryID == this.selectedCategoryId)
+                if (category.CategoryId == this.selectedCategoryId)
                     item.Selected = true;
-                if (CategoryManager.GetAllCategories(category.CategoryID).Count > 0)
-                    BindData(category.CategoryID, prefix + "--");
+                if (CategoryManager.GetAllCategories(category.CategoryId).Count > 0)
+                    BindData(category.CategoryId, prefix + "--");
             }
 
             this.ddlCategories.DataBind();

@@ -18,11 +18,10 @@
         <ContentTemplate>
             <asp:GridView ID="gvBannedIpAddress" runat="server" AutoGenerateColumns="False" Width="100%">
                 <Columns>
-                    <asp:BoundField DataField="BannedIpAddressID" HeaderText="ID" Visible="False"></asp:BoundField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Blacklist.IpAddress.IPAddress %>"
                         ItemStyle-Width="20%">
                         <ItemTemplate>
-                            <a href="BlacklistIPDetails.aspx?BannedIpAddressID=<%#Eval("BannedIpAddressID")%>"
+                            <a href="BlacklistIPDetails.aspx?BannedIpAddressID=<%#Eval("BannedIpAddressId")%>"
                                 title="<%#GetLocaleResourceString("Admin.Blacklist.IpAddress.IPAddress.Edit")%>">
                                 <%#Server.HtmlEncode(Eval("Address").ToString())%>
                             </a>
@@ -50,11 +49,10 @@
         <ContentTemplate>
             <asp:GridView ID="gvBannedIpNetwork" runat="server" AutoGenerateColumns="False" Width="100%">
                 <Columns>
-                    <asp:BoundField DataField="BannedIpNetworkID" HeaderText="ID" Visible="False"></asp:BoundField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Blacklist.IpNetwork.IPRange %>"
                         ItemStyle-Width="20%">
                         <ItemTemplate>
-                            <a href="BlacklistNetworkDetails.aspx?BannedIpNetworkID=<%#Eval("BannedIpNetworkID")%>"
+                            <a href="BlacklistNetworkDetails.aspx?BannedIpNetworkID=<%#Eval("BannedIpNetworkId")%>"
                                 title="<%#GetLocaleResourceString("Admin.Blacklist.IpNetwork.IPRange.Edit")%>">
                                 <%#Server.HtmlEncode(Eval("StartAddress").ToString())%>-<%#Server.HtmlEncode(Eval("EndAddress").ToString())%>
                             </a>

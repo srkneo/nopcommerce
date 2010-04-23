@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     CreditCardType creditCardType = ctrlCreditCardTypeInfo.SaveInfo();
-                    Response.Redirect("CreditCardTypeDetails.aspx?CreditCardTypeID=" + creditCardType.CreditCardTypeID.ToString());
+                    Response.Redirect("CreditCardTypeDetails.aspx?CreditCardTypeID=" + creditCardType.CreditCardTypeId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                CreditCardTypeManager.MarkCreditCardTypeAsDeleted(this.CreditCardTypeID);
+                CreditCardTypeManager.MarkCreditCardTypeAsDeleted(this.CreditCardTypeId);
                 Response.Redirect("CreditCardTypes.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CreditCardTypeID
+        public int CreditCardTypeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CreditCardTypeID");
+                return CommonHelper.QueryStringInt("CreditCardTypeId");
             }
         }
     }

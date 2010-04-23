@@ -40,10 +40,10 @@ namespace NopSolutions.NopCommerce.Web.Boards
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
             }
 
-            ForumGroup forumGroup = ForumManager.GetForumGroupByID(this.ForumGroupID);
+            ForumGroup forumGroup = ForumManager.GetForumGroupById(this.ForumGroupId);
             if (forumGroup != null)
             {
                 string title = forumGroup.Name;
@@ -55,15 +55,15 @@ namespace NopSolutions.NopCommerce.Web.Boards
         {
             base.OnInit(e);
             
-            ctrlForumGroup.ForumGroupID = this.ForumGroupID;
-            ctrlForumBreadcrumb.ForumGroupID = this.ForumGroupID;       
+            ctrlForumGroup.ForumGroupId = this.ForumGroupId;
+            ctrlForumBreadcrumb.ForumGroupId = this.ForumGroupId;       
         }
 
-        public int ForumGroupID
+        public int ForumGroupId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ForumGroupID");
+                return CommonHelper.QueryStringInt("ForumGroupId");
             }
         }
     }

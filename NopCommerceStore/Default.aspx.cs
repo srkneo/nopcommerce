@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             bool showCategoriesOnMainPage = SettingManager.GetSettingValueBoolean("Display.ShowCategoriesOnMainPage");
             if (showCategoriesOnMainPage)
-                ctrlHomePageCategories.ParentCategoryID = 0;
+                ctrlHomePageCategories.ParentCategoryId = 0;
             else
                 ctrlHomePageCategories.Visible = false;
             

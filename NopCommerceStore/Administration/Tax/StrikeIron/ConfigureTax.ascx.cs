@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.StrikeIron
 
         private void BindData()
         {
-            txtUserID.Text = SettingManager.GetSettingValue("Tax.TaxProvider.StrikeIron.UserID");
+            txtUserId.Text = SettingManager.GetSettingValue("Tax.TaxProvider.StrikeIron.UserId");
             txtPassword.Text = SettingManager.GetSettingValue("Tax.TaxProvider.StrikeIron.Password");
         }
 
@@ -50,10 +50,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.StrikeIron
             {
                 StrikeIronTaxProvider strikeIronTaxProvider = new StrikeIronTaxProvider();
                 string zip = txtZip_TestUSA.Text.Trim();
-                string userID = txtUserID.Text.Trim();
+                string userId = txtUserId.Text.Trim();
                 string password = txtPassword.Text.Trim();
                 string error = string.Empty;
-                decimal taxRate = strikeIronTaxProvider.GetTaxRateUSA(zip, userID, password, ref error);
+                decimal taxRate = strikeIronTaxProvider.GetTaxRateUSA(zip, userId, password, ref error);
                 if (!String.IsNullOrEmpty(error))
                 {
                     lblTestResultUSA.Text = error;
@@ -75,10 +75,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.StrikeIron
             {
                 StrikeIronTaxProvider strikeIronTaxProvider = new StrikeIronTaxProvider();
                 string province = txtProvince_TestCanada.Text.Trim();
-                string userID = txtUserID.Text.Trim();
+                string userId = txtUserId.Text.Trim();
                 string password = txtPassword.Text.Trim();
                 string error = string.Empty;
-                decimal taxRate = strikeIronTaxProvider.GetTaxRateCanada(province, userID, password, ref error);
+                decimal taxRate = strikeIronTaxProvider.GetTaxRateCanada(province, 
+                    userId, password, ref error);
                 if (!String.IsNullOrEmpty(error))
                 {
                     lblTestResultCanada.Text = error;
@@ -96,7 +97,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.StrikeIron
 
         public void Save()
         {
-            SettingManager.SetParam("Tax.TaxProvider.StrikeIron.UserID", txtUserID.Text);
+            SettingManager.SetParam("Tax.TaxProvider.StrikeIron.UserId", txtUserId.Text);
             SettingManager.SetParam("Tax.TaxProvider.StrikeIron.Password", txtPassword.Text);
         }
     }

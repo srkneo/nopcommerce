@@ -50,23 +50,23 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             pnlError.Visible = false;
 
-            var forumTopic = ForumManager.GetTopicByID(this.ForumTopicID);
+            var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
 
             if (forumTopic == null)
             {
-                Response.Redirect(SEOHelper.GetForumMainURL());
+                Response.Redirect(SEOHelper.GetForumMainUrl());
             }
 
             if (!ForumManager.IsUserAllowedToMoveTopic(NopContext.Current.User, forumTopic))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
-            ctrlForumBreadcrumb.ForumTopicID = forumTopic.ForumTopicID;
+            ctrlForumBreadcrumb.ForumTopicId = forumTopic.ForumTopicId;
             ctrlForumBreadcrumb.BindData();
 
-            ctrlForumSelector.SelectedForumId = forumTopic.ForumID;
+            ctrlForumSelector.SelectedForumId = forumTopic.ForumId;
             ctrlForumSelector.BindData();
         }
 
@@ -74,14 +74,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             try
             {
-                var forumTopic = ForumManager.GetTopicByID(this.ForumTopicID);
+                var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
                 if (forumTopic == null)
                 {
-                    Response.Redirect(SEOHelper.GetForumMainURL());
+                    Response.Redirect(SEOHelper.GetForumMainUrl());
                 }
 
-                ForumManager.MoveTopic(forumTopic.ForumTopicID, ctrlForumSelector.SelectedForumId);
-                string topicURL = SEOHelper.GetForumTopicURL(forumTopic.ForumTopicID);
+                ForumManager.MoveTopic(forumTopic.ForumTopicId, ctrlForumSelector.SelectedForumId);
+                string topicURL = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
                 Response.Redirect(topicURL);
             }
             catch (Exception exc)
@@ -95,15 +95,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             try
             {
-                var forumTopic = ForumManager.GetTopicByID(this.ForumTopicID);
+                var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
                 if (forumTopic != null)
                 {
-                    string topicUrl = SEOHelper.GetForumTopicURL(forumTopic.ForumTopicID);
+                    string topicUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
                     Response.Redirect(topicUrl);
                 }
                 else
                 {
-                    Response.Redirect(SEOHelper.GetForumMainURL());
+                    Response.Redirect(SEOHelper.GetForumMainUrl());
                 }
             }
             catch (Exception exc)
@@ -113,11 +113,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ForumTopicID
+        public int ForumTopicId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TopicID");
+                return CommonHelper.QueryStringInt("TopicId");
             }
         }
     }

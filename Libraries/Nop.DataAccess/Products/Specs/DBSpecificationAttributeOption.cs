@@ -36,12 +36,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets or sets the specification attribute option identifier
         /// </summary>
-        public int SpecificationAttributeOptionID { get; set; }
+        public int SpecificationAttributeOptionId { get; set; }
 
         /// <summary>
         /// Gets or sets the specification attribute identifier
         /// </summary>
-        public int SpecificationAttributeID { get; set; }
+        public int SpecificationAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

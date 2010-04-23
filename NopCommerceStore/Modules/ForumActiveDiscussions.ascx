@@ -9,7 +9,7 @@
         <%if (!this.HideViewAllLink)
           { %>
         <div class="viewall">
-            [<a href="<%= SEOHelper.GetForumActiveDiscussionsURL() %>"><%=GetLocaleResourceString("Forum.ActiveDiscussions.ViewAll")%></a>]
+            [<a href="<%= SEOHelper.GetForumActiveDiscussionsUrl() %>"><%=GetLocaleResourceString("Forum.ActiveDiscussions.ViewAll")%></a>]
         </div>
         <%} %>
     </div>

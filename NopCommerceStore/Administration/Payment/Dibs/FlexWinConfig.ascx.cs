@@ -11,7 +11,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Dibs
         {
             if(!Page.IsPostBack)
             {
-                txtMerchantID.Text = FlexWinSettings.MerchantID.ToString();
+                txtMerchantId.Text = FlexWinSettings.MerchantId.ToString();
                 txtGatewayUrl.Text = FlexWinSettings.GatewayUrl;
                 cbUseSandbox.Checked = FlexWinSettings.UseSandbox;
                 txtMD5Key1.Text = FlexWinSettings.MD5Key1;
@@ -22,7 +22,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Dibs
 
         public void Save()
         {
-            FlexWinSettings.MerchantID = Int32.Parse(txtMerchantID.Text);
+            FlexWinSettings.MerchantId = Int32.Parse(txtMerchantId.Text);
             FlexWinSettings.GatewayUrl = txtGatewayUrl.Text;
             FlexWinSettings.UseSandbox = cbUseSandbox.Checked;
             FlexWinSettings.MD5Key1 = txtMD5Key1.Text;

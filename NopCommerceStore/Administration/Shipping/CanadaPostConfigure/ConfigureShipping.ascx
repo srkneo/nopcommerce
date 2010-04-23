@@ -22,7 +22,7 @@
             Canada Post Customer ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtCustomerID" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtCustomerId" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
 </table>

@@ -12,7 +12,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Amazon
         {
             if(!Page.IsPostBack)
             {
-                txtAccountID.Text = SimplePaySettings.AccountId;
+                txtAccountId.Text = SimplePaySettings.AccountId;
                 txtGatewayUrl.Text = SimplePaySettings.GatewayUrl;
                 cbSettleImmediately.Checked = SimplePaySettings.SettleImmediately;
                 txtAccessKey.Text = SimplePaySettings.AccessKey;
@@ -23,7 +23,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Amazon
 
         public void Save()
         {
-            SimplePaySettings.AccountId = txtAccountID.Text;
+            SimplePaySettings.AccountId = txtAccountId.Text;
             SimplePaySettings.GatewayUrl = txtGatewayUrl.Text;
             SimplePaySettings.SettleImmediately = cbSettleImmediately.Checked;
             SimplePaySettings.AccessKey = txtAccessKey.Text;

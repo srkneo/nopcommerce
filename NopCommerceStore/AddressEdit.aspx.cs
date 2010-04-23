@@ -36,9 +36,9 @@ namespace NopSolutions.NopCommerce.Web
         private void BindData()
         {
             AddressEditControl.IsBillingAddress = this.IsBillingAddress;
-            if (this.AddressID > 0)
+            if (this.AddressId > 0)
             {
-                var address = CustomerManager.GetAddressByID(this.AddressID);
+                var address = CustomerManager.GetAddressById(this.AddressId);
                 if (address != null)
                 {
                     lHeaderTitle.Text = GetLocaleResourceString("Address.UpdateAddressTitle");
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureSSL();
+                CommonHelper.EnsureSsl();
             }
             
             string title = GetLocaleResourceString("PageTitle.AddressEdit");
@@ -75,22 +75,22 @@ namespace NopSolutions.NopCommerce.Web
 
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
-            var address = CustomerManager.GetAddressByID(this.AddressID);
+            var address = CustomerManager.GetAddressById(this.AddressId);
             if (address != null)
             {
                 var addressCustomer = address.Customer;
-                if (addressCustomer == null || addressCustomer.CustomerID != NopContext.Current.User.CustomerID)
+                if (addressCustomer == null || addressCustomer.CustomerId != NopContext.Current.User.CustomerId)
                 {
-                    string loginURL = SEOHelper.GetLoginPageURL(true);
+                    string loginURL = SEOHelper.GetLoginPageUrl(true);
                     Response.Redirect(loginURL);
                 }
 
                 if (DeleteAddress)
                 {
-                    CustomerManager.DeleteAddress(address.AddressID);
+                    CustomerManager.DeleteAddress(address.AddressId);
                     Response.Redirect("~/account.aspx");
                 }
             }
@@ -105,25 +105,25 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (Page.IsValid)
             {
-                var oldAddress = CustomerManager.GetAddressByID(this.AddressID);
+                var oldAddress = CustomerManager.GetAddressById(this.AddressId);
                 var inputedAddress = AddressEditControl.Address;
                 if (oldAddress != null)
                 {
-                    CustomerManager.UpdateAddress(oldAddress.AddressID, oldAddress.CustomerID, oldAddress.IsBillingAddress,
+                    CustomerManager.UpdateAddress(oldAddress.AddressId, oldAddress.CustomerId, oldAddress.IsBillingAddress,
                         inputedAddress.FirstName, inputedAddress.LastName,
                         inputedAddress.PhoneNumber, inputedAddress.Email, inputedAddress.FaxNumber,
                         inputedAddress.Company, inputedAddress.Address1, inputedAddress.Address2,
-                        inputedAddress.City, inputedAddress.StateProvinceID, inputedAddress.ZipPostalCode,
-                        inputedAddress.CountryID, oldAddress.CreatedOn, DateTime.Now);
+                        inputedAddress.City, inputedAddress.StateProvinceId, inputedAddress.ZipPostalCode,
+                        inputedAddress.CountryId, oldAddress.CreatedOn, DateTime.Now);
                 }
                 else
                 {
-                    CustomerManager.InsertAddress(NopContext.Current.User.CustomerID, this.IsBillingAddress,
+                    CustomerManager.InsertAddress(NopContext.Current.User.CustomerId, this.IsBillingAddress,
                         inputedAddress.FirstName, inputedAddress.LastName,
                         inputedAddress.PhoneNumber, inputedAddress.Email, inputedAddress.FaxNumber,
                         inputedAddress.Company, inputedAddress.Address1, inputedAddress.Address2,
-                        inputedAddress.City, inputedAddress.StateProvinceID, inputedAddress.ZipPostalCode,
-                        inputedAddress.CountryID, DateTime.Now, DateTime.Now);
+                        inputedAddress.City, inputedAddress.StateProvinceId, inputedAddress.ZipPostalCode,
+                        inputedAddress.CountryId, DateTime.Now, DateTime.Now);
                 }
                 Response.Redirect("~/account.aspx");
             }
@@ -131,15 +131,15 @@ namespace NopSolutions.NopCommerce.Web
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            CustomerManager.DeleteAddress(this.AddressID);
+            CustomerManager.DeleteAddress(this.AddressId);
             Response.Redirect("~/account.aspx");
         }
-        
-        public int AddressID
+
+        public int AddressId
         {
             get
             {
-                return CommonHelper.QueryStringInt("AddressID");
+                return CommonHelper.QueryStringInt("AddressId");
             }
         }
 

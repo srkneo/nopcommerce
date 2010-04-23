@@ -15,20 +15,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             private DataControlRowType _templateType;
             private string _columnName;
             private string _dataType;
-            private int _shippingMethodID;
+            private int _shippingMethodId;
             #endregion
 
             #region Ctor
-            public NopGridViewCustomTemplate(DataControlRowType type, string columnName, string DataType) : this(type, columnName, DataType, 0)
+            public NopGridViewCustomTemplate(DataControlRowType type, 
+                string columnName, string DataType) : this(type, columnName, DataType, 0)
             {
             }
 
-            public NopGridViewCustomTemplate(DataControlRowType type, string columnName, string dataType, int shippingMethodID)
+            public NopGridViewCustomTemplate(DataControlRowType type, 
+                string columnName, string dataType, int shippingMethodId)
             {
                 _templateType = type;
                 _columnName = columnName;
                 _dataType = dataType;
-                _shippingMethodID = shippingMethodID;
+                _shippingMethodId = shippingMethodId;
             }
             #endregion
 
@@ -47,26 +49,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     case "Checkbox":
                         ShippingMethodCountryMappingHelperClass map1 = row.DataItem as ShippingMethodCountryMappingHelperClass;
-                        (ctrl as CheckBox).Checked = map1.Restrict[_shippingMethodID];
+                        (ctrl as CheckBox).Checked = map1.Restrict[_shippingMethodId];
                         break;
                 }
             }
 
-            private void hfCountryID_DataBinding(Object sender, EventArgs e)
+            private void hfCountryId_DataBinding(Object sender, EventArgs e)
             {
                 HiddenField hf = sender as HiddenField;
                 GridViewRow row = hf.NamingContainer as GridViewRow;
 
                 ShippingMethodCountryMappingHelperClass map1 = row.DataItem as ShippingMethodCountryMappingHelperClass;
-                hf.Value = map1.CountryID.ToString();
+                hf.Value = map1.CountryId.ToString();
             }
             #endregion
 
             #region Methods
             public void InstantiateIn(Control container)
             {
-                DataControlFieldCell hc = null;
-
                 switch(_templateType)
                 {
                     case DataControlRowType.Header:
@@ -85,11 +85,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                             case "Checkbox":
                                 ctrl = new CheckBox();
-                                ctrl.ID = String.Format("cbRestrict_{0}", _shippingMethodID);
-                                HiddenField hfCountryID = new HiddenField();
-                                hfCountryID.ID = String.Format("hfCountryID_{0}", _shippingMethodID);
-                                hfCountryID.DataBinding += new EventHandler(hfCountryID_DataBinding);
-                                container.Controls.Add(hfCountryID);
+                                ctrl.ID = String.Format("cbRestrict_{0}", _shippingMethodId);
+                                HiddenField hfCountryId = new HiddenField();
+                                hfCountryId.ID = String.Format("hfCountryId_{0}", _shippingMethodId);
+                                hfCountryId.DataBinding += new EventHandler(hfCountryId_DataBinding);
+                                container.Controls.Add(hfCountryId);
                                 break;
 
                             default:
@@ -106,7 +106,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected class ShippingMethodCountryMappingHelperClass
         {
-            public int CountryID 
+            public int CountryId 
             { 
                 get;
                 set; 
@@ -138,7 +138,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             foreach(ShippingMethod shippingMethod in shippingMethodCollection)
             {
                 TemplateField tf = new TemplateField();
-                tf.ItemTemplate = new NopGridViewCustomTemplate(DataControlRowType.DataRow, "Restrict", "Checkbox", shippingMethod.ShippingMethodID);
+                tf.ItemTemplate = new NopGridViewCustomTemplate(DataControlRowType.DataRow, "Restrict", "Checkbox", shippingMethod.ShippingMethodId);
                 tf.HeaderTemplate = new NopGridViewCustomTemplate(DataControlRowType.Header, shippingMethod.Name, "String");
                 gvShippingMethodCountryMap.Columns.Add(tf);
             }
@@ -162,13 +162,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             foreach(Country country in countryCollection)
             {
                 ShippingMethodCountryMappingHelperClass map1 = new ShippingMethodCountryMappingHelperClass();
-                map1.CountryID = country.CountryID;
+                map1.CountryId = country.CountryId;
                 map1.CountryName = country.Name;
                 map1.Restrict = new Dictionary<int, bool>();
 
                 foreach(ShippingMethod shippingMethod in shippingMethodCollection)
                 {
-                    map1.Restrict.Add(shippingMethod.ShippingMethodID, ShippingMethodManager.IsShippingMethodCountryMappingExists(shippingMethod.ShippingMethodID, country.CountryID));
+                    map1.Restrict.Add(shippingMethod.ShippingMethodId, ShippingMethodManager.IsShippingMethodCountryMappingExists(shippingMethod.ShippingMethodId, country.CountryId));
                 }
 
                 dt.Add(map1);
@@ -203,18 +203,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     {
                         foreach(ShippingMethod shippingMethod in shippingMethodCollection)
                         {
-                            CheckBox cbRestrict = row.FindControl(String.Format("cbRestrict_{0}", shippingMethod.ShippingMethodID)) as CheckBox;
-                            HiddenField hfCountryID = row.FindControl(String.Format("hfCountryID_{0}", shippingMethod.ShippingMethodID)) as HiddenField;
+                            CheckBox cbRestrict = row.FindControl(String.Format("cbRestrict_{0}", shippingMethod.ShippingMethodId)) as CheckBox;
+                            HiddenField hfCountryId = row.FindControl(String.Format("hfCountryId_{0}", shippingMethod.ShippingMethodId)) as HiddenField;
 
-                            int countryID = Int32.Parse(hfCountryID.Value);
+                            int countryId = Int32.Parse(hfCountryId.Value);
 
                             if(cbRestrict.Checked)
                             {
-                                ShippingMethodManager.CreateShippingMethodCountryMapping(shippingMethod.ShippingMethodID, countryID);
+                                ShippingMethodManager.CreateShippingMethodCountryMapping(shippingMethod.ShippingMethodId, countryId);
                             }
                             else
                             {
-                                ShippingMethodManager.DeleteShippingMethodCountryMapping(shippingMethod.ShippingMethodID, countryID);
+                                ShippingMethodManager.DeleteShippingMethodCountryMapping(shippingMethod.ShippingMethodId, countryId);
                             }
                         }
                     }

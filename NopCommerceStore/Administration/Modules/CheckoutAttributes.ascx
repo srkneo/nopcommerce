@@ -13,8 +13,6 @@
 <asp:GridView ID="gvCheckoutAttributes" runat="server" AutoGenerateColumns="False"
     Width="100%">
     <Columns>
-        <asp:BoundField DataField="CheckoutAttributeID" HeaderText="CheckoutAttributeID"
-            Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.CheckoutAttributes.Name %>"
             ItemStyle-Width="40%">
             <ItemTemplate>
@@ -43,7 +41,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.CheckoutAttributes.Edit %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="checkoutattributedetails.aspx?checkoutattributeid=<%#Eval("CheckoutAttributeID")%>">
+                <a href="checkoutattributedetails.aspx?checkoutattributeid=<%#Eval("CheckoutAttributeId")%>">
                     <%#GetLocaleResourceString("Admin.CheckoutAttributes.Edit")%>
                 </a>
             </ItemTemplate>

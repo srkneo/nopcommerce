@@ -41,12 +41,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the recurring payment identifier
         /// </summary>
-        public int RecurringPaymentID { get; set; }
+        public int RecurringPaymentId { get; set; }
 
         /// <summary>
         /// Gets or sets the initial order identifier
         /// </summary>
-        public int InitialOrderID { get; set; }
+        public int InitialOrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the cycle length
@@ -67,12 +67,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Gets or sets the start date
         /// </summary>
         public DateTime StartDate { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the payment is active
         /// </summary>
         public bool IsActive { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the entity has been deleted
         /// </summary>
@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                return OrderManager.GetOrderByID(InitialOrderID);
+                return OrderManager.GetOrderById(this.InitialOrderId);
             }
         }
 
@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                return OrderManager.SearchRecurringPaymentHistory(this.RecurringPaymentID, 0);
+                return OrderManager.SearchRecurringPaymentHistory(this.RecurringPaymentId, 0);
             }
         }
 
@@ -254,7 +254,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 if (order == null)
                     return RecurringPaymentTypeEnum.NotSupported;
 
-                return PaymentManager.SupportRecurringPayments(order.PaymentMethodID);
+                return PaymentManager.SupportRecurringPayments(order.PaymentMethodId);
             }
         }
 

@@ -33,12 +33,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
     public abstract partial class DBAffiliateProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets an affiliate by affiliate identifier
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Affiliate</returns>
-        public abstract DBAffiliate GetAffiliateByID(int AffiliateID);
+        public abstract DBAffiliate GetAffiliateById(int affiliateId);
 
         /// <summary>
         /// Gets all affiliates
@@ -49,51 +50,53 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
         /// <summary>
         /// Inserts an affiliate
         /// </summary>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="MiddleName">The middle name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="Active">A value indicating whether the entity is active</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="middleName">The middle name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="active">A value indicating whether the entity is active</param>
         /// <returns>An affiliate</returns>
-        public abstract DBAffiliate InsertAffiliate(string FirstName, string LastName, string MiddleName,
-            string PhoneNumber, string Email, string FaxNumber, string Company, string Address1,
-            string Address2, string City, string StateProvince, string ZipPostalCode,
-            int CountryID, bool Deleted, bool Active);
+        public abstract DBAffiliate InsertAffiliate(string firstName, 
+            string lastName, string middleName, string phoneNumber, 
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, string stateProvince, string zipPostalCode,
+            int countryId, bool deleted, bool active);
 
         /// <summary>
         /// Updates the affiliate
         /// </summary>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="MiddleName">The middle name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="Active">A value indicating whether the entity is active</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="middleName">The middle name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="active">A value indicating whether the entity is active</param>
         /// <returns>An affiliate</returns>
-        public abstract DBAffiliate UpdateAffiliate(int AffiliateID, string FirstName, string LastName,
-            string MiddleName, string PhoneNumber, string Email, string FaxNumber, string Company,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, bool Active);
+        public abstract DBAffiliate UpdateAffiliate(int affiliateId, string firstName,
+            string lastName, string middleName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, string stateProvince, string zipPostalCode,
+            int countryId, bool deleted, bool active);
 
         #endregion
     }

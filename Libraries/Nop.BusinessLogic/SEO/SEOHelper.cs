@@ -52,8 +52,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <param name="page">Page instance</param>
         /// <param name="name">Meta name</param>
         /// <param name="content">Content</param>
-        /// <param name="OverwriteExisting">Overwrite existing content if exists</param>
-        public static void RenderMetaTag(Page page, string name, string content, bool OverwriteExisting)
+        /// <param name="overwriteExisting">Overwrite existing content if exists</param>
+        public static void RenderMetaTag(Page page, string name, 
+            string content, bool overwriteExisting)
         {
             if (page == null || page.Header == null)
                 return;
@@ -67,7 +68,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
                     var meta = (HtmlMeta)control;
                     if (meta.Name.ToLower().Equals(name.ToLower()) && !string.IsNullOrEmpty(content))
                     {
-                        if (OverwriteExisting)
+                        if (overwriteExisting)
                             meta.Content = content;
                         else
                         {
@@ -83,11 +84,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="page">Page instance</param>
         /// <param name="title">Page title</param>
-        /// <param name="OverwriteExisting">Overwrite existing content if exists</param>
-        public static void RenderTitle(Page page, string title, bool OverwriteExisting)
+        /// <param name="overwriteExisting">Overwrite existing content if exists</param>
+        public static void RenderTitle(Page page, string title, bool overwriteExisting)
         {
             bool includeStoreNameInTitle = SettingManager.GetSettingValueBoolean("SEO.IncludeStoreNameInTitle");
-            RenderTitle(page, title, includeStoreNameInTitle, OverwriteExisting);
+            RenderTitle(page, title, includeStoreNameInTitle, overwriteExisting);
         }
 
         /// <summary>
@@ -95,20 +96,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="page">Page instance</param>
         /// <param name="title">Page title</param>
-        /// <param name="IncludeStoreNameInTitle">Include store name in title</param>
-        /// <param name="OverwriteExisting">Overwrite existing content if exists</param>
-        public static void RenderTitle(Page page, string title, bool IncludeStoreNameInTitle, bool OverwriteExisting)
+        /// <param name="includeStoreNameInTitle">Include store name in title</param>
+        /// <param name="overwriteExisting">Overwrite existing content if exists</param>
+        public static void RenderTitle(Page page, string title, 
+            bool includeStoreNameInTitle, bool overwriteExisting)
         {
             if (page == null || page.Header == null)
                 return;
 
-            if (IncludeStoreNameInTitle)
+            if (includeStoreNameInTitle)
                 title = SettingManager.StoreName + ". " + title;
 
             if (String.IsNullOrEmpty(title))
                 return;
 
-            if (OverwriteExisting)
+            if (overwriteExisting)
                 page.Title = HttpUtility.HtmlEncode(title);
             else
             {
@@ -123,7 +125,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <param name="page">Page instance</param>
         /// <param name="title">RSS Title</param>
         /// <param name="href">Path to the RSS feed</param>
-        public static void RenderHeaderRSSLink(Page page, string title, string href)
+        public static void RenderHeaderRssLink(Page page, string title, string href)
         {
             if (page == null || page.Header == null)
                 return;
@@ -164,7 +166,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// Gets access denied page URL for admin area
         /// </summary>
         /// <returns>Result URL</returns>
-        public static string GetAdminAreaAccessDeniedURL()
+        public static string GetAdminAreaAccessDeniedUrl()
         {
             string url = CommonHelper.GetStoreAdminLocation() + "AccessDenied.aspx";
             return url.ToLowerInvariant();
@@ -174,24 +176,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// Gets login page URL
         /// </summary>
         /// <returns>Login page URL</returns>
-        public static string GetLoginPageURL()
+        public static string GetLoginPageUrl()
         {
-            return GetLoginPageURL(string.Empty);
+            return GetLoginPageUrl(string.Empty);
         }
 
         /// <summary>
         /// Gets login page URL
         /// </summary>
-        /// <param name="ReturnUrl">Return url</param>
+        /// <param name="returnUrl">Return url</param>
         /// <returns>Login page URL</returns>
-        public static string GetLoginPageURL(string ReturnUrl)
+        public static string GetLoginPageUrl(string returnUrl)
         {
             string loginUrl = string.Empty;
-            if (!string.IsNullOrEmpty(ReturnUrl))
+            if (!string.IsNullOrEmpty(returnUrl))
             {
                 loginUrl = string.Format(CultureInfo.InvariantCulture, "{0}Login.aspx?ReturnUrl={1}",
                     CommonHelper.GetStoreLocation(),
-                    HttpUtility.UrlEncode(ReturnUrl));
+                    HttpUtility.UrlEncode(returnUrl));
             }
             else
             {
@@ -204,37 +206,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <summary>
         /// Gets login page URL
         /// </summary>
-        /// <param name="AddCurrentPageURL">A value indicating whether add current page url as "ReturnURL" parameter</param>
+        /// <param name="addCurrentPageUrl">A value indicating whether add current page url as "ReturnURL" parameter</param>
         /// <returns>Login page URL</returns>
-        public static string GetLoginPageURL(bool AddCurrentPageURL)
+        public static string GetLoginPageUrl(bool addCurrentPageUrl)
         {
-            return GetLoginPageURL(AddCurrentPageURL, false);
+            return GetLoginPageUrl(addCurrentPageUrl, false);
         }
 
         /// <summary>
         /// Gets login page URL
         /// </summary>
-        /// <param name="AddCurrentPageURL">A value indicating whether add current page url as "ReturnURL" parameter</param>
-        /// <param name="CheckoutAsGuest">A value indicating whether login page will show "Checkout as a guest or Register" message</param>
+        /// <param name="addCurrentPageUrl">A value indicating whether add current page url as "ReturnURL" parameter</param>
+        /// <param name="checkoutAsGuest">A value indicating whether login page will show "Checkout as a guest or Register" message</param>
         /// <returns>Login page URL</returns>
-        public static string GetLoginPageURL(bool AddCurrentPageURL, bool CheckoutAsGuest)
+        public static string GetLoginPageUrl(bool addCurrentPageUrl, bool checkoutAsGuest)
         {
             string loginUrl = string.Empty;
-            if (AddCurrentPageURL)
+            if (addCurrentPageUrl)
             {
-                string rawURL = string.Empty;
+                string rawUrl = string.Empty;
                 if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                    rawURL = HttpContext.Current.Request.RawUrl;
+                    rawUrl = HttpContext.Current.Request.RawUrl;
                 loginUrl = string.Format(CultureInfo.InvariantCulture, "{0}Login.aspx?ReturnUrl={1}",
                     CommonHelper.GetStoreLocation(),
-                    HttpUtility.UrlEncode(rawURL));
+                    HttpUtility.UrlEncode(rawUrl));
             }
             else
             {
-                loginUrl = GetLoginPageURL();
+                loginUrl = GetLoginPageUrl();
             }
 
-            if (CheckoutAsGuest)
+            if (checkoutAsGuest)
             {
                 loginUrl = CommonHelper.ModifyQueryString(loginUrl, "CheckoutAsGuest=true", string.Empty);
             }
@@ -245,7 +247,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// Gets login page URL of admin area
         /// </summary>
         /// <returns>Login page URL</returns>
-        public static string GetAdminAreaLoginPageURL()
+        public static string GetAdminAreaLoginPageUrl()
         {
             string url = string.Format(CultureInfo.InvariantCulture, "{0}Login.aspx",
                       CommonHelper.GetStoreAdminLocation());
@@ -255,12 +257,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <summary>
         /// Gets product URL
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product URL</returns>
-        public static string GetProductURL(int ProductID)
+        public static string GetProductUrl(int productId)
         {
-            var product = ProductManager.GetProductByID(ProductID);
-            return GetProductURL(product);
+            var product = ProductManager.GetProductById(productId);
+            return GetProductUrl(product);
         }
 
         /// <summary>
@@ -268,7 +270,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="product">Product</param>
         /// <returns>Product URL</returns>
-        public static string GetProductURL(Product product)
+        public static string GetProductUrl(Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -277,30 +279,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             {
                 seName = GetSEName(product.Name);
             }
-            string url = string.Format(SettingManager.GetSettingValue("SEO.Product.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), product.ProductID, seName);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.Product.UrlRewriteFormat"), 
+                CommonHelper.GetStoreLocation(), product.ProductId, seName);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets product email a friend URL
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product email a friend URL</returns>
-        public static string GetProductEmailAFriendURL(int ProductID)
+        public static string GetProductEmailAFriendUrl(int productId)
         {
-            string url = string.Format("{0}ProductEmailAFriend.aspx?ProductID={1}", CommonHelper.GetStoreLocation(), ProductID);
+            string url = string.Format("{0}ProductEmailAFriend.aspx?ProductId={1}", CommonHelper.GetStoreLocation(), productId);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets manufacturer URL
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
         /// <returns>Manufacturer URL</returns>
-        public static string GetManufacturerURL(int ManufacturerID)
+        public static string GetManufacturerUrl(int manufacturerId)
         {
-            var manufacturer = ManufacturerManager.GetManufacturerByID(ManufacturerID);
-            return GetManufacturerURL(manufacturer);
+            var manufacturer = ManufacturerManager.GetManufacturerById(manufacturerId);
+            return GetManufacturerUrl(manufacturer);
         }
 
         /// <summary>
@@ -308,7 +311,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="manufacturer">Manufacturer</param>
         /// <returns>Manufacturer URL</returns>
-        public static string GetManufacturerURL(Manufacturer manufacturer)
+        public static string GetManufacturerUrl(Manufacturer manufacturer)
         {
             if (manufacturer == null)
                 throw new ArgumentNullException("manufacturer");
@@ -317,19 +320,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             {
                 seName = GetSEName(manufacturer.Name);
             } 
-            string url = string.Format(SettingManager.GetSettingValue("SEO.Manufacturer.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), manufacturer.ManufacturerID, seName);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.Manufacturer.UrlRewriteFormat"), 
+                CommonHelper.GetStoreLocation(), manufacturer.ManufacturerId, seName);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets category URL
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <returns>Category URL</returns>
-        public static string GetCategoryURL(int CategoryID)
+        public static string GetCategoryUrl(int categoryId)
         {
-            var category = CategoryManager.GetCategoryByID(CategoryID);
-            return GetCategoryURL(category);
+            var category = CategoryManager.GetCategoryById(categoryId);
+            return GetCategoryUrl(category);
         }
 
         /// <summary>
@@ -337,7 +341,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="category">Category</param>
         /// <returns>Category URL</returns>
-        public static string GetCategoryURL(Category category)
+        public static string GetCategoryUrl(Category category)
         {
             if (category == null)
                 throw new ArgumentNullException("category"); 
@@ -346,19 +350,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             {
                 seName = GetSEName(category.Name);
             }
-            string url = string.Format(SettingManager.GetSettingValue("SEO.Category.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), category.CategoryID, seName);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.Category.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), category.CategoryId, seName);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets blog post URL
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
+        /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>Blog post URL</returns>
-        public static string GetBlogPostURL(int BlogPostID)
+        public static string GetBlogPostUrl(int blogPostId)
         {
-            var blogPost = BlogManager.GetBlogPostByID(BlogPostID);
-            return GetBlogPostURL(blogPost);
+            var blogPost = BlogManager.GetBlogPostById(blogPostId);
+            return GetBlogPostUrl(blogPost);
         }
 
         /// <summary>
@@ -366,24 +370,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="blogPost">Blog post</param>
         /// <returns>Blog post URL</returns>
-        public static string GetBlogPostURL(BlogPost blogPost)
+        public static string GetBlogPostUrl(BlogPost blogPost)
         {
             if (blogPost == null)
                 throw new ArgumentNullException("blogPost"); 
             string seName = GetSEName(blogPost.BlogPostTitle);
-            string url = string.Format(SettingManager.GetSettingValue("SEO.Blog.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), blogPost.BlogPostID, seName);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.Blog.UrlRewriteFormat"), 
+                CommonHelper.GetStoreLocation(), blogPost.BlogPostId, seName);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets news URL
         /// </summary>
-        /// <param name="NewsID">News identifier</param>
+        /// <param name="newsId">News identifier</param>
         /// <returns>News URL</returns>
-        public static string GetNewsURL(int NewsID)
+        public static string GetNewsUrl(int newsId)
         {
-            var news = NewsManager.GetNewsByID(NewsID);
-            return GetNewsURL(news);
+            var news = NewsManager.GetNewsById(newsId);
+            return GetNewsUrl(news);
         }
 
         /// <summary>
@@ -391,12 +396,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="news">News item</param>
         /// <returns>News URL</returns>
-        public static string GetNewsURL(News news)
+        public static string GetNewsUrl(News news)
         {
             if (news == null)
                 throw new ArgumentNullException("news"); 
             string seName = GetSEName(news.Title);
-            string url = string.Format(SettingManager.GetSettingValue("SEO.News.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), news.NewsID, seName);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.News.UrlRewriteFormat"), 
+                CommonHelper.GetStoreLocation(), news.NewsId, seName);
             return url.ToLowerInvariant();
         }
 
@@ -404,19 +410,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// Gets news Rss URL
         /// </summary>
         /// <returns>News Rss URL</returns>
-        public static string GetNewsRssURL()
+        public static string GetNewsRssUrl()
         {
-            return GetNewsRssURL(NopContext.Current.WorkingLanguage.LanguageID);
+            return GetNewsRssUrl(NopContext.Current.WorkingLanguage.LanguageId);
         }
 
         /// <summary>
         /// Gets news Rss URL
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>News Rss URL</returns>
-        public static string GetNewsRssURL(int LanguageID)
+        public static string GetNewsRssUrl(int languageId)
         {
-            string url = CommonHelper.GetStoreLocation() + "NewsRSS.aspx?LanguageID=" + LanguageID.ToString();
+            string url = CommonHelper.GetStoreLocation() + "NewsRSS.aspx?LanguageId=" + languageId.ToString();
             return url.ToLowerInvariant();
         }
 
@@ -424,19 +430,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// Gets blog Rss URL
         /// </summary>
         /// <returns>Blog Rss URL</returns>
-        public static string GetBlogRssURL()
+        public static string GetBlogRssUrl()
         {
-            return GetBlogRssURL(NopContext.Current.WorkingLanguage.LanguageID);
+            return GetBlogRssUrl(NopContext.Current.WorkingLanguage.LanguageId);
         }
 
         /// <summary>
         /// Gets blog Rss URL
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Blog Rss URL</returns>
-        public static string GetBlogRssURL(int LanguageID)
+        public static string GetBlogRssUrl(int languageId)
         {
-            string url = CommonHelper.GetStoreLocation() + "BlogRSS.aspx?LanguageID=" + LanguageID.ToString();
+            string url = CommonHelper.GetStoreLocation() + "BlogRSS.aspx?LanguageId=" + languageId.ToString();
             return url.ToLowerInvariant();
         }
 
@@ -444,7 +450,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// Gets forum URL
         /// </summary>
         /// <returns>Forum URL</returns>
-        public static string GetForumMainURL()
+        public static string GetForumMainUrl()
         {
             string url = string.Format("{0}Boards/", CommonHelper.GetStoreLocation());
             return url.ToLowerInvariant();
@@ -454,7 +460,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// Gets forum URL
         /// </summary>
         /// <returns>Forum URL</returns>
-        public static string GetForumActiveDiscussionsURL()
+        public static string GetForumActiveDiscussionsUrl()
         {
             string url = string.Format("{0}Boards/ActiveDiscussions.aspx", CommonHelper.GetStoreLocation());
             return url.ToLowerInvariant();
@@ -463,12 +469,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <summary>
         /// Gets forum group URL
         /// </summary>
-        /// <param name="ForumGroupID">Forum group identifier</param>
+        /// <param name="forumGroupId">Forum group identifier</param>
         /// <returns>Forum group URL</returns>
-        public static string GetForumGroupURL(int ForumGroupID)
+        public static string GetForumGroupUrl(int forumGroupId)
         {
-            var forumGroup = ForumManager.GetForumGroupByID(ForumGroupID);
-            return GetForumGroupURL(forumGroup);
+            var forumGroup = ForumManager.GetForumGroupById(forumGroupId);
+            return GetForumGroupUrl(forumGroup);
         }
 
         /// <summary>
@@ -476,26 +482,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="forumGroup">Forum group</param>
         /// <returns>Forum group URL</returns>
-        public static string GetForumGroupURL(ForumGroup forumGroup)
+        public static string GetForumGroupUrl(ForumGroup forumGroup)
         {
             if(forumGroup == null)
             {
                 throw new ArgumentNullException("forumGroup");
             }
             string seName = GetSEName(forumGroup.Name);
-            string url = string.Format(SettingManager.GetSettingValue("SEO.ForumGroup.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), forumGroup.ForumGroupID, seName);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.ForumGroup.UrlRewriteFormat"), 
+                CommonHelper.GetStoreLocation(), forumGroup.ForumGroupId, seName);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets forum URL
         /// </summary>
-        /// <param name="ForumID">Forum identifier</param>
+        /// <param name="forumId">Forum identifier</param>
         /// <returns>Forum URL</returns>
-        public static string GetForumURL(int ForumID)
+        public static string GetForumUrl(int forumId)
         {
-            var forum = ForumManager.GetForumByID(ForumID);
-            return GetForumURL(forum);
+            var forum = ForumManager.GetForumById(forumId);
+            return GetForumUrl(forum);
         }
 
         /// <summary>
@@ -503,14 +510,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="forum">Forum</param>
         /// <returns>Forum URL</returns>
-        public static string GetForumURL(Forum forum)
+        public static string GetForumUrl(Forum forum)
         {
             if(forum == null)
             {
                 throw new ArgumentNullException("Forum");
             }
             string seName = GetSEName(forum.Name);
-            string url = string.Format(SettingManager.GetSettingValue("SEO.Forum.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), forum.ForumID, seName);
+            string url = string.Format(SettingManager.GetSettingValue("SEO.Forum.UrlRewriteFormat"), 
+                CommonHelper.GetStoreLocation(), forum.ForumId, seName);
             return url.ToLowerInvariant();
         }
 
@@ -519,72 +527,73 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// </summary>
         /// <param name="forumTopic">Forum topic</param>
         /// <returns>Forum URL</returns>
-        public static string GetMoveForumTopicURL(ForumTopic forumTopic)
+        public static string GetMoveForumTopicUrl(ForumTopic forumTopic)
         {
             if (forumTopic == null)
                 throw new ArgumentNullException("forumTopic");
 
-            string url = string.Format("{0}Boards/MoveTopic.aspx?TopicID={1}", CommonHelper.GetStoreLocation(), forumTopic.ForumTopicID);
+            string url = string.Format("{0}Boards/MoveTopic.aspx?TopicId={1}", CommonHelper.GetStoreLocation(), forumTopic.ForumTopicId);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets forum search URL
         /// </summary>
-        /// <param name="SearchTerms">Search terms</param>
+        /// <param name="searchTerms">Search terms</param>
         /// <returns>Forum URL</returns>
-        public static string GetForumSearchURL(string SearchTerms)
+        public static string GetForumSearchUrl(string searchTerms)
         {
-            string url = string.Format("{0}Boards/Search.aspx?searchTerms={1}", CommonHelper.GetStoreLocation(), HttpUtility.UrlEncode(SearchTerms));
+            string url = string.Format("{0}Boards/Search.aspx?searchTerms={1}", CommonHelper.GetStoreLocation(), HttpUtility.UrlEncode(searchTerms));
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets forum topic URL
         /// </summary>
-        /// <param name="TopicID">Forum topic identifier</param>
+        /// <param name="topicId">Forum topic identifier</param>
         /// <returns>Forum topic URL</returns>
-        public static string GetForumTopicURL(int TopicID)
+        public static string GetForumTopicUrl(int topicId)
         {
-            return GetForumTopicURL(TopicID, "p", null); 
+            return GetForumTopicUrl(topicId, "p", null); 
         }
 
         /// <summary>
         /// Gets forum topic URL
         /// </summary>
-        /// <param name="TopicID">Forum topic identifier</param>
-        /// <param name="QueryStringProperty">Query string property</param>
-        /// <param name="PageIndex">Page index</param>
+        /// <param name="topicId">Forum topic identifier</param>
+        /// <param name="queryStringProperty">Query string property</param>
+        /// <param name="pageIndex">Page index</param>
         /// <returns>Forum topic URL</returns>
-        public static string GetForumTopicURL(int TopicID, string QueryStringProperty, int? PageIndex)
+        public static string GetForumTopicUrl(int topicId, 
+            string queryStringProperty, int? pageIndex)
         {
-            return GetForumTopicURL(TopicID, QueryStringProperty, PageIndex, null);
+            return GetForumTopicUrl(topicId, queryStringProperty, pageIndex, null);
         }
 
         /// <summary>
         /// Gets forum topic URL
         /// </summary>
-        /// <param name="TopicID">Forum topic identifier</param>
-        /// <param name="QueryStringProperty">Query string property</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="PostID">Post identifier (anchor)</param>
+        /// <param name="topicId">Forum topic identifier</param>
+        /// <param name="queryStringProperty">Query string property</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="postId">Post identifier (anchor)</param>
         /// <returns>Forum topic URL</returns>
-        public static string GetForumTopicURL(int TopicID, string QueryStringProperty, 
-            int? PageIndex, int? PostID)
+        public static string GetForumTopicUrl(int topicId, string queryStringProperty, 
+            int? pageIndex, int? postId)
         {
-            return GetForumTopicURL(ForumManager.GetTopicByID(TopicID), QueryStringProperty, PageIndex, PostID);
+            return GetForumTopicUrl(ForumManager.GetTopicById(topicId), queryStringProperty, pageIndex, postId);
         }
 
         /// <summary>
         /// Gets forum topic URL
         /// </summary>
-        /// <param name="TopicID">Forum topic identifier</param>
-        /// <param name="QueryStringProperty">Query string property</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="PostID">Post identifier (anchor)</param>
+        /// <param name="topic">Forum topic</param>
+        /// <param name="queryStringProperty">Query string property</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="postId">Post identifier (anchor)</param>
         /// <returns>Forum topic URL</returns>
-        public static string GetForumTopicURL(ForumTopic topic, string QueryStringProperty,
-            int? PageIndex, int? PostID)
+        public static string GetForumTopicUrl(ForumTopic topic, string queryStringProperty,
+            int? pageIndex, int? postId)
         {
             if(topic == null)
             {
@@ -592,14 +601,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             }
             string seName = GetSEName(topic.Subject);
             string url = string.Empty;
-            url = string.Format(SettingManager.GetSettingValue("SEO.ForumTopic.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), topic.ForumTopicID, seName);
-            if(PageIndex.HasValue && PageIndex.Value > 1)
+            url = string.Format(SettingManager.GetSettingValue("SEO.ForumTopic.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), topic.ForumTopicId, seName);
+            if(pageIndex.HasValue && pageIndex.Value > 1)
             {
-                url += string.Format("?{0}={1}", QueryStringProperty, PageIndex.Value);
+                url += string.Format("?{0}={1}", queryStringProperty, pageIndex.Value);
             }
-            if(PostID.HasValue)
+            if(postId.HasValue)
             {
-                url += string.Format("#{0}", PostID.Value);
+                url += string.Format("#{0}", postId.Value);
             }
             return url.ToLowerInvariant();
         }
@@ -607,45 +616,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <summary>
         /// Gets new forum topic URL
         /// </summary>
-        /// <param name="ForumID">Forum identifier</param>
+        /// <param name="forumId">Forum identifier</param>
         /// <returns>New forum topic URL</returns>
-        public static string GetNewForumTopicURL(int ForumID)
+        public static string GetNewForumTopicUrl(int forumId)
         {
-            string url = string.Format("{0}Boards/TopicNew.aspx?ForumID={1}", CommonHelper.GetStoreLocation(), ForumID);
+            string url = string.Format("{0}Boards/TopicNew.aspx?ForumId={1}", CommonHelper.GetStoreLocation(), forumId);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets edit topic URL
         /// </summary>
-        /// <param name="TopicID">Forum post identifier</param>
+        /// <param name="topicId">Forum post identifier</param>
         /// <returns>Edit forum post URL</returns>
-        public static string GetEditForumTopicURL(int TopicID)
+        public static string GetEditForumTopicUrl(int topicId)
         {
-            string url = string.Format("{0}Boards/TopicEdit.aspx?TopicID={1}", CommonHelper.GetStoreLocation(), TopicID);
+            string url = string.Format("{0}Boards/TopicEdit.aspx?TopicId={1}", CommonHelper.GetStoreLocation(), topicId);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets new forum post URL
         /// </summary>
-        /// <param name="TopicID">Forum topic identifier</param>
+        /// <param name="topicId">Forum topic identifier</param>
         /// <returns>New forum post URL</returns>
-        public static string GetNewForumPostURL(int TopicID)
+        public static string GetNewForumPostUrl(int topicId)
         {
-            string url = string.Format("{0}Boards/PostNew.aspx?TopicID={1}", CommonHelper.GetStoreLocation(), TopicID);
+            string url = string.Format("{0}Boards/PostNew.aspx?TopicId={1}", CommonHelper.GetStoreLocation(), topicId);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets new forum post URL with quoting post
         /// </summary>
-        /// <param name="TopicID">Forum topic identifier</param>
-        /// <param name="QuotePostID">Quoting post identifier</param>
+        /// <param name="topicId">Forum topic identifier</param>
+        /// <param name="quotePostId">Quoting post identifier</param>
         /// <returns>New forum post URL</returns>
-        public static string GetNewForumPostURL(int TopicID, int QuotePostID)
+        public static string GetNewForumPostUrl(int topicId, int quotePostId)
         {
-            string url = string.Format("{0}Boards/PostNew.aspx?TopicID={1}&QuotePostID={2}", CommonHelper.GetStoreLocation(), TopicID, QuotePostID);
+            string url = string.Format("{0}Boards/PostNew.aspx?TopicId={1}&QuotePostId={2}", CommonHelper.GetStoreLocation(), topicId, quotePostId);
             return url.ToLowerInvariant();
         }
 
@@ -653,34 +662,34 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <summary>
         /// Gets edit post URL
         /// </summary>
-        /// <param name="ForumPostID">Forum post identifier</param>
+        /// <param name="forumPostId">Forum post identifier</param>
         /// <returns>Edit forum post URL</returns>
-        public static string GetEditForumPostURL(int ForumPostID)
+        public static string GetEditForumPostUrl(int forumPostId)
         {
-            string url = string.Format("{0}Boards/PostEdit.aspx?PostID={1}", CommonHelper.GetStoreLocation(), ForumPostID);
+            string url = string.Format("{0}Boards/PostEdit.aspx?PostId={1}", CommonHelper.GetStoreLocation(), forumPostId);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets forum user profile URL
         /// </summary>
-        /// <param name="UserID">User identifier</param>
+        /// <param name="userId">User identifier</param>
         /// <returns>Forum topic URL</returns>
-        public static string GetUserProfileURL(int UserID)
+        public static string GetUserProfileUrl(int userId)
         {
-            string url = string.Format("{0}Profile.aspx?UserID={1}", CommonHelper.GetStoreLocation(), UserID);
+            string url = string.Format("{0}Profile.aspx?UserId={1}", CommonHelper.GetStoreLocation(), userId);
             return url.ToLowerInvariant();
         }
 
         /// <summary>
         /// Gets Topic page URL
         /// </summary>
-        /// <param name="TopicID">Topic identifier</param>
-        /// <param name="Title">Localized topic title</param>
+        /// <param name="topicId">Topic identifier</param>
+        /// <param name="title">Localized topic title</param>
         /// <returns>Topic page URL</returns>
-        public static string GetTopicUrl(int TopicID, string Title)
+        public static string GetTopicUrl(int topicId, string title)
         {
-            string url = string.Format(SettingManager.GetSettingValue("SEO.Topic.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), TopicID, GetSEName(Title));
+            string url = string.Format(SettingManager.GetSettingValue("SEO.Topic.UrlRewriteFormat"), CommonHelper.GetStoreLocation(), topicId, GetSEName(title));
             return url.ToLowerInvariant();
         }
 

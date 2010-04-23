@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 var productVariants = product.ProductVariants;
@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 var txtQuantity = e.Item.FindControl("txtQuantity") as NumericTextBox;
                 var txtCustomerEnteredPrice = e.Item.FindControl("txtCustomerEnteredPrice") as NumericTextBox;
-                var productVariantID = e.Item.FindControl("ProductVariantID") as Label;
+                var productVariantId = e.Item.FindControl("ProductVariantId") as Label;
                 var ctrlProductAttributes = e.Item.FindControl("ctrlProductAttributes") as ProductAttributesControl;
                 var txtRecipientName = e.Item.FindControl("txtRecipientName") as TextBox;
                 var txtRecipientEmail = e.Item.FindControl("txtRecipientEmail") as TextBox;
@@ -78,7 +78,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var txtGiftCardMessage = e.Item.FindControl("txtGiftCardMessage") as TextBox;
                 var lblError = e.Item.FindControl("lblError") as Label;
 
-                var pv = ProductManager.GetProductVariantByID(Convert.ToInt32(productVariantID.Text));
+                var pv = ProductManager.GetProductVariantById(Convert.ToInt32(productVariantId.Text));
                 if (pv == null)
                     return;
 
@@ -105,7 +105,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         List<string> addToCartWarnings = ShoppingCartManager.AddToCart(
                             ShoppingCartTypeEnum.ShoppingCart,
-                            pv.ProductVariantID, 
+                            pv.ProductVariantId, 
                             attributes, 
                             customerEnteredPrice,
                             quantity);
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         var addToCartWarnings = ShoppingCartManager.AddToCart(
                             ShoppingCartTypeEnum.Wishlist,
-                            pv.ProductVariantID, 
+                            pv.ProductVariantId, 
                             attributes, 
                             customerEnteredPrice,
                             quantity);
@@ -238,7 +238,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (productVariant.CustomerEntersPrice)
                 {
                     txtCustomerEnteredPrice.Visible = true;
-                    txtCustomerEnteredPrice.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
+                    txtCustomerEnteredPrice.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
                     txtCustomerEnteredPrice.Value = (int)productVariant.MinimumCustomerEnteredPrice;
                     txtCustomerEnteredPrice.MinimumValue = ((int)productVariant.MinimumCustomerEnteredPrice).ToString();
                     txtCustomerEnteredPrice.MaximumValue = ((int)productVariant.MaximumCustomerEnteredPrice).ToString();
@@ -252,9 +252,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 //buttons
                 if (!productVariant.DisableBuyButton)
                 {
-                    txtQuantity.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
-                    btnAddToCart.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
-                    btnAddToWishlist.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
+                    txtQuantity.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
+                    btnAddToCart.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
+                    btnAddToWishlist.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
 
                     txtQuantity.Value = productVariant.OrderMinimumQuantity;
                 }
@@ -281,11 +281,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

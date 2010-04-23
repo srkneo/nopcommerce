@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
 
         private void BindData()
         {
-            TaxProvider taxProvider = TaxProviderManager.GetTaxProviderByID(this.TaxProviderID);
+            TaxProvider taxProvider = TaxProviderManager.GetTaxProviderById(this.TaxProviderId);
             if (taxProvider != null)
             {
                 this.txtName.Text = taxProvider.Name;
@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
         
         private void CreateChildControlsTree()
         {
-            TaxProvider taxProvider = TaxProviderManager.GetTaxProviderByID(this.TaxProviderID);
+            TaxProvider taxProvider = TaxProviderManager.GetTaxProviderById(this.TaxProviderId);
             if (taxProvider != null)
             {
                 Control child = null;
@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                     child = base.LoadControl(taxProvider.ConfigureTemplatePath);
                     this.ConfigurePlaceHolder.Controls.Add(child);
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                 }
             }
@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
             if (!Page.IsPostBack)
             {
                 this.BindData();
-                this.SelectTab(this.TaxTabs, this.TabID);
+                this.SelectTab(this.TaxTabs, this.TabId);
             }
         }
 
@@ -98,11 +98,11 @@ namespace NopSolutions.NopCommerce.Web.Administration
             {
                 try
                 {
-                    var taxProvider = TaxProviderManager.GetTaxProviderByID(this.TaxProviderID);
+                    var taxProvider = TaxProviderManager.GetTaxProviderById(this.TaxProviderId);
 
                     if (taxProvider != null)
                     {
-                        taxProvider = TaxProviderManager.UpdateTaxProvider(taxProvider.TaxProviderID, txtName.Text,
+                        taxProvider = TaxProviderManager.UpdateTaxProvider(taxProvider.TaxProviderId, txtName.Text,
                             txtDescription.Text, txtConfigureTemplatePath.Text, txtClassName.Text,
                           txtDisplayOrder.Value);
 
@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                             GetLocaleResourceString("ActivityLog.EditTaxProvider"),
                             taxProvider.Name);
 
-                        Response.Redirect(string.Format("TaxProviderDetails.aspx?TaxProviderID={0}&TabID={1}", taxProvider.TaxProviderID, this.GetActiveTabID(this.TaxTabs)));
+                        Response.Redirect(string.Format("TaxProviderDetails.aspx?TaxProviderID={0}&TabID={1}", taxProvider.TaxProviderId, this.GetActiveTabId(this.TaxTabs)));
                     }
                     else
                         Response.Redirect("TaxProviders.aspx");
@@ -131,7 +131,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
         {
             try
             {
-                TaxProviderManager.DeleteTaxProvider(this.TaxProviderID);
+                TaxProviderManager.DeleteTaxProvider(this.TaxProviderId);
                 Response.Redirect("TaxProviders.aspx");
             }
             catch (Exception exc)
@@ -140,19 +140,19 @@ namespace NopSolutions.NopCommerce.Web.Administration
             }
         }
 
-        public int TaxProviderID
+        public int TaxProviderId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TaxProviderID");
+                return CommonHelper.QueryStringInt("TaxProviderId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

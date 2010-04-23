@@ -76,8 +76,6 @@
 <asp:GridView ID="gvCustomers" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvCustomers_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="CustomerID" HeaderText="Customer ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Customers.EmailColumn %>" ItemStyle-Width="20%">
             <ItemTemplate>
                 <%#GetCustomerInfo((Customer)Container.DataItem)%>
@@ -110,7 +108,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Customers.EditColumn %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerID")%>" title="<%#GetLocaleResourceString("Admin.Customers.EditColumn.Tooltip")%>">
+                <a href="CustomerDetails.aspx?CustomerID=<%#Eval("CustomerId")%>" title="<%#GetLocaleResourceString("Admin.Customers.EditColumn.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Customers.EditColumn")%>
                 </a>
             </ItemTemplate>

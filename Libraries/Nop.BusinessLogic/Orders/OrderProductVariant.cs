@@ -27,8 +27,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     public partial class OrderProductVariant : BaseEntity
     {
         #region Fields
-        private Order order = null;
-        private ProductVariant pv = null;
+        private Order _order = null;
+        private ProductVariant _pv = null;
         #endregion
 
         #region Ctor
@@ -44,22 +44,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the order product variant identifier
         /// </summary>
-        public int OrderProductVariantID { get; set; }
+        public int OrderProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the order product variant identifier
         /// </summary>
-        public Guid OrderProductVariantGUID { get; set; }
+        public Guid OrderProductVariantGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the unit price in primary store currency (incl tax)
@@ -109,7 +109,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the product variant attributes in XML format
         /// </summary>
-        public string AttributesXML { get; set; }
+        public string AttributesXml { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Gets or sets the discount amount (excl tax)
         /// </summary>
         public decimal DiscountAmountExclTax { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the download count
         /// </summary>
@@ -139,7 +139,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets a license download identifier (in case this is a downloadable product)
         /// </summary>
-        public int LicenseDownloadID { get; set; }
+        public int LicenseDownloadId { get; set; }
 
         #endregion
 
@@ -151,9 +151,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (order == null)
-                    order = OrderManager.GetOrderByID(OrderID);
-                return order;
+                if (_order == null)
+                    _order = OrderManager.GetOrderById(this.OrderId);
+                return _order;
             }
         }
 
@@ -164,9 +164,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (pv == null)
-                    pv = ProductManager.GetProductVariantByID(ProductVariantID);
-                return pv;
+                if (_pv == null)
+                    _pv = ProductManager.GetProductVariantById(this.ProductVariantId);
+                return _pv;
             }
         }
 
@@ -177,7 +177,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                return DownloadManager.GetDownloadByID(LicenseDownloadID);
+                return DownloadManager.GetDownloadById(this.LicenseDownloadId);
             }
         }
         #endregion

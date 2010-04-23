@@ -24,7 +24,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeByID(this.SpecificationAttributeID, 0);
+            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId, 0);
 
             if (this.HasLocalizableContent)
             {
@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = specificationAttribute.DisplayOrder;
             }
 
-            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(SpecificationAttributeID, 0);
+            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(SpecificationAttributeId, 0);
             grdSpecificationAttributeOptions.DataSource = saoCol;
             grdSpecificationAttributeOptions.DataBind();
         }
@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.BindData();
             }
 
-            if (SpecificationAttributeID <= 0)
+            if (this.SpecificationAttributeId <= 0)
                 pnlSpecAttrOptions.Visible = false;
         }
 
@@ -70,28 +70,28 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void btnAddSpecificationAttributeOption_Click(object sender, EventArgs e)
         {
-            Response.Redirect("SpecificationAttributeOptionAdd.aspx?SpecificationAttributeID=" + this.SpecificationAttributeID);
+            Response.Redirect("SpecificationAttributeOptionAdd.aspx?SpecificationAttributeID=" + this.SpecificationAttributeId);
         }
 
         public SpecificationAttribute SaveInfo()
         {
-            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeByID(this.SpecificationAttributeID, 0);
+            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId, 0);
 
             if (specificationAttribute != null)
             {
-                specificationAttribute = SpecificationAttributeManager.UpdateSpecificationAttribute(specificationAttribute.SpecificationAttributeID, txtName.Text, txtDisplayOrder.Value);
+                specificationAttribute = SpecificationAttributeManager.UpdateSpecificationAttribute(specificationAttribute.SpecificationAttributeId, txtName.Text, txtDisplayOrder.Value);
             }
             else
             {
                 specificationAttribute = SpecificationAttributeManager.InsertSpecificationAttribute(txtName.Text, txtDisplayOrder.Value);
             }
 
-            saveLocalizableContent(specificationAttribute);
+            SaveLocalizableContent(specificationAttribute);
 
             return specificationAttribute;
         }
 
-        protected void saveLocalizableContent(SpecificationAttribute specificationAttribute)
+        protected void SaveLocalizableContent(SpecificationAttribute specificationAttribute)
         {
             if (specificationAttribute == null)
                 return;
@@ -106,34 +106,34 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedName = (TextBox)item.FindControl("txtLocalizedName");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtLocalizedName.Text;
 
                     bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
 
-                    var content = SpecificationAttributeManager.GetSpecificationAttributeLocalizedBySpecificationAttributeIDAndLanguageID(specificationAttribute.SpecificationAttributeID, languageID);
+                    var content = SpecificationAttributeManager.GetSpecificationAttributeLocalizedBySpecificationAttributeIdAndLanguageId(specificationAttribute.SpecificationAttributeId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = SpecificationAttributeManager.InsertSpecificationAttributeLocalized(specificationAttribute.SpecificationAttributeID,
-                                   languageID, name);
+                            content = SpecificationAttributeManager.InsertSpecificationAttributeLocalized(specificationAttribute.SpecificationAttributeId,
+                                   languageId, name);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = SpecificationAttributeManager.UpdateSpecificationAttributeLocalized(content.SpecificationAttributeLocalizedID, content.SpecificationAttributeID,
-                                languageID, name);
+                            content = SpecificationAttributeManager.UpdateSpecificationAttributeLocalized(content.SpecificationAttributeLocalizedId, content.SpecificationAttributeId,
+                                languageId, name);
                         }
                     }
                 }
             }
         }
 
-        protected void saveLocalizableContent(SpecificationAttributeOption sao)
+        protected void SaveLocalizableContent(SpecificationAttributeOption sao)
         {
             if (sao == null)
                 return;
@@ -146,9 +146,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Repeater rptrLanguageDivs2 = row.FindControl("rptrLanguageDivs2") as Repeater;
                 if (rptrLanguageDivs2 != null)
                 {
-                    HiddenField hfSpecificationAttributeOptionID = row.FindControl("hfSpecificationAttributeOptionID") as HiddenField;
-                    int saoID = int.Parse(hfSpecificationAttributeOptionID.Value);
-                    if (saoID == sao.SpecificationAttributeOptionID)
+                    HiddenField hfSpecificationAttributeOptionId = row.FindControl("hfSpecificationAttributeOptionId") as HiddenField;
+                    int saoId = int.Parse(hfSpecificationAttributeOptionId.Value);
+                    if (saoId == sao.SpecificationAttributeOptionId)
                     {
                         foreach (RepeaterItem item in rptrLanguageDivs2.Items)
                         {
@@ -157,27 +157,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                                 var txtLocalizedOptionName = (TextBox)item.FindControl("txtLocalizedOptionName");
                                 var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                                int languageID = int.Parse(lblLanguageId.Text);
+                                int languageId = int.Parse(lblLanguageId.Text);
                                 string name = txtLocalizedOptionName.Text;
 
                                 bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
 
-                                var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIDAndLanguageID(sao.SpecificationAttributeOptionID, languageID);
+                                var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIdAndLanguageId(sao.SpecificationAttributeOptionId, languageId);
                                 if (content == null)
                                 {
-                                    if (!allFieldsAreEmpty && languageID > 0)
+                                    if (!allFieldsAreEmpty && languageId > 0)
                                     {
                                         //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                                        content = SpecificationAttributeManager.InsertSpecificationAttributeOptionLocalized(sao.SpecificationAttributeOptionID,
-                                               languageID, name);
+                                        content = SpecificationAttributeManager.InsertSpecificationAttributeOptionLocalized(sao.SpecificationAttributeOptionId,
+                                               languageId, name);
                                     }
                                 }
                                 else
                                 {
-                                    if (languageID > 0)
+                                    if (languageId > 0)
                                     {
-                                        content = SpecificationAttributeManager.UpdateSpecificationAttributeOptionLocalized(content.SpecificationAttributeOptionLocalizedID,
-                                            content.SpecificationAttributeOptionID, languageID, name);
+                                        content = SpecificationAttributeManager.UpdateSpecificationAttributeOptionLocalized(content.SpecificationAttributeOptionLocalizedId,
+                                            content.SpecificationAttributeOptionId, languageId, name);
                                     }
                                 }
                             }
@@ -194,9 +194,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedName = (TextBox)e.Item.FindControl("txtLocalizedName");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = SpecificationAttributeManager.GetSpecificationAttributeLocalizedBySpecificationAttributeIDAndLanguageID(this.SpecificationAttributeID, languageID);
+                var content = SpecificationAttributeManager.GetSpecificationAttributeLocalizedBySpecificationAttributeIdAndLanguageId(this.SpecificationAttributeId, languageId);
 
                 if (content != null)
                 {
@@ -214,17 +214,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 GridViewRow row = grdSpecificationAttributeOptions.Rows[index];
                 SimpleTextBox txtName = row.FindControl("txtOptionName") as SimpleTextBox;
                 NumericTextBox txtDisplayOrder = row.FindControl("txtOptionDisplayOrder") as NumericTextBox;
-                HiddenField hfSpecificationAttributeOptionID = row.FindControl("hfSpecificationAttributeOptionID") as HiddenField;
+                HiddenField hfSpecificationAttributeOptionId = row.FindControl("hfSpecificationAttributeOptionId") as HiddenField;
 
                 string name = txtName.Text;
                 int displayOrder = txtDisplayOrder.Value;
-                int saoID = int.Parse(hfSpecificationAttributeOptionID.Value);
+                int saoId = int.Parse(hfSpecificationAttributeOptionId.Value);
 
-                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(saoID, 0);
+                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId, 0);
                 if (sao != null)
                 {
-                    sao = SpecificationAttributeManager.UpdateSpecificationAttributeOptions(saoID, SpecificationAttributeID, name, displayOrder);
-                    saveLocalizableContent(sao);
+                    sao = SpecificationAttributeManager.UpdateSpecificationAttributeOptions(saoId, SpecificationAttributeId, name, displayOrder);
+                    SaveLocalizableContent(sao);
                 }
 
                 BindData();
@@ -233,11 +233,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void OnSpecificationAttributeOptionsDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int saoID = (int)grdSpecificationAttributeOptions.DataKeys[e.RowIndex]["SpecificationAttributeOptionID"];
-            SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(saoID, 0);
+            int saoId = (int)grdSpecificationAttributeOptions.DataKeys[e.RowIndex]["SpecificationAttributeOptionId"];
+            SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId, 0);
             if (sao != null)
             {
-                SpecificationAttributeManager.DeleteSpecificationAttributeOption(sao.SpecificationAttributeOptionID);
+                SpecificationAttributeManager.DeleteSpecificationAttributeOption(sao.SpecificationAttributeOptionId);
                 BindData();
             }
         }
@@ -269,14 +269,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 var txtLocalizedOptionName = (TextBox)e.Item.FindControl("txtLocalizedOptionName");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
-                var hfSpecificationAttributeOptionID = (HiddenField)e.Item.Parent.Parent.FindControl("hfSpecificationAttributeOptionID");
+                var hfSpecificationAttributeOptionId = (HiddenField)e.Item.Parent.Parent.FindControl("hfSpecificationAttributeOptionId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
-                int saoID = Convert.ToInt32(hfSpecificationAttributeOptionID.Value);
-                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(saoID, 0);
+                int languageId = int.Parse(lblLanguageId.Text);
+                int saoId = Convert.ToInt32(hfSpecificationAttributeOptionId.Value);
+                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId, 0);
                 if (sao != null)
                 {
-                    var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIDAndLanguageID(saoID, languageID);
+                    var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIdAndLanguageId(saoId, languageId);
                     if (content != null)
                     {
                         txtLocalizedOptionName.Text = content.Name;
@@ -284,12 +284,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
         }
-        
-        public int SpecificationAttributeID
+
+        public int SpecificationAttributeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("SpecificationAttributeID");
+                return CommonHelper.QueryStringInt("SpecificationAttributeId");
             }
         }
     }

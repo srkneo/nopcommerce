@@ -49,7 +49,7 @@
             <div id="idTab_Info<%# Container.ItemIndex+2 %>" class="tab">
                 <i>
                     <%=GetLocaleResourceString("Admin.Localizable.EmptyFieldNote")%></i>
-                <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                <asp:Label ID="lblLanguageId" runat="server" Text='<%#Eval("LanguageId") %>' Visible="false"></asp:Label>
                 <table class="adminContent">
                     <tr>
                         <td class="adminTitle">

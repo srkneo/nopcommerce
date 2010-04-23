@@ -63,19 +63,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             OrderStatusEnum? orderStatus = null;
-            int orderStatusID = int.Parse(ddlOrderStatus.SelectedItem.Value);
-            if (orderStatusID > 0)
-                orderStatus = (OrderStatusEnum)Enum.ToObject(typeof(OrderStatusEnum), orderStatusID);
+            int orderStatusId = int.Parse(ddlOrderStatus.SelectedItem.Value);
+            if (orderStatusId > 0)
+                orderStatus = (OrderStatusEnum)Enum.ToObject(typeof(OrderStatusEnum), orderStatusId);
 
             PaymentStatusEnum? paymentStatus = null;
-            int paymentStatusID = int.Parse(ddlPaymentStatus.SelectedItem.Value);
-            if (paymentStatusID > 0)
-                paymentStatus = (PaymentStatusEnum)Enum.ToObject(typeof(PaymentStatusEnum), paymentStatusID);
+            int paymentStatusId = int.Parse(ddlPaymentStatus.SelectedItem.Value);
+            if (paymentStatusId > 0)
+                paymentStatus = (PaymentStatusEnum)Enum.ToObject(typeof(PaymentStatusEnum), paymentStatusId);
 
             ShippingStatusEnum? shippingStatus = null;
-            int shippingStatusID = int.Parse(ddlShippingStatus.SelectedItem.Value);
-            if (shippingStatusID > 0)
-                shippingStatus = (ShippingStatusEnum)Enum.ToObject(typeof(ShippingStatusEnum), shippingStatusID);
+            int shippingStatusId = int.Parse(ddlShippingStatus.SelectedItem.Value);
+            if (shippingStatusId > 0)
+                shippingStatus = (ShippingStatusEnum)Enum.ToObject(typeof(ShippingStatusEnum), shippingStatusId);
 
             OrderCollection orders = OrderManager.SearchOrders(startDate, endDate, txtCustomerEmail.Text, orderStatus, paymentStatus, shippingStatus);
 
@@ -90,7 +90,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses)
             {
-                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusID), orderStatus.OrderStatusID.ToString());
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
                 this.ddlOrderStatus.Items.Add(item2);
             }
 
@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             PaymentStatusCollection paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
             foreach (PaymentStatus paymentStatus in paymentStatuses)
             {
-                ListItem item2 = new ListItem(PaymentStatusManager.GetPaymentStatusName(paymentStatus.PaymentStatusID), paymentStatus.PaymentStatusID.ToString());
+                ListItem item2 = new ListItem(PaymentStatusManager.GetPaymentStatusName(paymentStatus.PaymentStatusId), paymentStatus.PaymentStatusId.ToString());
                 this.ddlPaymentStatus.Items.Add(item2);
             }
 
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ShippingStatusCollection shippingStatuses = ShippingStatusManager.GetAllShippingStatuses();
             foreach (ShippingStatus shippingStatus in shippingStatuses)
             {
-                ListItem item2 = new ListItem(ShippingStatusManager.GetShippingStatusName(shippingStatus.ShippingStatusID), shippingStatus.ShippingStatusID.ToString());
+                ListItem item2 = new ListItem(ShippingStatusManager.GetShippingStatusName(shippingStatus.ShippingStatusId), shippingStatus.ShippingStatusId.ToString());
                 this.ddlShippingStatus.Items.Add(item2);
             }
         }
@@ -124,8 +124,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string fileName = string.Format("orders_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
 
                     OrderCollection orders = GetOrders();
-                    string xml = ExportManager.ExportOrdersToXML(orders);
-                    CommonHelper.WriteResponseXML(xml, fileName);
+                    string xml = ExportManager.ExportOrdersToXml(orders);
+                    CommonHelper.WriteResponseXml(xml, fileName);
                 }
                 catch (Exception exc)
                 {
@@ -144,8 +144,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
                     OrderCollection orders = GetOrders();
 
-                    ExportManager.ExportOrdersToXLS(filePath, orders);
-                    CommonHelper.WriteResponseXLS(filePath, fileName);
+                    ExportManager.ExportOrdersToXls(filePath, orders);
+                    CommonHelper.WriteResponseXls(filePath, fileName);
                 }
                 catch (Exception exc)
                 {
@@ -161,9 +161,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 string fileName = String.Format("packagingslips_{0}_{1}.pdf", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                 string filePath = String.Format("{0}files\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
 
-                PDFHelper.PrintPackagingSlipsToPDF(GetOrders(), filePath);
+                PDFHelper.PrintPackagingSlipsToPdf(GetOrders(), filePath);
 
-                CommonHelper.WriteResponsePDF(filePath, fileName);
+                CommonHelper.WriteResponsePdf(filePath, fileName);
             }
             catch(Exception ex)
             {
@@ -188,19 +188,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
                 if (customer.IsGuest)
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.Orders.CustomerColumn.Guest"));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.Orders.CustomerColumn.Guest"));
                 }
                 else
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 }
             }
             return customerInfo;
@@ -233,10 +233,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    int orderID = 0;
-                    if (int.TryParse(txtOrderID.Text.Trim(), out orderID))
+                    int orderId = 0;
+                    if (int.TryParse(txtOrderId.Text.Trim(), out orderId))
                     {
-                        string url = string.Format("{0}OrderDetails.aspx?OrderID={1}", CommonHelper.GetStoreAdminLocation(), orderID);
+                        string url = string.Format("{0}OrderDetails.aspx?OrderID={1}", CommonHelper.GetStoreAdminLocation(), orderId);
                         Response.Redirect(url);
                     }
                 }

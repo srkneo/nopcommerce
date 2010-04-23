@@ -30,9 +30,9 @@ namespace NopSolutions.NopCommerce.Tax
         /// Gets tax rate
         /// </summary>
         /// <param name="calculateTaxRequest">Tax calculation request</param>
-        /// <param name="Error">Error</param>
+        /// <param name="error">Error</param>
         /// <returns>Tax</returns>
-        public decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string Error)
+        public decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string error)
         {
             return decimal.Zero;
         }

@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Topic topic = ctrlTopicInfo.SaveInfo();
-                    Response.Redirect("TopicDetails.aspx?TopicID=" + topic.TopicID.ToString());
+                    Response.Redirect("TopicDetails.aspx?TopicID=" + topic.TopicId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                TopicManager.DeleteTopic(this.TopicID);
+                TopicManager.DeleteTopic(this.TopicId);
                 Response.Redirect("Topics.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int TopicID
+        public int TopicId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TopicID");
+                return CommonHelper.QueryStringInt("TopicId");
             }
         }
     }

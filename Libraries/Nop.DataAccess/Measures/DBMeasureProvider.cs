@@ -33,18 +33,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
     public abstract partial class DBMeasureProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes measure dimension
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
-        public abstract void DeleteMeasureDimension(int MeasureDimensionID);
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
+        public abstract void DeleteMeasureDimension(int measureDimensionId);
 
         /// <summary>
         /// Gets a measure dimension by identifier
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
         /// <returns>Measure dimension</returns>
-        public abstract DBMeasureDimension GetMeasureDimensionByID(int MeasureDimensionID);
+        public abstract DBMeasureDimension GetMeasureDimensionById(int measureDimensionId);
 
         /// <summary>
         /// Gets all measure dimensions
@@ -55,38 +56,38 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
         /// <summary>
         /// Inserts a measure dimension
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure dimension</returns>
-        public abstract DBMeasureDimension InsertMeasureDimension(string Name, 
-            string SystemKeyword, decimal Ratio, int DisplayOrder);
+        public abstract DBMeasureDimension InsertMeasureDimension(string name, 
+            string systemKeyword, decimal ratio, int displayOrder);
 
         /// <summary>
         /// Updates the measure dimension
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure dimension</returns>
-        public abstract DBMeasureDimension UpdateMeasureDimension(int MeasureDimensionID, string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder);
+        public abstract DBMeasureDimension UpdateMeasureDimension(int measureDimensionId, 
+            string name, string systemKeyword, decimal ratio, int displayOrder);
         
         /// <summary>
         /// Deletes measure weight
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
-        public abstract void DeleteMeasureWeight(int MeasureWeightID);
+        /// <param name="measureWeightId">Measure weight identifier</param>
+        public abstract void DeleteMeasureWeight(int measureWeightId);
 
         /// <summary>
         /// Gets a measure weight by identifier
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
+        /// <param name="measureWeightId">Measure weight identifier</param>
         /// <returns>Measure weight</returns>
-        public abstract DBMeasureWeight GetMeasureWeightByID(int MeasureWeightID);
+        public abstract DBMeasureWeight GetMeasureWeightById(int measureWeightId);
         
         /// <summary>
         /// Gets all measure weights
@@ -97,25 +98,25 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
         /// <summary>
         /// Inserts a measure weight
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure weight</returns>
-        public abstract DBMeasureWeight InsertMeasureWeight(string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder);
+        public abstract DBMeasureWeight InsertMeasureWeight(string name,
+            string systemKeyword, decimal ratio, int displayOrder);
 
         /// <summary>
         /// Updates the measure weight
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="measureWeightId">Measure weight identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure weight</returns>
-        public abstract DBMeasureWeight UpdateMeasureWeight(int MeasureWeightID, string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder);
+        public abstract DBMeasureWeight UpdateMeasureWeight(int measureWeightId, string name,
+            string systemKeyword, decimal ratio, int displayOrder);
 
         #endregion
     }

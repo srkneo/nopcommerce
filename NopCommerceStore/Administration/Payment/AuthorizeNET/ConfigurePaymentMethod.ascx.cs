@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.AuthorizeNET
 
             cbUseSandbox.Checked = SettingManager.GetSettingValueBoolean("PaymentMethod.AuthorizeNET.UseSandbox");
             txtTransactionKey.Text = SettingManager.GetSettingValue("PaymentMethod.AuthorizeNET.TransactionKey");
-            txtLoginID.Text = SettingManager.GetSettingValue("PaymentMethod.AuthorizeNET.LoginID");
+            txtLoginId.Text = SettingManager.GetSettingValue("PaymentMethod.AuthorizeNET.LoginId");
 
             txtAdditionalFee.Value = SettingManager.GetSettingValueDecimalNative("PaymentMethod.AuthorizeNET.AdditionalFee");
         }
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.AuthorizeNET
 
             SettingManager.SetParam("PaymentMethod.AuthorizeNET.UseSandbox", cbUseSandbox.Checked.ToString());
             SettingManager.SetParam("PaymentMethod.AuthorizeNET.TransactionKey", txtTransactionKey.Text);
-            SettingManager.SetParam("PaymentMethod.AuthorizeNET.LoginID", txtLoginID.Text);
+            SettingManager.SetParam("PaymentMethod.AuthorizeNET.LoginId", txtLoginId.Text);
 
             SettingManager.SetParamNative("PaymentMethod.AuthorizeNET.AdditionalFee", txtAdditionalFee.Value);
         }

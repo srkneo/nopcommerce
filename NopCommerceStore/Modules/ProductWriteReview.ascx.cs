@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             pnlError.Visible = false;
 
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null && product.AllowCustomerReviews)
             {
                 FillRatingDropDowns();
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (Page.IsValid)
                 {
-                    var product = ProductManager.GetProductByID(this.ProductID);
+                    var product = ProductManager.GetProductById(this.ProductId);
                     if (product != null && product.AllowCustomerReviews)
                     {
                         if (NopContext.Current.User == null && CustomerManager.AllowAnonymousUsersToReviewProduct)
@@ -119,7 +119,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             rating = int.Parse(rblRating.SelectedItem.Value);
                         bool isApproved = !CustomerManager.ProductReviewsMustBeApproved;
                         
-                        ProductManager.InsertProductReview(product.ProductID, NopContext.Current.User.CustomerID,
+                        ProductManager.InsertProductReview(product.ProductId, NopContext.Current.User.CustomerId,
                             productReviewTitle, productReviewText,
                             rating, 0, 0, isApproved, DateTime.Now);
                         txtProductReviewTitle.Text = string.Empty;
@@ -131,7 +131,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         }
                         else
                         {
-                            string productURL = SEOHelper.GetProductURL(product);
+                            string productURL = SEOHelper.GetProductUrl(product);
                             Response.Redirect(productURL);
                         }
                     }
@@ -146,11 +146,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

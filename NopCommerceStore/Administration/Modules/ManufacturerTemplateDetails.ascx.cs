@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ManufacturerTemplate manufacturerTemplate = ctrlManufacturerTemplateInfo.SaveInfo();
-                    Response.Redirect("ManufacturerTemplateDetails.aspx?ManufacturerTemplateID=" + manufacturerTemplate.ManufacturerTemplateID.ToString());
+                    Response.Redirect("ManufacturerTemplateDetails.aspx?ManufacturerTemplateID=" + manufacturerTemplate.ManufacturerTemplateId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                TemplateManager.DeleteManufacturerTemplate(this.ManufacturerTemplateID);
+                TemplateManager.DeleteManufacturerTemplate(this.ManufacturerTemplateId);
                 Response.Redirect("ManufacturerTemplates.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ManufacturerTemplateID
+        public int ManufacturerTemplateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ManufacturerTemplateID");
+                return CommonHelper.QueryStringInt("ManufacturerTemplateId");
             }
         }
     }

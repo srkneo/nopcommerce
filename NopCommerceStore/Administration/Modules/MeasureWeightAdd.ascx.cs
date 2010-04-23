@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     MeasureWeight measureWeight = ctrlMeasureWeightInfo.SaveInfo();
-                    Response.Redirect("MeasureWeightDetails.aspx?MeasureWeightID=" + measureWeight.MeasureWeightID.ToString());
+                    Response.Redirect("MeasureWeightDetails.aspx?MeasureWeightID=" + measureWeight.MeasureWeightId.ToString());
                 }
                 catch (Exception exc)
                 {

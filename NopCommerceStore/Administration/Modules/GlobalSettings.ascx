@@ -53,7 +53,7 @@
     function toggleSMSAlerts() {
         if (getE('<%=cbIsSMSAlertsEnabled.ClientID %>').checked) {
             $('#pnlSMSAlertsPhoneNumber').show();
-            $('#pnlSMSAlertsClickatellAPIID').show();
+            $('#pnlSMSAlertsClickatellAPIId').show();
             $('#pnlSMSAlertsClickatellUsername').show();
             $('#pnlSMSAlertsClickatellPassword').show();
             $('#pnlSMSAlertsTest_0').show();
@@ -64,7 +64,7 @@
         }
         else {
             $('#pnlSMSAlertsPhoneNumber').hide();
-            $('#pnlSMSAlertsClickatellAPIID').hide();
+            $('#pnlSMSAlertsClickatellAPIId').hide();
             $('#pnlSMSAlertsClickatellUsername').hide();
             $('#pnlSMSAlertsClickatellPassword').hide();
             $('#pnlSMSAlertsTest_0').hide();
@@ -701,14 +701,14 @@
                             <asp:TextBox runat="server" ID="txtSMSAlertsPhoneNumber" />
                         </td>
                     </tr>
-                    <tr id="pnlSMSAlertsClickatellAPIID">
+                    <tr id="pnlSMSAlertsClickatellAPIId">
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
-                                ID="lblSMSAlertsClickatellAPIID" Text="<% $NopResources:Admin.GlobalSettings.SMSAlerts.Clickatell.APIID %>"
+                                ID="lblSMSAlertsClickatellAPIId" Text="<% $NopResources:Admin.GlobalSettings.SMSAlerts.Clickatell.APIID %>"
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.SMSAlerts.Clickatell.APIID.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <asp:TextBox runat="server" ID="txtSMSAlertsClickatellAPIID" />
+                            <asp:TextBox runat="server" ID="txtSMSAlertsClickatellAPIId" />
                         </td>
                     </tr>
                     <tr id="pnlSMSAlertsClickatellUsername">

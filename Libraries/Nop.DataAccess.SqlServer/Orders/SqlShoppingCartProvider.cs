@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
     /// <summary>
     /// Shopping cart provider for SQL Server
     /// </summary>
-    public partial class SQLShoppingCartProvider : DBShoppingCartProvider
+    public partial class SqlShoppingCartProvider : DBShoppingCartProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         #region Utilities
         private DBShoppingCartItem GetShoppingCartItemFromReader(IDataReader dataReader)
         {
-            DBShoppingCartItem shoppingCartItem = new DBShoppingCartItem();
-            shoppingCartItem.ShoppingCartItemID = NopSqlDataHelper.GetInt(dataReader, "ShoppingCartItemID");
-            shoppingCartItem.ShoppingCartTypeID = NopSqlDataHelper.GetInt(dataReader, "ShoppingCartTypeID");
-            shoppingCartItem.CustomerSessionGUID = NopSqlDataHelper.GetGuid(dataReader, "CustomerSessionGUID");
-            shoppingCartItem.ProductVariantID = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
-            shoppingCartItem.AttributesXML = NopSqlDataHelper.GetString(dataReader, "AttributesXML");
-            shoppingCartItem.CustomerEnteredPrice = NopSqlDataHelper.GetDecimal(dataReader, "CustomerEnteredPrice");
-            shoppingCartItem.Quantity = NopSqlDataHelper.GetInt(dataReader, "Quantity");
-            shoppingCartItem.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            shoppingCartItem.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return shoppingCartItem;
+            var item = new DBShoppingCartItem();
+            item.ShoppingCartItemId = NopSqlDataHelper.GetInt(dataReader, "ShoppingCartItemID");
+            item.ShoppingCartTypeId = NopSqlDataHelper.GetInt(dataReader, "ShoppingCartTypeID");
+            item.CustomerSessionGuid = NopSqlDataHelper.GetGuid(dataReader, "CustomerSessionGUID");
+            item.ProductVariantId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
+            item.AttributesXml = NopSqlDataHelper.GetString(dataReader, "AttributesXML");
+            item.CustomerEnteredPrice = NopSqlDataHelper.GetDecimal(dataReader, "CustomerEnteredPrice");
+            item.Quantity = NopSqlDataHelper.GetInt(dataReader, "Quantity");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
         #endregion
 
@@ -89,146 +89,147 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Deletes expired shopping cart items
         /// </summary>
-        /// <param name="OlderThan">Older than date and time</param>
-        public override void DeleteExpiredShoppingCartItems(DateTime OlderThan)
+        /// <param name="olderThan">Older than date and time</param>
+        public override void DeleteExpiredShoppingCartItems(DateTime olderThan)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShoppingCartItemDeleteExpired");
-            db.AddInParameter(dbCommand, "OlderThan", DbType.DateTime, OlderThan);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "OlderThan", DbType.DateTime, olderThan);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Deletes a shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartItemID">The shopping cart item identifier</param>
-        public override void DeleteShoppingCartItem(int ShoppingCartItemID)
+        /// <param name="shoppingCartItemId">The shopping cart item identifier</param>
+        public override void DeleteShoppingCartItem(int shoppingCartItemId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShoppingCartItemDelete");
-            db.AddInParameter(dbCommand, "ShoppingCartItemID", DbType.Int32, ShoppingCartItemID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ShoppingCartItemID", DbType.Int32, shoppingCartItemId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a shopping cart by customer session GUID
         /// </summary>
-        /// <param name="ShoppingCartTypeID">Shopping cart type identifier</param>
-        /// <param name="CustomerSessionGUID">The customer session identifier</param>
+        /// <param name="shoppingCartTypeId">Shopping cart type identifier</param>
+        /// <param name="customerSessionGuid">The customer session identifier</param>
         /// <returns>Cart</returns>
-        public override DBShoppingCart GetShoppingCartByCustomerSessionGUID(int ShoppingCartTypeID, Guid CustomerSessionGUID)
+        public override DBShoppingCart GetShoppingCartByCustomerSessionGuid(int shoppingCartTypeId,
+            Guid customerSessionGuid)
         {
-            DBShoppingCart Cart = new DBShoppingCart();
+            var result = new DBShoppingCart();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShoppingCartItemLoadByCustomerSessionGUID");
-            db.AddInParameter(dbCommand, "ShoppingCartTypeID", DbType.Int32, ShoppingCartTypeID);
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
+            db.AddInParameter(dbCommand, "ShoppingCartTypeID", DbType.Int32, shoppingCartTypeId);
+            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
                 {
-                    DBShoppingCartItem shoppingCartItem = GetShoppingCartItemFromReader(dataReader);
-                    Cart.Add(shoppingCartItem);
+                    var item = GetShoppingCartItemFromReader(dataReader);
+                    result.Add(item);
                 }
             }
 
-            return Cart;
+            return result;
         }
 
         /// <summary>
         /// Gets a shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartItemID">The shopping cart item identifier</param>
+        /// <param name="shoppingCartItemId">The shopping cart item identifier</param>
         /// <returns>Shopping cart item</returns>
-        public override DBShoppingCartItem GetShoppingCartItemByID(int ShoppingCartItemID)
+        public override DBShoppingCartItem GetShoppingCartItemById(int shoppingCartItemId)
         {
-            DBShoppingCartItem shoppingCartItem = null;
-            if (ShoppingCartItemID == 0)
-                return shoppingCartItem;
+            DBShoppingCartItem item = null;
+            if (shoppingCartItemId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShoppingCartItemLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ShoppingCartItemID", DbType.Int32, ShoppingCartItemID);
+            db.AddInParameter(dbCommand, "ShoppingCartItemID", DbType.Int32, shoppingCartItemId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    shoppingCartItem = GetShoppingCartItemFromReader(dataReader);
+                    item = GetShoppingCartItemFromReader(dataReader);
                 }
             }
-            return shoppingCartItem;
+            return item;
         }
 
         /// <summary>
         /// Inserts a shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartTypeID">The shopping cart type identifier</param>
-        /// <param name="CustomerSessionGUID">The customer session identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The product variant attributes</param>
-        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="shoppingCartTypeId">The shopping cart type identifier</param>
+        /// <param name="customerSessionGuid">The customer session identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The product variant attributes</param>
+        /// <param name="customerEnteredPrice">The price enter by a customer</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public override DBShoppingCartItem InsertShoppingCartItem(int ShoppingCartTypeID, 
-            Guid CustomerSessionGUID, int ProductVariantID, string AttributesXML,
-            decimal CustomerEnteredPrice, int Quantity, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBShoppingCartItem InsertShoppingCartItem(int shoppingCartTypeId,
+            Guid customerSessionGuid, int productVariantId, string attributesXml,
+            decimal customerEnteredPrice, int quantity,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBShoppingCartItem shoppingCartItem = null;
+            DBShoppingCartItem item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShoppingCartItemInsert");
             db.AddOutParameter(dbCommand, "ShoppingCartItemID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ShoppingCartTypeID", DbType.Int32, ShoppingCartTypeID);
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
-            db.AddInParameter(dbCommand, "CustomerEnteredPrice", DbType.Decimal, CustomerEnteredPrice);
-            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, Quantity);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "ShoppingCartTypeID", DbType.Int32, shoppingCartTypeId);
+            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, attributesXml);
+            db.AddInParameter(dbCommand, "CustomerEnteredPrice", DbType.Decimal, customerEnteredPrice);
+            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, quantity);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ShoppingCartItemID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShoppingCartItemID"));
-                shoppingCartItem = GetShoppingCartItemByID(ShoppingCartItemID);
+                int shoppingCartItemId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShoppingCartItemID"));
+                item = GetShoppingCartItemById(shoppingCartItemId);
             }
-            return shoppingCartItem;
+            return item;
         }
 
         /// <summary>
         /// Updates the shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartItemID">The shopping cart item identifier</param>
-        /// <param name="ShoppingCartTypeID">The shopping cart type identifier</param>
-        /// <param name="CustomerSessionGUID">The customer session identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The product variant attributes</param>
-        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="shoppingCartItemId">The shopping cart item identifier</param>
+        /// <param name="shoppingCartTypeId">The shopping cart type identifier</param>
+        /// <param name="customerSessionGuid">The customer session identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The product variant attributes</param>
+        /// <param name="customerEnteredPrice">The price enter by a customer</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public override DBShoppingCartItem UpdateShoppingCartItem(int ShoppingCartItemID, 
-            int ShoppingCartTypeID, Guid CustomerSessionGUID, int ProductVariantID,
-            string AttributesXML, decimal CustomerEnteredPrice, int Quantity,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBShoppingCartItem UpdateShoppingCartItem(int shoppingCartItemId,
+            int shoppingCartTypeId, Guid customerSessionGuid,
+            int productVariantId, string attributesXml,
+            decimal customerEnteredPrice, int quantity, DateTime createdOn, DateTime updatedOn)
         {
-            DBShoppingCartItem shoppingCartItem = null;
+            DBShoppingCartItem item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShoppingCartItemUpdate");
-            db.AddInParameter(dbCommand, "ShoppingCartItemID", DbType.Int32, ShoppingCartItemID);
-            db.AddInParameter(dbCommand, "ShoppingCartTypeID", DbType.Int32, ShoppingCartTypeID);
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, CustomerSessionGUID);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, ProductVariantID);
-            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, AttributesXML);
-            db.AddInParameter(dbCommand, "CustomerEnteredPrice", DbType.Decimal, CustomerEnteredPrice);
-            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, Quantity);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "ShoppingCartItemID", DbType.Int32, shoppingCartItemId);
+            db.AddInParameter(dbCommand, "ShoppingCartTypeID", DbType.Int32, shoppingCartTypeId);
+            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
+            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
+            db.AddInParameter(dbCommand, "AttributesXML", DbType.Xml, attributesXml);
+            db.AddInParameter(dbCommand, "CustomerEnteredPrice", DbType.Decimal, customerEnteredPrice);
+            db.AddInParameter(dbCommand, "Quantity", DbType.Int32, quantity);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                shoppingCartItem = GetShoppingCartItemByID(ShoppingCartItemID);
-
-
-            return shoppingCartItem;
+                item = GetShoppingCartItemById(shoppingCartItemId);
+            
+            return item;
         }
         #endregion
     }

@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             var item = new Language();
-            item.LanguageID = dbItem.LanguageID;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.LanguageCulture = dbItem.LanguageCulture;
             item.FlagImageFileName = dbItem.FlagImageFileName;
@@ -73,11 +73,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Deletes a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        public static void DeleteLanguage(int LanguageID)
+        /// <param name="languageId">Language identifier</param>
+        public static void DeleteLanguage(int languageId)
         {
-            var language = GetLanguageByID(LanguageID);
-            DBProviderManager<DBLanguageProvider>.Provider.DeleteLanguage(LanguageID);
+            var language = GetLanguageById(languageId);
+            DBProviderManager<DBLanguageProvider>.Provider.DeleteLanguage(languageId);
             if (LanguageManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
@@ -121,21 +121,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Language</returns>
-        public static Language GetLanguageByID(int LanguageID)
+        public static Language GetLanguageById(int languageId)
         {
-            if (LanguageID == 0)
+            if (languageId == 0)
                 return null;
 
-            string key = string.Format(LANGUAGES_BY_ID_KEY, LanguageID);
+            string key = string.Format(LANGUAGES_BY_ID_KEY, languageId);
             object obj2 = NopCache.Get(key);
             if (LanguageManager.CacheEnabled && (obj2 != null))
             {
                 return (Language)obj2;
             }
 
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.GetLanguageByID(LanguageID);
+            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.GetLanguageById(languageId);
             var language = DBMapping(dbItem);
 
             if (LanguageManager.CacheEnabled)
@@ -148,17 +148,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Inserts a language
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="LanguageCulture">The language culture</param>
-        /// <param name="FlagImageFileName">The flag image file name</param>
-        /// <param name="Published">A value indicating whether the language is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="languageCulture">The language culture</param>
+        /// <param name="flagImageFileName">The flag image file name</param>
+        /// <param name="published">A value indicating whether the language is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Language</returns>
-        public static Language InsertLanguage(string Name, string LanguageCulture,
-            string FlagImageFileName, bool Published, int DisplayOrder)
+        public static Language InsertLanguage(string name, string languageCulture,
+            string flagImageFileName, bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.InsertLanguage(Name,
-                LanguageCulture, FlagImageFileName, Published, DisplayOrder);
+            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.InsertLanguage(name,
+                languageCulture, flagImageFileName, published, displayOrder);
             var language = DBMapping(dbItem);
 
             if (LanguageManager.CacheEnabled)
@@ -171,18 +171,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Updates a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="LanguageCulture">The language culture</param>
-        /// <param name="FlagImageFileName">The flag image file name</param>
-        /// <param name="Published">A value indicating whether the language is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="languageCulture">The language culture</param>
+        /// <param name="flagImageFileName">The flag image file name</param>
+        /// <param name="published">A value indicating whether the language is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Language</returns>
-        public static Language UpdateLanguage(int LanguageID, string Name,
-            string LanguageCulture, string FlagImageFileName, bool Published, int DisplayOrder)
+        public static Language UpdateLanguage(int languageId,
+            string name, string languageCulture,
+            string flagImageFileName, bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.UpdateLanguage(LanguageID,
-                Name, LanguageCulture, FlagImageFileName, Published, DisplayOrder);
+            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.UpdateLanguage(languageId,
+                name, languageCulture, flagImageFileName, published, displayOrder);
             var language = DBMapping(dbItem);
             if (LanguageManager.CacheEnabled)
             {

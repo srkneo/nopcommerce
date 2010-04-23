@@ -34,7 +34,7 @@
             Customer ID:
         </td>
         <td class="adminData">
-            <asp:TextBox ID="txtCustomerID" runat="server" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox ID="txtCustomerId" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

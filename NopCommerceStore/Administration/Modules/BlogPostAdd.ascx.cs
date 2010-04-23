@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     BlogPost blogPost = ctrlBlogPostInfo.SaveInfo();
-                    Response.Redirect("BlogPostDetails.aspx?BlogPostID=" + blogPost.BlogPostID.ToString());
+                    Response.Redirect("BlogPostDetails.aspx?BlogPostID=" + blogPost.BlogPostId.ToString());
                 }
                 catch (Exception exc)
                 {

@@ -12,7 +12,6 @@
 </div>
 <asp:GridView ID="gvCountries" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="CountryID" HeaderText="Country ID" Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Countries.Name %>" ItemStyle-Width="20%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
@@ -27,13 +26,13 @@
         <asp:BoundField DataField="AllowsShipping" HeaderText="<% $NopResources:Admin.Countries.AllowsShipping %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
         </asp:BoundField>
-        <asp:BoundField DataField="TwoLetterISOCode" HeaderText="<% $NopResources:Admin.Countries.TwoLetterISOCode %>"
+        <asp:BoundField DataField="TwoLetterIsoCode" HeaderText="<% $NopResources:Admin.Countries.TwoLetterISOCode %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
         </asp:BoundField>
-        <asp:BoundField DataField="ThreeLetterISOCode" HeaderText="<% $NopResources:Admin.Countries.ThreeLetterISOCode %>"
+        <asp:BoundField DataField="ThreeLetterIsoCode" HeaderText="<% $NopResources:Admin.Countries.ThreeLetterISOCode %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="12%" ItemStyle-HorizontalAlign="Center">
         </asp:BoundField>
-        <asp:BoundField DataField="NumericISOCode" HeaderText="<% $NopResources:Admin.Countries.NumericISOCode %>"
+        <asp:BoundField DataField="NumericIsoCode" HeaderText="<% $NopResources:Admin.Countries.NumericISOCode %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
         </asp:BoundField>
         <asp:BoundField DataField="DisplayOrder" HeaderText="<% $NopResources:Admin.Countries.DisplayOrder %>"
@@ -49,7 +48,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Countries.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="12%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="CountryDetails.aspx?CountryID=<%#Eval("CountryID")%>" title="<%#GetLocaleResourceString("Admin.Countries.Edit.Tooltip")%>">
+                <a href="CountryDetails.aspx?CountryID=<%#Eval("CountryId")%>" title="<%#GetLocaleResourceString("Admin.Countries.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Countries.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

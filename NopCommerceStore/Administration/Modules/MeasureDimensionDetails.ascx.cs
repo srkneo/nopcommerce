@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     MeasureDimension measureDimension = ctrlMeasureDimensionInfo.SaveInfo();
-                    Response.Redirect("MeasureDimensionDetails.aspx?MeasureDimensionID=" + measureDimension.MeasureDimensionID.ToString());
+                    Response.Redirect("MeasureDimensionDetails.aspx?MeasureDimensionID=" + measureDimension.MeasureDimensionId.ToString());
                     
                 }
                 catch (Exception exc)
@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                MeasureManager.DeleteMeasureDimension(this.MeasureDimensionID);
+                MeasureManager.DeleteMeasureDimension(this.MeasureDimensionId);
                 Response.Redirect("Measures.aspx");
             }
             catch (Exception exc)
@@ -59,11 +59,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int MeasureDimensionID
+        public int MeasureDimensionId
         {
             get
             {
-                return CommonHelper.QueryStringInt("MeasureDimensionID");
+                return CommonHelper.QueryStringInt("MeasureDimensionId");
             }
         }
     }

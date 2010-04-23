@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Forums
         /// <summary>
         /// Gets or sets the forum group identifier
         /// </summary>
-        public int ForumGroupID { get; set; }
+        public int ForumGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

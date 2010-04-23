@@ -167,13 +167,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblGoDirectlyToOrderNumber;
         
         /// <summary>
-        /// txtOrderID control.
+        /// txtOrderId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtOrderID;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtOrderId;
         
         /// <summary>
         /// btnGoDirectlyToOrderNumber control.

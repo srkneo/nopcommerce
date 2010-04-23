@@ -38,14 +38,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Customer customer = ctrlCustomerInfo.SaveInfo();
-                    ctrlCustomerRoleMappings.SaveInfo(customer.CustomerID);
+                    ctrlCustomerRoleMappings.SaveInfo(customer.CustomerId);
                     
                     CustomerActivityManager.InsertActivity(
                         "AddNewCustomer",
                         GetLocaleResourceString("ActivityLog.AddNewCustomer"),
-                        customer.CustomerID);
+                        customer.CustomerId);
 
-                    Response.Redirect("CustomerDetails.aspx?CustomerID=" + customer.CustomerID.ToString());
+                    Response.Redirect("CustomerDetails.aspx?CustomerID=" + customer.CustomerId.ToString());
                 }
                 catch (Exception exc)
                 {

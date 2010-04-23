@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.GoogleCheckout
 
             string GoogleEnvironment = config.AppSettings.Settings["GoogleEnvironment"].Value;           
             cbUseSandbox.Checked = GoogleEnvironment == "Sandbox";
-            txtGoogleVendorID.Text = config.AppSettings.Settings["GoogleMerchantID"].Value;
+            txtGoogleVendorId.Text = config.AppSettings.Settings["GoogleMerchantID"].Value;
             txtGoogleMerchantKey.Text = config.AppSettings.Settings["GoogleMerchantKey"].Value;
 
             cbAuthenticateCallback.Checked = Convert.ToBoolean(config.AppSettings.Settings["GoogleAuthenticateCallback"].Value);
@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.GoogleCheckout
                 config.AppSettings.Settings["GoogleEnvironment"].Value = "Sandbox";
             else
                 config.AppSettings.Settings["GoogleEnvironment"].Value = "Production";
-            config.AppSettings.Settings["GoogleMerchantID"].Value = txtGoogleVendorID.Text;
+            config.AppSettings.Settings["GoogleMerchantId"].Value = txtGoogleVendorId.Text;
             config.AppSettings.Settings["GoogleMerchantKey"].Value = txtGoogleMerchantKey.Text;
             config.AppSettings.Settings["GoogleAuthenticateCallback"].Value = cbAuthenticateCallback.Checked.ToString();
             config.Save(ConfigurationSaveMode.Modified);

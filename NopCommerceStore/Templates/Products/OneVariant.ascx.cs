@@ -29,7 +29,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if(product == null || product.ProductVariants.Count == 0)
             {
                 Response.Redirect(CommonHelper.GetStoreLocation());
@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             var productPictures = product.ProductPictures;
             if(productPictures.Count > 1)
             {
-                defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureID, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
+                defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
                 defaultImage.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                 defaultImage.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                 lvProductPictures.DataSource = productPictures;
@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             }
             else if(productPictures.Count == 1)
             {
-                defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureID, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
+                defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
                 defaultImage.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                 defaultImage.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                 lvProductPictures.Visible = false;
@@ -74,10 +74,10 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
         {
             btnAddToWishlist.Visible = SettingManager.GetSettingValueBoolean("Common.EnableWishlist");
 
-            ctrlTierPrices.ProductVariantID = productVariant.ProductVariantID;
-            ctrlProductAttributes.ProductVariantID = ProductVariant.ProductVariantID;
-            //ctrlProductPrice.ProductVariantID = productVariant.ProductVariantID;
-            ctrlProductPrice2.ProductVariantID = productVariant.ProductVariantID;
+            ctrlTierPrices.ProductVariantId = productVariant.ProductVariantId;
+            ctrlProductAttributes.ProductVariantId = ProductVariant.ProductVariantId;
+            //ctrlProductPrice.ProductVariantId = productVariant.ProductVariantId;
+            ctrlProductPrice2.ProductVariantId = productVariant.ProductVariantId;
 
             //stock
             if(pnlStockAvailablity != null && lblStockAvailablity != null)
@@ -122,7 +122,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             if (productVariant.CustomerEntersPrice)
             {
                 txtCustomerEnteredPrice.Visible = true;
-                txtCustomerEnteredPrice.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
+                txtCustomerEnteredPrice.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
                 txtCustomerEnteredPrice.Value = (int)productVariant.MinimumCustomerEnteredPrice;
                 txtCustomerEnteredPrice.MinimumValue = ((int)productVariant.MinimumCustomerEnteredPrice).ToString();
                 txtCustomerEnteredPrice.MaximumValue = ((int)productVariant.MaximumCustomerEnteredPrice).ToString();
@@ -136,9 +136,9 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             //buttons
             if(!productVariant.DisableBuyButton)
             {
-                txtQuantity.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
-                btnAddToCart.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
-                btnAddToWishlist.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantID);
+                txtQuantity.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
+                btnAddToCart.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
+                btnAddToWishlist.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
 
                 txtQuantity.Value = productVariant.OrderMinimumQuantity;
             }
@@ -189,11 +189,11 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             base.OnPreRender(e);
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
 
@@ -201,7 +201,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
         {
             get
             {
-                Product product = ProductManager.GetProductByID(ProductID);
+                Product product = ProductManager.GetProductById(this.ProductId);
                 if(product == null && product.ProductVariants.Count == 0)
                 {
                     return null;
@@ -240,7 +240,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                 {
                     var addToCartWarnings = ShoppingCartManager.AddToCart(
                         ShoppingCartTypeEnum.ShoppingCart,
-                        pv.ProductVariantID, 
+                        pv.ProductVariantId, 
                         attributes,
                         customerEnteredPrice,
                         quantity);
@@ -267,7 +267,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                 {
                     var addToCartWarnings = ShoppingCartManager.AddToCart(
                         ShoppingCartTypeEnum.Wishlist,
-                        pv.ProductVariantID, 
+                        pv.ProductVariantId, 
                         attributes,
                         customerEnteredPrice,
                         quantity);

@@ -60,7 +60,7 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
 		/// Must be overridden to provide a regular expression string
 		/// to match strings literals. 
 		/// </summary>
-		protected abstract string StringRegEx
+		protected abstract string StringRegex
 		{
 			get;
 		}
@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
 		/// Must be overridden to provide a regular expression string
 		/// to match comments. 
 		/// </summary>
-		protected abstract string CommentRegEx
+		protected abstract string CommentRegex
 		{
 			get;
 		}
@@ -108,9 +108,9 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
 			//build a master regex with capturing groups
 			StringBuilder regAll = new StringBuilder();
 			regAll.Append("(");
-			regAll.Append(CommentRegEx);
+			regAll.Append(CommentRegex);
 			regAll.Append(")|(");
-			regAll.Append(StringRegEx);
+			regAll.Append(StringRegex);
 			if (regPreproc.Length > 0)
 			{
 				regAll.Append(")|(");

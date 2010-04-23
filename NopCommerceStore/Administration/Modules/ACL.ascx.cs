@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             private DataControlRowType templateType;
             private string columnName;
             private string dataType;
-            private int customerRoleID;
+            private int customerRoleId;
             #endregion
 
             #region Ctor
@@ -52,12 +52,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             public NopGridViewCustomTemplate(DataControlRowType type,
-                string columnName, string DataType, int customerRoleID)
+                string columnName, string DataType, int customerRoleId)
             {
                 this.templateType = type;
                 this.columnName = columnName;
                 this.dataType = DataType;
-                this.customerRoleID = customerRoleID;
+                this.customerRoleId = customerRoleId;
             }
             #endregion
 
@@ -77,27 +77,25 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     case "Checkbox":
                         {
                             CustomerActionACLMappingHelperClass map1 = (CustomerActionACLMappingHelperClass)row.DataItem;
-                            ((CheckBox)ctrl).Checked = map1.Allow[this.customerRoleID];
+                            ((CheckBox)ctrl).Checked = map1.Allow[this.customerRoleId];
                         }
                         break;
                 }
             }
 
-            private void hfCustomerActionID_DataBinding(Object sender, EventArgs e)
+            private void hfCustomerActionId_DataBinding(Object sender, EventArgs e)
             {
                 HiddenField hf = (HiddenField)sender;
                 GridViewRow row = (GridViewRow)hf.NamingContainer;
 
                 CustomerActionACLMappingHelperClass map1 = (CustomerActionACLMappingHelperClass)row.DataItem;
-                hf.Value = map1.CustomerActionID.ToString();
+                hf.Value = map1.CustomerActionId.ToString();
             }
             #endregion
 
             #region Methods
             public void InstantiateIn(Control container)
             {
-                DataControlFieldCell hc = null;
-
                 switch (templateType)
                 {
                     case DataControlRowType.Header:
@@ -114,12 +112,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                                 break;
                             case "Checkbox":
                                 ctrl = new CheckBox();
-                                ctrl.ID = string.Format("cbAllow_{0}", customerRoleID);
+                                ctrl.ID = string.Format("cbAllow_{0}", customerRoleId);
 
-                                HiddenField hfCustomerActionID = new HiddenField();
-                                hfCustomerActionID.ID = string.Format("hfCustomerActionID_{0}", customerRoleID);
-                                hfCustomerActionID.DataBinding += new EventHandler(this.hfCustomerActionID_DataBinding);
-                                container.Controls.Add(hfCustomerActionID);
+                                HiddenField hfCustomerActionId = new HiddenField();
+                                hfCustomerActionId.ID = string.Format("hfCustomerActionId_{0}", customerRoleId);
+                                hfCustomerActionId.DataBinding += new EventHandler(this.hfCustomerActionId_DataBinding);
+                                container.Controls.Add(hfCustomerActionId);
                                 break;
                             default:
                                 throw new Exception("Not supported column type");
@@ -137,7 +135,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected class CustomerActionACLMappingHelperClass
         {
-            public int CustomerActionID { get; set; }
+            public int CustomerActionId { get; set; }
             public string CustomerActionName { get; set; }
             public Dictionary<int, bool> Allow { get; set; }
         }
@@ -155,7 +153,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             foreach (CustomerRole cr in roles)
             {
                 TemplateField tf = new TemplateField();
-                tf.ItemTemplate = new NopGridViewCustomTemplate(DataControlRowType.DataRow, "Allow", "Checkbox", cr.CustomerRoleID);
+                tf.ItemTemplate = new NopGridViewCustomTemplate(DataControlRowType.DataRow, "Allow", "Checkbox", cr.CustomerRoleId);
                 tf.HeaderTemplate = new NopGridViewCustomTemplate(DataControlRowType.Header, cr.Name, "String");
                 gvACL.Columns.Add(tf);
             }
@@ -179,21 +177,21 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             foreach (CustomerAction ca in actions)
             {
                 CustomerActionACLMappingHelperClass map1 = new CustomerActionACLMappingHelperClass();
-                map1.CustomerActionID = ca.CustomerActionID;
+                map1.CustomerActionId = ca.CustomerActionId;
                 map1.CustomerActionName = ca.Name;
                 map1.Allow = new Dictionary<int, bool>();
 
                 foreach (CustomerRole cr in roles)
                 {
-                    ACLCollection acls = ACLManager.GetAllACL(ca.CustomerActionID, cr.CustomerRoleID, null);
+                    ACLCollection acls = ACLManager.GetAllAcl(ca.CustomerActionId, cr.CustomerRoleId, null);
                     if (acls.Count > 0)
                     {
                         ACL acl = acls[0];
-                        map1.Allow.Add(cr.CustomerRoleID, acl.Allow);
+                        map1.Allow.Add(cr.CustomerRoleId, acl.Allow);
                     }
                     else
                     {
-                        map1.Allow.Add(cr.CustomerRoleID, false);
+                        map1.Allow.Add(cr.CustomerRoleId, false);
                     }
                 }
                 dt.Add(map1);
@@ -241,23 +239,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     {
                         foreach (CustomerRole cr in roles)
                         {
-                            CheckBox cbAllow = row.FindControl(string.Format("cbAllow_{0}", cr.CustomerRoleID)) as CheckBox;
-                            HiddenField hfCustomerActionID = row.FindControl(string.Format("hfCustomerActionID_{0}", cr.CustomerRoleID)) as HiddenField;
-                            if (cbAllow == null || hfCustomerActionID == null || String.IsNullOrEmpty(hfCustomerActionID.Value))
+                            CheckBox cbAllow = row.FindControl(string.Format("cbAllow_{0}", cr.CustomerRoleId)) as CheckBox;
+                            HiddenField hfCustomerActionId = row.FindControl(string.Format("hfCustomerActionId_{0}", cr.CustomerRoleId)) as HiddenField;
+                            if (cbAllow == null || hfCustomerActionId == null || String.IsNullOrEmpty(hfCustomerActionId.Value))
                                 return;
 
                             bool allow = cbAllow.Checked;
-                            int customerActionID = int.Parse(hfCustomerActionID.Value);
+                            int customerActionId = int.Parse(hfCustomerActionId.Value);
 
-                            ACLCollection acls = ACLManager.GetAllACL(customerActionID, cr.CustomerRoleID, null);
+                            ACLCollection acls = ACLManager.GetAllAcl(customerActionId, cr.CustomerRoleId, null);
                             if (acls.Count > 0)
                             {
                                 ACL acl = acls[0];
-                                ACLManager.UpdateACL(acl.ACLID, customerActionID, cr.CustomerRoleID, allow);
+                                ACLManager.UpdateAcl(acl.AclId, customerActionId, cr.CustomerRoleId, allow);
                             }
                             else
                             {
-                                ACL acl = ACLManager.InsertACL(customerActionID, cr.CustomerRoleID, allow);
+                                ACL acl = ACLManager.InsertAcl(customerActionId, cr.CustomerRoleId, allow);
                             }
                         }
                     } 

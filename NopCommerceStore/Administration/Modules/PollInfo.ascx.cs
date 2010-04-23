@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             LanguageCollection languages = LanguageManager.GetAllLanguages();
             foreach (Language language in languages)
             {
-                ListItem item2 = new ListItem(language.Name, language.LanguageID.ToString());
+                ListItem item2 = new ListItem(language.Name, language.LanguageId.ToString());
                 this.ddlLanguage.Items.Add(item2);
             }
         }
 
         private void BindData()
         {
-            Poll poll = PollManager.GetPollByID(this.PollID);
+            Poll poll = PollManager.GetPollById(this.PollId);
             if (poll != null)
             {
-                CommonHelper.SelectListItem(this.ddlLanguage, poll.LanguageID);
+                CommonHelper.SelectListItem(this.ddlLanguage, poll.LanguageId);
                 this.txtName.Text = poll.Name;
                 this.txtSystemKeyword.Text = poll.SystemKeyword;
                 this.cbPublished.Checked = poll.Published;
@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                PollAnswer pollAnswer = PollManager.InsertPollAnswer(this.PollID,
+                PollAnswer pollAnswer = PollManager.InsertPollAnswer(this.PollId,
                     txtPollAnswerName.Text, 0, txtPollAnswerDisplayOrder.Value);
 
                 BindData();
@@ -95,15 +95,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvPollAnswers.Rows[index];
 
-                HiddenField hfPollAnswerID = row.FindControl("hfPollAnswerID") as HiddenField;
+                HiddenField hfPollAnswerId = row.FindControl("hfPollAnswerId") as HiddenField;
                 SimpleTextBox txtName = row.FindControl("txtName") as SimpleTextBox;
                 NumericTextBox txtDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
 
-                int pollAnswerID = int.Parse(hfPollAnswerID.Value);
-                PollAnswer pollAnswer = PollManager.GetPollAnswerByID(pollAnswerID);
+                int pollAnswerId = int.Parse(hfPollAnswerId.Value);
+                PollAnswer pollAnswer = PollManager.GetPollAnswerById(pollAnswerId);
 
                 if (pollAnswer != null)
-                    pollAnswer = PollManager.UpdatePoll(pollAnswer.PollAnswerID, pollAnswer.PollID,
+                    pollAnswer = PollManager.UpdatePoll(pollAnswer.PollAnswerId, pollAnswer.PollId,
                        txtName.Text, pollAnswer.Count, txtDisplayOrder.Value);
 
                 BindData();
@@ -124,11 +124,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvPollAnswers_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int pollAnswerID = (int)gvPollAnswers.DataKeys[e.RowIndex]["PollAnswerID"];
-            PollAnswer pollAnswer = PollManager.GetPollAnswerByID(pollAnswerID);
+            int pollAnswerId = (int)gvPollAnswers.DataKeys[e.RowIndex]["PollAnswerId"];
+            PollAnswer pollAnswer = PollManager.GetPollAnswerById(pollAnswerId);
             if (pollAnswer != null)
             {
-                PollManager.DeletePollAnswer(pollAnswer.PollAnswerID);
+                PollManager.DeletePollAnswer(pollAnswer.PollAnswerId);
                 BindData();
             }
         }
@@ -142,11 +142,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Poll SaveInfo()
         {
-            Poll poll = PollManager.GetPollByID(this.PollID);
+            Poll poll = PollManager.GetPollById(this.PollId);
 
             if (poll != null)
             {
-                poll = PollManager.UpdatePoll(poll.PollID, int.Parse(this.ddlLanguage.SelectedItem.Value),
+                poll = PollManager.UpdatePoll(poll.PollId, int.Parse(this.ddlLanguage.SelectedItem.Value),
                     txtName.Text, txtSystemKeyword.Text, cbPublished.Checked, txtDisplayOrder.Value);
             }
             else
@@ -157,11 +157,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return poll;
         }
 
-        public int PollID
+        public int PollId
         {
             get
             {
-                return CommonHelper.QueryStringInt("PollID");
+                return CommonHelper.QueryStringInt("PollId");
             }
         }
     }

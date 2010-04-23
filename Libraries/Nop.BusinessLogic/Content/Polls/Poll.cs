@@ -39,23 +39,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets or sets the poll identifier
         /// </summary>
-        public int PollID { get; set; }
+        public int PollId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the system keyword
         /// </summary>
         public string SystemKeyword { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the entity is published
         /// </summary>
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         {
             get
             {
-                return LanguageManager.GetLanguageByID(LanguageID);
+                return LanguageManager.GetLanguageById(this.LanguageId);
             }
         }
 
@@ -101,7 +101,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         {
             get
             {
-                return PollManager.GetPollAnswersByPollID(PollID);
+                return PollManager.GetPollAnswersByPollId(this.PollId);
             }
         }
 

@@ -28,14 +28,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Returns a customer attribute that has the specified attribute value
         /// </summary>
-        /// <param name="Key">Customer attribute key</param>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="key">Customer attribute key</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>A customer attribute that has the specified attribute value; otherwise null</returns>
-        public CustomerAttribute FindAttribute(string Key, int CustomerID)
+        public CustomerAttribute FindAttribute(string key, int customerId)
         {
             foreach (CustomerAttribute customerAttribute in this)
-                if (customerAttribute.Key == Key && customerAttribute.CustomerID == CustomerID)
+            {
+                if (customerAttribute.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase) &&
+                    customerAttribute.CustomerId == customerId)
                     return customerAttribute;
+            }
             return null;
         }
         #endregion

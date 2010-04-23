@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new ProductAttribute();
-            item.ProductAttributeID = dbItem.ProductAttributeID;
+            item.ProductAttributeId = dbItem.ProductAttributeId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
 
@@ -77,9 +77,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new ProductAttributeLocalized();
-            item.ProductAttributeLocalizedID = dbItem.ProductAttributeLocalizedID;
-            item.ProductAttributeID = dbItem.ProductAttributeID;
-            item.LanguageID = dbItem.LanguageID;
+            item.ProductAttributeLocalizedId = dbItem.ProductAttributeLocalizedId;
+            item.ProductAttributeId = dbItem.ProductAttributeId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
 
@@ -107,12 +107,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new ProductVariantAttribute();
-            item.ProductVariantAttributeID = dbItem.ProductVariantAttributeID;
-            item.ProductVariantID = dbItem.ProductVariantID;
-            item.ProductAttributeID = dbItem.ProductAttributeID;
+            item.ProductVariantAttributeId = dbItem.ProductVariantAttributeId;
+            item.ProductVariantId = dbItem.ProductVariantId;
+            item.ProductAttributeId = dbItem.ProductAttributeId;
             item.TextPrompt = dbItem.TextPrompt;
             item.IsRequired = dbItem.IsRequired;
-            item.AttributeControlTypeID = dbItem.AttributeControlTypeID;
+            item.AttributeControlTypeId = dbItem.AttributeControlTypeId;
             item.DisplayOrder = dbItem.DisplayOrder;
 
             return item;
@@ -139,8 +139,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new ProductVariantAttributeValue();
-            item.ProductVariantAttributeValueID = dbItem.ProductVariantAttributeValueID;
-            item.ProductVariantAttributeID = dbItem.ProductVariantAttributeID;
+            item.ProductVariantAttributeValueId = dbItem.ProductVariantAttributeValueId;
+            item.ProductVariantAttributeId = dbItem.ProductVariantAttributeId;
             item.Name = dbItem.Name;
             item.PriceAdjustment = dbItem.PriceAdjustment;
             item.WeightAdjustment = dbItem.WeightAdjustment;
@@ -156,9 +156,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new ProductVariantAttributeValueLocalized();
-            item.ProductVariantAttributeValueLocalizedID = dbItem.ProductVariantAttributeValueLocalizedID;
-            item.ProductVariantAttributeValueID = dbItem.ProductVariantAttributeValueID;
-            item.LanguageID = dbItem.LanguageID;
+            item.ProductVariantAttributeValueLocalizedId = dbItem.ProductVariantAttributeValueLocalizedId;
+            item.ProductVariantAttributeValueId = dbItem.ProductVariantAttributeValueId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
 
             return item;
@@ -185,9 +185,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return null;
 
             var item = new ProductVariantAttributeCombination();
-            item.ProductVariantAttributeCombinationID = dbItem.ProductVariantAttributeCombinationID;
-            item.ProductVariantID = dbItem.ProductVariantID;
-            item.AttributesXML = dbItem.AttributesXML;
+            item.ProductVariantAttributeCombinationId = dbItem.ProductVariantAttributeCombinationId;
+            item.ProductVariantId = dbItem.ProductVariantId;
+            item.AttributesXml = dbItem.AttributesXml;
             item.StockQuantity = dbItem.StockQuantity;
             item.AllowOutOfStockOrders = dbItem.AllowOutOfStockOrders;
 
@@ -203,10 +203,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Deletes a product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        public static void DeleteProductAttribute(int ProductAttributeID)
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        public static void DeleteProductAttribute(int productAttributeId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductAttribute(ProductAttributeID);
+            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductAttribute(productAttributeId);
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -223,25 +223,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
             return GetAllProductAttributes(languageId);
         }
 
         /// <summary>
         /// Gets all product attributes
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute collection</returns>
-        public static ProductAttributeCollection GetAllProductAttributes(int LanguageID)
+        public static ProductAttributeCollection GetAllProductAttributes(int languageId)
         {
-            string key = string.Format(PRODUCTATTRIBUTES_ALL_KEY, LanguageID);
+            string key = string.Format(PRODUCTATTRIBUTES_ALL_KEY, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductAttributeCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductAttributes(LanguageID);
+            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductAttributes(languageId);
             var productAttributes = DBMapping(dbCollection);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -254,35 +254,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets a product attribute 
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
         /// <returns>Product attribute </returns>
-        public static ProductAttribute GetProductAttributeByID(int ProductAttributeID)
+        public static ProductAttribute GetProductAttributeById(int productAttributeId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetProductAttributeByID(ProductAttributeID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetProductAttributeById(productAttributeId, languageId);
         }
 
         /// <summary>
         /// Gets a product attribute 
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute </returns>
-        public static ProductAttribute GetProductAttributeByID(int ProductAttributeID, int LanguageID)
+        public static ProductAttribute GetProductAttributeById(int productAttributeId, int languageId)
         {
-            if (ProductAttributeID == 0)
+            if (productAttributeId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTATTRIBUTES_BY_ID_KEY, ProductAttributeID, LanguageID);
+            string key = string.Format(PRODUCTATTRIBUTES_BY_ID_KEY, productAttributeId, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductAttribute)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeByID(ProductAttributeID, LanguageID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeById(productAttributeId, languageId);
             var productAttribute = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -295,12 +295,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a product attribute
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
         /// <returns>Product attribute </returns>
-        public static ProductAttribute InsertProductAttribute(string Name, string Description)
+        public static ProductAttribute InsertProductAttribute(string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttribute(Name, Description);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttribute(name, description);
             var productAttribute = DBMapping(dbItem);
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -314,15 +314,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Updates the product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
         /// <returns>Product attribute </returns>
-        public static ProductAttribute UpdateProductAttribute(int ProductAttributeID, string Name,
-            string Description)
+        public static ProductAttribute UpdateProductAttribute(int productAttributeId,
+            string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttribute(ProductAttributeID,
-                Name, Description);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttribute(productAttributeId,
+                name, description);
             var productAttribute = DBMapping(dbItem);
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -337,14 +337,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized product attribute by id
         /// </summary>
-        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <param name="productAttributeLocalizedId">Localized product attribute identifier</param>
         /// <returns>Product attribute content</returns>
-        public static ProductAttributeLocalized GetProductAttributeLocalizedByID(int ProductAttributeLocalizedID)
+        public static ProductAttributeLocalized GetProductAttributeLocalizedById(int productAttributeLocalizedId)
         {
-            if (ProductAttributeLocalizedID == 0)
+            if (productAttributeLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedByID(ProductAttributeLocalizedID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedById(productAttributeLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -352,15 +352,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized product attribute by product attribute id and language id
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute content</returns>
-        public static ProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(int ProductAttributeID, int LanguageID)
+        public static ProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIdAndLanguageId(int productAttributeId, int languageId)
         {
-            if (ProductAttributeID == 0 || LanguageID == 0)
+            if (productAttributeId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(ProductAttributeID, LanguageID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedByProductAttributeIdAndLanguageId(productAttributeId, languageId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -368,16 +368,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a localized product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>Localized product attribute</returns>
-        public static ProductAttributeLocalized InsertProductAttributeLocalized(int ProductAttributeID,
-            int LanguageID, string Name, string Description)
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product attribute content</returns>
+        public static ProductAttributeLocalized InsertProductAttributeLocalized(int productAttributeId,
+            int languageId, string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttributeLocalized(ProductAttributeID,
-            LanguageID, Name, Description);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttributeLocalized(productAttributeId,
+            languageId, name, description);
             var item = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -393,17 +393,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Update a localized product attribute
         /// </summary>
-        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>DBProductAttributeLocalized</returns>
-        public static ProductAttributeLocalized UpdateProductAttributeLocalized(int ProductAttributeLocalizedID,
-            int ProductAttributeID, int LanguageID, string Name, string Description)
+        /// <param name="productAttributeLocalizedId">Localized product attribute identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product attribute content</returns>
+        public static ProductAttributeLocalized UpdateProductAttributeLocalized(int productAttributeLocalizedId,
+            int productAttributeId, int languageId, string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttributeLocalized(ProductAttributeLocalizedID,
-                ProductAttributeID, LanguageID, Name, Description);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttributeLocalized(productAttributeLocalizedId,
+                productAttributeId, languageId, name, description);
             var item = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -423,10 +423,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Deletes a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">Product variant attribute mapping identifier</param>
-        public static void DeleteProductVariantAttribute(int ProductVariantAttributeID)
+        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
+        public static void DeleteProductVariantAttribute(int productVariantAttributeId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttribute(ProductVariantAttributeID);
+            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttribute(productVariantAttributeId);
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -438,18 +438,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets product variant attribute mappings by product identifier
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public static ProductVariantAttributeCollection GetProductVariantAttributesByProductVariantID(int ProductVariantID)
+        public static ProductVariantAttributeCollection GetProductVariantAttributesByProductVariantId(int productVariantId)
         {
-            string key = string.Format(PRODUCTVARIANTATTRIBUTES_ALL_KEY, ProductVariantID);
+            string key = string.Format(PRODUCTVARIANTATTRIBUTES_ALL_KEY, productVariantId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariantAttributeCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributesByProductVariantID(ProductVariantID);
+            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributesByProductVariantId(productVariantId);
             var productVariantAttributes = DBMapping(dbCollection);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -462,21 +462,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">Product variant attribute mapping identifier</param>
+        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
         /// <returns>Product variant attribute mapping</returns>
-        public static ProductVariantAttribute GetProductVariantAttributeByID(int ProductVariantAttributeID)
+        public static ProductVariantAttribute GetProductVariantAttributeById(int productVariantAttributeId)
         {
-            if (ProductVariantAttributeID == 0)
+            if (productVariantAttributeId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTVARIANTATTRIBUTES_BY_ID_KEY, ProductVariantAttributeID);
+            string key = string.Format(PRODUCTVARIANTATTRIBUTES_BY_ID_KEY, productVariantAttributeId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariantAttribute)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeByID(ProductVariantAttributeID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeById(productVariantAttributeId);
             var productVariantAttribute = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -489,18 +489,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductAttributeID">The product attribute identifier</param>
-        /// <param name="TextPrompt">The text prompt</param>
-        /// <param name="IsRequired">The value indicating whether the entity is required</param>
-        /// <param name="AttributeControlType">The attribute control type</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productAttributeId">The product attribute identifier</param>
+        /// <param name="textPrompt">The text prompt</param>
+        /// <param name="isRequired">The value indicating whether the entity is required</param>
+        /// <param name="attributeControlType">The attribute control type</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute mapping</returns>
-        public static ProductVariantAttribute InsertProductVariantAttribute(int ProductVariantID,
-            int ProductAttributeID, string TextPrompt, bool IsRequired, AttributeControlTypeEnum AttributeControlType, int DisplayOrder)
+        public static ProductVariantAttribute InsertProductVariantAttribute(int productVariantId,
+            int productAttributeId, string textPrompt, bool isRequired, AttributeControlTypeEnum attributeControlType, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttribute(ProductVariantID,
-                ProductAttributeID, TextPrompt, IsRequired, (int)AttributeControlType, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttribute(productVariantId,
+                productAttributeId, textPrompt, isRequired, (int)attributeControlType, displayOrder);
             var productVariantAttribute = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -516,19 +516,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Updates the product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductAttributeID">The product attribute identifier</param>
-        /// <param name="TextPrompt">The text prompt</param>
-        /// <param name="IsRequired">The value indicating whether the entity is required</param>
-        /// <param name="AttributeControlType">The attribute control type</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productAttributeId">The product attribute identifier</param>
+        /// <param name="textPrompt">The text prompt</param>
+        /// <param name="isRequired">The value indicating whether the entity is required</param>
+        /// <param name="attributeControlType">The attribute control type</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute mapping</returns>
-        public static ProductVariantAttribute UpdateProductVariantAttribute(int ProductVariantAttributeID, int ProductVariantID,
-            int ProductAttributeID, string TextPrompt, bool IsRequired, AttributeControlTypeEnum AttributeControlType, int DisplayOrder)
+        public static ProductVariantAttribute UpdateProductVariantAttribute(int productVariantAttributeId, 
+            int productVariantId, int productAttributeId, string textPrompt, 
+            bool isRequired, AttributeControlTypeEnum attributeControlType, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttribute(ProductVariantAttributeID,
-                ProductVariantID, ProductAttributeID, TextPrompt, IsRequired, (int)AttributeControlType, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttribute(productVariantAttributeId,
+                productVariantId, productAttributeId, textPrompt, isRequired, (int)attributeControlType, displayOrder);
             var productVariantAttribute = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -548,10 +549,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Deletes a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        public static void DeleteProductVariantAttributeValue(int ProductVariantAttributeValueID)
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        public static void DeleteProductVariantAttributeValue(int productVariantAttributeValueId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttributeValue(ProductVariantAttributeValueID);
+            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttributeValue(productVariantAttributeValueId);
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -563,32 +564,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets product variant attribute values by product identifier
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public static ProductVariantAttributeValueCollection GetProductVariantAttributeValues(int ProductVariantAttributeID)
+        public static ProductVariantAttributeValueCollection GetProductVariantAttributeValues(int productVariantAttributeId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetProductVariantAttributeValues(ProductVariantAttributeID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetProductVariantAttributeValues(productVariantAttributeId, languageId);
         }
 
         /// <summary>
         /// Gets product variant attribute values by product identifier
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public static ProductVariantAttributeValueCollection GetProductVariantAttributeValues(int ProductVariantAttributeID, int LanguageID)
+        public static ProductVariantAttributeValueCollection GetProductVariantAttributeValues(int productVariantAttributeId, int languageId)
         {
-            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY, ProductVariantAttributeID, LanguageID);
+            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY, productVariantAttributeId, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariantAttributeValueCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValues(ProductVariantAttributeID, LanguageID);
+            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValues(productVariantAttributeId, languageId);
             var productVariantAttributeValues = DBMapping(dbCollection);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -601,35 +602,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
         /// <returns>Product variant attribute value</returns>
-        public static ProductVariantAttributeValue GetProductVariantAttributeValueByID(int ProductVariantAttributeValueID)
+        public static ProductVariantAttributeValue GetProductVariantAttributeValueById(int productVariantAttributeValueId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
-            return GetProductVariantAttributeValueByID(ProductVariantAttributeValueID, languageId);
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
+            return GetProductVariantAttributeValueById(productVariantAttributeValueId, languageId);
         }
 
         /// <summary>
         /// Gets a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant attribute value</returns>
-        public static ProductVariantAttributeValue GetProductVariantAttributeValueByID(int ProductVariantAttributeValueID, int LanguageID)
+        public static ProductVariantAttributeValue GetProductVariantAttributeValueById(int productVariantAttributeValueId, int languageId)
         {
-            if (ProductVariantAttributeValueID == 0)
+            if (productVariantAttributeValueId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_BY_ID_KEY, ProductVariantAttributeValueID ,LanguageID);
+            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_BY_ID_KEY, productVariantAttributeValueId ,languageId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariantAttributeValue)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueByID(ProductVariantAttributeValueID, LanguageID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueById(productVariantAttributeValueId, languageId);
             var productVariantAttributeValue = DBMapping(dbItem);
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -641,19 +642,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="Name">The product variant attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="name">The product variant attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute value</returns>
-        public static ProductVariantAttributeValue InsertProductVariantAttributeValue(int ProductVariantAttributeID,
-            string Name, decimal PriceAdjustment, decimal WeightAdjustment,
-            bool IsPreSelected, int DisplayOrder)
+        public static ProductVariantAttributeValue InsertProductVariantAttributeValue(int productVariantAttributeId,
+            string name, decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeValue(ProductVariantAttributeID,
-                Name, PriceAdjustment, WeightAdjustment, IsPreSelected, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeValue(productVariantAttributeId,
+                name, priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
             var productVariantAttributeValue = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -669,20 +670,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Updates the product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">The product variant attribute value identifier</param>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="Name">The product variant attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeValueId">The product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="name">The product variant attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute value</returns>
-        public static ProductVariantAttributeValue UpdateProductVariantAttributeValue(int ProductVariantAttributeValueID,
-            int ProductVariantAttributeID, string Name, decimal PriceAdjustment,
-            decimal WeightAdjustment, bool IsPreSelected, int DisplayOrder)
+        public static ProductVariantAttributeValue UpdateProductVariantAttributeValue(int productVariantAttributeValueId,
+            int productVariantAttributeId, string name,
+            decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeValue(ProductVariantAttributeValueID,
-                ProductVariantAttributeID, Name, PriceAdjustment, WeightAdjustment, IsPreSelected, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeValue(productVariantAttributeValueId,
+                productVariantAttributeId, name, priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
             var productVariantAttributeValue = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -698,14 +700,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized product variant attribute value by id
         /// </summary>
-        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeValueLocalizedId">Localized product variant attribute value identifier</param>
         /// <returns>Localized product variant attribute value</returns>
-        public static ProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByID(int ProductVariantAttributeValueLocalizedID)
+        public static ProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedById(int productVariantAttributeValueLocalizedId)
         {
-            if (ProductVariantAttributeValueLocalizedID == 0)
+            if (productVariantAttributeValueLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueLocalizedByID(ProductVariantAttributeValueLocalizedID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueLocalizedById(productVariantAttributeValueLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -713,15 +715,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets localized product variant attribute value by product variant attribute value id and language id
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized product variant attribute value</returns>
-        public static ProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(int ProductVariantAttributeValueID, int LanguageID)
+        public static ProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIdAndLanguageId(int productVariantAttributeValueId, int languageId)
         {
-            if (ProductVariantAttributeValueID == 0 || LanguageID == 0)
+            if (productVariantAttributeValueId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(ProductVariantAttributeValueID, LanguageID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIdAndLanguageId(productVariantAttributeValueId, languageId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -729,15 +731,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a localized product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized product variant attribute value</returns>
-        public static ProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int ProductVariantAttributeValueID,
-            int LanguageID, string Name)
+        public static ProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int productVariantAttributeValueId,
+            int languageId, string name)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeValueLocalized(ProductVariantAttributeValueID,
-                LanguageID, Name);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeValueLocalized(productVariantAttributeValueId,
+                languageId, name);
             var item = DBMapping(dbItem);
             
             if (ProductAttributeManager.CacheEnabled)
@@ -753,16 +755,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Update a localized product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="productVariantAttributeValueLocalizedId">Localized product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized product variant attribute value</returns>
-        public static ProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int ProductVariantAttributeValueLocalizedID,
-            int ProductVariantAttributeValueID, int LanguageID, string Name)
+        public static ProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int productVariantAttributeValueLocalizedId,
+            int productVariantAttributeValueId, int languageId, string name)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeValueLocalized(ProductVariantAttributeValueLocalizedID,
-                ProductVariantAttributeValueID, LanguageID, Name);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeValueLocalized(productVariantAttributeValueLocalizedId,
+                productVariantAttributeValueId, languageId, name);
             var item = DBMapping(dbItem);
 
             if (ProductAttributeManager.CacheEnabled)
@@ -782,23 +784,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Deletes a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
-        public static void DeleteProductVariantAttributeCombination(int ProductVariantAttributeCombinationID)
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
+        public static void DeleteProductVariantAttributeCombination(int productVariantAttributeCombinationId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttributeCombination(ProductVariantAttributeCombinationID);
+            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttributeCombination(productVariantAttributeCombinationId);
         }
 
         /// <summary>
         /// Gets all product variant attribute combinations
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Product variant attribute combination collection</returns>
-        public static ProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int ProductVariantID)
+        public static ProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int productVariantId)
         {
-            if (ProductVariantID == 0)
+            if (productVariantId == 0)
                 return new ProductVariantAttributeCombinationCollection();
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductVariantAttributeCombinations(ProductVariantID);
+            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductVariantAttributeCombinations(productVariantId);
             var combination = DBMapping(dbCollection);
             return combination;
         }
@@ -806,14 +808,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
         /// <returns>Product variant attribute combination</returns>
-        public static ProductVariantAttributeCombination GetProductVariantAttributeCombinationByID(int ProductVariantAttributeCombinationID)
+        public static ProductVariantAttributeCombination GetProductVariantAttributeCombinationById(int productVariantAttributeCombinationId)
         {
-            if (ProductVariantAttributeCombinationID == 0)
+            if (productVariantAttributeCombinationId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeCombinationByID(ProductVariantAttributeCombinationID);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -821,18 +823,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Inserts a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The attributes</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The attributes</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
         /// <returns>Product variant attribute combination</returns>
-        public static ProductVariantAttributeCombination InsertProductVariantAttributeCombination(int ProductVariantID,
-            string AttributesXML,
-            int StockQuantity,
-            bool AllowOutOfStockOrders)
+        public static ProductVariantAttributeCombination InsertProductVariantAttributeCombination(int productVariantId,
+            string attributesXml,
+            int stockQuantity,
+            bool allowOutOfStockOrders)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeCombination(ProductVariantID,
-                AttributesXML, StockQuantity, AllowOutOfStockOrders);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeCombination(productVariantId,
+                attributesXml, stockQuantity, allowOutOfStockOrders);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -840,20 +842,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Updates a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The attributes</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The attributes</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
         /// <returns>Product variant attribute combination</returns>
-        public static ProductVariantAttributeCombination UpdateProductVariantAttributeCombination(int ProductVariantAttributeCombinationID,
-            int ProductVariantID,
-            string AttributesXML,
-            int StockQuantity,
-            bool AllowOutOfStockOrders)
+        public static ProductVariantAttributeCombination UpdateProductVariantAttributeCombination(int productVariantAttributeCombinationId,
+            int productVariantId,
+            string attributesXml,
+            int stockQuantity,
+            bool allowOutOfStockOrders)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeCombination(ProductVariantAttributeCombinationID,
-                 ProductVariantID, AttributesXML, StockQuantity, AllowOutOfStockOrders);
+            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeCombination(productVariantAttributeCombinationId,
+                 productVariantId, attributesXml, stockQuantity, allowOutOfStockOrders);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -861,19 +863,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Finds a product variant attribute combination by attributes stored in XML 
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="AttributesXML">Attributes in XML format</param>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="attributesXml">Attributes in XML format</param>
         /// <returns>Found product variant attribute combination</returns>
-        public static ProductVariantAttributeCombination FindProductVariantAttributeCombination(int ProductVariantID, string AttributesXML)
+        public static ProductVariantAttributeCombination FindProductVariantAttributeCombination(int productVariantId, string attributesXml)
         {
             //existing combinations
-            var combinations = ProductAttributeManager.GetAllProductVariantAttributeCombinations(ProductVariantID);
+            var combinations = ProductAttributeManager.GetAllProductVariantAttributeCombinations(productVariantId);
             if (combinations.Count == 0)
                 return null;
 
             foreach (var combination in combinations)
             {
-                bool attributesEqual = ProductAttributeHelper.AreProductAttributesEqual(combination.AttributesXML, AttributesXML);
+                bool attributesEqual = ProductAttributeHelper.AreProductAttributesEqual(combination.AttributesXml, attributesXml);
                 if (attributesEqual)
                 {
                     return combination;

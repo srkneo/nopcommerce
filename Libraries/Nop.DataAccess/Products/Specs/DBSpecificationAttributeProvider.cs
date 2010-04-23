@@ -31,23 +31,23 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets a specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeID">The specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute</returns>
-        public abstract DBSpecificationAttribute GetSpecificationAttributeByID(int SpecificationAttributeID, int LanguageID);
+        public abstract DBSpecificationAttribute GetSpecificationAttributeById(int specificationAttributeId, int languageId);
 
         /// <summary>
         /// Gets specification attribute collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute collection</returns>
-        public abstract DBSpecificationAttributeCollection GetSpecificationAttributes(int LanguageID);
+        public abstract DBSpecificationAttributeCollection GetSpecificationAttributes(int languageId);
 
         /// <summary>
         /// Deletes a specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeID">The specification attribute identifier</param>
-        public abstract void DeleteSpecificationAttribute(int SpecificationAttributeID);
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
+        public abstract void DeleteSpecificationAttribute(int specificationAttributeId);
 
         /// <summary>
         /// Inserts a specification attribute
@@ -60,47 +60,47 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Updates the specification attribute
         /// </summary>
-        /// <param name="specificationAttributeID">The specification attribute identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <param name="name">The name</param>
         /// <param name="displayOrder">Display order</param>
         /// <returns>Specification attribute</returns>
-        public abstract DBSpecificationAttribute UpdateSpecificationAttribute(int specificationAttributeID, string name, int displayOrder);
+        public abstract DBSpecificationAttribute UpdateSpecificationAttribute(int specificationAttributeId, string name, int displayOrder);
         
         /// <summary>
         /// Gets localized specification attribute by id
         /// </summary>
-        /// <param name="SpecificationAttributeLocalizedID">Localized specification identifier</param>
+        /// <param name="specificationAttributeLocalizedId">Localized specification identifier</param>
         /// <returns>Specification attribute content</returns>
-        public abstract DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedByID(int SpecificationAttributeLocalizedID);
+        public abstract DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedById(int specificationAttributeLocalizedId);
 
         /// <summary>
         /// Gets localized specification attribute by specification attribute id and language id
         /// </summary>
-        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeId">Specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute content</returns>
-        public abstract DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedBySpecificationAttributeIDAndLanguageID(int SpecificationAttributeID, int LanguageID);
+        public abstract DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedBySpecificationAttributeIdAndLanguageId(int specificationAttributeId, int languageId);
 
         /// <summary>
         /// Inserts a localized specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeId">Specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Specification attribute content</returns>
-        public abstract DBSpecificationAttributeLocalized InsertSpecificationAttributeLocalized(int SpecificationAttributeID,
-            int LanguageID, string Name);
+        public abstract DBSpecificationAttributeLocalized InsertSpecificationAttributeLocalized(int specificationAttributeId,
+            int languageId, string name);
 
         /// <summary>
         /// Update a localized specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeLocalizedID">Localized specification attribute identifier</param>
-        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeLocalizedId">Localized specification attribute identifier</param>
+        /// <param name="specificationAttributeId">Specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Specification attribute content</returns>
-        public abstract DBSpecificationAttributeLocalized UpdateSpecificationAttributeLocalized(int SpecificationAttributeLocalizedID,
-            int SpecificationAttributeID, int LanguageID, string Name);
+        public abstract DBSpecificationAttributeLocalized UpdateSpecificationAttributeLocalized(int specificationAttributeLocalizedId,
+            int specificationAttributeId, int languageId, string name);
       
         #endregion
 
@@ -109,145 +109,152 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets a specification attribute option collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option collection</returns>
-        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptions(int LanguageID);
+        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptions(int languageId);
 
         /// <summary>
         /// Gets a specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeOptionId">The specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option</returns>
-        public abstract DBSpecificationAttributeOption GetSpecificationAttributeOptionByID(int specificationAttributeOptionID, int LanguageID);
+        public abstract DBSpecificationAttributeOption GetSpecificationAttributeOptionById(int specificationAttributeOptionId, int languageId);
 
         /// <summary>
         /// Gets specification attribute option collection
         /// </summary>
-        /// <param name="specificationAttributeID">Specification attribute unique identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeId">Specification attribute unique identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option collection</returns>
-        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttributeID(int specificationAttributeID, int LanguageID);
+        public abstract DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttributeId(int specificationAttributeId, int languageId);
 
         /// <summary>
         /// Inserts a specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeID">The specification attribute identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <param name="name">The name</param>
         /// <param name="displayOrder">Display order</param>
         /// <returns>Specification attribute option</returns>
-        public abstract DBSpecificationAttributeOption InsertSpecificationAttributeOption(int specificationAttributeID, string name, int displayOrder);
+        public abstract DBSpecificationAttributeOption InsertSpecificationAttributeOption(int specificationAttributeId, 
+            string name, int displayOrder);
 
         /// <summary>
         /// Updates the specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
-        /// <param name="specificationAttributeID">The specification attribute identifier</param>
+        /// <param name="specificationAttributeOptionId">The specification attribute option identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <param name="name">The name</param>
         /// <param name="displayOrder">Display order</param>
         /// <returns>Specification attribute option</returns>
-        public abstract DBSpecificationAttributeOption UpdateSpecificationAttributeOption(int specificationAttributeOptionID, int specificationAttributeID, string name, int displayOrder);
+        public abstract DBSpecificationAttributeOption UpdateSpecificationAttributeOption(int specificationAttributeOptionId, 
+            int specificationAttributeId, string name, int displayOrder);
 
         /// <summary>
         /// Deletes a specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
-        public abstract void DeleteSpecificationAttributeOption(int specificationAttributeOptionID);
+        /// <param name="specificationAttributeOptionId">The specification attribute option identifier</param>
+        public abstract void DeleteSpecificationAttributeOption(int specificationAttributeOptionId);
 
         /// <summary>
         /// Gets localized specification attribute option by id
         /// </summary>
-        /// <param name="SpecificationAttributeOptionLocalizedID">Localized specification attribute option identifier</param>
+        /// <param name="specificationAttributeOptionLocalizedId">Localized specification attribute option identifier</param>
         /// <returns>Localized specification attribute option</returns>
-        public abstract DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedByID(int SpecificationAttributeOptionLocalizedID);
+        public abstract DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedById(int specificationAttributeOptionLocalizedId);
 
         /// <summary>
         /// Gets localized specification attribute option by specification attribute option id and language id
         /// </summary>
-        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized specification attribute option</returns>
-        public abstract DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIDAndLanguageID(int SpecificationAttributeOptionID, int LanguageID);
+        public abstract DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIdAndLanguageId(int specificationAttributeOptionId, int languageId);
 
         /// <summary>
         /// Inserts a localized specification attribute option
         /// </summary>
-        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized specification attribute option</returns>
-        public abstract DBSpecificationAttributeOptionLocalized InsertSpecificationAttributeOptionLocalized(int SpecificationAttributeOptionID,
-            int LanguageID, string Name);
+        public abstract DBSpecificationAttributeOptionLocalized InsertSpecificationAttributeOptionLocalized(int specificationAttributeOptionId,
+            int languageId, string name);
 
         /// <summary>
         /// Update a localized specification attribute option
         /// </summary>
-        /// <param name="SpecificationAttributeOptionLocalizedID">Localized specification attribute option identifier</param>
-        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeOptionLocalizedId">Localized specification attribute option identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized specification attribute option</returns>
-        public abstract DBSpecificationAttributeOptionLocalized UpdateSpecificationAttributeOptionLocalized(int SpecificationAttributeOptionLocalizedID,
-            int SpecificationAttributeOptionID, int LanguageID, string Name);
+        public abstract DBSpecificationAttributeOptionLocalized UpdateSpecificationAttributeOptionLocalized(int specificationAttributeOptionLocalizedId,
+            int specificationAttributeOptionId, int languageId, string name);
       
         #endregion
 
         #region Product specification attribute
 
         /// <summary>
+        /// Deletes a product specification attribute mapping
+        /// </summary>
+        /// <param name="productSpecificationAttributeId">Product specification attribute identifier</param>
+        public abstract void DeleteProductSpecificationAttribute(int productSpecificationAttributeId);
+
+        /// <summary>
         /// Gets a product specification attribute mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="AllowFiltering">0 to load attributes with AllowFiltering set to false, 0 to load attributes with AllowFiltering set to true, null to load all attributes</param>
-        /// <param name="ShowOnProductPage">0 to load attributes with ShowOnProductPage set to false, 0 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="allowFiltering">0 to load attributes with AllowFiltering set to false, 0 to load attributes with AllowFiltering set to true, null to load all attributes</param>
+        /// <param name="showOnProductPage">0 to load attributes with ShowOnProductPage set to false, 0 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
         /// <returns>Product specification attribute mapping collection</returns>
-        public abstract DBProductSpecificationAttributeCollection GetProductSpecificationAttributesByProductID(int ProductID, bool? AllowFiltering, bool? ShowOnProductPage);
+        public abstract DBProductSpecificationAttributeCollection GetProductSpecificationAttributesByProductId(int productId, 
+            bool? allowFiltering, bool? showOnProductPage);
 
         /// <summary>
         /// Gets a product specification attribute mapping 
         /// </summary>
-        /// <param name="ProductSpecificationAttributeID">Product specification attribute mapping identifier</param>
+        /// <param name="productSpecificationAttributeId">Product specification attribute mapping identifier</param>
         /// <returns>Product specification attribute mapping</returns>
-        public abstract DBProductSpecificationAttribute GetProductSpecificationAttributeByID(int ProductSpecificationAttributeID);
-
-        /// <summary>
-        /// Gets all specification attribute option filter mapping collection by category id
-        /// </summary>
-        /// <param name="CategoryID">Product category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <returns>Specification attribute option filter mapping collection</returns>
-        public abstract DBSpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilterByCategoryID(int CategoryID, int LanguageID);
+        public abstract DBProductSpecificationAttribute GetProductSpecificationAttributeById(int productSpecificationAttributeId);
 
         /// <summary>
         /// Inserts a product specification attribute mapping
         /// </summary>
-        /// <param name="productID">Product identifier</param>
-        /// <param name="specificationAttributeOptionID">Specification attribute option identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
         /// <param name="allowFiltering">Allow product filtering by this attribute</param>
         /// <param name="showOnProductPage">Show the attribute on the product page</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Product specification attribute mapping</returns>
-        public abstract DBProductSpecificationAttribute InsertProductSpecificationAttribute(int productID, int specificationAttributeOptionID,
+        public abstract DBProductSpecificationAttribute InsertProductSpecificationAttribute(int productId, int specificationAttributeOptionId,
                  bool allowFiltering, bool showOnProductPage, int displayOrder);
 
         /// <summary>
         /// Updates the product specification attribute mapping
         /// </summary>
-        /// <param name="productSpecificationAttributeID">product specification attribute mapping identifier</param>
-        /// <param name="productID">Product identifier</param>
-        /// <param name="specificationAttributeOptionID">Specification attribute option identifier</param>
+        /// <param name="productSpecificationAttributeId">product specification attribute mapping identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
         /// <param name="allowFiltering">Allow product filtering by this attribute</param>
         /// <param name="showOnProductPage">Show the attribute onn the product page</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Product specification attribute mapping</returns>
-        public abstract DBProductSpecificationAttribute UpdateProductSpecificationAttribute(int productSpecificationAttributeID,
-               int productID, int specificationAttributeOptionID, bool allowFiltering, bool showOnProductPage, int displayOrder);
+        public abstract DBProductSpecificationAttribute UpdateProductSpecificationAttribute(int productSpecificationAttributeId,
+               int productId, int specificationAttributeOptionId, bool allowFiltering, bool showOnProductPage, int displayOrder);
+
+        #endregion
+
+        #region Specification attribute option filter
 
         /// <summary>
-        /// Deletes a product specification attribute mapping
+        /// Gets all specification attribute option filter mapping collection by category id
         /// </summary>
-        /// <param name="ProductSpecificationAttributeID">Product specification attribute identifier</param>
-        public abstract void DeleteProductSpecificationAttribute(int ProductSpecificationAttributeID);
+        /// <param name="categoryId">Product category identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Specification attribute option filter mapping collection</returns>
+        public abstract DBSpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilterByCategoryId(int categoryId, int languageId);
 
         #endregion
 

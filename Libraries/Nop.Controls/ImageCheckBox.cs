@@ -37,7 +37,6 @@ namespace NopSolutions.NopCommerce.Controls
 
         protected override void Render(HtmlTextWriter output)
         {
-            string str = string.Empty;
             var image = new Image();
             image.ID = this.ClientID + "_Image";
             image.AlternateText = this.Checked.ToString();

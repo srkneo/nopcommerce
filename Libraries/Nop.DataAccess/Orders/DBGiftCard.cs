@@ -38,12 +38,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the gift card identifier
         /// </summary>
-        public int GiftCardID { get; set; }
+        public int GiftCardId { get; set; }
 
         /// <summary>
         /// Gets or sets the purchased order product variant identifier
         /// </summary>
-        public int PurchasedOrderProductVariantID { get; set; }
+        public int PurchasedOrderProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the amount

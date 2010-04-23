@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (NewsManager.NewsEnabled)
             {
-                NewsCollection newsCollection = NewsManager.GetNews(LanguageID, 0);
+                NewsCollection newsCollection = NewsManager.GetNews(LanguageId, 0);
                 rptrNews.DataSource = newsCollection;
                 rptrNews.DataBind();
             }
@@ -52,11 +52,11 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

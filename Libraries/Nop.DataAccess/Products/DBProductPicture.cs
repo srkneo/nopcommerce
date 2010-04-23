@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the ProductPicture identifier
         /// </summary>
-        public int ProductPictureID { get; set; }
+        public int ProductPictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the display order

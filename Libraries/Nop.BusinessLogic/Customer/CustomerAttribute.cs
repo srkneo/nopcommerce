@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets or sets the customer attribute identifier
         /// </summary>
-        public int CustomerAttributeID { get; set; }
+        public int CustomerAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the key

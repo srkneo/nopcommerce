@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             decimal result = GetGiftCardInitialValue(gc);
 
-            var usageHistoryCollection = OrderManager.GetAllGiftCardUsageHistoryEntries(gc.GiftCardID, null, null);
+            var usageHistoryCollection = OrderManager.GetAllGiftCardUsageHistoryEntries(gc.GiftCardId, null, null);
             foreach (var usageHistory in usageHistoryCollection)
             {
                 result -= usageHistory.UsedValue;
@@ -112,15 +112,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Is gift card valid
         /// </summary>
-        /// <param name="GiftCardCouponCode">Gift card coupon code</param>
+        /// <param name="giftCardCouponCode">Gift card coupon code</param>
         /// <returns>Result</returns>
-        public static bool IsGiftCardValid(string GiftCardCouponCode)
+        public static bool IsGiftCardValid(string giftCardCouponCode)
         {
-            if (String.IsNullOrEmpty(GiftCardCouponCode))
+            if (String.IsNullOrEmpty(giftCardCouponCode))
                 return false;
 
             var _gcCollection = OrderManager.GetAllGiftCards(null, null,
-                    null, null, null, null, null, true, GiftCardCouponCode);
+                    null, null, null, null, null, true, giftCardCouponCode);
             foreach (var _gc in _gcCollection)
             {
                 if (IsGiftCardValid(_gc))
@@ -133,18 +133,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets coupon codes
         /// </summary>
-        /// <param name="GiftCartCouponCodes">Existing gift cart coupon codes</param>
+        /// <param name="giftCartCouponCodes">Existing gift cart coupon codes</param>
         /// <returns>Coupon codes</returns>
-        public static string[] GetCouponCodes(string GiftCartCouponCodes)
+        public static string[] GetCouponCodes(string giftCartCouponCodes)
         {
             var couponCodes = new List<string>();
-            if (String.IsNullOrEmpty(GiftCartCouponCodes))
+            if (String.IsNullOrEmpty(giftCartCouponCodes))
                 return couponCodes.ToArray();
 
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(GiftCartCouponCodes);
+                xmlDoc.LoadXml(giftCartCouponCodes);
 
                 XmlNodeList nodeList1 = xmlDoc.SelectNodes(@"//GiftCardCouponCodes/CouponCode");
                 foreach (XmlNode node1 in nodeList1)
@@ -166,25 +166,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Adds a coupon code
         /// </summary>
-        /// <param name="GiftCartCouponCodes">Existing gift cart coupon codes</param>
-        /// <param name="CouponCode">Coupon code</param>
+        /// <param name="giftCartCouponCodes">Existing gift cart coupon codes</param>
+        /// <param name="couponCode">Coupon code</param>
         /// <returns>New coupon codes document</returns>
-        public static string AddCouponCode(string GiftCartCouponCodes, string CouponCode)
+        public static string AddCouponCode(string giftCartCouponCodes, string couponCode)
         {
             string result = string.Empty;
             try
             {
-                CouponCode = CouponCode.Trim().ToLower();
+                couponCode = couponCode.Trim().ToLower();
 
                 XmlDocument xmlDoc = new XmlDocument();
-                if (String.IsNullOrEmpty(GiftCartCouponCodes))
+                if (String.IsNullOrEmpty(giftCartCouponCodes))
                 {
                     XmlElement _element1 = xmlDoc.CreateElement("GiftCardCouponCodes");
                     xmlDoc.AppendChild(_element1);
                 }
                 else
                 {
-                    xmlDoc.LoadXml(GiftCartCouponCodes);
+                    xmlDoc.LoadXml(giftCartCouponCodes);
                 }
                 XmlElement rootElement = (XmlElement)xmlDoc.SelectSingleNode(@"//GiftCardCouponCodes");
 
@@ -196,7 +196,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     if (node1.Attributes != null && node1.Attributes["Code"] != null)
                     {
                         string _couponCode = node1.Attributes["Code"].InnerText.Trim();
-                        if (_couponCode.ToLower() == CouponCode.ToLower())
+                        if (_couponCode.ToLower() == couponCode.ToLower())
                         {
                             gcElement = (XmlElement)node1;
                             break;
@@ -208,7 +208,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 if (gcElement == null)
                 {
                     gcElement = xmlDoc.CreateElement("CouponCode");
-                    gcElement.SetAttribute("Code", CouponCode);
+                    gcElement.SetAttribute("Code", couponCode);
                     rootElement.AppendChild(gcElement);
                 }
 

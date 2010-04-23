@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
 
         private void BindData()
         {
-            ShippingRateComputationMethod shippingRateComputationMethod = ShippingRateComputationMethodManager.GetShippingRateComputationMethodByID(this.ShippingRateComputationMethodID);
+            ShippingRateComputationMethod shippingRateComputationMethod = ShippingRateComputationMethodManager.GetShippingRateComputationMethodById(this.ShippingRateComputationMethodId);
             if (shippingRateComputationMethod != null)
             {
                 this.txtName.Text = shippingRateComputationMethod.Name;
@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
         
         private void CreateChildControlsTree()
         {
-            ShippingRateComputationMethod shippingRateComputationMethod = ShippingRateComputationMethodManager.GetShippingRateComputationMethodByID(this.ShippingRateComputationMethodID);
+            ShippingRateComputationMethod shippingRateComputationMethod = ShippingRateComputationMethodManager.GetShippingRateComputationMethodById(this.ShippingRateComputationMethodId);
             if (shippingRateComputationMethod != null)
             {
                 Control child = null;
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                     child = base.LoadControl(shippingRateComputationMethod.ConfigureTemplatePath);
                     this.ConfigurePlaceHolder.Controls.Add(child);
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                 }
             }
@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
             if (!Page.IsPostBack)
             {
                 this.BindData();
-                this.SelectTab(this.ShippingTabs, this.TabID);
+                this.SelectTab(this.ShippingTabs, this.TabId);
             }
         }
 
@@ -99,11 +99,11 @@ namespace NopSolutions.NopCommerce.Web.Administration
             {
                 try
                 {
-                    var shippingRateComputationMethod = ShippingRateComputationMethodManager.GetShippingRateComputationMethodByID(this.ShippingRateComputationMethodID);
+                    var shippingRateComputationMethod = ShippingRateComputationMethodManager.GetShippingRateComputationMethodById(this.ShippingRateComputationMethodId);
 
                     if (shippingRateComputationMethod != null)
                     {
-                        shippingRateComputationMethod = ShippingRateComputationMethodManager.UpdateShippingRateComputationMethod(shippingRateComputationMethod.ShippingRateComputationMethodID,
+                        shippingRateComputationMethod = ShippingRateComputationMethodManager.UpdateShippingRateComputationMethod(shippingRateComputationMethod.ShippingRateComputationMethodId,
                             txtName.Text, txtDescription.Text, txtConfigureTemplatePath.Text,
                             txtClassName.Text, cbActive.Checked, txtDisplayOrder.Value);
 
@@ -116,7 +116,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                             GetLocaleResourceString("ActivityLog.EditShippingProvider"),
                             shippingRateComputationMethod.Name);
 
-                        Response.Redirect(string.Format("ShippingRateComputationMethodDetails.aspx?ShippingRateComputationMethodID={0}&TabID={1}", shippingRateComputationMethod.ShippingRateComputationMethodID, this.GetActiveTabID(this.ShippingTabs)));
+                        Response.Redirect(string.Format("ShippingRateComputationMethodDetails.aspx?ShippingRateComputationMethodID={0}&TabID={1}", shippingRateComputationMethod.ShippingRateComputationMethodId, this.GetActiveTabId(this.ShippingTabs)));
                     }
                     else
                         Response.Redirect("ShippingRateComputationMethods.aspx");
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
         {
             try
             {
-                ShippingRateComputationMethodManager.DeleteShippingRateComputationMethod(this.ShippingRateComputationMethodID);
+                ShippingRateComputationMethodManager.DeleteShippingRateComputationMethod(this.ShippingRateComputationMethodId);
                 Response.Redirect("ShippingRateComputationMethods.aspx");
             }
             catch (Exception exc)
@@ -141,19 +141,19 @@ namespace NopSolutions.NopCommerce.Web.Administration
             }
         }
 
-        public int ShippingRateComputationMethodID
+        public int ShippingRateComputationMethodId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ShippingRateComputationMethodID");
+                return CommonHelper.QueryStringInt("ShippingRateComputationMethodId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

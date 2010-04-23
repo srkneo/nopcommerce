@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Campaign campaign = ctrlCampaignInfo.SaveInfo();
-                    Response.Redirect("CampaignDetails.aspx?CampaignID=" + campaign.CampaignID.ToString());
+                    Response.Redirect("CampaignDetails.aspx?CampaignID=" + campaign.CampaignId.ToString());
                 }
                 catch (Exception exc)
                 {

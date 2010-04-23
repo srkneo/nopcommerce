@@ -26,7 +26,7 @@
             Vendor ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtVendorID" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtVendorId" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

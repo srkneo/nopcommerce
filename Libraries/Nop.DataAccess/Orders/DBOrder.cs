@@ -36,27 +36,27 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public Guid OrderGUID { get; set; }
+        public Guid OrderGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer language identifier
         /// </summary>
-        public int CustomerLanguageID { get; set; }
+        public int CustomerLanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer tax display type identifier
         /// </summary>
-        public int CustomerTaxDisplayTypeID { get; set; }
+        public int CustomerTaxDisplayTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer IP
@@ -165,7 +165,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the checkout attributes in XML format
         /// </summary>
-        public string CheckoutAttributesXML { get; set; }
+        public string CheckoutAttributesXml { get; set; }
 
         /// <summary>
         /// Gets or sets the customer currency code
@@ -180,12 +180,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the affiliate identifier
         /// </summary>
-        public int AffiliateID { get; set; }
+        public int AffiliateId { get; set; }
 
         /// <summary>
         /// Gets or sets an order status identifer
         /// </summary>
-        public int OrderStatusID { get; set; }
+        public int OrderStatusId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether storing of credit card number is allowed
@@ -215,7 +215,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the card CVV2
         /// </summary>
-        public string CardCVV2 { get; set; }
+        public string CardCvv2 { get; set; }
 
         /// <summary>
         /// Gets or sets the card expiration month
@@ -230,7 +230,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the payment method identifier
         /// </summary>
-        public int PaymentMethodID { get; set; }
+        public int PaymentMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the payment method name
@@ -238,9 +238,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public string PaymentMethodName { get; set; }
 
         /// <summary>
-        /// Gets or sets the authorization transaction ID
+        /// Gets or sets the authorization transaction identifier
         /// </summary>
-        public string AuthorizationTransactionID { get; set; }
+        public string AuthorizationTransactionId { get; set; }
 
         /// <summary>
         /// Gets or sets the authorization transaction code
@@ -253,9 +253,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public string AuthorizationTransactionResult { get; set; }
 
         /// <summary>
-        /// Gets or sets the capture transaction ID
+        /// Gets or sets the capture transaction identifier
         /// </summary>
-        public string CaptureTransactionID { get; set; }
+        public string CaptureTransactionId { get; set; }
 
         /// <summary>
         /// Gets or sets the capture transaction result
@@ -263,9 +263,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public string CaptureTransactionResult { get; set; }
 
         /// <summary>
-        /// Gets or sets the subscription transaction ID
+        /// Gets or sets the subscription transaction identifier
         /// </summary>
-        public string SubscriptionTransactionID { get; set; }
+        public string SubscriptionTransactionId { get; set; }
 
         /// <summary>
         /// Gets or sets the purchase order number
@@ -275,7 +275,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the payment status identifier
         /// </summary>
-        public int PaymentStatusID { get; set; }
+        public int PaymentStatusId { get; set; }
 
         /// <summary>
         /// Gets or sets the paid date and time
@@ -335,7 +335,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the billing state/province identifier
         /// </summary>
-        public int BillingStateProvinceID { get; set; }
+        public int BillingStateProvinceId { get; set; }
 
         /// <summary>
         /// Gets or sets the billing zip/postal code
@@ -350,12 +350,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the billing country identifier
         /// </summary>
-        public int BillingCountryID { get; set; }
+        public int BillingCountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping status identifier
         /// </summary>
-        public int ShippingStatusID { get; set; }
+        public int ShippingStatusId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping first name
@@ -410,7 +410,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the shipping state/province identifier
         /// </summary>
-        public int ShippingStateProvinceID { get; set; }
+        public int ShippingStateProvinceId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping zip/postal code
@@ -425,7 +425,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the shipping identifier
         /// </summary>
-        public int ShippingCountryID { get; set; }
+        public int ShippingCountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping method
@@ -435,7 +435,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the shipping rate computation method identifier
         /// </summary>
-        public int ShippingRateComputationMethodID { get; set; }
+        public int ShippingRateComputationMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipped date and time

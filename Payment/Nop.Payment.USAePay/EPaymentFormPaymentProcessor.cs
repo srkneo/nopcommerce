@@ -39,9 +39,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.USAePay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.USAePay
             post.Add("UMcommand", (EPaymentFormSettings.AuthorizeOnly ? "authonly" : "sale"));
             post.Add("UMamount", String.Format(CultureInfo.InvariantCulture, "{0:0.00}", order.OrderTotal));
             post.Add("UMcurrency", CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
-            post.Add("UMinvoice", String.Format("{0:0000000000}", order.OrderID));
+            post.Add("UMinvoice", String.Format("{0:0000000000}", order.OrderId));
             post.Add("UMredirApproved", String.Format("{0}USAePayEPaymentFormReturn.aspx", CommonHelper.GetStoreLocation(false)));
             post.Add("UMemail", order.BillingEmail);
 
@@ -122,11 +122,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.USAePay
                 using(usaepayService svc = new usaepayService())
                 {
                     svc.Url = EPaymentFormSettings.ServiceUrl;
-                    TransactionResponse rsp = svc.captureTransaction(EPaymentFormHelper.ServiceSecurityToken, processPaymentResult.AuthorizationTransactionID, (double)order.OrderTotal);
+                    TransactionResponse rsp = svc.captureTransaction(EPaymentFormHelper.ServiceSecurityToken, processPaymentResult.AuthorizationTransactionId, (double)order.OrderTotal);
                     switch(rsp.ResultCode)
                     {
                         case "A":
-                            processPaymentResult.CaptureTransactionID = rsp.RefNum;
+                            processPaymentResult.CaptureTransactionId = rsp.RefNum;
                             processPaymentResult.AVSResult = rsp.AvsResult;
                             processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
                             break;
@@ -158,7 +158,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.USAePay
                 using(usaepayService svc = new usaepayService())
                 {
                     svc.Url = EPaymentFormSettings.ServiceUrl;
-                    TransactionResponse rsp = svc.refundTransaction(EPaymentFormHelper.ServiceSecurityToken, cancelPaymentResult.CaptureTransactionID, (double)cancelPaymentResult.Amount);
+                    TransactionResponse rsp = svc.refundTransaction(EPaymentFormHelper.ServiceSecurityToken, cancelPaymentResult.CaptureTransactionId, (double)cancelPaymentResult.Amount);
                     switch(rsp.ResultCode)
                     {
                         case "A":
@@ -192,7 +192,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.USAePay
                 using(usaepayService svc = new usaepayService())
                 {
                     svc.Url = EPaymentFormSettings.ServiceUrl;
-                    if(svc.voidTransaction(EPaymentFormHelper.ServiceSecurityToken, cancelPaymentResult.AuthorizationTransactionID))
+                    if(svc.voidTransaction(EPaymentFormHelper.ServiceSecurityToken, cancelPaymentResult.AuthorizationTransactionId))
                     {
                         cancelPaymentResult.PaymentStatus = PaymentStatusEnum.Voided;
                     }
@@ -215,9 +215,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.USAePay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

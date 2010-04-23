@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets or sets the private message identifier
         /// </summary>
-        public int PrivateMessageID { get; set; }
+        public int PrivateMessageId { get; set; }
 
         /// <summary>
         /// Gets or sets the user identifier who sent the message
         /// </summary>
-        public int FromUserID { get; set; }
+        public int FromUserId { get; set; }
 
         /// <summary>
         /// Gets or sets the user identifier who should receive the message
         /// </summary>
-        public int ToUserID { get; set; }
+        public int ToUserId { get; set; }
 
         /// <summary>
         /// Gets or sets the subject
@@ -69,12 +69,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// Gets or sets a value indivating whether message is deleted by author
         /// </summary>
         public bool IsDeletedByAuthor { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indivating whether message is deleted by recipient
         /// </summary>
         public bool IsDeletedByRecipient { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the date and time of instance creation
         /// </summary>
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return CustomerManager.GetCustomerByID(FromUserID);
+                return CustomerManager.GetCustomerById(this.FromUserId);
             }
         }
 
@@ -102,7 +102,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return CustomerManager.GetCustomerByID(ToUserID);
+                return CustomerManager.GetCustomerById(this.ToUserId);
             }
         }
 

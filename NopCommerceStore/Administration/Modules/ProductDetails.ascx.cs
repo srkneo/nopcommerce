@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.ProductTabs, this.TabID);
+                this.SelectTab(this.ProductTabs, this.TabId);
             }
         }
 
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
 
                     if (product != null)
-                        Response.Redirect(string.Format("ProductDetails.aspx?ProductID={0}&TabID={1}", product.ProductID, this.GetActiveTabID(this.ProductTabs)));
+                        Response.Redirect(string.Format("ProductDetails.aspx?ProductID={0}&TabID={1}", product.ProductId, this.GetActiveTabId(this.ProductTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -98,10 +98,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Product product = ProductManager.GetProductByID(this.ProductID);
+                Product product = ProductManager.GetProductById(this.ProductId);
                 if (product != null)
                 {
-                    ProductManager.MarkProductAsDeleted(this.ProductID);
+                    ProductManager.MarkProductAsDeleted(this.ProductId);
 
                     CustomerActivityManager.InsertActivity(
                         "DeleteProduct",
@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Product productCopy = ProductManager.DuplicateProduct(ProductID, txtProductCopyName.Text, cbIsProductCopyPublished.Checked, cbCopyImages.Checked);
+                Product productCopy = ProductManager.DuplicateProduct(ProductId, txtProductCopyName.Text, cbIsProductCopyPublished.Checked, cbCopyImages.Checked);
                 if(productCopy != null)
                 {
                     CustomerActivityManager.InsertActivity(
@@ -129,7 +129,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.AddNewProduct"),
                         productCopy.Name);
 
-                    Response.Redirect(String.Format("ProductDetails.aspx?ProductID={0}", productCopy.ProductID));
+                    Response.Redirect(String.Format("ProductDetails.aspx?ProductID={0}", productCopy.ProductId));
                 }
             }
             catch(Exception ex)
@@ -138,19 +138,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

@@ -55,10 +55,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (ProductManager.ProductsAlsoPurchasedEnabled)
             {
-                var product = ProductManager.GetProductByID(ProductID);
+                var product = ProductManager.GetProductById(this.ProductId);
                 if (product != null)
                 {
-                    var productsAlsoPurchased = ProductManager.GetProductsAlsoPurchasedByID(product.ProductID);
+                    var productsAlsoPurchased = ProductManager.GetProductsAlsoPurchasedById(product.ProductId);
                     if (productsAlsoPurchased.Count > 0)
                     {
                         this.Visible = true;
@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var product = e.Item.DataItem as Product;
                 if (product != null)
                 {
-                    string productURL = SEOHelper.GetProductURL(product);
+                    string productURL = SEOHelper.GetProductUrl(product);
 
                     var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                     if (hlImageLink != null)
@@ -114,11 +114,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

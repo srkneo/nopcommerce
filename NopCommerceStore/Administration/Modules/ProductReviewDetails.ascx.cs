@@ -33,12 +33,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductReview productReview = ProductManager.GetProductReviewByID(this.ProductReviewID);
+            ProductReview productReview = ProductManager.GetProductReviewById(this.ProductReviewId);
             if (productReview != null)
             {
                 this.txtTitle.Text = productReview.Title;
-                this.lblProduct.Text = GetProductInfo(productReview.ProductID);
-                this.lblCustomer.Text = GetCustomerInfo(productReview.CustomerID);
+                this.lblProduct.Text = GetProductInfo(productReview.ProductId);
+                this.lblCustomer.Text = GetCustomerInfo(productReview.CustomerId);
                 //this.txtReviewText.Value = productReview.ReviewText;
                 this.txtReviewText.Text = productReview.ReviewText;
                 this.productRating.CurrentRating = productReview.Rating;
@@ -49,24 +49,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Response.Redirect("ProductReviews.aspx");
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
-                string customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                string customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 return customerInfo;
             }
             else
                 return string.Empty;
         }
 
-        protected string GetProductInfo(int ProductID)
+        protected string GetProductInfo(int productId)
         {
-            Product product = ProductManager.GetProductByID(ProductID);
+            Product product = ProductManager.GetProductById(productId);
             if (product != null)
             {
-                string productInfo = string.Format("<a href=\"ProductDetails.aspx?ProductID={0}\">{1}</a>", product.ProductID, Server.HtmlEncode(product.Name));
+                string productInfo = string.Format("<a href=\"ProductDetails.aspx?ProductID={0}\">{1}</a>", product.ProductId, Server.HtmlEncode(product.Name));
                 return productInfo;
             }
             else
@@ -87,16 +87,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    ProductReview productReview = ProductManager.GetProductReviewByID(this.ProductReviewID);
+                    ProductReview productReview = ProductManager.GetProductReviewById(this.ProductReviewId);
                     if (productReview != null)
                     {
                         string title = txtTitle.Text.Trim();
                         string reviewText = txtReviewText.Text.Trim();
-                        productReview = ProductManager.UpdateProductReview(productReview.ProductReviewID, productReview.ProductID,
-                            productReview.CustomerID, title, reviewText,
+                        productReview = ProductManager.UpdateProductReview(productReview.ProductReviewId, productReview.ProductId,
+                            productReview.CustomerId, title, reviewText,
                             productReview.Rating, productReview.HelpfulYesTotal, productReview.HelpfulNoTotal,
                             cbIsApproved.Checked, productReview.CreatedOn);
-                        Response.Redirect("ProductReviewDetails.aspx?ProductReviewID=" + productReview.ProductReviewID.ToString());
+                        Response.Redirect("ProductReviewDetails.aspx?ProductReviewID=" + productReview.ProductReviewId.ToString());
                     }
                     else
                         Response.Redirect("ProductReviews.aspx");
@@ -112,7 +112,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductManager.DeleteProductReview(this.ProductReviewID);
+                ProductManager.DeleteProductReview(this.ProductReviewId);
                 Response.Redirect("ProductReviews.aspx");
             }
             catch (Exception exc)
@@ -121,11 +121,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ProductReviewID
+        public int ProductReviewId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductReviewID");
+                return CommonHelper.QueryStringInt("ProductReviewId");
             }
         }
     }

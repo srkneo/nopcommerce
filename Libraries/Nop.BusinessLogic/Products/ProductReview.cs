@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the product review identifier
         /// </summary>
-        public int ProductReviewID { get; set; }
+        public int ProductReviewId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the title
@@ -74,7 +74,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Review not helpful votes total
         /// </summary>
         public int HelpfulNoTotal { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the product review is approved
         /// </summary>
@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductByID(ProductID);
+                return ProductManager.GetProductById(this.ProductId);
             }
         }
 
@@ -106,7 +106,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return CustomerManager.GetCustomerByID(CustomerID);
+                return CustomerManager.GetCustomerById(this.CustomerId);
             }
         }
         #endregion

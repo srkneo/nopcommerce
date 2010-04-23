@@ -10,16 +10,23 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
     /// </summary>
     public class DBSpecificationAttributeOptionFilter : BaseDBEntity
     {
+        #region Ctor
+
         /// <summary>
         /// Default constructor
         /// </summary>
         public DBSpecificationAttributeOptionFilter()
-        { }
+        {
+        }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
-        /// Gets or sets the SpecificationAttributeID
+        /// Gets or sets the specification attribute identifier
         /// </summary>
-        public int SpecificationAttributeID { get; set; }
+        public int SpecificationAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the SpecificationAttributeName
@@ -32,13 +39,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         public int DisplayOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets the SpecificationAttributeOptionID
+        /// Gets or sets the specification attribute option identifier
         /// </summary>
-        public int SpecificationAttributeOptionID { get; set; }
+        public int SpecificationAttributeOptionId { get; set; }
 
         /// <summary>
         /// Gets or sets the SpecificationAttributeOptionName
         /// </summary>
         public string SpecificationAttributeOptionName { get; set; }
+
+        #endregion
     }
 }

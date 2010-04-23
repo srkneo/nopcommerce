@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ShippingMethod shippingMethod = ctrlShippingMethodInfo.SaveInfo();
-                    Response.Redirect("ShippingMethodDetails.aspx?ShippingMethodID=" + shippingMethod.ShippingMethodID.ToString());
+                    Response.Redirect("ShippingMethodDetails.aspx?ShippingMethodID=" + shippingMethod.ShippingMethodId.ToString());
                 }
                 catch (Exception exc)
                 {

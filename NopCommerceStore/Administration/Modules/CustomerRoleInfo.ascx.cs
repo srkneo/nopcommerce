@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            CustomerRole customerRole = CustomerManager.GetCustomerRoleByID(this.CustomerRoleID);
+            CustomerRole customerRole = CustomerManager.GetCustomerRoleById(this.CustomerRoleId);
             if (customerRole != null)
             {
                 this.txtName.Text = customerRole.Name;
@@ -53,11 +53,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public CustomerRole SaveInfo()
         {
-            CustomerRole customerRole = CustomerManager.GetCustomerRoleByID(this.CustomerRoleID);
+            CustomerRole customerRole = CustomerManager.GetCustomerRoleById(this.CustomerRoleId);
 
             if (customerRole != null)
             {
-                customerRole = CustomerManager.UpdateCustomerRole(customerRole.CustomerRoleID,
+                customerRole = CustomerManager.UpdateCustomerRole(customerRole.CustomerRoleId,
                     txtName.Text, cbFreeShipping.Checked, cbTaxExempt.Checked, cbActive.Checked, customerRole.Deleted);
             }
             else
@@ -69,11 +69,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return customerRole;
         }
 
-        public int CustomerRoleID
+        public int CustomerRoleId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerRoleID");
+                return CommonHelper.QueryStringInt("CustomerRoleId");
             }
         }
     }

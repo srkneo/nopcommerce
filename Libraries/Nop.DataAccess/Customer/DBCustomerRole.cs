@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the customer role identifier
         /// </summary>
-        public int CustomerRoleID { get; set; }
+        public int CustomerRoleId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer role name

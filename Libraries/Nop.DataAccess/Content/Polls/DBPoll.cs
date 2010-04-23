@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         /// <summary>
         /// Gets or sets the poll identifier
         /// </summary>
-        public int PollID { get; set; }
+        public int PollId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

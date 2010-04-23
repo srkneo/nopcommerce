@@ -59,8 +59,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
                 return null;
 
             var item = new Poll();
-            item.PollID = dbItem.PollID;
-            item.LanguageID = dbItem.LanguageID;
+            item.PollId = dbItem.PollId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.SystemKeyword = dbItem.SystemKeyword;
             item.Published = dbItem.Published;
@@ -90,8 +90,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
                 return null;
 
             var item = new PollAnswer();
-            item.PollAnswerID = dbItem.PollAnswerID;
-            item.PollID = dbItem.PollID;
+            item.PollAnswerId = dbItem.PollAnswerId;
+            item.PollId = dbItem.PollId;
             item.Name = dbItem.Name;
             item.Count = dbItem.Count;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -104,21 +104,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets a poll
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
+        /// <param name="pollId">The poll identifier</param>
         /// <returns>Poll</returns>
-        public static Poll GetPollByID(int PollID)
+        public static Poll GetPollById(int pollId)
         {
-            if (PollID == 0)
+            if (pollId == 0)
                 return null;
 
-            string key = string.Format(POLLS_BY_ID_KEY, PollID);
+            string key = string.Format(POLLS_BY_ID_KEY, pollId);
             object obj2 = NopCache.Get(key);
             if (PollManager.CacheEnabled && (obj2 != null))
             {
                 return (Poll)obj2;
             }
 
-            var dbItem = DBProviderManager<DBPollProvider>.Provider.GetPollByID(PollID);
+            var dbItem = DBProviderManager<DBPollProvider>.Provider.GetPollById(pollId);
             var poll = DBMapping(dbItem);
 
             if (PollManager.CacheEnabled)
@@ -131,11 +131,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets a poll
         /// </summary>
-        /// <param name="SystemKeyword">The poll system keyword</param>
+        /// <param name="systemKeyword">The poll system keyword</param>
         /// <returns>Poll</returns>
-        public static Poll GetPollBySystemKeyword(string SystemKeyword)
+        public static Poll GetPollBySystemKeyword(string systemKeyword)
         {
-            var dbItem = DBProviderManager<DBPollProvider>.Provider.GetPollBySystemKeyword(SystemKeyword);
+            var dbItem = DBProviderManager<DBPollProvider>.Provider.GetPollBySystemKeyword(systemKeyword);
             var poll = DBMapping(dbItem);
             return poll;
         }
@@ -143,13 +143,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets poll collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="PollCount">Poll count to load. 0 if you want to get all polls</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="pollCount">Poll count to load. 0 if you want to get all polls</param>
         /// <returns>Poll collection</returns>
-        public static PollCollection GetPolls(int LanguageID, int PollCount)
+        public static PollCollection GetPolls(int languageId, int pollCount)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBPollProvider>.Provider.GetPolls(LanguageID, PollCount, showHidden);
+            var dbCollection = DBProviderManager<DBPollProvider>.Provider.GetPolls(languageId, pollCount, showHidden);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -157,10 +157,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Deletes a poll
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
-        public static void DeletePoll(int PollID)
+        /// <param name="pollId">The poll identifier</param>
+        public static void DeletePoll(int pollId)
         {
-            DBProviderManager<DBPollProvider>.Provider.DeletePoll(PollID);
+            DBProviderManager<DBPollProvider>.Provider.DeletePoll(pollId);
             if (PollManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
@@ -171,27 +171,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets all polls
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <returns>Poll collection</returns>
-        public static PollCollection GetAllPolls(int LanguageID)
+        public static PollCollection GetAllPolls(int languageId)
         {
-            return GetPolls(LanguageID, 0);
+            return GetPolls(languageId, 0);
         }
 
         /// <summary>
         /// Inserts a poll
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll</returns>
-        public static Poll InsertPoll(int LanguageID, string Name, string SystemKeyword, 
-            bool Published, int DisplayOrder)
+        public static Poll InsertPoll(int languageId, string name, string systemKeyword,
+            bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBPollProvider>.Provider.InsertPoll(LanguageID, Name,
-                SystemKeyword, Published, DisplayOrder);
+            var dbItem = DBProviderManager<DBPollProvider>.Provider.InsertPoll(languageId,
+                name, systemKeyword, published, displayOrder);
             var poll = DBMapping(dbItem);
 
             if (PollManager.CacheEnabled)
@@ -206,18 +206,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Updates the poll
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="pollId">The poll identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll</returns>
-        public static Poll UpdatePoll(int PollID, int LanguageID, string Name, string SystemKeyword, 
-            bool Published, int DisplayOrder)
+        public static Poll UpdatePoll(int pollId, int languageId, string name,
+            string systemKeyword, bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBPollProvider>.Provider.UpdatePoll(PollID, LanguageID, Name, 
-                SystemKeyword, Published, DisplayOrder);
+            var dbItem = DBProviderManager<DBPollProvider>.Provider.UpdatePoll(pollId, 
+                languageId, name, systemKeyword, published, displayOrder);
             var poll = DBMapping(dbItem);
 
             if (PollManager.CacheEnabled)
@@ -232,25 +232,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Is voting record already exists
         /// </summary>
-        /// <param name="PollID">Poll identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="pollId">Poll identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Poll</returns>
-        public static bool PollVotingRecordExists(int PollID, int CustomerID)
+        public static bool PollVotingRecordExists(int pollId, int customerId)
         {
-            return DBProviderManager<DBPollProvider>.Provider.PollVotingRecordExists(PollID, CustomerID);
+            return DBProviderManager<DBPollProvider>.Provider.PollVotingRecordExists(pollId, customerId);
         }
 
         /// <summary>
         /// Gets a poll answer
         /// </summary>
-        /// <param name="PollAnswerID">Poll answer identifier</param>
+        /// <param name="pollAnswerId">Poll answer identifier</param>
         /// <returns>Poll answer</returns>
-        public static PollAnswer GetPollAnswerByID(int PollAnswerID)
+        public static PollAnswer GetPollAnswerById(int pollAnswerId)
         {
-            if (PollAnswerID == 0)
+            if (pollAnswerId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBPollProvider>.Provider.GetPollAnswerByID(PollAnswerID);
+            var dbItem = DBProviderManager<DBPollProvider>.Provider.GetPollAnswerById(pollAnswerId);
             var pollAnswer = DBMapping(dbItem);
             return pollAnswer;
         }
@@ -258,18 +258,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets a poll answers by poll identifier
         /// </summary>
-        /// <param name="PollID">Poll identifier</param>
+        /// <param name="pollId">Poll identifier</param>
         /// <returns>Poll answer collection</returns>
-        public static PollAnswerCollection GetPollAnswersByPollID(int PollID)
+        public static PollAnswerCollection GetPollAnswersByPollId(int pollId)
         {
-            string key = string.Format(POLLANSWERS_BY_POLLID_KEY, PollID);
+            string key = string.Format(POLLANSWERS_BY_POLLID_KEY, pollId);
             object obj2 = NopCache.Get(key);
             if (PollManager.CacheEnabled && (obj2 != null))
             {
                 return (PollAnswerCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBPollProvider>.Provider.GetPollAnswersByPollID(PollID);
+            var dbCollection = DBProviderManager<DBPollProvider>.Provider.GetPollAnswersByPollId(pollId);
             var pollAnswerCollection = DBMapping(dbCollection);
 
             if (PollManager.CacheEnabled)
@@ -282,10 +282,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Deletes a poll answer
         /// </summary>
-        /// <param name="PollAnswerID">Poll answer identifier</param>
-        public static void DeletePollAnswer(int PollAnswerID)
+        /// <param name="pollAnswerId">Poll answer identifier</param>
+        public static void DeletePollAnswer(int pollAnswerId)
         {
-            DBProviderManager<DBPollProvider>.Provider.DeletePollAnswer(PollAnswerID);
+            DBProviderManager<DBPollProvider>.Provider.DeletePollAnswer(pollAnswerId);
             if (PollManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
@@ -296,14 +296,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Inserts a poll answer
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
-        /// <param name="Name">The poll answer name</param>
-        /// <param name="Count">The current count</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="pollId">The poll identifier</param>
+        /// <param name="name">The poll answer name</param>
+        /// <param name="count">The current count</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll answer</returns>
-        public static PollAnswer InsertPollAnswer(int PollID, string Name, int Count, int DisplayOrder)
+        public static PollAnswer InsertPollAnswer(int pollId,
+            string name, int count, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBPollProvider>.Provider.InsertPollAnswer(PollID, Name, Count, DisplayOrder);
+            var dbItem = DBProviderManager<DBPollProvider>.Provider.InsertPollAnswer(pollId,
+                name, count, displayOrder);
             var pollAnswer = DBMapping(dbItem);
 
             if (PollManager.CacheEnabled)
@@ -318,15 +320,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Updates the poll answer
         /// </summary>
-        /// <param name="PollAnswerID">The poll answer identifier</param>
-        /// <param name="PollID">The poll identifier</param>
-        /// <param name="Name">The poll answer name</param>
-        /// <param name="Count">The current count</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="pollAnswerId">The poll answer identifier</param>
+        /// <param name="pollId">The poll identifier</param>
+        /// <param name="name">The poll answer name</param>
+        /// <param name="count">The current count</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll answer</returns>
-        public static PollAnswer UpdatePoll(int PollAnswerID, int PollID, string Name, int Count, int DisplayOrder)
+        public static PollAnswer UpdatePoll(int pollAnswerId,
+            int pollId, string name, int count, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBPollProvider>.Provider.UpdatePollAnswer(PollAnswerID, PollID, Name, Count, DisplayOrder);
+            var dbItem = DBProviderManager<DBPollProvider>.Provider.UpdatePollAnswer(pollAnswerId, 
+                pollId, name, count, displayOrder);
             var pollAnswer = DBMapping(dbItem);
 
             if (PollManager.CacheEnabled)
@@ -341,11 +345,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Creates a poll voting record
         /// </summary>
-        /// <param name="PollAnswerID">The poll answer identifier</param>
-        /// <param name="CustomerID">Customer identifer</param>
-        public static void CreatePollVotingRecord(int PollAnswerID, int CustomerID)
+        /// <param name="pollAnswerId">The poll answer identifier</param>
+        /// <param name="customerId">Customer identifer</param>
+        public static void CreatePollVotingRecord(int pollAnswerId, int customerId)
         {
-            DBProviderManager<DBPollProvider>.Provider.CreatePollVotingRecord(PollAnswerID, CustomerID);
+            DBProviderManager<DBPollProvider>.Provider.CreatePollVotingRecord(pollAnswerId,
+                customerId);
             if (PollManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(POLLS_PATTERN_KEY);

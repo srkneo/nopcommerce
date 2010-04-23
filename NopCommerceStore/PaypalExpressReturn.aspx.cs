@@ -55,18 +55,18 @@ namespace NopSolutions.NopCommerce.Web
 
                     PaymentMethod paypalExpressPaymentMethod = PaymentMethodManager.GetPaymentMethodBySystemKeyword("PayPalExpress");
             
-                    paymentInfo.PaymentMethodID = paypalExpressPaymentMethod.PaymentMethodID;
+                    paymentInfo.PaymentMethodId = paypalExpressPaymentMethod.PaymentMethodId;
                     paymentInfo.BillingAddress = NopContext.Current.User.BillingAddress;
                     paymentInfo.ShippingAddress = NopContext.Current.User.ShippingAddress;
-                    paymentInfo.PaypalPayerID = payer.PayerID;
+                    paymentInfo.PaypalPayerId = payer.PayerID;
                     paymentInfo.PaypalToken = token;
                     paymentInfo.CustomerLanguage = NopContext.Current.WorkingLanguage;
                     paymentInfo.CustomerCurrency = NopContext.Current.WorkingCurrency;
 
-                    int orderID = 0;
-                    string result = OrderManager.PlaceOrder(paymentInfo, NopContext.Current.User, out orderID);
+                    int orderId = 0;
+                    string result = OrderManager.PlaceOrder(paymentInfo, NopContext.Current.User, out orderId);
 
-                    Order order = OrderManager.GetOrderByID(orderID);
+                    Order order = OrderManager.GetOrderById(orderId);
                     if (!String.IsNullOrEmpty(result))
                     {
                         lConfirmOrderError.Text = Server.HtmlEncode(result);
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 

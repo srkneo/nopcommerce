@@ -140,7 +140,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
                 request.RequestedShipment.Recipient.Address.StateOrProvinceCode = string.Empty;
             }
             request.RequestedShipment.Recipient.Address.PostalCode = ShipmentPackage.ShippingAddress.ZipPostalCode;
-            request.RequestedShipment.Recipient.Address.CountryCode = ShipmentPackage.ShippingAddress.Country.TwoLetterISOCode;
+            request.RequestedShipment.Recipient.Address.CountryCode = ShipmentPackage.ShippingAddress.Country.TwoLetterIsoCode;
         }
 
         private void SetOrigin(RateRequest request)
@@ -339,28 +339,28 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shipmentPackage">Shipment package</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage ShipmentPackage, ref string Error)
+        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
             var shippingOptions = new ShippingOptionCollection();
-            if (ShipmentPackage == null)
+            if (shipmentPackage == null)
                 throw new ArgumentNullException("ShipmentPackage");
-            if (ShipmentPackage.Items == null)
+            if (shipmentPackage.Items == null)
                 throw new NopException("No shipment items");
-            if (ShipmentPackage.ShippingAddress == null)
+            if (shipmentPackage.ShippingAddress == null)
             {
-                Error = "Shipping address is not set";
+                error = "Shipping address is not set";
                 return shippingOptions;
             }
-            if (ShipmentPackage.ShippingAddress.Country == null)
+            if (shipmentPackage.ShippingAddress.Country == null)
             {
-                Error = "Shipping country is not set";
+                error = "Shipping country is not set";
                 return shippingOptions;
             }
 
-            RateRequest request = CreateRateRequest(ShipmentPackage);
+            RateRequest request = CreateRateRequest(shipmentPackage);
             RateService service = new RateService(); // Initialize the service
             service.Url = SettingManager.GetSettingValue("ShippingRateComputationMethod.FedEx.URL");
             try
@@ -376,37 +376,37 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
                     }
                     else
                     {
-                        Error = "Could not get reply from shipping server";
+                        error = "Could not get reply from shipping server";
                     }
                 }
                 else
                 {
                     Debug.WriteLine(reply.Notifications[0].Message);
-                    Error = reply.Notifications[0].Message;
+                    error = reply.Notifications[0].Message;
                 }
             }
             catch (SoapException e)
             {
                 Debug.WriteLine(e.Detail.InnerText);
-                Error = e.Detail.InnerText;
+                error = e.Detail.InnerText;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                Error = e.Message;
+                error = e.Message;
             }
-            
-            if (String.IsNullOrEmpty(Error) && shippingOptions.Count == 0)
-                Error = "Shipping options could not be loaded";
+
+            if (String.IsNullOrEmpty(error) && shippingOptions.Count == 0)
+                error = "Shipping options could not be loaded";
             return shippingOptions;
         }
 
         /// <summary>
         /// Gets fixed shipping rate (if shipping rate computation method allows it and the rate can be calculated before checkout).
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
+        /// <param name="shipmentPackage">Shipment package</param>
         /// <returns>Fixed shipping rate; or null if shipping rate could not be calculated before checkout</returns>
-        public decimal? GetFixedRate(ShipmentPackage ShipmentPackage)
+        public decimal? GetFixedRate(ShipmentPackage shipmentPackage)
         {
             return null;
         }

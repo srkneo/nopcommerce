@@ -38,27 +38,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets or sets the forum subscription identifier
         /// </summary>
-        public int ForumSubscriptionID { get; set; }
+        public int ForumSubscriptionId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum subscription identifier
         /// </summary>
-        public Guid SubscriptionGUID { get; set; }
+        public Guid SubscriptionGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the user identifier
         /// </summary>
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum identifier
         /// </summary>
-        public int ForumID { get; set; }
+        public int ForumId { get; set; }
 
         /// <summary>
         /// Gets or sets the topic identifier
         /// </summary>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return CustomerManager.GetCustomerByID(UserID);
+                return CustomerManager.GetCustomerById(this.UserId);
             }
         }
         
@@ -87,7 +87,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return ForumManager.GetForumByID(ForumID);
+                return ForumManager.GetForumById(this.ForumId);
             }
         }
 
@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return ForumManager.GetTopicByID(TopicID);
+                return ForumManager.GetTopicById(this.TopicId);
             }
         }
 

@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Shipping error log item type
         /// </summary>
-        ShippingErrror = 6,
+        ShippingError = 6,
         /// <summary>
         /// Tax error log item type
         /// </summary>

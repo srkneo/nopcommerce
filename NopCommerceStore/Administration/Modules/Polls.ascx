@@ -29,7 +29,6 @@
 </p>
 <asp:GridView ID="gvPolls" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="PollID" HeaderText="Poll ID" Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Polls.Name %>" ItemStyle-Width="30%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
@@ -57,7 +56,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Polls.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="PollDetails.aspx?PollID=<%#Eval("PollID")%>" title="<%#GetLocaleResourceString("Admin.Polls.Edit.Tooltip")%>">
+                <a href="PollDetails.aspx?PollID=<%#Eval("PollId")%>" title="<%#GetLocaleResourceString("Admin.Polls.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Polls.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

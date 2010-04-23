@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
 
             CustomerManager.Logout();
 
-            string url = SEOHelper.GetAdminAreaLoginPageURL();
+            string url = SEOHelper.GetAdminAreaLoginPageUrl();
             Response.Redirect(url);
         }
 

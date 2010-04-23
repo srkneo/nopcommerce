@@ -42,17 +42,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <summary>
         /// Gets or sets the localized specification attribute identifier
         /// </summary>
-        public int SpecificationAttributeLocalizedID { get; set; }
+        public int SpecificationAttributeLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the specification attribute identifier
         /// </summary>
-        public int SpecificationAttributeID { get; set; }
+        public int SpecificationAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

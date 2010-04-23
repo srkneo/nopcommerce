@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.AddNewSetting"),
                         setting.Name);
 
-                    Response.Redirect("SettingDetails.aspx?SettingID=" + setting.SettingID.ToString());
+                    Response.Redirect("SettingDetails.aspx?SettingID=" + setting.SettingId.ToString());
                 }
                 catch (Exception exc)
                 {

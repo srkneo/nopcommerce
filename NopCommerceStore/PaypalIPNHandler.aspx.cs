@@ -103,19 +103,19 @@ namespace NopSolutions.NopCommerce.Web
                         case "recurring_payment":
                             #region Recurring payment
                             {
-                                Guid orderNumberGUID = Guid.Empty;
+                                Guid orderNumberGuid = Guid.Empty;
                                 try
                                 {
-                                    orderNumberGUID = new Guid(rp_invoice_id);
+                                    orderNumberGuid = new Guid(rp_invoice_id);
                                 }
                                 catch
                                 {
                                 }
 
-                                Order initialOrder = OrderManager.GetOrderByGUID(orderNumberGUID);
+                                Order initialOrder = OrderManager.GetOrderByGuid(orderNumberGuid);
                                 if (initialOrder != null)
                                 {
-                                    RecurringPaymentCollection recurringPayments = OrderManager.SearchRecurringPayments(0, initialOrder.OrderID, null);
+                                    RecurringPaymentCollection recurringPayments = OrderManager.SearchRecurringPayments(0, initialOrder.OrderId, null);
                                     foreach (var rp in recurringPayments)
                                     {
                                         switch (newPaymentStatus)
@@ -127,12 +127,12 @@ namespace NopSolutions.NopCommerce.Web
                                                     if (recurringPaymentHistory.Count == 0)
                                                     {
                                                         //first payment
-                                                        OrderManager.InsertRecurringPaymentHistory(rp.RecurringPaymentID, initialOrder.OrderID, DateTime.Now);
+                                                        OrderManager.InsertRecurringPaymentHistory(rp.RecurringPaymentId, initialOrder.OrderId, DateTime.Now);
                                                     }
                                                     else
                                                     {
                                                         //next payments
-                                                        OrderManager.ProcessNextRecurringPayment(rp.RecurringPaymentID);
+                                                        OrderManager.ProcessNextRecurringPayment(rp.RecurringPaymentId);
                                                         //UNDONE change new order status according to newPaymentStatus
                                                         //UNDONE refund/void is not supported
                                                     }
@@ -141,7 +141,7 @@ namespace NopSolutions.NopCommerce.Web
                                         }
                                     }
 
-                                    //OrderManager.InsertOrderNote(newOrder.OrderID, sb.ToString(), DateTime.Now);
+                                    //OrderManager.InsertOrderNote(newOrder.OrderId, sb.ToString(), DateTime.Now);
                                     LogManager.InsertLog(LogTypeEnum.Unknown, "PayPal IPN. Recurring info", new NopException(sb.ToString()));
                                 }
                                 else
@@ -156,19 +156,19 @@ namespace NopSolutions.NopCommerce.Web
                             {
                                 string orderNumber = string.Empty;
                                 values.TryGetValue("custom", out orderNumber);
-                                Guid orderNumberGUID = Guid.Empty;
+                                Guid orderNumberGuid = Guid.Empty;
                                 try
                                 {
-                                    orderNumberGUID = new Guid(orderNumber);
+                                    orderNumberGuid = new Guid(orderNumber);
                                 }
                                 catch
                                 {
                                 }
 
-                                Order order = OrderManager.GetOrderByGUID(orderNumberGUID);
+                                Order order = OrderManager.GetOrderByGuid(orderNumberGuid);
                                 if (order != null)
                                 {
-                                    OrderManager.InsertOrderNote(order.OrderID, sb.ToString(), false, DateTime.Now);
+                                    OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.Now);
                                     switch (newPaymentStatus)
                                     {
                                         case PaymentStatusEnum.Pending:
@@ -179,7 +179,7 @@ namespace NopSolutions.NopCommerce.Web
                                             {
                                                 if (OrderManager.CanMarkOrderAsAuthorized(order))
                                                 {
-                                                    OrderManager.MarkAsAuthorized(order.OrderID);
+                                                    OrderManager.MarkAsAuthorized(order.OrderId);
                                                 }
                                             }
                                             break;
@@ -187,7 +187,7 @@ namespace NopSolutions.NopCommerce.Web
                                             {
                                                 if (OrderManager.CanMarkOrderAsPaid(order))
                                                 {
-                                                    OrderManager.MarkOrderAsPaid(order.OrderID);
+                                                    OrderManager.MarkOrderAsPaid(order.OrderId);
                                                 }
                                             }
                                             break;
@@ -195,7 +195,7 @@ namespace NopSolutions.NopCommerce.Web
                                             {
                                                 if (OrderManager.CanRefundOffline(order))
                                                 {
-                                                    OrderManager.RefundOffline(order.OrderID);
+                                                    OrderManager.RefundOffline(order.OrderId);
                                                 }
                                             }
                                             break;
@@ -203,7 +203,7 @@ namespace NopSolutions.NopCommerce.Web
                                             {
                                                 if (OrderManager.CanVoidOffline(order))
                                                 {
-                                                    OrderManager.VoidOffline(order.OrderID);
+                                                    OrderManager.VoidOffline(order.OrderId);
                                                 }
                                             }
                                             break;

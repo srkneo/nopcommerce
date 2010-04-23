@@ -60,7 +60,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
                 return null;
 
             var item = new CategoryTemplate();
-            item.CategoryTemplateID = dbItem.CategoryTemplateID;
+            item.CategoryTemplateId = dbItem.CategoryTemplateId;
             item.Name = dbItem.Name;
             item.TemplatePath = dbItem.TemplatePath;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
                 return null;
 
             var item = new ManufacturerTemplate();
-            item.ManufacturerTemplateID = dbItem.ManufacturerTemplateID;
+            item.ManufacturerTemplateId = dbItem.ManufacturerTemplateId;
             item.Name = dbItem.Name;
             item.TemplatePath = dbItem.TemplatePath;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -122,7 +122,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
                 return null;
 
             var item = new ProductTemplate();
-            item.ProductTemplateID = dbItem.ProductTemplateID;
+            item.ProductTemplateId = dbItem.ProductTemplateId;
             item.Name = dbItem.Name;
             item.TemplatePath = dbItem.TemplatePath;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -137,10 +137,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Deletes a category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
-        public static void DeleteCategoryTemplate(int CategoryTemplateID)
+        /// <param name="categoryTemplateId">Category template identifier</param>
+        public static void DeleteCategoryTemplate(int categoryTemplateId)
         {
-            DBProviderManager<DBTemplateProvider>.Provider.DeleteCategoryTemplate(CategoryTemplateID);
+            DBProviderManager<DBTemplateProvider>.Provider.DeleteCategoryTemplate(categoryTemplateId);
 
             if (TemplateManager.CacheEnabled)
             {
@@ -174,21 +174,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Gets a category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
+        /// <param name="categoryTemplateId">Category template identifier</param>
         /// <returns>A category template</returns>
-        public static CategoryTemplate GetCategoryTemplateByID(int CategoryTemplateID)
+        public static CategoryTemplate GetCategoryTemplateById(int categoryTemplateId)
         {
-            if (CategoryTemplateID == 0)
+            if (categoryTemplateId == 0)
                 return null;
 
-            string key = string.Format(CATEGORYTEMPLATES_BY_ID_KEY, CategoryTemplateID);
+            string key = string.Format(CATEGORYTEMPLATES_BY_ID_KEY, categoryTemplateId);
             object obj2 = NopCache.Get(key);
             if (TemplateManager.CacheEnabled && (obj2 != null))
             {
                 return (CategoryTemplate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetCategoryTemplateByID(CategoryTemplateID);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetCategoryTemplateById(categoryTemplateId);
             var categoryTemplate = DBMapping(dbItem);
 
             if (TemplateManager.CacheEnabled)
@@ -201,20 +201,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Inserts a category template
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A category template</returns>
-        public static CategoryTemplate InsertCategoryTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static CategoryTemplate InsertCategoryTemplate(string name,
+            string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertCategoryTemplate(Name, 
-                TemplatePath, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertCategoryTemplate(name, 
+                templatePath, displayOrder, createdOn, updatedOn);
             var categoryTemplate = DBMapping(dbItem);
             if (TemplateManager.CacheEnabled)
             {
@@ -227,21 +227,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Updates the category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="categoryTemplateId">Category template identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A category template</returns>
-        public static CategoryTemplate UpdateCategoryTemplate(int CategoryTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static CategoryTemplate UpdateCategoryTemplate(int categoryTemplateId,
+            string name, string templatePath, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateCategoryTemplate(CategoryTemplateID, 
-                Name, TemplatePath, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateCategoryTemplate(categoryTemplateId, 
+                name, templatePath, displayOrder, createdOn, updatedOn);
             var categoryTemplate = DBMapping(dbItem);
             if (TemplateManager.CacheEnabled)
             {
@@ -254,10 +255,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Deletes a manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifier</param>
-        public static void DeleteManufacturerTemplate(int ManufacturerTemplateID)
+        /// <param name="manufacturerTemplateId">Manufacturer template identifier</param>
+        public static void DeleteManufacturerTemplate(int manufacturerTemplateId)
         {
-            DBProviderManager<DBTemplateProvider>.Provider.DeleteManufacturerTemplate(ManufacturerTemplateID);
+            DBProviderManager<DBTemplateProvider>.Provider.DeleteManufacturerTemplate(manufacturerTemplateId);
 
             if (TemplateManager.CacheEnabled)
             {
@@ -291,21 +292,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Gets a manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifier</param>
+        /// <param name="manufacturerTemplateId">Manufacturer template identifier</param>
         /// <returns>Manufacturer template</returns>
-        public static ManufacturerTemplate GetManufacturerTemplateByID(int ManufacturerTemplateID)
+        public static ManufacturerTemplate GetManufacturerTemplateById(int manufacturerTemplateId)
         {
-            if (ManufacturerTemplateID == 0)
+            if (manufacturerTemplateId == 0)
                 return null;
 
-            string key = string.Format(MANUFACTURERTEMPLATES_BY_ID_KEY, ManufacturerTemplateID);
+            string key = string.Format(MANUFACTURERTEMPLATES_BY_ID_KEY, manufacturerTemplateId);
             object obj2 = NopCache.Get(key);
             if (TemplateManager.CacheEnabled && (obj2 != null))
             {
                 return (ManufacturerTemplate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetManufacturerTemplateByID(ManufacturerTemplateID);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetManufacturerTemplateById(manufacturerTemplateId);
             var manufacturerTemplate = DBMapping(dbItem);
 
             if (TemplateManager.CacheEnabled)
@@ -318,20 +319,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Inserts a manufacturer template
         /// </summary>
-        /// <param name="Name">The manufacturer template identifier</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The manufacturer template identifier</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer template</returns>
-        public static ManufacturerTemplate InsertManufacturerTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ManufacturerTemplate InsertManufacturerTemplate(string name,
+            string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertManufacturerTemplate(Name,
-                TemplatePath, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertManufacturerTemplate(name,
+                templatePath, displayOrder, createdOn, updatedOn);
             var manufacturerTemplate = DBMapping(dbItem);
             if (TemplateManager.CacheEnabled)
             {
@@ -343,21 +344,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Updates the manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifer</param>
-        /// <param name="Name">The manufacturer template identifier</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="manufacturerTemplateId">Manufacturer template identifer</param>
+        /// <param name="name">The manufacturer template identifier</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer template</returns>
-        public static ManufacturerTemplate UpdateManufacturerTemplate(int ManufacturerTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ManufacturerTemplate UpdateManufacturerTemplate(int manufacturerTemplateId,
+            string name, string templatePath, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateManufacturerTemplate(ManufacturerTemplateID,
-                Name, TemplatePath, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateManufacturerTemplate(manufacturerTemplateId,
+                name, templatePath, displayOrder, createdOn, updatedOn);
             var manufacturerTemplate = DBMapping(dbItem);
             if (TemplateManager.CacheEnabled)
             {
@@ -369,10 +371,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Deletes a product template
         /// </summary>
-        /// <param name="ProductTemplateID">Product template identifier</param>
-        public static void DeleteProductTemplate(int ProductTemplateID)
+        /// <param name="productTemplateId">Product template identifier</param>
+        public static void DeleteProductTemplate(int productTemplateId)
         {
-            DBProviderManager<DBTemplateProvider>.Provider.DeleteProductTemplate(ProductTemplateID);
+            DBProviderManager<DBTemplateProvider>.Provider.DeleteProductTemplate(productTemplateId);
 
             if (TemplateManager.CacheEnabled)
             {
@@ -406,21 +408,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Gets a product template
         /// </summary>
-        /// <param name="ProductTemplateID">Product template identifier</param>
+        /// <param name="productTemplateId">Product template identifier</param>
         /// <returns>Product template</returns>
-        public static ProductTemplate GetProductTemplateByID(int ProductTemplateID)
+        public static ProductTemplate GetProductTemplateById(int productTemplateId)
         {
-            if (ProductTemplateID == 0)
+            if (productTemplateId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTTEMPLATES_BY_ID_KEY, ProductTemplateID);
+            string key = string.Format(PRODUCTTEMPLATES_BY_ID_KEY, productTemplateId);
             object obj2 = NopCache.Get(key);
             if (TemplateManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductTemplate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetProductTemplateByID(ProductTemplateID);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetProductTemplateById(productTemplateId);
             var productTemplate = DBMapping(dbItem);
 
             if (TemplateManager.CacheEnabled)
@@ -433,20 +435,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Inserts a product template
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product template</returns>
-        public static ProductTemplate InsertProductTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ProductTemplate InsertProductTemplate(string name, string templatePath,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertProductTemplate(Name, TemplatePath,
-                DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertProductTemplate(name, templatePath,
+                displayOrder, createdOn, updatedOn);
             var productTemplate = DBMapping(dbItem);
 
             if (TemplateManager.CacheEnabled)
@@ -460,21 +462,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Updates the product template
         /// </summary>
-        /// <param name="ProductTemplateID">The product template identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productTemplateId">The product template identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product template</returns>
-        public static ProductTemplate UpdateProductTemplate(int ProductTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ProductTemplate UpdateProductTemplate(int productTemplateId,
+            string name, string templatePath, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateProductTemplate(ProductTemplateID,
-                Name, TemplatePath, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateProductTemplate(productTemplateId,
+                name, templatePath, displayOrder, createdOn, updatedOn);
             var productTemplate = DBMapping(dbItem);
 
             if (TemplateManager.CacheEnabled)

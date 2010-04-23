@@ -42,29 +42,29 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FisedRateShippingCM
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shipmentPackage">Shipment package</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage ShipmentPackage, ref string Error)
+        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
             var shippingOptions = new ShippingOptionCollection();
 
-            if (ShipmentPackage == null)
+            if (shipmentPackage == null)
                 throw new ArgumentNullException("ShipmentPackage");
-            if (ShipmentPackage.Items == null)
+            if (shipmentPackage.Items == null)
                 throw new NopException("No shipment items");
-            if(ShipmentPackage.ShippingAddress == null)
+            if (shipmentPackage.ShippingAddress == null)
             {
-                Error = "Shipping address is not set";
+                error = "Shipping address is not set";
                 return shippingOptions;
             }
-            if(ShipmentPackage.ShippingAddress.Country == null)
+            if (shipmentPackage.ShippingAddress.Country == null)
             {
-                Error = "Shipping country is not set";
+                error = "Shipping country is not set";
                 return shippingOptions;
             }
 
-            var shippingMethods = ShippingMethodManager.GetAllShippingMethods(ShipmentPackage.ShippingAddress.CountryID);
+            var shippingMethods = ShippingMethodManager.GetAllShippingMethods(shipmentPackage.ShippingAddress.CountryId);
             foreach (var shippingMethod in shippingMethods)
             {
                 var shippingOption = new ShippingOption();
@@ -80,9 +80,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FisedRateShippingCM
         /// <summary>
         /// Gets fixed shipping rate (if shipping rate computation method allows it and the rate can be calculated before checkout).
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
+        /// <param name="shipmentPackage">Shipment package</param>
         /// <returns>Fixed shipping rate; or null if shipping rate could not be calculated before checkout</returns>
-        public decimal? GetFixedRate(ShipmentPackage ShipmentPackage)
+        public decimal? GetFixedRate(ShipmentPackage shipmentPackage)
         {
             return GetRate();
         }

@@ -35,10 +35,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Affiliate affiliate = AffiliateManager.GetAffiliateByID(this.AffiliateID);
+            Affiliate affiliate = AffiliateManager.GetAffiliateById(this.AffiliateId);
             if (affiliate != null)
             {
-                gvAffiliateOrders.DataSource = OrderManager.GetOrdersByAffiliateID(this.AffiliateID);
+                gvAffiliateOrders.DataSource = OrderManager.GetOrdersByAffiliateId(this.AffiliateId);
                 gvAffiliateOrders.DataBind();
             }
             else
@@ -53,19 +53,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
                 if (customer.IsGuest)
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.AffiliateOrders.Customer.Guest"));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.AffiliateOrders.Customer.Guest"));
                 }
                 else
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 }
             }
             return customerInfo;
@@ -75,11 +75,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
         }
 
-        public int AffiliateID
+        public int AffiliateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("AffiliateID");
+                return CommonHelper.QueryStringInt("AffiliateId");
             }
         }
     }

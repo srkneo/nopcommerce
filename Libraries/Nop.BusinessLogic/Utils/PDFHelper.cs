@@ -58,10 +58,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
         /// Print product collection to PDF
         /// </summary>
         /// <param name="productCollection"></param>
-        /// <param name="FilePath"></param>
-        public static void PrintProductsToPDF(ProductCollection productCollection, string FilePath)
+        /// <param name="filePath"></param>
+        public static void PrintProductsToPdf(ProductCollection productCollection, string filePath)
         {
-            if(String.IsNullOrEmpty(FilePath))
+            if(String.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException("FilePath");
             }
@@ -164,21 +164,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
             renderer.Document = doc;
             renderer.RenderDocument();
-            renderer.PdfDocument.Save(FilePath);
+            renderer.PdfDocument.Save(filePath);
         }
 
         /// <summary>
         /// Print an order to PDF
         /// </summary>
         /// <param name="order">Order</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="FilePath">File path</param>
-        public static void PrintOrderToPDF(Order order, int LanguageID, string FilePath)
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="filePath">File path</param>
+        public static void PrintOrderToPdf(Order order, int languageId, string filePath)
         {
             if(order == null)
                 throw new ArgumentNullException("order");
 
-            if(String.IsNullOrEmpty(FilePath))
+            if(String.IsNullOrEmpty(filePath))
                 throw new ArgumentNullException("FilePath");
 
             Document doc = new Document();
@@ -199,11 +199,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             Row ordRow = table.AddRow();
 
             int rownum = logoExists ? 1 : 0;
-            Paragraph p1 = ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Order#", LanguageID), order.OrderID));
+            Paragraph p1 = ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Order#", languageId), order.OrderId));
             p1.Format.Font.Bold = true;
             p1.Format.Font.Color = Colors.Black;
-            ordRow[rownum].AddParagraph(SettingManager.StoreURL.Trim(new char[] { '/' })).AddHyperlink(SettingManager.StoreURL, HyperlinkType.Url);
-            ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderDate", LanguageID), order.CreatedOn));
+            ordRow[rownum].AddParagraph(SettingManager.StoreUrl.Trim(new char[] { '/' })).AddHyperlink(SettingManager.StoreUrl, HyperlinkType.Url);
+            ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderDate", languageId), order.CreatedOn));
 
             if(File.Exists(PDFHelper.LogoFilePath))
             {
@@ -229,22 +229,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             //billing info
 
             row.Cells[0].AddParagraph();
-            Paragraph p2 = row.Cells[0].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.BillingInformation", LanguageID));
+            Paragraph p2 = row.Cells[0].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.BillingInformation", languageId));
             p2.Format.Font.Bold = true;
             p2.Format.Font.Color = Colors.Black;
 
 
             if(!String.IsNullOrEmpty(order.BillingCompany))
             {
-                row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Company", LanguageID), order.BillingCompany));
+                row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Company", languageId), order.BillingCompany));
             }
-            row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Name", LanguageID), order.BillingFullName));
-            row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Phone", LanguageID), order.BillingPhoneNumber));
+            row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Name", languageId), order.BillingFullName));
+            row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Phone", languageId), order.BillingPhoneNumber));
             if(!String.IsNullOrEmpty(order.BillingFaxNumber))
-                row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Fax", LanguageID), order.BillingFaxNumber));
-            row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address", LanguageID), order.BillingAddress1));
+                row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Fax", languageId), order.BillingFaxNumber));
+            row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address", languageId), order.BillingAddress1));
             if(!String.IsNullOrEmpty(order.BillingAddress2))
-                row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address2", LanguageID), order.BillingAddress2));
+                row.Cells[0].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address2", languageId), order.BillingAddress2));
             row.Cells[0].AddParagraph("   " + String.Format("{0}, {1}", order.BillingCountry, order.BillingStateProvince));
             row.Cells[0].AddParagraph("   " + String.Format("{0}, {1}", order.BillingCity, order.BillingZipPostalCode));
             row.Cells[0].AddParagraph();
@@ -253,19 +253,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             if(order.ShippingStatus != ShippingStatusEnum.ShippingNotRequired)
             {
                 row.Cells[1].AddParagraph();
-                Paragraph p3 = row.Cells[1].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ShippingInformation", LanguageID));
+                Paragraph p3 = row.Cells[1].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ShippingInformation", languageId));
                 p3.Format.Font.Bold = true;
                 p3.Format.Font.Color = Colors.Black;
 
                 if(!String.IsNullOrEmpty(order.ShippingCompany))
-                    row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Company", LanguageID), order.ShippingCompany));
-                row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Name", LanguageID), order.ShippingFullName));
-                row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Phone", LanguageID), order.ShippingPhoneNumber));
+                    row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Company", languageId), order.ShippingCompany));
+                row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Name", languageId), order.ShippingFullName));
+                row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Phone", languageId), order.ShippingPhoneNumber));
                 if(!String.IsNullOrEmpty(order.ShippingFaxNumber))
-                    row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Fax", LanguageID), order.ShippingFaxNumber));
-                row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address", LanguageID), order.ShippingAddress1));
+                    row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Fax", languageId), order.ShippingFaxNumber));
+                row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address", languageId), order.ShippingAddress1));
                 if(!String.IsNullOrEmpty(order.ShippingAddress2))
-                    row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address2", LanguageID), order.ShippingAddress2));
+                    row.Cells[1].AddParagraph("   " + String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.Address2", languageId), order.ShippingAddress2));
                 row.Cells[1].AddParagraph("   " + String.Format("{0}, {1}", order.ShippingCountry, order.ShippingStateProvince));
                 row.Cells[1].AddParagraph("   " + String.Format("{0}, {1}", order.ShippingCity, order.ShippingZipPostalCode));
                 row.Cells[1].AddParagraph();
@@ -276,7 +276,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
 
             //products
-            Paragraph p4 = sec.AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.Product(s)", LanguageID));
+            Paragraph p4 = sec.AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.Product(s)", languageId));
             p4.Format.Font.Bold = true;
             p4.Format.Font.Color = Colors.Black;
 
@@ -295,16 +295,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
             Row header = tbl.AddRow();
 
-            header.Cells[0].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductName", LanguageID));
+            header.Cells[0].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductName", languageId));
             header.Cells[0].Format.Alignment = ParagraphAlignment.Center;
 
-            header.Cells[1].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductPrice", LanguageID));
+            header.Cells[1].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductPrice", languageId));
             header.Cells[1].Format.Alignment = ParagraphAlignment.Center;
 
-            header.Cells[2].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductQuantity", LanguageID));
+            header.Cells[2].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductQuantity", languageId));
             header.Cells[2].Format.Alignment = ParagraphAlignment.Center;
 
-            header.Cells[3].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductTotal", LanguageID));
+            header.Cells[3].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.ProductTotal", languageId));
             header.Cells[3].Format.Alignment = ParagraphAlignment.Center;
 
             for(int i = 0; i < productCollection.Count; i++)
@@ -313,8 +313,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 int rowNum = i + 1;
                 Row prodRow = tbl.AddRow();
 
-                string name = String.Format("Not available. ID={0}", orderProductVariant.ProductVariantID);
-                var pv = ProductManager.GetProductVariantByID(orderProductVariant.ProductVariantID);
+                string name = String.Format("Not available. Id={0}", orderProductVariant.ProductVariantId);
+                var pv = ProductManager.GetProductVariantById(orderProductVariant.ProductVariantId);
                 if(pv != null)
                 {
                     name = pv.FullProductName;
@@ -374,13 +374,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 case TaxDisplayTypeEnum.ExcludingTax:
                     {
                         string orderSubtotalExclTaxStr = PriceHelper.FormatPrice(order.OrderSubtotalExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
-                        p6 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Sub-Total", LanguageID), orderSubtotalExclTaxStr));
+                        p6 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Sub-Total", languageId), orderSubtotalExclTaxStr));
                     }
                     break;
                 case TaxDisplayTypeEnum.IncludingTax:
                     {
                         string orderSubtotalInclTaxStr = PriceHelper.FormatPrice(order.OrderSubtotalInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
-                        p6 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Sub-Total", LanguageID), orderSubtotalInclTaxStr));
+                        p6 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Sub-Total", languageId), orderSubtotalInclTaxStr));
                     }
                     break;
             }
@@ -393,15 +393,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             if(order.OrderDiscountInCustomerCurrency > decimal.Zero)
             {
                 string orderDiscountInCustomerCurrencyStr = PriceHelper.FormatPrice(-order.OrderDiscountInCustomerCurrency, true, order.CustomerCurrencyCode, false);
-                Paragraph p7 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Discount", LanguageID), orderDiscountInCustomerCurrencyStr));
+                Paragraph p7 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Discount", languageId), orderDiscountInCustomerCurrencyStr));
                 p7.Format.Alignment = ParagraphAlignment.Right;
             }
 
             //gift cards
-            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderID);
+            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             foreach(var giftCardUsageHistory in gcuhC)
             {
-                string gcTitle = string.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.GiftCardInfo", LanguageID), giftCardUsageHistory.GiftCard.GiftCardCouponCode);
+                string gcTitle = string.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.GiftCardInfo", languageId), giftCardUsageHistory.GiftCard.GiftCardCouponCode);
                 string gcAmountStr = PriceHelper.FormatPrice(-giftCardUsageHistory.UsedValueInCustomerCurrency, true, order.CustomerCurrencyCode, false);
                 Paragraph p8 = sec.AddParagraph(String.Format("{0} {1}", gcTitle, gcAmountStr));
                 p8.Format.Alignment = ParagraphAlignment.Right;
@@ -416,13 +416,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                     case TaxDisplayTypeEnum.ExcludingTax:
                         {
                             string orderShippingExclTaxStr = PriceHelper.FormatShippingPrice(order.OrderShippingExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
-                            p9 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Shipping", LanguageID), orderShippingExclTaxStr));
+                            p9 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Shipping", languageId), orderShippingExclTaxStr));
                         }
                         break;
                     case TaxDisplayTypeEnum.IncludingTax:
                         {
                             string orderShippingInclTaxStr = PriceHelper.FormatShippingPrice(order.OrderShippingInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
-                            p9 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Shipping", LanguageID), orderShippingInclTaxStr));
+                            p9 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Shipping", languageId), orderShippingInclTaxStr));
                         }
                         break;
                 }
@@ -442,13 +442,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                     case TaxDisplayTypeEnum.ExcludingTax:
                         {
                             string paymentMethodAdditionalFeeExclTaxStr = PriceHelper.FormatPaymentMethodAdditionalFee(order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
-                            p10 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.PaymentMethodAdditionalFee", LanguageID), paymentMethodAdditionalFeeExclTaxStr));
+                            p10 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.PaymentMethodAdditionalFee", languageId), paymentMethodAdditionalFeeExclTaxStr));
                         }
                         break;
                     case TaxDisplayTypeEnum.IncludingTax:
                         {
                             string paymentMethodAdditionalFeeInclTaxStr = PriceHelper.FormatPaymentMethodAdditionalFee(order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
-                            p10 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.PaymentMethodAdditionalFee", LanguageID), paymentMethodAdditionalFeeInclTaxStr));
+                            p10 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.PaymentMethodAdditionalFee", languageId), paymentMethodAdditionalFeeInclTaxStr));
                         }
                         break;
                 }
@@ -477,12 +477,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             }
             if(displayTax)
             {
-                var p11 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Tax", LanguageID), taxStr));
+                var p11 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Tax", languageId), taxStr));
                 p11.Format.Alignment = ParagraphAlignment.Right;
             }
 
             string orderTotalStr = PriceHelper.FormatPrice(order.OrderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false);
-            var p12 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderTotal", LanguageID), orderTotalStr));
+            var p12 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderTotal", languageId), orderTotalStr));
             p12.Format.Font.Bold = true;
             p12.Format.Font.Color = Colors.Black;
             p12.Format.Alignment = ParagraphAlignment.Right;
@@ -491,17 +491,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
             renderer.Document = doc;
             renderer.RenderDocument();
-            renderer.PdfDocument.Save(FilePath);
+            renderer.PdfDocument.Save(filePath);
         }
 
         /// <summary>
         /// Print packaging slips to PDF
         /// </summary>
         /// <param name="orderCollection">Order collection</param>
-        /// <param name="FilePath">File path</param>
-        public static void PrintPackagingSlipsToPDF(OrderCollection orderCollection, string FilePath)
+        /// <param name="filePath">File path</param>
+        public static void PrintPackagingSlipsToPdf(OrderCollection orderCollection, 
+            string filePath)
         {
-            if(String.IsNullOrEmpty(FilePath))
+            if(String.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException("FilePath");
             }
@@ -514,7 +515,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
             foreach(var order in orderCollection)
             {
-                Paragraph p1 = section.AddParagraph(String.Format("{0} #{1}", LocalizationManager.GetLocaleResourceString("PdfPackagingSlip.Order"), order.OrderID));
+                Paragraph p1 = section.AddParagraph(String.Format("{0} #{1}", LocalizationManager.GetLocaleResourceString("PdfPackagingSlip.Order"), order.OrderId));
                 p1.Format.Font.Bold = true;
                 p1.Format.Font.Color = Colors.Black;
                 p1.Format.Font.Underline = Underline.None;
@@ -553,8 +554,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                     row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
                     row.Cells[0].AddParagraph(orderProductVariant.Quantity.ToString());
 
-                    string name = String.Format("Not available. ID={0}", orderProductVariant.ProductVariantID);
-                    var pv = ProductManager.GetProductVariantByID(orderProductVariant.ProductVariantID);
+                    string name = String.Format("Not available. ID={0}", orderProductVariant.ProductVariantId);
+                    var pv = ProductManager.GetProductVariantById(orderProductVariant.ProductVariantId);
                     if(pv != null)
                     {
                         name = pv.FullProductName;
@@ -579,7 +580,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always);
             renderer.Document = doc;
             renderer.RenderDocument();
-            renderer.PdfDocument.Save(FilePath);
+            renderer.PdfDocument.Save(filePath);
         }
         
         #endregion

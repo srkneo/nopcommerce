@@ -15,7 +15,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.SecurePay
         {
             if(!Page.IsPostBack)
             {
-                txtMerchantID.Text = SecurePaySettings.MerchantID;
+                txtMerchantId.Text = SecurePaySettings.MerchantId;
                 txtMerchantPassword.Text = SecurePaySettings.MerchantPassword;
                 cbTestMode.Checked = XmlPaymentSettings.TestMode;
                 cbAuthorizeOnly.Checked = XmlPaymentSettings.AuthorizeOnly;
@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.SecurePay
 
         public void Save()
         {
-            SecurePaySettings.MerchantID = txtMerchantID.Text;
+            SecurePaySettings.MerchantId = txtMerchantId.Text;
             SecurePaySettings.MerchantPassword = txtMerchantPassword.Text;
             XmlPaymentSettings.AuthorizeOnly = cbAuthorizeOnly.Checked;
             XmlPaymentSettings.TestMode = cbTestMode.Checked;

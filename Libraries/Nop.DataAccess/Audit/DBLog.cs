@@ -38,12 +38,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets or sets the log identifier
         /// </summary>
-        public int LogID { get; set; }
+        public int LogId { get; set; }
 
         /// <summary>
         /// Gets or sets the log type identifier
         /// </summary>
-        public int LogTypeID { get; set; }
+        public int LogTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the severity
@@ -68,17 +68,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the page URL
         /// </summary>
-        public string PageURL { get; set; }
+        public string PageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the referrer URL
         /// </summary>
-        public string ReferrerURL { get; set; }
+        public string ReferrerUrl { get; set; }
         
         /// <summary>
         /// Gets or sets the date and time of instance creation

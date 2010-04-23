@@ -41,9 +41,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             LanguageCollection languageCollection = LanguageManager.GetAllLanguages();
             foreach (Language language in languageCollection)
             {
-                ListItem ddlLanguageItem2 = new ListItem(language.Name, language.LanguageID.ToString());
+                ListItem ddlLanguageItem2 = new ListItem(language.Name, language.LanguageId.ToString());
                 this.ddlLanguage.Items.Add(ddlLanguageItem2);
-                if (this.LanguageID == language.LanguageID)
+                if (this.LanguageId == language.LanguageId)
                     ddlLanguageItem2.Selected = true;
             }
         }
@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            Language language = LanguageManager.GetLanguageByID(int.Parse(this.ddlLanguage.SelectedItem.Value));
+            Language language = LanguageManager.GetLanguageById(int.Parse(this.ddlLanguage.SelectedItem.Value));
             if (language != null)
             {
                 LocaleStringResourceDictionary resourceDictionary = language.LocaleStringResources;
@@ -78,9 +78,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void ddlLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Language language = LanguageManager.GetLanguageByID(int.Parse(this.ddlLanguage.SelectedItem.Value));
+            Language language = LanguageManager.GetLanguageById(int.Parse(this.ddlLanguage.SelectedItem.Value));
             if (language != null)
-                Response.Redirect("LocaleStringResources.aspx?LanguageID=" + language.LanguageID);
+                Response.Redirect("LocaleStringResources.aspx?LanguageID=" + language.LanguageId);
             else
                 Response.Redirect("LocaleStringResources.aspx");
         }
@@ -91,9 +91,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    Language language = LanguageManager.GetLanguageByID(int.Parse(this.ddlLanguage.SelectedItem.Value));
+                    Language language = LanguageManager.GetLanguageById(int.Parse(this.ddlLanguage.SelectedItem.Value));
                     if (language != null)
-                        Response.Redirect("LocaleStringResourceAdd.aspx?LanguageID=" + language.LanguageID);
+                        Response.Redirect("LocaleStringResourceAdd.aspx?LanguageID=" + language.LanguageId);
                 }
                 catch (Exception exc)
                 {
@@ -108,11 +108,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             BindGrid();
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

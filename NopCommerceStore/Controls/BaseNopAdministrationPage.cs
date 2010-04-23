@@ -44,14 +44,14 @@ namespace NopSolutions.NopCommerce.Web
 
         }
 
-        protected void SelectTab(TabContainer tabContainer, string TabID)
+        protected void SelectTab(TabContainer tabContainer, string tabId)
         {
             if (tabContainer == null)
                 throw new ArgumentNullException("tabContainer");
 
-            if (!String.IsNullOrEmpty(TabID))
+            if (!String.IsNullOrEmpty(tabId))
             {
-                AjaxControlToolkit.TabPanel tab = tabContainer.FindControl(TabID) as AjaxControlToolkit.TabPanel;
+                AjaxControlToolkit.TabPanel tab = tabContainer.FindControl(tabId) as AjaxControlToolkit.TabPanel;
                 if (tab != null)
                 {
                     tabContainer.ActiveTab = tab;
@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        protected string GetActiveTabID(TabContainer tabContainer)
+        protected string GetActiveTabId(TabContainer tabContainer)
         {
             if (tabContainer == null)
                 throw new ArgumentNullException("tabContainer");
@@ -76,20 +76,20 @@ namespace NopSolutions.NopCommerce.Web
             if (this.AdministratorSecurityValidationEnabled &&
                 !ValidateAdministratorSecurity())
             {
-                string url = SEOHelper.GetAdminAreaLoginPageURL();
+                string url = SEOHelper.GetAdminAreaLoginPageUrl();
                 Response.Redirect(url);
             }
 
             //page security validation
             if (!ValidatePageSecurity())
             {
-                string url = SEOHelper.GetAdminAreaAccessDeniedURL();
+                string url = SEOHelper.GetAdminAreaAccessDeniedUrl();
                 Response.Redirect(url);
             }
 
             if(this.IPAddressValidationEnabled && !ValidateIP())
             {
-                Response.Redirect(SEOHelper.GetAdminAreaAccessDeniedURL());
+                Response.Redirect(SEOHelper.GetAdminAreaAccessDeniedUrl());
             }
 
             base.OnPreInit(e);
@@ -137,7 +137,7 @@ namespace NopSolutions.NopCommerce.Web
 
         protected override void OnLoad(EventArgs e)
         {
-            CommonHelper.EnsureSSL();
+            CommonHelper.EnsureSsl();
             base.OnLoad(e);
         }
 
@@ -170,7 +170,7 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
         
-        protected void ShowMessage(string Message)
+        protected void ShowMessage(string message)
         {
             MasterPage masterPage = this.Master;
             if (masterPage == null)
@@ -178,15 +178,15 @@ namespace NopSolutions.NopCommerce.Web
 
             BaseNopAdministrationMasterPage nopAdministrationMasterPage = masterPage as BaseNopAdministrationMasterPage;
             if (nopAdministrationMasterPage != null)
-                nopAdministrationMasterPage.ShowMessage(Message);
+                nopAdministrationMasterPage.ShowMessage(message);
         }
 
-        protected void ShowError(string Message)
+        protected void ShowError(string message)
         {
-            ShowError(Message, string.Empty);
+            ShowError(message, string.Empty);
         }
 
-        protected void ShowError(string Message, string CompleteMessage)
+        protected void ShowError(string message, string completeMessage)
         {
             MasterPage masterPage = this.Master;
             if (masterPage == null)
@@ -194,13 +194,13 @@ namespace NopSolutions.NopCommerce.Web
 
             BaseNopAdministrationMasterPage nopAdministrationMasterPage = masterPage as BaseNopAdministrationMasterPage;
             if (nopAdministrationMasterPage != null)
-                nopAdministrationMasterPage.ShowError(Message, CompleteMessage);
+                nopAdministrationMasterPage.ShowError(message, completeMessage);
         }
 
-        protected string GetLocaleResourceString(string ResourceName)
+        protected string GetLocaleResourceString(string resourceName)
         {
             Language language = NopContext.Current.WorkingLanguage;
-            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageID);
+            return LocalizationManager.GetLocaleResourceString(resourceName, language.LanguageId);
         }
 
         protected virtual bool AdministratorSecurityValidationEnabled

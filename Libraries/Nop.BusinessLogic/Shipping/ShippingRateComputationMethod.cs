@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets or sets the shipping rate computation method identifier
         /// </summary>
-        public int ShippingRateComputationMethodID { get; set; }
+        public int ShippingRateComputationMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 ShippingRateComputationMethodTypeEnum type = ShippingRateComputationMethodTypeEnum.Unknown;
                 try
                 {
-                    type = ShippingRateComputationMethodManager.GetShippingRateComputationMethodTypeEnum(this.ShippingRateComputationMethodID);
+                    type = ShippingRateComputationMethodManager.GetShippingRateComputationMethodTypeEnum(this.ShippingRateComputationMethodId);
                 }
                 catch { }
                 return type;

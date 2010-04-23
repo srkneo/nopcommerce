@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var passwordRecoveryToken = CommonHelper.QueryStringGUID("PRT");
+            var passwordRecoveryToken = CommonHelper.QueryStringGuid("PRT");
             if (!passwordRecoveryToken.HasValue)
             {
                 pnlResult.Visible = false;
@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         var passwordRecoveryToken = Guid.NewGuid();
                         customer.PasswordRecoveryToken = passwordRecoveryToken.ToString();
-                        MessageManager.SendCustomerPasswordRecoveryMessage(customer, NopContext.Current.WorkingLanguage.LanguageID);
+                        MessageManager.SendCustomerPasswordRecoveryMessage(customer, NopContext.Current.WorkingLanguage.LanguageId);
 
                         lResult.Text = GetLocaleResourceString("Account.PasswordRecovery.EmailHasBeenSent");
                         pnlResult.Visible = true;
@@ -116,7 +116,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 try
                 {
-                    var passwordRecoveryToken = CommonHelper.QueryStringGUID("PRT");
+                    var passwordRecoveryToken = CommonHelper.QueryStringGuid("PRT");
                     string email = CommonHelper.QueryString("Email");
                     if (passwordRecoveryToken.HasValue && !String.IsNullOrEmpty(email))
                     {

@@ -10,7 +10,7 @@
             <tr>
                 <td colspan="2" width="100%">
                     <asp:GridView ID="gvShippingByTotals" runat="server" AutoGenerateColumns="false"
-                        DataKeyNames="ShippingByTotalID" OnRowDeleting="gvShippingByTotals_RowDeleting"
+                        DataKeyNames="ShippingByTotalId" OnRowDeleting="gvShippingByTotals_RowDeleting"
                         OnRowDataBound="gvShippingByTotals_RowDataBound" OnRowCommand="gvShippingByTotals_RowCommand"
                         Width="100%">
                         <Columns>
@@ -18,7 +18,7 @@
                                 <ItemTemplate>
                                     <asp:DropDownList ID="ddlShippingMethod" CssClass="adminInput" runat="server">
                                     </asp:DropDownList>
-                                    <asp:HiddenField ID="hfShippingByTotalID" runat="server" Value='<%# Eval("ShippingByTotalID") %>' />
+                                    <asp:HiddenField ID="hfShippingByTotalId" runat="server" Value='<%# Eval("ShippingByTotalId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="From" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%"

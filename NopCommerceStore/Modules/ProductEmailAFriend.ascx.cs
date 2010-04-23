@@ -49,10 +49,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
-                hlProduct.NavigateUrl = SEOHelper.GetProductURL(product);
+                hlProduct.NavigateUrl = SEOHelper.GetProductUrl(product);
                 hlProduct.Text = Server.HtmlEncode(product.Name);
                 lShortDescription.Text = product.ShortDescription;
 
@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 try
                 {
-                    var product = ProductManager.GetProductByID(this.ProductID);
+                    var product = ProductManager.GetProductById(this.ProductId);
                     if (product != null)
                     {
                         if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         personalMessage = ProductManager.FormatEmailAFriendText(personalMessage);
 
                         MessageManager.SendEmailAFriendMessage(NopContext.Current.User,
-                            NopContext.Current.WorkingLanguage.LanguageID, product,
+                            NopContext.Current.WorkingLanguage.LanguageId, product,
                             friendsEmail, personalMessage);
 
                         txtFriendsEmail.Text = string.Empty;
@@ -113,11 +113,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

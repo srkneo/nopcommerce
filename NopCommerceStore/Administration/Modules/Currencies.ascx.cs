@@ -64,15 +64,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 foreach (GridViewRow row in gvCurrencies.Rows)
                 {
-                    HiddenField hfCurrencyID = (HiddenField)row.FindControl("hfCurrencyID");
-                    int currencyID = int.Parse(hfCurrencyID.Value);
+                    HiddenField hfCurrencyId = (HiddenField)row.FindControl("hfCurrencyId");
+                    int currencyId = int.Parse(hfCurrencyId.Value);
                     
                     RadioButton rdbIsPrimaryExchangeRateCurrency = (RadioButton)row.FindControl("rdbIsPrimaryExchangeRateCurrency");
                     RadioButton rdbIsPrimaryStoreCurrency = (RadioButton)row.FindControl("rdbIsPrimaryStoreCurrency");
                     if (rdbIsPrimaryExchangeRateCurrency.Checked)
-                        CurrencyManager.PrimaryExchangeRateCurrency = CurrencyManager.GetCurrencyByID(currencyID);
+                        CurrencyManager.PrimaryExchangeRateCurrency = CurrencyManager.GetCurrencyById(currencyId);
                     if (rdbIsPrimaryStoreCurrency.Checked)
-                        CurrencyManager.PrimaryStoreCurrency = CurrencyManager.GetCurrencyByID(currencyID);
+                        CurrencyManager.PrimaryStoreCurrency = CurrencyManager.GetCurrencyById(currencyId);
                 }
 
                 BindCurrencyGrid();
@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         currency = currency2;
                 if (currency != null)
                 {
-                    CurrencyManager.UpdateCurrency(currency.CurrencyID, currency.Name, currency.CurrencyCode,
+                    CurrencyManager.UpdateCurrency(currency.CurrencyId, currency.Name, currency.CurrencyCode,
                         txtRate.Value, currency.DisplayLocale, currency.CustomFormatting, currency.Published, currency.DisplayOrder,
                         currency.CreatedOn, DateTime.Now);
                     BindCurrencyGrid();

@@ -122,21 +122,21 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             TransactMode transactionMode = GetCurrentTransactionMode();
 
             if (transactionMode == TransactMode.Authorize)
             {
-                AuthorizeOrSale(paymentInfo, customer, OrderGuid, processPaymentResult, true);
+                AuthorizeOrSale(paymentInfo, customer, orderGuid, processPaymentResult, true);
                 if (!String.IsNullOrEmpty(processPaymentResult.Error))
                     return;
             }
             else
             {
-                AuthorizeOrSale(paymentInfo, customer, OrderGuid, processPaymentResult, false);
+                AuthorizeOrSale(paymentInfo, customer, orderGuid, processPaymentResult, false);
                 if (!String.IsNullOrEmpty(processPaymentResult.Error))
                     return;
             }
@@ -170,7 +170,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         {
             InitSettings();
 
-            string authorizationID = processPaymentResult.AuthorizationTransactionID;
+            string authorizationID = processPaymentResult.AuthorizationTransactionId;
             DoCaptureReq req = new DoCaptureReq();
             req.DoCaptureRequest = new DoCaptureRequestType();
             req.DoCaptureRequest.Version = this.APIVersion;
@@ -186,7 +186,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             if (Success)
             {
                 processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
-                processPaymentResult.CaptureTransactionID = response.DoCaptureResponseDetails.PaymentInfo.TransactionID;
+                processPaymentResult.CaptureTransactionId = response.DoCaptureResponseDetails.PaymentInfo.TransactionID;
                 processPaymentResult.CaptureTransactionResult = response.Ack.ToString();
             }
             else
@@ -200,11 +200,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
         /// <param name="authorizeOnly">A value indicating whether to authorize only; true - authorize; false - sale</param>
         protected void AuthorizeOrSale(PaymentInfo paymentInfo, Customer customer,
-            Guid OrderGuid, ProcessPaymentResult processPaymentResult, bool authorizeOnly)
+            Guid orderGuid, ProcessPaymentResult processPaymentResult, bool authorizeOnly)
         {
             InitSettings();
 
@@ -225,7 +225,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             details.CreditCard.ExpMonth = paymentInfo.CreditCardExpireMonth;
             details.CreditCard.ExpYearSpecified = true;
             details.CreditCard.ExpYear = paymentInfo.CreditCardExpireYear;
-            details.CreditCard.CVV2 = paymentInfo.CreditCardCVV2;
+            details.CreditCard.CVV2 = paymentInfo.CreditCardCvv2;
 
             details.CreditCard.CardOwner = new PayerInfoType();
             details.CreditCard.CardOwner.PayerCountry = GetPaypalCountryCodeType(paymentInfo.BillingAddress.Country);
@@ -249,7 +249,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             details.PaymentDetails.OrderTotal = new BasicAmountType();
             details.PaymentDetails.OrderTotal.Value = paymentInfo.OrderTotal.ToString("N", new CultureInfo("en-us"));
             details.PaymentDetails.OrderTotal.currencyID = PaypalHelper.GetPaypalCurrency(CurrencyManager.PrimaryStoreCurrency);
-            details.PaymentDetails.Custom = OrderGuid.ToString();
+            details.PaymentDetails.Custom = orderGuid.ToString();
             details.PaymentDetails.ButtonSource = "nopCommerceCart";
 
 
@@ -283,7 +283,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
                     shippingAddress.CityName = paymentInfo.ShippingAddress.City;
                     shippingAddress.StateOrProvince = paymentInfo.ShippingAddress.StateProvince.Abbreviation;
                     shippingAddress.PostalCode = paymentInfo.ShippingAddress.ZipPostalCode;
-                    shippingAddress.Country = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), paymentInfo.ShippingAddress.Country.TwoLetterISOCode, true);
+                    shippingAddress.Country = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), paymentInfo.ShippingAddress.Country.TwoLetterIsoCode, true);
                     shippingAddress.CountrySpecified = true;
                     details.PaymentDetails.ShipToAddress = shippingAddress;
                 }
@@ -299,14 +299,14 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
                 processPaymentResult.AuthorizationTransactionCode = response.CVV2Code;
                 if (authorizeOnly)
                 {
-                    processPaymentResult.AuthorizationTransactionID = response.TransactionID;
+                    processPaymentResult.AuthorizationTransactionId = response.TransactionID;
                     processPaymentResult.AuthorizationTransactionResult = response.Ack.ToString();
 
                     processPaymentResult.PaymentStatus = PaymentStatusEnum.Authorized;
                 }
                 else
                 {
-                    processPaymentResult.CaptureTransactionID = response.TransactionID;
+                    processPaymentResult.CaptureTransactionId = response.TransactionID;
                     processPaymentResult.CaptureTransactionResult = response.Ack.ToString();
 
                     processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
@@ -329,7 +329,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             CountryCodeType payerCountry = CountryCodeType.US;
             try
             {
-                payerCountry = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), country.TwoLetterISOCode);
+                payerCountry = (CountryCodeType)Enum.Parse(typeof(CountryCodeType), country.TwoLetterIsoCode);
             }
             catch
             {
@@ -370,7 +370,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         {
             InitSettings();
 
-            string transactionID = cancelPaymentResult.CaptureTransactionID;
+            string transactionID = cancelPaymentResult.CaptureTransactionId;
 
             RefundTransactionReq req = new RefundTransactionReq();
             req.RefundTransactionRequest = new RefundTransactionRequestType();
@@ -403,9 +403,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         {
             InitSettings();
 
-            string transactionID = cancelPaymentResult.AuthorizationTransactionID;
+            string transactionID = cancelPaymentResult.AuthorizationTransactionId;
             if (String.IsNullOrEmpty(transactionID))
-                transactionID = cancelPaymentResult.CaptureTransactionID;
+                transactionID = cancelPaymentResult.CaptureTransactionId;
 
             DoVoidReq req = new DoVoidReq();
             req.DoVoidRequest = new DoVoidRequestType();
@@ -431,9 +431,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
 
@@ -450,7 +450,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             details.CreditCard.ExpMonth = paymentInfo.CreditCardExpireMonth;
             details.CreditCard.ExpYearSpecified = true;
             details.CreditCard.ExpYear = paymentInfo.CreditCardExpireYear;
-            details.CreditCard.CVV2 = paymentInfo.CreditCardCVV2;
+            details.CreditCard.CVV2 = paymentInfo.CreditCardCvv2;
 
             details.CreditCard.CardOwner = new PayerInfoType();
             details.CreditCard.CardOwner.PayerCountry = GetPaypalCountryCodeType(paymentInfo.BillingAddress.Country);
@@ -474,7 +474,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             //start date
             details.RecurringPaymentsProfileDetails = new RecurringPaymentsProfileDetailsType();
             details.RecurringPaymentsProfileDetails.BillingStartDate = DateTime.UtcNow;
-            details.RecurringPaymentsProfileDetails.ProfileReference = OrderGuid.ToString();
+            details.RecurringPaymentsProfileDetails.ProfileReference = orderGuid.ToString();
 
             //schedule
             details.ScheduleDetails = new ScheduleDetailsType();
@@ -513,7 +513,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
                 processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
                 if (response.CreateRecurringPaymentsProfileResponseDetails != null)
                 {
-                    processPaymentResult.SubscriptionTransactionID = response.CreateRecurringPaymentsProfileResponseDetails.ProfileID;
+                    processPaymentResult.SubscriptionTransactionId = response.CreateRecurringPaymentsProfileResponseDetails.ProfileID;
                 }
             }
             else

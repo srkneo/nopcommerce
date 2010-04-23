@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Gets or sets the credit card type identifier
         /// </summary>
-        public int CreditCardTypeID { get; set; }
+        public int CreditCardTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

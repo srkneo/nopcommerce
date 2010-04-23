@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     BannedIpAddress ipAddress = ctrlBlacklist.SaveBannedIpAddressInfo();
-                    Response.Redirect("BlacklistIPDetails.aspx?BannedIpAddressID=" + ipAddress.BannedIpAddressID.ToString());
+                    Response.Redirect("BlacklistIPDetails.aspx?BannedIpAddressID=" + ipAddress.BannedIpAddressId.ToString());
                 }
                 catch (Exception exc)
                 {

@@ -38,9 +38,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -65,11 +65,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             post.Add(AmazonHelper.SIGNATURE_METHOD_KEYNAME, AmazonHelper.HMAC_SHA256_ALGORITHM);
             post.Add("accessKey", SimplePaySettings.AccessKey);
             post.Add("amount", String.Format(CultureInfo.InvariantCulture, "USD {0:0.00}", order.OrderTotal));
-            post.Add("description", string.Format("{0}, {1}", SettingManager.StoreName, order.OrderID));
+            post.Add("description", string.Format("{0}, {1}", SettingManager.StoreName, order.OrderId));
             post.Add("amazonPaymentsAccountId", SimplePaySettings.AccountId);
             post.Add("returnUrl", String.Format("{0}AmazonSimplePayReturn.aspx", CommonHelper.GetStoreLocation(false)));
             post.Add("processImmediate", (SimplePaySettings.SettleImmediately ? "1" : "0"));
-            post.Add("referenceId", order.OrderID.ToString());
+            post.Add("referenceId", order.OrderId.ToString());
             post.Add(AmazonHelper.SIGNATURE_KEYNAME, AmazonHelper.SignParameters(post.Params, SimplePaySettings.SecretKey, post.Method, gatewayUrl.Host, gatewayUrl.AbsolutePath));
 
 
@@ -122,9 +122,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

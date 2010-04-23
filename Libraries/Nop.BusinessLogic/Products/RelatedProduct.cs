@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the related product identifier
         /// </summary>
-        public int RelatedProductID { get; set; }
+        public int RelatedProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the first product identifier
         /// </summary>
-        public int ProductID1 { get; set; }
+        public int ProductId1 { get; set; }
 
         /// <summary>
         /// Gets or sets the second product identifier
         /// </summary>
-        public int ProductID2 { get; set; }
+        public int ProductId2 { get; set; }
 
         /// <summary>
         /// Gets or sets the display order
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductByID(ProductID1);
+                return ProductManager.GetProductById(this.ProductId1);
             }
         }
 
@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductByID(ProductID2);
+                return ProductManager.GetProductById(this.ProductId2);
             }
         }
         #endregion

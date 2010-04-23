@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         /// <summary>
         /// Gets or sets the topic identifier
         /// </summary>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

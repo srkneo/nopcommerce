@@ -13,7 +13,6 @@
 <asp:GridView ID="gvLogs" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvLogs_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="LogID" HeaderText="Log ID" Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Logs.LogType %>" ItemStyle-Width="12%">
             <ItemTemplate>
                 <%#CommonHelper.ConvertEnum(((LogTypeEnum)(Eval("LogType"))).ToString())%>
@@ -21,7 +20,7 @@
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Logs.Customer %>" ItemStyle-Width="15%">
             <ItemTemplate>
-                <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerID")))%>
+                <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Logs.CreatedOn %>" HeaderStyle-HorizontalAlign="Center"
@@ -37,7 +36,7 @@
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Logs.Details %>" ItemStyle-Width="15%">
             <ItemTemplate>
-                <a href="LogDetails.aspx?LogID=<%#Eval("LogID")%>" title="<%#GetLocaleResourceString("Admin.Logs.Details.Tooltip")%>">
+                <a href="LogDetails.aspx?LogID=<%#Eval("LogId")%>" title="<%#GetLocaleResourceString("Admin.Logs.Details.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Logs.Details")%></a>
             </ItemTemplate>
         </asp:TemplateField>
@@ -45,7 +44,7 @@
             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <asp:Button ID="DeleteLogButton" runat="server" CssClass="adminButton" CommandName="DeleteLog"
-                    Text="<% $NopResources:Admin.Logs.DeleteButton.Text %>" CommandArgument='<%#Eval("LogID")%>'
+                    Text="<% $NopResources:Admin.Logs.DeleteButton.Text %>" CommandArgument='<%#Eval("LogId")%>'
                     OnCommand="DeleteLogButton_OnCommand" CausesValidation="false" ToolTip="<% $NopResources:Admin.Logs.DeleteButton.Tooltip %>" />
             </ItemTemplate>
         </asp:TemplateField>

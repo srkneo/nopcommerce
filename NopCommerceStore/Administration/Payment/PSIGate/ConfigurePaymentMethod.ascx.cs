@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.PSIGate
         private void BindData()
         {
             cbUseSandbox.Checked = SettingManager.GetSettingValueBoolean("PaymentMethod.PSIGate.UseSandbox");
-            txtStoreID.Text = SettingManager.GetSettingValue("PaymentMethod.PSIGate.StoreID");
+            txtStoreId.Text = SettingManager.GetSettingValue("PaymentMethod.PSIGate.StoreId");
             txtPassphrase.Text = SettingManager.GetSettingValue("PaymentMethod.PSIGate.Passphrase");
             txtAdditionalFee.Value = SettingManager.GetSettingValueDecimalNative("PaymentMethod.PSIGate.AdditionalFee");
         }
@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.PSIGate
         public void Save()
         {
             SettingManager.SetParam("PaymentMethod.PSIGate.UseSandbox", cbUseSandbox.Checked.ToString());
-            SettingManager.SetParam("PaymentMethod.PSIGate.StoreID", txtStoreID.Text);
+            SettingManager.SetParam("PaymentMethod.PSIGate.StoreId", txtStoreId.Text);
             SettingManager.SetParam("PaymentMethod.PSIGate.Passphrase", txtPassphrase.Text);
             SettingManager.SetParamNative("PaymentMethod.PSIGate.AdditionalFee", txtAdditionalFee.Value);
         }

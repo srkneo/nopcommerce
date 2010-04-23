@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
     /// <summary>
     /// Specification attribute provider for SQL Server
     /// </summary>
-    public partial class SQLSpecificationAttributeProvider : DBSpecificationAttributeProvider
+    public partial class SqlSpecificationAttributeProvider : DBSpecificationAttributeProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -40,19 +40,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <returns>Specification attribute</returns>
         private DBSpecificationAttribute GetSpecificationAttributeFromReader(IDataReader dataReader)
         {
-            DBSpecificationAttribute specificationAttribute = new DBSpecificationAttribute();
-            specificationAttribute.SpecificationAttributeID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
-            specificationAttribute.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            specificationAttribute.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return specificationAttribute;
+            var item = new DBSpecificationAttribute();
+            item.SpecificationAttributeId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
 
         private DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBSpecificationAttributeLocalized();
-            item.SpecificationAttributeLocalizedID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeLocalizedID");
-            item.SpecificationAttributeID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.SpecificationAttributeLocalizedId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeLocalizedID");
+            item.SpecificationAttributeId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             return item;
         }
@@ -64,20 +64,20 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <returns>Specification attribute option</returns>
         private DBSpecificationAttributeOption GetSpecificationAttributeOptionFromReader(IDataReader dataReader)
         {
-            DBSpecificationAttributeOption specificationAttributeOption = new DBSpecificationAttributeOption();
-            specificationAttributeOption.SpecificationAttributeOptionID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
-            specificationAttributeOption.SpecificationAttributeID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
-            specificationAttributeOption.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            specificationAttributeOption.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return specificationAttributeOption;
+            var item = new DBSpecificationAttributeOption();
+            item.SpecificationAttributeOptionId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
+            item.SpecificationAttributeId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
 
         private DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBSpecificationAttributeOptionLocalized();
-            item.SpecificationAttributeOptionLocalizedID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionLocalizedID");
-            item.SpecificationAttributeOptionID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.SpecificationAttributeOptionLocalizedId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionLocalizedID");
+            item.SpecificationAttributeOptionId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             return item;
         }
@@ -89,14 +89,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <returns>Product specification attribute</returns>
         private DBProductSpecificationAttribute GetProductSpecificationAttributeFromReader(IDataReader dataReader)
         {
-            DBProductSpecificationAttribute productSpecificationAttribute = new DBProductSpecificationAttribute();
-            productSpecificationAttribute.ProductSpecificationAttributeID = NopSqlDataHelper.GetInt(dataReader, "ProductSpecificationAttributeID");
-            productSpecificationAttribute.ProductID = NopSqlDataHelper.GetInt(dataReader, "ProductID");
-            productSpecificationAttribute.SpecificationAttributeOptionID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
-            productSpecificationAttribute.AllowFiltering = NopSqlDataHelper.GetBoolean(dataReader, "AllowFiltering");
-            productSpecificationAttribute.ShowOnProductPage = NopSqlDataHelper.GetBoolean(dataReader, "ShowOnProductPage");
-            productSpecificationAttribute.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return productSpecificationAttribute;
+            var item = new DBProductSpecificationAttribute();
+            item.ProductSpecificationAttributeId = NopSqlDataHelper.GetInt(dataReader, "ProductSpecificationAttributeID");
+            item.ProductId = NopSqlDataHelper.GetInt(dataReader, "ProductID");
+            item.SpecificationAttributeOptionId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
+            item.AllowFiltering = NopSqlDataHelper.GetBoolean(dataReader, "AllowFiltering");
+            item.ShowOnProductPage = NopSqlDataHelper.GetBoolean(dataReader, "ShowOnProductPage");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
 
         /// <summary>
@@ -106,11 +106,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <returns>Specification attribute option filter</returns>
         private DBSpecificationAttributeOptionFilter GetSpecificationAttributeOptionFilterFromReader(IDataReader dataReader)
         {
-            DBSpecificationAttributeOptionFilter item = new DBSpecificationAttributeOptionFilter();
-            item.SpecificationAttributeID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
+            var item = new DBSpecificationAttributeOptionFilter();
+            item.SpecificationAttributeId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeID");
             item.SpecificationAttributeName = NopSqlDataHelper.GetString(dataReader, "SpecificationAttributeName");
             item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            item.SpecificationAttributeOptionID = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
+            item.SpecificationAttributeOptionId = NopSqlDataHelper.GetInt(dataReader, "SpecificationAttributeOptionID");
             item.SpecificationAttributeOptionName = NopSqlDataHelper.GetString(dataReader, "SpecificationAttributeOptionName");
             return item;
         }
@@ -157,39 +157,39 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets a specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeID">The specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute</returns>
-        public override DBSpecificationAttribute GetSpecificationAttributeByID(int SpecificationAttributeID, int LanguageID)
+        public override DBSpecificationAttribute GetSpecificationAttributeById(int specificationAttributeId, int languageId)
         {
-            DBSpecificationAttribute specificationAttribute = null;
-            if (SpecificationAttributeID == 0)
-                return specificationAttribute;
+            DBSpecificationAttribute item = null;
+            if (specificationAttributeId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, SpecificationAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    specificationAttribute = GetSpecificationAttributeFromReader(dataReader);
+                    item = GetSpecificationAttributeFromReader(dataReader);
                 }
             }
-            return specificationAttribute;
+            return item;
         }
 
         /// <summary>
         /// Gets specification attribute collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute collection</returns>
-        public override DBSpecificationAttributeCollection GetSpecificationAttributes(int LanguageID)
+        public override DBSpecificationAttributeCollection GetSpecificationAttributes(int languageId)
         {
             var result = new DBSpecificationAttributeCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeLoadAll");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -205,13 +205,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Deletes a specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeID">The specification attribute identifier</param>
-        public override void DeleteSpecificationAttribute(int SpecificationAttributeID)
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
+        public override void DeleteSpecificationAttribute(int specificationAttributeId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeDelete");
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, SpecificationAttributeID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <returns>Specification attribute</returns>
         public override DBSpecificationAttribute InsertSpecificationAttribute(string name, int displayOrder)
         {
-            DBSpecificationAttribute specificationAttribute = null;
+            DBSpecificationAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeInsert");
             db.AddOutParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, 0);
@@ -230,46 +230,46 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.String, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int SpecificationAttributeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeID"));
-                specificationAttribute = GetSpecificationAttributeByID(SpecificationAttributeID, 0);
+                int specificationAttributeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeID"));
+                item = GetSpecificationAttributeById(specificationAttributeId, 0);
             }
-            return specificationAttribute;
+            return item;
         }
 
         /// <summary>
         /// Updates the specification attribute
         /// </summary>
-        /// <param name="specificationAttributeID">The specification attribute identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <param name="name">The name</param>
         /// <param name="displayOrder">Display order</param>
         /// <returns>Specification attribute</returns>
-        public override DBSpecificationAttribute UpdateSpecificationAttribute(int specificationAttributeID, string name, int displayOrder)
+        public override DBSpecificationAttribute UpdateSpecificationAttribute(int specificationAttributeId, string name, int displayOrder)
         {
-            DBSpecificationAttribute specificationAttribute = null;
+            DBSpecificationAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeUpdate");
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
             db.AddInParameter(dbCommand, "Name", DbType.String, name);
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.String, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                specificationAttribute = GetSpecificationAttributeByID(specificationAttributeID, 0);
+                item = GetSpecificationAttributeById(specificationAttributeId, 0);
 
-            return specificationAttribute;
+            return item;
         }
 
         /// <summary>
         /// Gets localized specification attribute by id
         /// </summary>
-        /// <param name="SpecificationAttributeLocalizedID">Localized specification identifier</param>
+        /// <param name="specificationAttributeLocalizedId">Localized specification identifier</param>
         /// <returns>Specification attribute content</returns>
-        public override DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedByID(int SpecificationAttributeLocalizedID)
+        public override DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedById(int specificationAttributeLocalizedId)
         {
             DBSpecificationAttributeLocalized item = null;
-            if (SpecificationAttributeLocalizedID == 0)
+            if (specificationAttributeLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "SpecificationAttributeLocalizedID", DbType.Int32, SpecificationAttributeLocalizedID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeLocalizedID", DbType.Int32, specificationAttributeLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -283,16 +283,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets localized specification attribute by specification attribute id and language id
         /// </summary>
-        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeId">Specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute content</returns>
-        public override DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedBySpecificationAttributeIDAndLanguageID(int SpecificationAttributeID, int LanguageID)
+        public override DBSpecificationAttributeLocalized GetSpecificationAttributeLocalizedBySpecificationAttributeIdAndLanguageId(int specificationAttributeId, int languageId)
         {
             DBSpecificationAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeLocalizedLoadBySpecificationAttributeIDAndLanguageID");
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, SpecificationAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -306,24 +306,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Inserts a localized specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeId">Specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Specification attribute content</returns>
-        public override DBSpecificationAttributeLocalized InsertSpecificationAttributeLocalized(int SpecificationAttributeID,
-            int LanguageID, string Name)
+        public override DBSpecificationAttributeLocalized InsertSpecificationAttributeLocalized(int specificationAttributeId,
+            int languageId, string name)
         {
             DBSpecificationAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeLocalizedInsert");
             db.AddOutParameter(dbCommand, "SpecificationAttributeLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, SpecificationAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int SpecificationAttributeLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeLocalizedID"));
-                item = GetSpecificationAttributeLocalizedByID(SpecificationAttributeLocalizedID);
+                int specificationAttributeLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeLocalizedID"));
+                item = GetSpecificationAttributeLocalizedById(specificationAttributeLocalizedId);
             }
             return item;
         }
@@ -331,23 +331,23 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Update a localized specification attribute
         /// </summary>
-        /// <param name="SpecificationAttributeLocalizedID">Localized specification attribute identifier</param>
-        /// <param name="SpecificationAttributeID">Specification attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeLocalizedId">Localized specification attribute identifier</param>
+        /// <param name="specificationAttributeId">Specification attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Specification attribute content</returns>
-        public override DBSpecificationAttributeLocalized UpdateSpecificationAttributeLocalized(int SpecificationAttributeLocalizedID,
-            int SpecificationAttributeID, int LanguageID, string Name)
+        public override DBSpecificationAttributeLocalized UpdateSpecificationAttributeLocalized(int specificationAttributeLocalizedId,
+            int specificationAttributeId, int languageId, string name)
         {
             DBSpecificationAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeLocalizedUpdate");
-            db.AddInParameter(dbCommand, "SpecificationAttributeLocalizedID", DbType.Int32, SpecificationAttributeLocalizedID);
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, SpecificationAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "SpecificationAttributeLocalizedID", DbType.Int32, specificationAttributeLocalizedId);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetSpecificationAttributeLocalizedByID(SpecificationAttributeLocalizedID);
+                item = GetSpecificationAttributeLocalizedById(specificationAttributeLocalizedId);
 
             return item;
         }
@@ -355,17 +355,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         #endregion
 
         #region SpecificationAttributeOption
+
         /// <summary>
         /// Gets a specification attribute option collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option collection</returns>
-        public override DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptions(int LanguageID)
+        public override DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptions(int languageId)
         {
             var result = new DBSpecificationAttributeOptionCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionLoadAll");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -381,44 +382,44 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets a specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeOptionId">The specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option</returns>
-        public override DBSpecificationAttributeOption GetSpecificationAttributeOptionByID(int specificationAttributeOptionID, int LanguageID)
+        public override DBSpecificationAttributeOption GetSpecificationAttributeOptionById(int specificationAttributeOptionId, int languageId)
         {
-            DBSpecificationAttributeOption sao = null;
-            if (specificationAttributeOptionID == 0)
-                return sao;
+            DBSpecificationAttributeOption item = null;
+            if (specificationAttributeOptionId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    sao = GetSpecificationAttributeOptionFromReader(dataReader);
+                    item = GetSpecificationAttributeOptionFromReader(dataReader);
                 }
             }
-            return sao;
+            return item;
         }
 
         /// <summary>
         /// Gets specification attribute option collection
         /// </summary>
-        /// <param name="specificationAttributeID">Specification attribute unique identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeId">Specification attribute unique identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option collection</returns>
-        public override DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttributeID(int specificationAttributeID, int LanguageID)
+        public override DBSpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttributeId(int specificationAttributeId, int languageId)
         {
             var result = new DBSpecificationAttributeOptionCollection();
-            if (specificationAttributeID == 0)
+            if (specificationAttributeId == 0)
                 return result;
 
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionLoadBySpecificationAttributeID");
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
 
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -435,81 +436,77 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Inserts a specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeID">The specification attribute identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <param name="name">The name</param>
         /// <param name="displayOrder">Display order</param>
         /// <returns>Specification attribute option</returns>
-        public override DBSpecificationAttributeOption InsertSpecificationAttributeOption(int specificationAttributeID,
+        public override DBSpecificationAttributeOption InsertSpecificationAttributeOption(int specificationAttributeId,
             string name, int displayOrder)
         {
-            DBSpecificationAttributeOption sao = null;
-
+            DBSpecificationAttributeOption item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionInsert");
-
             db.AddOutParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
             db.AddInParameter(dbCommand, "Name", DbType.String, name);
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.String, displayOrder);
-
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int saoID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeOptionID"));
-                sao = GetSpecificationAttributeOptionByID(saoID, 0);
+                int saoId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeOptionID"));
+                item = GetSpecificationAttributeOptionById(saoId, 0);
             }
-            return sao;
+            return item;
         }
 
         /// <summary>
         /// Updates the specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
-        /// <param name="specificationAttributeID">The specification attribute identifier</param>
+        /// <param name="specificationAttributeOptionId">The specification attribute option identifier</param>
+        /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <param name="name">The name</param>
         /// <param name="displayOrder">Display order</param>
         /// <returns>Specification attribute option</returns>
-        public override DBSpecificationAttributeOption UpdateSpecificationAttributeOption(int specificationAttributeOptionID, int specificationAttributeID, string name, int displayOrder)
+        public override DBSpecificationAttributeOption UpdateSpecificationAttributeOption(int specificationAttributeOptionId,
+            int specificationAttributeId, string name, int displayOrder)
         {
-            DBSpecificationAttributeOption sao = null;
-
+            DBSpecificationAttributeOption item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionUpdate");
-
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionID);
-            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
+            db.AddInParameter(dbCommand, "SpecificationAttributeID", DbType.Int32, specificationAttributeId);
             db.AddInParameter(dbCommand, "Name", DbType.String, name);
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.String, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                sao = GetSpecificationAttributeOptionByID(specificationAttributeOptionID, 0);
+                item = GetSpecificationAttributeOptionById(specificationAttributeOptionId, 0);
 
-            return sao;
+            return item;
         }
 
         /// <summary>
         /// Deletes a specification attribute option
         /// </summary>
-        /// <param name="specificationAttributeOptionID">The specification attribute option identifier</param>
-        public override void DeleteSpecificationAttributeOption(int specificationAttributeOptionID)
+        /// <param name="specificationAttributeOptionId">The specification attribute option identifier</param>
+        public override void DeleteSpecificationAttributeOption(int specificationAttributeOptionId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionDelete");
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets localized specification attribute option by id
         /// </summary>
-        /// <param name="SpecificationAttributeOptionLocalizedID">Localized specification attribute option identifier</param>
+        /// <param name="specificationAttributeOptionLocalizedId">Localized specification attribute option identifier</param>
         /// <returns>Localized specification attribute option</returns>
-        public override DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedByID(int SpecificationAttributeOptionLocalizedID)
+        public override DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedById(int specificationAttributeOptionLocalizedId)
         {
             DBSpecificationAttributeOptionLocalized item = null;
-            if (SpecificationAttributeOptionLocalizedID == 0)
+            if (specificationAttributeOptionLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionLocalizedID", DbType.Int32, SpecificationAttributeOptionLocalizedID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionLocalizedID", DbType.Int32, specificationAttributeOptionLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -523,16 +520,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets localized specification attribute option by specification attribute option id and language id
         /// </summary>
-        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized specification attribute option</returns>
-        public override DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIDAndLanguageID(int SpecificationAttributeOptionID, int LanguageID)
+        public override DBSpecificationAttributeOptionLocalized GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIdAndLanguageId(int specificationAttributeOptionId, int languageId)
         {
             DBSpecificationAttributeOptionLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionLocalizedLoadBySpecificationAttributeOptionIDAndLanguageID");
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, SpecificationAttributeOptionID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -546,24 +543,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Inserts a localized specification attribute option
         /// </summary>
-        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized specification attribute option</returns>
-        public override DBSpecificationAttributeOptionLocalized InsertSpecificationAttributeOptionLocalized(int SpecificationAttributeOptionID,
-            int LanguageID, string Name)
+        public override DBSpecificationAttributeOptionLocalized InsertSpecificationAttributeOptionLocalized(int specificationAttributeOptionId,
+            int languageId, string name)
         {
             DBSpecificationAttributeOptionLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionLocalizedInsert");
             db.AddOutParameter(dbCommand, "SpecificationAttributeOptionLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, SpecificationAttributeOptionID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int SpecificationAttributeOptionLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeOptionLocalizedID"));
-                item = GetSpecificationAttributeOptionLocalizedByID(SpecificationAttributeOptionLocalizedID);
+                int specificationAttributeOptionLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SpecificationAttributeOptionLocalizedID"));
+                item = GetSpecificationAttributeOptionLocalizedById(specificationAttributeOptionLocalizedId);
             }
             return item;
         }
@@ -571,23 +568,23 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Update a localized specification attribute option
         /// </summary>
-        /// <param name="SpecificationAttributeOptionLocalizedID">Localized specification attribute option identifier</param>
-        /// <param name="SpecificationAttributeOptionID">Specification attribute option identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="specificationAttributeOptionLocalizedId">Localized specification attribute option identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized specification attribute option</returns>
-        public override DBSpecificationAttributeOptionLocalized UpdateSpecificationAttributeOptionLocalized(int SpecificationAttributeOptionLocalizedID,
-            int SpecificationAttributeOptionID, int LanguageID, string Name)
+        public override DBSpecificationAttributeOptionLocalized UpdateSpecificationAttributeOptionLocalized(int specificationAttributeOptionLocalizedId,
+            int specificationAttributeOptionId, int languageId, string name)
         {
             DBSpecificationAttributeOptionLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionLocalizedUpdate");
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionLocalizedID", DbType.Int32, SpecificationAttributeOptionLocalizedID);
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, SpecificationAttributeOptionID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionLocalizedID", DbType.Int32, specificationAttributeOptionLocalizedId);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetSpecificationAttributeOptionLocalizedByID(SpecificationAttributeOptionLocalizedID);
+                item = GetSpecificationAttributeOptionLocalizedById(specificationAttributeOptionLocalizedId);
 
             return item;
         }
@@ -599,34 +596,35 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Deletes a product specification attribute mapping
         /// </summary>
-        /// <param name="ProductSpecificationAttributeID">Product specification attribute identifier</param>
-        public override void DeleteProductSpecificationAttribute(int ProductSpecificationAttributeID)
+        /// <param name="productSpecificationAttributeId">Product specification attribute identifier</param>
+        public override void DeleteProductSpecificationAttribute(int productSpecificationAttributeId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_SpecificationAttribute_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductSpecificationAttributeID", DbType.Int32, ProductSpecificationAttributeID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ProductSpecificationAttributeID", DbType.Int32, productSpecificationAttributeId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a product specification attribute mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="AllowFiltering">0 to load attributes with AllowFiltering set to false, 0 to load attributes with AllowFiltering set to true, null to load all attributes</param>
-        /// <param name="ShowOnProductPage">0 to load attributes with ShowOnProductPage set to false, 0 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="allowFiltering">0 to load attributes with AllowFiltering set to false, 0 to load attributes with AllowFiltering set to true, null to load all attributes</param>
+        /// <param name="showOnProductPage">0 to load attributes with ShowOnProductPage set to false, 0 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
         /// <returns>Product specification attribute mapping collection</returns>
-        public override DBProductSpecificationAttributeCollection GetProductSpecificationAttributesByProductID(int ProductID, bool? AllowFiltering, bool? ShowOnProductPage)
+        public override DBProductSpecificationAttributeCollection GetProductSpecificationAttributesByProductId(int productId,
+            bool? allowFiltering, bool? showOnProductPage)
         {
             var result = new DBProductSpecificationAttributeCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_SpecificationAttribute_MappingLoadByProductID");
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
-            if (AllowFiltering.HasValue)
-                db.AddInParameter(dbCommand, "AllowFiltering", DbType.Boolean, AllowFiltering.Value);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            if (allowFiltering.HasValue)
+                db.AddInParameter(dbCommand, "AllowFiltering", DbType.Boolean, allowFiltering.Value);
             else
                 db.AddInParameter(dbCommand, "AllowFiltering", DbType.Boolean, null);
-            if (ShowOnProductPage.HasValue)
-                db.AddInParameter(dbCommand, "ShowOnProductPage", DbType.Boolean, ShowOnProductPage.Value);
+            if (showOnProductPage.HasValue)
+                db.AddInParameter(dbCommand, "ShowOnProductPage", DbType.Boolean, showOnProductPage.Value);
             else
                 db.AddInParameter(dbCommand, "ShowOnProductPage", DbType.Boolean, null);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
@@ -644,101 +642,100 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
         /// <summary>
         /// Gets a product specification attribute mapping 
         /// </summary>
-        /// <param name="ProductSpecificationAttributeID">Product specification attribute mapping identifier</param>
+        /// <param name="productSpecificationAttributeId">Product specification attribute mapping identifier</param>
         /// <returns>Product specification attribute mapping</returns>
-        public override DBProductSpecificationAttribute GetProductSpecificationAttributeByID(int ProductSpecificationAttributeID)
+        public override DBProductSpecificationAttribute GetProductSpecificationAttributeById(int productSpecificationAttributeId)
         {
-            DBProductSpecificationAttribute productSpecificationAttribute = null;
-            if (ProductSpecificationAttributeID == 0)
-                return productSpecificationAttribute;
+            DBProductSpecificationAttribute item = null;
+            if (productSpecificationAttributeId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_SpecificationAttribute_MappingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductSpecificationAttributeID", DbType.Int32, ProductSpecificationAttributeID);
+            db.AddInParameter(dbCommand, "ProductSpecificationAttributeID", DbType.Int32, productSpecificationAttributeId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    productSpecificationAttribute = GetProductSpecificationAttributeFromReader(dataReader);
+                    item = GetProductSpecificationAttributeFromReader(dataReader);
                 }
             }
-            return productSpecificationAttribute;
+            return item;
         }
 
         /// <summary>
         /// Inserts a product specification attribute mapping
         /// </summary>
-        /// <param name="productID">Product identifier</param>
-        /// <param name="specificationAttributeOptionID">Specification attribute option identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
         /// <param name="allowFiltering">Allow product filtering by this attribute</param>
         /// <param name="showOnProductPage">Show the attribute on the product page</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Product specification attribute mapping</returns>
-        public override DBProductSpecificationAttribute InsertProductSpecificationAttribute(int productID, int specificationAttributeOptionID,
+        public override DBProductSpecificationAttribute InsertProductSpecificationAttribute(int productId, int specificationAttributeOptionId,
                  bool allowFiltering, bool showOnProductPage, int displayOrder)
         {
-            DBProductSpecificationAttribute productSpecificationAttribute = null;
+            DBProductSpecificationAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_SpecificationAttribute_MappingInsert");
             db.AddOutParameter(dbCommand, "ProductSpecificationAttributeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productID);
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionID);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
             db.AddInParameter(dbCommand, "AllowFiltering", DbType.Boolean, allowFiltering);
             db.AddInParameter(dbCommand, "ShowOnProductPage", DbType.Boolean, showOnProductPage);
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductSpecificationAttributeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductSpecificationAttributeID"));
-                productSpecificationAttribute = GetProductSpecificationAttributeByID(ProductSpecificationAttributeID);
+                int productSpecificationAttributeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductSpecificationAttributeID"));
+                item = GetProductSpecificationAttributeById(productSpecificationAttributeId);
             }
-            return productSpecificationAttribute;
+            return item;
         }
 
         /// <summary>
         /// Updates the product specification attribute mapping
         /// </summary>
-        /// <param name="productSpecificationAttributeID">product specification attribute mapping identifier</param>
-        /// <param name="productID">Product identifier</param>
-        /// <param name="specificationAttributeOptionID">Specification attribute option identifier</param>
+        /// <param name="productSpecificationAttributeId">product specification attribute mapping identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
         /// <param name="allowFiltering">Allow product filtering by this attribute</param>
         /// <param name="showOnProductPage">Show the attribute onn the product page</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Product specification attribute mapping</returns>
-        public override DBProductSpecificationAttribute UpdateProductSpecificationAttribute(int productSpecificationAttributeID,
-               int productID, int specificationAttributeOptionID, bool allowFiltering, bool showOnProductPage, int displayOrder)
+        public override DBProductSpecificationAttribute UpdateProductSpecificationAttribute(int productSpecificationAttributeId,
+               int productId, int specificationAttributeOptionId, bool allowFiltering, bool showOnProductPage, int displayOrder)
         {
-            DBProductSpecificationAttribute productSpecificationAttribute = null;
+            DBProductSpecificationAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_SpecificationAttribute_MappingUpdate");
-            db.AddInParameter(dbCommand, "ProductSpecificationAttributeID", DbType.Int32, productSpecificationAttributeID);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productID);
-            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionID);
+            db.AddInParameter(dbCommand, "ProductSpecificationAttributeID", DbType.Int32, productSpecificationAttributeId);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "SpecificationAttributeOptionID", DbType.Int32, specificationAttributeOptionId);
             db.AddInParameter(dbCommand, "AllowFiltering", DbType.Boolean, allowFiltering);
             db.AddInParameter(dbCommand, "ShowOnProductPage", DbType.Boolean, showOnProductPage);
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productSpecificationAttribute = GetProductSpecificationAttributeByID(productSpecificationAttributeID);
+                item = GetProductSpecificationAttributeById(productSpecificationAttributeId);
 
-            return productSpecificationAttribute;
+            return item;
         }
 
         #endregion
 
-        #region SpecificationAttributeOptionFilter
+        #region Specification attribute option filter
 
         /// <summary>
-        /// Gets a specification attribute option filter mapping collection by category id
+        /// Gets all specification attribute option filter mapping collection by category id
         /// </summary>
-        /// <param name="CategoryID">Product category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="categoryId">Product category identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option filter mapping collection</returns>
-        public override DBSpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilterByCategoryID(int CategoryID, int LanguageID)
+        public override DBSpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilterByCategoryId(int categoryId, int languageId)
         {
             var result = new DBSpecificationAttributeOptionFilterCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SpecificationAttributeOptionFilter_LoadByFilter");
-
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())

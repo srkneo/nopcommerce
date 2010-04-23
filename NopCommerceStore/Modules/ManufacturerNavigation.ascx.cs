@@ -61,16 +61,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var hlManufacturer = e.Item.FindControl("hlManufacturer") as HyperLink;
                 if (hlManufacturer != null)
                 {
-                    hlManufacturer.NavigateUrl = SEOHelper.GetManufacturerURL(manufacturer);
+                    hlManufacturer.NavigateUrl = SEOHelper.GetManufacturerUrl(manufacturer);
                 }
             }
         }
 
-        public int ManufacturerID
+        public int ManufacturerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ManufacturerID");
+                return CommonHelper.QueryStringInt("ManufacturerId");
             }
         }
     }

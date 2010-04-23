@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+            Category category = CategoryManager.GetCategoryById(this.CategoryId);
 
             if (category != null)
             {
@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnAddNew.OnClientClick = string.Format("javascript:OpenWindow('CategoryProductAdd.aspx?cid={0}&BtnID={1}', 800, 600, true); return false;", this.CategoryID, btnRefresh.ClientID);
+            btnAddNew.OnClientClick = string.Format("javascript:OpenWindow('CategoryProductAdd.aspx?cid={0}&BtnId={1}', 800, 600, true); return false;", this.CategoryId, btnRefresh.ClientID);
             
             if (!Page.IsPostBack)
             {
@@ -62,27 +62,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+            Category category = CategoryManager.GetCategoryById(this.CategoryId);
 
             if (category != null)
             {
                 foreach (GridViewRow row in gvProductCategoryMappings.Rows)
                 {
                     CheckBox cbProductInfo = row.FindControl("cbProductInfo") as CheckBox;
-                    HiddenField hfProductID = row.FindControl("hfProductID") as HiddenField;
-                    HiddenField hfProductCategoryID = row.FindControl("hfProductCategoryID") as HiddenField;
+                    HiddenField hfProductId = row.FindControl("hfProductId") as HiddenField;
+                    HiddenField hfProductCategoryId = row.FindControl("hfProductCategoryId") as HiddenField;
                     CheckBox cbFeatured = row.FindControl("cbFeatured") as CheckBox;
                     NumericTextBox txtRowDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
 
-                    int productID = int.Parse(hfProductID.Value);
-                    int productCategoryID = int.Parse(hfProductCategoryID.Value);
+                    int productId = int.Parse(hfProductId.Value);
+                    int productCategoryId = int.Parse(hfProductCategoryId.Value);
                     bool featured = cbFeatured.Checked;
                     int displayOrder = txtRowDisplayOrder.Value;
 
-                    if (productCategoryID > 0 && !cbProductInfo.Checked)
-                        CategoryManager.DeleteProductCategory(productCategoryID);
-                    if (productCategoryID > 0 && cbProductInfo.Checked)
-                        CategoryManager.UpdateProductCategory(productCategoryID, productID, category.CategoryID, featured, displayOrder);
+                    if (productCategoryId > 0 && !cbProductInfo.Checked)
+                        CategoryManager.DeleteProductCategory(productCategoryId);
+                    if (productCategoryId > 0 && cbProductInfo.Checked)
+                        CategoryManager.UpdateProductCategory(productCategoryId, productId, category.CategoryId, featured, displayOrder);
                 }
             }
         }
@@ -107,8 +107,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (product != null)
                 {
                     ProductCategoryMappingHelperClass pcmhc = new ProductCategoryMappingHelperClass();
-                    pcmhc.ProductCategoryID = pc.ProductCategoryID;
-                    pcmhc.ProductID = pc.ProductID;
+                    pcmhc.ProductCategoryId = pc.ProductCategoryId;
+                    pcmhc.ProductId = pc.ProductId;
                     pcmhc.ProductInfo = product.Name;
                     pcmhc.IsMapped = true;
                     pcmhc.IsFeatured = pc.IsFeaturedProduct;
@@ -123,19 +123,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         [Serializable]
         private class ProductCategoryMappingHelperClass
         {
-            public int ProductCategoryID { get; set; }
-            public int ProductID { get; set; }
+            public int ProductCategoryId { get; set; }
+            public int ProductId { get; set; }
             public string ProductInfo { get; set; }
             public bool IsMapped { get; set; }
             public bool IsFeatured { get; set; }
             public int DisplayOrder { get; set; }
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryID");
+                return CommonHelper.QueryStringInt("CategoryId");
             }
         }
     }

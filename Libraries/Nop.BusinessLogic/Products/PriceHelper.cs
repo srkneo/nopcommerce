@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 }
             }
 
-            var productCategories = CategoryManager.GetProductCategoriesByProductID(productVariant.ProductID);
+            var productCategories = CategoryManager.GetProductCategoriesByProductId(productVariant.ProductId);
             foreach (var _productCategory in productCategories)
             {
                 var category = _productCategory.Category;
@@ -97,7 +97,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productVariant">Product variant</param>
         /// <param name="customer">Customer</param>
         /// <returns>Preferred discount</returns>
-        protected static Discount GetPreferredDiscount(ProductVariant productVariant, Customer customer)
+        protected static Discount GetPreferredDiscount(ProductVariant productVariant, 
+            Customer customer)
         {
             return GetPreferredDiscount(productVariant, customer, decimal.Zero);
         }
@@ -107,12 +108,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productVariant">Product variant</param>
         /// <param name="customer">Customer</param>
-        /// <param name="AdditionalCharge">Additional charge</param>
+        /// <param name="additionalCharge">Additional charge</param>
         /// <returns>Preferred discount</returns>
-        protected static Discount GetPreferredDiscount(ProductVariant productVariant, Customer customer, decimal AdditionalCharge)
+        protected static Discount GetPreferredDiscount(ProductVariant productVariant, 
+            Customer customer, decimal additionalCharge)
         {
             var allowedDiscounts = GetAllowedDiscounts(productVariant, customer);
-            decimal finalPriceWithoutDiscount = GetFinalPrice(productVariant, customer, AdditionalCharge, false);
+            decimal finalPriceWithoutDiscount = GetFinalPrice(productVariant, customer, additionalCharge, false);
             var preferredDiscount = DiscountManager.GetPreferredDiscount(allowedDiscounts, finalPriceWithoutDiscount);
             return preferredDiscount;
         }
@@ -121,9 +123,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets a tier price
         /// </summary>
         /// <param name="productVariant">Product variant</param>
-        /// <param name="Quantity">Quantity</param>
+        /// <param name="quantity">Quantity</param>
         /// <returns>Price</returns>
-        protected static decimal GetTierPrice(ProductVariant productVariant, int Quantity)
+        protected static decimal GetTierPrice(ProductVariant productVariant, int quantity)
         {
             var tierPrices = productVariant.TierPrices;
 
@@ -131,7 +133,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             decimal previousPrice = productVariant.Price;            
             foreach (TierPrice tierPrice in tierPrices)
             {
-                if (Quantity < tierPrice.Quantity)
+                if (quantity < tierPrice.Quantity)
                     continue;
 
                 if (tierPrice.Quantity < previousQty)
@@ -164,7 +166,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             {
                 foreach (var cr in customerRoles)
                 {
-                    if (cr.CustomerRoleID == crpp.CustomerRoleID)
+                    if (cr.CustomerRoleId == crpp.CustomerRoleId)
                     {
                         if (result.HasValue)
                         {
@@ -220,11 +222,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productVariant">Product variant</param>
         /// <param name="customer">The customer</param>
-        /// <param name="AdditionalCharge">Additional charge</param>
+        /// <param name="additionalCharge">Additional charge</param>
         /// <param name="includeDiscounts">A value indicating whether include discounts or not for final price computation</param>
         /// <returns>Final price</returns>
         public static decimal GetFinalPrice(ProductVariant productVariant, Customer customer, 
-            decimal AdditionalCharge, bool includeDiscounts)
+            decimal additionalCharge, bool includeDiscounts)
         {
             decimal result = decimal.Zero;
 
@@ -239,12 +241,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             
             if (includeDiscounts)
             {
-                decimal discountAmount = GetDiscountAmount(productVariant, customer, AdditionalCharge);
-                result = initialPrice + AdditionalCharge - discountAmount;
+                decimal discountAmount = GetDiscountAmount(productVariant, customer, additionalCharge);
+                result = initialPrice + additionalCharge - discountAmount;
             }
             else
             {
-                result = initialPrice + AdditionalCharge;
+                result = initialPrice + additionalCharge;
             }
             if (result < decimal.Zero)
                 result = decimal.Zero;
@@ -304,7 +306,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             {
                 decimal attributesTotalPrice = decimal.Zero;
 
-                var pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(shoppingCartItem.AttributesXML);
+                var pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(shoppingCartItem.AttributesXml);
                 foreach (var pvaValue in pvaValues)
                 {
                     attributesTotalPrice += pvaValue.PriceAdjustment;
@@ -360,13 +362,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productVariant">Product variant</param>
         /// <param name="customer">The customer</param>
-        /// <param name="AdditionalCharge">Additional charge</param>
+        /// <param name="additionalCharge">Additional charge</param>
         /// <returns>Discount amount</returns>
         public static decimal GetDiscountAmount(ProductVariant productVariant, Customer customer, 
-            decimal AdditionalCharge)
+            decimal additionalCharge)
         {
             Discount appliedDiscount = null;
-            return GetDiscountAmount(productVariant, customer, AdditionalCharge, out appliedDiscount);
+            return GetDiscountAmount(productVariant, customer, additionalCharge, out appliedDiscount);
         }
 
         /// <summary>
@@ -374,11 +376,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productVariant">Product variant</param>
         /// <param name="customer">The customer</param>
-        /// <param name="AdditionalCharge">Additional charge</param>
+        /// <param name="additionalCharge">Additional charge</param>
         /// <param name="appliedDiscount">Applied discount</param>
         /// <returns>Discount amount</returns>
         public static decimal GetDiscountAmount(ProductVariant productVariant, Customer customer,
-            decimal AdditionalCharge, out Discount appliedDiscount)
+            decimal additionalCharge, out Discount appliedDiscount)
         {
             decimal appliedDiscountAmount = decimal.Zero;
 
@@ -389,10 +391,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return appliedDiscountAmount;
             }
 
-            appliedDiscount = GetPreferredDiscount(productVariant, customer, AdditionalCharge);
+            appliedDiscount = GetPreferredDiscount(productVariant, customer, additionalCharge);
             if (appliedDiscount != null)
             {
-                decimal finalPriceWithoutDiscount = GetFinalPrice(productVariant, customer, AdditionalCharge, false);
+                decimal finalPriceWithoutDiscount = GetFinalPrice(productVariant, customer, additionalCharge, false);
                 appliedDiscountAmount = appliedDiscount.GetDiscountAmount(finalPriceWithoutDiscount);
             }
 
@@ -441,7 +443,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             {
                 decimal attributesTotalPrice = decimal.Zero;
 
-                var pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(shoppingCartItem.AttributesXML);
+                var pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(shoppingCartItem.AttributesXml);
                 foreach (var pvaValue in pvaValues)
                 {
                     attributesTotalPrice += pvaValue.PriceAdjustment;
@@ -462,25 +464,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Formats the price
         /// </summary>
-        /// <param name="Price">Price</param>
+        /// <param name="price">Price</param>
         /// <returns>Price</returns>
-        public static string FormatPrice(decimal Price)
+        public static string FormatPrice(decimal price)
         {
             bool ShowCurrency = true;
             var TargetCurrency = NopContext.Current.WorkingCurrency;
-            return FormatPrice(Price, ShowCurrency, TargetCurrency);
+            return FormatPrice(price, ShowCurrency, TargetCurrency);
         }
 
         /// <summary>
         /// Formats the price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
         /// <returns>Price</returns>
-        public static string FormatPrice(decimal Price, bool ShowCurrency, Currency TargetCurrency)
+        public static string FormatPrice(decimal price, bool showCurrency, Currency targetCurrency)
         {
-            var Language = NopContext.Current.WorkingLanguage;
+            var language = NopContext.Current.WorkingLanguage;
             bool priceIncludesTax = false;
             switch (NopContext.Current.TaxDisplayType)
             {
@@ -491,20 +493,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     priceIncludesTax = true;
                     break;
             }
-            return FormatPrice(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax);
+            return FormatPrice(price, showCurrency, targetCurrency, language, priceIncludesTax);
         }
 
         /// <summary>
         /// Formats the price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="ShowTax">A value indicating whether to show tax suffix</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
         /// <returns>Price</returns>
-        public static string FormatPrice(decimal Price, bool ShowCurrency, bool ShowTax)
+        public static string FormatPrice(decimal price, bool showCurrency, bool showTax)
         {
-            var TargetCurrency = NopContext.Current.WorkingCurrency;
-            var Language = NopContext.Current.WorkingLanguage;
+            var targetCurrency = NopContext.Current.WorkingCurrency;
+            var language = NopContext.Current.WorkingLanguage;
             bool priceIncludesTax = false;
             switch (NopContext.Current.TaxDisplayType)
             {
@@ -515,27 +517,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     priceIncludesTax = true;
                     break;
             }
-            return FormatPrice(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax, ShowTax);
+            return FormatPrice(price, showCurrency, targetCurrency, language, priceIncludesTax, showTax);
         }
 
         /// <summary>
         /// Formats the price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="CurrencyCode">Currency code</param>
-        /// <param name="ShowTax">A value indicating whether to show tax suffix</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="currencyCode">Currency code</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
         /// <returns>Price</returns>
-        public static string FormatPrice(decimal Price, bool ShowCurrency, string CurrencyCode,
-            bool ShowTax)
+        public static string FormatPrice(decimal price, bool showCurrency, 
+            string currencyCode, bool showTax)
         {
-            var currency = CurrencyManager.GetCurrencyByCode(CurrencyCode);
+            var currency = CurrencyManager.GetCurrencyByCode(currencyCode);
             if (currency == null)
             {
                 currency = new Currency();
-                currency.CurrencyCode = CurrencyCode;
+                currency.CurrencyCode = currencyCode;
             }
-            var Language = NopContext.Current.WorkingLanguage;
+            var language = NopContext.Current.WorkingLanguage;
             bool priceIncludesTax = false;
             switch (NopContext.Current.TaxDisplayType)
             {
@@ -547,46 +549,48 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     break;
             }
 
-            return FormatPrice(Price, ShowCurrency, currency, Language, priceIncludesTax, ShowTax);
+            return FormatPrice(price, showCurrency, currency, 
+                language, priceIncludesTax, showTax);
         }
 
         /// <summary>
         /// Formats the price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
         /// <returns>Price</returns>
-        public static string FormatPrice(decimal Price, bool ShowCurrency, Currency TargetCurrency,
-            Language Language, bool priceIncludesTax)
+        public static string FormatPrice(decimal price, bool showCurrency, 
+            Currency targetCurrency, Language language, bool priceIncludesTax)
         {
-            bool ShowTax = TaxManager.DisplayTaxSuffix;
-            return FormatPrice(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax, ShowTax);
+            bool showTax = TaxManager.DisplayTaxSuffix;
+            return FormatPrice(price, showCurrency, targetCurrency, language, 
+                priceIncludesTax, showTax);
         }
 
         /// <summary>
         /// Formats the price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
-        /// <param name="ShowTax">A value indicating whether to show tax suffix</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
         /// <returns>Price</returns>
-        public static string FormatPrice(decimal Price, bool ShowCurrency, Currency TargetCurrency,
-            Language Language, bool priceIncludesTax, bool ShowTax)
+        public static string FormatPrice(decimal price, bool showCurrency, 
+            Currency targetCurrency, Language language, bool priceIncludesTax, bool showTax)
         {
-            string currencyString = LocalizationManager.GetCurrencyString(Price, ShowCurrency, TargetCurrency);
+            string currencyString = LocalizationManager.GetCurrencyString(price, showCurrency, targetCurrency);
 
-            if (ShowTax)
+            if (showTax)
             {
                 string formatStr = string.Empty;
                 if (priceIncludesTax)
                 {
-                    formatStr = LocalizationManager.GetLocaleResourceString("Products.InclTaxSuffix", Language.LanguageID, false);
+                    formatStr = LocalizationManager.GetLocaleResourceString("Products.InclTaxSuffix", language.LanguageId, false);
                     if (String.IsNullOrEmpty(formatStr))
                     {
                         formatStr = "{0} incl tax";
@@ -594,7 +598,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 }
                 else
                 {
-                    formatStr = LocalizationManager.GetLocaleResourceString("Products.ExclTaxSuffix", Language.LanguageID, false);
+                    formatStr = LocalizationManager.GetLocaleResourceString("Products.ExclTaxSuffix", language.LanguageId, false);
                     if (String.IsNullOrEmpty(formatStr))
                     {
                         formatStr = "{0} excl tax";
@@ -612,22 +616,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Formats the price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="CurrencyCode">Currency code</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="currencyCode">Currency code</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
         /// <returns>Price</returns>
-        public static string FormatPrice(decimal Price, bool ShowCurrency, string CurrencyCode, 
-            Language Language, bool priceIncludesTax)
+        public static string FormatPrice(decimal price, bool showCurrency, string currencyCode, 
+            Language language, bool priceIncludesTax)
         {
-            var currency = CurrencyManager.GetCurrencyByCode(CurrencyCode);
+            var currency = CurrencyManager.GetCurrencyByCode(currencyCode);
             if (currency == null)
             {
                 currency = new Currency();
-                currency.CurrencyCode = CurrencyCode;
+                currency.CurrencyCode = currencyCode;
             }
-            return FormatPrice(Price, ShowCurrency, currency, Language, priceIncludesTax);
+            return FormatPrice(price, showCurrency, currency, language, priceIncludesTax);
         }
 
 
@@ -635,13 +639,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Formats the shipping price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
         /// <returns>Price</returns>
-        public static string FormatShippingPrice(decimal Price, bool ShowCurrency)
+        public static string FormatShippingPrice(decimal price, bool showCurrency)
         {
-            var TargetCurrency = NopContext.Current.WorkingCurrency;
-            var Language = NopContext.Current.WorkingLanguage;
+            var targetCurrency = NopContext.Current.WorkingCurrency;
+            var language = NopContext.Current.WorkingLanguage;
             bool priceIncludesTax = false;
             switch (NopContext.Current.TaxDisplayType)
             {
@@ -652,72 +656,72 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     priceIncludesTax = true;
                     break;
             }
-            return FormatShippingPrice(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax);
+            return FormatShippingPrice(price, showCurrency, targetCurrency, language, priceIncludesTax);
         }
 
         /// <summary>
         /// Formats the shipping price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
         /// <returns>Price</returns>
-        public static string FormatShippingPrice(decimal Price, bool ShowCurrency, Currency TargetCurrency,
-            Language Language, bool priceIncludesTax)
+        public static string FormatShippingPrice(decimal price, bool showCurrency, 
+            Currency targetCurrency, Language language, bool priceIncludesTax)
         {
-            bool ShowTax = TaxManager.ShippingIsTaxable && TaxManager.DisplayTaxSuffix;
-            return FormatShippingPrice(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax, ShowTax);
+            bool showTax = TaxManager.ShippingIsTaxable && TaxManager.DisplayTaxSuffix;
+            return FormatShippingPrice(price, showCurrency, targetCurrency, language, priceIncludesTax, showTax);
         }
 
         /// <summary>
         /// Formats the shipping price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
-        /// <param name="ShowTax">A value indicating whether to show tax suffix</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
         /// <returns>Price</returns>
-        public static string FormatShippingPrice(decimal Price, bool ShowCurrency, Currency TargetCurrency,
-            Language Language, bool priceIncludesTax, bool ShowTax)
+        public static string FormatShippingPrice(decimal price, bool showCurrency, 
+            Currency targetCurrency, Language language, bool priceIncludesTax, bool showTax)
         {
-            return FormatPrice(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax, ShowTax);
+            return FormatPrice(price, showCurrency, targetCurrency, language, priceIncludesTax, showTax);
         }
         
         /// <summary>
         /// Formats the shipping price
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="CurrencyCode">Currency code</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="currencyCode">Currency code</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
         /// <returns>Price</returns>
-        public static string FormatShippingPrice(decimal Price, bool ShowCurrency, string CurrencyCode, 
-            Language Language, bool priceIncludesTax)
+        public static string FormatShippingPrice(decimal price, bool showCurrency, 
+            string currencyCode, Language language, bool priceIncludesTax)
         {
-            var currency = CurrencyManager.GetCurrencyByCode(CurrencyCode);
+            var currency = CurrencyManager.GetCurrencyByCode(currencyCode);
             if (currency == null)
             {
                 currency = new Currency();
-                currency.CurrencyCode = CurrencyCode;
+                currency.CurrencyCode = currencyCode;
             }
-            return FormatShippingPrice(Price, ShowCurrency, currency, Language, priceIncludesTax);
+            return FormatShippingPrice(price, showCurrency, currency, language, priceIncludesTax);
         }
 
         /// <summary>
         /// Formats the payment method additional fee
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
         /// <returns>Price</returns>
-        public static string FormatPaymentMethodAdditionalFee(decimal Price, bool ShowCurrency)
+        public static string FormatPaymentMethodAdditionalFee(decimal price, bool showCurrency)
         {
-            var TargetCurrency = NopContext.Current.WorkingCurrency;
-            var Language = NopContext.Current.WorkingLanguage;
+            var targetCurrency = NopContext.Current.WorkingCurrency;
+            var language = NopContext.Current.WorkingLanguage;
             bool priceIncludesTax = false;
             switch (NopContext.Current.TaxDisplayType)
             {
@@ -728,60 +732,63 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     priceIncludesTax = true;
                     break;
             }
-            return FormatPaymentMethodAdditionalFee(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax);
+            return FormatPaymentMethodAdditionalFee(price, showCurrency, targetCurrency, 
+                language, priceIncludesTax);
         }
 
         /// <summary>
         /// Formats the payment method additional fee
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
         /// <returns>Price</returns>
-        public static string FormatPaymentMethodAdditionalFee(decimal Price, bool ShowCurrency,
-            Currency TargetCurrency, Language Language, bool priceIncludesTax)
+        public static string FormatPaymentMethodAdditionalFee(decimal price, bool showCurrency,
+            Currency targetCurrency, Language language, bool priceIncludesTax)
         {
-            bool ShowTax = TaxManager.PaymentMethodAdditionalFeeIsTaxable && TaxManager.DisplayTaxSuffix;
-            return FormatPaymentMethodAdditionalFee(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax, ShowTax);
+            bool showTax = TaxManager.PaymentMethodAdditionalFeeIsTaxable && TaxManager.DisplayTaxSuffix;
+            return FormatPaymentMethodAdditionalFee(price, showCurrency, targetCurrency, language, priceIncludesTax, showTax);
         }
 
         /// <summary>
         /// Formats the payment method additional fee
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="TargetCurrency">Target currency</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="targetCurrency">Target currency</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
-        /// <param name="ShowTax">A value indicating whether to show tax suffix</param>
+        /// <param name="showTax">A value indicating whether to show tax suffix</param>
         /// <returns>Price</returns>
-        public static string FormatPaymentMethodAdditionalFee(decimal Price, bool ShowCurrency, 
-            Currency TargetCurrency, Language Language, bool priceIncludesTax, bool ShowTax)
+        public static string FormatPaymentMethodAdditionalFee(decimal price, bool showCurrency, 
+            Currency targetCurrency, Language language, bool priceIncludesTax, bool showTax)
         {
-            return FormatPrice(Price, ShowCurrency, TargetCurrency, Language, priceIncludesTax, ShowTax);
+            return FormatPrice(price, showCurrency, targetCurrency, language, 
+                priceIncludesTax, showTax);
         }
 
         /// <summary>
         /// Formats the payment method additional fee
         /// </summary>
-        /// <param name="Price">Price</param>
-        /// <param name="ShowCurrency">A value indicating whether to show a currency</param>
-        /// <param name="CurrencyCode">Currency code</param>
-        /// <param name="Language">Language</param>
+        /// <param name="price">Price</param>
+        /// <param name="showCurrency">A value indicating whether to show a currency</param>
+        /// <param name="currencyCode">Currency code</param>
+        /// <param name="language">Language</param>
         /// <param name="priceIncludesTax">A value indicating whether price includes tax</param>
         /// <returns>Price</returns>
-        public static string FormatPaymentMethodAdditionalFee(decimal Price, bool ShowCurrency, 
-            string CurrencyCode, Language Language, bool priceIncludesTax)
+        public static string FormatPaymentMethodAdditionalFee(decimal price, bool showCurrency, 
+            string currencyCode, Language language, bool priceIncludesTax)
         {
-            var currency = CurrencyManager.GetCurrencyByCode(CurrencyCode);
+            var currency = CurrencyManager.GetCurrencyByCode(currencyCode);
             if (currency == null)
             {
                 currency = new Currency();
-                currency.CurrencyCode = CurrencyCode;
+                currency.CurrencyCode = currencyCode;
             }
-            return FormatPaymentMethodAdditionalFee(Price, ShowCurrency, currency, Language, priceIncludesTax);
+            return FormatPaymentMethodAdditionalFee(price, showCurrency, currency, 
+                language, priceIncludesTax);
         }
 
         #endregion

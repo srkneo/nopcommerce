@@ -136,10 +136,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    int emailID = 0;
-                    if (int.TryParse(txtEmailID.Text.Trim(), out emailID))
+                    int emailId = 0;
+                    if (int.TryParse(txtEmailId.Text.Trim(), out emailId))
                     {
-                        string url = string.Format("{0}MessageQueueDetails.aspx?QueuedEmailID={1}", CommonHelper.GetStoreAdminLocation(), emailID);
+                        string url = string.Format("{0}MessageQueueDetails.aspx?QueuedEmailID={1}", CommonHelper.GetStoreAdminLocation(), emailId);
                         Response.Redirect(url);
                     }
                 }

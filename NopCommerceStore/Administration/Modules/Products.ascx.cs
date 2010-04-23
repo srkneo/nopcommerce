@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ManufacturerCollection manufacturers = ManufacturerManager.GetAllManufacturers();
             foreach (Manufacturer manufacturer in manufacturers)
             {
-                ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerID.ToString());
+                ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerId.ToString());
                 this.ddlManufacturer.Items.Add(item2);
             }
         }
@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
             return GetProducts(languageId);
         }
 
@@ -83,11 +83,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected ProductCollection GetProducts(int languageId)
         {
             string productName = txtProductName.Text;
-            int categoryID = ParentCategory.SelectedCategoryId;
-            int manufacturerID = int.Parse(this.ddlManufacturer.SelectedItem.Value);
+            int categoryId = ParentCategory.SelectedCategoryId;
+            int manufacturerId = int.Parse(this.ddlManufacturer.SelectedItem.Value);
 
             int totalRecords = 0;
-            ProductCollection products = ProductManager.GetAllProducts(categoryID, manufacturerID, null,
+            ProductCollection products = ProductManager.GetAllProducts(categoryId, manufacturerId, null,
                 null, null, productName, false, int.MaxValue, 0, null,languageId, out totalRecords);
             return products;
         }
@@ -133,9 +133,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string fileName = string.Format("products_{0}_{1}.pdf", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
 
-                    PDFHelper.PrintProductsToPDF(GetProducts(), filePath);
+                    PDFHelper.PrintProductsToPdf(GetProducts(), filePath);
 
-                    CommonHelper.WriteResponsePDF(filePath, fileName);
+                    CommonHelper.WriteResponsePdf(filePath, fileName);
                 }
                 catch(Exception ex)
                 {
@@ -153,8 +153,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string fileName = String.Format("products_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
                     
                     ProductCollection products = GetProducts(0);
-                    string xml = ExportManager.ExportProductsToXML(products);
-                    CommonHelper.WriteResponseXML(xml, fileName);
+                    string xml = ExportManager.ExportProductsToXml(products);
+                    CommonHelper.WriteResponseXml(xml, fileName);
                 }
                 catch (Exception exc)
                 {
@@ -173,8 +173,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
                     ProductCollection products = GetProducts(0);
 
-                    ExportManager.ExportProductsToXLS(filePath, products);
-                    CommonHelper.WriteResponseXLS(filePath, fileName);
+                    ExportManager.ExportProductsToXls(filePath, products);
+                    CommonHelper.WriteResponseXls(filePath, fileName);
                 }
                 catch (Exception exc)
                 {
@@ -198,7 +198,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
 
                     File.WriteAllBytes(filePath, fileBytes);
-                    ImportManager.ImportProductsFromXLS(filePath);
+                    ImportManager.ImportProductsFromXls(filePath);
 
                     BindGrid();
                 }

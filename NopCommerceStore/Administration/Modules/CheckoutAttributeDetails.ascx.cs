@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.AttributeTabs, this.TabID);
+                this.SelectTab(this.AttributeTabs, this.TabId);
             }
         }
 
@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         attribute.Name);
 
                     if (attribute != null)
-                        Response.Redirect(string.Format("CheckoutAttributeDetails.aspx?CheckoutAttributeID={0}&TabID={1}", attribute.CheckoutAttributeID, this.GetActiveTabID(this.AttributeTabs)));
+                        Response.Redirect(string.Format("CheckoutAttributeDetails.aspx?CheckoutAttributeID={0}&TabID={1}", attribute.CheckoutAttributeId, this.GetActiveTabId(this.AttributeTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -69,10 +69,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                var attribute = CheckoutAttributeManager.GetCheckoutAttributeByID(this.CheckoutAttributeID);
+                var attribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId);
                 if (attribute != null)
                 {
-                    CheckoutAttributeManager.DeleteCheckoutAttribute(this.CheckoutAttributeID);
+                    CheckoutAttributeManager.DeleteCheckoutAttribute(this.CheckoutAttributeId);
 
                     CustomerActivityManager.InsertActivity(
                         "DeleteCheckoutAttribute",
@@ -88,19 +88,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CheckoutAttributeID
+        public int CheckoutAttributeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CheckoutAttributeID");
+                return CommonHelper.QueryStringInt("CheckoutAttributeId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

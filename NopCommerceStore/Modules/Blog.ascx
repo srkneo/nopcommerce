@@ -21,7 +21,7 @@
         <asp:Repeater ID="rptrBlogPosts" runat="server" OnItemDataBound="rptrBlogPosts_ItemDataBound">
             <ItemTemplate>
                 <div class="post">
-                    <a class="blogtitle" href="<%#SEOHelper.GetBlogPostURL(Convert.ToInt32(Eval("BlogPostID")))%>">
+                    <a class="blogtitle" href="<%#SEOHelper.GetBlogPostUrl(Convert.ToInt32(Eval("BlogPostId")))%>">
                         <%#Server.HtmlEncode(Eval("BlogPostTitle").ToString())%></a><span class="blogdate">
                             -
                             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString("d")%>
@@ -29,7 +29,7 @@
                     <div class="blogbody">
                         <%#Eval("BlogPostBody")%>
                     </div>
-                    <a href="<%#SEOHelper.GetBlogPostURL(Convert.ToInt32(Eval("BlogPostID")))%>" class="blogdetails">
+                    <a href="<%#SEOHelper.GetBlogPostUrl(Convert.ToInt32(Eval("BlogPostId")))%>" class="blogdetails">
                         <asp:Literal ID="lComments" runat="server"></asp:Literal>
                     </a>
                 </div>

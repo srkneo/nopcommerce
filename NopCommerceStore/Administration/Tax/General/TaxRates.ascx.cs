@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
             TaxCategoryCollection taxCategories = TaxCategoryManager.GetAllTaxCategories();
             foreach (TaxCategory taxCategory in taxCategories)
             {
-                ListItem ddlTaxCategoryItem2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryID.ToString());
+                ListItem ddlTaxCategoryItem2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryId.ToString());
                 this.ddlTaxCategory.Items.Add(ddlTaxCategoryItem2);
             }
         }
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
             CountryCollection countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -59,14 +59,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
         protected void FillStateProvinceDropDowns()
         {
             this.ddlStateProvince.Items.Clear();
-            int countryID = int.Parse(this.ddlCountry.SelectedItem.Value);
+            int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             ListItem ddlStateProvinceItem = new ListItem("*", "0");
             this.ddlStateProvince.Items.Add(ddlStateProvinceItem);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
-                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceID.ToString());
+                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
                 this.ddlStateProvince.Items.Add(ddlStateProviceItem2);
             }
         }
@@ -95,23 +95,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
 
         protected void gvTaxRates_RowEditing(object source, GridViewEditEventArgs e)
         {
-            HiddenField hfTaxRateID = gvTaxRates.Rows[e.NewEditIndex].Cells[0].FindControl("hfTaxRateID") as HiddenField;
-            int taxRateID = int.Parse(hfTaxRateID.Value);            
-            LoadEditor(taxRateID);
+            HiddenField hfTaxRateId = gvTaxRates.Rows[e.NewEditIndex].Cells[0].FindControl("hfTaxRateId") as HiddenField;
+            int taxRateId = int.Parse(hfTaxRateId.Value);            
+            LoadEditor(taxRateId);
             ToggleGrid(false);
         }
         
         protected void gvTaxRates_RowDeleting(object source, GridViewDeleteEventArgs e)
         {
-            HiddenField hfTaxRateID = gvTaxRates.Rows[e.RowIndex].Cells[0].FindControl("hfTaxRateID") as HiddenField;
-            int taxRateID = int.Parse(hfTaxRateID.Value);
-            TaxRateManager.DeleteTaxRate(taxRateID);
+            HiddenField hfTaxRateId = gvTaxRates.Rows[e.RowIndex].Cells[0].FindControl("hfTaxRateId") as HiddenField;
+            int taxRateId = int.Parse(hfTaxRateId.Value);
+            TaxRateManager.DeleteTaxRate(taxRateId);
             BindGrid();
         }
         
-        protected string GetStateProvinceInfo(int StateProvinceID)
+        protected string GetStateProvinceInfo(int stateProvinceId)
         {
-            StateProvince stateProvince = StateProvinceManager.GetStateProvinceByID(StateProvinceID);
+            StateProvince stateProvince = StateProvinceManager.GetStateProvinceById(stateProvinceId);
             if (stateProvince != null)
                 return stateProvince.Name;
             else
@@ -132,28 +132,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
             pnlEdit.Visible = !show;
         }
 
-        protected void LoadEditor(int TaxRateID)
+        protected void LoadEditor(int taxRateId)
         {
             ToggleGrid(false);
-
-
-            TaxRate taxRate = TaxRateManager.GetTaxRateByID(TaxRateID);
+            
+            TaxRate taxRate = TaxRateManager.GetTaxRateById(taxRateId);
             if (taxRate != null)
             {
-                lblTaxRateID.Text = taxRate.TaxRateID.ToString();
+                lblTaxRateId.Text = taxRate.TaxRateId.ToString();
 
                 FillTaxCategoryDropDown();
-                CommonHelper.SelectListItem(this.ddlTaxCategory, taxRate.TaxCategoryID);
+                CommonHelper.SelectListItem(this.ddlTaxCategory, taxRate.TaxCategoryId);
                 FillCountryDropDowns();
-                CommonHelper.SelectListItem(this.ddlCountry, taxRate.CountryID);
+                CommonHelper.SelectListItem(this.ddlCountry, taxRate.CountryId);
                 FillStateProvinceDropDowns();
-                CommonHelper.SelectListItem(this.ddlStateProvince, taxRate.StateProvinceID);
+                CommonHelper.SelectListItem(this.ddlStateProvince, taxRate.StateProvinceId);
                 this.txtZip.Text = taxRate.Zip;
                 this.txtPercentage.Value = taxRate.Percentage;
             }
             else
             {
-                lblTaxRateID.Text = "0";
+                lblTaxRateId.Text = "0";
 
                 FillTaxCategoryDropDown();
                 FillCountryDropDowns();
@@ -183,25 +182,25 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
             {
                 try
                 {
-                    int taxRateID = 0;
-                    int.TryParse(lblTaxRateID.Text, out taxRateID);
-                    int TaxCategoryID = int.Parse(this.ddlTaxCategory.SelectedItem.Value);
-                    int CountryID = int.Parse(this.ddlCountry.SelectedItem.Value);
-                    int StateProvinceID = int.Parse(this.ddlStateProvince.SelectedItem.Value);
-                    string ZipPostalCode = txtZip.Text;
-                    decimal Percentage = txtPercentage.Value;
+                    int taxRateId = 0;
+                    int.TryParse(lblTaxRateId.Text, out taxRateId);
+                    int taxCategoryId = int.Parse(this.ddlTaxCategory.SelectedItem.Value);
+                    int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
+                    int stateProvinceId = int.Parse(this.ddlStateProvince.SelectedItem.Value);
+                    string zipPostalCode = txtZip.Text;
+                    decimal percentage = txtPercentage.Value;
 
-                    TaxRate taxRate = TaxRateManager.GetTaxRateByID(taxRateID);
+                    TaxRate taxRate = TaxRateManager.GetTaxRateById(taxRateId);
 
                     if (taxRate != null)
                     {
-                        taxRate = TaxRateManager.UpdateTaxRate(taxRate.TaxRateID, TaxCategoryID,
-                            CountryID, StateProvinceID, ZipPostalCode, Percentage);
+                        taxRate = TaxRateManager.UpdateTaxRate(taxRate.TaxRateId, taxCategoryId,
+                            countryId, stateProvinceId, zipPostalCode, percentage);
                     }
                     else
                     {
-                        taxRate = TaxRateManager.InsertTaxRate(TaxCategoryID,
-                            CountryID, StateProvinceID, ZipPostalCode, Percentage);
+                        taxRate = TaxRateManager.InsertTaxRate(taxCategoryId,
+                            countryId, stateProvinceId, zipPostalCode, percentage);
                     }
 
                     BindGrid();

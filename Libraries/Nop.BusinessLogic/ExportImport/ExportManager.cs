@@ -47,24 +47,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
     {
         #region Utilities
 
-        private static void WriteCategories(XmlWriter xmlWriter, int ParentCategoryID)
+        private static void WriteCategories(XmlWriter xmlWriter, int parentCategoryId)
         {
-            var categories = CategoryManager.GetAllCategories(ParentCategoryID);
+            var categories = CategoryManager.GetAllCategories(parentCategoryId);
             if (categories.Count > 0)
             {
                 foreach (var category in categories)
                 {
                     xmlWriter.WriteStartElement("Category");
-                    xmlWriter.WriteElementString("CategoryID", null, category.CategoryID.ToString());
+                    xmlWriter.WriteElementString("CategoryId", null, category.CategoryId.ToString());
                     xmlWriter.WriteElementString("Name", null, category.Name);
                     xmlWriter.WriteElementString("Description", null, category.Description);
-                    xmlWriter.WriteElementString("TemplateID", null, category.TemplateID.ToString());
+                    xmlWriter.WriteElementString("TemplateId", null, category.TemplateId.ToString());
                     xmlWriter.WriteElementString("MetaKeywords", null, category.MetaKeywords);
                     xmlWriter.WriteElementString("MetaDescription", null, category.MetaDescription);
                     xmlWriter.WriteElementString("MetaTitle", null, category.MetaTitle);
                     xmlWriter.WriteElementString("SEName", null, category.SEName);
-                    xmlWriter.WriteElementString("ParentCategoryID", null, category.ParentCategoryID.ToString());
-                    xmlWriter.WriteElementString("PictureID", null, category.PictureID.ToString());
+                    xmlWriter.WriteElementString("ParentCategoryId", null, category.ParentCategoryId.ToString());
+                    xmlWriter.WriteElementString("PictureId", null, category.PictureId.ToString());
                     xmlWriter.WriteElementString("PageSize", null, category.PageSize.ToString());
                     xmlWriter.WriteElementString("PriceRanges", null, category.PriceRanges);
                     xmlWriter.WriteElementString("Published", null, category.Published.ToString());
@@ -81,8 +81,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         if (product != null && !product.Deleted)
                         {
                             xmlWriter.WriteStartElement("ProductCategory");
-                            xmlWriter.WriteElementString("ProductCategoryID", null, productCategory.ProductCategoryID.ToString());
-                            xmlWriter.WriteElementString("ProductID", null, productCategory.ProductID.ToString());
+                            xmlWriter.WriteElementString("ProductCategoryId", null, productCategory.ProductCategoryId.ToString());
+                            xmlWriter.WriteElementString("ProductId", null, productCategory.ProductId.ToString());
                             xmlWriter.WriteElementString("IsFeaturedProduct", null, productCategory.IsFeaturedProduct.ToString());
                             xmlWriter.WriteElementString("DisplayOrder", null, productCategory.DisplayOrder.ToString());
                             xmlWriter.WriteEndElement();
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     xmlWriter.WriteEndElement();
 
                     xmlWriter.WriteStartElement("SubCategories");
-                    WriteCategories(xmlWriter, category.CategoryID);
+                    WriteCategories(xmlWriter, category.CategoryId);
                     xmlWriter.WriteEndElement();
                     xmlWriter.WriteEndElement();
                 }
@@ -104,11 +104,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <summary>
         /// Export all string resources and message templates as XML
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>XML content</returns>
-        public static string ExportResources(int LanguageID)
+        public static string ExportResources(int languageId)
         {
-            return LocalizationManager.LanguagePackExport(LanguageID);
+            return LocalizationManager.LanguagePackExport(languageId);
 
         }
 
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         /// <param name="customers">Customers</param>
         /// <returns>Result in XML format</returns>
-        public static string ExportCustomersToXML(CustomerCollection customers)
+        public static string ExportCustomersToXml(CustomerCollection customers)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -129,16 +129,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
             foreach (var customer in customers)
             {
                 xmlWriter.WriteStartElement("Customer");
-                xmlWriter.WriteElementString("CustomerID", null, customer.CustomerID.ToString());
-                xmlWriter.WriteElementString("CustomerGUID", null, customer.CustomerGUID.ToString());
+                xmlWriter.WriteElementString("CustomerId", null, customer.CustomerId.ToString());
+                xmlWriter.WriteElementString("CustomerGuid", null, customer.CustomerGuid.ToString());
                 xmlWriter.WriteElementString("Email", null, customer.Email);
                 xmlWriter.WriteElementString("Username", null, customer.Username);
                 xmlWriter.WriteElementString("PasswordHash", null, customer.PasswordHash);
                 xmlWriter.WriteElementString("SaltKey", null, customer.SaltKey);
-                xmlWriter.WriteElementString("AffiliateID", null, customer.AffiliateID.ToString());
-                xmlWriter.WriteElementString("LanguageID", null, customer.LanguageID.ToString());
-                xmlWriter.WriteElementString("CurrencyID", null, customer.CurrencyID.ToString());
-                xmlWriter.WriteElementString("TaxDisplayTypeID", null, customer.TaxDisplayTypeID.ToString());
+                xmlWriter.WriteElementString("AffiliateId", null, customer.AffiliateId.ToString());
+                xmlWriter.WriteElementString("LanguageId", null, customer.LanguageId.ToString());
+                xmlWriter.WriteElementString("CurrencyId", null, customer.CurrencyId.ToString());
+                xmlWriter.WriteElementString("TaxDisplayTypeId", null, customer.TaxDisplayTypeId.ToString());
                 xmlWriter.WriteElementString("IsTaxExempt", null, customer.IsTaxExempt.ToString());
                 xmlWriter.WriteElementString("IsAdmin", null, customer.IsAdmin.ToString());
                 xmlWriter.WriteElementString("IsGuest", null, customer.IsGuest.ToString());
@@ -147,8 +147,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteElementString("Active", null, customer.Active.ToString());
                 xmlWriter.WriteElementString("Deleted", null, customer.Deleted.ToString());
                 xmlWriter.WriteElementString("RegistrationDate", null, customer.RegistrationDate.ToString());
-                xmlWriter.WriteElementString("TimeZoneID", null, customer.TimeZoneID);
-                xmlWriter.WriteElementString("AvatarID", null, customer.AvatarID.ToString());
+                xmlWriter.WriteElementString("TimeZoneId", null, customer.TimeZoneId);
+                xmlWriter.WriteElementString("AvatarId", null, customer.AvatarId.ToString());
 
 
                 xmlWriter.WriteElementString("Gender", null, customer.Gender);
@@ -164,12 +164,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteElementString("PhoneNumber", null, customer.PhoneNumber);
                 xmlWriter.WriteElementString("FaxNumber", null, customer.FaxNumber);
 
-                xmlWriter.WriteElementString("CountryID", null, customer.CountryID.ToString());
-                var country = CountryManager.GetCountryByID(customer.CountryID);
+                xmlWriter.WriteElementString("CountryId", null, customer.CountryId.ToString());
+                var country = CountryManager.GetCountryById(customer.CountryId);
                 xmlWriter.WriteElementString("Country", null, (country == null) ? string.Empty : country.Name);
 
-                xmlWriter.WriteElementString("StateProvinceID", null, customer.StateProvinceID.ToString());
-                var stateProvince = StateProvinceManager.GetStateProvinceByID(customer.StateProvinceID);
+                xmlWriter.WriteElementString("StateProvinceId", null, customer.StateProvinceId.ToString());
+                var stateProvince = StateProvinceManager.GetStateProvinceById(customer.StateProvinceId);
                 xmlWriter.WriteElementString("StateProvince", null, (stateProvince == null) ? string.Empty : stateProvince.Name);
                 xmlWriter.WriteElementString("ReceiveNewsletter", null, customer.ReceiveNewsletter.ToString());
 
@@ -180,7 +180,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     foreach (var address in billingAddresses)
                     {
                         xmlWriter.WriteStartElement("Address");
-                        xmlWriter.WriteElementString("AddressID", null, address.AddressID.ToString());
+                        xmlWriter.WriteElementString("AddressId", null, address.AddressId.ToString());
                         xmlWriter.WriteElementString("FirstName", null, address.FirstName);
                         xmlWriter.WriteElementString("LastName", null, address.LastName);
                         xmlWriter.WriteElementString("PhoneNumber", null, address.PhoneNumber);
@@ -190,10 +190,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         xmlWriter.WriteElementString("Address1", null, address.Address1);
                         xmlWriter.WriteElementString("Address2", null, address.Address2);
                         xmlWriter.WriteElementString("City", null, address.City);
-                        xmlWriter.WriteElementString("StateProvinceID", null, address.StateProvinceID.ToString());
+                        xmlWriter.WriteElementString("StateProvinceId", null, address.StateProvinceId.ToString());
                         xmlWriter.WriteElementString("StateProvince", null, (address.StateProvince == null) ? string.Empty : address.StateProvince.Name);
                         xmlWriter.WriteElementString("ZipPostalCode", null, address.ZipPostalCode);
-                        xmlWriter.WriteElementString("CountryID", null, address.CountryID.ToString());
+                        xmlWriter.WriteElementString("CountryId", null, address.CountryId.ToString());
                         xmlWriter.WriteElementString("Country", null, (address.Country == null) ? string.Empty : address.Country.Name);
                         xmlWriter.WriteElementString("CreatedOn", null, address.CreatedOn.ToString());
                         xmlWriter.WriteElementString("UpdatedOn", null, address.UpdatedOn.ToString());
@@ -209,7 +209,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     foreach (var address in shippingAddresses)
                     {
                         xmlWriter.WriteStartElement("Address");
-                        xmlWriter.WriteElementString("AddressID", null, address.AddressID.ToString());
+                        xmlWriter.WriteElementString("AddressId", null, address.AddressId.ToString());
                         xmlWriter.WriteElementString("FirstName", null, address.FirstName);
                         xmlWriter.WriteElementString("LastName", null, address.LastName);
                         xmlWriter.WriteElementString("PhoneNumber", null, address.PhoneNumber);
@@ -219,10 +219,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         xmlWriter.WriteElementString("Address1", null, address.Address1);
                         xmlWriter.WriteElementString("Address2", null, address.Address2);
                         xmlWriter.WriteElementString("City", null, address.City);
-                        xmlWriter.WriteElementString("StateProvinceID", null, address.StateProvinceID.ToString());
+                        xmlWriter.WriteElementString("StateProvinceId", null, address.StateProvinceId.ToString());
                         xmlWriter.WriteElementString("StateProvince", null, (address.StateProvince == null) ? string.Empty : address.StateProvince.Name);
                         xmlWriter.WriteElementString("ZipPostalCode", null, address.ZipPostalCode);
-                        xmlWriter.WriteElementString("CountryID", null, address.CountryID.ToString());
+                        xmlWriter.WriteElementString("CountryId", null, address.CountryId.ToString());
                         xmlWriter.WriteElementString("Country", null, (address.Country == null) ? string.Empty : address.Country.Name);
                         xmlWriter.WriteElementString("CreatedOn", null, address.CreatedOn.ToString());
                         xmlWriter.WriteEndElement();
@@ -241,25 +241,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <summary>
         /// Export customer list to XLS
         /// </summary>
-        /// <param name="FilePath">File path to use</param>
+        /// <param name="filePath">File path to use</param>
         /// <param name="customers">Customers</param>
-        public static void ExportCustomersToXLS(string FilePath, CustomerCollection customers)
+        public static void ExportCustomersToXls(string filePath, CustomerCollection customers)
         {
-            using (ExcelHelper excelHelper = new ExcelHelper(FilePath))
+            using (ExcelHelper excelHelper = new ExcelHelper(filePath))
             {
-                excelHelper.HDR = "YES";
-                excelHelper.IMEX = "0";
+                excelHelper.Hdr = "YES";
+                excelHelper.Imex = "0";
                 Dictionary<string, string> tableDefinition = new Dictionary<string,string>();
-                tableDefinition.Add("CustomerID", "int");
-                tableDefinition.Add("CustomerGUID", "uniqueidentifier");
+                tableDefinition.Add("CustomerId", "int");
+                tableDefinition.Add("CustomerGuid", "uniqueidentifier");
                 tableDefinition.Add("Email", "nvarchar(255)");
                 tableDefinition.Add("Username", "nvarchar(255)");
                 tableDefinition.Add("PasswordHash", "nvarchar(255)");
                 tableDefinition.Add("SaltKey", "nvarchar(255)");
-                tableDefinition.Add("AffiliateID", "int");
-                tableDefinition.Add("LanguageID", "int");
-                tableDefinition.Add("CurrencyID", "int");
-                tableDefinition.Add("TaxDisplayTypeID", "int");
+                tableDefinition.Add("AffiliateId", "int");
+                tableDefinition.Add("LanguageId", "int");
+                tableDefinition.Add("CurrencyId", "int");
+                tableDefinition.Add("TaxDisplayTypeId", "int");
                 tableDefinition.Add("IsTaxExempt", "nvarchar(5)");
                 tableDefinition.Add("IsAdmin", "nvarchar(5)");
                 tableDefinition.Add("IsGuest", "nvarchar(5)");
@@ -270,8 +270,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("Active", "nvarchar(5)");
                 tableDefinition.Add("Deleted", "nvarchar(5)");
                 tableDefinition.Add("RegistrationDate", "decimal");
-                tableDefinition.Add("TimeZoneID", "nvarchar(200)");
-                tableDefinition.Add("AvatarID", "int");
+                tableDefinition.Add("TimeZoneId", "nvarchar(200)");
+                tableDefinition.Add("AvatarId", "int");
                 tableDefinition.Add("Gender", "nvarchar(100)");
                 tableDefinition.Add("FirstName", "nvarchar(100)");
                 tableDefinition.Add("LastName", "nvarchar(100)");
@@ -282,8 +282,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("City", "nvarchar(100)");
                 tableDefinition.Add("PhoneNumber", "nvarchar(100)");
                 tableDefinition.Add("FaxNumber", "nvarchar(100)");
-                tableDefinition.Add("CountryID", "int");
-                tableDefinition.Add("StateProvinceID", "int");
+                tableDefinition.Add("CountryId", "int");
+                tableDefinition.Add("StateProvinceId", "int");
                 tableDefinition.Add("ReceiveNewsletter", "nvarchar(5)");
                 excelHelper.WriteTable("Customers", tableDefinition);
 
@@ -292,17 +292,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 foreach (var customer in customers)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO [Customers] (CustomerID, CustomerGUID, Email, Username, PasswordHash, SaltKey, AffiliateID, LanguageID, CurrencyID, TaxDisplayTypeID, IsTaxExempt, IsAdmin, IsGuest, IsForumModerator, TotalForumPosts, Signature, AdminComment, Active, Deleted, RegistrationDate, TimeZoneID, AvatarID, Gender, FirstName, LastName, Company, StreetAddress, StreetAddress2, ZipPostalCode, City, PhoneNumber, FaxNumber, CountryID, StateProvinceID, ReceiveNewsletter) VALUES (");
-                    sb.Append(customer.CustomerID); sb.Append(",");
-                    sb.Append('"'); sb.Append(customer.CustomerGUID); sb.Append("\",");
+                    sb.Append("INSERT INTO [Customers] (CustomerId, CustomerGuid, Email, Username, PasswordHash, SaltKey, AffiliateId, LanguageId, CurrencyId, TaxDisplayTypeId, IsTaxExempt, IsAdmin, IsGuest, IsForumModerator, TotalForumPosts, Signature, AdminComment, Active, Deleted, RegistrationDate, TimeZoneId, AvatarId, Gender, FirstName, LastName, Company, StreetAddress, StreetAddress2, ZipPostalCode, City, PhoneNumber, FaxNumber, CountryId, StateProvinceId, ReceiveNewsletter) VALUES (");
+                    sb.Append(customer.CustomerId); sb.Append(",");
+                    sb.Append('"'); sb.Append(customer.CustomerGuid); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.Email.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.Username); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.PasswordHash.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.SaltKey.Replace('"', '\'')); sb.Append("\",");
-                    sb.Append(customer.AffiliateID); sb.Append(",");
-                    sb.Append(customer.LanguageID); sb.Append(",");
-                    sb.Append(customer.CurrencyID); sb.Append(",");
-                    sb.Append(customer.TaxDisplayTypeID); sb.Append(',');
+                    sb.Append(customer.AffiliateId); sb.Append(",");
+                    sb.Append(customer.LanguageId); sb.Append(",");
+                    sb.Append(customer.CurrencyId); sb.Append(",");
+                    sb.Append(customer.TaxDisplayTypeId); sb.Append(',');
                     sb.Append('"'); sb.Append(customer.IsTaxExempt); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.IsAdmin); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.IsGuest); sb.Append("\",");
@@ -313,8 +313,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     sb.Append('"'); sb.Append(customer.Active); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.Deleted); sb.Append("\",");
                     sb.Append(decimalQuoter); sb.Append(customer.RegistrationDate.ToOADate()); sb.Append(decimalQuoter); sb.Append(",");
-                    sb.Append('"'); sb.Append(customer.TimeZoneID); sb.Append("\",");
-                    sb.Append(customer.AvatarID); sb.Append(',');
+                    sb.Append('"'); sb.Append(customer.TimeZoneId); sb.Append("\",");
+                    sb.Append(customer.AvatarId); sb.Append(',');
 
                     //custom properties
                     sb.Append('"'); sb.Append(customer.Gender); sb.Append("\",");
@@ -327,8 +327,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     sb.Append('"'); sb.Append(customer.City); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.PhoneNumber); sb.Append("\",");
                     sb.Append('"'); sb.Append(customer.FaxNumber); sb.Append("\",");
-                    sb.Append(customer.CountryID); sb.Append(',');
-                    sb.Append(customer.StateProvinceID); sb.Append(',');
+                    sb.Append(customer.CountryId); sb.Append(',');
+                    sb.Append(customer.StateProvinceId); sb.Append(',');
                     sb.Append('"'); sb.Append(customer.ReceiveNewsletter); sb.Append("\"");
                     sb.Append(")");
 
@@ -341,7 +341,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// Export manufacturer list to xml
         /// </summary>
         /// <returns>Result in XML format</returns>
-        public static string ExportManufacturersToXML(ManufacturerCollection manufacturers)
+        public static string ExportManufacturersToXml(ManufacturerCollection manufacturers)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -353,15 +353,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
             foreach (var manufacturer in manufacturers)
             {
                 xmlWriter.WriteStartElement("Manufacturer");
-                xmlWriter.WriteElementString("ManufacturerID", null, manufacturer.ManufacturerID.ToString());
+                xmlWriter.WriteElementString("ManufacturerId", null, manufacturer.ManufacturerId.ToString());
                 xmlWriter.WriteElementString("Name", null, manufacturer.Name);
                 xmlWriter.WriteElementString("Description", null, manufacturer.Description);
-                xmlWriter.WriteElementString("TemplateID", null, manufacturer.TemplateID.ToString());
+                xmlWriter.WriteElementString("TemplateId", null, manufacturer.TemplateId.ToString());
                 xmlWriter.WriteElementString("MetaKeywords", null, manufacturer.MetaKeywords);
                 xmlWriter.WriteElementString("MetaDescription", null, manufacturer.MetaDescription);
                 xmlWriter.WriteElementString("MetaTitle", null, manufacturer.MetaTitle);
                 xmlWriter.WriteElementString("SEName", null, manufacturer.SEName);
-                xmlWriter.WriteElementString("PictureID", null, manufacturer.PictureID.ToString());
+                xmlWriter.WriteElementString("PictureId", null, manufacturer.PictureId.ToString());
                 xmlWriter.WriteElementString("PageSize", null, manufacturer.PageSize.ToString());
                 xmlWriter.WriteElementString("PriceRanges", null, manufacturer.PriceRanges);
                 xmlWriter.WriteElementString("Published", null, manufacturer.Published.ToString());
@@ -378,8 +378,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     if (product != null && !product.Deleted)
                     {
                         xmlWriter.WriteStartElement("ProductManufacturer");
-                        xmlWriter.WriteElementString("ProductManufacturerID", null, productManufacturer.ProductManufacturerID.ToString());
-                        xmlWriter.WriteElementString("ProductID", null, productManufacturer.ProductID.ToString());
+                        xmlWriter.WriteElementString("ProductManufacturerId", null, productManufacturer.ProductManufacturerId.ToString());
+                        xmlWriter.WriteElementString("ProductId", null, productManufacturer.ProductId.ToString());
                         xmlWriter.WriteElementString("IsFeaturedProduct", null, productManufacturer.IsFeaturedProduct.ToString());
                         xmlWriter.WriteElementString("DisplayOrder", null, productManufacturer.DisplayOrder.ToString());
                         xmlWriter.WriteEndElement();
@@ -400,7 +400,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// Export category list to xml
         /// </summary>
         /// <returns>Result in XML format</returns>
-        public static string ExportCategoriesToXML()
+        public static string ExportCategoriesToXml()
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -420,7 +420,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         /// <param name="products">Products</param>
         /// <returns>Result in XML format</returns>
-        public static string ExportProductsToXML(ProductCollection products)
+        public static string ExportProductsToXml(ProductCollection products)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -432,13 +432,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
             foreach (var product in products)
             {
                 xmlWriter.WriteStartElement("Product");
-                xmlWriter.WriteElementString("ProductID", null, product.ProductID.ToString());
+                xmlWriter.WriteElementString("ProductId", null, product.ProductId.ToString());
                 xmlWriter.WriteElementString("Name", null, product.Name);
                 xmlWriter.WriteElementString("ShortDescription", null, product.ShortDescription);
                 xmlWriter.WriteElementString("FullDescription", null, product.FullDescription);
                 xmlWriter.WriteElementString("AdminComment", null, product.AdminComment);
-                xmlWriter.WriteElementString("ProductTypeID", null, product.ProductTypeID.ToString());
-                xmlWriter.WriteElementString("TemplateID", null, product.TemplateID.ToString());
+                xmlWriter.WriteElementString("ProductTypeId", null, product.ProductTypeId.ToString());
+                xmlWriter.WriteElementString("TemplateId", null, product.TemplateId.ToString());
                 xmlWriter.WriteElementString("ShowOnHomePage", null, product.ShowOnHomePage.ToString());
                 xmlWriter.WriteElementString("MetaKeywords", null, product.MetaKeywords);
                 xmlWriter.WriteElementString("MetaDescription", null, product.MetaDescription);
@@ -454,12 +454,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteElementString("UpdatedOn", null, product.UpdatedOn.ToString());
 
                 xmlWriter.WriteStartElement("ProductVariants");
-                var productVariants = ProductManager.GetProductVariantsByProductID(product.ProductID, 0, true);
+                var productVariants = ProductManager.GetProductVariantsByProductId(product.ProductId, 0, true);
                 foreach (var productVariant in productVariants)
                 {
                     xmlWriter.WriteStartElement("ProductVariant");
-                    xmlWriter.WriteElementString("ProductVariantID", null, productVariant.ProductVariantID.ToString());
-                    xmlWriter.WriteElementString("ProductID", null, productVariant.ProductID.ToString());
+                    xmlWriter.WriteElementString("ProductVariantId", null, productVariant.ProductVariantId.ToString());
+                    xmlWriter.WriteElementString("ProductId", null, productVariant.ProductId.ToString());
                     xmlWriter.WriteElementString("Name", null, productVariant.Name);
                     xmlWriter.WriteElementString("SKU", null, productVariant.SKU);
                     xmlWriter.WriteElementString("Description", null, productVariant.Description);
@@ -467,7 +467,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     xmlWriter.WriteElementString("ManufacturerPartNumber", null, productVariant.ManufacturerPartNumber);
                     xmlWriter.WriteElementString("IsGiftCard", null, productVariant.IsGiftCard.ToString());
                     xmlWriter.WriteElementString("IsDownload", null, productVariant.IsDownload.ToString());
-                    xmlWriter.WriteElementString("DownloadID", null, productVariant.DownloadID.ToString());
+                    xmlWriter.WriteElementString("DownloadId", null, productVariant.DownloadId.ToString());
                     xmlWriter.WriteElementString("UnlimitedDownloads", null, productVariant.UnlimitedDownloads.ToString());
                     xmlWriter.WriteElementString("MaxNumberOfDownloads", null, productVariant.MaxNumberOfDownloads.ToString());
                     if (productVariant.DownloadExpirationDays.HasValue)
@@ -476,7 +476,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         xmlWriter.WriteElementString("DownloadExpirationDays", null, string.Empty);
                     xmlWriter.WriteElementString("DownloadActivationType", null, productVariant.DownloadActivationType.ToString());
                     xmlWriter.WriteElementString("HasSampleDownload", null, productVariant.HasSampleDownload.ToString());
-                    xmlWriter.WriteElementString("SampleDownloadID", null, productVariant.SampleDownloadID.ToString());
+                    xmlWriter.WriteElementString("SampleDownloadId", null, productVariant.SampleDownloadId.ToString());
                     xmlWriter.WriteElementString("HasUserAgreement", null, productVariant.HasUserAgreement.ToString());
                     xmlWriter.WriteElementString("UserAgreementText", null, productVariant.UserAgreementText);
                     xmlWriter.WriteElementString("IsRecurring", null, productVariant.IsRecurring.ToString());
@@ -487,12 +487,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     xmlWriter.WriteElementString("IsFreeShipping", null, productVariant.IsFreeShipping.ToString());
                     xmlWriter.WriteElementString("AdditionalShippingCharge", null, productVariant.AdditionalShippingCharge.ToString());
                     xmlWriter.WriteElementString("IsTaxExempt", null, productVariant.IsTaxExempt.ToString());
-                    xmlWriter.WriteElementString("TaxCategoryID", null, productVariant.TaxCategoryID.ToString());
+                    xmlWriter.WriteElementString("TaxCategoryId", null, productVariant.TaxCategoryId.ToString());
                     xmlWriter.WriteElementString("ManageInventory", null, productVariant.ManageInventory.ToString());
                     xmlWriter.WriteElementString("StockQuantity", null, productVariant.StockQuantity.ToString());
                     xmlWriter.WriteElementString("DisplayStockAvailability", null, productVariant.DisplayStockAvailability.ToString());
                     xmlWriter.WriteElementString("MinStockQuantity", null, productVariant.MinStockQuantity.ToString());
-                    xmlWriter.WriteElementString("LowStockActivityID", null, productVariant.LowStockActivityID.ToString());
+                    xmlWriter.WriteElementString("LowStockActivityId", null, productVariant.LowStockActivityId.ToString());
                     xmlWriter.WriteElementString("NotifyAdminForQuantityBelow", null, productVariant.NotifyAdminForQuantityBelow.ToString());
                     xmlWriter.WriteElementString("AllowOutOfStockOrders", null, productVariant.AllowOutOfStockOrders.ToString());
                     xmlWriter.WriteElementString("OrderMinimumQuantity", null, productVariant.OrderMinimumQuantity.ToString());
@@ -509,7 +509,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     xmlWriter.WriteElementString("Length", null, productVariant.Length.ToString());
                     xmlWriter.WriteElementString("Width", null, productVariant.Width.ToString());
                     xmlWriter.WriteElementString("Height", null, productVariant.Height.ToString());
-                    xmlWriter.WriteElementString("PictureID", null, productVariant.PictureID.ToString());
+                    xmlWriter.WriteElementString("PictureId", null, productVariant.PictureId.ToString());
                     xmlWriter.WriteElementString("Published", null, productVariant.Published.ToString());
                     xmlWriter.WriteElementString("Deleted", null, productVariant.Deleted.ToString());
                     xmlWriter.WriteElementString("DisplayOrder", null, productVariant.DisplayOrder.ToString());
@@ -520,7 +520,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     var discounts = productVariant.AllDiscounts;
                     foreach (var discount in discounts)
                     {
-                        xmlWriter.WriteElementString("DiscountID", null, discount.DiscountID.ToString());
+                        xmlWriter.WriteElementString("DiscountId", null, discount.DiscountId.ToString());
                     }
                     xmlWriter.WriteEndElement();
 
@@ -529,7 +529,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     var tierPrices = productVariant.TierPrices;
                     foreach (var tierPrice in tierPrices)
                     {
-                        xmlWriter.WriteElementString("TierPriceID", null, tierPrice.TierPriceID.ToString());
+                        xmlWriter.WriteElementString("TierPriceId", null, tierPrice.TierPriceId.ToString());
                         xmlWriter.WriteElementString("Quantity", null, tierPrice.Quantity.ToString());
                         xmlWriter.WriteElementString("Price", null, tierPrice.Price.ToString());
                     }
@@ -540,20 +540,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     foreach (var productVariantAttribute in productVariantAttributes)
                     {
                         xmlWriter.WriteStartElement("ProductVariantAttribute");
-                        xmlWriter.WriteElementString("ProductVariantAttributeID", null, productVariantAttribute.ProductVariantAttributeID.ToString());
-                        xmlWriter.WriteElementString("ProductAttributeID", null, productVariantAttribute.ProductAttributeID.ToString());
+                        xmlWriter.WriteElementString("ProductVariantAttributeId", null, productVariantAttribute.ProductVariantAttributeId.ToString());
+                        xmlWriter.WriteElementString("ProductAttributeId", null, productVariantAttribute.ProductAttributeId.ToString());
                         xmlWriter.WriteElementString("TextPrompt", null, productVariantAttribute.TextPrompt);
                         xmlWriter.WriteElementString("IsRequired", null, productVariantAttribute.IsRequired.ToString());
-                        xmlWriter.WriteElementString("AttributeControlTypeID", null, productVariantAttribute.AttributeControlTypeID.ToString());
+                        xmlWriter.WriteElementString("AttributeControlTypeId", null, productVariantAttribute.AttributeControlTypeId.ToString());
                         xmlWriter.WriteElementString("DisplayOrder", null, productVariantAttribute.DisplayOrder.ToString());
 
 
 
                         xmlWriter.WriteStartElement("ProductVariantAttributeValues");
-                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeID, 0);
+                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId, 0);
                         foreach (var productVariantAttributeValue in productVariantAttributeValues)
                         {
-                            xmlWriter.WriteElementString("ProductVariantAttributeValueID", null, productVariantAttributeValue.ProductVariantAttributeValueID.ToString());
+                            xmlWriter.WriteElementString("ProductVariantAttributeValueId", null, productVariantAttributeValue.ProductVariantAttributeValueId.ToString());
                             xmlWriter.WriteElementString("Name", null, productVariantAttributeValue.Name);
                             xmlWriter.WriteElementString("PriceAdjustment", null, productVariantAttributeValue.PriceAdjustment.ToString());
                             xmlWriter.WriteElementString("WeightAdjustment", null, productVariantAttributeValue.WeightAdjustment.ToString());
@@ -578,8 +578,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 foreach (var productPicture in productPictures)
                 {
                     xmlWriter.WriteStartElement("ProductPicture");
-                    xmlWriter.WriteElementString("ProductPictureID", null, productPicture.ProductPictureID.ToString());
-                    xmlWriter.WriteElementString("PictureID", null, productPicture.PictureID.ToString());
+                    xmlWriter.WriteElementString("ProductPictureId", null, productPicture.ProductPictureId.ToString());
+                    xmlWriter.WriteElementString("PictureId", null, productPicture.PictureId.ToString());
                     xmlWriter.WriteElementString("DisplayOrder", null, productPicture.DisplayOrder.ToString());
                     xmlWriter.WriteEndElement();
                 }
@@ -590,9 +590,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 foreach (var relatedProduct in relatedProducts)
                 {
                     xmlWriter.WriteStartElement("RelatedProduct");
-                    xmlWriter.WriteElementString("RelatedProductID", null, relatedProduct.RelatedProductID.ToString());
-                    xmlWriter.WriteElementString("ProductID1", null, relatedProduct.ProductID1.ToString());
-                    xmlWriter.WriteElementString("ProductID2", null, relatedProduct.ProductID2.ToString());
+                    xmlWriter.WriteElementString("RelatedProductId", null, relatedProduct.RelatedProductId.ToString());
+                    xmlWriter.WriteElementString("ProductId1", null, relatedProduct.ProductId1.ToString());
+                    xmlWriter.WriteElementString("ProductId2", null, relatedProduct.ProductId2.ToString());
                     xmlWriter.WriteElementString("DisplayOrder", null, relatedProduct.DisplayOrder.ToString());
                     xmlWriter.WriteEndElement();
                 }
@@ -603,8 +603,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 foreach (var productCategory in productCategories)
                 {
                     xmlWriter.WriteStartElement("ProductCategory");
-                    xmlWriter.WriteElementString("ProductCategoryID", null, productCategory.ProductCategoryID.ToString());
-                    xmlWriter.WriteElementString("CategoryID", null, productCategory.CategoryID.ToString());
+                    xmlWriter.WriteElementString("ProductCategoryId", null, productCategory.ProductCategoryId.ToString());
+                    xmlWriter.WriteElementString("CategoryId", null, productCategory.CategoryId.ToString());
                     xmlWriter.WriteElementString("IsFeaturedProduct", null, productCategory.IsFeaturedProduct.ToString());
                     xmlWriter.WriteElementString("DisplayOrder", null, productCategory.DisplayOrder.ToString());
                     xmlWriter.WriteEndElement();
@@ -616,8 +616,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 foreach (var productManufacturer in productManufacturers)
                 {
                     xmlWriter.WriteStartElement("ProductManufacturer");
-                    xmlWriter.WriteElementString("ProductManufacturerID", null, productManufacturer.ProductManufacturerID.ToString());
-                    xmlWriter.WriteElementString("ManufacturerID", null, productManufacturer.ManufacturerID.ToString());
+                    xmlWriter.WriteElementString("ProductManufacturerId", null, productManufacturer.ProductManufacturerId.ToString());
+                    xmlWriter.WriteElementString("ManufacturerId", null, productManufacturer.ManufacturerId.ToString());
                     xmlWriter.WriteElementString("IsFeaturedProduct", null, productManufacturer.IsFeaturedProduct.ToString());
                     xmlWriter.WriteElementString("DisplayOrder", null, productManufacturer.DisplayOrder.ToString());
                     xmlWriter.WriteEndElement();
@@ -625,12 +625,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("ProductSpecificationAttributes");
-                var productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID);
+                var productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product.ProductId);
                 foreach (var productSpecificationAttribute in productSpecificationAttributes)
                 {
                     xmlWriter.WriteStartElement("ProductSpecificationAttribute");
-                    xmlWriter.WriteElementString("ProductSpecificationAttributeID", null, productSpecificationAttribute.ProductSpecificationAttributeID.ToString());
-                    xmlWriter.WriteElementString("SpecificationAttributeOptionID", null, productSpecificationAttribute.SpecificationAttributeOptionID.ToString());
+                    xmlWriter.WriteElementString("ProductSpecificationAttributeId", null, productSpecificationAttribute.ProductSpecificationAttributeId.ToString());
+                    xmlWriter.WriteElementString("SpecificationAttributeOptionId", null, productSpecificationAttribute.SpecificationAttributeOptionId.ToString());
                     xmlWriter.WriteElementString("AllowFiltering", null, productSpecificationAttribute.AllowFiltering.ToString());
                     xmlWriter.WriteElementString("ShowOnProductPage", null, productSpecificationAttribute.ShowOnProductPage.ToString());
                     xmlWriter.WriteElementString("DisplayOrder", null, productSpecificationAttribute.DisplayOrder.ToString());
@@ -653,21 +653,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <summary>
         /// Export products to XLS
         /// </summary>
-        /// <param name="FilePath">File path to use</param>
+        /// <param name="filePath">File path to use</param>
         /// <param name="products">Products</param>
-        public static void ExportProductsToXLS(string FilePath, ProductCollection products)
+        public static void ExportProductsToXls(string filePath, ProductCollection products)
         {
-            using (ExcelHelper excelHelper = new ExcelHelper(FilePath))
+            using (ExcelHelper excelHelper = new ExcelHelper(filePath))
             {
-                excelHelper.HDR = "YES";
-                excelHelper.IMEX = "0";
+                excelHelper.Hdr = "YES";
+                excelHelper.Imex = "0";
                 Dictionary<string, string> tableDefinition = new Dictionary<string, string>();
                 int maxStringLength = 200;
                 tableDefinition.Add("Name", string.Format("nvarchar({0})",maxStringLength));
                 tableDefinition.Add("ShortDescription", string.Format("nvarchar({0})", maxStringLength));
                 tableDefinition.Add("FullDescription", string.Format("nvarchar({0})", maxStringLength));
-                tableDefinition.Add("ProductTypeID", "int");
-                tableDefinition.Add("TemplateID", "int");
+                tableDefinition.Add("ProductTypeId", "int");
+                tableDefinition.Add("TemplateId", "int");
                 tableDefinition.Add("ShowOnHomePage", "nvarchar(5)");
                 tableDefinition.Add("MetaKeywords", string.Format("nvarchar({0})", maxStringLength));
                 tableDefinition.Add("MetaDescription", string.Format("nvarchar({0})", maxStringLength));
@@ -679,12 +679,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("ManufacturerPartNumber", string.Format("nvarchar({0})", maxStringLength));
                 tableDefinition.Add("IsGiftCard", "nvarchar(5)");
                 tableDefinition.Add("IsDownload", "nvarchar(5)");
-                tableDefinition.Add("DownloadID", "int");
+                tableDefinition.Add("DownloadId", "int");
                 tableDefinition.Add("UnlimitedDownloads", "nvarchar(5)");
                 tableDefinition.Add("MaxNumberOfDownloads", "int");
                 tableDefinition.Add("DownloadActivationType", "int");                
                 tableDefinition.Add("HasSampleDownload", "nvarchar(5)");
-                tableDefinition.Add("SampleDownloadID", "int");
+                tableDefinition.Add("SampleDownloadId", "int");
                 tableDefinition.Add("HasUserAgreement", "nvarchar(5)");
                 tableDefinition.Add("UserAgreementText", String.Format("nvarchar({0})", maxStringLength));
                 tableDefinition.Add("IsRecurring", "nvarchar(5)");
@@ -695,12 +695,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("IsFreeShipping", "nvarchar(5)");
                 tableDefinition.Add("AdditionalShippingCharge", "decimal");
                 tableDefinition.Add("IsTaxExempt", "nvarchar(5)");
-                tableDefinition.Add("TaxCategoryID", "int");
+                tableDefinition.Add("TaxCategoryId", "int");
                 tableDefinition.Add("ManageInventory", "int");
                 tableDefinition.Add("StockQuantity", "int");
                 tableDefinition.Add("DisplayStockAvailability", "nvarchar(5)");
                 tableDefinition.Add("MinStockQuantity", "int");
-                tableDefinition.Add("LowStockActivityID", "int");
+                tableDefinition.Add("LowStockActivityId", "int");
                 tableDefinition.Add("NotifyAdminForQuantityBelow", "int");
                 tableDefinition.Add("AllowOutOfStockOrders", "nvarchar(5)");
                 tableDefinition.Add("OrderMinimumQuantity", "int");
@@ -723,12 +723,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
 
                 foreach (var p in products)
                 {
-                    var productVariants = ProductManager.GetProductVariantsByProductID(p.ProductID, 0, true);
+                    var productVariants = ProductManager.GetProductVariantsByProductId(p.ProductId, 0, true);
 
                     foreach (var pv in productVariants)
                     {
                         StringBuilder sb = new StringBuilder();
-                        sb.Append("INSERT INTO [Products] (Name, ShortDescription,FullDescription,ProductTypeID,TemplateID,ShowOnHomePage,MetaKeywords,MetaDescription,MetaTitle,AllowCustomerReviews,AllowCustomerRatings,Published,SKU,ManufacturerPartNumber,IsGiftCard,IsDownload,DownloadID,UnlimitedDownloads,MaxNumberOfDownloads,DownloadActivationType,HasSampleDownload,SampleDownloadID,HasUserAgreement,UserAgreementText,IsRecurring,CycleLength,CyclePeriod,TotalCycles,IsShipEnabled,IsFreeShipping,AdditionalShippingCharge,IsTaxExempt,TaxCategoryID,ManageInventory,StockQuantity,DisplayStockAvailability,MinStockQuantity,LowStockActivityID,NotifyAdminForQuantityBelow,AllowOutOfStockOrders,OrderMinimumQuantity,OrderMaximumQuantity,DisableBuyButton,Price,OldPrice,ProductCost,CustomerEntersPrice,MinimumCustomerEnteredPrice,MaximumCustomerEnteredPrice,Weight, Length, Width, Height, CreatedOn) VALUES (");
+                        sb.Append("INSERT INTO [Products] (Name, ShortDescription,FullDescription,ProductTypeId,TemplateId,ShowOnHomePage,MetaKeywords,MetaDescription,MetaTitle,AllowCustomerReviews,AllowCustomerRatings,Published,SKU,ManufacturerPartNumber,IsGiftCard,IsDownload,DownloadId,UnlimitedDownloads,MaxNumberOfDownloads,DownloadActivationType,HasSampleDownload,SampleDownloadId,HasUserAgreement,UserAgreementText,IsRecurring,CycleLength,CyclePeriod,TotalCycles,IsShipEnabled,IsFreeShipping,AdditionalShippingCharge,IsTaxExempt,TaxCategoryId,ManageInventory,StockQuantity,DisplayStockAvailability,MinStockQuantity,LowStockActivityId,NotifyAdminForQuantityBelow,AllowOutOfStockOrders,OrderMinimumQuantity,OrderMaximumQuantity,DisableBuyButton,Price,OldPrice,ProductCost,CustomerEntersPrice,MinimumCustomerEnteredPrice,MaximumCustomerEnteredPrice,Weight, Length, Width, Height, CreatedOn) VALUES (");
                         string name = p.Name;
                         if (name.Length > maxStringLength)
                             name = name.Substring(0, maxStringLength);
@@ -741,8 +741,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         if (fullDescription.Length > maxStringLength)
                             fullDescription = fullDescription.Substring(0, maxStringLength);
                         sb.Append('"'); sb.Append(fullDescription.Replace('"', '\'')); sb.Append("\",");
-                        sb.Append(p.ProductTypeID); sb.Append(",");
-                        sb.Append(p.TemplateID); sb.Append(",");
+                        sb.Append(p.ProductTypeId); sb.Append(",");
+                        sb.Append(p.TemplateId); sb.Append(",");
                         sb.Append('"'); sb.Append(p.ShowOnHomePage); sb.Append("\",");
                         string metaKeywords = p.MetaKeywords;
                         if (metaKeywords.Length > maxStringLength)
@@ -769,12 +769,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         sb.Append('"'); sb.Append(manufacturerPartNumber.Replace('"', '\'')); sb.Append("\",");
                         sb.Append('"'); sb.Append(pv.IsGiftCard); sb.Append("\",");
                         sb.Append('"'); sb.Append(pv.IsDownload); sb.Append("\",");
-                        sb.Append(pv.DownloadID); sb.Append(",");
+                        sb.Append(pv.DownloadId); sb.Append(",");
                         sb.Append('"'); sb.Append(pv.UnlimitedDownloads); sb.Append("\",");
                         sb.Append(pv.MaxNumberOfDownloads); sb.Append(",");
                         sb.Append(pv.DownloadActivationType); sb.Append(",");
                         sb.Append('"'); sb.Append(pv.HasSampleDownload); sb.Append("\",");
-                        sb.Append(pv.SampleDownloadID); sb.Append(",");
+                        sb.Append(pv.SampleDownloadId); sb.Append(",");
                         sb.Append('"'); sb.Append(pv.HasUserAgreement); sb.Append("\",");
                         string UserAgreementText = pv.UserAgreementText;
                         if(UserAgreementText.Length > maxStringLength)
@@ -788,12 +788,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         sb.Append('"'); sb.Append(pv.IsFreeShipping); sb.Append("\",");
                         sb.Append(decimalQuoter); sb.Append(pv.AdditionalShippingCharge); sb.Append(decimalQuoter); sb.Append(',');//decimal
                         sb.Append('"'); sb.Append(pv.IsTaxExempt); sb.Append("\",");
-                        sb.Append(pv.TaxCategoryID); sb.Append(",");
+                        sb.Append(pv.TaxCategoryId); sb.Append(",");
                         sb.Append(pv.ManageInventory); sb.Append(",");
                         sb.Append(pv.StockQuantity); sb.Append(",");
                         sb.Append('"'); sb.Append(pv.DisplayStockAvailability); sb.Append("\",");
                         sb.Append(pv.MinStockQuantity); sb.Append(",");
-                        sb.Append(pv.LowStockActivityID); sb.Append(",");
+                        sb.Append(pv.LowStockActivityId); sb.Append(",");
                         sb.Append(pv.NotifyAdminForQuantityBelow); sb.Append(",");
                         sb.Append('"'); sb.Append(pv.AllowOutOfStockOrders); sb.Append("\",");
                         sb.Append(pv.OrderMinimumQuantity); sb.Append(",");
@@ -823,7 +823,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         /// <param name="orders">Orders</param>
         /// <returns>Result in XML format</returns>
-        public static string ExportOrdersToXML(OrderCollection orders)
+        public static string ExportOrdersToXml(OrderCollection orders)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -835,11 +835,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
             foreach (var order in orders)
             {
                 xmlWriter.WriteStartElement("Order");
-                xmlWriter.WriteElementString("OrderID", null, order.OrderID.ToString());
-                xmlWriter.WriteElementString("OrderGUID", null, order.OrderGUID.ToString());
-                xmlWriter.WriteElementString("CustomerID", null, order.CustomerID.ToString());
-                xmlWriter.WriteElementString("CustomerLanguageID", null, order.CustomerLanguageID.ToString());
-                xmlWriter.WriteElementString("CustomerTaxDisplayTypeID", null, order.CustomerTaxDisplayTypeID.ToString());
+                xmlWriter.WriteElementString("OrderId", null, order.OrderId.ToString());
+                xmlWriter.WriteElementString("OrderGuid", null, order.OrderGuid.ToString());
+                xmlWriter.WriteElementString("CustomerId", null, order.CustomerId.ToString());
+                xmlWriter.WriteElementString("CustomerLanguageId", null, order.CustomerLanguageId.ToString());
+                xmlWriter.WriteElementString("CustomerTaxDisplayTypeId", null, order.CustomerTaxDisplayTypeId.ToString());
                 xmlWriter.WriteElementString("CustomerIP", null, order.CustomerIP);
                 xmlWriter.WriteElementString("OrderSubtotalInclTax", null, order.OrderSubtotalInclTax.ToString());
                 xmlWriter.WriteElementString("OrderSubtotalExclTax", null, order.OrderSubtotalExclTax.ToString());
@@ -861,26 +861,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteElementString("OrderDiscountInCustomerCurrency", null, order.OrderDiscountInCustomerCurrency.ToString());
                 xmlWriter.WriteElementString("CustomerCurrencyCode", null, order.CustomerCurrencyCode);
                 xmlWriter.WriteElementString("OrderWeight", null, order.OrderWeight.ToString());
-                xmlWriter.WriteElementString("AffiliateID", null, order.AffiliateID.ToString());
-                xmlWriter.WriteElementString("OrderStatusID", null, order.OrderStatusID.ToString());
+                xmlWriter.WriteElementString("AffiliateId", null, order.AffiliateId.ToString());
+                xmlWriter.WriteElementString("OrderStatusId", null, order.OrderStatusId.ToString());
                 xmlWriter.WriteElementString("AllowStoringCreditCardNumber", null, order.AllowStoringCreditCardNumber.ToString());
                 xmlWriter.WriteElementString("CardType", null, order.CardType);
                 xmlWriter.WriteElementString("CardName", null, order.CardName);
                 xmlWriter.WriteElementString("CardNumber", null, order.CardNumber);
                 xmlWriter.WriteElementString("MaskedCreditCardNumber", null, order.MaskedCreditCardNumber);
-                xmlWriter.WriteElementString("CardCVV2", null, order.CardCVV2);
+                xmlWriter.WriteElementString("CardCvv2", null, order.CardCvv2);
                 xmlWriter.WriteElementString("CardExpirationMonth", null, order.CardExpirationMonth);
                 xmlWriter.WriteElementString("CardExpirationYear", null, order.CardExpirationYear);
-                xmlWriter.WriteElementString("PaymentMethodID", null, order.PaymentMethodID.ToString());
+                xmlWriter.WriteElementString("PaymentMethodId", null, order.PaymentMethodId.ToString());
                 xmlWriter.WriteElementString("PaymentMethodName", null, order.PaymentMethodName);
-                xmlWriter.WriteElementString("AuthorizationTransactionID", null, order.AuthorizationTransactionID);
+                xmlWriter.WriteElementString("AuthorizationTransactionId", null, order.AuthorizationTransactionId);
                 xmlWriter.WriteElementString("AuthorizationTransactionCode", null, order.AuthorizationTransactionCode);
                 xmlWriter.WriteElementString("AuthorizationTransactionResult", null, order.AuthorizationTransactionResult);
-                xmlWriter.WriteElementString("CaptureTransactionID", null, order.CaptureTransactionID);
+                xmlWriter.WriteElementString("CaptureTransactionId", null, order.CaptureTransactionId);
                 xmlWriter.WriteElementString("CaptureTransactionResult", null, order.CaptureTransactionResult);
-                xmlWriter.WriteElementString("SubscriptionTransactionID", null, order.SubscriptionTransactionID);
+                xmlWriter.WriteElementString("SubscriptionTransactionId", null, order.SubscriptionTransactionId);
                 xmlWriter.WriteElementString("PurchaseOrderNumber", null, order.PurchaseOrderNumber);
-                xmlWriter.WriteElementString("PaymentStatusID", null, order.PaymentStatusID.ToString());
+                xmlWriter.WriteElementString("PaymentStatusId", null, order.PaymentStatusId.ToString());
                 xmlWriter.WriteElementString("PaidDate", null, (order.PaidDate == null) ? string.Empty : order.PaidDate.Value.ToString());
                 xmlWriter.WriteElementString("BillingFirstName", null, order.BillingFirstName);
                 xmlWriter.WriteElementString("BillingLastName", null, order.BillingLastName);
@@ -892,11 +892,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteElementString("BillingAddress2", null, order.BillingAddress2);
                 xmlWriter.WriteElementString("BillingCity", null, order.BillingCity);
                 xmlWriter.WriteElementString("BillingStateProvince", null, order.BillingStateProvince);
-                xmlWriter.WriteElementString("BillingStateProvinceID", null, order.BillingStateProvinceID.ToString());
+                xmlWriter.WriteElementString("BillingStateProvinceId", null, order.BillingStateProvinceId.ToString());
                 xmlWriter.WriteElementString("BillingCountry", null, order.BillingCountry);
-                xmlWriter.WriteElementString("BillingCountryID", null, order.BillingCountryID.ToString());
+                xmlWriter.WriteElementString("BillingCountryId", null, order.BillingCountryId.ToString());
                 xmlWriter.WriteElementString("BillingZipPostalCode", null, order.BillingZipPostalCode);
-                xmlWriter.WriteElementString("ShippingStatusID", null, order.ShippingStatusID.ToString());
+                xmlWriter.WriteElementString("ShippingStatusId", null, order.ShippingStatusId.ToString());
                 xmlWriter.WriteElementString("ShippingFirstName", null, order.ShippingFirstName);
                 xmlWriter.WriteElementString("ShippingLastName", null, order.ShippingLastName);
                 xmlWriter.WriteElementString("ShippingPhoneNumber", null, order.ShippingPhoneNumber);
@@ -907,12 +907,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteElementString("ShippingAddress2", null, order.ShippingAddress2);
                 xmlWriter.WriteElementString("ShippingCity", null, order.ShippingCity);
                 xmlWriter.WriteElementString("ShippingStateProvince", null, order.ShippingStateProvince);
-                xmlWriter.WriteElementString("ShippingStateProvinceID", null, order.ShippingStateProvinceID.ToString());
+                xmlWriter.WriteElementString("ShippingStateProvinceId", null, order.ShippingStateProvinceId.ToString());
                 xmlWriter.WriteElementString("ShippingCountry", null, order.ShippingCountry);
-                xmlWriter.WriteElementString("ShippingCountryID", null, order.ShippingCountryID.ToString());
+                xmlWriter.WriteElementString("ShippingCountryId", null, order.ShippingCountryId.ToString());
                 xmlWriter.WriteElementString("ShippingZipPostalCode", null, order.ShippingZipPostalCode);
                 xmlWriter.WriteElementString("ShippingMethod", null, order.ShippingMethod);
-                xmlWriter.WriteElementString("ShippingRateComputationMethodID", null, order.ShippingRateComputationMethodID.ToString());
+                xmlWriter.WriteElementString("ShippingRateComputationMethodId", null, order.ShippingRateComputationMethodId.ToString());
                 xmlWriter.WriteElementString("ShippedDate", null, (order.ShippedDate == null) ? string.Empty : order.ShippedDate.Value.ToString());
                 xmlWriter.WriteElementString("TrackingNumber", null, order.TrackingNumber);
                 xmlWriter.WriteElementString("Deleted", null, order.Deleted.ToString());
@@ -925,8 +925,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     foreach (var orderProductVariant in orderProductVariants)
                     {
                         xmlWriter.WriteStartElement("OrderProductVariant");
-                        xmlWriter.WriteElementString("OrderProductVariantID", null, orderProductVariant.OrderProductVariantID.ToString());
-                        xmlWriter.WriteElementString("ProductVariantID", null, orderProductVariant.ProductVariantID.ToString());
+                        xmlWriter.WriteElementString("OrderProductVariantId", null, orderProductVariant.OrderProductVariantId.ToString());
+                        xmlWriter.WriteElementString("ProductVariantId", null, orderProductVariant.ProductVariantId.ToString());
 
                         var productVariant = orderProductVariant.ProductVariant;
                         if (productVariant != null)
@@ -942,13 +942,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                         xmlWriter.WriteElementString("PriceInclTaxInCustomerCurrency", null, orderProductVariant.PriceInclTaxInCustomerCurrency.ToString());
                         xmlWriter.WriteElementString("PriceExclTaxInCustomerCurrency", null, orderProductVariant.PriceExclTaxInCustomerCurrency.ToString());
                         xmlWriter.WriteElementString("AttributeDescription", null, orderProductVariant.AttributeDescription);
-                        xmlWriter.WriteElementString("AttributesXML", null, orderProductVariant.AttributesXML);
+                        xmlWriter.WriteElementString("AttributesXml", null, orderProductVariant.AttributesXml);
                         xmlWriter.WriteElementString("Quantity", null, orderProductVariant.Quantity.ToString());
                         xmlWriter.WriteElementString("DiscountAmountInclTax", null, orderProductVariant.DiscountAmountInclTax.ToString());
                         xmlWriter.WriteElementString("DiscountAmountExclTax", null, orderProductVariant.DiscountAmountExclTax.ToString());
                         xmlWriter.WriteElementString("DownloadCount", null, orderProductVariant.DownloadCount.ToString());
                         xmlWriter.WriteElementString("IsDownloadActivated", null, orderProductVariant.IsDownloadActivated.ToString());
-                        xmlWriter.WriteElementString("LicenseDownloadID", null, orderProductVariant.LicenseDownloadID.ToString());
+                        xmlWriter.WriteElementString("LicenseDownloadId", null, orderProductVariant.LicenseDownloadId.ToString());
                         xmlWriter.WriteEndElement();
                     }
                     xmlWriter.WriteEndElement();
@@ -966,18 +966,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <summary>
         /// Export orders to XLS
         /// </summary>
-        /// <param name="FilePath">File path to use</param>
+        /// <param name="filePath">File path to use</param>
         /// <param name="orders">Orders</param>
-        public static void ExportOrdersToXLS(string FilePath, OrderCollection orders)
+        public static void ExportOrdersToXls(string filePath, OrderCollection orders)
         {
-            using (ExcelHelper excelHelper = new ExcelHelper(FilePath))
+            using (ExcelHelper excelHelper = new ExcelHelper(filePath))
             {
-                excelHelper.HDR = "YES";
-                excelHelper.IMEX = "0";
+                excelHelper.Hdr = "YES";
+                excelHelper.Imex = "0";
                 Dictionary<string, string> tableDefinition = new Dictionary<string, string>();
-                tableDefinition.Add("OrderID", "int");
-                tableDefinition.Add("OrderGUID", "uniqueidentifier");
-                tableDefinition.Add("CustomerID", "int");
+                tableDefinition.Add("OrderId", "int");
+                tableDefinition.Add("OrderGuid", "uniqueidentifier");
+                tableDefinition.Add("CustomerId", "int");
                 tableDefinition.Add("OrderSubtotalInclTax", "decimal");
                 tableDefinition.Add("OrderSubtotalExclTax", "decimal");
                 tableDefinition.Add("OrderShippingInclTax", "decimal");
@@ -998,12 +998,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("OrderDiscountInCustomerCurrency", "decimal");
                 tableDefinition.Add("CustomerCurrencyCode", "nvarchar(5)");
                 tableDefinition.Add("OrderWeight", "decimal");
-                tableDefinition.Add("AffiliateID", "int");
-                tableDefinition.Add("OrderStatusID", "int");
-                tableDefinition.Add("PaymentMethodID", "int");
+                tableDefinition.Add("AffiliateId", "int");
+                tableDefinition.Add("OrderStatusId", "int");
+                tableDefinition.Add("PaymentMethodId", "int");
                 tableDefinition.Add("PaymentMethodName", "nvarchar(100)");
                 tableDefinition.Add("PurchaseOrderNumber", "nvarchar(100)");
-                tableDefinition.Add("PaymentStatusID", "int");
+                tableDefinition.Add("PaymentStatusId", "int");
                 tableDefinition.Add("BillingFirstName", "nvarchar(100)");
                 tableDefinition.Add("BillingLastName", "nvarchar(100)");
                 tableDefinition.Add("BillingPhoneNumber", "nvarchar(50)");
@@ -1016,7 +1016,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("BillingStateProvince", "nvarchar(100)");
                 tableDefinition.Add("BillingZipPostalCode", "nvarchar(100)");
                 tableDefinition.Add("BillingCountry", "nvarchar(100)");
-                tableDefinition.Add("ShippingStatusID", "int");
+                tableDefinition.Add("ShippingStatusId", "int");
                 tableDefinition.Add("ShippingFirstName", "nvarchar(100)");
                 tableDefinition.Add("ShippingLastName", "nvarchar(100)");
                 tableDefinition.Add("ShippingPhoneNumber", "nvarchar(50)");
@@ -1030,7 +1030,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 tableDefinition.Add("ShippingZipPostalCode", "nvarchar(100)");
                 tableDefinition.Add("ShippingCountry", "nvarchar(100)");
                 tableDefinition.Add("ShippingMethod", "nvarchar(100)");
-                tableDefinition.Add("ShippingRateComputationMethodID", "int");
+                tableDefinition.Add("ShippingRateComputationMethodId", "int");
                 tableDefinition.Add("CreatedOn", "decimal");
                 excelHelper.WriteTable("Orders", tableDefinition);
                 
@@ -1039,12 +1039,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 foreach (var order in orders)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO [Orders] (OrderID, OrderGUID, CustomerID, OrderSubtotalInclTax, OrderSubtotalExclTax, OrderShippingInclTax, OrderShippingExclTax, PaymentMethodAdditionalFeeInclTax, PaymentMethodAdditionalFeeExclTax, OrderTax, OrderTotal, OrderDiscount, OrderSubtotalInclTaxInCustomerCurrency, OrderSubtotalExclTaxInCustomerCurrency, OrderShippingInclTaxInCustomerCurrency, OrderShippingExclTaxInCustomerCurrency, PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency, OrderTaxInCustomerCurrency, OrderTotalInCustomerCurrency, OrderDiscountInCustomerCurrency, CustomerCurrencyCode, OrderWeight, AffiliateID, OrderStatusID, PaymentMethodID, PaymentMethodName, PurchaseOrderNumber, PaymentStatusID, BillingFirstName, BillingLastName, BillingPhoneNumber, BillingEmail, BillingFaxNumber, BillingCompany, BillingAddress1, BillingAddress2, BillingCity, BillingStateProvince, BillingZipPostalCode, BillingCountry, ShippingStatusID,  ShippingFirstName, ShippingLastName, ShippingPhoneNumber, ShippingEmail, ShippingFaxNumber, ShippingCompany,  ShippingAddress1, ShippingAddress2, ShippingCity, ShippingStateProvince, ShippingZipPostalCode, ShippingCountry, ShippingMethod, ShippingRateComputationMethodID, CreatedOn) VALUES (");
+                    sb.Append("INSERT INTO [Orders] (OrderId, OrderGuid, CustomerId, OrderSubtotalInclTax, OrderSubtotalExclTax, OrderShippingInclTax, OrderShippingExclTax, PaymentMethodAdditionalFeeInclTax, PaymentMethodAdditionalFeeExclTax, OrderTax, OrderTotal, OrderDiscount, OrderSubtotalInclTaxInCustomerCurrency, OrderSubtotalExclTaxInCustomerCurrency, OrderShippingInclTaxInCustomerCurrency, OrderShippingExclTaxInCustomerCurrency, PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, PaymentMethodAdditionalFeeExclTaxInCustomerCurrency, OrderTaxInCustomerCurrency, OrderTotalInCustomerCurrency, OrderDiscountInCustomerCurrency, CustomerCurrencyCode, OrderWeight, AffiliateId, OrderStatusId, PaymentMethodId, PaymentMethodName, PurchaseOrderNumber, PaymentStatusId, BillingFirstName, BillingLastName, BillingPhoneNumber, BillingEmail, BillingFaxNumber, BillingCompany, BillingAddress1, BillingAddress2, BillingCity, BillingStateProvince, BillingZipPostalCode, BillingCountry, ShippingStatusId,  ShippingFirstName, ShippingLastName, ShippingPhoneNumber, ShippingEmail, ShippingFaxNumber, ShippingCompany,  ShippingAddress1, ShippingAddress2, ShippingCity, ShippingStateProvince, ShippingZipPostalCode, ShippingCountry, ShippingMethod, ShippingRateComputationMethodId, CreatedOn) VALUES (");
 
 
-                    sb.Append(order.OrderID); sb.Append(",");
-                    sb.Append('"'); sb.Append(order.OrderGUID); sb.Append("\",");
-                    sb.Append(order.CustomerID); sb.Append(",");
+                    sb.Append(order.OrderId); sb.Append(",");
+                    sb.Append('"'); sb.Append(order.OrderGuid); sb.Append("\",");
+                    sb.Append(order.CustomerId); sb.Append(",");
                     sb.Append(decimalQuoter); sb.Append(order.OrderSubtotalInclTax); sb.Append(decimalQuoter); sb.Append(",");
                     sb.Append(decimalQuoter); sb.Append(order.OrderSubtotalExclTax); sb.Append(decimalQuoter); sb.Append(",");
                     sb.Append(decimalQuoter); sb.Append(order.OrderShippingInclTax); sb.Append(decimalQuoter); sb.Append(",");
@@ -1065,12 +1065,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     sb.Append(decimalQuoter); sb.Append(order.OrderDiscountInCustomerCurrency); sb.Append(decimalQuoter); sb.Append(",");
                     sb.Append('"'); sb.Append(order.CustomerCurrencyCode.Replace('"', '\'')); sb.Append("\",");
                     sb.Append(order.OrderWeight); sb.Append(",");
-                    sb.Append(order.AffiliateID); sb.Append(",");
-                    sb.Append(order.OrderStatusID); sb.Append(",");
-                    sb.Append(order.PaymentMethodID); sb.Append(",");
+                    sb.Append(order.AffiliateId); sb.Append(",");
+                    sb.Append(order.OrderStatusId); sb.Append(",");
+                    sb.Append(order.PaymentMethodId); sb.Append(",");
                     sb.Append('"'); sb.Append(order.PaymentMethodName.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.PurchaseOrderNumber.Replace('"', '\'')); sb.Append("\",");
-                    sb.Append(order.PaymentStatusID); sb.Append(",");
+                    sb.Append(order.PaymentStatusId); sb.Append(",");
                     sb.Append('"'); sb.Append(order.BillingFirstName.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.BillingLastName.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.BillingPhoneNumber.Replace('"', '\'')); sb.Append("\",");
@@ -1083,7 +1083,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     sb.Append('"'); sb.Append(order.BillingStateProvince.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.BillingZipPostalCode.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.BillingCountry.Replace('"', '\'')); sb.Append("\",");
-                    sb.Append(order.ShippingStatusID); sb.Append(",");
+                    sb.Append(order.ShippingStatusId); sb.Append(",");
                     sb.Append('"'); sb.Append(order.ShippingFirstName.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.ShippingLastName.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.ShippingPhoneNumber.Replace('"', '\'')); sb.Append("\",");
@@ -1097,7 +1097,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     sb.Append('"'); sb.Append(order.ShippingZipPostalCode.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.ShippingCountry.Replace('"', '\'')); sb.Append("\",");
                     sb.Append('"'); sb.Append(order.ShippingMethod.Replace('"', '\'')); sb.Append("\",");
-                    sb.Append(order.ShippingRateComputationMethodID); sb.Append(",");
+                    sb.Append(order.ShippingRateComputationMethodId); sb.Append(",");
                     sb.Append(decimalQuoter); sb.Append(order.CreatedOn.ToOADate()); sb.Append(decimalQuoter); 
                     sb.Append(")");
 
@@ -1110,7 +1110,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// Export message tokens to xml
         /// </summary>
         /// <returns>Result in XML format</returns>
-        public static string ExportMessageTokensToXML()
+        public static string ExportMessageTokensToXml()
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);

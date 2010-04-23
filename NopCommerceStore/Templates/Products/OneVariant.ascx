@@ -43,9 +43,9 @@
                 </GroupTemplate>
                 <ItemTemplate>
                     <td align="left">
-                        <a href="<%#PictureManager.GetPictureUrl((int)Eval("PictureID"))%>" rel="lightbox-p"
+                        <a href="<%#PictureManager.GetPictureUrl((int)Eval("PictureId"))%>" rel="lightbox-p"
                             title="<%= lProductName.Text%>">
-                            <img src="<%#PictureManager.GetPictureUrl((int)Eval("PictureID"), 70)%>" alt="Product image" /></a>
+                            <img src="<%#PictureManager.GetPictureUrl((int)Eval("PictureId"), 70)%>" alt="Product image" /></a>
                     </td>
                 </ItemTemplate>
             </asp:ListView>
@@ -73,9 +73,9 @@
                         RangeErrorMessage="<% $NopResources:Products.QuantityRange %>" MinimumValue="1"
                         MaximumValue="999999" Width="50" />
                     <asp:Button ID="btnAddToCart" runat="server" OnCommand="OnCommand" Text="<% $NopResources:Products.AddToCart %>"
-                        CommandName="AddToCart" CommandArgument='<%#Eval("ProductVariantID")%>' CssClass="productvariantaddtocartbutton" />
+                        CommandName="AddToCart" CommandArgument='<%#Eval("ProductVariantId")%>' CssClass="productvariantaddtocartbutton" />
                     <asp:Button ID="btnAddToWishlist" runat="server" OnCommand="OnCommand" Text="<% $NopResources:Wishlist.AddToWishlist %>"
-                        CommandName="AddToWishlist" CommandArgument='<%#Eval("ProductVariantID")%>' CssClass="productvariantaddtowishlistbutton" />
+                        CommandName="AddToWishlist" CommandArgument='<%#Eval("ProductVariantId")%>' CssClass="productvariantaddtowishlistbutton" />
                 </div>
                 <asp:Panel runat="server" ID="pnlDownloadSample" Visible="false" CssClass="one-variant-download-sample">
                     <span class="downloadsamplebutton">

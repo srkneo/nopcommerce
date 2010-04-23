@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets or sets the ProductCategory identifier
         /// </summary>
-        public int ProductCategoryID { get; set; }
+        public int ProductCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the category identifier
         /// </summary>
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the product is featured

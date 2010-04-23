@@ -27,13 +27,13 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
     public partial class CodeFormatHelper
     {
         #region Fields
-        private static Regex regexCode1 = new Regex(@"(?<begin>\[code:(?<lang>.*?)(?:;ln=(?<linenumbers>(?:on|off)))?(?:;alt=(?<altlinenumbers>(?:on|off)))?(?:;(?<title>.*?))?\])(?<code>.*?)(?<end>\[/code\])", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        //private static Regex regexCode1 = new Regex(@"(?<begin>\[code:(?<lang>.*?)(?:;ln=(?<linenumbers>(?:on|off)))?(?:;alt=(?<altlinenumbers>(?:on|off)))?(?:;(?<title>.*?))?\])(?<code>.*?)(?<end>\[/code\])", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         private static Regex regexHtml = new Regex("<[^>]*>", RegexOptions.Compiled);
-
         private static readonly Regex regexCode2 = new Regex(@"\[code\](?<inner>(.*?))\[/code\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
         #region Utilities
+
         /// <summary>
         /// Code evaluator method
         /// </summary>
@@ -182,19 +182,19 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
         /// <summary>
         /// Formats the text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatTextSimple(string Text)
+        public static string FormatTextSimple(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            if (Text.Contains("[/code]"))
+            if (text.Contains("[/code]"))
             {
-                Text = regexCode2.Replace(Text, new MatchEvaluator(CodeEvaluatorSimple));
-                Text = regexCode2.Replace(Text, "$1");
+                text = regexCode2.Replace(text, new MatchEvaluator(CodeEvaluatorSimple));
+                text = regexCode2.Replace(text, "$1");
             }
-            return Text;
+            return text;
         }
 
         #endregion

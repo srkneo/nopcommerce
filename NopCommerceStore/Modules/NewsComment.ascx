@@ -20,7 +20,7 @@
         </div>
         <div class="commentbody">
             <asp:Label ID="lblComment" CssClass="commenttext" runat="server"></asp:Label>
-            <asp:Label ID="lblNewsCommentID" runat="server" Visible="false"></asp:Label>
+            <asp:Label ID="lblNewsCommentId" runat="server" Visible="false"></asp:Label>
         </div>
     </div>
     <div class="clear">

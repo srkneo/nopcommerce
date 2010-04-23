@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             Currency item = new Currency();
-            item.CurrencyID = dbItem.CurrencyID;
+            item.CurrencyId = dbItem.CurrencyId;
             item.Name = dbItem.Name;
             item.CurrencyCode = dbItem.CurrencyCode;
             item.Rate = dbItem.Rate;
@@ -82,18 +82,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets currency live rates
         /// </summary>
-        /// <param name="ExchangeRateCurrencyCode">Exchange rate currency code</param>
-        /// <param name="UpdateDate">Update date</param>
-        /// <param name="Rates">Currency rates table</param>
-        public static void GetCurrencyLiveRates(string ExchangeRateCurrencyCode, out DateTime UpdateDate, out DataTable Rates)
+        /// <param name="exchangeRateCurrencyCode">Exchange rate currency code</param>
+        /// <param name="updateDate">Update date</param>
+        /// <param name="rates">Currency rates table</param>
+        public static void GetCurrencyLiveRates(string exchangeRateCurrencyCode, 
+            out DateTime updateDate, out DataTable rates)
         {
-            if (String.IsNullOrEmpty(ExchangeRateCurrencyCode) || ExchangeRateCurrencyCode.ToLower() != "eur")
+            if (String.IsNullOrEmpty(exchangeRateCurrencyCode) || 
+                exchangeRateCurrencyCode.ToLower() != "eur")
                 throw new NopException("You can use our \"CurrencyLiveRate\" service only when exchange rate currency code is set to EURO");
 
-            UpdateDate = DateTime.Now;
-            Rates = new DataTable();
-            Rates.Columns.Add("CurrencyCode", typeof(string));
-            Rates.Columns.Add("Rate", typeof(decimal));
+            updateDate = DateTime.Now;
+            rates = new DataTable();
+            rates.Columns.Add("CurrencyCode", typeof(string));
+            rates.Columns.Add("Rate", typeof(decimal));
             HttpWebRequest request = WebRequest.Create("http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml") as HttpWebRequest;
             using (WebResponse response = request.GetResponse())
             {
@@ -103,22 +105,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 nsmgr.AddNamespace("ns", "http://www.ecb.int/vocabulary/2002-08-01/eurofxref");
                 nsmgr.AddNamespace("gesmes", "http://www.gesmes.org/xml/2002-08-01");
                 XmlNode node = document.SelectSingleNode("gesmes:Envelope/ns:Cube/ns:Cube", nsmgr);
-                UpdateDate = DateTime.ParseExact(node.Attributes["time"].Value, "yyyy-MM-dd", null);
+                updateDate = DateTime.ParseExact(node.Attributes["time"].Value, "yyyy-MM-dd", null);
                 NumberFormatInfo provider = new NumberFormatInfo();
                 provider.NumberDecimalSeparator = ".";
                 provider.NumberGroupSeparator = "";
                 foreach (XmlNode node2 in node.ChildNodes)
-                    Rates.Rows.Add(new object[] {node2.Attributes["currency"].Value, double.Parse(node2.Attributes["rate"].Value, provider) });
+                    rates.Rows.Add(new object[] {node2.Attributes["currency"].Value, double.Parse(node2.Attributes["rate"].Value, provider) });
             }
         }
 
         /// <summary>
         /// Deletes currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
-        public static void DeleteCurrency(int CurrencyID)
+        /// <param name="currencyId">Currency identifier</param>
+        public static void DeleteCurrency(int currencyId)
         {
-            DBProviderManager<DBCurrencyProvider>.Provider.DeleteCurrency(CurrencyID);
+            DBProviderManager<DBCurrencyProvider>.Provider.DeleteCurrency(currencyId);
             if (CurrencyManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
@@ -128,21 +130,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
+        /// <param name="currencyId">Currency identifier</param>
         /// <returns>Currency</returns>
-        public static Currency GetCurrencyByID(int CurrencyID)
+        public static Currency GetCurrencyById(int currencyId)
         {
-            if (CurrencyID == 0)
+            if (currencyId == 0)
                 return null;
 
-            string key = string.Format(CURRENCIES_BY_ID_KEY, CurrencyID);
+            string key = string.Format(CURRENCIES_BY_ID_KEY, currencyId);
             object obj2 = NopCache.Get(key);
             if (CurrencyManager.CacheEnabled && (obj2 != null))
             {
                 return (Currency)obj2;
             }
 
-            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.GetCurrencyByID(CurrencyID);
+            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.GetCurrencyById(currencyId);
             Currency currency = DBMapping(dbItem);
 
             if (CurrencyManager.CacheEnabled)
@@ -155,16 +157,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a currency by code
         /// </summary>
-        /// <param name="CurrencyCode">Currency code</param>
+        /// <param name="currencyCode">Currency code</param>
         /// <returns>Currency</returns>
-        public static Currency GetCurrencyByCode(string CurrencyCode)
+        public static Currency GetCurrencyByCode(string currencyCode)
         {
-            if (String.IsNullOrEmpty(CurrencyCode))
+            if (String.IsNullOrEmpty(currencyCode))
                 return null;
             CurrencyCollection currencies = GetAllCurrencies();
             foreach (Currency currency in currencies)
             {
-                if (currency.CurrencyCode.ToLowerInvariant() == CurrencyCode.ToLowerInvariant())
+                if (currency.CurrencyCode.ToLowerInvariant() == currencyCode.ToLowerInvariant())
                 {
                     return currency;
                 }
@@ -199,33 +201,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Inserts a currency
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="CurrencyCode">The currency code</param>
-        /// <param name="Rate">The rate</param>
-        /// <param name="DisplayLocale">The display locale</param>
-        /// <param name="CustomFormatting">The custom formatting</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <param name="rate">The rate</param>
+        /// <param name="displayLocale">The display locale</param>
+        /// <param name="customFormatting">The custom formatting</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A currency</returns>
-        public static Currency InsertCurrency(string Name, string CurrencyCode, decimal Rate,
-           string DisplayLocale, string CustomFormatting, bool Published, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Currency InsertCurrency(string name,
+            string currencyCode, decimal rate, string displayLocale,
+            string customFormatting, bool published, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
             try
             {
-                CultureInfo ci = CultureInfo.GetCultureInfo(DisplayLocale);
+                CultureInfo ci = CultureInfo.GetCultureInfo(displayLocale);
             }
             catch (Exception)
             {
                 throw new NopException("Specified display locale culture is not supported");
             }
 
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.InsertCurrency(Name, CurrencyCode, Rate,
-                DisplayLocale, CustomFormatting, Published, DisplayOrder, CreatedOn, UpdatedOn);
+            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.InsertCurrency(name,
+                currencyCode, rate, displayLocale, customFormatting,
+                published, displayOrder, createdOn, updatedOn);
             Currency currency = DBMapping(dbItem);
 
             if (CurrencyManager.CacheEnabled)
@@ -238,34 +243,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Updates the currency
         /// </summary>
-        /// <param name="CurrencyID">Currency identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="CurrencyCode">The currency code</param>
-        /// <param name="Rate">The rate</param>
-        /// <param name="DisplayLocale">The display locale</param>
-        /// <param name="CustomFormatting">The custom formatting</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="currencyId">Currency identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <param name="rate">The rate</param>
+        /// <param name="displayLocale">The display locale</param>
+        /// <param name="customFormatting">The custom formatting</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A currency</returns>
-        public static Currency UpdateCurrency(int CurrencyID, string Name, string CurrencyCode, decimal Rate,
-           string DisplayLocale, string CustomFormatting, bool Published, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Currency UpdateCurrency(int currencyId, string name,
+            string currencyCode, decimal rate, string displayLocale,
+            string customFormatting, bool published, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
             try
             {
-                CultureInfo ci = CultureInfo.GetCultureInfo(DisplayLocale);
+                CultureInfo ci = CultureInfo.GetCultureInfo(displayLocale);
             }
             catch (Exception)
             {
                 throw new NopException("Specified display locale culture is not supported");
             }
 
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.UpdateCurrency(CurrencyID, Name, CurrencyCode, Rate,
-                DisplayLocale, CustomFormatting, Published, DisplayOrder, CreatedOn, UpdatedOn);
+            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.UpdateCurrency(currencyId, 
+                name, currencyCode, rate, displayLocale, customFormatting, 
+                published, displayOrder, createdOn, updatedOn);
             Currency currency = DBMapping(dbItem);
 
             if (CurrencyManager.CacheEnabled)
@@ -278,19 +286,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Converts currency
         /// </summary>
-        /// <param name="Amount">Amount</param>
-        /// <param name="SourceCurrencyCode">Source currency code</param>
-        /// <param name="TargetCurrencyCode">Target currency code</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="sourceCurrencyCode">Source currency code</param>
+        /// <param name="targetCurrencyCode">Target currency code</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertCurrency(decimal Amount, Currency SourceCurrencyCode, Currency TargetCurrencyCode)
+        public static decimal ConvertCurrency(decimal amount, Currency sourceCurrencyCode, 
+            Currency targetCurrencyCode)
         {
-            decimal result = Amount;
-            if (SourceCurrencyCode.CurrencyID == TargetCurrencyCode.CurrencyID)
+            decimal result = amount;
+            if (sourceCurrencyCode.CurrencyId == targetCurrencyCode.CurrencyId)
                 return result;
-            if (result != decimal.Zero && SourceCurrencyCode.CurrencyID != TargetCurrencyCode.CurrencyID)
+            if (result != decimal.Zero && sourceCurrencyCode.CurrencyId != targetCurrencyCode.CurrencyId)
             {
-                result = ConvertToPrimaryExchangeRateCurrency(result, SourceCurrencyCode);
-                result = ConvertFromPrimaryExchangeRateCurrency(result, TargetCurrencyCode);
+                result = ConvertToPrimaryExchangeRateCurrency(result, sourceCurrencyCode);
+                result = ConvertFromPrimaryExchangeRateCurrency(result, targetCurrencyCode);
             }
             result = Math.Round(result, 2);
             return result;
@@ -299,18 +308,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Converts to primary exchange rate currency 
         /// </summary>
-        /// <param name="Amount">Amount</param>
-        /// <param name="SourceCurrencyCode">Source currency code</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="sourceCurrencyCode">Source currency code</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertToPrimaryExchangeRateCurrency(decimal Amount, Currency SourceCurrencyCode)
+        public static decimal ConvertToPrimaryExchangeRateCurrency(decimal amount, 
+            Currency sourceCurrencyCode)
         {
-            decimal result = Amount;
-            if (result != decimal.Zero && SourceCurrencyCode.CurrencyID != PrimaryExchangeRateCurrency.CurrencyID)
+            decimal result = amount;
+            if (result != decimal.Zero && sourceCurrencyCode.CurrencyId != PrimaryExchangeRateCurrency.CurrencyId)
             {
-                decimal ExchangeRate = SourceCurrencyCode.Rate;
-                if (ExchangeRate == decimal.Zero)
-                    throw new NopException(string.Format("Exchange rate not found for currency [{0}]", SourceCurrencyCode.Name));
-                result = result / ExchangeRate;
+                decimal exchangeRate = sourceCurrencyCode.Rate;
+                if (exchangeRate == decimal.Zero)
+                    throw new NopException(string.Format("Exchange rate not found for currency [{0}]", sourceCurrencyCode.Name));
+                result = result / exchangeRate;
             }
             return result;
         }
@@ -318,18 +328,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Converts from primary exchange rate currency
         /// </summary>
-        /// <param name="Amount">Amount</param>
-        /// <param name="TargetCurrencyCode">Target currency code</param>
+        /// <param name="amount">Amount</param>
+        /// <param name="targetCurrencyCode">Target currency code</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertFromPrimaryExchangeRateCurrency(decimal Amount, Currency TargetCurrencyCode)
+        public static decimal ConvertFromPrimaryExchangeRateCurrency(decimal amount, 
+            Currency targetCurrencyCode)
         {
-            decimal result = Amount;
-            if (result != decimal.Zero && TargetCurrencyCode.CurrencyID != PrimaryExchangeRateCurrency.CurrencyID)
+            decimal result = amount;
+            if (result != decimal.Zero && targetCurrencyCode.CurrencyId != PrimaryExchangeRateCurrency.CurrencyId)
             {
-                decimal ExchangeRate = TargetCurrencyCode.Rate;
-                if (ExchangeRate == decimal.Zero)
-                    throw new NopException(string.Format("Exchange rate not found for currency [{0}]", TargetCurrencyCode.Name));
-                result = result * ExchangeRate;
+                decimal exchangeRate = targetCurrencyCode.Rate;
+                if (exchangeRate == decimal.Zero)
+                    throw new NopException(string.Format("Exchange rate not found for currency [{0}]", targetCurrencyCode.Name));
+                result = result * exchangeRate;
             }
             return result;
         }
@@ -344,13 +355,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             get
             {
-                int primaryStoreCurrencyID = SettingManager.GetSettingValueInteger("Currency.PrimaryStoreCurrency");
-                return GetCurrencyByID(primaryStoreCurrencyID);
+                int primaryStoreCurrencyId = SettingManager.GetSettingValueInteger("Currency.PrimaryStoreCurrency");
+                return GetCurrencyById(primaryStoreCurrencyId);
             }
             set
             {
                 if (value != null)
-                    SettingManager.SetParam("Currency.PrimaryStoreCurrency", value.CurrencyID.ToString());
+                    SettingManager.SetParam("Currency.PrimaryStoreCurrency", value.CurrencyId.ToString());
             }
         }
 
@@ -361,13 +372,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             get
             {
-                int primaryExchangeRateCurrencyID = SettingManager.GetSettingValueInteger("Currency.PrimaryExchangeRateCurrency");
-                return GetCurrencyByID(primaryExchangeRateCurrencyID);
+                int primaryExchangeRateCurrencyId = SettingManager.GetSettingValueInteger("Currency.PrimaryExchangeRateCurrency");
+                return GetCurrencyById(primaryExchangeRateCurrencyId);
             }
             set
             {
                 if (value != null)
-                    SettingManager.SetParam("Currency.PrimaryExchangeRateCurrency", value.CurrencyID.ToString());
+                    SettingManager.SetParam("Currency.PrimaryExchangeRateCurrency", value.CurrencyId.ToString());
             }
         }
 

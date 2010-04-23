@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Dibs
         /// <summary>
         /// Gets or sets the merchant ID
         /// </summary>
-        public static int MerchantID
+        public static int MerchantId
         {
             get
             {

@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     News news = ctrlNewsInfo.SaveInfo();
-                    Response.Redirect("NewsDetails.aspx?NewsID=" + news.NewsID.ToString());
+                    Response.Redirect("NewsDetails.aspx?NewsID=" + news.NewsId.ToString());
                 }
                 catch (Exception exc)
                 {

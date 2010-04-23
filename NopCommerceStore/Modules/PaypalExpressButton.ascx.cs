@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 return;
             }
 
-            if (Cart.IsRecurring && PaymentManager.SupportRecurringPayments(ppePaymentMethod.PaymentMethodID) == RecurringPaymentTypeEnum.NotSupported)
+            if (Cart.IsRecurring && PaymentManager.SupportRecurringPayments(ppePaymentMethod.PaymentMethodId) == RecurringPaymentTypeEnum.NotSupported)
             {
                 this.Visible = false;
                 return;
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var ppePaymentMethod = PaymentMethodManager.GetPaymentMethodBySystemKeyword("PayPalExpress");
             if (ppePaymentMethod != null && ppePaymentMethod.IsActive)
             {
-                decimal? cartTotal = ShoppingCartManager.GetShoppingCartTotal(Cart, ppePaymentMethod.PaymentMethodID, NopContext.Current.User);
+                decimal? cartTotal = ShoppingCartManager.GetShoppingCartTotal(Cart, ppePaymentMethod.PaymentMethodId, NopContext.Current.User);
                 if (cartTotal.HasValue)
                 {
                     string expressCheckoutURL = payPalExpress.SetExpressCheckout(cartTotal.Value,

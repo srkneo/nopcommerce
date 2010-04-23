@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureSSL();
+                CommonHelper.EnsureSsl();
             }
 
             CommonHelper.SetResponseNoCache(Response);
@@ -63,12 +63,12 @@ namespace NopSolutions.NopCommerce.Web
 
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
             //reset checkout data
-            CustomerManager.ResetCheckoutData(NopContext.Current.User.CustomerID, false);
+            CustomerManager.ResetCheckoutData(NopContext.Current.User.CustomerId, false);
 
 
             //validation
@@ -83,8 +83,8 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     var sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(
                         sci.ShoppingCartType,
-                            sci.ProductVariantID, 
-                            sci.AttributesXML, 
+                            sci.ProductVariantId, 
+                            sci.AttributesXml, 
                             sci.CustomerEnteredPrice, 
                             sci.Quantity);
                     if (sciWarnings.Count > 0)

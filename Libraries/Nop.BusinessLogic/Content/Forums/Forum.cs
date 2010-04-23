@@ -38,12 +38,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets or sets the forum identifier
         /// </summary>
-        public int ForumID { get; set; }
+        public int ForumId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum group identifier
         /// </summary>
-        public int ForumGroupID { get; set; }
+        public int ForumGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -68,17 +68,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets or sets the last topic identifier
         /// </summary>
-        public int LastTopicID { get; set; }
+        public int LastTopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the last post identifier
         /// </summary>
-        public int LastPostID { get; set; }
+        public int LastPostId { get; set; }
 
         /// <summary>
         /// Gets or sets the last post user identifier
         /// </summary>
-        public int LastPostUserID { get; set; }
+        public int LastPostUserId { get; set; }
 
         /// <summary>
         /// Gets or sets the last post date and time
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return ForumManager.GetForumGroupByID(ForumGroupID);
+                return ForumManager.GetForumGroupById(this.ForumGroupId);
             }
         }
 
@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return ForumManager.GetTopicByID(LastTopicID);
+                return ForumManager.GetTopicById(this.LastTopicId);
             }
         }
 
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return ForumManager.GetPostByID(LastPostID);
+                return ForumManager.GetPostById(this.LastPostId);
             }
         }
 
@@ -143,7 +143,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return CustomerManager.GetCustomerByID(LastPostUserID);
+                return CustomerManager.GetCustomerById(this.LastPostUserId);
             }
         }
         #endregion

@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditProductAttribute"),
                         productAttribute.Name);
 
-                    Response.Redirect("ProductAttributeDetails.aspx?ProductAttributeID=" + productAttribute.ProductAttributeID.ToString());
+                    Response.Redirect("ProductAttributeDetails.aspx?ProductAttributeID=" + productAttribute.ProductAttributeId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -56,10 +56,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeByID(this.ProductAttributeID);
+                ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeById(this.ProductAttributeId);
                 if (productAttribute != null)
                 {
-                    ProductAttributeManager.DeleteProductAttribute(productAttribute.ProductAttributeID);
+                    ProductAttributeManager.DeleteProductAttribute(productAttribute.ProductAttributeId);
 
                     CustomerActivityManager.InsertActivity(
                         "DeleteProductAttribute",
@@ -74,11 +74,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ProductAttributeID
+        public int ProductAttributeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductAttributeID");
+                return CommonHelper.QueryStringInt("ProductAttributeId");
             }
         }
     }

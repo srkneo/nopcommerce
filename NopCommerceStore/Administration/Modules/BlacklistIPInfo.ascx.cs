@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         /// </summary>
         private void BindData()
         {
-            BannedIpAddress ipAddress = IpBlacklistManager.GetBannedIpAddressById(BannedIpAddressID);
+            BannedIpAddress ipAddress = IpBlacklistManager.GetBannedIpAddressById(this.BannedIpAddressId);
             if (ipAddress != null)
             {
                 txtBannedIP.Text = ipAddress.Address;
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         public BannedIpAddress SaveBannedIpAddressInfo()
         {
             DateTime nowDT = DateTime.Now;
-            BannedIpAddress ipAddress = IpBlacklistManager.GetBannedIpAddressById(BannedIpAddressID);
+            BannedIpAddress ipAddress = IpBlacklistManager.GetBannedIpAddressById(this.BannedIpAddressId);
 
             // Check if the IP is valid
             if (!IpBlacklistManager.IsValidIp(txtBannedIP.Text.Trim()))
@@ -74,7 +74,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             //if ip address is not null update
             if (ipAddress != null)
             {
-                ipAddress = IpBlacklistManager.UpdateBannedIpAddress(BannedIpAddressID, txtBannedIP.Text,
+                ipAddress = IpBlacklistManager.UpdateBannedIpAddress(this.BannedIpAddressId, txtBannedIP.Text,
                     txtComment.Text, ipAddress.CreatedOn, nowDT);
             }
             else //insert
@@ -88,11 +88,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         /// <summary>
         /// Gets BannedIpAddressID from query string
         /// </summary>
-        public int BannedIpAddressID
+        public int BannedIpAddressId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BannedIpAddressID");
+                return CommonHelper.QueryStringInt("BannedIpAddressId");
             }
         }
     }

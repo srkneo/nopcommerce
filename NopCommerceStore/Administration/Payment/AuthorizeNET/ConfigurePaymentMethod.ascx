@@ -40,7 +40,7 @@
             Login ID:
         </td>
         <td class="adminData">
-            <asp:TextBox ID="txtLoginID" runat="server" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox ID="txtLoginId" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

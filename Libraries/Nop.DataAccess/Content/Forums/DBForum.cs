@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Forums
         /// <summary>
         /// Gets or sets the forum identifier
         /// </summary>
-        public int ForumID { get; set; }
+        public int ForumId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum group identifier
         /// </summary>
-        public int ForumGroupID { get; set; }
+        public int ForumGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -67,17 +67,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Forums
         /// <summary>
         /// Gets or sets the last topic identifier
         /// </summary>
-        public int LastTopicID { get; set; }
+        public int LastTopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the last post identifier
         /// </summary>
-        public int LastPostID { get; set; }
+        public int LastPostId { get; set; }
 
         /// <summary>
         /// Gets or sets the last post user identifier
         /// </summary>
-        public int LastPostUserID { get; set; }
+        public int LastPostUserId { get; set; }
 
         /// <summary>
         /// Gets or sets the last post date and time

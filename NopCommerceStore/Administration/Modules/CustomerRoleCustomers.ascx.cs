@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            CustomerRole customerRole = CustomerManager.GetCustomerRoleByID(this.CustomerRoleID);
+            CustomerRole customerRole = CustomerManager.GetCustomerRoleById(this.CustomerRoleId);
             if (customerRole != null)
             {
                 CustomerCollection customers = customerRole.Customers;
@@ -54,11 +54,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
         }
 
-        public int CustomerRoleID
+        public int CustomerRoleId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerRoleID");
+                return CommonHelper.QueryStringInt("CustomerRoleId");
             }
         }
     }

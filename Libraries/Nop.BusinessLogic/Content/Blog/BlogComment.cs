@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Gets or sets the blog comment identifier
         /// </summary>
-        public int BlogCommentID { get; set; }
+        public int BlogCommentId { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post identifier
         /// </summary>
-        public int BlogPostID { get; set; }
+        public int BlogPostId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier who commented the blog post
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the comment text
@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             get
             {
-                return CustomerManager.GetCustomerByID(CustomerID);
+                return CustomerManager.GetCustomerById(this.CustomerId);
             }
         }
 
@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             get
             {
-                return BlogManager.GetBlogPostByID(BlogPostID);
+                return BlogManager.GetBlogPostById(this.BlogPostId);
             }
         }
         #endregion

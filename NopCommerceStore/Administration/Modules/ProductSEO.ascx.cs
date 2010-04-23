@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID, 0);
+            Product product = ProductManager.GetProductById(this.ProductId, 0);
 
             if (this.HasLocalizableContent)
             {
@@ -79,26 +79,26 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            SaveInfo(this.ProductID);
+            SaveInfo(this.ProductId);
         }
 
-        public void SaveInfo(int prodID)
+        public void SaveInfo(int prodId)
         {
-            Product product = ProductManager.GetProductByID(prodID, 0);
+            Product product = ProductManager.GetProductById(prodId, 0);
             if (product != null)
             {
-                product = ProductManager.UpdateProduct(product.ProductID, product.Name, product.ShortDescription,
-                    product.FullDescription, product.AdminComment, product.ProductTypeID,
-                    product.TemplateID, product.ShowOnHomePage, txtMetaKeywords.Text,
+                product = ProductManager.UpdateProduct(product.ProductId, product.Name, product.ShortDescription,
+                    product.FullDescription, product.AdminComment, product.ProductTypeId,
+                    product.TemplateId, product.ShowOnHomePage, txtMetaKeywords.Text,
                     txtMetaDescription.Text, txtMetaTitle.Text, txtSEName.Text,
                     product.AllowCustomerReviews, product.AllowCustomerRatings, product.RatingSum,
                     product.TotalRatingVotes, product.Published, product.Deleted, product.CreatedOn, DateTime.Now);
             }
 
-            saveLocalizableContent(product);
+            SaveLocalizableContent(product);
         }
 
-        protected void saveLocalizableContent(Product product)
+        protected void SaveLocalizableContent(Product product)
         {
             if (product == null)
                 return;
@@ -116,7 +116,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedSEName = (TextBox)item.FindControl("txtLocalizedSEName");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string metaKeywords = txtLocalizedMetaKeywords.Text;
                     string metaDescription = txtLocalizedMetaDescription.Text;
                     string metaTitle = txtLocalizedMetaTitle.Text;
@@ -127,23 +127,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         string.IsNullOrEmpty(metaTitle) &&
                         string.IsNullOrEmpty(seName));
 
-                    var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(product.ProductID, languageID);
+                    var content = ProductManager.GetProductLocalizedByProductIdAndLanguageId(product.ProductId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = ProductManager.InsertProductLocalized(product.ProductID,
-                                   languageID, string.Empty, string.Empty, string.Empty,
+                            content = ProductManager.InsertProductLocalized(product.ProductId,
+                                   languageId, string.Empty, string.Empty, string.Empty,
                                    metaKeywords, metaDescription, metaTitle, seName);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = ProductManager.UpdateProductLocalized(content.ProductLocalizedID, content.ProductID,
-                                languageID, content.Name, content.ShortDescription, content.FullDescription,
+                            content = ProductManager.UpdateProductLocalized(content.ProductLocalizedId, content.ProductId,
+                                languageId, content.Name, content.ShortDescription, content.FullDescription,
                                 metaKeywords, metaDescription, metaTitle, seName);
                         }
                     }
@@ -161,9 +161,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedSEName = (TextBox)e.Item.FindControl("txtLocalizedSEName");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(this.ProductID, languageID);
+                var content = ProductManager.GetProductLocalizedByProductIdAndLanguageId(this.ProductId, languageId);
                 if (content != null)
                 {
                     txtLocalizedMetaKeywords.Text = content.MetaKeywords;
@@ -174,11 +174,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
 

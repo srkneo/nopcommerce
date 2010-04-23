@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets or sets the forum post identifier
         /// </summary>
-        public int ForumPostID { get; set; }
+        public int ForumPostId { get; set; }
 
         /// <summary>
         /// Gets or sets the forum topic identifier
         /// </summary>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the user identifier
         /// </summary>
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the text
@@ -80,7 +80,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return ForumManager.GetTopicByID(TopicID);
+                return ForumManager.GetTopicById(this.TopicId);
             }
         }
 
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             get
             {
-                return CustomerManager.GetCustomerByID(UserID);
+                return CustomerManager.GetCustomerById(this.UserId);
             }
         }
         #endregion

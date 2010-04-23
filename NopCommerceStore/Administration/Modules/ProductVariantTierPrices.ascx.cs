@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
                 pnlData.Visible = true;
@@ -77,12 +77,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant != null)
                 {
                     decimal price = txtNewPrice.Value;
                     int quantity = txtNewQuantity.Value;
-                    TierPrice tierPrice = ProductManager.InsertTierPrice(productVariant.ProductVariantID, quantity, price);
+                    TierPrice tierPrice = ProductManager.InsertTierPrice(productVariant.ProductVariantId, quantity, price);
 
                     BindData();
                 }
@@ -100,19 +100,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvTierPrices.Rows[index];
 
-                HiddenField hfTierPriceID = row.FindControl("hfTierPriceID") as HiddenField;
+                HiddenField hfTierPriceId = row.FindControl("hfTierPriceId") as HiddenField;
                 NumericTextBox txtQuantity = row.FindControl("txtQuantity") as NumericTextBox;
                 DecimalTextBox txtPrice = row.FindControl("txtPrice") as DecimalTextBox;
 
-                int tierPriceID = int.Parse(hfTierPriceID.Value);
+                int tierPriceId = int.Parse(hfTierPriceId.Value);
                 decimal price = txtPrice.Value;
                 int quantity = txtQuantity.Value;
 
-                TierPrice tierPrice = ProductManager.GetTierPriceByID(tierPriceID);
+                TierPrice tierPrice = ProductManager.GetTierPriceById(tierPriceId);
 
                 if (tierPrice != null)
-                    ProductManager.UpdateTierPrice(tierPrice.TierPriceID,
-                       tierPrice.ProductVariantID, quantity, price);
+                    ProductManager.UpdateTierPrice(tierPrice.TierPriceId,
+                       tierPrice.ProductVariantId, quantity, price);
 
                 BindData();
             }
@@ -132,8 +132,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvTierPrices_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int tierPriceID = (int)gvTierPrices.DataKeys[e.RowIndex]["TierPriceID"];
-            ProductManager.DeleteTierPrice(tierPriceID);
+            int tierPriceId = (int)gvTierPrices.DataKeys[e.RowIndex]["TierPriceId"];
+            ProductManager.DeleteTierPrice(tierPriceId);
             BindData();
         }
 
@@ -144,11 +144,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             lErrorTitle.Text = exc.Message;
         }
 
-        public int ProductVariantID
+        public int ProductVariantId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductVariantID");
+                return CommonHelper.QueryStringInt("ProductVariantId");
             }
         }
     }

@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// <summary>
         /// Gets or sets the blog post identifier
         /// </summary>
-        public int BlogPostID { get; set; }
+        public int BlogPostId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post title
@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// <summary>
         /// Gets or sets the user identifier who created the blog post
         /// </summary>
-        public int CreatedByID { get; set; }
+        public int CreatedById { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation

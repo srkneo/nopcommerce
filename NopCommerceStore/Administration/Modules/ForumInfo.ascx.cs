@@ -32,10 +32,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Forum forum = ForumManager.GetForumByID(this.ForumID);
+            Forum forum = ForumManager.GetForumById(this.ForumId);
             if (forum != null)
             {
-                CommonHelper.SelectListItem(this.ddlForumGroup, forum.ForumGroupID);
+                CommonHelper.SelectListItem(this.ddlForumGroup, forum.ForumGroupId);
 
                 this.txtName.Text = forum.Name;
                 this.txtDescription.Text = forum.Description;
@@ -60,7 +60,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ForumGroupCollection forumGroups = ForumManager.GetAllForumGroups();
             foreach (ForumGroup forumGroup in forumGroups)
             {
-                ListItem item2 = new ListItem(forumGroup.Name, forumGroup.ForumGroupID.ToString());
+                ListItem item2 = new ListItem(forumGroup.Name, forumGroup.ForumGroupId.ToString());
                 this.ddlForumGroup.Items.Add(item2);
             }
         }
@@ -76,15 +76,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Forum SaveInfo()
         {
-            Forum forum = ForumManager.GetForumByID(this.ForumID);
+            Forum forum = ForumManager.GetForumById(this.ForumId);
             DateTime nowDT = DateTime.Now;
 
             if (forum != null)
             {
-                forum = ForumManager.UpdateForum(forum.ForumID, int.Parse(this.ddlForumGroup.SelectedItem.Value),
+                forum = ForumManager.UpdateForum(forum.ForumId, int.Parse(this.ddlForumGroup.SelectedItem.Value),
                     txtName.Text, txtDescription.Text, forum.NumTopics,
-                    forum.NumPosts, forum.LastTopicID, forum.LastPostID,
-                    forum.LastPostUserID, forum.LastPostTime,
+                    forum.NumPosts, forum.LastTopicId, forum.LastPostId,
+                    forum.LastPostUserId, forum.LastPostTime,
                     txtDisplayOrder.Value, forum.CreatedOn, nowDT);
             }
             else
@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ForumManager.DeleteForum(this.ForumID);
+                ForumManager.DeleteForum(this.ForumId);
                 Response.Redirect("Forums.aspx");
             }
             catch (Exception exc)
@@ -109,11 +109,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ForumID
+        public int ForumId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ForumID");
+                return CommonHelper.QueryStringInt("ForumId");
             }
         }
     }

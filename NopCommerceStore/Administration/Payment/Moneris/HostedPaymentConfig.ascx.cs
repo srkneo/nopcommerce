@@ -12,7 +12,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Moneris
         {
             if(!Page.IsPostBack)
             {
-                txtHppID.Text = HostedPaymentSettings.HppID;
+                txtHppId.Text = HostedPaymentSettings.HppId;
                 txtGatewayUrl.Text = HostedPaymentSettings.GatewayUrl;
                 txtHppKey.Text = HostedPaymentSettings.HppKey;
                 cbAuthorizeOnly.Checked = HostedPaymentSettings.AuthorizeOnly;
@@ -22,7 +22,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Moneris
 
         public void Save()
         {
-            HostedPaymentSettings.HppID = txtHppID.Text;
+            HostedPaymentSettings.HppId = txtHppId.Text;
             HostedPaymentSettings.GatewayUrl = txtGatewayUrl.Text;
             HostedPaymentSettings.HppKey = txtHppKey.Text;
             HostedPaymentSettings.AuthorizeOnly = cbAuthorizeOnly.Checked;

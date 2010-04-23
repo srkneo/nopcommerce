@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (product != null)
             {
-                string productURL = SEOHelper.GetProductURL(product);
+                string productURL = SEOHelper.GetProductUrl(product);
 
                 hlProduct.NavigateUrl = productURL;
                 hlProduct.Text = Server.HtmlEncode(product.Name);
@@ -141,32 +141,32 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnProductDetails_Click(object sender, CommandEventArgs e)
         {
-            int productID = Convert.ToInt32(e.CommandArgument);
-            string productURL = SEOHelper.GetProductURL(productID);
+            int productId = Convert.ToInt32(e.CommandArgument);
+            string productURL = SEOHelper.GetProductUrl(productId);
             Response.Redirect(productURL);
         }
 
         protected void btnAddToCart_Click(object sender, CommandEventArgs e)
         {
-            int productID = Convert.ToInt32(e.CommandArgument);
-            int productVariantID = 0;
-            if (ProductManager.DirectAddToCartAllowed(productID, out productVariantID))
+            int productId = Convert.ToInt32(e.CommandArgument);
+            int productVariantId = 0;
+            if (ProductManager.DirectAddToCartAllowed(productId, out productVariantId))
             {
                 var addToCartWarnings = ShoppingCartManager.AddToCart(ShoppingCartTypeEnum.ShoppingCart, 
-                    productVariantID, string.Empty, decimal.Zero, 1);
+                    productVariantId, string.Empty, decimal.Zero, 1);
                 if (addToCartWarnings.Count == 0)
                 {
                     Response.Redirect("~/shoppingcart.aspx");
                 }
                 else
                 {
-                    string productURL = SEOHelper.GetProductURL(productID);
+                    string productURL = SEOHelper.GetProductUrl(productId);
                     Response.Redirect(productURL);
                 }
             }
             else
             {
-                string productURL = SEOHelper.GetProductURL(productID);
+                string productURL = SEOHelper.GetProductUrl(productId);
                 Response.Redirect(productURL);
             }
         }

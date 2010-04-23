@@ -27,28 +27,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Finds an address
         /// </summary>
-        /// <param name="FirstName">First name</param>
-        /// <param name="LastName">Last name</param>
-        /// <param name="PhoneNumber">Phone number</param>
-        /// <param name="Email">Email</param>
-        /// <param name="FaxNumber">Fax number</param>
-        /// <param name="Company">Company</param>
-        /// <param name="Address1">Address 1</param>
-        /// <param name="Address2">Address 2</param>
-        /// <param name="City">City</param>
-        /// <param name="StateProvinceID">State/province identifier</param>
-        /// <param name="ZipPostalCode">Zip postal code</param>
-        /// <param name="CountryID">Country identifier</param>
+        /// <param name="firstName">First name</param>
+        /// <param name="lastName">Last name</param>
+        /// <param name="phoneNumber">Phone number</param>
+        /// <param name="email">Email</param>
+        /// <param name="faxNumber">Fax number</param>
+        /// <param name="company">Company</param>
+        /// <param name="address1">Address 1</param>
+        /// <param name="address2">Address 2</param>
+        /// <param name="city">City</param>
+        /// <param name="stateProvinceId">State/province identifier</param>
+        /// <param name="zipPostalCode">Zip postal code</param>
+        /// <param name="countryId">Country identifier</param>
         /// <returns>Address</returns>
-        public Address FindAddress(string FirstName, string LastName, string PhoneNumber, string Email,
-            string FaxNumber, string Company,string Address1, string Address2, string City, int StateProvinceID,
-            string ZipPostalCode, int CountryID)
+        public Address FindAddress(string firstName, string lastName, string phoneNumber, 
+            string email, string faxNumber, string company,string address1, 
+            string address2, string city, int stateProvinceId,
+            string zipPostalCode, int countryId)
         {
-            return this.Find((a) => a.FirstName == FirstName && a.LastName == LastName && a.PhoneNumber == PhoneNumber &&
-                 a.Email == Email && a.FaxNumber == FaxNumber && a.Company == Company && 
-                 a.Address1 == Address1 && a.Address2 == Address2 &&
-                 a.City == City && a.StateProvinceID == StateProvinceID 
-                 && a.ZipPostalCode == ZipPostalCode && a.CountryID == CountryID);
+            return this.Find((a) => a.FirstName == firstName &&
+                a.LastName == lastName && 
+                a.PhoneNumber == phoneNumber &&
+                a.Email == email && 
+                a.FaxNumber == faxNumber &&
+                a.Company == company && 
+                a.Address1 == address1 && 
+                a.Address2 == address2 &&
+                a.City == city && 
+                a.StateProvinceId == stateProvinceId && 
+                a.ZipPostalCode == zipPostalCode &&
+                a.CountryId == countryId);
         }
     }
 }

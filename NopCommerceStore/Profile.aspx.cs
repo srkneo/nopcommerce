@@ -43,9 +43,9 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
 
-                Customer customer = CustomerManager.GetCustomerByID(this.CustomerID);
+                Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
                 if (customer == null || customer.IsGuest)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
@@ -64,11 +64,11 @@ namespace NopSolutions.NopCommerce.Web
             SEOHelper.RenderTitle(this, title, true);
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("UserID");
+                return CommonHelper.QueryStringInt("UserId");
             }
         }
     }

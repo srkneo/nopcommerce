@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     /// <summary>
     /// ShippingByWeightAndCountry provider for SQL Server
     /// </summary>
-    public partial class SQLShippingByWeightAndCountryProvider : DBShippingByWeightAndCountryProvider
+    public partial class SqlShippingByWeightAndCountryProvider : DBShippingByWeightAndCountryProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,16 +36,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         #region Utilities
         private DBShippingByWeightAndCountry GetShippingByWeightAndCountryFromReader(IDataReader dataReader)
         {
-            DBShippingByWeightAndCountry shippingByWeightAndCountry = new DBShippingByWeightAndCountry();
-            shippingByWeightAndCountry.ShippingByWeightAndCountryID = NopSqlDataHelper.GetInt(dataReader, "ShippingByWeightAndCountryID");
-            shippingByWeightAndCountry.ShippingMethodID = NopSqlDataHelper.GetInt(dataReader, "ShippingMethodID");
-            shippingByWeightAndCountry.CountryID = NopSqlDataHelper.GetInt(dataReader, "CountryID");
-            shippingByWeightAndCountry.From = NopSqlDataHelper.GetDecimal(dataReader, "From");
-            shippingByWeightAndCountry.To = NopSqlDataHelper.GetDecimal(dataReader, "To");
-            shippingByWeightAndCountry.UsePercentage = NopSqlDataHelper.GetBoolean(dataReader, "UsePercentage");
-            shippingByWeightAndCountry.ShippingChargePercentage = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargePercentage");
-            shippingByWeightAndCountry.ShippingChargeAmount = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargeAmount");
-            return shippingByWeightAndCountry;
+            var item = new DBShippingByWeightAndCountry();
+            item.ShippingByWeightAndCountryId = NopSqlDataHelper.GetInt(dataReader, "ShippingByWeightAndCountryID");
+            item.ShippingMethodId = NopSqlDataHelper.GetInt(dataReader, "ShippingMethodID");
+            item.CountryId = NopSqlDataHelper.GetInt(dataReader, "CountryID");
+            item.From = NopSqlDataHelper.GetDecimal(dataReader, "From");
+            item.To = NopSqlDataHelper.GetDecimal(dataReader, "To");
+            item.UsePercentage = NopSqlDataHelper.GetBoolean(dataReader, "UsePercentage");
+            item.ShippingChargePercentage = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargePercentage");
+            item.ShippingChargeAmount = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargeAmount");
+            return item;
         }
         #endregion
 
@@ -88,34 +88,34 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Gets a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">ShippingByWeightAndCountry identifier</param>
+        /// <param name="shippingByWeightAndCountryId">ShippingByWeightAndCountry identifier</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public override DBShippingByWeightAndCountry GetByID(int ShippingByWeightAndCountryID)
+        public override DBShippingByWeightAndCountry GetById(int shippingByWeightAndCountryId)
         {
-            DBShippingByWeightAndCountry shippingByWeightAndCountry = null;
+            DBShippingByWeightAndCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightAndCountryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ShippingByWeightAndCountryID", DbType.Int32, ShippingByWeightAndCountryID);
+            db.AddInParameter(dbCommand, "ShippingByWeightAndCountryID", DbType.Int32, shippingByWeightAndCountryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    shippingByWeightAndCountry = GetShippingByWeightAndCountryFromReader(dataReader);
+                    item = GetShippingByWeightAndCountryFromReader(dataReader);
                 }
             }
-            return shippingByWeightAndCountry;
+            return item;
         }
 
         /// <summary>
         /// Deletes a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">ShippingByWeightAndCountry identifier</param>
-        public override void DeleteShippingByWeightAndCountry(int ShippingByWeightAndCountryID)
+        /// <param name="shippingByWeightAndCountryId">ShippingByWeightAndCountry identifier</param>
+        public override void DeleteShippingByWeightAndCountry(int shippingByWeightAndCountryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightAndCountryDelete");
-            db.AddInParameter(dbCommand, "ShippingByWeightAndCountryID", DbType.Int32, ShippingByWeightAndCountryID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ShippingByWeightAndCountryID", DbType.Int32, shippingByWeightAndCountryId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -142,82 +142,83 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Inserts a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public override DBShippingByWeightAndCountry InsertShippingByWeightAndCountry(int ShippingMethodID,
-            int CountryID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public override DBShippingByWeightAndCountry InsertShippingByWeightAndCountry(int shippingMethodId,
+            int countryId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            DBShippingByWeightAndCountry shippingByWeightAndCountry = null;
+            DBShippingByWeightAndCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightAndCountryInsert");
             db.AddOutParameter(dbCommand, "ShippingByWeightAndCountryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, ShippingMethodID);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "From", DbType.Decimal, From);
-            db.AddInParameter(dbCommand, "To", DbType.Decimal, To);
-            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, UsePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, ShippingChargePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, ShippingChargeAmount);
+            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "From", DbType.Decimal, from);
+            db.AddInParameter(dbCommand, "To", DbType.Decimal, to);
+            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, usePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, shippingChargePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, shippingChargeAmount);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ShippingByWeightAndCountryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShippingByWeightAndCountryID"));
-                shippingByWeightAndCountry = GetByID(ShippingByWeightAndCountryID);
+                int shippingByWeightAndCountryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShippingByWeightAndCountryID"));
+                item = GetById(shippingByWeightAndCountryId);
             }
-            return shippingByWeightAndCountry;
+            return item;
         }
 
         /// <summary>
         /// Updates the ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">The ShippingByWeightAndCountry identifier</param>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingByWeightAndCountryId">The ShippingByWeightAndCountry identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public override DBShippingByWeightAndCountry UpdateShippingByWeightAndCountry(int ShippingByWeightAndCountryID,
-            int ShippingMethodID, int CountryID, decimal From, decimal To, bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public override DBShippingByWeightAndCountry UpdateShippingByWeightAndCountry(int shippingByWeightAndCountryId,
+            int shippingMethodId, int countryId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            DBShippingByWeightAndCountry shippingByWeightAndCountry = null;
+            DBShippingByWeightAndCountry item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightAndCountryUpdate");
-            db.AddInParameter(dbCommand, "ShippingByWeightAndCountryID", DbType.Int32, ShippingByWeightAndCountryID);
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, ShippingMethodID);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "From", DbType.Decimal, From);
-            db.AddInParameter(dbCommand, "To", DbType.Decimal, To);
-            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, UsePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, ShippingChargePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, ShippingChargeAmount);
+            db.AddInParameter(dbCommand, "ShippingByWeightAndCountryID", DbType.Int32, shippingByWeightAndCountryId);
+            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "From", DbType.Decimal, from);
+            db.AddInParameter(dbCommand, "To", DbType.Decimal, to);
+            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, usePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, shippingChargePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, shippingChargeAmount);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                shippingByWeightAndCountry = GetByID(ShippingByWeightAndCountryID);
+                item = GetById(shippingByWeightAndCountryId);
 
-            return shippingByWeightAndCountry;
+            return item;
         }
 
         /// <summary>
         /// Gets all ShippingByWeightAndCountrys by shipping method identifier
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
         /// <returns>ShippingByWeightAndCountry collection</returns>
-        public override DBShippingByWeightAndCountryCollection GetAllByShippingMethodIDAndCountryID(int ShippingMethodID, int CountryID)
+        public override DBShippingByWeightAndCountryCollection GetAllByShippingMethodIdAndCountryId(int shippingMethodId, int countryId)
         {
             var result = new DBShippingByWeightAndCountryCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightAndCountryLoadByShippingMethodIDAndCountryID");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, ShippingMethodID);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
+            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())

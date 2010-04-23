@@ -51,7 +51,7 @@
             Store ID:
         </td>
         <td class="adminData">
-            <asp:TextBox ID="txtStoreID" runat="server" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox ID="txtStoreId" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

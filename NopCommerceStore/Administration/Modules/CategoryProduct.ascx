@@ -28,14 +28,14 @@
                                 <ItemTemplate>
                                     <asp:CheckBox ID="cbProductInfo" runat="server" Text='<%#Server.HtmlEncode(Eval("ProductInfo").ToString()) %>'
                                         Checked='<%# Eval("IsMapped") %>' ToolTip="<% $NopResources:Admin.CategoryProducts.Mapped.Tooltip %>" />
-                                    <asp:HiddenField ID="hfProductID" runat="server" Value='<%# Eval("ProductID") %>' />
-                                    <asp:HiddenField ID="hfProductCategoryID" runat="server" Value='<%# Eval("ProductCategoryID") %>' />
+                                    <asp:HiddenField ID="hfProductId" runat="server" Value='<%# Eval("ProductId") %>' />
+                                    <asp:HiddenField ID="hfProductCategoryId" runat="server" Value='<%# Eval("ProductCategoryId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="<% $NopResources:Admin.CategoryProducts.View %>" HeaderStyle-HorizontalAlign="Center"
                                 ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <a href='ProductDetails.aspx?ProductID=<%# Eval("ProductID") %>' title="<%#GetLocaleResourceString("Admin.CategoryProducts.View.Tooltip")%>">
+                                    <a href='ProductDetails.aspx?ProductID=<%# Eval("ProductId") %>' title="<%#GetLocaleResourceString("Admin.CategoryProducts.View.Tooltip")%>">
                                         <%#GetLocaleResourceString("Admin.CategoryProducts.View")%></a>
                                 </ItemTemplate>
                             </asp:TemplateField>

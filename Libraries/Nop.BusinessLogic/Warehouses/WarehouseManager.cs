@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
                 return null;
 
             var item = new Warehouse();
-            item.WarehouseID = dbItem.WarehouseID;
+            item.WarehouseId = dbItem.WarehouseId;
             item.Name = dbItem.Name;
             item.PhoneNumber = dbItem.PhoneNumber;
             item.Email = dbItem.Email;
@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             item.City = dbItem.City;
             item.StateProvince = dbItem.StateProvince;
             item.ZipPostalCode = dbItem.ZipPostalCode;
-            item.CountryID = dbItem.CountryID;
+            item.CountryId = dbItem.CountryId;
             item.Deleted = dbItem.Deleted;
             item.CreatedOn = dbItem.CreatedOn;
             item.UpdatedOn = dbItem.UpdatedOn;
@@ -75,15 +75,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         /// <summary>
         /// Marks a warehouse as deleted
         /// </summary>
-        /// <param name="WarehouseID">The warehouse identifier</param>
-        public static void MarkWarehouseAsDeleted(int WarehouseID)
+        /// <param name="warehouseId">The warehouse identifier</param>
+        public static void MarkWarehouseAsDeleted(int warehouseId)
         {
-            var warehouse = GetWarehouseByID(WarehouseID);
+            var warehouse = GetWarehouseById(warehouseId);
             if (warehouse != null)
             {
-                UpdateWarehouse(warehouse.WarehouseID, warehouse.Name, warehouse.PhoneNumber,
+                UpdateWarehouse(warehouse.WarehouseId, warehouse.Name, warehouse.PhoneNumber,
                     warehouse.Email, warehouse.FaxNumber, warehouse.Address1, warehouse.Address2, warehouse.City,
-                    warehouse.StateProvince, warehouse.ZipPostalCode, warehouse.CountryID, true, warehouse.CreatedOn, warehouse.UpdatedOn);
+                    warehouse.StateProvince, warehouse.ZipPostalCode, warehouse.CountryId, true, warehouse.CreatedOn, warehouse.UpdatedOn);
             }
         }
 
@@ -101,14 +101,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         /// <summary>
         /// Gets a warehouse
         /// </summary>
-        /// <param name="WarehouseID">The warehouse identifier</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
         /// <returns>Warehouse</returns>
-        public static Warehouse GetWarehouseByID(int WarehouseID)
+        public static Warehouse GetWarehouseById(int warehouseId)
         {
-            if (WarehouseID == 0)
+            if (warehouseId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.GetWarehouseByID(WarehouseID);
+            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.GetWarehouseById(warehouseId);
             var warehouse = DBMapping(dbItem);
             return warehouse;
         }
@@ -116,30 +116,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         /// <summary>
         /// Inserts a warehouse
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Warehouse</returns>
-        public static Warehouse InsertWarehouse(string Name, string PhoneNumber, string Email, string FaxNumber,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Warehouse InsertWarehouse(string name, string phoneNumber,
+            string email, string faxNumber, string address1, string address2,
+            string city, string stateProvince, string zipPostalCode, int countryId,
+            bool deleted, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.InsertWarehouse(Name, PhoneNumber, Email, FaxNumber,
-                Address1, Address2, City, StateProvince,
-                ZipPostalCode, CountryID, Deleted, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.InsertWarehouse(name, 
+                phoneNumber, email, faxNumber, address1, address2, city, stateProvince,
+                zipPostalCode, countryId, deleted, createdOn, updatedOn);
             var warehouse = DBMapping(dbItem);
             return warehouse;
         }
@@ -147,31 +148,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         /// <summary>
         /// Updates the warehouse
         /// </summary>
-        /// <param name="WarehouseID">The warehouse identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Warehouse</returns>
-        public static Warehouse UpdateWarehouse(int WarehouseID, string Name, string PhoneNumber, string Email, string FaxNumber,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn)
+        public static Warehouse UpdateWarehouse(int warehouseId,
+            string name, string phoneNumber, string email, string faxNumber,
+            string address1, string address2, string city, string stateProvince,
+            string zipPostalCode, int countryId, bool deleted,
+            DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.UpdateWarehouse(WarehouseID, Name, PhoneNumber, Email, FaxNumber,
-                Address1, Address2, City, StateProvince,
-                ZipPostalCode, CountryID, Deleted, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.UpdateWarehouse(warehouseId, 
+                name, phoneNumber, email, faxNumber, address1, address2, city, stateProvince,
+                zipPostalCode, countryId, deleted, createdOn, updatedOn);
             var warehouse = DBMapping(dbItem);
             return warehouse;
         }

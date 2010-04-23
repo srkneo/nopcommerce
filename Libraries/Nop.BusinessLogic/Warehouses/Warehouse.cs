@@ -38,13 +38,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         /// <summary>
         /// Gets or sets the warehouse identifier
         /// </summary>
-        public int WarehouseID { get; set; }
+        public int WarehouseId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the phone number
         /// </summary>
@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the entity has been deleted
@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         {
             get
             {
-                return CountryManager.GetCountryByID(CountryID);
+                return CountryManager.GetCountryById(this.CountryId);
             }
         }
         #endregion

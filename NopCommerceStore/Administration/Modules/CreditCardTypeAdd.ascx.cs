@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 CreditCardType creditCardType = ctrlCreditCardTypeInfo.SaveInfo();
-                Response.Redirect("CreditCardTypeDetails.aspx?CreditCardTypeID=" + creditCardType.CreditCardTypeID.ToString());
+                Response.Redirect("CreditCardTypeDetails.aspx?CreditCardTypeID=" + creditCardType.CreditCardTypeId.ToString());
             }
             catch (Exception exc)
             {

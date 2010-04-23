@@ -67,10 +67,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     paymentInfo.CustomerLanguage = NopContext.Current.WorkingLanguage;
                     paymentInfo.CustomerCurrency = NopContext.Current.WorkingCurrency;
 
-                    int orderID = 0;
-                    string result = OrderManager.PlaceOrder(paymentInfo, NopContext.Current.User, out orderID);
+                    int orderId = 0;
+                    string result = OrderManager.PlaceOrder(paymentInfo, NopContext.Current.User, out orderId);
                     this.PaymentInfo = null;
-                    var order = OrderManager.GetOrderByID(orderID);
+                    var order = OrderManager.GetOrderById(orderId);
                     if (!String.IsNullOrEmpty(result))
                     {
                         lConfirmOrderError.Text = Server.HtmlEncode(result);
@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 

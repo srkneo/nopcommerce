@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Measures
         /// <summary>
         /// Gets or sets the measure dimension identifier
         /// </summary>
-        public int MeasureDimensionID { get; set; }
+        public int MeasureDimensionId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets or sets the discount limitation identifier
         /// </summary>
-        public int DiscountLimitationID { get; set; }
+        public int DiscountLimitationId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

@@ -54,10 +54,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                dsNopCommerceNews.Url = string.Format("http://www.nopCommerce.com/NewsRSS.aspx?Version={0}&Localhost={1}&HideAdvertisements={2}&StoreURL={3}", SiteHelper.GetCurrentVersion(), HttpContext.Current.Request.Url.IsLoopback, SettingManager.GetSettingValueBoolean("Common.HideAdvertisementsOnAdminArea"), SettingManager.StoreURL);
+                dsNopCommerceNews.Url = string.Format("http://www.nopCommerce.com/NewsRSS.aspx?Version={0}&Localhost={1}&HideAdvertisements={2}&StoreURL={3}", SiteHelper.GetCurrentVersion(), HttpContext.Current.Request.Url.IsLoopback, SettingManager.GetSettingValueBoolean("Common.HideAdvertisementsOnAdminArea"), SettingManager.StoreUrl);
                 lvNopCommerceNews.DataBind();
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 //ShowError("No internet connection. nopCommerce news could not be loaded", exc.Message);
                 this.Visible = false;

@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
         /// <summary>
         /// Gets or sets the message template identifier
         /// </summary>
-        public int MessageTemplateID { get; set; }
+        public int MessageTemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

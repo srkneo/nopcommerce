@@ -37,30 +37,30 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         /// <summary>
         /// Deletes a topic
         /// </summary>
-        /// <param name="TopicID">Topic identifier</param>
-        public abstract void DeleteTopic(int TopicID);
-
-        /// <summary>
-        /// Inserts a topic
-        /// </summary>
-        /// <param name="Name">The name</param>
-        /// <returns>Topic</returns>
-        public abstract DBTopic InsertTopic(string Name);
-
-        /// <summary>
-        /// Updates the topic
-        /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="Name">The name</param>
-        /// <returns>Topic</returns>
-        public abstract DBTopic UpdateTopic(int TopicID, string Name);
+        /// <param name="topicId">Topic identifier</param>
+        public abstract void DeleteTopic(int topicId);
 
         /// <summary>
         /// Gets a topic by template identifier
         /// </summary>
-        /// <param name="TopicID">Topic identifier</param>
+        /// <param name="topicId">Topic identifier</param>
         /// <returns>Topic</returns>
-        public abstract DBTopic GetTopicByID(int TopicID);
+        public abstract DBTopic GetTopicById(int topicId);
+
+        /// <summary>
+        /// Inserts a topic
+        /// </summary>
+        /// <param name="name">The name</param>
+        /// <returns>Topic</returns>
+        public abstract DBTopic InsertTopic(string name);
+
+        /// <summary>
+        /// Updates the topic
+        /// </summary>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="name">The name</param>
+        /// <returns>Topic</returns>
+        public abstract DBTopic UpdateTopic(int topicId, string name);
 
         /// <summary>
         /// Gets all topics
@@ -71,76 +71,75 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         /// <summary>
         /// Gets a localized topic by identifier
         /// </summary>
-        /// <param name="LocalizedTopicID">Localized topic identifier</param>
+        /// <param name="localizedTopicId">Localized topic identifier</param>
         /// <returns>Localized topic</returns>
-        public abstract DBLocalizedTopic GetLocalizedTopicByID(int LocalizedTopicID);
+        public abstract DBLocalizedTopic GetLocalizedTopicById(int localizedTopicId);
 
         /// <summary>
-        /// Gets a localized topic by parent TopicID and language identifier
+        /// Gets a localized topic by parent topic identifier and language identifier
         /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized topic</returns>
-        public abstract DBLocalizedTopic GetLocalizedTopic(int TopicID, int LanguageID);
+        public abstract DBLocalizedTopic GetLocalizedTopic(int topicId, int languageId);
         
         /// <summary>
         /// Gets a localized topic by name and language identifier
         /// </summary>
-        /// <param name="Name">Topic name</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="name">Topic name</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized topic</returns>
-        public abstract DBLocalizedTopic GetLocalizedTopic(string Name, int LanguageID);
+        public abstract DBLocalizedTopic GetLocalizedTopic(string name, int languageId);
 
         /// <summary>
         /// Deletes a localized topic
         /// </summary>
-        /// <param name="LocalizedTopicID">Topic identifier</param>
-        public abstract void DeleteLocalizedTopic(int LocalizedTopicID);
+        /// <param name="localizedTopicId">Topic identifier</param>
+        public abstract void DeleteLocalizedTopic(int localizedTopicId);
 
         /// <summary>
         /// Gets all localized topics
         /// </summary>
-        /// <param name="TopicName">Topic name</param>
+        /// <param name="topicName">Topic name</param>
         /// <returns>Localized topic collection</returns>
-        public abstract DBLocalizedTopicCollection GetAllLocalizedTopics(string TopicName);
+        public abstract DBLocalizedTopicCollection GetAllLocalizedTopics(string topicName);
 
         /// <summary>
         /// Inserts a localized topic
         /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
         /// <returns>Localized topic</returns>
-        public abstract DBLocalizedTopic InsertLocalizedTopic(int TopicID,
-            int LanguageID, string Title, string Body,
-            DateTime CreatedOn, DateTime UpdatedOn,
-            string MetaKeywords, string MetaDescription, string MetaTitle);
+        public abstract DBLocalizedTopic InsertLocalizedTopic(int topicId,
+            int languageId, string title, string body,
+            DateTime createdOn, DateTime updatedOn,
+            string metaKeywords, string metaDescription, string metaTitle);
 
         /// <summary>
         /// Updates the localized topic
         /// </summary>
-        /// <param name="TopicLocalizedID">The localized topic identifier</param>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
+        /// <param name="topicLocalizedId">The localized topic identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
         /// <returns>Localized topic</returns>
-        public abstract DBLocalizedTopic UpdateLocalizedTopic(int TopicLocalizedID,
-            int TopicID, int LanguageID,
-            string Title, string Body,
-            DateTime CreatedOn, DateTime UpdatedOn,
-            string MetaKeywords, string MetaDescription, string MetaTitle);
+        public abstract DBLocalizedTopic UpdateLocalizedTopic(int topicLocalizedId,
+            int topicId, int languageId, string title, string body,
+            DateTime createdOn, DateTime updatedOn,
+            string metaKeywords, string metaDescription, string metaTitle);
 
         #endregion
     }

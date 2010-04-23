@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ProductTemplateCollection productTemplateCollection = TemplateManager.GetAllProductTemplates();
             foreach (ProductTemplate productTemplate in productTemplateCollection)
             {
-                ListItem item2 = new ListItem(productTemplate.Name, productTemplate.ProductTemplateID.ToString());
+                ListItem item2 = new ListItem(productTemplate.Name, productTemplate.ProductTemplateId.ToString());
                 this.ddlTemplate.Items.Add(item2);
             }
 
@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ProductTypeCollection productTypeCollection = ProductManager.GetAllProductTypes();
             foreach (ProductType productType in productTypeCollection)
             {
-                ListItem item2 = new ListItem(productType.Name, productType.ProductTypeID.ToString());
+                ListItem item2 = new ListItem(productType.Name, productType.ProductTypeId.ToString());
                 this.ddlProductType.Items.Add(item2);
             }
 
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             TaxCategoryCollection taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
             foreach (TaxCategory taxCategory in taxCategoryCollection)
             {
-                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryID.ToString());
+                ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryId.ToString());
                 this.ddlTaxCategory.Items.Add(item2);
             }
 
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             WarehouseCollection warehouseCollection = WarehouseManager.GetAllWarehouses();
             foreach (Warehouse warehouse in warehouseCollection)
             {
-                ListItem item2 = new ListItem(warehouse.Name, warehouse.WarehouseID.ToString());
+                ListItem item2 = new ListItem(warehouse.Name, warehouse.WarehouseId.ToString());
                 this.ddlWarehouse.Items.Add(item2);
             }
 
@@ -141,8 +141,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             string shortDescription = txtShortDescription.Text.Trim();
             string fullDescription = txtFullDescription.Content.Trim();
             string adminComment = txtAdminComment.Text.Trim();
-            int productTypeID = int.Parse(this.ddlProductType.SelectedItem.Value);
-            int templateID = int.Parse(this.ddlTemplate.SelectedItem.Value);
+            int productTypeId = int.Parse(this.ddlProductType.SelectedItem.Value);
+            int templateId = int.Parse(this.ddlTemplate.SelectedItem.Value);
             bool showOnHomePage = cbShowOnHomePage.Checked;
             bool allowCustomerReviews = cbAllowCustomerReviews.Checked;
             bool allowCustomerRatings = cbAllowCustomerRatings.Checked;
@@ -151,7 +151,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             string manufacturerPartNumber = txtManufacturerPartNumber.Text.Trim();
             bool isGiftCard = cbIsGiftCard.Checked;
             bool isDownload = cbIsDownload.Checked;
-            int productVariantDownloadID = 0;
+            int productVariantDownloadId = 0;
             if (isDownload)
             {
                 bool useDownloadURL = cbUseDownloadURL.Checked;
@@ -173,7 +173,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Download productVariantDownload = DownloadManager.InsertDownload(useDownloadURL,
                     downloadURL, productVariantDownloadBinary, downloadContentType,
                     downloadFilename, downloadExtension, true);
-                productVariantDownloadID = productVariantDownload.DownloadID;
+                productVariantDownloadId = productVariantDownload.DownloadId;
             }
 
             bool unlimitedDownloads = cbUnlimitedDownloads.Checked;
@@ -186,7 +186,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             string userAgreementText = txtUserAgreementText.Content;
 
             bool hasSampleDownload = cbHasSampleDownload.Checked;
-            int productVariantSampleDownloadID = 0;
+            int productVariantSampleDownloadId = 0;
             if (hasSampleDownload)
             {
                 bool useSampleDownloadURL = cbUseSampleDownloadURL.Checked;
@@ -208,7 +208,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Download productVariantSampleDownload = DownloadManager.InsertDownload(useSampleDownloadURL,
                     sampleDownloadURL, productVariantSampleDownloadBinary, sampleDownloadContentType,
                     sampleDownloadFilename, sampleDownloadExtension, true);
-                productVariantSampleDownloadID = productVariantSampleDownload.DownloadID;
+                productVariantSampleDownloadId = productVariantSampleDownload.DownloadId;
             }
 
             bool isRecurring = cbIsRecurring.Checked;
@@ -220,7 +220,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             bool isFreeShipping = cbIsFreeShipping.Checked;
             decimal additionalShippingCharge = txtAdditionalShippingCharge.Value;
             bool isTaxExempt = cbIsTaxExempt.Checked;
-            int taxCategoryID = int.Parse(this.ddlTaxCategory.SelectedItem.Value);
+            int taxCategoryId = int.Parse(this.ddlTaxCategory.SelectedItem.Value);
             int manageStock = Convert.ToInt32(ddlManageStock.SelectedValue);
             int stockQuantity = txtStockQuantity.Value;
             bool displayStockAvailability = cbDisplayStockAvailability.Checked;
@@ -230,7 +230,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             bool allowOutOfStockOrders = cbAllowOutOfStockOrders.Checked;
             int orderMinimumQuantity = txtOrderMinimumQuantity.Value;
             int orderMaximumQuantity = txtOrderMaximumQuantity.Value;
-            int warehouseID = int.Parse(this.ddlWarehouse.SelectedItem.Value);
+            int warehouseId = int.Parse(this.ddlWarehouse.SelectedItem.Value);
             bool disableBuyButton = cbDisableBuyButton.Checked;
             decimal price = txtPrice.Value;
             decimal oldPrice = txtOldPrice.Value;
@@ -254,32 +254,32 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             Product product = ProductManager.InsertProduct(name, shortDescription, fullDescription,
-                adminComment, productTypeID, templateID, showOnHomePage, string.Empty, string.Empty,
+                adminComment, productTypeId, templateId, showOnHomePage, string.Empty, string.Empty,
                 string.Empty, string.Empty, allowCustomerReviews, allowCustomerRatings, 0, 0,
                  published, false, nowDT, nowDT);
 
-            ProductVariant productVariant = ProductManager.InsertProductVariant(product.ProductID,
+            ProductVariant productVariant = ProductManager.InsertProductVariant(product.ProductId,
                  string.Empty, sku, string.Empty, string.Empty, manufacturerPartNumber,
-                 isGiftCard, isDownload, productVariantDownloadID, unlimitedDownloads,
+                 isGiftCard, isDownload, productVariantDownloadId, unlimitedDownloads,
                  maxNumberOfDownloads, downloadExpirationDays, downloadActivationType,
-                 hasSampleDownload, productVariantSampleDownloadID,
+                 hasSampleDownload, productVariantSampleDownloadId,
                  hasUserAgreement, userAgreementText,
                  isRecurring, cycleLength, (int)cyclePeriod, totalCycles,
                  isShipEnabled, isFreeShipping, additionalShippingCharge, isTaxExempt,
-                 taxCategoryID, manageStock, stockQuantity, displayStockAvailability,
+                 taxCategoryId, manageStock, stockQuantity, displayStockAvailability,
                  minStockQuantity, lowStockActivity, notifyForQuantityBelow, allowOutOfStockOrders,
-                 orderMinimumQuantity, orderMaximumQuantity, warehouseID, disableBuyButton,
+                 orderMinimumQuantity, orderMaximumQuantity, warehouseId, disableBuyButton,
                  price, oldPrice, productCost, customerEntersPrice,
                  minimumCustomerEnteredPrice, maximumCustomerEnteredPrice,
                  weight, length, width, height, 0, availableStartDateTime, availableEndDateTime,
                  published, false, 1, nowDT, nowDT);
 
-            saveLocalizableContent(product);
+            SaveLocalizableContent(product);
 
             return product;
         }
 
-        protected void saveLocalizableContent(Product product)
+        protected void SaveLocalizableContent(Product product)
         {
             if (product == null)
                 return;
@@ -296,7 +296,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedFullDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedFullDescription");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtLocalizedName.Text;
                     string shortDescription = txtLocalizedShortDescription.Text;
                     string fullDescription = txtLocalizedFullDescription.Content;
@@ -305,23 +305,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         string.IsNullOrEmpty(shortDescription) &&
                         string.IsNullOrEmpty(fullDescription));
 
-                    var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(product.ProductID, languageID);
+                    var content = ProductManager.GetProductLocalizedByProductIdAndLanguageId(product.ProductId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = ProductManager.InsertProductLocalized(product.ProductID,
-                                   languageID, name, shortDescription, fullDescription,
+                            content = ProductManager.InsertProductLocalized(product.ProductId,
+                                   languageId, name, shortDescription, fullDescription,
                                    string.Empty, string.Empty, string.Empty, string.Empty);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = ProductManager.UpdateProductLocalized(content.ProductLocalizedID, content.ProductID,
-                                languageID, name, shortDescription, fullDescription,
+                            content = ProductManager.UpdateProductLocalized(content.ProductLocalizedId, content.ProductId,
+                                languageId, name, shortDescription, fullDescription,
                                 content.MetaKeywords, content.MetaDescription,
                                 content.MetaTitle, content.SEName);
                         }
@@ -339,9 +339,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedFullDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedFullDescription");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(this.ProductID, languageID);
+                var content = ProductManager.GetProductLocalizedByProductIdAndLanguageId(this.ProductId, languageId);
                 if (content != null)
                 {
                     txtLocalizedName.Text = content.Name;
@@ -351,11 +351,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

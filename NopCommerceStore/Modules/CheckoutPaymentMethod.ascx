@@ -6,7 +6,7 @@
     <br />
     <div class="payment-methods">
         <asp:PlaceHolder runat="server" ID="phSelectPaymentMethod">
-            <asp:DataList runat="server" ID="dlPaymentMethod" DataKeyField="PaymentMethodID">
+            <asp:DataList runat="server" ID="dlPaymentMethod" DataKeyField="PaymentMethodId">
                 <ItemTemplate>
                     <div class="payment-method-item" style="text-align: left;">
                         <nopCommerce:GlobalRadioButton runat="server" ID="rdPaymentMethod" Checked="false"

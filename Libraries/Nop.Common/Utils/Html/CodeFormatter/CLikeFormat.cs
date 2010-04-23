@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
 		/// Regular expression string to match single line and multi-line 
 		/// comments (// and /* */). 
 		/// </summary>
-		protected override string CommentRegEx
+		protected override string CommentRegex
 		{
 			get { return @"/\*.*?\*/|//.*?(?=\r|\n)"; }
 		}
@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
 		/// <summary>
 		/// Regular expression string to match string and character literals. 
 		/// </summary>
-		protected override string StringRegEx
+		protected override string StringRegex
 		{
 			get { return @"@?""""|@?"".*?(?!\\).""|''|'.*?(?!\\).'"; }
 		}

@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         var hlProduct = dataItem.FindControl("hlProduct") as HyperLink;
                         if (hlProduct != null)
                         {
-                            hlProduct.NavigateUrl = SEOHelper.GetProductURL(sci.ProductVariant.Product);
+                            hlProduct.NavigateUrl = SEOHelper.GetProductUrl(sci.ProductVariant.Product);
                             hlProduct.Text = Server.HtmlEncode(sci.ProductVariant.FullProductName);
                         }
 

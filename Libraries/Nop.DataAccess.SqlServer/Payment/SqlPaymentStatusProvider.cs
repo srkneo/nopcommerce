@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
     /// <summary>
     /// Payment status provider for SQL Server
     /// </summary>
-    public partial class SQLPaymentStatusProvider : DBPaymentStatusProvider
+    public partial class SqlPaymentStatusProvider : DBPaymentStatusProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,10 +36,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         #region Utilities
         private DBPaymentStatus GetPaymentStatusFromReader(IDataReader dataReader)
         {
-            DBPaymentStatus paymentStatus = new DBPaymentStatus();
-            paymentStatus.PaymentStatusID = NopSqlDataHelper.GetInt(dataReader, "PaymentStatusID");
-            paymentStatus.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return paymentStatus;
+            var item = new DBPaymentStatus();
+            item.PaymentStatusId = NopSqlDataHelper.GetInt(dataReader, "PaymentStatusID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
         #endregion
 
@@ -80,26 +80,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         }
 
         /// <summary>
-        /// Gets a payment status by ID
+        /// Gets a payment status by identifier
         /// </summary>
-        /// <param name="PaymentStatusID">payment status identifier</param>
+        /// <param name="paymentStatusId">payment status identifier</param>
         /// <returns>Payment status</returns>
-        public override DBPaymentStatus GetPaymentStatusByID(int PaymentStatusID)
+        public override DBPaymentStatus GetPaymentStatusById(int paymentStatusId)
         {
-            DBPaymentStatus paymentStatus = null;
-            if (PaymentStatusID == 0)
-                return paymentStatus;
+            DBPaymentStatus item = null;
+            if (paymentStatusId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentStatusLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, PaymentStatusID);
+            db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    paymentStatus = GetPaymentStatusFromReader(dataReader);
+                    item = GetPaymentStatusFromReader(dataReader);
                 }
             }
-            return paymentStatus;
+            return item;
         }
 
         /// <summary>

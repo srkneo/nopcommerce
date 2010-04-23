@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         private void BindData()
         {
-            var productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            var productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
                 if (productVariant.CustomerEntersPrice)
@@ -114,11 +114,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ProductVariantID
+        public int ProductVariantId
         {
             get
             {
-                object obj2 = this.ViewState["ProductVariantID"];
+                object obj2 = this.ViewState["ProductVariantId"];
                 if (obj2 != null)
                     return (int)obj2;
                 else
@@ -126,7 +126,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             set
             {
-                this.ViewState["ProductVariantID"] = value;
+                this.ViewState["ProductVariantId"] = value;
             }
         }
     }

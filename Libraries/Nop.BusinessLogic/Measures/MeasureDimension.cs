@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Gets or sets the measure dimension identifier
         /// </summary>
-        public int MeasureDimensionID { get; set; }
+        public int MeasureDimensionId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             get
             {
                 MeasureDimension primaryMeasureDimension = MeasureManager.BaseDimensionIn;
-                return ((primaryMeasureDimension != null && primaryMeasureDimension.MeasureDimensionID == MeasureDimensionID));
+                return ((primaryMeasureDimension != null && primaryMeasureDimension.MeasureDimensionId == this.MeasureDimensionId));
             }
         }
         #endregion

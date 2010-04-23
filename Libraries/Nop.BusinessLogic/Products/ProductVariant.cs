@@ -43,12 +43,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the download identifier
         /// </summary>
-        public int DownloadID { get; set; }
+        public int DownloadId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this downloadable product can be downloaded unlimited number of times
@@ -109,7 +109,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets or sets the download activation type
         /// </summary>
         public int DownloadActivationType { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the product variant has a sample download file
         /// </summary>
@@ -118,7 +118,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the sample download identifier
         /// </summary>
-        public int SampleDownloadID { get; set; }
+        public int SampleDownloadId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the product has user agreement
@@ -173,7 +173,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the tax category identifier
         /// </summary>
-        public int TaxCategoryID { get; set; }
+        public int TaxCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating how to manage inventory
@@ -189,7 +189,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets or sets a value indicating whether to display stock availability
         /// </summary>
         public bool DisplayStockAvailability { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the minimum stock quantity
         /// </summary>
@@ -198,7 +198,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the low stock activity identifier
         /// </summary>
-        public int LowStockActivityID { get; set; }
+        public int LowStockActivityId { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity when admin should be notified
@@ -283,7 +283,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the available start date and time
@@ -330,7 +330,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return WarehouseManager.GetWarehouseByID(WarehouseId);
+                return WarehouseManager.GetWarehouseById(this.WarehouseId);
             }
         }
 
@@ -341,11 +341,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return (LowStockActivityEnum)LowStockActivityID;
+                return (LowStockActivityEnum)this.LowStockActivityId;
             }
             set
             {
-                LowStockActivityID = (int)value;
+                this.LowStockActivityId = (int)value;
             }
         }
 
@@ -356,7 +356,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return TaxCategoryManager.GetTaxCategoryByID(TaxCategoryID);
+                return TaxCategoryManager.GetTaxCategoryById(this.TaxCategoryId);
             }
         }
 
@@ -367,7 +367,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetProductByID(ProductID);
+                return ProductManager.GetProductById(this.ProductId);
             }
         }
 
@@ -378,7 +378,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return DiscountManager.GetDiscountsByProductVariantID(ProductVariantID);
+                return DiscountManager.GetDiscountsByProductVariantId(this.ProductVariantId);
             }
         }
 
@@ -392,7 +392,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 Product product = this.Product;
                 if (product != null)
                 {
-                    if (!String.IsNullOrEmpty(Name))
+                    if (!String.IsNullOrEmpty(this.Name))
                         return product.Name + " (" + this.Name + ")";
                     return product.Name;
                 }
@@ -407,7 +407,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return PictureManager.GetPictureByID(PictureID);
+                return PictureManager.GetPictureById(this.PictureId);
             }
         }
 
@@ -418,7 +418,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return DownloadManager.GetDownloadByID(DownloadID);
+                return DownloadManager.GetDownloadById(this.DownloadId);
             }
         }
                 
@@ -429,7 +429,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return DownloadManager.GetDownloadByID(SampleDownloadID);
+                return DownloadManager.GetDownloadById(this.SampleDownloadId);
             }
         }
         
@@ -440,7 +440,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductAttributeManager.GetProductVariantAttributesByProductVariantID(ProductVariantID);
+                return ProductAttributeManager.GetProductVariantAttributesByProductVariantId(this.ProductVariantId);
             }
         }
 
@@ -451,7 +451,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetTierPricesByProductVariantID(ProductVariantID);
+                return ProductManager.GetTierPricesByProductVariantId(this.ProductVariantId);
             }
         }
 
@@ -462,7 +462,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return ProductManager.GetAllCustomerRoleProductPrices(this.ProductVariantID);
+                return ProductManager.GetAllCustomerRoleProductPrices(this.ProductVariantId);
             }
         }
 

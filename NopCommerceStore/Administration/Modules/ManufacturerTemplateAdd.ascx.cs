@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ManufacturerTemplate manufacturerTemplate = ctrlManufacturerTemplateInfo.SaveInfo();
-                    Response.Redirect("ManufacturerTemplateDetails.aspx?ManufacturerTemplateID=" + manufacturerTemplate.ManufacturerTemplateID.ToString());
+                    Response.Redirect("ManufacturerTemplateDetails.aspx?ManufacturerTemplateID=" + manufacturerTemplate.ManufacturerTemplateId.ToString());
                 }
                 catch (Exception exc)
                 {

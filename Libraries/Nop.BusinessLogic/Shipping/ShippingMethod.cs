@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets or sets the shipping method identifier
         /// </summary>
-        public int ShippingMethodID { get; set; }
+        public int ShippingMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

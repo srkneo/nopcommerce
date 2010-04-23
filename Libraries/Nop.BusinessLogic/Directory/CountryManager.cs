@@ -62,14 +62,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             var item = new Country();
-            item.CountryID = dbItem.CountryID;
+            item.CountryId = dbItem.CountryId;
             item.Name = dbItem.Name;
             item.AllowsRegistration = dbItem.AllowsRegistration;
             item.AllowsBilling = dbItem.AllowsBilling;
             item.AllowsShipping = dbItem.AllowsShipping;
-            item.TwoLetterISOCode = dbItem.TwoLetterISOCode;
-            item.ThreeLetterISOCode = dbItem.ThreeLetterISOCode;
-            item.NumericISOCode = dbItem.NumericISOCode;
+            item.TwoLetterIsoCode = dbItem.TwoLetterIsoCode;
+            item.ThreeLetterIsoCode = dbItem.ThreeLetterIsoCode;
+            item.NumericIsoCode = dbItem.NumericIsoCode;
             item.Published = dbItem.Published;
             item.DisplayOrder = dbItem.DisplayOrder;
 
@@ -81,10 +81,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Deletes a country
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
-        public static void DeleteCountry(int CountryID)
+        /// <param name="countryId">Country identifier</param>
+        public static void DeleteCountry(int countryId)
         {
-            DBProviderManager<DBCountryProvider>.Provider.DeleteCountry(CountryID);
+            DBProviderManager<DBCountryProvider>.Provider.DeleteCountry(countryId);
             if (CountryManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
@@ -190,21 +190,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a country 
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
+        /// <param name="countryId">Country identifier</param>
         /// <returns>Country</returns>
-        public static Country GetCountryByID(int CountryID)
+        public static Country GetCountryById(int countryId)
         {
-            if (CountryID == 0)
+            if (countryId == 0)
                 return null;
 
-            string key = string.Format(COUNTRIES_BY_ID_KEY, CountryID);
+            string key = string.Format(COUNTRIES_BY_ID_KEY, countryId);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
                 return (Country)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryByID(CountryID);
+            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryById(countryId);
             var country = DBMapping(dbItem);
 
             if (CountryManager.CacheEnabled)
@@ -217,11 +217,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a country by two letter ISO code
         /// </summary>
-        /// <param name="TwoLetterISOCode">Country two letter ISO code</param>
+        /// <param name="twoLetterIsoCode">Country two letter ISO code</param>
         /// <returns>Country</returns>
-        public static Country GetCountryByTwoLetterISOCode(string TwoLetterISOCode)
+        public static Country GetCountryByTwoLetterIsoCode(string twoLetterIsoCode)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryByTwoLetterISOCode(TwoLetterISOCode);
+            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryByTwoLetterIsoCode(twoLetterIsoCode);
             var country = DBMapping(dbItem);
             return country;
         }
@@ -229,11 +229,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a country by three letter ISO code
         /// </summary>
-        /// <param name="ThreeLetterISOCode">Country three letter ISO code</param>
+        /// <param name="threeLetterIsoCode">Country three letter ISO code</param>
         /// <returns>Country</returns>
-        public static Country GetCountryByThreeLetterISOCode(string ThreeLetterISOCode)
+        public static Country GetCountryByThreeLetterIsoCode(string threeLetterIsoCode)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryByThreeLetterISOCode(ThreeLetterISOCode);
+            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryByThreeLetterIsoCode(threeLetterIsoCode);
             var country = DBMapping(dbItem);
             return country;
         }
@@ -241,25 +241,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Inserts a country
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="AllowsRegistration">A value indicating whether registration is allowed to this country</param>
-        /// <param name="AllowsBilling">A value indicating whether billing is allowed to this country</param>
-        /// <param name="AllowsShipping">A value indicating whether shipping is allowed to this country</param>
-        /// <param name="TwoLetterISOCode">The two letter ISO code</param>
-        /// <param name="ThreeLetterISOCode">The three letter ISO code</param>
-        /// <param name="NumericISOCode">The numeric ISO code</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="allowsRegistration">A value indicating whether registration is allowed to this country</param>
+        /// <param name="allowsBilling">A value indicating whether billing is allowed to this country</param>
+        /// <param name="allowsShipping">A value indicating whether shipping is allowed to this country</param>
+        /// <param name="twoLetterIsoCode">The two letter ISO code</param>
+        /// <param name="threeLetterIsoCode">The three letter ISO code</param>
+        /// <param name="numericIsoCode">The numeric ISO code</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Country</returns>
-        public static Country InsertCountry(string Name,
-            bool AllowsRegistration, bool AllowsBilling, bool AllowsShipping,
-            string TwoLetterISOCode, string ThreeLetterISOCode, int NumericISOCode,
-            bool Published, int DisplayOrder)
+        public static Country InsertCountry(string name,
+            bool allowsRegistration, bool allowsBilling, bool allowsShipping,
+            string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
+            bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.InsertCountry(Name,
-                AllowsRegistration, AllowsBilling, AllowsShipping,
-                TwoLetterISOCode, ThreeLetterISOCode, NumericISOCode, Published,
-                DisplayOrder);
+            var dbItem = DBProviderManager<DBCountryProvider>.Provider.InsertCountry(name,
+                allowsRegistration, allowsBilling, allowsShipping,
+                twoLetterIsoCode, threeLetterIsoCode, numericIsoCode, published,
+                displayOrder);
             var country = DBMapping(dbItem);
 
             if (CountryManager.CacheEnabled)
@@ -272,26 +272,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Updates the country
         /// </summary>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="AllowsRegistration">A value indicating whether registration is allowed to this country</param>
-        /// <param name="AllowsBilling">A value indicating whether billing is allowed to this country</param>
-        /// <param name="AllowsShipping">A value indicating whether shipping is allowed to this country</param>
-        /// <param name="TwoLetterISOCode">The two letter ISO code</param>
-        /// <param name="ThreeLetterISOCode">The three letter ISO code</param>
-        /// <param name="NumericISOCode">The numeric ISO code</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="allowsRegistration">A value indicating whether registration is allowed to this country</param>
+        /// <param name="allowsBilling">A value indicating whether billing is allowed to this country</param>
+        /// <param name="allowsShipping">A value indicating whether shipping is allowed to this country</param>
+        /// <param name="twoLetterIsoCode">The two letter ISO code</param>
+        /// <param name="threeLetterIsoCode">The three letter ISO code</param>
+        /// <param name="numericIsoCode">The numeric ISO code</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Country</returns>
-        public static Country UpdateCountry(int CountryID, string Name,
-            bool AllowsRegistration, bool AllowsBilling, bool AllowsShipping,
-            string TwoLetterISOCode, string ThreeLetterISOCode, int NumericISOCode,
-            bool Published, int DisplayOrder)
+        public static Country UpdateCountry(int countryId, string name,
+            bool allowsRegistration, bool allowsBilling, bool allowsShipping,
+            string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
+            bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.UpdateCountry(CountryID,
-                Name, AllowsRegistration, AllowsBilling, AllowsShipping,
-                TwoLetterISOCode, ThreeLetterISOCode, NumericISOCode,
-                Published, DisplayOrder);
+            var dbItem = DBProviderManager<DBCountryProvider>.Provider.UpdateCountry(countryId,
+                name, allowsRegistration, allowsBilling, allowsShipping,
+                twoLetterIsoCode, threeLetterIsoCode, numericIsoCode,
+                published, displayOrder);
             var country = DBMapping(dbItem);
 
             if (CountryManager.CacheEnabled)

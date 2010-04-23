@@ -40,9 +40,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -61,27 +61,27 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
                 Url = iDealBasicPaymentSettings.Url
             };
 
-            remotePostHelper.Add("urlCancel", CommonHelper.GetStoreLocation(false) + "idealreturn.aspx?s=1&o=" + order.OrderID);
+            remotePostHelper.Add("urlCancel", CommonHelper.GetStoreLocation(false) + "idealreturn.aspx?s=1&o=" + order.OrderId);
             remotePostHelper.Add("urlSuccess", CommonHelper.GetStoreLocation(false) + "checkoutcompleted.aspx");
-            remotePostHelper.Add("urlError", CommonHelper.GetStoreLocation(false) + "idealreturn.aspx?s=2&o=" + order.OrderID);
+            remotePostHelper.Add("urlError", CommonHelper.GetStoreLocation(false) + "idealreturn.aspx?s=2&o=" + order.OrderId);
 
-            remotePostHelper.Add("merchantID", iDealBasicPaymentSettings.MerchantID);
-            remotePostHelper.Add("subID", iDealBasicPaymentSettings.SubID);
-            remotePostHelper.Add("description", "Order " + order.OrderID);
+            remotePostHelper.Add("merchantID", iDealBasicPaymentSettings.MerchantId);
+            remotePostHelper.Add("subID", iDealBasicPaymentSettings.SubId);
+            remotePostHelper.Add("description", "Order " + order.OrderId);
 
             remotePostHelper.Add("language", "nl");
             remotePostHelper.Add("currency", CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
             remotePostHelper.Add("paymentType", "ideal");
 
-            remotePostHelper.Add("purchaseID", order.OrderID.ToString());
+            remotePostHelper.Add("purchaseID", order.OrderId.ToString());
             remotePostHelper.Add("amount", ((int)(order.OrderTotal * 100)).ToString());
             remotePostHelper.Add("validUntil", validUntil);
 
             StringBuilder hasString = new StringBuilder(iDealBasicPaymentSettings.HashKey);
-            hasString.Append(iDealBasicPaymentSettings.MerchantID);
-            hasString.Append(iDealBasicPaymentSettings.SubID);
+            hasString.Append(iDealBasicPaymentSettings.MerchantId);
+            hasString.Append(iDealBasicPaymentSettings.SubId);
             hasString.Append(((int)(order.OrderTotal * 100)).ToString());
-            hasString.Append(order.OrderID.ToString());
+            hasString.Append(order.OrderId.ToString());
             hasString.Append("ideal");
             hasString.Append(validUntil);
             ulong aantal = 0;
@@ -89,8 +89,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
             int i = 1;
             foreach (OrderProductVariant product in order.OrderProductVariants)
             {
-                hasString.Append(product.ProductVariantID.ToString());
-                remotePostHelper.Add("itemNumber" + i, product.ProductVariantID.ToString());
+                hasString.Append(product.ProductVariantId.ToString());
+                remotePostHelper.Add("itemNumber" + i, product.ProductVariantId.ToString());
 
                 if (!String.IsNullOrEmpty(product.ProductVariant.Product.ShortDescription))
                 {
@@ -243,9 +243,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

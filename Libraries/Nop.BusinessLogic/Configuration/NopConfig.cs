@@ -27,11 +27,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
     public partial class NopConfig : IConfigurationSectionHandler
     {
         #region Fields
-        private static string _ConnectionString = "";
-        private static bool _Initialized = false;
-        private static int _CookieExpires = 128;
-        private static bool _CacheEnabled = false;
-        private static XmlNode _ScheduleTasks;
+        private static string _connectionString = "";
+        private static bool _initialized = false;
+        private static int _cookieExpires = 128;
+        private static bool _cacheEnabled = false;
+        private static XmlNode _scheduleTasks;
         #endregion
 
         #region Methods
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
             {
                 XmlAttribute attribute = sqlServerNode.Attributes["ConnectionStringName"];
                 if ((attribute != null) && (WebConfigurationManager.ConnectionStrings[attribute.Value] != null))
-                    _ConnectionString = WebConfigurationManager.ConnectionStrings[attribute.Value].ConnectionString;
+                    _connectionString = WebConfigurationManager.ConnectionStrings[attribute.Value].ConnectionString;
             }
 
             XmlNode cacheNode = section.SelectSingleNode("Cache");
@@ -59,11 +59,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
                 if (attribute != null && attribute.Value != null)
                 {
                     string str1 = attribute.Value.ToUpperInvariant();
-                    _CacheEnabled = (str1 == "TRUE" || str1 == "YES" || str1 == "1");
+                    _cacheEnabled = (str1 == "TRUE" || str1 == "YES" || str1 == "1");
                 }
             }
 
-            _ScheduleTasks = section.SelectSingleNode("ScheduleTasks");
+            _scheduleTasks = section.SelectSingleNode("ScheduleTasks");
 
             return null;
         }
@@ -73,10 +73,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
         /// </summary>
         public static void Init()
         {
-            if (!_Initialized)
+            if (!_initialized)
             {
                 ConfigurationManager.GetSection("NopConfig");
-                _Initialized = true;
+                _initialized = true;
             }
         }
         #endregion
@@ -89,11 +89,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
         {
             get
             {
-                return _ConnectionString;
+                return _connectionString;
             }
             set
             {
-                _ConnectionString = value;
+                _connectionString = value;
             }
         }
 
@@ -104,11 +104,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
         {
             get
             {
-                return _CookieExpires;
+                return _cookieExpires;
             }
             set
             {
-                _CookieExpires = value;
+                _cookieExpires = value;
             }
         }
 
@@ -119,11 +119,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
         {
             get
             {
-                return _CacheEnabled;
+                return _cacheEnabled;
             }
             set
             {
-                _CacheEnabled = value;
+                _cacheEnabled = value;
             }
         }
 
@@ -134,11 +134,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
         {
             get
             {
-                return _ScheduleTasks;
+                return _scheduleTasks;
             }
             set
             {
-                _ScheduleTasks = value;
+                _scheduleTasks = value;
             }
         }
         #endregion

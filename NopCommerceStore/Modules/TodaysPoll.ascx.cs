@@ -45,9 +45,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var polls = PollManager.GetPolls(NopContext.Current.WorkingLanguage.LanguageID, 1);
+            var polls = PollManager.GetPolls(NopContext.Current.WorkingLanguage.LanguageId, 1);
             if (polls.Count > 0)
-                PollControl.PollID = polls[0].PollID;
+                PollControl.PollId = polls[0].PollId;
             else
                 this.Visible = false;
         }

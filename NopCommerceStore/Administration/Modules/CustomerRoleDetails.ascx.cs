@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.CustomerRoleTabs, this.TabID);
+                this.SelectTab(this.CustomerRoleTabs, this.TabId);
             }
         }
 
@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditCustomerRole"),
                         customerRole.Name);
 
-                    Response.Redirect(string.Format("CustomerRoleDetails.aspx?CustomerRoleID={0}&TabID={1}", customerRole.CustomerRoleID, this.GetActiveTabID(this.CustomerRoleTabs)));
+                    Response.Redirect(string.Format("CustomerRoleDetails.aspx?CustomerRoleID={0}&TabID={1}", customerRole.CustomerRoleId, this.GetActiveTabId(this.CustomerRoleTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -67,10 +67,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                CustomerRole customerRole = CustomerManager.GetCustomerRoleByID(this.CustomerRoleID);
+                CustomerRole customerRole = CustomerManager.GetCustomerRoleById(this.CustomerRoleId);
                 if (customerRole != null)
                 {
-                    CustomerManager.MarkCustomerRoleAsDeleted(this.CustomerRoleID);
+                    CustomerManager.MarkCustomerRoleAsDeleted(this.CustomerRoleId);
 
                     CustomerActivityManager.InsertActivity(
                         "DeleteCustomerRole",
@@ -86,19 +86,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CustomerRoleID
+        public int CustomerRoleId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerRoleID");
+                return CommonHelper.QueryStringInt("CustomerRoleId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

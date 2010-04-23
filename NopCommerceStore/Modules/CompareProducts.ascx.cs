@@ -100,13 +100,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 cell.Align = "center";
                 priceRow.Cells.Add(cell);
 
-                var specificationAttributeIDs = new List<int>();
+                var specificationAttributeIds = new List<int>();
                 foreach (var product in compareProducts)
                 {
-                    var productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID, null, true);
+                    var productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product.ProductId, null, true);
                     foreach (var attribute in productSpecificationAttributes)
-                        if (!specificationAttributeIDs.Contains(attribute.SpecificationAttribute.SpecificationAttributeID))
-                            specificationAttributeIDs.Add(attribute.SpecificationAttribute.SpecificationAttributeID);
+                        if (!specificationAttributeIds.Contains(attribute.SpecificationAttribute.SpecificationAttributeId))
+                            specificationAttributeIds.Add(attribute.SpecificationAttribute.SpecificationAttributeId);
                 }
 
                 foreach (var product in compareProducts)
@@ -118,10 +118,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     btnRemoveFromList.Text = GetLocaleResourceString("Products.CompareProductsRemoveFromList");
                     btnRemoveFromList.CommandName = "Remove";
                     btnRemoveFromList.Command += new CommandEventHandler(this.btnRemoveFromList_Command);
-                    btnRemoveFromList.CommandArgument = product.ProductID.ToString();
+                    btnRemoveFromList.CommandArgument = product.ProductId.ToString();
                     btnRemoveFromList.CausesValidation = false;
                     btnRemoveFromList.CssClass = "remove-button";
-                    btnRemoveFromList.ID = "btnRemoveFromList" + product.ProductID.ToString();
+                    btnRemoveFromList.ID = "btnRemoveFromList" + product.ProductId.ToString();
                     headerCellDiv.Controls.Add(btnRemoveFromList);
 
                     var productImagePanel = new HtmlGenericControl("p");
@@ -144,7 +144,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var productNameCell = new HtmlTableCell();
                     var productLink = new HyperLink();
                     productLink.Text = Server.HtmlEncode(product.Name);
-                    productLink.NavigateUrl = SEOHelper.GetProductURL(product);
+                    productLink.NavigateUrl = SEOHelper.GetProductUrl(product);
                     productLink.Attributes.Add("class", "link");
                     productNameCell.Align = "center";
                     productNameCell.Controls.Add(productLink);
@@ -167,9 +167,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 this.tblCompareProducts.Rows.Add(productNameRow);
                 this.tblCompareProducts.Rows.Add(priceRow);
 
-                foreach (int specificationAttributeID in specificationAttributeIDs)
+                foreach (int specificationAttributeId in specificationAttributeIds)
                 {
-                    var specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeByID(specificationAttributeID);
+                    var specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(specificationAttributeId);
                     var productRow = new HtmlTableRow();
                     this.AddCell(productRow, Server.HtmlEncode(specificationAttribute.Name)).Align = "left";
 
@@ -177,10 +177,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         var productCell = new HtmlTableCell();
                         {
-                            var productSpecificationAttributes2 = SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product2.ProductID, null, true);
+                            var productSpecificationAttributes2 = SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product2.ProductId, null, true);
                             foreach (var psa2 in productSpecificationAttributes2)
                             {
-                                if (specificationAttribute.SpecificationAttributeID == psa2.SpecificationAttribute.SpecificationAttributeID)
+                                if (specificationAttribute.SpecificationAttributeId == psa2.SpecificationAttribute.SpecificationAttributeId)
                                 {
                                     productCell.InnerHtml = (!String.IsNullOrEmpty(psa2.SpecificationAttributeOption.Name)) ? Server.HtmlEncode(psa2.SpecificationAttributeOption.Name) : "&nbsp;";
                                 }

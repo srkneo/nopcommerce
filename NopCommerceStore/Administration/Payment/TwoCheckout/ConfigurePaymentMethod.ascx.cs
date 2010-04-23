@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.TwoCheckout
         private void BindData()
         {
             cbUseSandbox.Checked = SettingManager.GetSettingValueBoolean("PaymentMethod.TwoCheckout.UseSandbox");
-            txtVendorID.Text = SettingManager.GetSettingValue("PaymentMethod.TwoCheckout.VendorID");
+            txtVendorId.Text = SettingManager.GetSettingValue("PaymentMethod.TwoCheckout.VendorId");
             cbUseMD5Hashing.Checked = SettingManager.GetSettingValueBoolean("PaymentMethod.TwoCheckout.UseMD5Hashing");
             txtSecretWord.Text = SettingManager.GetSettingValue("PaymentMethod.TwoCheckout.SecretWord");
             txtAdditionalFee.Value = SettingManager.GetSettingValueDecimalNative("PaymentMethod.TwoCheckout.AdditionalFee");
@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.TwoCheckout
         public void Save()
         {
             SettingManager.SetParam("PaymentMethod.TwoCheckout.UseSandbox", cbUseSandbox.Checked.ToString());
-            SettingManager.SetParam("PaymentMethod.TwoCheckout.VendorID", txtVendorID.Text);
+            SettingManager.SetParam("PaymentMethod.TwoCheckout.VendorId", txtVendorId.Text);
             SettingManager.SetParam("PaymentMethod.TwoCheckout.UseMD5Hashing", cbUseMD5Hashing.Checked.ToString());
             SettingManager.SetParam("PaymentMethod.TwoCheckout.SecretWord", txtSecretWord.Text);
             SettingManager.SetParamNative("PaymentMethod.TwoCheckout.AdditionalFee", txtAdditionalFee.Value);

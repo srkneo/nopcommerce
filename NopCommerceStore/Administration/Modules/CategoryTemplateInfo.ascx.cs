@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            CategoryTemplate categoryTemplate = TemplateManager.GetCategoryTemplateByID(this.CategoryTemplateID);
+            CategoryTemplate categoryTemplate = TemplateManager.GetCategoryTemplateById(this.CategoryTemplateId);
             if (categoryTemplate != null)
             {
                 this.txtName.Text = categoryTemplate.Name;
@@ -60,11 +60,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public CategoryTemplate SaveInfo()
         {
-            CategoryTemplate categoryTemplate = TemplateManager.GetCategoryTemplateByID(this.CategoryTemplateID);
+            CategoryTemplate categoryTemplate = TemplateManager.GetCategoryTemplateById(this.CategoryTemplateId);
 
             if (categoryTemplate != null)
             {
-                categoryTemplate = TemplateManager.UpdateCategoryTemplate(categoryTemplate.CategoryTemplateID, txtName.Text,
+                categoryTemplate = TemplateManager.UpdateCategoryTemplate(categoryTemplate.CategoryTemplateId, txtName.Text,
                     txtTemplatePath.Text, txtDisplayOrder.Value, categoryTemplate.CreatedOn, DateTime.Now);                
             }
             else
@@ -77,11 +77,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return categoryTemplate;
         }
 
-        public int CategoryTemplateID
+        public int CategoryTemplateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryTemplateID");
+                return CommonHelper.QueryStringInt("CategoryTemplateId");
             }
         }
     }

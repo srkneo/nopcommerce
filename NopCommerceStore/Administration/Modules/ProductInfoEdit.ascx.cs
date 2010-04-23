@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID, 0);
+            Product product = ProductManager.GetProductById(this.ProductId, 0);
 
             if (this.HasLocalizableContent)
             {
@@ -55,8 +55,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtShortDescription.Text = product.ShortDescription;
                 this.txtFullDescription.Content = product.FullDescription;
                 this.txtAdminComment.Text = product.AdminComment;
-                CommonHelper.SelectListItem(this.ddlProductType, product.ProductTypeID);
-                CommonHelper.SelectListItem(this.ddlTemplate, product.TemplateID);
+                CommonHelper.SelectListItem(this.ddlProductType, product.ProductTypeId);
+                CommonHelper.SelectListItem(this.ddlTemplate, product.TemplateId);
                 this.cbShowOnHomePage.Checked = product.ShowOnHomePage;
 
                 this.cbAllowCustomerReviews.Checked = product.AllowCustomerReviews;
@@ -68,7 +68,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     hlViewReviews.Visible = true;
                     hlViewReviews.Text = string.Format(GetLocaleResourceString("Admin.ProductInfo.AllowCustomerReviewsView"), productReviews.Count);
-                    hlViewReviews.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductReviews.aspx?ProductID=" + product.ProductID.ToString();
+                    hlViewReviews.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductReviews.aspx?ProductID=" + product.ProductId.ToString();
                 }
                 else
                     hlViewReviews.Visible = false;
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ProductTemplateCollection productTemplateCollection = TemplateManager.GetAllProductTemplates();
             foreach (ProductTemplate productTemplate in productTemplateCollection)
             {
-                ListItem item2 = new ListItem(productTemplate.Name, productTemplate.ProductTemplateID.ToString());
+                ListItem item2 = new ListItem(productTemplate.Name, productTemplate.ProductTemplateId.ToString());
                 this.ddlTemplate.Items.Add(item2);
             }
 
@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ProductTypeCollection productTypeCollection = ProductManager.GetAllProductTypes();
             foreach (ProductType productType in productTypeCollection)
             {
-                ListItem item2 = new ListItem(productType.Name, productType.ProductTypeID.ToString());
+                ListItem item2 = new ListItem(productType.Name, productType.ProductTypeId.ToString());
                 this.ddlProductType.Items.Add(item2);
             }
         }
@@ -116,10 +116,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         
         public Product SaveInfo()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID, 0);
+            Product product = ProductManager.GetProductById(this.ProductId, 0);
             if (product != null)
             {
-                product = ProductManager.UpdateProduct(product.ProductID, txtName.Text, txtShortDescription.Text, txtFullDescription.Content, txtAdminComment.Text,
+                product = ProductManager.UpdateProduct(product.ProductId, txtName.Text, txtShortDescription.Text, txtFullDescription.Content, txtAdminComment.Text,
                      int.Parse(this.ddlProductType.SelectedItem.Value), int.Parse(this.ddlTemplate.SelectedItem.Value),
                      cbShowOnHomePage.Checked, product.MetaKeywords, product.MetaDescription,
                      product.MetaTitle, product.SEName, cbAllowCustomerReviews.Checked,
@@ -128,12 +128,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             }
 
-            saveLocalizableContent(product);
+            SaveLocalizableContent(product);
 
             return product;
         }
 
-        protected void saveLocalizableContent(Product product)
+        protected void SaveLocalizableContent(Product product)
         {
             if (product == null)
                 return;
@@ -150,7 +150,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedFullDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedFullDescription");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtLocalizedName.Text;
                     string shortDescription = txtLocalizedShortDescription.Text;
                     string fullDescription = txtLocalizedFullDescription.Content;
@@ -159,23 +159,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         string.IsNullOrEmpty(shortDescription) &&
                         string.IsNullOrEmpty(fullDescription));
 
-                    var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(product.ProductID, languageID);
+                    var content = ProductManager.GetProductLocalizedByProductIdAndLanguageId(product.ProductId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = ProductManager.InsertProductLocalized(product.ProductID,
-                                   languageID, name, shortDescription, fullDescription,
+                            content = ProductManager.InsertProductLocalized(product.ProductId,
+                                   languageId, name, shortDescription, fullDescription,
                                    string.Empty, string.Empty, string.Empty, string.Empty);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = ProductManager.UpdateProductLocalized(content.ProductLocalizedID, content.ProductID,
-                                languageID, name, shortDescription, fullDescription,
+                            content = ProductManager.UpdateProductLocalized(content.ProductLocalizedId, content.ProductId,
+                                languageId, name, shortDescription, fullDescription,
                                 content.MetaKeywords, content.MetaDescription,
                                 content.MetaTitle, content.SEName);
                         }
@@ -193,9 +193,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedFullDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedFullDescription");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = ProductManager.GetProductLocalizedByProductIDAndLanguageID(this.ProductID, languageID);
+                var content = ProductManager.GetProductLocalizedByProductIdAndLanguageId(this.ProductId, languageId);
                 if (content != null)
                 {
                     txtLocalizedName.Text = content.Name;
@@ -205,12 +205,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

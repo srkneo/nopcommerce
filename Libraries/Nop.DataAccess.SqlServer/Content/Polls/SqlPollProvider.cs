@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
     /// <summary>
     /// Poll provider for SQL Server
     /// </summary>
-    public partial class SQLPollProvider : DBPollProvider
+    public partial class SqlPollProvider : DBPollProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,25 +36,25 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         #region Utilities
         private DBPoll GetPollFromReader(IDataReader dataReader)
         {
-            DBPoll poll = new DBPoll();
-            poll.PollID = NopSqlDataHelper.GetInt(dataReader, "PollID");
-            poll.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            poll.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            poll.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
-            poll.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
-            poll.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return poll;
+            var item = new DBPoll();
+            item.PollId = NopSqlDataHelper.GetInt(dataReader, "PollID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
+            item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
 
         private DBPollAnswer GetPollAnswerFromReader(IDataReader dataReader)
         {
-            DBPollAnswer pollAnswer = new DBPollAnswer();
-            pollAnswer.PollAnswerID = NopSqlDataHelper.GetInt(dataReader, "PollAnswerID");
-            pollAnswer.PollID = NopSqlDataHelper.GetInt(dataReader, "PollID");
-            pollAnswer.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            pollAnswer.Count = NopSqlDataHelper.GetInt(dataReader, "Count");
-            pollAnswer.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return pollAnswer;
+            var item = new DBPollAnswer();
+            item.PollAnswerId = NopSqlDataHelper.GetInt(dataReader, "PollAnswerID");
+            item.PollId = NopSqlDataHelper.GetInt(dataReader, "PollID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Count = NopSqlDataHelper.GetInt(dataReader, "Count");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -97,61 +97,62 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         /// <summary>
         /// Gets a poll
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
+        /// <param name="pollId">The poll identifier</param>
         /// <returns>Poll</returns>
-        public override DBPoll GetPollByID(int PollID)
+        public override DBPoll GetPollById(int pollId)
         {
-            DBPoll poll = null;
-            if (PollID == 0)
-                return poll;
+            DBPoll item = null;
+            if (pollId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, PollID);
+            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    poll = GetPollFromReader(dataReader);
+                    item = GetPollFromReader(dataReader);
                 }
             }
-            return poll;
+            return item;
         }
 
         /// <summary>
         /// Gets a poll
         /// </summary>
-        /// <param name="SystemKeyword">Poll system keyword</param>
+        /// <param name="systemKeyword">Poll system keyword</param>
         /// <returns>Poll</returns>
-        public override DBPoll GetPollBySystemKeyword(string SystemKeyword)
+        public override DBPoll GetPollBySystemKeyword(string systemKeyword)
         {
-            DBPoll poll = null;
+            DBPoll item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollLoadBySystemKeyword");
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    poll = GetPollFromReader(dataReader);
+                    item = GetPollFromReader(dataReader);
                 }
             }
-            return poll;
+            return item;
         }
 
         /// <summary>
         /// Gets poll collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="PollCount">Poll count to load. 0 if you want to get all polls</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="pollCount">Poll count to load. 0 if you want to get all polls</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Poll collection</returns>
-        public override DBPollCollection GetPolls(int LanguageID, int PollCount, bool showHidden)
+        public override DBPollCollection GetPolls(int languageId,
+            int pollCount, bool showHidden)
         {
             var result = new DBPollCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollLoadAll");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "PollCount", DbType.Int32, PollCount);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "PollCount", DbType.Int32, pollCount);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -168,85 +169,85 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         /// <summary>
         /// Deletes a poll
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
-        public override void DeletePoll(int PollID)
+        /// <param name="pollId">The poll identifier</param>
+        public override void DeletePoll(int pollId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollDelete");
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, PollID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Inserts a poll
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll</returns>
-        public override DBPoll InsertPoll(int LanguageID, string Name,
-            string SystemKeyword, bool Published, int DisplayOrder)
+        public override DBPoll InsertPoll(int languageId, string name, string systemKeyword,
+            bool published, int displayOrder)
         {
-            DBPoll poll = null;
+            DBPoll item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollInsert");
             db.AddOutParameter(dbCommand, "PollID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int PollID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PollID"));
-                poll = GetPollByID(PollID);
+                int pollId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PollID"));
+                item = GetPollById(pollId);
             }
-            return poll;
+            return item;
         }
 
         /// <summary>
         /// Updates the poll
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="pollId">The poll identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll</returns>
-        public override DBPoll UpdatePoll(int PollID, int LanguageID, string Name, 
-            string SystemKeyword, bool Published, int DisplayOrder)
+        public override DBPoll UpdatePoll(int pollId, int languageId, string name,
+            string systemKeyword, bool published, int displayOrder)
         {
-            DBPoll poll = null;
+            DBPoll item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollUpdate");
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, PollID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                poll = GetPollByID(PollID);
+                item = GetPollById(pollId);
 
-            return poll;
+            return item;
         }
 
         /// <summary>
         /// Is voting record already exists
         /// </summary>
-        /// <param name="PollID">Poll identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
+        /// <param name="pollId">Poll identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <returns>Poll</returns>
-        public override bool PollVotingRecordExists(int PollID, int CustomerID)
+        public override bool PollVotingRecordExists(int pollId, int customerId)
         {
             bool result = false;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollVotingRecordExists");
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, PollID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.String, CustomerID);
+            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.String, customerId);
             if ((int)db.ExecuteScalar(dbCommand) > 0)
                 result = true;
 
@@ -256,37 +257,37 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         /// <summary>
         /// Gets a poll answer
         /// </summary>
-        /// <param name="PollAnswerID">Poll answer identifier</param>
+        /// <param name="pollAnswerId">Poll answer identifier</param>
         /// <returns>Poll answer</returns>
-        public override DBPollAnswer GetPollAnswerByID(int PollAnswerID)
+        public override DBPollAnswer GetPollAnswerById(int pollAnswerId)
         {
-            DBPollAnswer pollAnswer = null;
-            if (PollAnswerID == 0)
-                return pollAnswer;
+            DBPollAnswer item = null;
+            if (pollAnswerId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollAnswerLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, PollAnswerID);
+            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, pollAnswerId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    pollAnswer = GetPollAnswerFromReader(dataReader);
+                    item = GetPollAnswerFromReader(dataReader);
                 }
             }
-            return pollAnswer;
+            return item;
         }
 
         /// <summary>
         /// Gets a poll answers by poll identifier
         /// </summary>
-        /// <param name="PollID">Poll identifier</param>
+        /// <param name="pollId">Poll identifier</param>
         /// <returns>Poll answer collection</returns>
-        public override DBPollAnswerCollection GetPollAnswersByPollID(int PollID)
+        public override DBPollAnswerCollection GetPollAnswersByPollId(int pollId)
         {
             var result = new DBPollAnswerCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollAnswerLoadByPollID");
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, PollID);
+            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -302,77 +303,79 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         /// <summary>
         /// Deletes a poll answer
         /// </summary>
-        /// <param name="PollAnswerID">Poll answer identifier</param>
-        public override void DeletePollAnswer(int PollAnswerID)
+        /// <param name="pollAnswerId">Poll answer identifier</param>
+        public override void DeletePollAnswer(int pollAnswerId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollAnswerDelete");
-            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, PollAnswerID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, pollAnswerId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Inserts a poll answer
         /// </summary>
-        /// <param name="PollID">The poll identifier</param>
-        /// <param name="Name">The poll answer name</param>
-        /// <param name="Count">The current count</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="pollId">The poll identifier</param>
+        /// <param name="name">The poll answer name</param>
+        /// <param name="count">The current count</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll answer</returns>
-        public override DBPollAnswer InsertPollAnswer(int PollID, string Name, int Count, int DisplayOrder)
+        public override DBPollAnswer InsertPollAnswer(int pollId,
+            string name, int count, int displayOrder)
         {
-            DBPollAnswer pollAnswer = null;
+            DBPollAnswer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollAnswerInsert");
             db.AddOutParameter(dbCommand, "PollAnswerID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, PollID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Count", DbType.Int32, Count);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Count", DbType.Int32, count);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int PollAnswerID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PollAnswerID"));
-                pollAnswer = GetPollAnswerByID(PollAnswerID);
+                int pollAnswerId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PollAnswerID"));
+                item = GetPollAnswerById(pollAnswerId);
             }
-            return pollAnswer;
+            return item;
         }
 
         /// <summary>
         /// Updates the poll answer
         /// </summary>
-        /// <param name="PollAnswerID">The poll answer identifier</param>
-        /// <param name="PollID">The poll identifier</param>
-        /// <param name="Name">The poll answer name</param>
-        /// <param name="Count">The current count</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="pollAnswerId">The poll answer identifier</param>
+        /// <param name="pollId">The poll identifier</param>
+        /// <param name="name">The poll answer name</param>
+        /// <param name="count">The current count</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Poll answer</returns>
-        public override DBPollAnswer UpdatePollAnswer(int PollAnswerID, int PollID, string Name, int Count, int DisplayOrder)
+        public override DBPollAnswer UpdatePollAnswer(int pollAnswerId,
+            int pollId, string name, int count, int displayOrder)
         {
-            DBPollAnswer pollAnswer = null;
+            DBPollAnswer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollAnswerUpdate");
-            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, PollAnswerID);
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, PollID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Count", DbType.Int32, Count);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, pollAnswerId);
+            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Count", DbType.Int32, count);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                pollAnswer = GetPollAnswerByID(PollAnswerID);
+                item = GetPollAnswerById(pollAnswerId);
 
-            return pollAnswer;
+            return item;
         }
 
         /// <summary>
         /// Creates a poll voting record
         /// </summary>
-        /// <param name="PollAnswerID">The poll answer identifier</param>
-        /// <param name="CustomerID">Customer identifer</param>
-        public override void CreatePollVotingRecord(int PollAnswerID, int CustomerID)
+        /// <param name="pollAnswerId">The poll answer identifier</param>
+        /// <param name="customerId">Customer identifer</param>
+        public override void CreatePollVotingRecord(int pollAnswerId, int customerId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollVotingRecordCreate");
-            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, PollAnswerID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
+            db.AddInParameter(dbCommand, "PollAnswerID", DbType.Int32, pollAnswerId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
             db.ExecuteNonQuery(dbCommand);
         }
 

@@ -31,16 +31,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Country country = CountryManager.GetCountryByID(this.CountryID);
+            Country country = CountryManager.GetCountryById(this.CountryId);
             if (country != null)
             {
                 this.txtName.Text = country.Name;
                 this.cbAllowsRegistration.Checked = country.AllowsRegistration;
                 this.cbAllowsBilling.Checked = country.AllowsBilling;
                 this.cbAllowsShipping.Checked = country.AllowsShipping;
-                this.txtTwoLetterISOCode.Text = country.TwoLetterISOCode;
-                this.txtThreeLetterISOCode.Text = country.ThreeLetterISOCode;
-                this.txtNumericISOCode.Value = country.NumericISOCode;
+                this.txtTwoLetterISOCode.Text = country.TwoLetterIsoCode;
+                this.txtThreeLetterISOCode.Text = country.ThreeLetterIsoCode;
+                this.txtNumericISOCode.Value = country.NumericIsoCode;
                 this.cbPublished.Checked = country.Published;
                 this.txtDisplayOrder.Value = country.DisplayOrder;
             }
@@ -56,11 +56,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Country SaveInfo()
         {
-            Country country = CountryManager.GetCountryByID(this.CountryID);
+            Country country = CountryManager.GetCountryById(this.CountryId);
 
             if (country != null)
             {
-                country = CountryManager.UpdateCountry(country.CountryID,
+                country = CountryManager.UpdateCountry(country.CountryId,
                     txtName.Text, cbAllowsRegistration.Checked,
                     cbAllowsBilling.Checked, cbAllowsShipping.Checked,
                     txtTwoLetterISOCode.Text, txtThreeLetterISOCode.Text,
@@ -79,11 +79,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return country;
         }
 
-        public int CountryID
+        public int CountryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CountryID");
+                return CommonHelper.QueryStringInt("CountryId");
             }
         }
     }

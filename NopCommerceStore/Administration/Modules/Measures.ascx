@@ -20,11 +20,10 @@
         <ContentTemplate>
             <asp:GridView ID="gvDimensions" runat="server" AutoGenerateColumns="False" Width="100%">
                 <Columns>
-                    <asp:BoundField DataField="MeasureDimensionID" HeaderText="ID" Visible="False"></asp:BoundField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Measures.Dimensions.Name %>"
                         ItemStyle-Width="55%">
                         <ItemTemplate>
-                            <a href="MeasureDimensionDetails.aspx?MeasureDimensionID=<%#Eval("MeasureDimensionID")%>"
+                            <a href="MeasureDimensionDetails.aspx?MeasureDimensionID=<%#Eval("MeasureDimensionId")%>"
                                 title="<%#GetLocaleResourceString("Admin.Measures.Dimensions.Name.Edit")%>">
                                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
                             </a>
@@ -41,7 +40,7 @@
                         <ItemTemplate>
                             <nopCommerce:GlobalRadioButton runat="server" ID="rdbIsPrimaryDimension" Checked='<%#Eval("IsPrimaryDimension")%>'
                                 GroupName="PrimaryDimension" ToolTip="<% $NopResources:Admin.Measures.Dimensions.PrimaryDimension.Tooltip %>" />
-                            <asp:HiddenField runat="server" ID="hfMeasureDimensionID" Value='<%#Eval("MeasureDimensionID")%>' />
+                            <asp:HiddenField runat="server" ID="hfMeasureDimensionId" Value='<%#Eval("MeasureDimensionId")%>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -52,10 +51,9 @@
         <ContentTemplate>
             <asp:GridView ID="gvWeights" runat="server" AutoGenerateColumns="False" Width="100%">
                 <Columns>
-                    <asp:BoundField DataField="MeasureWeightID" HeaderText="ID" Visible="False"></asp:BoundField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Measures.Weights.Name %>" ItemStyle-Width="55%">
                         <ItemTemplate>
-                            <a href="MeasureWeightDetails.aspx?MeasureWeightID=<%#Eval("MeasureWeightID")%>"
+                            <a href="MeasureWeightDetails.aspx?MeasureWeightID=<%#Eval("MeasureWeightId")%>"
                                 title="<%#GetLocaleResourceString("Admin.Measures.Weights.Name.Edit")%>">
                                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
                             </a>
@@ -72,7 +70,7 @@
                         <ItemTemplate>
                             <nopCommerce:GlobalRadioButton runat="server" ID="rdbIsPrimaryWeight" Checked='<%#Eval("IsPrimaryWeight")%>'
                                 GroupName="PrimaryWeight" ToolTip="<% $NopResources:Admin.Measures.Weights.PrimaryWeight.Tooltip %>" />
-                            <asp:HiddenField runat="server" ID="hfMeasureWeightID" Value='<%#Eval("MeasureWeightID")%>' />
+                            <asp:HiddenField runat="server" ID="hfMeasureWeightId" Value='<%#Eval("MeasureWeightId")%>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

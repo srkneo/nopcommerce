@@ -28,8 +28,6 @@
 </p>
 <asp:GridView ID="gvStateProvinces" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="StateProvinceID" HeaderText="StateProvince ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.StateProvinces.Name %>" ItemStyle-Width="50%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
@@ -44,7 +42,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.StateProvinces.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="16%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="StateProvinceDetails.aspx?StateProvinceID=<%#Eval("StateProvinceID")%>"
+                <a href="StateProvinceDetails.aspx?StateProvinceID=<%#Eval("StateProvinceId")%>"
                     title="<%#GetLocaleResourceString("Admin.StateProvinces.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.StateProvinces.Edit")%>
                 </a>

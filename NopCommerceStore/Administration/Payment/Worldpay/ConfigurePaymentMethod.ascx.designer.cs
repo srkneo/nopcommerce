@@ -23,13 +23,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.Worldpay {
         protected global::System.Web.UI.WebControls.CheckBox cbUseSandbox;
         
         /// <summary>
-        /// txtWorldpayInstanceID control.
+        /// txtWorldpayInstanceId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtWorldpayInstanceID;
+        protected global::System.Web.UI.WebControls.TextBox txtWorldpayInstanceId;
         
         /// <summary>
         /// txtCreditCard control.

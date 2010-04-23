@@ -59,7 +59,7 @@
                         </td>
                         <%} %>
                         <td class="product">
-                            <a href='<%#GetProductURL((ShoppingCartItem)Container.DataItem)%>'>
+                            <a href='<%#GetProductUrl((ShoppingCartItem)Container.DataItem)%>'>
                                 <%#Server.HtmlEncode(GetProductVariantName((ShoppingCartItem)Container.DataItem))%></a>
                             <%#GetAttributeDescription((ShoppingCartItem)Container.DataItem)%>
                             <asp:Panel runat="server" ID="pnlWarnings" CssClass="warning-box" EnableViewState="false"
@@ -84,7 +84,7 @@
                         </td>
                         <td width="20%" class="end">
                             <%#GetShoppingCartItemSubTotalString((ShoppingCartItem)Container.DataItem)%>
-                            <asp:Label ID="lblShoppingCartItemID" runat="server" Visible="false" Text='<%# Eval("ShoppingCartItemID") %>' />
+                            <asp:Label ID="lblShoppingCartItemId" runat="server" Visible="false" Text='<%# Eval("ShoppingCartItemId") %>' />
                         </td>
                     </tr>
                 </ItemTemplate>

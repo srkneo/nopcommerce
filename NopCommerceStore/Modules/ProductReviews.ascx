@@ -25,13 +25,13 @@
                     <%#ProductManager.FormatProductReviewText((string)Eval("ReviewText"))%>
                     <p>
                         <%=GetLocaleResourceString("Products.ProductReviewFrom")%>:
-                        <%#Server.HtmlEncode(GetCustomerInfo(Convert.ToInt32(Eval("CustomerID"))))%>
+                        <%#Server.HtmlEncode(GetCustomerInfo(Convert.ToInt32(Eval("CustomerId"))))%>
                         |
                         <%=GetLocaleResourceString("Products.ProductReviewCreatedOn")%>:
                         <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
                     </p>
                     <nopCommerce:ProductReviewHelpfulness ID="ctrlProductReviewHelpfulness" runat="server"
-                        ProductReviewID='<%#Eval("ProductReviewID")%>'></nopCommerce:ProductReviewHelpfulness>
+                        ProductReviewID='<%#Eval("ProductReviewId")%>'></nopCommerce:ProductReviewHelpfulness>
                 </div>
             </ItemTemplate>
         </asp:Repeater>

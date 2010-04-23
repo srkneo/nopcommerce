@@ -34,17 +34,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <summary>
         /// Gets or sets the product specification attribute identifier
         /// </summary>
-        public int ProductSpecificationAttributeID { get; set; }
+        public int ProductSpecificationAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
-        /// Gets or sets the specification attribute option identifier
+        /// Gets or sets the specification attribute identifier
         /// </summary>
-        public int SpecificationAttributeOptionID { get; set; }
+        public int SpecificationAttributeOptionId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the attribute can be filtered by
@@ -71,9 +71,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             get
             {
-                SpecificationAttributeOption specificationAttributeOption = this.SpecificationAttributeOption;
-                if (specificationAttributeOption != null)
-                    return SpecificationAttributeManager.GetSpecificationAttributeByID(specificationAttributeOption.SpecificationAttributeID);
+                SpecificationAttributeOption sao = this.SpecificationAttributeOption;
+                if (sao != null)
+                    return SpecificationAttributeManager.GetSpecificationAttributeById(sao.SpecificationAttributeId);
                 else
                     return null;
             }
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             get
             {
-                return SpecificationAttributeManager.GetSpecificationAttributeOptionByID(SpecificationAttributeOptionID);
+                return SpecificationAttributeManager.GetSpecificationAttributeOptionById(this.SpecificationAttributeOptionId);
             }
         }
 
@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             get
             {
-                return ProductManager.GetProductByID(ProductID);
+                return ProductManager.GetProductById(this.ProductId);
             }
         }
 

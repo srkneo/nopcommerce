@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the localized product variant attribute value identifier
         /// </summary>
-        public int ProductVariantAttributeValueLocalizedID { get; set; }
+        public int ProductVariantAttributeValueLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant attribute value identifier
         /// </summary>
-        public int ProductVariantAttributeValueID { get; set; }
+        public int ProductVariantAttributeValueId { get; set; }
         
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

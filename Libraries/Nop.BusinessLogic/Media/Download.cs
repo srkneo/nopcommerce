@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         /// <summary>
         /// Gets or sets the download identifier
         /// </summary>
-        public int DownloadID { get; set; }
-        
+        public int DownloadId { get; set; }
+
         /// <summary>
-        /// Gets a sets a value indicating whether DownloadURL property should be used
+        /// Gets a sets a value indicating whether DownloadUrl property should be used
         /// </summary>
-        public bool UseDownloadURL { get; set; }
+        public bool UseDownloadUrl { get; set; }
 
         /// <summary>
         /// Gets a sets a download URL
         /// </summary>
-        public string DownloadURL { get; set; }
+        public string DownloadUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the download binary
@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         public byte[] DownloadBinary { get; set; }
 
         /// <summary>
-        /// The mime-type for the download
+        /// The mime-type of the download
         /// </summary>
         public string ContentType { get; set; }
 
@@ -68,7 +68,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         /// Gets or sets the extension
         /// </summary>
         public string Extension { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the download is new
         /// </summary>

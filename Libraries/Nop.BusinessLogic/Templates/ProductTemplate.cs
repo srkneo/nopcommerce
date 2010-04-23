@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <summary>
         /// Gets or sets the product template identifier
         /// </summary>
-        public int ProductTemplateID { get; set; }
+        public int ProductTemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

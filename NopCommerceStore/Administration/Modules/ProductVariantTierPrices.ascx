@@ -12,7 +12,7 @@
             <%=GetLocaleResourceString("Admin.ProductVariantTierPrices.Title")%>
             <br />
             <br />
-            <asp:GridView ID="gvTierPrices" runat="server" AutoGenerateColumns="false" DataKeyNames="TierPriceID"
+            <asp:GridView ID="gvTierPrices" runat="server" AutoGenerateColumns="false" DataKeyNames="TierPriceId"
                 OnRowDeleting="gvTierPrices_RowDeleting" OnRowDataBound="gvTierPrices_RowDataBound"
                 OnRowCommand="gvTierPrices_RowCommand" Width="100%">
                 <Columns>
@@ -25,7 +25,7 @@
                                 ValidationGroup="TierPrice" MinimumValue="1" MaximumValue="99999" Width="50px">
                             </nopCommerce:NumericTextBox>
                             <%#GetLocaleResourceString("Admin.ProductVariantTierPrices.Quantity.AndAbove")%>
-                            <asp:HiddenField ID="hfTierPriceID" runat="server" Value='<%# Eval("TierPriceID") %>' />
+                            <asp:HiddenField ID="hfTierPriceId" runat="server" Value='<%# Eval("TierPriceId") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductVariantTierPrices.Price %>"

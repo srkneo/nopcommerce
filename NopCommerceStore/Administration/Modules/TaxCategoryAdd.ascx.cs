@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     TaxCategory taxCategory = ctrlTaxCategoryInfo.SaveInfo();
-                    Response.Redirect("TaxCategoryDetails.aspx?TaxCategoryID=" + taxCategory.TaxCategoryID.ToString());
+                    Response.Redirect("TaxCategoryDetails.aspx?TaxCategoryID=" + taxCategory.TaxCategoryId.ToString());
                 }
                 catch (Exception exc)
                 {

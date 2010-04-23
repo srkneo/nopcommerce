@@ -21,7 +21,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPoint
             }
         }
 
-        public static string MerchantID
+        public static string MerchantId
         {
             get
             {

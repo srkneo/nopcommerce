@@ -64,8 +64,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
                 return null;
 
             var item = new News();
-            item.NewsID = dbItem.NewsID;
-            item.LanguageID = dbItem.LanguageID;
+            item.NewsId = dbItem.NewsId;
+            item.LanguageId = dbItem.LanguageId;
             item.Title = dbItem.Title;
             item.Short = dbItem.Short;
             item.Full = dbItem.Full;
@@ -97,9 +97,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
                 return null;
 
             var item = new NewsComment();
-            item.NewsCommentID = dbItem.NewsCommentID;
-            item.NewsID = dbItem.NewsID;
-            item.CustomerID = dbItem.CustomerID;
+            item.NewsCommentId = dbItem.NewsCommentId;
+            item.NewsId = dbItem.NewsId;
+            item.CustomerId = dbItem.CustomerId;
             item.Title = dbItem.Title;
             item.Comment = dbItem.Comment;
             item.CreatedOn = dbItem.CreatedOn;
@@ -112,21 +112,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets a news
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
+        /// <param name="newsId">The news identifier</param>
         /// <returns>News</returns>
-        public static News GetNewsByID(int NewsID)
+        public static News GetNewsById(int newsId)
         {
-            if (NewsID == 0)
+            if (newsId == 0)
                 return null;
 
-            string key = string.Format(NEWS_BY_ID_KEY, NewsID);
+            string key = string.Format(NEWS_BY_ID_KEY, newsId);
             object obj2 = NopCache.Get(key);
             if (NewsManager.CacheEnabled && (obj2 != null))
             {
                 return (News)obj2;
             }
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.GetNewsByID(NewsID);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.GetNewsById(newsId);
             var news = DBMapping(dbItem);
 
             if (NewsManager.CacheEnabled)
@@ -139,10 +139,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Deletes a news
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        public static void DeleteNews(int NewsID)
+        /// <param name="newsId">The news identifier</param>
+        public static void DeleteNews(int newsId)
         {
-            DBProviderManager<DBNewsProvider>.Provider.DeleteNews(NewsID);
+            DBProviderManager<DBNewsProvider>.Provider.DeleteNews(newsId);
             if (NewsManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(NEWS_PATTERN_KEY);
@@ -152,13 +152,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets news item collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="NewsCount">News item count. 0 if you want to get all news</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="newsCount">News item count. 0 if you want to get all news</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetNews(int LanguageID, int NewsCount)
+        public static NewsCollection GetNews(int languageId, int newsCount)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetNews(LanguageID, NewsCount, showHidden);
+            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetNews(languageId, newsCount, showHidden);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -166,31 +166,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets all news
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetAllNews(int LanguageID)
+        public static NewsCollection GetAllNews(int languageId)
         {
-            return GetNews(LanguageID, 0);
+            return GetNews(languageId, 0);
         }
 
         /// <summary>
         /// Inserts a news item
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The news title</param>
-        /// <param name="Short">The short text</param>
-        /// <param name="Full">The full text</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="AllowComments">A value indicating whether the entity allows comments</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The news title</param>
+        /// <param name="shortText">The short text</param>
+        /// <param name="fullText">The full text</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="allowComments">A value indicating whether the entity allows comments</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News item</returns>
-        public static News InsertNews(int LanguageID, string Title, string Short,
-            string Full, bool Published, bool AllowComments, DateTime CreatedOn)
+        public static News InsertNews(int languageId, string title, string shortText,
+            string fullText, bool published, bool allowComments, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNews(LanguageID, Title, Short,
-                Full, Published, AllowComments, CreatedOn);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNews(languageId, 
+                title, shortText, fullText, published, allowComments, createdOn);
             var news = DBMapping(dbItem);
 
             if (NewsManager.CacheEnabled)
@@ -204,22 +204,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Updates the news item
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The news title</param>
-        /// <param name="Short">The short text</param>
-        /// <param name="Full">The full text</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="AllowComments">A value indicating whether the entity allows comments</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The news title</param>
+        /// <param name="shortText">The short text</param>
+        /// <param name="fullText">The full text</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="allowComments">A value indicating whether the entity allows comments</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News item</returns>
-        public static News UpdateNews(int NewsID, int LanguageID, string Title, string Short,
-            string Full, bool Published, bool AllowComments, DateTime CreatedOn)
+        public static News UpdateNews(int newsId, int languageId,
+            string title, string shortText, string fullText,
+            bool published, bool allowComments, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNews(NewsID, LanguageID, Title, Short,
-                Full, Published, AllowComments, CreatedOn);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNews(newsId, 
+                languageId, title, shortText, fullText, published, allowComments, createdOn);
             var news = DBMapping(dbItem);
 
             if (NewsManager.CacheEnabled)
@@ -233,14 +234,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets a news comment
         /// </summary>
-        /// <param name="NewsCommentID">News comment identifer</param>
+        /// <param name="newsCommentId">News comment identifer</param>
         /// <returns>News comment</returns>
-        public static NewsComment GetNewsCommentByID(int NewsCommentID)
+        public static NewsComment GetNewsCommentById(int newsCommentId)
         {
-            if (NewsCommentID == 0)
+            if (newsCommentId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.GetNewsCommentByID(NewsCommentID);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.GetNewsCommentById(newsCommentId);
             var newsComment = DBMapping(dbItem);
             return newsComment;
         }
@@ -248,11 +249,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets a news comment collection by news identifier
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
+        /// <param name="newsId">The news identifier</param>
         /// <returns>News comment collection</returns>
-        public static NewsCommentCollection GetNewsCommentsByNewsID(int NewsID)
+        public static NewsCommentCollection GetNewsCommentsByNewsId(int newsId)
         {
-            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetNewsCommentsByNewsID(NewsID);
+            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetNewsCommentsByNewsId(newsId);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -260,10 +261,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Deletes a news comment
         /// </summary>
-        /// <param name="NewsCommentID">The news comment identifier</param>
-        public static void DeleteNewsComment(int NewsCommentID)
+        /// <param name="newsCommentId">The news comment identifier</param>
+        public static void DeleteNewsComment(int newsCommentId)
         {
-            DBProviderManager<DBNewsProvider>.Provider.DeleteNewsComment(NewsCommentID);
+            DBProviderManager<DBNewsProvider>.Provider.DeleteNewsComment(newsCommentId);
         }
 
         /// <summary>
@@ -280,40 +281,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Inserts a news comment
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public static NewsComment InsertNewsComment(int NewsID, int CustomerID, string Title,
-            string Comment, DateTime CreatedOn)
+        public static NewsComment InsertNewsComment(int newsId, int customerId,
+            string title, string comment, DateTime createdOn)
         {
-            return InsertNewsComment(NewsID, CustomerID, Title, Comment, CreatedOn, NewsManager.NotifyAboutNewNewsComments);
+            return InsertNewsComment(newsId, customerId, title, comment, 
+                createdOn, NewsManager.NotifyAboutNewNewsComments);
         }
 
         /// <summary>
         /// Inserts a news comment
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <param name="notify">A value indicating whether to notify the store owner</param>
         /// <returns>News comment</returns>
-        public static NewsComment InsertNewsComment(int NewsID, int CustomerID, string Title,
-            string Comment, DateTime CreatedOn, bool notify)
+        public static NewsComment InsertNewsComment(int newsId, int customerId,
+            string title, string comment, DateTime createdOn, bool notify)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNewsComment(NewsID, CustomerID, Title,
-                Comment, CreatedOn);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNewsComment(newsId, 
+                customerId, title, comment, createdOn);
             var newsComment = DBMapping(dbItem);
             
             if (notify)
             {
-                MessageManager.SendNewsCommentNotificationMessage(newsComment, LocalizationManager.DefaultAdminLanguage.LanguageID);
+                MessageManager.SendNewsCommentNotificationMessage(newsComment, LocalizationManager.DefaultAdminLanguage.LanguageId);
             }
 
             return newsComment;
@@ -322,20 +324,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Updates the news comment
         /// </summary>
-        /// <param name="NewsCommentID">The news comment identifier</param>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsCommentId">The news comment identifier</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public static NewsComment UpdateNewsComment(int NewsCommentID, int NewsID, int CustomerID, string Title,
-            string Comment, DateTime CreatedOn)
+        public static NewsComment UpdateNewsComment(int newsCommentId,
+            int newsId, int customerId, string title,
+            string comment, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNewsComment(NewsCommentID, NewsID, CustomerID, Title,
-                Comment, CreatedOn);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNewsComment(newsCommentId, 
+                newsId, customerId, title, comment, createdOn);
             var newsComment = DBMapping(dbItem);
             return newsComment;
         }
@@ -343,15 +346,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Formats the text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatCommentText(string Text)
+        public static string FormatCommentText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            Text = HtmlHelper.FormatText(Text, false, true, false, false, false, false);
-            return Text;
+            text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
+            return text;
         }
         
         #endregion

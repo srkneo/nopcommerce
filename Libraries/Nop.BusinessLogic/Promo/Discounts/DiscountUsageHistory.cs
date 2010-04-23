@@ -40,27 +40,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets or sets the discount usage history entry identifier
         /// </summary>
-        public int DiscountUsageHistoryID { get; set; }
+        public int DiscountUsageHistoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the discount identifier
         /// </summary>
-        public int DiscountID { get; set; }
+        public int DiscountId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation
         /// </summary>
         public DateTime CreatedOn { get; set; }
+
 
         #endregion
 
@@ -73,7 +74,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             get
             {
-                return DiscountManager.GetDiscountByID(DiscountID);
+                return DiscountManager.GetDiscountById(this.DiscountId);
             }
         }
 
@@ -84,7 +85,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             get
             {
-                return CustomerManager.GetCustomerByID(CustomerID);
+                return CustomerManager.GetCustomerById(this.CustomerId);
             }
         }
 
@@ -95,7 +96,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             get
             {
-                return OrderManager.GetOrderByID(OrderID);
+                return OrderManager.GetOrderById(this.OrderId);
             }
         }
         #endregion

@@ -19,10 +19,10 @@
         <div class="buttons">
             <asp:Button runat="server" ID="btnProductDetails" OnCommand="btnProductDetails_Click"
                 Text="<% $NopResources:Products.ProductDetails %>" ValidationGroup="ProductDetails"
-                CommandArgument='<%# Eval("ProductID") %>' CssClass="productlistproductdetailbutton" />
+                CommandArgument='<%# Eval("ProductId") %>' CssClass="productlistproductdetailbutton" />
             <br />
             <asp:Button runat="server" ID="btnAddToCart" OnCommand="btnAddToCart_Click" Text="<% $NopResources:Products.AddToCart %>"
-                ValidationGroup="ProductDetails" CommandArgument='<%# Eval("ProductID") %>' CssClass="productlistaddtocartbutton" />
+                ValidationGroup="ProductDetails" CommandArgument='<%# Eval("ProductId") %>' CssClass="productlistaddtocartbutton" />
         </div>
     </div>
 </div>

@@ -36,9 +36,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Gets a credit card type
         /// </summary>
-        /// <param name="CreditCardTypeID">Credit card type identifier</param>
+        /// <param name="creditCardTypeId">Credit card type identifier</param>
         /// <returns>Credit card type</returns>
-        public abstract DBCreditCardType GetCreditCardTypeByID(int CreditCardTypeID);
+        public abstract DBCreditCardType GetCreditCardTypeById(int creditCardTypeId);
 
         /// <summary>
         /// Gets all credit card types
@@ -49,24 +49,25 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Inserts a credit card type
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>A credit card type</returns>
-        public abstract DBCreditCardType InsertCreditCardType(string Name, string SystemKeyword, int DisplayOrder, bool Deleted);
+        public abstract DBCreditCardType InsertCreditCardType(string name, 
+            string systemKeyword, int displayOrder, bool deleted);
 
         /// <summary>
         /// Updates the credit card type
         /// </summary>
-        /// <param name="CreditCardTypeID">Credit card type identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="creditCardTypeId">Credit card type identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>A credit card type</returns>
-        public abstract DBCreditCardType UpdateCreditCardType(int CreditCardTypeID, string Name, string SystemKeyword,
-            int DisplayOrder, bool Deleted);
+        public abstract DBCreditCardType UpdateCreditCardType(int creditCardTypeId, 
+            string name, string systemKeyword, int displayOrder, bool deleted);
         #endregion
     }
 }

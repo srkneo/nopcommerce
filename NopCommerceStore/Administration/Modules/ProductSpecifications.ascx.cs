@@ -27,13 +27,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 pnlData.Visible = true;
                 pnlMessage.Visible = false;
 
-                ProductSpecificationAttributeCollection productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID);
+                ProductSpecificationAttributeCollection productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product.ProductId);
                 if (productSpecificationAttributes.Count > 0)
                 {
                     gvProductSpecificationAttributes.Visible = true;
@@ -56,19 +56,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             SpecificationAttributeCollection productSpecificationAttributes = SpecificationAttributeManager.GetSpecificationAttributes();
             foreach (SpecificationAttribute sa in productSpecificationAttributes)
             {
-                ListItem item2 = new ListItem(sa.Name, sa.SpecificationAttributeID.ToString());
+                ListItem item2 = new ListItem(sa.Name, sa.SpecificationAttributeId.ToString());
                 this.ddlNewProductSpecificationAttribute.Items.Add(item2);
             }
 
             ddlNewProductSpecificationAttributeOption.Items.Clear();
             if (!String.IsNullOrEmpty(ddlNewProductSpecificationAttribute.SelectedValue))
             {
-                int saID = Convert.ToInt32(ddlNewProductSpecificationAttribute.SelectedValue.ToString());
+                int saId = Convert.ToInt32(ddlNewProductSpecificationAttribute.SelectedValue.ToString());
                 SpecificationAttributeOptionCollection saoCol =
-                    SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saID);
+                    SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saId);
                 foreach (SpecificationAttributeOption sao in saoCol)
                 {
-                    ListItem item2 = new ListItem(sao.Name, sao.SpecificationAttributeOptionID.ToString());
+                    ListItem item2 = new ListItem(sao.Name, sao.SpecificationAttributeOptionId.ToString());
                     this.ddlNewProductSpecificationAttributeOption.Items.Add(item2);
                 }
             }
@@ -77,11 +77,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void OnSpecificationAttributeIndexChanged(object sender, EventArgs e)
         {
             ddlNewProductSpecificationAttributeOption.Items.Clear();
-            int saID = Convert.ToInt32(ddlNewProductSpecificationAttribute.SelectedValue.ToString());
-            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saID);
+            int saId = Convert.ToInt32(ddlNewProductSpecificationAttribute.SelectedValue.ToString());
+            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saId);
             foreach (SpecificationAttributeOption sao in saoCol)
             {
-                ListItem item2 = new ListItem(sao.Name, sao.SpecificationAttributeOptionID.ToString());
+                ListItem item2 = new ListItem(sao.Name, sao.SpecificationAttributeOptionId.ToString());
                 this.ddlNewProductSpecificationAttributeOption.Items.Add(item2);
             }
         }
@@ -103,23 +103,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Product product = ProductManager.GetProductByID(this.ProductID);
+                Product product = ProductManager.GetProductById(this.ProductId);
                 if (product != null)
                 {
                     if (String.IsNullOrEmpty(ddlNewProductSpecificationAttribute.SelectedValue))
                         throw new NopException("Please select specification attribute");
                     if (String.IsNullOrEmpty(ddlNewProductSpecificationAttributeOption.SelectedValue))
                         throw new NopException("Please select specification attribute option");
-                    
-                    int specificationAttributeID = int.Parse(ddlNewProductSpecificationAttribute.SelectedItem.Value);
-                    int productSpecificationAttributeOptionID = Convert.ToInt32(ddlNewProductSpecificationAttributeOption.SelectedValue);
+
+                    int specificationAttributeId = int.Parse(ddlNewProductSpecificationAttribute.SelectedItem.Value);
+                    int productSpecificationAttributeOptionId = Convert.ToInt32(ddlNewProductSpecificationAttributeOption.SelectedValue);
                     bool allowFiltering = chkNewAllowFiltering.Checked;
                     bool showOnProductPage = chkNewShowOnProductPage.Checked;
                     int productSpecificationAttributeDisplayOrder = txtNewProductSpecificationAttributeDisplayOrder.Value;
                    
                     ProductSpecificationAttribute productSpecificationAttribute = SpecificationAttributeManager.InsertProductSpecificationAttribute(
-                        product.ProductID,
-                        productSpecificationAttributeOptionID,
+                        product.ProductId,
+                        productSpecificationAttributeOptionId,
                         allowFiltering,
                         showOnProductPage,
                         productSpecificationAttributeDisplayOrder);
@@ -140,24 +140,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvProductSpecificationAttributes.Rows[index];
 
-                HiddenField hfProductSpecificationAttributeID = row.FindControl("hfProductSpecificationAttributeID") as HiddenField;
+                HiddenField hfProductSpecificationAttributeId = row.FindControl("hfProductSpecificationAttributeId") as HiddenField;
                 Literal lblSpecificationAttributeName = row.FindControl("lblSpecificationAttributeName") as Literal;
                 DropDownList ddlSpecificationAttributeOption = row.FindControl("ddlSpecificationAttributeOption") as DropDownList;
                 CheckBox chkAllowFiltering = row.FindControl("chkAllowFiltering") as CheckBox;
                 CheckBox chkShowOnProductPage = row.FindControl("chkShowOnProductPage") as CheckBox;
                 NumericTextBox txtProductSpecificationAttributeDisplayOrder = row.FindControl("txtProductSpecificationAttributeDisplayOrder") as NumericTextBox;
 
-                int productSpecificationAttributeID = int.Parse(hfProductSpecificationAttributeID.Value);
-                int saoID = int.Parse(ddlSpecificationAttributeOption.SelectedItem.Value);
+                int productSpecificationAttributeId = int.Parse(hfProductSpecificationAttributeId.Value);
+                int saoId = int.Parse(ddlSpecificationAttributeOption.SelectedItem.Value);
                 int displayOrder = txtProductSpecificationAttributeDisplayOrder.Value;
 
-                ProductSpecificationAttribute productSpecificationAttribute = SpecificationAttributeManager.GetProductSpecificationAttributeByID(productSpecificationAttributeID);
+                ProductSpecificationAttribute productSpecificationAttribute = SpecificationAttributeManager.GetProductSpecificationAttributeById(productSpecificationAttributeId);
 
                 if (productSpecificationAttribute != null)
                     SpecificationAttributeManager.UpdateProductSpecificationAttribute(
-                        productSpecificationAttribute.ProductSpecificationAttributeID,
-                        productSpecificationAttribute.ProductID,
-                        saoID,
+                        productSpecificationAttribute.ProductSpecificationAttributeId,
+                        productSpecificationAttribute.ProductId,
+                        saoId,
                         chkAllowFiltering.Checked,
                         chkShowOnProductPage.Checked,
                         displayOrder);
@@ -176,19 +176,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (btnUpdate != null)
                     btnUpdate.CommandArgument = e.Row.RowIndex.ToString();
 
-                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(productSpecificationAttribute.SpecificationAttributeOptionID);
-                SpecificationAttribute sa = SpecificationAttributeManager.GetSpecificationAttributeByID(sao.SpecificationAttributeID);                
+                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(productSpecificationAttribute.SpecificationAttributeOptionId);
+                SpecificationAttribute sa = SpecificationAttributeManager.GetSpecificationAttributeById(sao.SpecificationAttributeId);                
                 Literal lblSpecificationAttributeName = e.Row.FindControl("lblSpecificationAttributeName") as Literal;
                 lblSpecificationAttributeName.Text = sa.Name;
 
                 DropDownList ddlSpecificationAttributeOption = e.Row.FindControl("ddlSpecificationAttributeOption") as DropDownList;
                 ddlSpecificationAttributeOption.Items.Clear();
-                SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(sao.SpecificationAttributeID);
+                SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(sao.SpecificationAttributeId);
                 foreach (SpecificationAttributeOption sao1 in saoCol)
                 {
-                    ListItem item = new ListItem(sao1.Name, sao1.SpecificationAttributeOptionID.ToString());
+                    ListItem item = new ListItem(sao1.Name, sao1.SpecificationAttributeOptionId.ToString());
                     ddlSpecificationAttributeOption.Items.Add(item);
-                    if (productSpecificationAttribute.SpecificationAttributeOptionID == sao1.SpecificationAttributeOptionID)
+                    if (productSpecificationAttribute.SpecificationAttributeOptionId == sao1.SpecificationAttributeOptionId)
                         item.Selected = true;
                 }
 
@@ -202,11 +202,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvProductSpecificationAttributes_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int productSpecificationAttributeID = (int)gvProductSpecificationAttributes.DataKeys[e.RowIndex]["ProductSpecificationAttributeID"];
-            ProductSpecificationAttribute productSpecificationAttribute = SpecificationAttributeManager.GetProductSpecificationAttributeByID(productSpecificationAttributeID);
+            int productSpecificationAttributeId = (int)gvProductSpecificationAttributes.DataKeys[e.RowIndex]["ProductSpecificationAttributeId"];
+            ProductSpecificationAttribute productSpecificationAttribute = SpecificationAttributeManager.GetProductSpecificationAttributeById(productSpecificationAttributeId);
             if (productSpecificationAttribute != null)
             {
-                SpecificationAttributeManager.DeleteProductSpecificationAttribute(productSpecificationAttribute.ProductSpecificationAttributeID);
+                SpecificationAttributeManager.DeleteProductSpecificationAttribute(productSpecificationAttribute.ProductSpecificationAttributeId);
                 BindData();
             }
         }
@@ -218,11 +218,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             lErrorTitle.Text = exc.Message;
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

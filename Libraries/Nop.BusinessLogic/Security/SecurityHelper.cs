@@ -42,11 +42,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
     {
         #region Utilities
 
-        private static byte[] EncryptTextToMemory(string Data, byte[] Key, byte[] IV)
+        private static byte[] EncryptTextToMemory(string data, byte[] key, byte[] iv)
         {
             var mStream = new MemoryStream();
-            var cStream = new CryptoStream(mStream, new TripleDESCryptoServiceProvider().CreateEncryptor(Key, IV), CryptoStreamMode.Write);
-            byte[] toEncrypt = new UnicodeEncoding().GetBytes(Data);
+            var cStream = new CryptoStream(mStream, new TripleDESCryptoServiceProvider().CreateEncryptor(key, iv), CryptoStreamMode.Write);
+            byte[] toEncrypt = new UnicodeEncoding().GetBytes(data);
             cStream.Write(toEncrypt, 0, toEncrypt.Length);
             cStream.FlushFinalBlock();
             byte[] ret = mStream.ToArray();
@@ -55,10 +55,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             return ret;
         }
 
-        private static string DecryptTextFromMemory(byte[] Data, byte[] Key, byte[] IV)
+        private static string DecryptTextFromMemory(byte[] data, byte[] key, byte[] iv)
         {
-            var msDecrypt = new MemoryStream(Data);
-            var csDecrypt = new CryptoStream(msDecrypt, new TripleDESCryptoServiceProvider().CreateDecryptor(Key, IV), CryptoStreamMode.Read);
+            var msDecrypt = new MemoryStream(data);
+            var csDecrypt = new CryptoStream(msDecrypt, new TripleDESCryptoServiceProvider().CreateDecryptor(key, iv), CryptoStreamMode.Read);
             var sReader = new StreamReader(csDecrypt, new UnicodeEncoding());
             return sReader.ReadLine();
         }
@@ -69,30 +69,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Decrypts text
         /// </summary>
-        /// <param name="CipherText">Cipher text</param>
+        /// <param name="cipherText">Cipher text</param>
         /// <returns>Decrypted string</returns>
-        public static string Decrypt(string CipherText)
+        public static string Decrypt(string cipherText)
         {
             string encryptionPrivateKey = SettingManager.GetSettingValue("Security.EncryptionPrivateKey");
-            return Decrypt(CipherText, encryptionPrivateKey);
+            return Decrypt(cipherText, encryptionPrivateKey);
         }
 
         /// <summary>
         /// Decrypts text
         /// </summary>
-        /// <param name="CipherText">Cipher text</param>
-        /// <param name="EncryptionPrivateKey">Encryption private key</param>
+        /// <param name="cipherText">Cipher text</param>
+        /// <param name="encryptionPrivateKey">Encryption private key</param>
         /// <returns>Decrypted string</returns>
-        protected static string Decrypt(string CipherText, string EncryptionPrivateKey)
+        protected static string Decrypt(string cipherText, string encryptionPrivateKey)
         {
-            if (String.IsNullOrEmpty(CipherText))
-                return CipherText;
+            if (String.IsNullOrEmpty(cipherText))
+                return cipherText;
 
             var tDESalg = new TripleDESCryptoServiceProvider();
-            tDESalg.Key = new ASCIIEncoding().GetBytes(EncryptionPrivateKey.Substring(0, 16));
-            tDESalg.IV = new ASCIIEncoding().GetBytes(EncryptionPrivateKey.Substring(8, 8));
+            tDESalg.Key = new ASCIIEncoding().GetBytes(encryptionPrivateKey.Substring(0, 16));
+            tDESalg.IV = new ASCIIEncoding().GetBytes(encryptionPrivateKey.Substring(8, 8));
 
-            byte[] buffer = Convert.FromBase64String(CipherText);
+            byte[] buffer = Convert.FromBase64String(cipherText);
             string result = DecryptTextFromMemory(buffer, tDESalg.Key, tDESalg.IV);
             return result;
         }
@@ -100,30 +100,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Encrypts text
         /// </summary>
-        /// <param name="PlainText">Plaint text</param>
+        /// <param name="plainText">Plaint text</param>
         /// <returns>Encrypted string</returns>
-        public static string Encrypt(string PlainText)
+        public static string Encrypt(string plainText)
         {
             string encryptionPrivateKey = SettingManager.GetSettingValue("Security.EncryptionPrivateKey");
-            return Encrypt(PlainText, encryptionPrivateKey);
+            return Encrypt(plainText, encryptionPrivateKey);
         }
 
         /// <summary>
         /// Encrypts text
         /// </summary>
-        /// <param name="PlainText">Plaint text</param>
-        /// <param name="EncryptionPrivateKey">Encryption private key</param>
+        /// <param name="plainText">Plaint text</param>
+        /// <param name="encryptionPrivateKey">Encryption private key</param>
         /// <returns>Encrypted string</returns>
-        protected static string Encrypt(string PlainText, string EncryptionPrivateKey)
+        protected static string Encrypt(string plainText, string encryptionPrivateKey)
         {
-            if (String.IsNullOrEmpty(PlainText))
-                return PlainText;
+            if (String.IsNullOrEmpty(plainText))
+                return plainText;
 
             var tDESalg = new TripleDESCryptoServiceProvider();
-            tDESalg.Key = new ASCIIEncoding().GetBytes(EncryptionPrivateKey.Substring(0, 16));
-            tDESalg.IV = new ASCIIEncoding().GetBytes(EncryptionPrivateKey.Substring(8, 8));
+            tDESalg.Key = new ASCIIEncoding().GetBytes(encryptionPrivateKey.Substring(0, 16));
+            tDESalg.IV = new ASCIIEncoding().GetBytes(encryptionPrivateKey.Substring(8, 8));
 
-            byte[] encryptedBinary = EncryptTextToMemory(PlainText, tDESalg.Key, tDESalg.IV);
+            byte[] encryptedBinary = EncryptTextToMemory(plainText, tDESalg.Key, tDESalg.IV);
             string result = Convert.ToBase64String(encryptedBinary);
             return result;
         }
@@ -131,15 +131,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Change encryption private key
         /// </summary>
-        /// <param name="NewEncryptionPrivateKey">New encryption private key</param>
-        public static void ChangeEncryptionPrivateKey(string NewEncryptionPrivateKey)
+        /// <param name="newEncryptionPrivateKey">New encryption private key</param>
+        public static void ChangeEncryptionPrivateKey(string newEncryptionPrivateKey)
         {
-            if (String.IsNullOrEmpty(NewEncryptionPrivateKey) || NewEncryptionPrivateKey.Length != 16)
+            if (String.IsNullOrEmpty(newEncryptionPrivateKey) || newEncryptionPrivateKey.Length != 16)
                 throw new NopException("Encryption private key must be 16 characters long");
 
             string oldEncryptionPrivateKey = SettingManager.GetSettingValue("Security.EncryptionPrivateKey");
 
-            if (oldEncryptionPrivateKey == NewEncryptionPrivateKey)
+            if (oldEncryptionPrivateKey == newEncryptionPrivateKey)
                 return;
 
             var orders = OrderManager.LoadAllOrders();
@@ -152,20 +152,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
                     string decryptedCardName = Decrypt(order.CardName, oldEncryptionPrivateKey);
                     string decryptedCardNumber = Decrypt(order.CardNumber, oldEncryptionPrivateKey);
                     string decryptedMaskedCreditCardNumber = Decrypt(order.MaskedCreditCardNumber, oldEncryptionPrivateKey);
-                    string decryptedCardCVV2 = Decrypt(order.CardCVV2, oldEncryptionPrivateKey);
+                    string decryptedCardCvv2 = Decrypt(order.CardCvv2, oldEncryptionPrivateKey);
                     string decryptedCardExpirationMonth = Decrypt(order.CardExpirationMonth, oldEncryptionPrivateKey);
                     string decryptedCardExpirationYear = Decrypt(order.CardExpirationYear, oldEncryptionPrivateKey);
 
-                    string encryptedCardType = Encrypt(decryptedCardType, NewEncryptionPrivateKey);
-                    string encryptedCardName = Encrypt(decryptedCardName, NewEncryptionPrivateKey);
-                    string encryptedCardNumber = Encrypt(decryptedCardNumber, NewEncryptionPrivateKey);
-                    string encryptedMaskedCreditCardNumber = Encrypt(decryptedMaskedCreditCardNumber, NewEncryptionPrivateKey);
-                    string encryptedCardCVV2 = Encrypt(decryptedCardCVV2, NewEncryptionPrivateKey);
-                    string encryptedCardExpirationMonth = Encrypt(decryptedCardExpirationMonth, NewEncryptionPrivateKey);
-                    string encryptedCardExpirationYear = Encrypt(decryptedCardExpirationYear, NewEncryptionPrivateKey);
+                    string encryptedCardType = Encrypt(decryptedCardType, newEncryptionPrivateKey);
+                    string encryptedCardName = Encrypt(decryptedCardName, newEncryptionPrivateKey);
+                    string encryptedCardNumber = Encrypt(decryptedCardNumber, newEncryptionPrivateKey);
+                    string encryptedMaskedCreditCardNumber = Encrypt(decryptedMaskedCreditCardNumber, newEncryptionPrivateKey);
+                    string encryptedCardCvv2 = Encrypt(decryptedCardCvv2, newEncryptionPrivateKey);
+                    string encryptedCardExpirationMonth = Encrypt(decryptedCardExpirationMonth, newEncryptionPrivateKey);
+                    string encryptedCardExpirationYear = Encrypt(decryptedCardExpirationYear, newEncryptionPrivateKey);
 
-                    OrderManager.UpdateOrder(order.OrderID, order.OrderGUID, order.CustomerID,
-                       order.CustomerLanguageID, order.CustomerTaxDisplayType, order.CustomerIP,
+                    OrderManager.UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId,
+                       order.CustomerLanguageId, order.CustomerTaxDisplayType, order.CustomerIP,
                        order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                        order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
                        order.OrderTax, order.OrderTotal, order.OrderDiscount,
@@ -174,30 +174,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
                        order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
                        order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
                        order.OrderDiscountInCustomerCurrency,
-                       order.CheckoutAttributeDescription, order.CheckoutAttributesXML,
+                       order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
                        order.CustomerCurrencyCode, order.OrderWeight,
-                       order.AffiliateID, order.OrderStatus, order.AllowStoringCreditCardNumber,
+                       order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber,
                        encryptedCardType, encryptedCardName, encryptedCardNumber,
-                       encryptedMaskedCreditCardNumber, encryptedCardCVV2, encryptedCardExpirationMonth, encryptedCardExpirationYear,
-                       order.PaymentMethodID, order.PaymentMethodName, order.AuthorizationTransactionID,
+                       encryptedMaskedCreditCardNumber, encryptedCardCvv2, encryptedCardExpirationMonth, encryptedCardExpirationYear,
+                       order.PaymentMethodId, order.PaymentMethodName, order.AuthorizationTransactionId,
                        order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
-                       order.CaptureTransactionID, order.CaptureTransactionResult,
-                       order.SubscriptionTransactionID, order.PurchaseOrderNumber,
+                       order.CaptureTransactionId, order.CaptureTransactionResult,
+                       order.SubscriptionTransactionId, order.PurchaseOrderNumber,
                        order.PaymentStatus, order.PaidDate, order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                        order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                        order.BillingAddress2, order.BillingCity,
-                       order.BillingStateProvince, order.BillingStateProvinceID, order.BillingZipPostalCode,
-                       order.BillingCountry, order.BillingCountryID, order.ShippingStatus,
+                       order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                       order.BillingCountry, order.BillingCountryId, order.ShippingStatus,
                        order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
                        order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
                        order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
-                       order.ShippingStateProvince, order.ShippingStateProvinceID, order.ShippingZipPostalCode,
-                       order.ShippingCountry, order.ShippingCountryID,
-                       order.ShippingMethod, order.ShippingRateComputationMethodID,
+                       order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                       order.ShippingCountry, order.ShippingCountryId,
+                       order.ShippingMethod, order.ShippingRateComputationMethodId,
                        order.ShippedDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
                 }
 
-                SettingManager.SetParam("Security.EncryptionPrivateKey", NewEncryptionPrivateKey);
+                SettingManager.SetParam("Security.EncryptionPrivateKey", newEncryptionPrivateKey);
 
                 //uncomment this line to support transactions
                 //scope.Complete();

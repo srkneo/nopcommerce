@@ -25,17 +25,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
     public partial class ProcessPaymentResult
     {
         #region Fields
-        private string avsResult = string.Empty;
-        private string authorizationTransactionID = string.Empty;
-        private string authorizationTransactionCode = string.Empty;
-        private string authorizationTransactionResult = string.Empty;
-        private string captureTransactionID = string.Empty;
-        private string captureTransactionResult = string.Empty;
-        private string subscriptionTransactionID = string.Empty;        
-        private string error = string.Empty;
-        private string fullError = string.Empty;
-        private PaymentStatusEnum paymentStatus = PaymentStatusEnum.Pending;
-        private bool allowStoringCreditCardNumber = false;
+        private string _avsResult = string.Empty;
+        private string _authorizationTransactionId = string.Empty;
+        private string _authorizationTransactionCode = string.Empty;
+        private string _authorizationTransactionResult = string.Empty;
+        private string _captureTransactionId = string.Empty;
+        private string _captureTransactionResult = string.Empty;
+        private string _subscriptionTransactionId = string.Empty;        
+        private string _error = string.Empty;
+        private string _fullError = string.Empty;
+        private PaymentStatusEnum _paymentStatus = PaymentStatusEnum.Pending;
+        private bool _allowStoringCreditCardNumber = false;
         #endregion
 
         #region Properties
@@ -46,26 +46,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return avsResult;
+                return _avsResult;
             }
             set
             {
-                avsResult = value;
+                _avsResult = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the authorization transaction ID
+        /// Gets or sets the authorization transaction identifier
         /// </summary>
-        public string AuthorizationTransactionID
+        public string AuthorizationTransactionId
         {
             get
             {
-                return authorizationTransactionID;
+                return _authorizationTransactionId;
             }
             set
             {
-                authorizationTransactionID = value;
+                _authorizationTransactionId = value;
             }
         }
 
@@ -76,11 +76,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return authorizationTransactionCode;
+                return _authorizationTransactionCode;
             }
             set
             {
-                authorizationTransactionCode = value;
+                _authorizationTransactionCode = value;
             }
         }
 
@@ -91,26 +91,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return authorizationTransactionResult;
+                return _authorizationTransactionResult;
             }
             set
             {
-                authorizationTransactionResult = value;
+                _authorizationTransactionResult = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the capture transaction ID
+        /// Gets or sets the capture transaction identifier
         /// </summary>
-        public string CaptureTransactionID
+        public string CaptureTransactionId
         {
             get
             {
-                return captureTransactionID;
+                return _captureTransactionId;
             }
             set
             {
-                captureTransactionID = value;
+                _captureTransactionId = value;
             }
         }
 
@@ -121,26 +121,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return captureTransactionResult;
+                return _captureTransactionResult;
             }
             set
             {
-                captureTransactionResult = value;
+                _captureTransactionResult = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the subscription transaction ID
+        /// Gets or sets the subscription transaction identifier
         /// </summary>
-        public string SubscriptionTransactionID
+        public string SubscriptionTransactionId
         {
             get
             {
-                return subscriptionTransactionID;
+                return _subscriptionTransactionId;
             }
             set
             {
-                subscriptionTransactionID = value;
+                _subscriptionTransactionId = value;
             }
         }
 
@@ -151,11 +151,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return error;
+                return _error;
             }
             set
             {
-                error = value;
+                _error = value;
             }
         }
 
@@ -166,11 +166,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return fullError;
+                return _fullError;
             }
             set
             {
-                fullError = value;
+                _fullError = value;
             }
         }
 
@@ -181,11 +181,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return paymentStatus;
+                return _paymentStatus;
             }
             set
             {
-                paymentStatus = value;
+                _paymentStatus = value;
             }
         }
 
@@ -196,11 +196,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                return allowStoringCreditCardNumber;
+                return _allowStoringCreditCardNumber;
             }
             set
             {
-                allowStoringCreditCardNumber = value;
+                _allowStoringCreditCardNumber = value;
             }
         }
         #endregion

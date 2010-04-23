@@ -40,14 +40,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
                 Product product = productVariant.Product;
                 if (product == null)
                     Response.Redirect("Products.aspx");
                 lblProductName.Text = Server.HtmlEncode(product.Name);
-                hlProductURL.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + product.ProductID.ToString();
+                hlProductURL.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + product.ProductId.ToString();
             }
             else
                 Response.Redirect("Products.aspx");
@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.ProductVariantTabs, this.TabID);
+                this.SelectTab(this.ProductVariantTabs, this.TabId);
                 this.BindData();
             }
         }
@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditProductVariant"),
                         productVariant.FullProductName);
 
-                    Response.Redirect(string.Format("ProductVariantDetails.aspx?ProductVariantID={0}&TabID={1}", productVariant.ProductVariantID, this.GetActiveTabID(this.ProductVariantTabs)));
+                    Response.Redirect(string.Format("ProductVariantDetails.aspx?ProductVariantID={0}&TabID={1}", productVariant.ProductVariantId, this.GetActiveTabId(this.ProductVariantTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -92,17 +92,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant != null)
                 {
-                    ProductManager.MarkProductVariantAsDeleted(productVariant.ProductVariantID);
+                    ProductManager.MarkProductVariantAsDeleted(productVariant.ProductVariantId);
                     
                     CustomerActivityManager.InsertActivity(
                         "DeleteProductVariant",
                         GetLocaleResourceString("ActivityLog.DeleteProductVariant"),
                         productVariant.FullProductName);
 
-                    string url = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + productVariant.ProductID.ToString();
+                    string url = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + productVariant.ProductId.ToString();
                     Response.Redirect(url);
                 }
                 else
@@ -116,19 +116,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ProductVariantID
+        public int ProductVariantId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductVariantID");
+                return CommonHelper.QueryStringInt("ProductVariantId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

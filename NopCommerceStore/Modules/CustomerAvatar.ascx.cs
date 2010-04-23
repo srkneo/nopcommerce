@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -77,8 +77,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             try
             {
-                PictureManager.DeletePicture(NopContext.Current.User.AvatarID);
-                NopContext.Current.User = CustomerManager.SetCustomerAvatarID(NopContext.Current.User.CustomerID, NopContext.Current.User.AvatarID);
+                PictureManager.DeletePicture(NopContext.Current.User.AvatarId);
+                NopContext.Current.User = CustomerManager.SetCustomerAvatarId(NopContext.Current.User.CustomerId, NopContext.Current.User.AvatarId);
                 BindData();
 
             }
@@ -109,15 +109,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                         byte[] customerPictureBinary = PictureManager.GetPictureBits(customerPictureFile.InputStream, customerPictureFile.ContentLength);
                         if (customerAvatar != null)
-                            customerAvatar = PictureManager.UpdatePicture(customerAvatar.PictureID, customerPictureBinary, customerPictureFile.ContentType, true);
+                            customerAvatar = PictureManager.UpdatePicture(customerAvatar.PictureId, customerPictureBinary, customerPictureFile.ContentType, true);
                         else
                             customerAvatar = PictureManager.InsertPicture(customerPictureBinary, customerPictureFile.ContentType, true);
                     }
-                    int customerAvatarID = 0;
+                    int customerAvatarId = 0;
                     if (customerAvatar != null)
-                        customerAvatarID = customerAvatar.PictureID;
+                        customerAvatarId = customerAvatar.PictureId;
 
-                    NopContext.Current.User = CustomerManager.SetCustomerAvatarID(NopContext.Current.User.CustomerID, customerAvatarID);
+                    NopContext.Current.User = CustomerManager.SetCustomerAvatarId(NopContext.Current.User.CustomerId, customerAvatarId);
 
                     BindData();
                 }

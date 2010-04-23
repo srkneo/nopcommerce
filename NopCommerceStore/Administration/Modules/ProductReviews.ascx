@@ -10,7 +10,7 @@
         <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True" />
     </Fields>
 </asp:DataPager>
-<asp:ListView ID="lvProductReviews" runat="server" DataKeyNames="ProductReviewID"
+<asp:ListView ID="lvProductReviews" runat="server" DataKeyNames="ProductReviewId"
     OnPagePropertiesChanging="lvProductReviews_OnPagePropertiesChanging">
     <LayoutTemplate>
         <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -26,24 +26,24 @@
         <p>
             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
             -
-            <%#GetCustomerInfo (Convert.ToInt32(Eval("CustomerID")))%></p>
+            <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%></p>
         <p>
-            <b><a href="ProductDetails.aspx?ProductID=<%#Eval("ProductID")%>" title="<%=GetLocaleResourceString("Admin.ProductReviews.ViewProductDetails")%>">
+            <b><a href="ProductDetails.aspx?ProductID=<%#Eval("ProductId")%>" title="<%=GetLocaleResourceString("Admin.ProductReviews.ViewProductDetails")%>">
                 <%#Server.HtmlEncode(((Product)Eval("Product")).Name)%></a></b>
         </p>
         <p>
         </p>
         <asp:Button runat="server" ID="btnUpdateProductReview" CssClass="adminButton" Text='<%# Convert.ToBoolean(Eval("IsApproved"))?GetLocaleResourceString("Admin.ProductReviews.Disapprove") :GetLocaleResourceString("Admin.ProductReviews.Approve")%>'
             ToolTip='<%# Convert.ToBoolean(Eval("IsApproved"))?GetLocaleResourceString("Admin.ProductReviews.Disapprove.Tooltip") :GetLocaleResourceString("Admin.ProductReviews.Approve.Tooltip")%>'
-            CommandName="Update" OnCommand="btnUpdateProductReview_Click" CommandArgument='<%#Eval("ProductReviewID")%>' />
+            CommandName="Update" OnCommand="btnUpdateProductReview_Click" CommandArgument='<%#Eval("ProductReviewId")%>' />
         <p>
         </p>
         <asp:Button runat="server" ID="btnEditProductReview" CssClass="adminButton" Text="<% $NopResources:Admin.ProductReviews.Edit %>"
             ToolTip="<% $NopResources:Admin.ProductReviews.Edit.Tooltip %>" CommandName="Edit"
-            OnCommand="btnEditProductReview_Click" CommandArgument='<%#Eval("ProductReviewID")%>' />
+            OnCommand="btnEditProductReview_Click" CommandArgument='<%#Eval("ProductReviewId")%>' />
         <asp:Button runat="server" ID="btnDeleteProductReview" CssClass="adminButton" Text="<% $NopResources:Admin.ProductReviews.Delete %>"
             ToolTip="<% $NopResources:Admin.ProductReviews.Delete.Tooltip %>" CommandName="Delete"
-            OnCommand="btnDeleteProductReview_Click" CommandArgument='<%#Eval("ProductReviewID")%>' />
+            OnCommand="btnDeleteProductReview_Click" CommandArgument='<%#Eval("ProductReviewId")%>' />
     </ItemTemplate>
     <ItemSeparatorTemplate>
         <hr />

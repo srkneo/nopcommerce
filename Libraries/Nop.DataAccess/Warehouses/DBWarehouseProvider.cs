@@ -33,6 +33,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Warehouses
     public abstract partial class DBWarehouseProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets all warehouses
         /// </summary>
@@ -42,52 +43,56 @@ namespace NopSolutions.NopCommerce.DataAccess.Warehouses
         /// <summary>
         /// Gets a warehouse
         /// </summary>
-        /// <param name="WarehouseID">The warehouse identifier</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
         /// <returns>Warehouse</returns>
-        public abstract DBWarehouse GetWarehouseByID(int WarehouseID);
+        public abstract DBWarehouse GetWarehouseById(int warehouseId);
 
         /// <summary>
         /// Inserts a warehouse
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Warehouse</returns>
-        public abstract DBWarehouse InsertWarehouse(string Name, string PhoneNumber, string Email, string FaxNumber,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBWarehouse InsertWarehouse(string name, string phoneNumber,
+            string email, string faxNumber, string address1, string address2,
+            string city, string stateProvince, string zipPostalCode, int countryId, 
+            bool deleted, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the warehouse
         /// </summary>
-        /// <param name="WarehouseID">The warehouse identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Warehouse</returns>
-        public abstract DBWarehouse UpdateWarehouse(int WarehouseID, string Name, string PhoneNumber, string Email, string FaxNumber,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBWarehouse UpdateWarehouse(int warehouseId, 
+            string name, string phoneNumber, string email, string faxNumber, 
+            string address1, string address2, string city, string stateProvince,
+            string zipPostalCode, int countryId, bool deleted, 
+            DateTime createdOn, DateTime updatedOn);
+
         #endregion
     }
 }

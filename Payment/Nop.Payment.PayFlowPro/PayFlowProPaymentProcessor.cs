@@ -102,9 +102,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayFlowPro
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
             TransactMode transactionMode = GetCurrentTransactionMode();
@@ -139,7 +139,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayFlowPro
                     invoice.ShipTo = to2;
                 }                
                 
-                invoice.InvNum = OrderGuid.ToString();
+                invoice.InvNum = orderGuid.ToString();
                 decimal orderTotal = Math.Round(paymentInfo.OrderTotal, 2);
                 invoice.Amt = new PayPal.Payments.DataObjects.Currency(orderTotal, CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
 
@@ -154,7 +154,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayFlowPro
                 }
                 creditCardExp = creditCardExp + paymentInfo.CreditCardExpireYear.ToString().Substring(2, 2);
                 CreditCard credCard = new CreditCard(paymentInfo.CreditCardNumber, creditCardExp);
-                credCard.Cvv2 = paymentInfo.CreditCardCVV2;
+                credCard.Cvv2 = paymentInfo.CreditCardCvv2;
                 CardTender tender = new CardTender(credCard);
                 // <vendor> = your merchant (login id)  
                 // <user> = <vendor> unless you created a separate <user> for Payflow Pro
@@ -177,7 +177,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayFlowPro
                 {
                     if (response.TransactionResponse.Result == 0)
                     {
-                        processPaymentResult.AuthorizationTransactionID = response.TransactionResponse.Pnref;
+                        processPaymentResult.AuthorizationTransactionId = response.TransactionResponse.Pnref;
                         processPaymentResult.AuthorizationTransactionResult = response.TransactionResponse.RespMsg;
 
                         if (transactionMode == TransactMode.Authorize)
@@ -201,7 +201,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayFlowPro
                     processPaymentResult.FullError = "Error during checkout";
                 }
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 throw;
             }
@@ -265,9 +265,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayFlowPro
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Campaign campaign = CampaignManager.GetCampaignByID(this.CampaignID);
+            Campaign campaign = CampaignManager.GetCampaignById(this.CampaignId);
             if (campaign != null)
             {
                 this.pnlSendCampaign.Visible = true;
@@ -76,11 +76,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Campaign SaveInfo()
         {
-            Campaign campaign = CampaignManager.GetCampaignByID(this.CampaignID);
+            Campaign campaign = CampaignManager.GetCampaignById(this.CampaignId);
 
             if (campaign != null)
             {
-                campaign = CampaignManager.UpdateCampaign(campaign.CampaignID,
+                campaign = CampaignManager.UpdateCampaign(campaign.CampaignId,
                     txtName.Text, txtSubject.Text, txtBody.Content, campaign.CreatedOn);
             }
             else
@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    CampaignManager.SendCampaign(this.CampaignID, txtSendTestEmailTo.Text);
+                    CampaignManager.SendCampaign(this.CampaignId, txtSendTestEmailTo.Text);
                     lblSendEmailResult.Text = GetLocaleResourceString("Admin.CampaignInfo.EmailSent");
                 }
                 catch (Exception exc)
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     Server.ScriptTimeout = 300;
                     NewsLetterSubscriptionCollection subscriptions = MessageManager.GetAllNewsLetterSubscriptions(false);
-                    int totalEmailsSent = CampaignManager.SendCampaign(this.CampaignID, subscriptions);
+                    int totalEmailsSent = CampaignManager.SendCampaign(this.CampaignId, subscriptions);
                     lblSendEmailResult.Text = string.Format(GetLocaleResourceString("Admin.CampaignInfo.EmailSentToCustomers"), totalEmailsSent);
                 }
                 catch (Exception exc)
@@ -131,11 +131,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CampaignID
+        public int CampaignId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CampaignID");
+                return CommonHelper.QueryStringInt("CampaignId");
             }
         }
     }

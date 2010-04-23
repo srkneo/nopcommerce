@@ -10,14 +10,33 @@ using System.Web.Hosting;
 
 namespace NopSolutions.NopCommerce.DataAccess
 {
+    /// <summary>
+    /// Provider nanager
+    /// </summary>
+    /// <typeparam name="T">T</typeparam>
     public abstract partial class DBProviderManager<T> where T : BaseDBProvider
     {
         #region Fields
 
+        /// <summary>
+        /// Initialized
+        /// </summary>
         protected static bool s_Initialized;
+        /// <summary>
+        /// Exception
+        /// </summary>
         protected static Exception s_InitializeException;
+        /// <summary>
+        /// Lock object
+        /// </summary>
         protected static object s_lock;
+        /// <summary>
+        /// Providers
+        /// </summary>
         protected static DBProviderCollection<T> s_Providers;
+        /// <summary>
+        /// Provider
+        /// </summary>
         private static T s_Provider;
 
         #endregion
@@ -124,6 +143,7 @@ namespace NopSolutions.NopCommerce.DataAccess
         /// <summary>
         /// Returns the configuration section.
         /// </summary>
+        /// <typeparam name="T">Type</typeparam>
         /// <returns>The ConfigurationSection object.</returns>
         protected static DBProviderSection GetSection<T>() where T : BaseDBProvider
         {

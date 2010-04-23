@@ -67,9 +67,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneybookers
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -87,7 +87,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneybookers
 
             remotePostHelper.Add("pay_to_email", payToEmail);
             remotePostHelper.Add("recipient_description", SettingManager.StoreName);
-            remotePostHelper.Add("transaction_id", order.OrderID.ToString());
+            remotePostHelper.Add("transaction_id", order.OrderId.ToString());
             remotePostHelper.Add("cancel_url", CommonHelper.GetStoreLocation(false));
             remotePostHelper.Add("status_url", CommonHelper.GetStoreLocation(false) + "MoneybookersReturn.aspx");
             //supported moneybookers languages (EN, DE, ES, FR, IT, PL, GR, RO, RU, TR, CN, CZ or NL)
@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneybookers
             remotePostHelper.Add("amount", order.OrderTotal.ToString(new CultureInfo("en-US", false).NumberFormat));
             remotePostHelper.Add("currency", CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
             remotePostHelper.Add("detail1_description", "Order ID:");
-            remotePostHelper.Add("detail1_text", order.OrderID.ToString());
+            remotePostHelper.Add("detail1_text", order.OrderId.ToString());
 
             remotePostHelper.Add("firstname", order.BillingFirstName);
             remotePostHelper.Add("lastname", order.BillingLastName);
@@ -103,14 +103,14 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneybookers
             remotePostHelper.Add("phone_number", order.BillingPhoneNumber);
             remotePostHelper.Add("postal_code", order.BillingZipPostalCode);
             remotePostHelper.Add("city", order.BillingCity);
-            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+            StateProvince billingStateProvince = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
             if (billingStateProvince != null)
                 remotePostHelper.Add("state", billingStateProvince.Abbreviation);
             else
                 remotePostHelper.Add("state", order.BillingStateProvince);
-            Country billingCountry = CountryManager.GetCountryByID(order.BillingCountryID);
+            Country billingCountry = CountryManager.GetCountryById(order.BillingCountryId);
             if (billingCountry != null)
-                remotePostHelper.Add("country", billingCountry.ThreeLetterISOCode);
+                remotePostHelper.Add("country", billingCountry.ThreeLetterIsoCode);
             else
                 remotePostHelper.Add("country", order.BillingCountry);
             remotePostHelper.Post();
@@ -161,9 +161,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Moneybookers
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

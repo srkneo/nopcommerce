@@ -26,7 +26,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
     /// </summary>
     public partial class ProductCategory : BaseEntity
     {
-        #region Ctor 
+        #region Ctor
         /// <summary>
         /// Creates a new instance of the ProductCategory class
         /// </summary>
@@ -39,17 +39,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets or sets the ProductCategory identifier
         /// </summary>
-        public int ProductCategoryID { get; set; }
+        public int ProductCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the category identifier
         /// </summary>
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the product is featured
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         {
             get
             {
-                return CategoryManager.GetCategoryByID(CategoryID);
+                return CategoryManager.GetCategoryById(this.CategoryId);
             }
         }
 
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         {
             get
             {
-                return ProductManager.GetProductByID(ProductID);
+                return ProductManager.GetProductById(this.ProductId);
             }
         }
 

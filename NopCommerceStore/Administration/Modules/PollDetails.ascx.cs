@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Poll poll = ctrlPollInfo.SaveInfo();
-                    Response.Redirect("PollDetails.aspx?PollID=" + poll.PollID.ToString());
+                    Response.Redirect("PollDetails.aspx?PollID=" + poll.PollId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                PollManager.DeletePoll(this.PollID);
+                PollManager.DeletePoll(this.PollId);
                 Response.Redirect("Polls.aspx");
             }
             catch (Exception exc)
@@ -60,11 +60,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int PollID
+        public int PollId
         {
             get
             {
-                return CommonHelper.QueryStringInt("PollID");
+                return CommonHelper.QueryStringInt("PollId");
             }
         }
     }

@@ -27,14 +27,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Finds a related product item by specified identifiers
         /// </summary>
-        /// <param name="ProductID1">The first product identifier</param>
-        /// <param name="ProductID2">The second product identifier</param>
+        /// <param name="productId1">The first product identifier</param>
+        /// <param name="productId2">The second product identifier</param>
         /// <returns>Found item instance</returns>
-        public RelatedProduct FindRelatedProduct(int ProductID1, int ProductID2)
+        public RelatedProduct FindRelatedProduct(int productId1, int productId2)
         {
             #region Methods
             foreach (RelatedProduct relatedProduct in this)
-                if (relatedProduct.ProductID1 == ProductID1 && relatedProduct.ProductID2 == ProductID2)
+                if (relatedProduct.ProductId1 == productId1 && relatedProduct.ProductId2 == productId2)
                     return relatedProduct;
             return null;
             #endregion

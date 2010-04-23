@@ -35,8 +35,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (e.CommandName == "Edit")
             {
-                int blogCommentID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("BlogCommentDetails.aspx?BlogCommentID=" + blogCommentID.ToString());
+                int blogCommentId = Convert.ToInt32(e.CommandArgument);
+                Response.Redirect("BlogCommentDetails.aspx?BlogCommentID=" + blogCommentId.ToString());
             }
         }
 
@@ -44,8 +44,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (e.CommandName == "Delete")
             {
-                int blogCommentID = Convert.ToInt32(e.CommandArgument);
-                BlogManager.DeleteBlogComment(blogCommentID);
+                int blogCommentId = Convert.ToInt32(e.CommandArgument);
+                BlogManager.DeleteBlogComment(blogCommentId);
                 BindData();
             }
         }
@@ -62,19 +62,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 BindData();
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
                 if (customer.IsGuest)
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.BlogComments.Customer.Guest"));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.BlogComments.Customer.Guest"));
                 }
                 else
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 }
             }
             return customerInfo;
@@ -83,19 +83,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void BindData()
         {
             BlogCommentCollection blogCommentCollection = null;
-            if (this.BlogPostID > 0)
-                blogCommentCollection = BlogManager.GetBlogCommentsByBlogPostID(this.BlogPostID);
+            if (this.BlogPostId > 0)
+                blogCommentCollection = BlogManager.GetBlogCommentsByBlogPostId(this.BlogPostId);
             else
                 blogCommentCollection = BlogManager.GetAllBlogComments();
             lvBlogComments.DataSource = blogCommentCollection;
             lvBlogComments.DataBind();
         }
 
-        public int BlogPostID
+        public int BlogPostId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BlogPostID");
+                return CommonHelper.QueryStringInt("BlogPostId");
             }
         }
     }

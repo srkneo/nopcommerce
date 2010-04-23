@@ -50,9 +50,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
         #region Utilities
 
-        private string createPricelistContents()
+        private string CreatePricelistContents()
         {
-            string strContents = "";
+            string strContents = string.Empty;
 
             ProductVariantCollection productVariants = new ProductVariantCollection();
             bool blnOverrideAdjustment = this.OverrideIndivAdjustment;
@@ -64,13 +64,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         blnOverrideAdjustment = true;
                         foreach (Product product in ProductManager.GetAllProducts(false))
                         {
-                            productVariants.AddRange(ProductManager.GetProductVariantsByProductID(product.ProductID, false));
+                            productVariants.AddRange(ProductManager.GetProductVariantsByProductId(product.ProductId, false));
                         }
                     }
                     break;
                 case PriceListExportModeEnum.AssignedProducts:
                     {
-                        productVariants = ProductManager.GetProductVariantsByPricelistID(this.PricelistID);
+                        productVariants = ProductManager.GetProductVariantsByPricelistId(this.PricelistId);
                     }
                     break;
                 default:
@@ -95,18 +95,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 // if export mode is all, then calculate price
                 if (blnOverrideAdjustment)
                 {
-                    newPrice = getAdjustedPrice(productVariant.Price, this.PriceAdjustmentType, PriceAdjustment);
+                    newPrice = GetAdjustedPrice(productVariant.Price, this.PriceAdjustmentType, PriceAdjustment);
                 }
                 else
                 {
-                    ProductVariantPricelist productVariantPricelist = ProductManager.GetProductVariantPricelist(productVariant.ProductVariantID, this.PricelistID);
+                    ProductVariantPricelist productVariantPricelist = ProductManager.GetProductVariantPricelist(productVariant.ProductVariantId, this.PricelistId);
                     if (productVariantPricelist != null)
                     {
-                        newPrice = getAdjustedPrice(productVariant.Price, productVariantPricelist.PriceAdjustmentType, productVariantPricelist.PriceAdjustment);
+                        newPrice = GetAdjustedPrice(productVariant.Price, productVariantPricelist.PriceAdjustmentType, productVariantPricelist.PriceAdjustment);
                     }
                 }
                 strContents += replaceMessageTemplateTokens(productVariant, this.Body,
-                    this.FormatLocalization, new System.Collections.Specialized.NameValueCollection(), AffiliateID, newPrice);
+                    this.FormatLocalization, new System.Collections.Specialized.NameValueCollection(), AffiliateId, newPrice);
                 if (!this.Body.EndsWith("\n"))
                     strContents += "\n";
             }
@@ -122,10 +122,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return strContents;
         }
 
-        private bool checkCache(int CacheTime, string CachePath)
+        private bool CheckCache(int cacheTime, string cachePath)
         {
             // search for youngest file
-            string[] files = System.IO.Directory.GetFiles(CachePath, this.ShortName + "*.txt");
+            string[] files = System.IO.Directory.GetFiles(cachePath, this.ShortName + "*.txt");
 
             string youngestFileName = "";
             DateTime youngestFileDate = new DateTime(2000, 01, 01);
@@ -145,10 +145,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return true;
         }
 
-        private string retrieveFromCache(string CachePath)
+        private string RetrieveFromCache(string cachePath)
         {
             // search for youngest file
-            string[] files = System.IO.Directory.GetFiles(CachePath, this.ShortName + "*.txt");
+            string[] files = System.IO.Directory.GetFiles(cachePath, this.ShortName + "*.txt");
 
             string youngestFileName = "";
             DateTime youngestFileDate = new DateTime(2000, 01, 01);
@@ -169,44 +169,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             }
         }
 
-        private void saveToCache(string CachePath, string Contents)
+        private void SaveToCache(string cachePath, string contents)
         {
-            string saveFilePath = string.Format("{0}{1}_{2:yyyyMMdd_HHmmss}.txt", CachePath, this.ShortName, DateTime.Now);
+            string saveFilePath = string.Format("{0}{1}_{2:yyyyMMdd_HHmmss}.txt", cachePath, this.ShortName, DateTime.Now);
 
             if (File.Exists(saveFilePath))
             {
                 using (FileStream fs = new FileStream(saveFilePath, FileMode.CreateNew, FileAccess.Write))
                 using (StreamWriter sw = new StreamWriter(fs))
-                    sw.Write(Contents);
+                    sw.Write(contents);
             }
         }
 
-        private string getProductUrlWithPricelistProvider(int ProductID, int AffiliateID)
+        private string GetProductUrlWithPricelistProvider(int productId, int affiliateId)
         {
-            string URL = SEOHelper.GetProductURL(ProductID);
-            if (AffiliateID != 0)
-                URL = CommonHelper.ModifyQueryString(URL, "AffiliateID=" + AffiliateID.ToString(), null);
-            return URL;
+            string url = SEOHelper.GetProductUrl(productId);
+            if (AffiliateId != 0)
+                url = CommonHelper.ModifyQueryString(url, "AffiliateID=" + AffiliateId.ToString(), null);
+            return url;
         }
 
         /// <summary>
         /// Replaces a message template tokens
         /// </summary>
         /// <param name="productVariant">Product variant instance</param>
-        /// <param name="Template">Template</param>
-        /// <param name="LocalFormat">Localization Provider Short name (en-US, de-DE, etc.)</param>
-        /// <param name="AdditionalKeys">Additional keys</param>
-        /// <param name="AffiliateID">Affiliate identifier</param>
-        /// <param name="Price">Price</param>
+        /// <param name="template">Template</param>
+        /// <param name="localFormat">Localization Provider Short name (en-US, de-DE, etc.)</param>
+        /// <param name="additionalKeys">Additional keys</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
+        /// <param name="price">Price</param>
         /// <returns>New template</returns>
-        protected string replaceMessageTemplateTokens(ProductVariant productVariant, string Template, string LocalFormat, NameValueCollection AdditionalKeys,
-            int AffiliateID, decimal Price)
+        protected string replaceMessageTemplateTokens(ProductVariant productVariant, 
+            string template, string localFormat, NameValueCollection additionalKeys,
+            int affiliateId, decimal price)
         {
             NameValueCollection tokens = new NameValueCollection();
 
-            IFormatProvider locProvider = new System.Globalization.CultureInfo(LocalFormat);
+            IFormatProvider locProvider = new System.Globalization.CultureInfo(localFormat);
 
-            string strHelper = Template;
+            string strHelper = template;
 
             while (strHelper.Contains("%"))
             {
@@ -235,7 +236,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                                 ProductPictureCollection pictures = productVariant.Product.ProductPictures;
                                 if (pictures.Count > 0)
                                 {
-                                    tokens.Add(strToken + strFormat, String.Format(locProvider, "{0" + strFormat + "}", PictureManager.GetPictureUrl(pictures[0].PictureID)));
+                                    tokens.Add(strToken + strFormat, String.Format(locProvider, "{0" + strFormat + "}", PictureManager.GetPictureUrl(pictures[0].PictureId)));
                                 }
                                 else
                                 {
@@ -245,12 +246,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                             break;
                         case "pv.producturl":
                             {
-                                tokens.Add(strToken + strFormat, String.Format(locProvider, "{0" + strFormat + "}", getProductUrlWithPricelistProvider(productVariant.ProductID, AffiliateID)));
+                                tokens.Add(strToken + strFormat, String.Format(locProvider, "{0" + strFormat + "}", GetProductUrlWithPricelistProvider(productVariant.ProductId, AffiliateId)));
                             }
                             break;
                         case "pv.price":
                             {
-                            tokens.Add(strToken + strFormat, String.Format(locProvider, "{0" + strFormat + "}", Price));
+                            tokens.Add(strToken + strFormat, String.Format(locProvider, "{0" + strFormat + "}", price));
                             }
                             break;
                         case "pv.name":
@@ -323,24 +324,72 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             }
 
             foreach (string token in tokens.Keys)
-                Template = Template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
 
-            foreach (string token in AdditionalKeys.Keys)
-                Template = Template.Replace(string.Format(@"%{0}%", token), AdditionalKeys[token]);
+            foreach (string token in additionalKeys.Keys)
+                template = template.Replace(string.Format(@"%{0}%", token), additionalKeys[token]);
 
-            return Template;
+            return template;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Creates price list
+        /// </summary>
+        /// <param name="cachePath">Cache path where cached price list can be stored</param>
+        /// <returns>Created price list</returns>
+        public string CreatePricelist(string cachePath)
+        {
+            string strContents = string.Empty;
+
+            if (CheckCache(this.CacheTime, cachePath))
+            {
+                return RetrieveFromCache(cachePath);
+            }
+            else
+            {
+                strContents = CreatePricelistContents();
+                SaveToCache(cachePath, strContents);
+                return strContents;
+            }
+        }
+
+        /// <summary>
+        /// Gets list of allowed tokens
+        /// </summary>
+        /// <returns>List of allowed tokens</returns>
+        public static string[] GetListOfAllowedTokens()
+        {
+            List<string> allowedTokens = new List<string>();
+            allowedTokens.Add("%store.name%");
+            allowedTokens.Add("%product.pictureurl%");
+            allowedTokens.Add("%pv.producturl%");
+            allowedTokens.Add("%pv.price%");
+            allowedTokens.Add("%pv.name%");
+            allowedTokens.Add("%pv.description%");
+            allowedTokens.Add("%product.description%");
+            allowedTokens.Add("%product.shortdescription%");
+            allowedTokens.Add("%pv.partnumber%");
+            allowedTokens.Add("%product.manufacturer%");
+            allowedTokens.Add("%product.category%");
+            allowedTokens.Add("%product.shippingcosts%");
+            return allowedTokens.ToArray();
         }
 
         /// <summary>
         /// Calculate a price adjustment according to adjustment type
         /// </summary>
-        /// <param name="Price">Price to adjust</param>
-        /// <param name="PriceAdjustmentType">The type of price adjustment calculation (e.g. absolute adjustment)</param>
-        /// <param name="PriceAdjustment">The value for price adjustment calculation</param>
+        /// <param name="price">Price to adjust</param>
+        /// <param name="priceAdjustmentType">The type of price adjustment calculation (e.g. absolute adjustment)</param>
+        /// <param name="priceAdjustment">The value for price adjustment calculation</param>
         /// <returns>Adjusted price</returns>
-        public decimal getAdjustedPrice(decimal Price, PriceAdjustmentTypeEnum PriceAdjustmentType, decimal PriceAdjustment)
+        public decimal GetAdjustedPrice(decimal price, 
+            PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment)
         {
-            decimal result = Price;
+            decimal result = price;
 
             switch (PriceAdjustmentType)
             {
@@ -370,73 +419,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Creates price list
-        /// </summary>
-        /// <param name="CachePath">Cache path where cached price list can be stored</param>
-        /// <returns>Created price list</returns>
-        public string CreatePricelist(string CachePath)
-        {
-            string strContents = string.Empty;
-
-            if (checkCache(this.CacheTime, CachePath))
-            {
-                return retrieveFromCache(CachePath);
-            }
-            else
-            {
-                strContents = createPricelistContents();
-                saveToCache(CachePath, strContents);
-                return strContents;
-            }
-        }
-
-        /// <summary>
-        /// Gets list of allowed tokens
-        /// </summary>
-        /// <returns>List of allowed tokens</returns>
-        public static string[] GetListOfAllowedTokens()
-        {
-            List<string> allowedTokens = new List<string>();
-            allowedTokens.Add("%store.name%");
-            allowedTokens.Add("%product.pictureurl%");
-            allowedTokens.Add("%pv.producturl%");
-            allowedTokens.Add("%pv.price%");
-            allowedTokens.Add("%pv.name%");
-            allowedTokens.Add("%pv.description%");
-            allowedTokens.Add("%product.description%");
-            allowedTokens.Add("%product.shortdescription%");
-            allowedTokens.Add("%pv.partnumber%");
-            allowedTokens.Add("%product.manufacturer%");
-            allowedTokens.Add("%product.category%");
-            allowedTokens.Add("%product.shippingcosts%");
-            return allowedTokens.ToArray();
-        }
-
-        #endregion
-
         #region Properties
         /// <summary>
-        /// Gets or sets the pricelist identifier
+        /// Gets or sets the Pricelist identifier
         /// </summary>
-        public int PricelistID { get; set; }
+        public int PricelistId { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode of list creation (Export all, assigned only, assigned only with special price)
+        /// Gets or sets the Mode of list creation (Export all, assigned only, assigned only with special price)
         /// </summary>
-        public int ExportModeID { get; set; }
+        public int ExportModeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the export type
+        /// Gets or sets the CSV or XML
         /// </summary>
-        public int ExportTypeID { get; set; }
+        public int ExportTypeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Affiliate connected to this pricelist (optional), links will be created with AffiliateID
+        /// Gets or sets the Affiliate connected to this pricelist (optional), links will be created with AffiliateId
         /// </summary>
-        public int AffiliateID { get; set; }
+        public int AffiliateId { get; set; }
 
         /// <summary>
         /// Gets or sets the Displayedname
@@ -489,9 +491,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public string Footer { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of price adjustment
+        /// Gets or sets the type of price adjustment (if used) (relative or absolute)
         /// </summary>
-        public int PriceAdjustmentTypeID { get; set; }
+        public int PriceAdjustmentTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the price will be adjusted by this amount (in accordance with PriceAdjustmentType)
@@ -504,12 +506,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public bool OverrideIndivAdjustment { get; set; }
 
         /// <summary>
-        /// Gets or sets the date and time of instance creation
+        /// Gets or sets the when was this record originally created
         /// </summary>
         public DateTime CreatedOn { get; set; }
 
         /// <summary>
-        /// Gets or sets the date and time of instance update
+        /// Gets or sets the last time this recordset was updated
         /// </summary>
         public DateTime UpdatedOn { get; set; }
 
@@ -524,11 +526,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return (PriceListExportModeEnum)ExportModeID;
+                return (PriceListExportModeEnum)this.ExportModeId;
             }
             set
             {
-                ExportModeID = (int)value;
+                this.ExportModeId = (int)value;
             }
         }
 
@@ -539,11 +541,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return (PriceListExportTypeEnum)ExportTypeID;
+                return (PriceListExportTypeEnum)this.ExportTypeId;
             }
             set
             {
-                ExportTypeID = (int)value;
+                this.ExportTypeId = (int)value;
             }
         }
 
@@ -554,11 +556,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                return (PriceAdjustmentTypeEnum)PriceAdjustmentTypeID;
+                return (PriceAdjustmentTypeEnum)this.PriceAdjustmentTypeId;
             }
             set
             {
-                PriceAdjustmentTypeID = (int)value;
+                this.PriceAdjustmentTypeId = (int)value;
             }
         }
 

@@ -30,19 +30,19 @@ namespace NopSolutions.NopCommerce.Web.Administration
 {
     public partial class popupMaster : BaseNopAdministrationMasterPage
     {
-        public override void ShowMessage(string Message)
+        public override void ShowMessage(string message)
         {
             pnlMessage.Visible = true;
             pnlMessage.CssClass = "messageBox messageBoxSuccess";
-            lMessage.Text = Message;
+            lMessage.Text = message;
         }
 
-        public override void ShowError(string Message, string CompleteMessage)
+        public override void ShowError(string message, string completeMessage)
         {
             pnlMessage.Visible = true;
             pnlMessage.CssClass = "messageBox messageBoxError";
-            lMessage.Text = Message;
-            lMessageComplete.Text = CompleteMessage;
+            lMessage.Text = message;
+            lMessageComplete.Text = completeMessage;
         }
     }
 }

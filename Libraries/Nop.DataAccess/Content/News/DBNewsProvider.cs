@@ -36,73 +36,75 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Gets a news
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
+        /// <param name="newsId">The news identifier</param>
         /// <returns>News</returns>
-        public abstract DBNews GetNewsByID(int NewsID);
+        public abstract DBNews GetNewsById(int newsId);
         
         /// <summary>
         /// Deletes a news
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        public abstract void DeleteNews(int NewsID);
+        /// <param name="newsId">The news identifier</param>
+        public abstract void DeleteNews(int newsId);
         
         /// <summary>
         /// Gets news item collection
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="NewsCount">News item count. 0 if you want to get all news</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="newsCount">News item count. 0 if you want to get all news</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>News item collection</returns>
-        public abstract DBNewsCollection GetNews(int LanguageID, int NewsCount, bool showHidden);
+        public abstract DBNewsCollection GetNews(int languageId, 
+            int newsCount, bool showHidden);
         
         /// <summary>
         /// Inserts a news item
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The news title</param>
-        /// <param name="Short">The short text</param>
-        /// <param name="Full">The full text</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="AllowComments">A value indicating whether the entity allows comments</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The news title</param>
+        /// <param name="shortText">The short text</param>
+        /// <param name="fullText">The full text</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="allowComments">A value indicating whether the entity allows comments</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News item</returns>
-        public abstract DBNews InsertNews(int LanguageID, string Title, string Short,
-            string Full, bool Published, bool AllowComments, DateTime CreatedOn);
+        public abstract DBNews InsertNews(int languageId, string title, string shortText,
+            string fullText, bool published, bool allowComments, DateTime createdOn);
 
         /// <summary>
         /// Updates the news item
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The news title</param>
-        /// <param name="Short">The short text</param>
-        /// <param name="Full">The full text</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="AllowComments">A value indicating whether the entity allows comments</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The news title</param>
+        /// <param name="shortText">The short text</param>
+        /// <param name="fullText">The full text</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="allowComments">A value indicating whether the entity allows comments</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News item</returns>
-        public abstract DBNews UpdateNews(int NewsID, int LanguageID, string Title, string Short,
-            string Full, bool Published, bool AllowComments, DateTime CreatedOn);
+        public abstract DBNews UpdateNews(int newsId, int languageId,
+            string title, string shortText, string fullText, 
+            bool published, bool allowComments, DateTime createdOn);
 
         /// <summary>
         /// Gets a news comment
         /// </summary>
-        /// <param name="NewsCommentID">News comment identifer</param>
+        /// <param name="newsCommentId">News comment identifer</param>
         /// <returns>News comment</returns>
-        public abstract DBNewsComment GetNewsCommentByID(int NewsCommentID);
+        public abstract DBNewsComment GetNewsCommentById(int newsCommentId);
         
         /// <summary>
         /// Gets a news comment collection by news identifier
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
+        /// <param name="newsId">The news identifier</param>
         /// <returns>News comment collection</returns>
-        public abstract DBNewsCommentCollection GetNewsCommentsByNewsID(int NewsID);
+        public abstract DBNewsCommentCollection GetNewsCommentsByNewsId(int newsId);
 
         /// <summary>
         /// Deletes a news comment
         /// </summary>
-        /// <param name="NewsCommentID">The news comment identifier</param>
-        public abstract void DeleteNewsComment(int NewsCommentID);
+        /// <param name="newsCommentId">The news comment identifier</param>
+        public abstract void DeleteNewsComment(int newsCommentId);
         
         /// <summary>
         /// Gets all news comments
@@ -113,27 +115,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Inserts a news comment
         /// </summary>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public abstract DBNewsComment InsertNewsComment(int NewsID, int CustomerID, string Title,
-            string Comment, DateTime CreatedOn);
+        public abstract DBNewsComment InsertNewsComment(int newsId, int customerId, 
+            string title, string comment, DateTime createdOn);
 
         /// <summary>
         /// Updates the news comment
         /// </summary>
-        /// <param name="NewsCommentID">The news comment identifier</param>
-        /// <param name="NewsID">The news identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="newsCommentId">The news comment identifier</param>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public abstract DBNewsComment UpdateNewsComment(int NewsCommentID, int NewsID, int CustomerID, string Title,
-            string Comment, DateTime CreatedOn);
+        public abstract DBNewsComment UpdateNewsComment(int newsCommentId, 
+            int newsId, int customerId, string title,
+            string comment, DateTime createdOn);
         #endregion
     }
 }

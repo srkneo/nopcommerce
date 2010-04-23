@@ -43,17 +43,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets or sets the localized checkout attribute value identifier
         /// </summary>
-        public int CheckoutAttributeValueLocalizedID { get; set; }
+        public int CheckoutAttributeValueLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the checkout attribute value identifier
         /// </summary>
-        public int CheckoutAttributeValueID { get; set; }
+        public int CheckoutAttributeValueId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

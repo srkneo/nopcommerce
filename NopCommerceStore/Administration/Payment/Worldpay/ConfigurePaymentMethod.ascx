@@ -22,7 +22,7 @@
             <i>also known as installation id</i>
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtWorldpayInstanceID" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtWorldpayInstanceId" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

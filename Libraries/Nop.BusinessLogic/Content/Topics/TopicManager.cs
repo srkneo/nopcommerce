@@ -68,7 +68,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
                 return null;
 
             var item = new Topic();
-            item.TopicID = dbItem.TopicID;
+            item.TopicId = dbItem.TopicId;
             item.Name = dbItem.Name;
 
             return item;
@@ -95,9 +95,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
                 return null;
 
             var item = new LocalizedTopic();
-            item.TopicLocalizedID = dbItem.TopicLocalizedID;
-            item.TopicID = dbItem.TopicID;
-            item.LanguageID = dbItem.LanguageID;
+            item.TopicLocalizedId = dbItem.TopicLocalizedId;
+            item.TopicId = dbItem.TopicId;
+            item.LanguageId = dbItem.LanguageId;
             item.Title = dbItem.Title;
             item.Body = dbItem.Body;
             item.CreatedOn = dbItem.CreatedOn;
@@ -116,20 +116,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Deletes a topic
         /// </summary>
-        /// <param name="TopicID">Topic identifier</param>
-        public static void DeleteTopic(int TopicID)
+        /// <param name="topicId">Topic identifier</param>
+        public static void DeleteTopic(int topicId)
         {
-            DBProviderManager<DBTopicProvider>.Provider.DeleteTopic(TopicID);
+            DBProviderManager<DBTopicProvider>.Provider.DeleteTopic(topicId);
         }
 
         /// <summary>
         /// Inserts a topic
         /// </summary>
-        /// <param name="Name">The name</param>
+        /// <param name="name">The name</param>
         /// <returns>Topic</returns>
-        public static Topic InsertTopic(string Name)
+        public static Topic InsertTopic(string name)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.InsertTopic(Name);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.InsertTopic(name);
             var topic = DBMapping(dbItem);
             return topic;
         }
@@ -137,12 +137,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Updates the topic
         /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="Name">The name</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="name">The name</param>
         /// <returns>Topic</returns>
-        public static Topic UpdateTopic(int TopicID, string Name)
+        public static Topic UpdateTopic(int topicId, string name)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.UpdateTopic(TopicID, Name);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.UpdateTopic(topicId, name);
             var topic = DBMapping(dbItem);
             return topic;
         }
@@ -150,14 +150,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Gets a topic by template identifier
         /// </summary>
-        /// <param name="TopicID">topic identifier</param>
+        /// <param name="topicId">topic identifier</param>
         /// <returns>topic</returns>
-        public static Topic GetTopicByID(int TopicID)
+        public static Topic GetTopicById(int topicId)
         {
-            if (TopicID == 0)
+            if (topicId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetTopicByID(TopicID);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetTopicById(topicId);
             var Topic = DBMapping(dbItem);
             return Topic;
         }
@@ -176,27 +176,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Gets a localized topic by identifier
         /// </summary>
-        /// <param name="LocalizedTopicID">Localized topic identifier</param>
+        /// <param name="localizedTopicId">Localized topic identifier</param>
         /// <returns>Localized topic</returns>
-        public static LocalizedTopic GetLocalizedTopicByID(int LocalizedTopicID)
+        public static LocalizedTopic GetLocalizedTopicById(int localizedTopicId)
         {
-            if (LocalizedTopicID == 0)
+            if (localizedTopicId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopicByID(LocalizedTopicID);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopicById(localizedTopicId);
             var localizedTopic = DBMapping(dbItem);
             return localizedTopic;
         }
 
         /// <summary>
-        /// Gets a localized topic by parent TopicID and language identifier
+        /// Gets a localized topic by parent topic identifier and language identifier
         /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized topic</returns>
-        public static LocalizedTopic GetLocalizedTopic(int TopicID, int LanguageID)
+        public static LocalizedTopic GetLocalizedTopic(int topicId, int languageId)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopic(TopicID, LanguageID);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopic(topicId, languageId);
             var localizedTopic = DBMapping(dbItem);
             return localizedTopic;
         }
@@ -204,12 +204,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Gets a localized topic by name and language identifier
         /// </summary>
-        /// <param name="Name">topic name</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="name">topic name</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized topic</returns>
-        public static LocalizedTopic GetLocalizedTopic(string Name, int LanguageID)
+        public static LocalizedTopic GetLocalizedTopic(string name, int languageId)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopic(Name, LanguageID);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopic(name, languageId);
             var localizedTopic = DBMapping(dbItem);
             return localizedTopic;
         }
@@ -217,20 +217,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Deletes a localized topic
         /// </summary>
-        /// <param name="LocalizedTopicID">topic identifier</param>
-        public static void DeleteLocalizedTopic(int LocalizedTopicID)
+        /// <param name="localizedTopicId">topic identifier</param>
+        public static void DeleteLocalizedTopic(int localizedTopicId)
         {
-            DBProviderManager<DBTopicProvider>.Provider.DeleteLocalizedTopic(LocalizedTopicID);
+            DBProviderManager<DBTopicProvider>.Provider.DeleteLocalizedTopic(localizedTopicId);
         }
 
         /// <summary>
         /// Gets all localized topics
         /// </summary>
-        /// <param name="TopicName">topic name</param>
+        /// <param name="topicName">topic name</param>
         /// <returns>Localized topic collection</returns>
-        public static LocalizedTopicCollection GetAllLocalizedTopics(string TopicName)
+        public static LocalizedTopicCollection GetAllLocalizedTopics(string topicName)
         {
-            var dbCollection = DBProviderManager<DBTopicProvider>.Provider.GetAllLocalizedTopics(TopicName);
+            var dbCollection = DBProviderManager<DBTopicProvider>.Provider.GetAllLocalizedTopics(topicName);
             var localizedTopics = DBMapping(dbCollection);
             return localizedTopics;
         }
@@ -238,26 +238,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Inserts a localized topic
         /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
         /// <returns>Localized topic</returns>
-        public static LocalizedTopic InsertLocalizedTopic(int TopicID,
-            int LanguageID, string Title, string Body,
-            DateTime CreatedOn, DateTime UpdatedOn,
-            string MetaKeywords, string MetaDescription, string MetaTitle)
+        public static LocalizedTopic InsertLocalizedTopic(int topicId,
+            int languageId, string title, string body,
+            DateTime createdOn, DateTime updatedOn,
+            string metaKeywords, string metaDescription, string metaTitle)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.InsertLocalizedTopic(TopicID,
-                LanguageID, Title, Body, CreatedOn, UpdatedOn, MetaKeywords, MetaDescription, MetaTitle);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.InsertLocalizedTopic(topicId,
+                languageId, title, body, createdOn, updatedOn, metaKeywords, 
+                metaDescription, metaTitle);
             var localizedTopic = DBMapping(dbItem);
             return localizedTopic;
         }
@@ -265,28 +266,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Updates the localized topic
         /// </summary>
-        /// <param name="TopicLocalizedID">The localized topic identifier</param>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
+        /// <param name="topicLocalizedId">The localized topic identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
         /// <returns>Localized topic</returns>
-        public static LocalizedTopic UpdateLocalizedTopic(int TopicLocalizedID,
-            int TopicID, int LanguageID,
-            string Title, string Body,
-            DateTime CreatedOn, DateTime UpdatedOn,
-            string MetaKeywords, string MetaDescription, string MetaTitle)
+        public static LocalizedTopic UpdateLocalizedTopic(int topicLocalizedId,
+            int topicId, int languageId, string title, string body,
+            DateTime createdOn, DateTime updatedOn,
+            string metaKeywords, string metaDescription, string metaTitle)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.UpdateLocalizedTopic(TopicLocalizedID,
-                TopicID, LanguageID, Title, Body, CreatedOn, UpdatedOn, MetaKeywords, MetaDescription, MetaTitle);
+            var dbItem = DBProviderManager<DBTopicProvider>.Provider.UpdateLocalizedTopic(topicLocalizedId,
+                topicId, languageId, title, body, createdOn, updatedOn, 
+                metaKeywords, metaDescription, metaTitle);
             var localizedTopic = DBMapping(dbItem);
             return localizedTopic;
         }

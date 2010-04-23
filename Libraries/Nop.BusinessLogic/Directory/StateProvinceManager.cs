@@ -58,8 +58,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             var item = new StateProvince();
-            item.StateProvinceID = dbItem.StateProvinceID;
-            item.CountryID = dbItem.CountryID;
+            item.StateProvinceId = dbItem.StateProvinceId;
+            item.CountryId = dbItem.CountryId;
             item.Name = dbItem.Name;
             item.Abbreviation = dbItem.Abbreviation;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -72,10 +72,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Deletes a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        public static void DeleteStateProvince(int StateProvinceID)
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        public static void DeleteStateProvince(int stateProvinceId)
         {
-            DBProviderManager<DBStateProvinceProvider>.Provider.DeleteStateProvince(StateProvinceID);
+            DBProviderManager<DBStateProvinceProvider>.Provider.DeleteStateProvince(stateProvinceId);
             if (StateProvinceManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
@@ -85,21 +85,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
         /// <returns>State/province</returns>
-        public static StateProvince GetStateProvinceByID(int StateProvinceID)
+        public static StateProvince GetStateProvinceById(int stateProvinceId)
         {
-            if (StateProvinceID == 0)
+            if (stateProvinceId == 0)
                 return null;
 
-            string key = string.Format(STATEPROVINCES_BY_ID_KEY, StateProvinceID);
+            string key = string.Format(STATEPROVINCES_BY_ID_KEY, stateProvinceId);
             object obj2 = NopCache.Get(key);
             if (StateProvinceManager.CacheEnabled && (obj2 != null))
             {
                 return (StateProvince)obj2;
             }
 
-            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.GetStateProvinceByID(StateProvinceID);
+            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.GetStateProvinceById(stateProvinceId);
             var stateProvince = DBMapping(dbItem);
 
             if (StateProvinceManager.CacheEnabled)
@@ -112,11 +112,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a state/province 
         /// </summary>
-        /// <param name="Abbreviation">The state/province abbreviation</param>
+        /// <param name="abbreviation">The state/province abbreviation</param>
         /// <returns>State/province</returns>
-        public static StateProvince GetStateProvinceByAbbreviation(string Abbreviation)
+        public static StateProvince GetStateProvinceByAbbreviation(string abbreviation)
         {
-            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.GetStateProvinceByAbbreviation(Abbreviation);
+            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.GetStateProvinceByAbbreviation(abbreviation);
             var stateProvince = DBMapping(dbItem);
             return stateProvince;
         }
@@ -124,18 +124,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets a state/province collection by country identifier
         /// </summary>
-        /// <param name="CountryID">Country identifier</param>
+        /// <param name="countryId">Country identifier</param>
         /// <returns>State/province collection</returns>
-        public static StateProvinceCollection GetStateProvincesByCountryID(int CountryID)
+        public static StateProvinceCollection GetStateProvincesByCountryId(int countryId)
         {
-            string key = string.Format(STATEPROVINCES_ALL_KEY, CountryID);
+            string key = string.Format(STATEPROVINCES_ALL_KEY, countryId);
             object obj2 = NopCache.Get(key);
             if (StateProvinceManager.CacheEnabled && (obj2 != null))
             {
                 return (StateProvinceCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBStateProvinceProvider>.Provider.GetStateProvincesByCountryID(CountryID);
+            var dbCollection = DBProviderManager<DBStateProvinceProvider>.Provider.GetStateProvincesByCountryId(countryId);
             var stateProvinceCollection = DBMapping(dbCollection);
 
             if (StateProvinceManager.CacheEnabled)
@@ -148,14 +148,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Inserts a state/province
         /// </summary>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Abbreviation">The abbreviation</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="abbreviation">The abbreviation</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>State/province</returns>
-        public static StateProvince InsertStateProvince(int CountryID, string Name, string Abbreviation, int DisplayOrder)
+        public static StateProvince InsertStateProvince(int countryId,
+            string name, string abbreviation, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.InsertStateProvince(CountryID, Name, Abbreviation, DisplayOrder);
+            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.InsertStateProvince(countryId, 
+                name, abbreviation, displayOrder);
             var stateProvince = DBMapping(dbItem);
 
             if (StateProvinceManager.CacheEnabled)
@@ -169,15 +171,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Updates a state/province
         /// </summary>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Abbreviation">The abbreviation</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="abbreviation">The abbreviation</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>State/province</returns>
-        public static StateProvince UpdateStateProvince(int StateProvinceID, int CountryID, string Name, string Abbreviation, int DisplayOrder)
+        public static StateProvince UpdateStateProvince(int stateProvinceId,
+            int countryId, string name, string abbreviation, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.UpdateStateProvince(StateProvinceID, CountryID, Name, Abbreviation, DisplayOrder);
+            var dbItem = DBProviderManager<DBStateProvinceProvider>.Provider.UpdateStateProvince(stateProvinceId, 
+                countryId, name, abbreviation, displayOrder);
             var stateProvince = DBMapping(dbItem);
 
             if (StateProvinceManager.CacheEnabled)

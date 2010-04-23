@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Language language = ctrlLanguageInfo.SaveInfo();
-                    Response.Redirect("LanguageDetails.aspx?LanguageID=" + language.LanguageID.ToString());
+                    Response.Redirect("LanguageDetails.aspx?LanguageID=" + language.LanguageId.ToString());
                 }
                 catch (Exception exc)
                 {

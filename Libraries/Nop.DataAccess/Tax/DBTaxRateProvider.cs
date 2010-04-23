@@ -33,18 +33,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
     public abstract partial class DBTaxRateProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a tax rate
         /// </summary>
-        /// <param name="TaxRateID">Tax rate identifier</param>
-        public abstract void DeleteTaxRate(int TaxRateID);
+        /// <param name="taxRateId">Tax rate identifier</param>
+        public abstract void DeleteTaxRate(int taxRateId);
 
         /// <summary>
         /// Gets a tax rate
         /// </summary>
-        /// <param name="TaxRateID">Tax rate identifier</param>
+        /// <param name="taxRateId">Tax rate identifier</param>
         /// <returns>Tax rate</returns>
-        public abstract DBTaxRate GetTaxRateByID(int TaxRateID);
+        public abstract DBTaxRate GetTaxRateById(int taxRateId);
 
         /// <summary>
         /// Gets all tax rates
@@ -55,27 +56,29 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         /// <summary>
         /// Inserts a tax rate
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="Zip">The zip</param>
-        /// <param name="Percentage">The percentage</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zip">The zip</param>
+        /// <param name="percentage">The percentage</param>
         /// <returns>Tax rate</returns>
-        public abstract DBTaxRate InsertTaxRate(int TaxCategoryID, int CountryID,
-            int StateProvinceID, string Zip, decimal Percentage);
+        public abstract DBTaxRate InsertTaxRate(int taxCategoryId, int countryId,
+            int stateProvinceId, string zip, decimal percentage);
 
         /// <summary>
         /// Updates the tax rate
         /// </summary>
-        /// <param name="TaxRateID">The tax rate identifier</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="StateProvinceID">The state/province identifier</param>
-        /// <param name="Zip">The zip</param>
-        /// <param name="Percentage">The percentage</param>
+        /// <param name="taxRateId">The tax rate identifier</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="stateProvinceId">The state/province identifier</param>
+        /// <param name="zip">The zip</param>
+        /// <param name="percentage">The percentage</param>
         /// <returns>Tax rate</returns>
-        public abstract DBTaxRate UpdateTaxRate(int TaxRateID, int TaxCategoryID, int CountryID,
-            int StateProvinceID, string Zip, decimal Percentage);
+        public abstract DBTaxRate UpdateTaxRate(int taxRateId, 
+            int taxCategoryId, int countryId, int stateProvinceId, 
+            string zip, decimal percentage);
+
         #endregion
     }
 }

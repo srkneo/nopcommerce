@@ -13,8 +13,6 @@
 <asp:GridView ID="gvProductAttributes" runat="server" AutoGenerateColumns="False"
     Width="100%">
     <Columns>
-        <asp:BoundField DataField="ProductAttributeID" HeaderText="ProductAttributeID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductAttributes.Name %>"
             ItemStyle-Width="70%">
             <ItemTemplate>
@@ -24,7 +22,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductAttributes.Edit %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="30%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="ProductAttributeDetails.aspx?ProductAttributeID=<%#Eval("ProductAttributeID")%>"
+                <a href="ProductAttributeDetails.aspx?ProductAttributeID=<%#Eval("ProductAttributeId")%>"
                     title="<%#GetLocaleResourceString("Admin.ProductAttributes.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.ProductAttributes.Edit")%>
                 </a>

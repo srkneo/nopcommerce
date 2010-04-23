@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         private void BindData()
         {
-            var customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            var customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer == null)
             {
                 this.Visible = false;
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (CustomerManager.ShowCustomersLocation)
             {
                 phLocation.Visible = true;
-                var country = CountryManager.GetCountryByID(customer.CountryID);
+                var country = CountryManager.GetCountryById(customer.CountryId);
                 if (country != null)
                 {
                     lblCountry.Text = Server.HtmlEncode(country.Name);
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (customer != null && !customer.IsGuest)
                 {
-                    btnSendPM.CustomerID = customer.CustomerID;
+                    btnSendPM.CustomerId = customer.CustomerId;
                     phPM.Visible = true;
                 }
                 else
@@ -162,7 +162,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     pageSize = ForumManager.LatestUserPostsPageSize;
                 }
                 var forumPosts = ForumManager.GetAllPosts(0, 
-                    customer.CustomerID, string.Empty, false, pageSize, 0, out totaRecords);
+                    customer.CustomerId, string.Empty, false, pageSize, 0, out totaRecords);
                 if (forumPosts.Count > 0)
                 {
                     rptrLatestPosts.DataSource = forumPosts;
@@ -192,7 +192,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if (forumTopic != null)
                     {
                         hlTopic.Text = Server.HtmlEncode(forumTopic.Subject);
-                        hlTopic.NavigateUrl = SEOHelper.GetForumTopicURL(forumPost.TopicID);
+                        hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumPost.TopicId);
                     }
                 }
 
@@ -210,11 +210,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("UserID");
+                return CommonHelper.QueryStringInt("UserId");
             }
         }
     }

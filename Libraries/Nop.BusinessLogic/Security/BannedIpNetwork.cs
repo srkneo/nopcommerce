@@ -32,9 +32,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
         #region Properties
         /// <summary>
-        /// Gets or sets the IpAddress unique identifier
+        /// Gets or sets the IP address unique identifier
         /// </summary>
-        public int BannedIpNetworkID { get; set; }
+        public int BannedIpNetworkId { get; set; }
+
         /// <summary>
         /// Gets or sets the starting IP address in the range
         /// </summary>
@@ -51,7 +52,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public string Comment { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of IP exceptions in the network
+        /// Gets or sets a list of exceptions in the IP Network
         /// </summary>
         public string IpException { get; set; }
 

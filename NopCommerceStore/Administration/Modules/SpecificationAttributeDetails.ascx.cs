@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.EditSpecAttribute"),
                         specificationAttribute.Name);
 
-                    Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + specificationAttribute.SpecificationAttributeID.ToString());
+                    Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + specificationAttribute.SpecificationAttributeId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -56,10 +56,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeByID(this.SpecificationAttributeID);
+                SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId);
                 if (specificationAttribute != null)
                 {
-                    SpecificationAttributeManager.DeleteSpecificationAttribute(this.SpecificationAttributeID);
+                    SpecificationAttributeManager.DeleteSpecificationAttribute(this.SpecificationAttributeId);
 
                     CustomerActivityManager.InsertActivity(
                         "DeleteSpecAttribute",
@@ -75,11 +75,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int SpecificationAttributeID
+        public int SpecificationAttributeId
         {
             get
             {
-                return CommonHelper.QueryStringInt("SpecificationAttributeID");
+                return CommonHelper.QueryStringInt("SpecificationAttributeId");
             }
         }
     }

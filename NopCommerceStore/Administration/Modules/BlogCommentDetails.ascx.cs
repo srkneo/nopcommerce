@@ -34,11 +34,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            BlogComment blogComment = BlogManager.GetBlogCommentByID(this.BlogCommentID);
+            BlogComment blogComment = BlogManager.GetBlogCommentById(this.BlogCommentId);
             if (blogComment != null)
             {
-                this.lblCustomer.Text = GetCustomerInfo(blogComment.CustomerID);
-                this.lblBlogPost.Text = GetBlogPostInfo(blogComment.BlogPostID);
+                this.lblCustomer.Text = GetCustomerInfo(blogComment.CustomerId);
+                this.lblBlogPost.Text = GetBlogPostInfo(blogComment.BlogPostId);
                 //this.txtComment.Value = blogComment.CommentText;
                 this.txtComment.Text = blogComment.CommentText;
                 this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogComment.CreatedOn).ToString();
@@ -47,30 +47,30 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Response.Redirect("BlogComments.aspx");
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
                 if (customer.IsGuest)
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.BlogCommentDetails.Customer.Guest"));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.BlogCommentDetails.Customer.Guest"));
                 }
                 else
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 }
             }
             return customerInfo;
         }
 
-        protected string GetBlogPostInfo(int BlogPostID)
+        protected string GetBlogPostInfo(int blogPostId)
         {
-            BlogPost blogPost = BlogManager.GetBlogPostByID(BlogPostID);
+            BlogPost blogPost = BlogManager.GetBlogPostById(blogPostId);
             if (blogPost != null)
             {
-                string blogPostInfo = string.Format("<a href=\"BlogPostDetails.aspx?BlogPostID={0}\">{1}</a>", blogPost.BlogPostID, Server.HtmlEncode(blogPost.BlogPostTitle));
+                string blogPostInfo = string.Format("<a href=\"BlogPostDetails.aspx?BlogPostID={0}\">{1}</a>", blogPost.BlogPostId, Server.HtmlEncode(blogPost.BlogPostTitle));
                 return blogPostInfo;
             }
             else
@@ -91,13 +91,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    BlogComment blogComment = BlogManager.GetBlogCommentByID(this.BlogCommentID);
+                    BlogComment blogComment = BlogManager.GetBlogCommentById(this.BlogCommentId);
                     if (blogComment != null)
                     {
                         string comment = txtComment.Text;
-                        blogComment = BlogManager.UpdateBlogComment(blogComment.BlogCommentID, blogComment.BlogPostID,
-                            blogComment.CustomerID, comment, blogComment.CreatedOn);
-                        Response.Redirect("BlogCommentDetails.aspx?BlogCommentID=" + blogComment.BlogCommentID.ToString());
+                        blogComment = BlogManager.UpdateBlogComment(blogComment.BlogCommentId, blogComment.BlogPostId,
+                            blogComment.CustomerId, comment, blogComment.CreatedOn);
+                        Response.Redirect("BlogCommentDetails.aspx?BlogCommentID=" + blogComment.BlogCommentId.ToString());
                     }
                     else
                         Response.Redirect("BlogComments.aspx");
@@ -111,15 +111,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            BlogManager.DeleteBlogComment(this.BlogCommentID);
+            BlogManager.DeleteBlogComment(this.BlogCommentId);
             Response.Redirect("BlogComments.aspx");
         }
 
-        public int BlogCommentID
+        public int BlogCommentId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BlogCommentID");
+                return CommonHelper.QueryStringInt("BlogCommentId");
             }
         }
     }

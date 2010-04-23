@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 Topic topic = ctrlTopicInfo.SaveInfo();
-                Response.Redirect("TopicDetails.aspx?TopicID=" + topic.TopicID.ToString());
+                Response.Redirect("TopicDetails.aspx?TopicID=" + topic.TopicId.ToString());
             }
             catch (Exception exc)
             {

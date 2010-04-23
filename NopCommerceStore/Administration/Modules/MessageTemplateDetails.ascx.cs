@@ -34,8 +34,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Language language = LanguageManager.GetLanguageByID(this.LanguageID);
-            MessageTemplate messageTemplate = MessageManager.GetMessageTemplateByID(this.MessageTemplateID);
+            Language language = LanguageManager.GetLanguageById(this.LanguageId);
+            MessageTemplate messageTemplate = MessageManager.GetMessageTemplateById(this.MessageTemplateId);
             if (language != null && messageTemplate != null)
             {
                 StringBuilder allowedTokensString = new StringBuilder();
@@ -51,11 +51,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 this.lblLanguage.Text = language.Name;
                 this.lblTemplate.Text = messageTemplate.Name;
-                LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageID);
+                LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageId);
                 if (localizedMessageTemplate != null)
                 {
                     this.cbActive.Checked = localizedMessageTemplate.IsActive;
-                    this.txtBCCEmailAddresses.Text = localizedMessageTemplate.BCCEmailAddresses;
+                    this.txtBCCEmailAddresses.Text = localizedMessageTemplate.BccEmailAddresses;
                     this.txtSubject.Text = localizedMessageTemplate.Subject;
                     this.txtBody.Content = localizedMessageTemplate.Body;
                 }
@@ -83,22 +83,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    MessageTemplate messageTemplate = MessageManager.GetMessageTemplateByID(this.MessageTemplateID);
+                    MessageTemplate messageTemplate = MessageManager.GetMessageTemplateById(this.MessageTemplateId);
                     if (messageTemplate != null)
                     {
-                        LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageID);
+                        LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageId);
                         if (localizedMessageTemplate != null)
                         {
-                            localizedMessageTemplate = MessageManager.UpdateLocalizedMessageTemplate(localizedMessageTemplate.MessageTemplateLocalizedID,
-                                localizedMessageTemplate.MessageTemplateID, localizedMessageTemplate.LanguageID, 
+                            localizedMessageTemplate = MessageManager.UpdateLocalizedMessageTemplate(localizedMessageTemplate.MessageTemplateLocalizedId,
+                                localizedMessageTemplate.MessageTemplateId, localizedMessageTemplate.LanguageId, 
                                 txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content, cbActive.Checked);
-                            Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + localizedMessageTemplate.MessageTemplateID.ToString() + "&LanguageID=" + localizedMessageTemplate.LanguageID.ToString());
+                            Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + localizedMessageTemplate.MessageTemplateId.ToString() + "&LanguageID=" + localizedMessageTemplate.LanguageId.ToString());
                         }
                         else
                         {
-                            localizedMessageTemplate = MessageManager.InsertLocalizedMessageTemplate(this.MessageTemplateID,
-                                this.LanguageID, txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content, cbActive.Checked);
-                            Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + this.MessageTemplateID.ToString() + "&LanguageID=" + this.LanguageID.ToString());
+                            localizedMessageTemplate = MessageManager.InsertLocalizedMessageTemplate(this.MessageTemplateId,
+                                this.LanguageId, txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content, cbActive.Checked);
+                            Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + this.MessageTemplateId.ToString() + "&LanguageID=" + this.LanguageId.ToString());
                         }
                     }
                     else
@@ -115,12 +115,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                MessageTemplate messageTemplate = MessageManager.GetMessageTemplateByID(this.MessageTemplateID);
+                MessageTemplate messageTemplate = MessageManager.GetMessageTemplateById(this.MessageTemplateId);
                 if (messageTemplate != null)
                 {
-                    LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageID);
+                    LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageId);
                     if (localizedMessageTemplate != null)
-                        MessageManager.DeleteLocalizedMessageTemplate(localizedMessageTemplate.MessageTemplateLocalizedID);
+                        MessageManager.DeleteLocalizedMessageTemplate(localizedMessageTemplate.MessageTemplateLocalizedId);
                 }
 
                 Response.Redirect("MessageTemplates.aspx");
@@ -131,19 +131,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int MessageTemplateID
+        public int MessageTemplateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("MessageTemplateID");
+                return CommonHelper.QueryStringInt("MessageTemplateId");
             }
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

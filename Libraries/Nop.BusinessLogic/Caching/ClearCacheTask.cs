@@ -25,7 +25,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
     /// </summary>
     public partial class ClearCacheTask : ITask
     {
-        #region ITask Members
         /// <summary>
         /// Executes the clear cache task
         /// </summary>
@@ -41,6 +40,5 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
                 LogManager.InsertLog(LogTypeEnum.AdministrationArea, "Error clearing cache.", ex);
             }
         }
-        #endregion
     }
 }

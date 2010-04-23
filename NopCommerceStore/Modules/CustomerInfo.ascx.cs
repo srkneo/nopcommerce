@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
             
@@ -86,11 +86,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             txtCity.Text = customer.City;
             txtPhoneNumber.Text = customer.PhoneNumber;
             txtFaxNumber.Text = customer.FaxNumber;
-            CommonHelper.SelectListItem(ddlCountry, customer.CountryID.ToString());
+            CommonHelper.SelectListItem(ddlCountry, customer.CountryId.ToString());
 
             FillStateProvinceDropDowns();
 
-            CommonHelper.SelectListItem(ddlStateProvince, customer.StateProvinceID.ToString());
+            CommonHelper.SelectListItem(ddlStateProvince, customer.StateProvinceId.ToString());
 
             cbNewsletter.Checked = customer.ReceiveNewsletter;
 
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var customer = NopContext.Current.User;
                     if (customer.Email.ToLower() != txtEmail.Text.ToLower().Trim())
                     {
-                        customer = CustomerManager.SetEmail(customer.CustomerID, txtEmail.Text.Trim());
+                        customer = CustomerManager.SetEmail(customer.CustomerId, txtEmail.Text.Trim());
                     }
 
                     if (rbGenderM.Checked)
@@ -133,22 +133,22 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     customer.City = txtCity.Text;
                     customer.PhoneNumber = txtPhoneNumber.Text;
                     customer.FaxNumber = txtFaxNumber.Text;
-                    customer.CountryID = int.Parse(ddlCountry.SelectedItem.Value);
-                    customer.StateProvinceID = int.Parse(ddlStateProvince.SelectedItem.Value);
+                    customer.CountryId = int.Parse(ddlCountry.SelectedItem.Value);
+                    customer.StateProvinceId = int.Parse(ddlStateProvince.SelectedItem.Value);
                     customer.ReceiveNewsletter = cbNewsletter.Checked;
 
                     if (DateTimeHelper.AllowCustomersToSetTimeZone)
                     {
                         if (ddlTimeZone.SelectedItem != null && !String.IsNullOrEmpty(ddlTimeZone.SelectedItem.Value))
                         {
-                            string timeZoneID = ddlTimeZone.SelectedItem.Value;
-                            DateTimeHelper.CurrentTimeZone = DateTimeHelper.FindTimeZoneById(timeZoneID);
+                            string timeZoneId = ddlTimeZone.SelectedItem.Value;
+                            DateTimeHelper.CurrentTimeZone = DateTimeHelper.FindTimeZoneById(timeZoneId);
                         }
                     }
 
                     if (ForumManager.ForumsEnabled && ForumManager.SignaturesEnabled)
                     {
-                        customer = CustomerManager.SetCustomerSignature(customer.CustomerID, txtSignature.Text);
+                        customer = CustomerManager.SetCustomerSignature(customer.CustomerId, txtSignature.Text);
                     }
                 }
                 catch (Exception exc)
@@ -164,7 +164,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var countryCollection = CountryManager.GetAllCountriesForRegistration();
             foreach (var country in countryCollection)
             {
-                var ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                var ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -172,14 +172,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
         private void FillStateProvinceDropDowns()
         {
             ddlStateProvince.Items.Clear();
-            int countryID = 0;
+            int countryId = 0;
             if (ddlCountry.SelectedItem != null)
-                countryID = int.Parse(ddlCountry.SelectedItem.Value);
+                countryId = int.Parse(ddlCountry.SelectedItem.Value);
 
-            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryID(countryID);
+            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (var stateProvince in stateProvinceCollection)
             {
-                var ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceID.ToString());
+                var ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
                 ddlStateProvince.Items.Add(ddlStateProviceItem2);
             }
             if (stateProvinceCollection.Count == 0)

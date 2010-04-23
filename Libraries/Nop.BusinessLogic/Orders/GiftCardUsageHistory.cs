@@ -27,9 +27,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     public partial class GiftCardUsageHistory : BaseEntity
     {
         #region Fields
-        private GiftCard gc = null;
-        private Customer customer = null;
-        private Order order = null;
+        private GiftCard _gc = null;
+        private Customer _customer = null;
+        private Order _order = null;
         #endregion
 
         #region Ctor
@@ -46,25 +46,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the gift card usage history entry identifier
         /// </summary>
-        public int GiftCardUsageHistoryID { get; set; }
+        public int GiftCardUsageHistoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the gift card identifier
         /// </summary>
-        public int GiftCardID { get; set; }
+        public int GiftCardId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
-        /// Gets or sets the used value
+        /// Gets or sets the used value (amount)
         /// </summary>
         public decimal UsedValue { get; set; }
 
@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Gets or sets the used value (customer currency)
         /// </summary>
         public decimal UsedValueInCustomerCurrency { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the date and time of instance creation
         /// </summary>
@@ -89,9 +89,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (gc == null)
-                    gc = OrderManager.GetGiftCardByID(GiftCardID);
-                return gc;
+                if (_gc == null)
+                    _gc = OrderManager.GetGiftCardById(this.GiftCardId);
+                return _gc;
             }
         }
 
@@ -102,9 +102,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (customer == null)
-                    customer = CustomerManager.GetCustomerByID(CustomerID);
-                return customer;
+                if (_customer == null)
+                    _customer = CustomerManager.GetCustomerById(this.CustomerId);
+                return _customer;
             }
         }
 
@@ -115,9 +115,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (order == null)
-                    order = OrderManager.GetOrderByID(OrderID);
-                return order;
+                if (_order == null)
+                    _order = OrderManager.GetOrderById(this.OrderId);
+                return _order;
             }
         }
         #endregion

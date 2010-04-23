@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 pnlData.Visible = true;
@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Product product = ProductManager.GetProductByID(this.ProductID);
+                Product product = ProductManager.GetProductById(this.ProductId);
                 if (product != null)
                 {
                     Picture picture = null;
@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
                     if (picture != null)
                     {
-                        ProductPicture productPicture = ProductManager.InsertProductPicture(product.ProductID, picture.PictureID, txtProductPictureDisplayOrder.Value);
+                        ProductPicture productPicture = ProductManager.InsertProductPicture(product.ProductId, picture.PictureId, txtProductPictureDisplayOrder.Value);
                     }
 
                     BindData();
@@ -108,15 +108,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvwImages.Rows[index];
                 NumericTextBox txtProductPictureDisplayOrder = row.FindControl("txtProductPictureDisplayOrder") as NumericTextBox;
-                HiddenField hfProductPictureID = row.FindControl("hfProductPictureID") as HiddenField;
+                HiddenField hfProductPictureId = row.FindControl("hfProductPictureId") as HiddenField;
 
                 int displayOrder = txtProductPictureDisplayOrder.Value;
-                int productPictureID = int.Parse(hfProductPictureID.Value);
-                ProductPicture productPicture = ProductManager.GetProductPictureByID(productPictureID);
+                int productPictureId = int.Parse(hfProductPictureId.Value);
+                ProductPicture productPicture = ProductManager.GetProductPictureById(productPictureId);
 
                 if (productPicture != null)
-                    ProductManager.UpdateProductPicture(productPicture.ProductPictureID,
-                       productPicture.ProductID, productPicture.PictureID, displayOrder);
+                    ProductManager.UpdateProductPicture(productPicture.ProductPictureId,
+                       productPicture.ProductId, productPicture.PictureId, displayOrder);
 
                 BindData();
             }
@@ -129,7 +129,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 ProductPicture productPicture = (ProductPicture)e.Row.DataItem;
                 Image iProductPicture = e.Row.FindControl("iProductPicture") as Image;
                 if (iProductPicture != null)
-                    iProductPicture.ImageUrl = PictureManager.GetPictureUrl(productPicture.PictureID);
+                    iProductPicture.ImageUrl = PictureManager.GetPictureUrl(productPicture.PictureId);
 
                 Button btnUpdate = e.Row.FindControl("btnUpdate") as Button;
                 if (btnUpdate != null)
@@ -139,21 +139,21 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvwImages_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int productPictureID = (int)gvwImages.DataKeys[e.RowIndex]["ProductPictureID"];
-            ProductPicture productPicture = ProductManager.GetProductPictureByID(productPictureID);
+            int productPictureId = (int)gvwImages.DataKeys[e.RowIndex]["ProductPictureId"];
+            ProductPicture productPicture = ProductManager.GetProductPictureById(productPictureId);
             if (productPicture != null)
             {
-                PictureManager.DeletePicture(productPicture.PictureID);
-                ProductManager.DeleteProductPicture(productPicture.ProductPictureID);
+                PictureManager.DeletePicture(productPicture.PictureId);
+                ProductManager.DeleteProductPicture(productPicture.ProductPictureId);
                 BindData();
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

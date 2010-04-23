@@ -45,12 +45,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
             get
             {
                 var address = ctrlShippingAddress.Address;
-                if (address.AddressID != 0 && NopContext.Current.User != null)
+                if (address.AddressId != 0 && NopContext.Current.User != null)
                 {
-                    var prevAddress = CustomerManager.GetAddressByID(address.AddressID);
-                    if (prevAddress.CustomerID != NopContext.Current.User.CustomerID)
+                    var prevAddress = CustomerManager.GetAddressById(address.AddressId);
+                    if (prevAddress.CustomerId != NopContext.Current.User.CustomerId)
                         return null;
-                    address.CustomerID = prevAddress.CustomerID;
+                    address.CustomerId = prevAddress.CustomerId;
                     address.CreatedOn = prevAddress.CreatedOn;
                 }
                 else
@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (shippingAddress == null)
             {
-                NopContext.Current.User = CustomerManager.SetDefaultShippingAddress(NopContext.Current.User.CustomerID, 0);
+                NopContext.Current.User = CustomerManager.SetDefaultShippingAddress(NopContext.Current.User.CustomerId, 0);
                 var args1 = new CheckoutStepEventArgs() { ShippingAddressSelected = true };
                 OnCheckoutStepChanged(args1);
                 if (!this.OnePageCheckout)
@@ -74,15 +74,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 return;
             }
 
-            if (shippingAddress.AddressID == 0)
+            if (shippingAddress.AddressId == 0)
             {
                 //check if address already exists
                 var shippingAddress2 = NopContext.Current.User.ShippingAddresses.FindAddress(shippingAddress.FirstName,
                     shippingAddress.LastName, shippingAddress.PhoneNumber, shippingAddress.Email,
                     shippingAddress.FaxNumber, shippingAddress.Company,
                     shippingAddress.Address1, shippingAddress.Address2,
-                    shippingAddress.City, shippingAddress.StateProvinceID, shippingAddress.ZipPostalCode,
-                    shippingAddress.CountryID);
+                    shippingAddress.City, shippingAddress.StateProvinceId, shippingAddress.ZipPostalCode,
+                    shippingAddress.CountryId);
 
                 if (shippingAddress2 != null)
                 {
@@ -90,15 +90,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 else
                 {
-                    shippingAddress = CustomerManager.InsertAddress(NopContext.Current.User.CustomerID, false, shippingAddress.FirstName,
+                    shippingAddress = CustomerManager.InsertAddress(NopContext.Current.User.CustomerId, false, shippingAddress.FirstName,
                               shippingAddress.LastName, shippingAddress.PhoneNumber, shippingAddress.Email,
                               shippingAddress.FaxNumber, shippingAddress.Company, shippingAddress.Address1, shippingAddress.Address2,
-                              shippingAddress.City, shippingAddress.StateProvinceID, shippingAddress.ZipPostalCode,
-                              shippingAddress.CountryID, DateTime.Now, DateTime.Now);
+                              shippingAddress.City, shippingAddress.StateProvinceId, shippingAddress.ZipPostalCode,
+                              shippingAddress.CountryId, DateTime.Now, DateTime.Now);
                 }
             }
 
-            NopContext.Current.User = CustomerManager.SetDefaultShippingAddress(NopContext.Current.User.CustomerID, shippingAddress.AddressID);
+            NopContext.Current.User = CustomerManager.SetDefaultShippingAddress(NopContext.Current.User.CustomerId, shippingAddress.AddressId);
             var args2 = new CheckoutStepEventArgs() { ShippingAddressSelected = true };
             OnCheckoutStepChanged(args2);
             if (!this.OnePageCheckout)
@@ -159,12 +159,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (Page.IsValid)
             {
-                int addressID = int.Parse(e.CommandArgument.ToString());
-                var shippingAddress = CustomerManager.GetAddressByID(addressID);
+                int addressId = int.Parse(e.CommandArgument.ToString());
+                var shippingAddress = CustomerManager.GetAddressById(addressId);
                 if (shippingAddress != null && NopContext.Current.User != null)
                 {
-                    var prevAddress = CustomerManager.GetAddressByID(shippingAddress.AddressID);
-                    if (prevAddress.CustomerID != NopContext.Current.User.CustomerID)
+                    var prevAddress = CustomerManager.GetAddressById(shippingAddress.AddressId);
+                    if (prevAddress.CustomerId != NopContext.Current.User.CustomerId)
                         return;
                 }
 
@@ -185,7 +185,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 

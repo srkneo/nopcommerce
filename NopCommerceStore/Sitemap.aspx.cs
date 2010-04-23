@@ -91,8 +91,8 @@ namespace NopSolutions.NopCommerce.Web
             foreach(Category category in categoryCollection)
             {
                 sb.Append("<li>");
-                sb.AppendFormat("<a href=\"{0}\">{1}</a>", SEOHelper.GetCategoryURL(category.CategoryID), Server.HtmlEncode(category.Name));
-                CategoryCollection childCategoryCollection = CategoryManager.GetAllCategories(category.CategoryID);
+                sb.AppendFormat("<a href=\"{0}\">{1}</a>", SEOHelper.GetCategoryUrl(category.CategoryId), Server.HtmlEncode(category.Name));
+                CategoryCollection childCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
                 if(childCategoryCollection.Count > 0)
                 {
                     sb.Append("<ul>");
@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             foreach(Manufacturer manufacturer in manufacturerCollection)
             {
-                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetManufacturerURL(manufacturer), Server.HtmlEncode(manufacturer.Name));
+                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetManufacturerUrl(manufacturer), Server.HtmlEncode(manufacturer.Name));
             }
         }
 
@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             foreach(Product product in productCollection)
             {
-                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetProductURL(product), Server.HtmlEncode(product.Name));
+                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetProductUrl(product), Server.HtmlEncode(product.Name));
             }
         }
 
@@ -123,10 +123,10 @@ namespace NopSolutions.NopCommerce.Web
         {
             foreach(Topic topic in topicCollection)
             {
-                LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.TopicID, NopContext.Current.WorkingLanguage.LanguageID);
+                LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.TopicId, NopContext.Current.WorkingLanguage.LanguageId);
                 if(localizedTopic != null)
                 {
-                    sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetTopicUrl(localizedTopic.TopicID, localizedTopic.Title), (String.IsNullOrEmpty(localizedTopic.Title) ? localizedTopic.TopicID.ToString() : Server.HtmlEncode(localizedTopic.Title)));
+                    sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetTopicUrl(localizedTopic.TopicId, localizedTopic.Title), (String.IsNullOrEmpty(localizedTopic.Title) ? localizedTopic.TopicId.ToString() : Server.HtmlEncode(localizedTopic.Title)));
                 }
             }
         }

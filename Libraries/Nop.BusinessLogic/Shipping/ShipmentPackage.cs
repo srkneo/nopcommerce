@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public decimal GetTotalWidth()
         {
             decimal totalWidth = decimal.Zero;
-            foreach (var shoppingCartItem in Items)
+            foreach (var shoppingCartItem in this.Items)
             {
                 var productVariant = shoppingCartItem.ProductVariant;
                 if (productVariant != null)
@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public decimal GetTotalLength()
         {
             decimal totalLength = decimal.Zero;
-            foreach (var shoppingCartItem in Items)
+            foreach (var shoppingCartItem in this.Items)
             {
                 var productVariant = shoppingCartItem.ProductVariant;
                 if (productVariant != null)
@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public decimal GetTotalHeight()
         {
             decimal totalHeight = decimal.Zero;
-            foreach (var shoppingCartItem in Items)
+            foreach (var shoppingCartItem in this.Items)
             {
                 var productVariant = shoppingCartItem.ProductVariant;
                 if (productVariant != null)

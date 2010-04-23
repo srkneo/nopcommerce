@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the checkout attribute identifier
         /// </summary>
-        public int CheckoutAttributeID { get; set; }
+        public int CheckoutAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -67,12 +67,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the tax category identifier
         /// </summary>
-        public int TaxCategoryID { get; set; }
+        public int TaxCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the attribute control type identifier
         /// </summary>
-        public int AttributeControlTypeID { get; set; }
+        public int AttributeControlTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the display order

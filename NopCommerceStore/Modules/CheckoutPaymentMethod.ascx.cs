@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected string FormatPaymentMethodInfo(PaymentMethod paymentMethod)
         {
-            decimal paymentMethodAdditionalFee = PaymentManager.GetAdditionalHandlingFee(paymentMethod.PaymentMethodID);
+            decimal paymentMethodAdditionalFee = PaymentManager.GetAdditionalHandlingFee(paymentMethod.PaymentMethodId);
             decimal rateBase = TaxManager.GetPaymentMethodAdditionalFee(paymentMethodAdditionalFee, NopContext.Current.User);
             decimal rate = CurrencyManager.ConvertCurrency(rateBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
             if (rate > decimal.Zero)
@@ -63,11 +63,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (Page.IsValid)
             {
-                int paymentMethodID = this.SelectedPaymentMethodID;
-                var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(paymentMethodID);
+                int paymentMethodId = this.SelectedPaymentMethodId;
+                var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
                 if (paymentMethod != null && paymentMethod.IsActive)
                 {
-                    NopContext.Current.User = CustomerManager.SetLastPaymentMethodID(NopContext.Current.User.CustomerID, paymentMethodID);
+                    NopContext.Current.User = CustomerManager.SetLastPaymentMethodId(NopContext.Current.User.CustomerId, paymentMethodId);
                     var args1 = new CheckoutStepEventArgs() { PaymentMethodSelected = true };
                     OnCheckoutStepChanged(args1);
                     if (!this.OnePageCheckout)
@@ -80,7 +80,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if ((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -88,21 +88,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 Response.Redirect("~/shoppingcart.aspx");
         }
 
-        protected int SelectedPaymentMethodID
+        protected int SelectedPaymentMethodId
         {
             get
             {
-                int selectedPaymentMethodID = 0;
+                int selectedPaymentMethodId = 0;
                 foreach (DataListItem item in this.dlPaymentMethod.Items)
                 {
                     RadioButton rdPaymentMethod = (RadioButton)item.FindControl("rdPaymentMethod");
                     if (rdPaymentMethod.Checked)
                     {
-                        selectedPaymentMethodID = Convert.ToInt32(this.dlPaymentMethod.DataKeys[item.ItemIndex].ToString());
+                        selectedPaymentMethodId = Convert.ToInt32(this.dlPaymentMethod.DataKeys[item.ItemIndex].ToString());
                         break;
                     }
                 }
-                return selectedPaymentMethodID;
+                return selectedPaymentMethodId;
             }
         }
 
@@ -116,15 +116,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         public void BindData()
         {
-            int? FilterByCountryID = null;
+            int? filterByCountryId = null;
             if (NopContext.Current.User.BillingAddress != null && NopContext.Current.User.BillingAddress.Country != null)
             {
-                FilterByCountryID = NopContext.Current.User.BillingAddress.CountryID;
+                filterByCountryId = NopContext.Current.User.BillingAddress.CountryId;
             }
 
             bool hasButtonMethods = false;
             var boundPaymentMethods = new PaymentMethodCollection();
-            var paymentMethods = PaymentMethodManager.GetAllPaymentMethods(FilterByCountryID);
+            var paymentMethods = PaymentMethodManager.GetAllPaymentMethods(filterByCountryId);
             foreach (var pm in paymentMethods)
             {
                 switch (pm.PaymentMethodType)
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     case PaymentMethodTypeEnum.Unknown:
                     case PaymentMethodTypeEnum.Standard:
                         {
-                            if (!Cart.IsRecurring || PaymentManager.SupportRecurringPayments(pm.PaymentMethodID) != RecurringPaymentTypeEnum.NotSupported)
+                            if (!Cart.IsRecurring || PaymentManager.SupportRecurringPayments(pm.PaymentMethodId) != RecurringPaymentTypeEnum.NotSupported)
                                 boundPaymentMethods.Add(pm);
                         }
                         break;
@@ -141,7 +141,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             //PayPal Express is placed here as button
                             if (pm.SystemKeyword == "PayPalExpress")
                             {
-                                if (!Cart.IsRecurring || PaymentManager.SupportRecurringPayments(pm.PaymentMethodID) != RecurringPaymentTypeEnum.NotSupported)
+                                if (!Cart.IsRecurring || PaymentManager.SupportRecurringPayments(pm.PaymentMethodId) != RecurringPaymentTypeEnum.NotSupported)
                                     hasButtonMethods = true;
                             }
                         }
@@ -183,7 +183,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 //{
                 //    phSelectPaymentMethod.Visible = true;
                 //    pnlPaymentMethodsError.Visible = false;
-                //    NopContext.Current.User = CustomerManager.SetLastPaymentMethodID(NopContext.Current.User.CustomerID, boundPaymentMethods[0].PaymentMethodID);
+                //    NopContext.Current.User = CustomerManager.SetLastPaymentMethodId(NopContext.Current.User.CustomerId, boundPaymentMethods[0].PaymentMethodId);
                 //    CheckoutStepEventArgs args1 = new CheckoutStepEventArgs() { PaymentMethodSelected = true };
                 //    OnCheckoutStepChanged(args1);
                 //    if (!this.OnePageCheckout)

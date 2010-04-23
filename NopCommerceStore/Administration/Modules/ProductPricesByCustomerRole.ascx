@@ -9,7 +9,7 @@
             <asp:Panel runat="server" ID="pnlError" EnableViewState="false" Visible="false" class="messageBox messageBoxError">
                 <asp:Literal runat="server" ID="lErrorTitle" EnableViewState="false" />
             </asp:Panel>
-            <asp:GridView ID="gvPrices" runat="server" AutoGenerateColumns="false" DataKeyNames="CustomerRoleProductPriceID"
+            <asp:GridView ID="gvPrices" runat="server" AutoGenerateColumns="false" DataKeyNames="CustomerRoleProductPriceId"
                 OnRowDeleting="gvPrices_RowDeleting" OnRowDataBound="gvPrices_RowDataBound"
                 OnRowCommand="gvPrices_RowCommand" Width="100%">
                 <Columns>
@@ -17,7 +17,7 @@
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="30%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label runat="server" ID="lblCustomerRole"></asp:Label>
-                            <asp:HiddenField ID="hfCustomerRoleProductPriceID" runat="server" Value='<%# Eval("CustomerRoleProductPriceID") %>' />
+                            <asp:HiddenField ID="hfCustomerRoleProductPriceId" runat="server" Value='<%# Eval("CustomerRoleProductPriceId") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.ProductPricesByCustomerRole.Price %>"

@@ -44,10 +44,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 string[] taxDisplayTypes = Enum.GetNames(typeof(TaxDisplayTypeEnum));
                 foreach (string taxDisplayTypeStr in taxDisplayTypes)
                 {
-                    int taxDisplayTypeID = (int)Enum.Parse(typeof(TaxDisplayTypeEnum), taxDisplayTypeStr, true);
+                    int taxDisplayTypeId = (int)Enum.Parse(typeof(TaxDisplayTypeEnum), taxDisplayTypeStr, true);
                     string taxDisplayTypeName = string.Empty;
 
-                    switch ((TaxDisplayTypeEnum)taxDisplayTypeID)
+                    switch ((TaxDisplayTypeEnum)taxDisplayTypeId)
                     {
                         case TaxDisplayTypeEnum.IncludingTax:
                             taxDisplayTypeName = LocalizationManager.GetLocaleResourceString("Products.TaxInclusive");
@@ -60,7 +60,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             break;
                     }
 
-                    var item = new ListItem(taxDisplayTypeName, taxDisplayTypeID.ToString());
+                    var item = new ListItem(taxDisplayTypeName, taxDisplayTypeId.ToString());
                     ddlTaxDisplayType.Items.Add(item);
                 }
 

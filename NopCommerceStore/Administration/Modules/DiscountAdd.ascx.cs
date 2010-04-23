@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         GetLocaleResourceString("ActivityLog.AddNewDiscount"),
                         discount.Name);
 
-                    Response.Redirect("DiscountDetails.aspx?DiscountID=" + discount.DiscountID.ToString());
+                    Response.Redirect("DiscountDetails.aspx?DiscountID=" + discount.DiscountId.ToString());
                 }
                 catch (Exception exc)
                 {

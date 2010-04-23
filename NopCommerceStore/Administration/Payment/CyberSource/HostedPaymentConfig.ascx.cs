@@ -15,7 +15,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.CyberSource
         {
             if(!Page.IsPostBack)
             {
-                txtMerchantID.Text = HostedPaymentSettings.MerchantID;
+                txtMerchantId.Text = HostedPaymentSettings.MerchantId;
                 txtPublicKey.Text = HostedPaymentSettings.PublicKey;
                 txtGatewayUrl.Text = HostedPaymentSettings.GatewayUrl;
                 txtSerialNumber.Text = HostedPaymentSettings.SerialNumber;
@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.CyberSource
 
         public void Save()
         {
-            HostedPaymentSettings.MerchantID = txtMerchantID.Text;
+            HostedPaymentSettings.MerchantId = txtMerchantId.Text;
             HostedPaymentSettings.PublicKey = txtPublicKey.Text;
             HostedPaymentSettings.GatewayUrl = txtGatewayUrl.Text;
             HostedPaymentSettings.AdditionalFee = txtAdditionalFee.Value;

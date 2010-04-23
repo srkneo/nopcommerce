@@ -55,15 +55,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                 return null;
 
             var item = new Log();
-            item.LogID = dbItem.LogID;
-            item.LogTypeID = dbItem.LogTypeID;
+            item.LogId = dbItem.LogId;
+            item.LogTypeId = dbItem.LogTypeId;
             item.Severity = dbItem.Severity;
             item.Message = dbItem.Message;
             item.Exception = dbItem.Exception;
             item.IPAddress = dbItem.IPAddress;
-            item.CustomerID = dbItem.CustomerID;
-            item.PageURL = dbItem.PageURL;
-            item.ReferrerURL = dbItem.ReferrerURL;
+            item.CustomerId = dbItem.CustomerId;
+            item.PageUrl = dbItem.PageUrl;
+            item.ReferrerUrl = dbItem.ReferrerUrl;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
@@ -74,10 +74,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Deletes a log item
         /// </summary>
-        /// <param name="LogID">Log item identifier</param>
-        public static void DeleteLog(int LogID)
+        /// <param name="logId">Log item identifier</param>
+        public static void DeleteLog(int logId)
         {
-            DBProviderManager<DBLogProvider>.Provider.DeleteLog(LogID);
+            DBProviderManager<DBLogProvider>.Provider.DeleteLog(logId);
         }
 
         /// <summary>
@@ -102,14 +102,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Gets a log item
         /// </summary>
-        /// <param name="LogID">Log item identifier</param>
+        /// <param name="logId">Log item identifier</param>
         /// <returns>Log item</returns>
-        public static Log GetLogByID(int LogID)
+        public static Log GetLogById(int logId)
         {
-            if (LogID == 0)
+            if (logId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBLogProvider>.Provider.GetLogByID(LogID);
+            var dbItem = DBProviderManager<DBLogProvider>.Provider.GetLogById(logId);
             var log = DBMapping(dbItem);
             return log;
         }
@@ -117,49 +117,49 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Inserts a log item
         /// </summary>
-        /// <param name="LogType">Log item type</param>
-        /// <param name="Message">The short message</param>
-        /// <param name="Exception">The exception</param>
+        /// <param name="logType">Log item type</param>
+        /// <param name="message">The short message</param>
+        /// <param name="exception">The exception</param>
         /// <returns>A log item</returns>
-        public static Log InsertLog(LogTypeEnum LogType, string Message, string Exception)
+        public static Log InsertLog(LogTypeEnum logType, string message, string exception)
         {
-            return InsertLog(LogType, Message, new Exception(String.IsNullOrEmpty(Exception) ? string.Empty : Exception));
+            return InsertLog(logType, message, new Exception(String.IsNullOrEmpty(exception) ? string.Empty : exception));
         }
 
         /// <summary>
         /// Inserts a log item
         /// </summary>
-        /// <param name="LogType">Log item type</param>
-        /// <param name="Message">The short message</param>
-        /// <param name="Exception">The exception</param>
+        /// <param name="logType">Log item type</param>
+        /// <param name="message">The short message</param>
+        /// <param name="exception">The exception</param>
         /// <returns>A log item</returns>
-        public static Log InsertLog(LogTypeEnum LogType, string Message, Exception Exception)
+        public static Log InsertLog(LogTypeEnum logType, string message, Exception exception)
         {
-            int CustomerID = 0;
+            int customerId = 0;
             if (NopContext.Current != null && NopContext.Current.User != null)
-                CustomerID = NopContext.Current.User.CustomerID;
+                customerId = NopContext.Current.User.CustomerId;
             string IPAddress = string.Empty;
             if (HttpContext.Current != null && HttpContext.Current.Request!=null)
                 IPAddress = HttpContext.Current.Request.UserHostAddress;
-            string PageURL = CommonHelper.GetThisPageURL(true);
+            string pageUrl = CommonHelper.GetThisPageUrl(true);
 
-            return InsertLog(LogType, 11, Message, Exception, IPAddress, CustomerID, PageURL);
+            return InsertLog(logType, 11, message, exception, IPAddress, customerId, pageUrl);
         }
 
         /// <summary>
         /// Inserts a log item
         /// </summary>
-        /// <param name="LogType">Log item type</param>
-        /// <param name="Severity">The severity</param>
-        /// <param name="Message">The short message</param>
+        /// <param name="logType">Log item type</param>
+        /// <param name="severity">The severity</param>
+        /// <param name="message">The short message</param>
         /// <param name="exception">The full exception</param>
         /// <param name="IPAddress">The IP address</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="PageURL">The page URL</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="pageUrl">The page URL</param>
         /// <returns>Log item</returns>
-        public static Log InsertLog(LogTypeEnum LogType, int Severity, string Message,
+        public static Log InsertLog(LogTypeEnum logType, int severity, string message,
             Exception exception, string IPAddress,
-            int CustomerID, string PageURL)
+            int customerId, string pageUrl)
         {
             //don't log thread abort exception
             if ((exception != null) && (exception is System.Threading.ThreadAbortException))
@@ -168,19 +168,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             if (IPAddress == null)
                 IPAddress = string.Empty;
 
-            string ReferrerURL = string.Empty;
+            string referrerUrl = string.Empty;
             if (HttpContext.Current != null &&
                 HttpContext.Current.Request != null &&
                 HttpContext.Current.Request.UrlReferrer != null)
-                ReferrerURL = HttpContext.Current.Request.UrlReferrer.ToString();
-            if (ReferrerURL == null)
-                ReferrerURL = string.Empty;
+                referrerUrl = HttpContext.Current.Request.UrlReferrer.ToString();
+            if (referrerUrl == null)
+                referrerUrl = string.Empty;
 
-            DateTime CreatedOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            DateTime createdOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
 
-            var dbItem = DBProviderManager<DBLogProvider>.Provider.InsertLog((int)LogType, Severity, Message,
-             exception == null ? string.Empty : exception.ToString(), IPAddress, 
-             CustomerID, PageURL, ReferrerURL, CreatedOn);
+            var dbItem = DBProviderManager<DBLogProvider>.Provider.InsertLog((int)logType, 
+                severity, message, exception == null ? string.Empty : exception.ToString(), 
+                IPAddress, customerId, pageUrl, referrerUrl, createdOn);
             var log = DBMapping(dbItem);
             return log;
         }

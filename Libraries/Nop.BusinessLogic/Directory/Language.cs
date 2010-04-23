@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -77,21 +77,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             get
             {
-                return LocaleStringResourceManager.GetAllResourcesByLanguageID(this.LanguageID);
+                return LocaleStringResourceManager.GetAllResourcesByLanguageId(this.LanguageId);
             }
         }
 
         /// <summary>
         /// Gets an icon URL
         /// </summary>
-        public string IconURL
+        public string IconUrl
         {
             get
             {
                 string url = string.Empty;
-                if (!String.IsNullOrEmpty(FlagImageFileName))
+                if (!String.IsNullOrEmpty(this.FlagImageFileName))
                 {
-                    url = string.Format("{0}images/flags/{1}", CommonHelper.GetStoreLocation(), FlagImageFileName);
+                    url = string.Format("{0}images/flags/{1}", CommonHelper.GetStoreLocation(), this.FlagImageFileName);
                 }
                 return url;
             }

@@ -37,8 +37,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Deletes a category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
-        public abstract void DeleteCategoryTemplate(int CategoryTemplateID);
+        /// <param name="categoryTemplateId">Category template identifier</param>
+        public abstract void DeleteCategoryTemplate(int categoryTemplateId);
 
         /// <summary>
         /// Gets all category templates
@@ -49,40 +49,41 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Gets a category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
+        /// <param name="categoryTemplateId">Category template identifier</param>
         /// <returns>A category template</returns>
-        public abstract DBCategoryTemplate GetCategoryTemplateByID(int CategoryTemplateID);
+        public abstract DBCategoryTemplate GetCategoryTemplateById(int categoryTemplateId);
 
         /// <summary>
         /// Inserts a category template
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A category template</returns>
-        public abstract DBCategoryTemplate InsertCategoryTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBCategoryTemplate InsertCategoryTemplate(string name, 
+            string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the category template
         /// </summary>
-        /// <param name="CategoryTemplateID">Category template identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="categoryTemplateId">Category template identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>A category template</returns>
-        public abstract DBCategoryTemplate UpdateCategoryTemplate(int CategoryTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBCategoryTemplate UpdateCategoryTemplate(int categoryTemplateId,
+            string name, string templatePath, int displayOrder,
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Deletes a manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifier</param>
-        public abstract void DeleteManufacturerTemplate(int ManufacturerTemplateID);
+        /// <param name="manufacturerTemplateId">Manufacturer template identifier</param>
+        public abstract void DeleteManufacturerTemplate(int manufacturerTemplateId);
 
         /// <summary>
         /// Gets all manufacturer templates
@@ -93,40 +94,41 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Gets a manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifier</param>
+        /// <param name="manufacturerTemplateId">Manufacturer template identifier</param>
         /// <returns>Manufacturer template</returns>
-        public abstract DBManufacturerTemplate GetManufacturerTemplateByID(int ManufacturerTemplateID);
+        public abstract DBManufacturerTemplate GetManufacturerTemplateById(int manufacturerTemplateId);
 
         /// <summary>
         /// Inserts a manufacturer template
         /// </summary>
-        /// <param name="Name">The manufacturer template identifier</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The manufacturer template identifier</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer template</returns>
-        public abstract DBManufacturerTemplate InsertManufacturerTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBManufacturerTemplate InsertManufacturerTemplate(string name, 
+            string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the manufacturer template
         /// </summary>
-        /// <param name="ManufacturerTemplateID">Manufacturer template identifer</param>
-        /// <param name="Name">The manufacturer template identifier</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="manufacturerTemplateId">Manufacturer template identifer</param>
+        /// <param name="name">The manufacturer template identifier</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer template</returns>
-        public abstract DBManufacturerTemplate UpdateManufacturerTemplate(int ManufacturerTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBManufacturerTemplate UpdateManufacturerTemplate(int manufacturerTemplateId, 
+            string name, string templatePath, int displayOrder, 
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Deletes a product template
         /// </summary>
-        /// <param name="ProductTemplateID">Product template identifier</param>
-        public abstract void DeleteProductTemplate(int ProductTemplateID);
+        /// <param name="productTemplateId">Product template identifier</param>
+        public abstract void DeleteProductTemplate(int productTemplateId);
 
         /// <summary>
         /// Gets all product templates
@@ -137,34 +139,35 @@ namespace NopSolutions.NopCommerce.DataAccess.Templates
         /// <summary>
         /// Gets a product template
         /// </summary>
-        /// <param name="ProductTemplateID">Product template identifier</param>
+        /// <param name="productTemplateId">Product template identifier</param>
         /// <returns>Product template</returns>
-        public abstract DBProductTemplate GetProductTemplateByID(int ProductTemplateID);
+        public abstract DBProductTemplate GetProductTemplateById(int productTemplateId);
 
         /// <summary>
         /// Inserts a product template
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product template</returns>
-        public abstract DBProductTemplate InsertProductTemplate(string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBProductTemplate InsertProductTemplate(string name, string templatePath,
+            int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the product template
         /// </summary>
-        /// <param name="ProductTemplateID">The product template identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="TemplatePath">The template path</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productTemplateId">The product template identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="templatePath">The template path</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product template</returns>
-        public abstract DBProductTemplate UpdateProductTemplate(int ProductTemplateID, string Name, string TemplatePath,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBProductTemplate UpdateProductTemplate(int productTemplateId, 
+            string name, string templatePath, int displayOrder, 
+            DateTime createdOn, DateTime updatedOn);
         #endregion
     }
 }

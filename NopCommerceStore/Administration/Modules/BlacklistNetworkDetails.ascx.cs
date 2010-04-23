@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     BannedIpNetwork ipNetwork = ctrlBlacklist.SaveBannedIpNetworkInfo();
-                    Response.Redirect("BlacklistNetworkDetails.aspx?BannedIpNetworkID=" + ipNetwork.BannedIpNetworkID.ToString());
+                    Response.Redirect("BlacklistNetworkDetails.aspx?BannedIpNetworkID=" + ipNetwork.BannedIpNetworkId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                IpBlacklistManager.DeleteBannedIpNetwork(BannedIpNetworkID);
+                IpBlacklistManager.DeleteBannedIpNetwork(this.BannedIpNetworkId);
                 Response.Redirect("Blacklist.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int BannedIpNetworkID
+        public int BannedIpNetworkId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BannedIpNetworkID");
+                return CommonHelper.QueryStringInt("BannedIpNetworkId");
             }
         }
     }

@@ -12,11 +12,9 @@
 </div>
 <asp:GridView ID="gvCustomerRoles" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="CustomerRoleID" HeaderText="CustomerRoleID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerRoles.Name %>" ItemStyle-Width="40%">
             <ItemTemplate>
-                <a href="CustomerRoleDetails.aspx?CustomerRoleID=<%#Eval("CustomerRoleID")%>" title="<%#GetLocaleResourceString("Admin.CustomerRoles.Name.Tooltip")%>">
+                <a href="CustomerRoleDetails.aspx?CustomerRoleID=<%#Eval("CustomerRoleId")%>" title="<%#GetLocaleResourceString("Admin.CustomerRoles.Name.Tooltip")%>">
                     <%#Eval("Name")%>
                 </a>
             </ItemTemplate>
@@ -37,7 +35,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerRoles.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="CustomerRoleDetails.aspx?CustomerRoleID=<%#Eval("CustomerRoleID")%>" title="<%#GetLocaleResourceString("Admin.CustomerRoles.Edit.Tooltip")%>">
+                <a href="CustomerRoleDetails.aspx?CustomerRoleID=<%#Eval("CustomerRoleId")%>" title="<%#GetLocaleResourceString("Admin.CustomerRoles.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.CustomerRoles.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

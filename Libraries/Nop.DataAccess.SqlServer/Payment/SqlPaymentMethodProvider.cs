@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
     /// <summary>
     /// Payment method provider for SQL Server
     /// </summary>
-    public partial class SQLPaymentMethodProvider : DBPaymentMethodProvider
+    public partial class SqlPaymentMethodProvider : DBPaymentMethodProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,18 +36,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         #region Utilities
         private DBPaymentMethod GetPaymentMethodFromReader(IDataReader dataReader)
         {
-            DBPaymentMethod paymentMethod = new DBPaymentMethod();
-            paymentMethod.PaymentMethodID = NopSqlDataHelper.GetInt(dataReader, "PaymentMethodID");
-            paymentMethod.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            paymentMethod.VisibleName = NopSqlDataHelper.GetString(dataReader, "VisibleName");
-            paymentMethod.Description = NopSqlDataHelper.GetString(dataReader, "Description");
-            paymentMethod.ConfigureTemplatePath = NopSqlDataHelper.GetString(dataReader, "ConfigureTemplatePath");
-            paymentMethod.UserTemplatePath = NopSqlDataHelper.GetString(dataReader, "UserTemplatePath");
-            paymentMethod.ClassName = NopSqlDataHelper.GetString(dataReader, "ClassName");
-            paymentMethod.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
-            paymentMethod.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
-            paymentMethod.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return paymentMethod;
+            var item = new DBPaymentMethod();
+            item.PaymentMethodId = NopSqlDataHelper.GetInt(dataReader, "PaymentMethodID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.VisibleName = NopSqlDataHelper.GetString(dataReader, "VisibleName");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            item.ConfigureTemplatePath = NopSqlDataHelper.GetString(dataReader, "ConfigureTemplatePath");
+            item.UserTemplatePath = NopSqlDataHelper.GetString(dataReader, "UserTemplatePath");
+            item.ClassName = NopSqlDataHelper.GetString(dataReader, "ClassName");
+            item.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
+            item.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -90,77 +90,78 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Deletes a payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
-        public override void DeletePaymentMethod(int PaymentMethodID)
+        /// <param name="paymentMethodId">Payment method identifier</param>
+        public override void DeletePaymentMethod(int paymentMethodId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethodDelete");
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a payment method
         /// </summary>
-        /// <param name="PaymentMethodID">Payment method identifier</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <returns>Payment method</returns>
-        public override DBPaymentMethod GetPaymentMethodByID(int PaymentMethodID)
+        public override DBPaymentMethod GetPaymentMethodById(int paymentMethodId)
         {
-            DBPaymentMethod paymentMethod = null;
-            if (PaymentMethodID == 0)
-                return paymentMethod;
+            DBPaymentMethod item = null;
+            if (paymentMethodId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethodLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    paymentMethod = GetPaymentMethodFromReader(dataReader);
+                    item = GetPaymentMethodFromReader(dataReader);
                 }
             }
-            return paymentMethod;
+            return item;
         }
 
         /// <summary>
         /// Gets a payment method
         /// </summary>
-        /// <param name="SystemKeyword">Payment method system keyword</param>
+        /// <param name="systemKeyword">Payment method system keyword</param>
         /// <returns>Payment method</returns>
-        public override DBPaymentMethod GetPaymentMethodBySystemKeyword(string SystemKeyword)
+        public override DBPaymentMethod GetPaymentMethodBySystemKeyword(string systemKeyword)
         {
 
-            DBPaymentMethod paymentMethod = null;
-            if (String.IsNullOrEmpty(SystemKeyword))
-                return paymentMethod;
+            DBPaymentMethod item = null;
+            if (String.IsNullOrEmpty(systemKeyword))
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethodLoadBySystemKeyword");
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    paymentMethod = GetPaymentMethodFromReader(dataReader);
+                    item = GetPaymentMethodFromReader(dataReader);
                 }
             }
-            return paymentMethod;
+            return item;
         }
 
         /// <summary>
         /// Gets all payment methods
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="FilterByCountryID">The country indentifier</param>
+        /// <param name="filterByCountryId">The country indentifier</param>
         /// <returns>Payment method collection</returns>
-        public override DBPaymentMethodCollection GetAllPaymentMethods(bool showHidden, int? FilterByCountryID)
+        public override DBPaymentMethodCollection GetAllPaymentMethods(bool showHidden,
+            int? filterByCountryId)
         {
             var result = new DBPaymentMethodCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethodLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            if(FilterByCountryID.HasValue)
+            if(filterByCountryId.HasValue)
             {
-                db.AddInParameter(dbCommand, "FilterByCountryID", DbType.Int32, FilterByCountryID.Value);
+                db.AddInParameter(dbCommand, "FilterByCountryID", DbType.Int32, filterByCountryId.Value);
             }
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -176,128 +177,122 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Inserts a payment method
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="VisibleName">The visible name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="UserTemplatePath">The user template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="IsActive">A value indicating whether the payment method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="visibleName">The visible name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="userTemplatePath">The user template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="isActive">A value indicating whether the payment method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
-        public override DBPaymentMethod InsertPaymentMethod(string Name, string VisibleName, string Description,
-           string ConfigureTemplatePath, string UserTemplatePath, string ClassName,string SystemKeyword,  bool IsActive, int DisplayOrder)
+        public override DBPaymentMethod InsertPaymentMethod(string name,
+            string visibleName, string description, string configureTemplatePath,
+            string userTemplatePath, string className, string systemKeyword,
+            bool isActive, int displayOrder)
         {
-            DBPaymentMethod paymentMethod = null;
+            DBPaymentMethod item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethodInsert");
             db.AddOutParameter(dbCommand, "PaymentMethodID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "VisibleName", DbType.String, VisibleName);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, ConfigureTemplatePath);
-            db.AddInParameter(dbCommand, "UserTemplatePath", DbType.String, UserTemplatePath);
-            db.AddInParameter(dbCommand, "ClassName", DbType.String, ClassName);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "VisibleName", DbType.String, visibleName);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, configureTemplatePath);
+            db.AddInParameter(dbCommand, "UserTemplatePath", DbType.String, userTemplatePath);
+            db.AddInParameter(dbCommand, "ClassName", DbType.String, className);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int PaymentMethodID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PaymentMethodID"));
-                paymentMethod = GetPaymentMethodByID(PaymentMethodID);
+                int paymentMethodId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@PaymentMethodID"));
+                item = GetPaymentMethodById(paymentMethodId);
             }
-            return paymentMethod;
+            return item;
         }
 
         /// <summary>
         /// Updates the payment method
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifer</param>
-        /// <param name="Name">The name</param>
-        /// <param name="VisibleName">The visible name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="UserTemplatePath">The user template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="IsActive">A value indicating whether the payment method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="paymentMethodId">The payment method identifer</param>
+        /// <param name="name">The name</param>
+        /// <param name="visibleName">The visible name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="userTemplatePath">The user template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="isActive">A value indicating whether the payment method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
-        public override DBPaymentMethod UpdatePaymentMethod(int PaymentMethodID, string Name, string VisibleName, string Description,
-           string ConfigureTemplatePath, string UserTemplatePath, string ClassName,string SystemKeyword, bool IsActive, int DisplayOrder)
+        public override DBPaymentMethod UpdatePaymentMethod(int paymentMethodId,
+            string name, string visibleName, string description, string configureTemplatePath,
+            string userTemplatePath, string className, string systemKeyword,
+            bool isActive, int displayOrder)
         {
-            DBPaymentMethod paymentMethod = null;
+            DBPaymentMethod item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethodUpdate");
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "VisibleName", DbType.String, VisibleName);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, ConfigureTemplatePath);
-            db.AddInParameter(dbCommand, "UserTemplatePath", DbType.String, UserTemplatePath);
-            db.AddInParameter(dbCommand, "ClassName", DbType.String, ClassName);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "VisibleName", DbType.String, visibleName);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, configureTemplatePath);
+            db.AddInParameter(dbCommand, "UserTemplatePath", DbType.String, userTemplatePath);
+            db.AddInParameter(dbCommand, "ClassName", DbType.String, className);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                paymentMethod = GetPaymentMethodByID(PaymentMethodID);
+                item = GetPaymentMethodById(paymentMethodId);
 
-            return paymentMethod;
+            return item;
         }
 
         /// <summary>
         /// Inserts payment method country mapping
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        public override void InsertPaymentMethodCountryMapping(int PaymentMethodID, int CountryID)
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public override void InsertPaymentMethodCountryMapping(int paymentMethodId, int countryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethod_RestrictedCountriesInsert");
-
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
             db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Checking whether the payment method country mapping is exists
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public override bool IsPaymentMethodCountryMappingExists(int PaymentMethodID, int CountryID)
+        public override bool IsPaymentMethodCountryMappingExists(int paymentMethodId, int countryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethod_RestrictedCountriesContains");
-
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
             db.AddOutParameter(dbCommand, "Result", DbType.Boolean, 0);
-
             db.ExecuteNonQuery(dbCommand);
-
             return Convert.ToBoolean(db.GetParameterValue(dbCommand, "@Result"));
         }
 
         /// <summary>
         /// Deletes payment method country mapping
         /// </summary>
-        /// <param name="PaymentMethodID">The payment method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        public override void DeletePaymentMethodCountryMapping(int PaymentMethodID, int CountryID)
+        /// <param name="paymentMethodId">The payment method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public override void DeletePaymentMethodCountryMapping(int paymentMethodId, int countryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethod_RestrictedCountriesDelete");
-
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, PaymentMethodID);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-
+            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
             db.ExecuteNonQuery(dbCommand);
         }
         #endregion

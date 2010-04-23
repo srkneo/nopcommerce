@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
     /// <summary>
     /// Language provider for SQL Server
     /// </summary>
-    public partial class SQLLanguageProvider : DBLanguageProvider
+    public partial class SqlLanguageProvider : DBLanguageProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,14 +36,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         #region Utilities
         private DBLanguage GetLanguageFromReader(IDataReader dataReader)
         {
-            DBLanguage language = new DBLanguage();
-            language.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            language.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            language.LanguageCulture = NopSqlDataHelper.GetString(dataReader, "LanguageCulture");
-            language.FlagImageFileName = NopSqlDataHelper.GetString(dataReader, "FlagImageFileName");
-            language.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
-            language.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return language;
+            var item = new DBLanguage();
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.LanguageCulture = NopSqlDataHelper.GetString(dataReader, "LanguageCulture");
+            item.FlagImageFileName = NopSqlDataHelper.GetString(dataReader, "FlagImageFileName");
+            item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -86,13 +86,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Deletes a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        public override void DeleteLanguage(int LanguageID)
+        /// <param name="languageId">Language identifier</param>
+        public override void DeleteLanguage(int languageId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LanguageDelete");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -120,83 +120,84 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Gets a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Language</returns>
-        public override DBLanguage GetLanguageByID(int LanguageID)
+        public override DBLanguage GetLanguageById(int languageId)
         {
-            DBLanguage language = null;
-            if (LanguageID == 0)
-                return language;
+            DBLanguage item = null;
+            if (languageId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LanguageLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    language = GetLanguageFromReader(dataReader);
+                    item = GetLanguageFromReader(dataReader);
                 }
             }
 
-            return language;
+            return item;
         }
 
         /// <summary>
         /// Inserts a language
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="LanguageCulture">The language culture</param>
-        /// <param name="FlagImageFileName">The flag image file name</param>
-        /// <param name="Published">A value indicating whether the language is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="languageCulture">The language culture</param>
+        /// <param name="flagImageFileName">The flag image file name</param>
+        /// <param name="published">A value indicating whether the language is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Language</returns>
-        public override DBLanguage InsertLanguage(string Name, string LanguageCulture,
-            string FlagImageFileName, bool Published, int DisplayOrder)
+        public override DBLanguage InsertLanguage(string name, string languageCulture,
+            string flagImageFileName, bool published, int displayOrder)
         {
-            DBLanguage language = null;
+            DBLanguage item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LanguageInsert");
             db.AddOutParameter(dbCommand, "LanguageID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "LanguageCulture", DbType.String, LanguageCulture);
-            db.AddInParameter(dbCommand, "FlagImageFileName", DbType.String, FlagImageFileName);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "LanguageCulture", DbType.String, languageCulture);
+            db.AddInParameter(dbCommand, "FlagImageFileName", DbType.String, flagImageFileName);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int LanguageID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@LanguageID"));
-                language = GetLanguageByID(LanguageID);
+                int languageId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@LanguageID"));
+                item = GetLanguageById(languageId);
             }
 
-            return language;
+            return item;
         }
 
         /// <summary>
         /// Updates a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="LanguageCulture">The language culture</param>
-        /// <param name="FlagImageFileName">The flag image file name</param>
-        /// <param name="Published">A value indicating whether the language is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="languageCulture">The language culture</param>
+        /// <param name="flagImageFileName">The flag image file name</param>
+        /// <param name="published">A value indicating whether the language is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Language</returns>
-        public override DBLanguage UpdateLanguage(int LanguageID, string Name,
-            string LanguageCulture, string FlagImageFileName, bool Published, int DisplayOrder)
+        public override DBLanguage UpdateLanguage(int languageId,
+            string name, string languageCulture,
+            string flagImageFileName, bool published, int displayOrder)
         {
-            DBLanguage language = null;
+            DBLanguage item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LanguageUpdate");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "LanguageCulture", DbType.String, LanguageCulture);
-            db.AddInParameter(dbCommand, "FlagImageFileName", DbType.String, FlagImageFileName);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "LanguageCulture", DbType.String, languageCulture);
+            db.AddInParameter(dbCommand, "FlagImageFileName", DbType.String, flagImageFileName);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                language = GetLanguageByID(LanguageID);
+                item = GetLanguageById(languageId);
 
-            return language;
+            return item;
         }
         #endregion
     }

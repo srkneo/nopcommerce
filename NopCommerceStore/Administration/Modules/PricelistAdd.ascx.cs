@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     Pricelist pricelist = ctrlPricelistInfo.SaveInfo();
                     if (pricelist != null)
                     {
-                        Response.Redirect("PricelistDetails.aspx?PricelistID=" + pricelist.PricelistID.ToString());
+                        Response.Redirect("PricelistDetails.aspx?PricelistID=" + pricelist.PricelistId.ToString());
                     }
                     else
                     {
@@ -53,11 +53,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int PricelistID
+        public int PricelistId
         {
             get
             {
-                return CommonHelper.QueryStringInt("PricelistID");
+                return CommonHelper.QueryStringInt("PricelistId");
             }
         }
     }

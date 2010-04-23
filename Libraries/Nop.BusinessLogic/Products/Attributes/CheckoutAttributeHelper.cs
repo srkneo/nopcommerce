@@ -36,18 +36,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets selected checkout attribute identifiers
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Selected checkout attribute identifiers</returns>
-        public static List<int> ParseCheckoutAttributeIDs(string Attributes)
+        public static List<int> ParseCheckoutAttributeIds(string attributes)
         {
-            var IDs = new List<int>();
-            if (String.IsNullOrEmpty(Attributes))
-                return IDs;
+            var Ids = new List<int>();
+            if (String.IsNullOrEmpty(attributes))
+                return Ids;
 
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(Attributes);
+                xmlDoc.LoadXml(attributes);
 
                 XmlNodeList nodeList1 = xmlDoc.SelectNodes(@"//Attributes/CheckoutAttribute");
                 foreach (XmlNode node1 in nodeList1)
@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     if (node1.Attributes != null && node1.Attributes["ID"] != null)
                     {
                         int id = Convert.ToInt32(node1.Attributes["ID"].InnerText.Trim());
-                        IDs.Add(id);
+                        Ids.Add(id);
                     }
                 }
             }
@@ -63,21 +63,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             {
                 Debug.Write(exc.ToString());
             }
-            return IDs;
+            return Ids;
         }
 
         /// <summary>
         /// Gets selected checkout attributes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Selected checkout attributes</returns>
-        public static CheckoutAttributeCollection ParseCheckoutAttributes(string Attributes)
+        public static CheckoutAttributeCollection ParseCheckoutAttributes(string attributes)
         {
             var caCollection = new CheckoutAttributeCollection();
-            var IDs = ParseCheckoutAttributeIDs(Attributes);
-            foreach (int id in IDs)
+            var Ids = ParseCheckoutAttributeIds(attributes);
+            foreach (int id in Ids)
             {
-                var ca = CheckoutAttributeManager.GetCheckoutAttributeByID(id);
+                var ca = CheckoutAttributeManager.GetCheckoutAttributeById(id);
                 if (ca != null)
                 {
                     caCollection.Add(ca);
@@ -89,26 +89,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Get checkout attribute values
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Checkout attribute values</returns>
-        public static CheckoutAttributeValueCollection ParseCheckoutAttributeValues(string Attributes)
+        public static CheckoutAttributeValueCollection ParseCheckoutAttributeValues(string attributes)
         {
             var caValues = new CheckoutAttributeValueCollection();
-            var caCollection = ParseCheckoutAttributes(Attributes);
+            var caCollection = ParseCheckoutAttributes(attributes);
             foreach (var ca in caCollection)
             {
                 if (!ca.ShouldHaveValues)
                     continue;
 
-                var caValuesStr = ParseValues(Attributes, ca.CheckoutAttributeID);
+                var caValuesStr = ParseValues(attributes, ca.CheckoutAttributeId);
                 foreach (string caValueStr in caValuesStr)
                 {
                     if (!String.IsNullOrEmpty(caValueStr))
                     {
-                        int caValueID = 0;
-                        if (int.TryParse(caValueStr, out caValueID))
+                        int caValueId = 0;
+                        if (int.TryParse(caValueStr, out caValueId))
                         {
-                            var caValue = CheckoutAttributeManager.GetCheckoutAttributeValueByID(caValueID);
+                            var caValue = CheckoutAttributeManager.GetCheckoutAttributeValueById(caValueId);
                             if (caValue != null)
                                 caValues.Add(caValue);
                         }
@@ -121,16 +121,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets selected checkout attribute value
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
+        /// <param name="attributes">Attributes</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
         /// <returns>Checkout attribute value</returns>
-        public static List<string> ParseValues(string Attributes, int CheckoutAttributeID)
+        public static List<string> ParseValues(string attributes, int checkoutAttributeId)
         {
             var selectedCheckoutAttributeValues = new List<string>();
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(Attributes);
+                xmlDoc.LoadXml(attributes);
 
                 XmlNodeList nodeList1 = xmlDoc.SelectNodes(@"//Attributes/CheckoutAttribute");
                 foreach (XmlNode node1 in nodeList1)
@@ -138,7 +138,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     if (node1.Attributes != null && node1.Attributes["ID"] != null)
                     {
                         int id = Convert.ToInt32(node1.Attributes["ID"].InnerText.Trim());
-                        if (id == CheckoutAttributeID)
+                        if (id == checkoutAttributeId)
                         {
                             XmlNodeList nodeList2 = node1.SelectNodes(@"CheckoutAttributeValue/Value");
                             foreach (XmlNode node2 in nodeList2)
@@ -160,24 +160,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Adds an attribute
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="ca">Checkout attribute</param>
         /// <param name="value">Value</param>
         /// <returns>Attributes</returns>
-        public static string AddCheckoutAttribute(string Attributes, CheckoutAttribute ca, string value)
+        public static string AddCheckoutAttribute(string attributes, CheckoutAttribute ca, string value)
         {
             string result = string.Empty;
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                if (String.IsNullOrEmpty(Attributes))
+                if (String.IsNullOrEmpty(attributes))
                 {
                     XmlElement _element1 = xmlDoc.CreateElement("Attributes");
                     xmlDoc.AppendChild(_element1);
                 }
                 else
                 {
-                    xmlDoc.LoadXml(Attributes);
+                    xmlDoc.LoadXml(attributes);
                 }
                 XmlElement rootElement = (XmlElement)xmlDoc.SelectSingleNode(@"//Attributes");
 
@@ -189,7 +189,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     if (node1.Attributes != null && node1.Attributes["ID"] != null)
                     {
                         int id = Convert.ToInt32(node1.Attributes["ID"].InnerText.Trim());
-                        if (id == ca.CheckoutAttributeID)
+                        if (id == ca.CheckoutAttributeId)
                         {
                             caElement = (XmlElement)node1;
                             break;
@@ -201,7 +201,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 if (caElement == null)
                 {
                     caElement = xmlDoc.CreateElement("CheckoutAttribute");
-                    caElement.SetAttribute("ID", ca.CheckoutAttributeID.ToString());
+                    caElement.SetAttribute("ID", ca.CheckoutAttributeId.ToString());
                     rootElement.AppendChild(caElement);
                 }
 
@@ -228,59 +228,59 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Formats attributes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(string Attributes)
+        public static string FormatAttributes(string attributes)
         {
             var customer = NopContext.Current.User;
-            return FormatAttributes(Attributes, customer, "<br />");
+            return FormatAttributes(attributes, customer, "<br />");
         }
 
         /// <summary>
         /// Formats attributes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Serapator">Serapator</param>
+        /// <param name="serapator">Serapator</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(string Attributes, Customer customer, string Serapator)
+        public static string FormatAttributes(string attributes, Customer customer, string serapator)
         {
-            return FormatAttributes(Attributes, customer, Serapator, true);
+            return FormatAttributes(attributes, customer, serapator, true);
         }
 
         /// <summary>
         /// Formats attributes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Serapator">Serapator</param>
-        /// <param name="HTMLEncode">A value indicating whether to encode (HTML) values</param>
+        /// <param name="serapator">Serapator</param>
+        /// <param name="htmlEncode">A value indicating whether to encode (HTML) values</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(string Attributes,
-            Customer customer, string Serapator, bool HTMLEncode)
+        public static string FormatAttributes(string attributes,
+            Customer customer, string serapator, bool htmlEncode)
         {
-            return FormatAttributes(Attributes, customer, Serapator, HTMLEncode, true);
+            return FormatAttributes(attributes, customer, serapator, htmlEncode, true);
         }
 
         /// <summary>
         /// Formats attributes
         /// </summary>
-        /// <param name="Attributes">Attributes</param>
+        /// <param name="attributes">Attributes</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Serapator">Serapator</param>
-        /// <param name="HTMLEncode">A value indicating whether to encode (HTML) values</param>
-        /// <param name="RenderPrices">A value indicating whether to render prices</param>
+        /// <param name="serapator">Serapator</param>
+        /// <param name="htmlEncode">A value indicating whether to encode (HTML) values</param>
+        /// <param name="renderPrices">A value indicating whether to render prices</param>
         /// <returns>Attributes</returns>
-        public static string FormatAttributes(string Attributes,
-            Customer customer, string Serapator, bool HTMLEncode, bool RenderPrices)
+        public static string FormatAttributes(string attributes,
+            Customer customer, string serapator, bool htmlEncode, bool renderPrices)
         {
             var result = new StringBuilder();
 
-            var caCollection = ParseCheckoutAttributes(Attributes);
+            var caCollection = ParseCheckoutAttributes(attributes);
             for (int i = 0; i < caCollection.Count; i++)
             {
                 var ca = caCollection[i];
-                var valuesStr = ParseValues(Attributes, ca.CheckoutAttributeID);
+                var valuesStr = ParseValues(attributes, ca.CheckoutAttributeId);
                 for (int j = 0; j < valuesStr.Count; j++)
                 {
                     string valueStr = valuesStr[j];
@@ -291,11 +291,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     }
                     else
                     {
-                        var caValue = CheckoutAttributeManager.GetCheckoutAttributeValueByID(Convert.ToInt32(valueStr));
+                        var caValue = CheckoutAttributeManager.GetCheckoutAttributeValueById(Convert.ToInt32(valueStr));
                         if (caValue != null)
                         {
                             caAttribute = string.Format("{0}: {1}", ca.Name, caValue.Name);
-                            if (RenderPrices)
+                            if (renderPrices)
                             {
                                 decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue, customer);
                                 decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
@@ -312,10 +312,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     {
                         if (i != 0 || j != 0)
                         {
-                            result.Append(Serapator);
+                            result.Append(serapator);
                         }
 
-                        if (HTMLEncode)
+                        if (htmlEncode)
                         {
                             result.Append(HttpUtility.HtmlEncode(caAttribute));
                         }

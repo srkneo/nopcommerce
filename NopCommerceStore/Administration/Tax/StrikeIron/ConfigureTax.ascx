@@ -25,7 +25,7 @@
             StrikeIron User ID:
         </td>
         <td class="adminData">
-            <asp:TextBox runat="server" ID="txtUserID" CssClass="adminInput"></asp:TextBox>
+            <asp:TextBox runat="server" ID="txtUserId" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
     <tr>

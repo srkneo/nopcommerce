@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         protected void BindAttributes()
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
                 pnlData.Visible = true;
@@ -69,14 +69,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindCombinations()
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
                 var productVariantAttributes = productVariant.ProductVariantAttributes;
                 if (productVariantAttributes.Count > 0)
                 {
                     pnlCombinations.Visible = true;
-                    var combinations = ProductAttributeManager.GetAllProductVariantAttributeCombinations(this.ProductVariantID);
+                    var combinations = ProductAttributeManager.GetAllProductVariantAttributeCombinations(this.ProductVariantId);
                     if (combinations.Count > 0)
                     {
                         gvCombinations.Visible = true;
@@ -106,7 +106,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ProductAttributeCollection productAttributes = ProductAttributeManager.GetAllProductAttributes();
             foreach (ProductAttribute pa in productAttributes)
             {
-                ListItem item2 = new ListItem(pa.Name, pa.ProductAttributeID.ToString());
+                ListItem item2 = new ListItem(pa.Name, pa.ProductAttributeId.ToString());
                 this.ddlNewProductAttributes.Items.Add(item2);
             }
 
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected override void OnInit(EventArgs e)
         {
-            ctrlSelectProductAttributes.ProductVariantID = this.ProductVariantID;
+            ctrlSelectProductAttributes.ProductVariantId = this.ProductVariantId;
             base.OnInit(e);
         }
 
@@ -138,18 +138,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant != null)
                 {
                     if (ddlNewProductAttributes.SelectedItem == null)
                         return;
 
-                    int productAttributeID = int.Parse(ddlNewProductAttributes.SelectedItem.Value);
+                    int productAttributeId = int.Parse(ddlNewProductAttributes.SelectedItem.Value);
 
                     AttributeControlTypeEnum attributeControlType = (AttributeControlTypeEnum)Enum.ToObject(typeof(AttributeControlTypeEnum), int.Parse(this.ddlAttributeControlType.SelectedItem.Value));
 
-                    ProductVariantAttribute productVariantAttribute = ProductAttributeManager.InsertProductVariantAttribute(productVariant.ProductVariantID,
-                        productAttributeID, txtNewTextPrompt.Text, cbNewProductVariantAttributeIsRequired.Checked, 
+                    ProductVariantAttribute productVariantAttribute = ProductAttributeManager.InsertProductVariantAttribute(productVariant.ProductVariantId,
+                        productAttributeId, txtNewTextPrompt.Text, cbNewProductVariantAttributeIsRequired.Checked, 
                         attributeControlType, txtNewProductVariantAttributeDisplayOrder.Value);
 
                     BindAttributes();
@@ -172,25 +172,25 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvProductVariantAttributes.Rows[index];
 
-                HiddenField hfProductVariantAttributeID = row.FindControl("hfProductVariantAttributeID") as HiddenField;
+                HiddenField hfProductVariantAttributeId = row.FindControl("hfProductVariantAttributeId") as HiddenField;
                 DropDownList ddlProductAttribute = row.FindControl("ddlProductAttribute") as DropDownList;
                 TextBox txtTextPrompt = row.FindControl("txtTextPrompt") as TextBox;
                 CheckBox cbIsRequired = row.FindControl("cbIsRequired") as CheckBox;
                 DropDownList ddlAttributeControlType = row.FindControl("ddlAttributeControlType") as DropDownList;
                 NumericTextBox txtDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
 
-                int productVariantAttributeID = int.Parse(hfProductVariantAttributeID.Value);
-                int productAttributeID = int.Parse(ddlProductAttribute.SelectedItem.Value);
+                int productVariantAttributeId = int.Parse(hfProductVariantAttributeId.Value);
+                int productAttributeId = int.Parse(ddlProductAttribute.SelectedItem.Value);
                 string textPrompt = txtTextPrompt.Text;
                 bool isRequired = cbIsRequired.Checked;
                 AttributeControlTypeEnum attributeControlType = (AttributeControlTypeEnum)Enum.ToObject(typeof(AttributeControlTypeEnum), int.Parse(ddlAttributeControlType.SelectedItem.Value));
                 int displayOrder = txtDisplayOrder.Value;
 
-                ProductVariantAttribute productVariantAttribute = ProductAttributeManager.GetProductVariantAttributeByID(productVariantAttributeID);
+                ProductVariantAttribute productVariantAttribute = ProductAttributeManager.GetProductVariantAttributeById(productVariantAttributeId);
 
                 if (productVariantAttribute != null)
-                    ProductAttributeManager.UpdateProductVariantAttribute(productVariantAttribute.ProductVariantAttributeID,
-                       productVariantAttribute.ProductVariantID, productAttributeID, textPrompt,
+                    ProductAttributeManager.UpdateProductVariantAttribute(productVariantAttribute.ProductVariantAttributeId,
+                       productVariantAttribute.ProductVariantId, productAttributeId, textPrompt,
                        isRequired, attributeControlType, displayOrder);
 
                 BindAttributes();
@@ -217,9 +217,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     foreach (ProductAttribute productAttribute in productAttributes)
                     {
                         ListItem item = new ListItem(productAttribute.Name,
-                                                     productAttribute.ProductAttributeID.ToString());
+                                                     productAttribute.ProductAttributeId.ToString());
                         ddlProductAttribute.Items.Add(item);
-                        if (productAttribute.ProductAttributeID == productVariantAttribute.ProductAttributeID)
+                        if (productAttribute.ProductAttributeId == productVariantAttribute.ProductAttributeId)
                             item.Selected = true;
                     }
                 }
@@ -228,7 +228,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     if (ddlAttributeControlType != null)
                         CommonHelper.FillDropDownWithEnum(ddlAttributeControlType, typeof (AttributeControlTypeEnum));
-                    CommonHelper.SelectListItem(ddlAttributeControlType, productVariantAttribute.AttributeControlTypeID);
+                    CommonHelper.SelectListItem(ddlAttributeControlType, productVariantAttribute.AttributeControlTypeId);
                 }
 
                 HyperLink hlAttributeValues = e.Row.FindControl("hlAttributeValues") as HyperLink;
@@ -239,7 +239,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         hlAttributeValues.Visible = true;
                         hlAttributeValues.NavigateUrl = string.Format("{0}ProductVariantAttributeValues.aspx?ProductVariantAttributeID={1}",
                                           CommonHelper.GetStoreAdminLocation(),
-                                          productVariantAttribute.ProductVariantAttributeID);
+                                          productVariantAttribute.ProductVariantAttributeId);
                         hlAttributeValues.Text = string.Format(GetLocaleResourceString("Admin.ProductVariantAttributes.Values.Count"), productVariantAttribute.ProductVariantAttributeValues.Count);
                     }
                     else
@@ -252,8 +252,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvProductVariantAttributes_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int productVariantAttributeID = (int)gvProductVariantAttributes.DataKeys[e.RowIndex]["ProductVariantAttributeID"];
-            ProductAttributeManager.DeleteProductVariantAttribute(productVariantAttributeID);
+            int productVariantAttributeId = (int)gvProductVariantAttributes.DataKeys[e.RowIndex]["ProductVariantAttributeId"];
+            ProductAttributeManager.DeleteProductVariantAttribute(productVariantAttributeId);
             
             BindAttributes();
             BindCombinations();
@@ -264,7 +264,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant != null)
                 {
                     string attributes = ctrlSelectProductAttributes.SelectedAttributes;
@@ -272,7 +272,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     bool allowOutOfStockOrders = cbAllowOutOfStockOrders.Checked;
 
                     List<string> warnings = ShoppingCartManager.GetShoppingCartItemAttributeWarnings(ShoppingCartTypeEnum.ShoppingCart,
-                            productVariant.ProductVariantID, attributes, 1, false);
+                            productVariant.ProductVariantId, attributes, 1, false);
                     if (warnings.Count > 0)
                     {
                         StringBuilder warningsSb = new StringBuilder();
@@ -290,7 +290,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
                     else
                     {
-                        var combination = ProductAttributeManager.InsertProductVariantAttributeCombination(productVariant.ProductVariantID,
+                        var combination = ProductAttributeManager.InsertProductVariantAttributeCombination(productVariant.ProductVariantId,
                             attributes,
                             stockQuantity,
                             allowOutOfStockOrders);
@@ -311,21 +311,21 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvCombinations.Rows[index];
 
-                HiddenField hfProductVariantAttributeCombinationID = row.FindControl("hfProductVariantAttributeCombinationID") as HiddenField;
+                HiddenField hfProductVariantAttributeCombinationId = row.FindControl("hfProductVariantAttributeCombinationId") as HiddenField;
                 Label lblAttributes = row.FindControl("lblAttributes") as Label;
                 Label lblWarnings = row.FindControl("lblWarnings") as Label;
                 NumericTextBox txtStockQuantity = row.FindControl("txtStockQuantity") as NumericTextBox;
                 CheckBox cbAllowOutOfStockOrders = row.FindControl("cbAllowOutOfStockOrders") as CheckBox;
 
-                int productVariantAttributeCombinationID = int.Parse(hfProductVariantAttributeCombinationID.Value);
+                int productVariantAttributeCombinationId = int.Parse(hfProductVariantAttributeCombinationId.Value);
                 int stockQuantity = txtStockQuantity.Value;            
                 bool allowOutOfStockOrders = cbAllowOutOfStockOrders.Checked;
 
-                var combination = ProductAttributeManager.GetProductVariantAttributeCombinationByID(productVariantAttributeCombinationID);
+                var combination = ProductAttributeManager.GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
 
                 if (combination != null)
-                    ProductAttributeManager.UpdateProductVariantAttributeCombination(combination.ProductVariantAttributeCombinationID,
-                       combination.ProductVariantID, combination.AttributesXML,
+                    ProductAttributeManager.UpdateProductVariantAttributeCombination(combination.ProductVariantAttributeCombinationId,
+                       combination.ProductVariantId, combination.AttributesXml,
                        stockQuantity, allowOutOfStockOrders);
 
                 BindCombinations();
@@ -342,18 +342,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (btnUpdate != null)
                     btnUpdate.CommandArgument = e.Row.RowIndex.ToString();
 
-                ProductVariant productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant == null)
                     return;
 
                 Label lblAttributes = e.Row.FindControl("lblAttributes") as Label;
                 lblAttributes.Text = ProductAttributeHelper.FormatAttributes(productVariant,
-                    productVariantAttribute.AttributesXML, NopContext.Current.User, "<br />",
+                    productVariantAttribute.AttributesXml, NopContext.Current.User, "<br />",
                     true, false, true, false);
 
                 Label lblWarnings = e.Row.FindControl("lblWarnings") as Label;
                 List<string> warnings = ShoppingCartManager.GetShoppingCartItemAttributeWarnings(ShoppingCartTypeEnum.ShoppingCart,
-                            productVariant.ProductVariantID, productVariantAttribute.AttributesXML, 1, false);
+                            productVariant.ProductVariantId, productVariantAttribute.AttributesXml, 1, false);
                 if (warnings.Count > 0)
                 {
                     StringBuilder warningsSb = new StringBuilder();
@@ -378,8 +378,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void gvCombinations_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int productVariantAttributeCombinationID = (int)gvCombinations.DataKeys[e.RowIndex]["ProductVariantAttributeCombinationID"];
-            ProductAttributeManager.DeleteProductVariantAttributeCombination(productVariantAttributeCombinationID);
+            int productVariantAttributeCombinationId = (int)gvCombinations.DataKeys[e.RowIndex]["ProductVariantAttributeCombinationId"];
+            ProductAttributeManager.DeleteProductVariantAttributeCombination(productVariantAttributeCombinationId);
 
             BindCombinations();
         }
@@ -391,11 +391,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             lErrorTitle.Text = exc.Message;
         }
 
-        public int ProductVariantID
+        public int ProductVariantId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductVariantID");
+                return CommonHelper.QueryStringInt("ProductVariantId");
             }
         }
     }

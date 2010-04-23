@@ -36,10 +36,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets a value indicating whether shipping is free
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <returns>A value indicating whether shipping is free</returns>
-        protected static bool IsFreeShipping(ShoppingCart Cart, Customer customer)
+        protected static bool IsFreeShipping(ShoppingCart cart, Customer customer)
         {
             if (customer != null)
             {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                         return true;
             }
 
-            bool shoppingCartRequiresShipping = ShoppingCartRequiresShipping(Cart);
+            bool shoppingCartRequiresShipping = ShoppingCartRequiresShipping(cart);
             if (!shoppingCartRequiresShipping)
                 return true;
 
@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             List<AppliedGiftCard> appliedGiftCards = null;
             decimal subtotalBaseWithoutPromo = decimal.Zero;
             decimal subtotalBaseWithPromo = decimal.Zero;
-            string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(Cart,
+            string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(cart,
                 customer, out subTotalDiscountBase,
                 out appliedDiscount, out appliedGiftCards,
                 out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             }
 
             bool allItemsAreFreeShipping = true;
-            foreach (var sc in Cart)
+            foreach (var sc in cart)
                 if (!sc.IsFreeShipping)
                 {
                     allItemsAreFreeShipping = false;
@@ -85,19 +85,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Create shipment package from shopping cart
         /// </summary>
-        /// <param name="Cart">Shopping cart</param>
+        /// <param name="cart">Shopping cart</param>
         /// <param name="customer">Customer</param>
-        /// <param name="ShippingAddress">Shipping address</param>
+        /// <param name="shippingAddress">Shipping address</param>
         /// <returns>Shipment package</returns>
-        protected static ShipmentPackage CreateShipmentPackage(ShoppingCart Cart, Customer customer, Address ShippingAddress)
+        protected static ShipmentPackage CreateShipmentPackage(ShoppingCart cart, 
+            Customer customer, Address shippingAddress)
         {
             var shipmentPackage = new ShipmentPackage();
             shipmentPackage.Customer = customer;
             shipmentPackage.Items = new ShoppingCart();
-            foreach (var sc in Cart)
+            foreach (var sc in cart)
                 if (sc.IsShipEnabled)
                     shipmentPackage.Items.Add(sc);
-            shipmentPackage.ShippingAddress = ShippingAddress;
+            shipmentPackage.ShippingAddress = shippingAddress;
             //TODO set values from warehouses or shipping origin
             shipmentPackage.CountryFrom = null;
             shipmentPackage.StateProvinceFrom = null;
@@ -112,14 +113,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets shopping cart weight
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <returns>Shopping cart weight</returns>
-        public static decimal GetShoppingCartTotalWeigth(ShoppingCart Cart, Customer customer)
+        public static decimal GetShoppingCartTotalWeigth(ShoppingCart cart, Customer customer)
         {
             decimal totalWeight = decimal.Zero;
             //shopping cart items
-            foreach (var shoppingCartItem in Cart)
+            foreach (var shoppingCartItem in cart)
                 totalWeight += shoppingCartItem.TotalWeigth;
 
             //checkout attributes
@@ -135,47 +136,47 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets shopping cart shipping total
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <returns>Shipping total</returns>
-        public static decimal? GetShoppingCartShippingTotal(ShoppingCart Cart)
+        public static decimal? GetShoppingCartShippingTotal(ShoppingCart cart)
         {
-            string Error = string.Empty;
-            return GetShoppingCartShippingTotal(Cart, ref Error);
+            string error = string.Empty;
+            return GetShoppingCartShippingTotal(cart, ref error);
         }
 
         /// <summary>
         /// Gets shopping cart shipping total
         /// </summary>
-        /// <param name="Cart">Cart</param>
-        /// <param name="Error">Error</param>
+        /// <param name="cart">Cart</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping total</returns>
-        public static decimal? GetShoppingCartShippingTotal(ShoppingCart Cart, ref string Error)
+        public static decimal? GetShoppingCartShippingTotal(ShoppingCart cart, ref string error)
         {
             Customer customer = NopContext.Current.User;
-            return GetShoppingCartShippingTotal(Cart, customer, ref Error);
+            return GetShoppingCartShippingTotal(cart, customer, ref error);
         }
 
         /// <summary>
         /// Gets shopping cart shipping total
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <returns>Shipping total</returns>
-        public static decimal? GetShoppingCartShippingTotal(ShoppingCart Cart, Customer customer)
+        public static decimal? GetShoppingCartShippingTotal(ShoppingCart cart, Customer customer)
         {
-            string Error = string.Empty;
-            return GetShoppingCartShippingTotal(Cart, customer, ref Error);
+            string error = string.Empty;
+            return GetShoppingCartShippingTotal(cart, customer, ref error);
         }
 
         /// <summary>
         /// Gets shopping cart shipping total
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
-        /// <param name="Error">Error</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping total</returns>
-        public static decimal? GetShoppingCartShippingTotal(ShoppingCart Cart,
-            Customer customer, ref string Error)
+        public static decimal? GetShoppingCartShippingTotal(ShoppingCart cart,
+            Customer customer, ref string error)
         {
             bool includingTax = false;
             switch (NopContext.Current.TaxDisplayType)
@@ -187,57 +188,57 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                     includingTax = true;
                     break;
             }
-            return GetShoppingCartShippingTotal(Cart, customer, includingTax, ref Error);
+            return GetShoppingCartShippingTotal(cart, customer, includingTax, ref error);
         }
 
         /// <summary>
         /// Gets shopping cart shipping total
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <param name="includingTax">A value indicating whether calculated price should include tax</param>
         /// <returns>Shipping total</returns>
-        public static decimal? GetShoppingCartShippingTotal(ShoppingCart Cart,
+        public static decimal? GetShoppingCartShippingTotal(ShoppingCart cart,
             Customer customer, bool includingTax)
         {
-            string Error = string.Empty;
-            return GetShoppingCartShippingTotal(Cart, customer, includingTax, ref Error);
+            string error = string.Empty;
+            return GetShoppingCartShippingTotal(cart, customer, includingTax, ref error);
         }
 
         /// <summary>
         /// Gets shopping cart shipping total
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <param name="includingTax">A value indicating whether calculated price should include tax</param>
-        /// <param name="Error">Error</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping total</returns>
-        public static decimal? GetShoppingCartShippingTotal(ShoppingCart Cart, 
-            Customer customer, bool includingTax, ref string Error)
+        public static decimal? GetShoppingCartShippingTotal(ShoppingCart cart, 
+            Customer customer, bool includingTax, ref string error)
         {
             Discount appliedDiscount = null;
-            return GetShoppingCartShippingTotal(Cart, customer, includingTax,
-                out appliedDiscount, ref Error);
+            return GetShoppingCartShippingTotal(cart, customer, includingTax,
+                out appliedDiscount, ref error);
         }
 
         /// <summary>
         /// Gets shopping cart shipping total
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <param name="includingTax">A value indicating whether calculated price should include tax</param>
         /// <param name="appliedDiscount">Applied discount</param>
-        /// <param name="Error">Error</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping total</returns>
-        public static decimal? GetShoppingCartShippingTotal(ShoppingCart Cart,
-            Customer customer, bool includingTax, out Discount appliedDiscount, ref string Error)
+        public static decimal? GetShoppingCartShippingTotal(ShoppingCart cart,
+            Customer customer, bool includingTax, out Discount appliedDiscount, ref string error)
         {
             decimal? shippingTotalWithoutDiscount = null;
             decimal? shippingTotalWithDiscount = null;
             decimal? shippingTotalWithDiscountTaxed = null;
             appliedDiscount = null;
 
-            bool isFreeShipping = IsFreeShipping(Cart, customer);
+            bool isFreeShipping = IsFreeShipping(cart, customer);
             if (isFreeShipping)
                 return decimal.Zero;
 
@@ -252,7 +253,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 //use last shipping option (get from cache)
                 //we have already discounted cache value
                 shippingTotalWithDiscount = lastShippingOption.Rate;
-                appliedDiscount = DiscountManager.GetDiscountByID(lastShippingOption.AppliedDiscountID);
+                appliedDiscount = DiscountManager.GetDiscountById(lastShippingOption.AppliedDiscountId);
             }
             else
             {
@@ -262,7 +263,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 {
                     shippingAddress = customer.ShippingAddress;
                 }
-                var ShipmentPackage = CreateShipmentPackage(Cart, customer, shippingAddress);
+                var ShipmentPackage = CreateShipmentPackage(cart, customer, shippingAddress);
                 var shippingRateComputationMethods = ShippingRateComputationMethodManager.GetAllShippingRateComputationMethods(false);
                 if (shippingRateComputationMethods.Count == 0)
                     throw new NopException("Shipping rate computation method could not be loaded");
@@ -275,7 +276,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                     decimal? fixedRate = iShippingRateComputationMethod.GetFixedRate(ShipmentPackage);
                     if (fixedRate.HasValue)
                     {
-                        decimal additionalShippingCharge = GetShoppingCartAdditionalShippingCharge(Cart, customer);
+                        decimal additionalShippingCharge = GetShoppingCartAdditionalShippingCharge(cart, customer);
                         shippingTotalWithoutDiscount = fixedRate.Value + additionalShippingCharge;
                         shippingTotalWithoutDiscount = Math.Round(shippingTotalWithoutDiscount.Value, 2);
                         decimal shippingTotalDiscount = GetShippingDiscount(customer, shippingTotalWithoutDiscount.Value, out appliedDiscount);
@@ -288,14 +289,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (!shippingTotalWithDiscount.HasValue)
             {
-                Error = "Shipping total could not be calculated";
+                error = "Shipping total could not be calculated";
             }
             else
             {
                 shippingTotalWithDiscountTaxed = TaxManager.GetShippingPrice(shippingTotalWithDiscount.Value,
                     includingTax,
                     customer,
-                    ref Error);
+                    ref error);
 
                 shippingTotalWithDiscountTaxed = Math.Round(shippingTotalWithDiscountTaxed.Value, 2);
             }
@@ -353,11 +354,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Indicates whether the shopping cart requires shipping
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <returns>True if the shopping cart requires shipping; otherwise, false.</returns>
-        public static bool ShoppingCartRequiresShipping(ShoppingCart Cart)
+        public static bool ShoppingCartRequiresShipping(ShoppingCart cart)
         {
-            foreach (var shoppingCartItem in Cart)
+            foreach (var shoppingCartItem in cart)
                 if (shoppingCartItem.IsShipEnabled)
                     return true;
             return false;
@@ -366,18 +367,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets shopping cart additional shipping charge
         /// </summary>
-        /// <param name="Cart">Cart</param>
+        /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <returns>Additional shipping charge</returns>
-        public static decimal GetShoppingCartAdditionalShippingCharge(ShoppingCart Cart, Customer customer)
+        public static decimal GetShoppingCartAdditionalShippingCharge(ShoppingCart cart, Customer customer)
         {
             decimal additionalShippingCharge = decimal.Zero;
 
-            bool isFreeShipping = IsFreeShipping(Cart, customer);
+            bool isFreeShipping = IsFreeShipping(cart, customer);
             if (isFreeShipping)
                 return decimal.Zero;
 
-            foreach (var shoppingCartItem in Cart)
+            foreach (var shoppingCartItem in cart)
                 additionalShippingCharge += shoppingCartItem.AdditionalShippingCharge;
 
             return additionalShippingCharge;
@@ -386,62 +387,64 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="Cart">Shopping cart</param>
+        /// <param name="cart">Shopping cart</param>
         /// <param name="customer">Customer</param>
-        /// <param name="ShippingAddress">Shipping address</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shippingAddress">Shipping address</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public static ShippingOptionCollection GetShippingOptions(ShoppingCart Cart, Customer customer, Address ShippingAddress, ref string Error)
+        public static ShippingOptionCollection GetShippingOptions(ShoppingCart cart, 
+            Customer customer, Address shippingAddress, ref string error)
         {
-            return GetShippingOptions(Cart, customer, ShippingAddress, null, ref Error);
+            return GetShippingOptions(cart, customer, shippingAddress, null, ref error);
         }
 
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="Cart">Shopping cart</param>
+        /// <param name="cart">Shopping cart</param>
         /// <param name="customer">Customer</param>
-        /// <param name="ShippingAddress">Shipping address</param>
-        /// <param name="AllowedShippingRateComputationMethodID">Allowed shipping rate computation method identifier; null to load shipping options of all methods</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shippingAddress">Shipping address</param>
+        /// <param name="allowedShippingRateComputationMethodId">Allowed shipping rate computation method identifier; null to load shipping options of all methods</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public static ShippingOptionCollection GetShippingOptions(ShoppingCart Cart, Customer customer, Address ShippingAddress, 
-            int? AllowedShippingRateComputationMethodID, ref string Error)
+        public static ShippingOptionCollection GetShippingOptions(ShoppingCart cart,
+            Customer customer, Address shippingAddress, 
+            int? allowedShippingRateComputationMethodId, ref string error)
         {
-            if (Cart == null)
+            if (cart == null)
                 throw new ArgumentNullException("Cart");
 
             var shippingOptions = new ShippingOptionCollection();
 
-            bool isFreeShipping = IsFreeShipping(Cart, customer);
+            bool isFreeShipping = IsFreeShipping(cart, customer);
 
-            var ShipmentPackage = CreateShipmentPackage(Cart, customer, ShippingAddress);
+            var ShipmentPackage = CreateShipmentPackage(cart, customer, shippingAddress);
             var shippingRateComputationMethods = ShippingRateComputationMethodManager.GetAllShippingRateComputationMethods(false);
             if (shippingRateComputationMethods.Count == 0)
                 throw new NopException("Shipping rate computation method could not be loaded");
 
             foreach (var srcm in shippingRateComputationMethods)
             {
-                if (AllowedShippingRateComputationMethodID.HasValue &&
-                    AllowedShippingRateComputationMethodID.Value > 0 &&
-                    AllowedShippingRateComputationMethodID.Value != srcm.ShippingRateComputationMethodID)
+                if (allowedShippingRateComputationMethodId.HasValue &&
+                    allowedShippingRateComputationMethodId.Value > 0 &&
+                    allowedShippingRateComputationMethodId.Value != srcm.ShippingRateComputationMethodId)
                     continue;
 
                 var iShippingRateComputationMethod = Activator.CreateInstance(Type.GetType(srcm.ClassName)) as IShippingRateComputationMethod;
 
-                var shippingOptions2 = iShippingRateComputationMethod.GetShippingOptions(ShipmentPackage, ref Error);
+                var shippingOptions2 = iShippingRateComputationMethod.GetShippingOptions(ShipmentPackage, ref error);
                 if (shippingOptions2 != null)
                 {
                     foreach (var so2 in shippingOptions2)
                     {
-                        so2.ShippingRateComputationMethodID = srcm.ShippingRateComputationMethodID;
+                        so2.ShippingRateComputationMethodId = srcm.ShippingRateComputationMethodId;
                         shippingOptions.Add(so2);
                     }
                 }
             }
 
             //additional shipping charges
-            decimal additionalShippingCharge = GetShoppingCartAdditionalShippingCharge(Cart, customer);
+            decimal additionalShippingCharge = GetShoppingCartAdditionalShippingCharge(cart, customer);
             shippingOptions.ForEach(so => so.Rate += additionalShippingCharge);
 
             //discounts
@@ -460,7 +463,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
                 so.Rate = rateWithDiscount;
                 if (rateDiscount != null)
-                    so.AppliedDiscountID = rateDiscount.DiscountID;
+                    so.AppliedDiscountId = rateDiscount.DiscountId;
             }
 
             //free shipping
@@ -483,30 +486,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             get
             {
-                int countryID = SettingManager.GetSettingValueInteger("Shipping.ShippingOrigin.CountryID");
-                int stateProvinceID = SettingManager.GetSettingValueInteger("Shipping.ShippingOrigin.StateProvinceID");
+                int countryId = SettingManager.GetSettingValueInteger("Shipping.ShippingOrigin.CountryId");
+                int stateProvinceId = SettingManager.GetSettingValueInteger("Shipping.ShippingOrigin.StateProvinceId");
                 string zipPostalCode = SettingManager.GetSettingValue("Shipping.ShippingOrigin.ZipPostalCode");
                 var address = new Address();
-                address.CountryID = countryID;
-                address.StateProvinceID = stateProvinceID;
+                address.CountryId = countryId;
+                address.StateProvinceId = stateProvinceId;
                 address.ZipPostalCode = zipPostalCode;
                 return address;
             }
             set
             {
-                int countryID = 0;
-                int stateProvinceID = 0;
+                int countryId = 0;
+                int stateProvinceId = 0;
                 string zipPostalCode = string.Empty;
 
                 if (value != null)
                 {
-                    countryID = value.CountryID;
-                    stateProvinceID = value.StateProvinceID;
+                    countryId = value.CountryId;
+                    stateProvinceId = value.StateProvinceId;
                     zipPostalCode = value.ZipPostalCode;
                 }
 
-                SettingManager.SetParam("Shipping.ShippingOrigin.CountryID", countryID.ToString());
-                SettingManager.SetParam("Shipping.ShippingOrigin.StateProvinceID", stateProvinceID.ToString());
+                SettingManager.SetParam("Shipping.ShippingOrigin.CountryId", countryId.ToString());
+                SettingManager.SetParam("Shipping.ShippingOrigin.StateProvinceId", stateProvinceId.ToString());
                 SettingManager.SetParam("Shipping.ShippingOrigin.ZipPostalCode", zipPostalCode);
             }
         }

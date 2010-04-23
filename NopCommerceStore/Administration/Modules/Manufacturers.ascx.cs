@@ -55,9 +55,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ManufacturerCollection manufacturers = ManufacturerManager.GetAllManufacturers();
-                    string xml = ExportManager.ExportManufacturersToXML(manufacturers);
+                    string xml = ExportManager.ExportManufacturersToXml(manufacturers);
                     string fileName = string.Format("manufacturers_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
-                    CommonHelper.WriteResponseXML(xml, fileName);
+                    CommonHelper.WriteResponseXml(xml, fileName);
                 }
                 catch (Exception exc)
                 {

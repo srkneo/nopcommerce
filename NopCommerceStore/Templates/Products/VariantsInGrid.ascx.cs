@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
         }
         protected void BindData()
         {
-            Product product = ProductManager.GetProductByID(ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 ctrlProductRating.Visible = product.AllowCustomerRatings;
@@ -63,11 +63,11 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                 ProductsTabs.ActiveTab = pnlProductReviews;
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

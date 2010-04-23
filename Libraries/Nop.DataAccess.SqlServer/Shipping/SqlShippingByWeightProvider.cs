@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     /// <summary>
     /// ShippingByWeight provider for SQL Server
     /// </summary>
-    public partial class SQLShippingByWeightProvider : DBShippingByWeightProvider
+    public partial class SqlShippingByWeightProvider : DBShippingByWeightProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,15 +36,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         #region Utilities
         private DBShippingByWeight GetShippingByWeightFromReader(IDataReader dataReader)
         {
-            DBShippingByWeight shippingByWeight = new DBShippingByWeight();
-            shippingByWeight.ShippingByWeightID = NopSqlDataHelper.GetInt(dataReader, "ShippingByWeightID");
-            shippingByWeight.ShippingMethodID = NopSqlDataHelper.GetInt(dataReader, "ShippingMethodID");
-            shippingByWeight.From = NopSqlDataHelper.GetDecimal(dataReader, "From");
-            shippingByWeight.To = NopSqlDataHelper.GetDecimal(dataReader, "To");
-            shippingByWeight.UsePercentage = NopSqlDataHelper.GetBoolean(dataReader, "UsePercentage");
-            shippingByWeight.ShippingChargePercentage = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargePercentage");
-            shippingByWeight.ShippingChargeAmount = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargeAmount");
-            return shippingByWeight;
+            var item = new DBShippingByWeight();
+            item.ShippingByWeightId = NopSqlDataHelper.GetInt(dataReader, "ShippingByWeightID");
+            item.ShippingMethodId = NopSqlDataHelper.GetInt(dataReader, "ShippingMethodID");
+            item.From = NopSqlDataHelper.GetDecimal(dataReader, "From");
+            item.To = NopSqlDataHelper.GetDecimal(dataReader, "To");
+            item.UsePercentage = NopSqlDataHelper.GetBoolean(dataReader, "UsePercentage");
+            item.ShippingChargePercentage = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargePercentage");
+            item.ShippingChargeAmount = NopSqlDataHelper.GetDecimal(dataReader, "ShippingChargeAmount");
+            return item;
         }
         #endregion
 
@@ -87,34 +87,34 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Gets a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">ShippingByWeight identifier</param>
+        /// <param name="shippingByWeightId">ShippingByWeight identifier</param>
         /// <returns>ShippingByWeight</returns>
-        public override DBShippingByWeight GetByID(int ShippingByWeightID)
+        public override DBShippingByWeight GetById(int shippingByWeightId)
         {
-            DBShippingByWeight shippingByWeight = null;
+            DBShippingByWeight item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ShippingByWeightID", DbType.Int32, ShippingByWeightID);
+            db.AddInParameter(dbCommand, "ShippingByWeightID", DbType.Int32, shippingByWeightId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    shippingByWeight = GetShippingByWeightFromReader(dataReader);
+                    item = GetShippingByWeightFromReader(dataReader);
                 }
             }
-            return shippingByWeight;
+            return item;
         }
 
         /// <summary>
         /// Deletes a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">ShippingByWeight identifier</param>
-        public override void DeleteShippingByWeight(int ShippingByWeightID)
+        /// <param name="shippingByWeightId">ShippingByWeight identifier</param>
+        public override void DeleteShippingByWeight(int shippingByWeightId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightDelete");
-            db.AddInParameter(dbCommand, "ShippingByWeightID", DbType.Int32, ShippingByWeightID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ShippingByWeightID", DbType.Int32, shippingByWeightId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
@@ -141,75 +141,77 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Inserts a ShippingByWeight
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeight</returns>
-        public override DBShippingByWeight InsertShippingByWeight(int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public override DBShippingByWeight InsertShippingByWeight(int shippingMethodId,
+            decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            DBShippingByWeight shippingByWeight = null;
+            DBShippingByWeight item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightInsert");
             db.AddOutParameter(dbCommand, "ShippingByWeightID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, ShippingMethodID);
-            db.AddInParameter(dbCommand, "From", DbType.Decimal, From);
-            db.AddInParameter(dbCommand, "To", DbType.Decimal, To);
-            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, UsePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, ShippingChargePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, ShippingChargeAmount);
+            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
+            db.AddInParameter(dbCommand, "From", DbType.Decimal, from);
+            db.AddInParameter(dbCommand, "To", DbType.Decimal, to);
+            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, usePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, shippingChargePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, shippingChargeAmount);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ShippingByWeightID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShippingByWeightID"));
-                shippingByWeight = GetByID(ShippingByWeightID);
+                int shippingByWeightId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShippingByWeightID"));
+                item = GetById(shippingByWeightId);
             }
-            return shippingByWeight;
+            return item;
         }
 
         /// <summary>
         /// Updates the ShippingByWeight
         /// </summary>
-        /// <param name="ShippingByWeightID">The ShippingByWeight identifier</param>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingByWeightId">The ShippingByWeight identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeight</returns>
-        public override DBShippingByWeight UpdateShippingByWeight(int ShippingByWeightID, int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount)
+        public override DBShippingByWeight UpdateShippingByWeight(int shippingByWeightId,
+            int shippingMethodId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            DBShippingByWeight shippingByWeight = null;
+            DBShippingByWeight item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightUpdate");
-            db.AddInParameter(dbCommand, "ShippingByWeightID", DbType.Int32, ShippingByWeightID);
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, ShippingMethodID);
-            db.AddInParameter(dbCommand, "From", DbType.Decimal, From);
-            db.AddInParameter(dbCommand, "To", DbType.Decimal, To);
-            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, UsePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, ShippingChargePercentage);
-            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, ShippingChargeAmount);
+            db.AddInParameter(dbCommand, "ShippingByWeightID", DbType.Int32, shippingByWeightId);
+            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
+            db.AddInParameter(dbCommand, "From", DbType.Decimal, from);
+            db.AddInParameter(dbCommand, "To", DbType.Decimal, to);
+            db.AddInParameter(dbCommand, "UsePercentage", DbType.Boolean, usePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargePercentage", DbType.Decimal, shippingChargePercentage);
+            db.AddInParameter(dbCommand, "ShippingChargeAmount", DbType.Decimal, shippingChargeAmount);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                shippingByWeight = GetByID(ShippingByWeightID);
+                item = GetById(shippingByWeightId);
 
-            return shippingByWeight;
+            return item;
         }
 
         /// <summary>
         /// Gets all ShippingByWeights by shipping method identifier
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <returns>ShippingByWeight collection</returns>
-        public override DBShippingByWeightCollection GetAllByShippingMethodID(int ShippingMethodID)
+        public override DBShippingByWeightCollection GetAllByShippingMethodId(int shippingMethodId)
         {
             var result = new DBShippingByWeightCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingByWeightLoadByShippingMethodID");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, ShippingMethodID);
+            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())

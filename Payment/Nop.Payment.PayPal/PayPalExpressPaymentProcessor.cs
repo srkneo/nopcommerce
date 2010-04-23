@@ -122,11 +122,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
-            DoExpressCheckout(paymentInfo, OrderGuid, processPaymentResult);
+            DoExpressCheckout(paymentInfo, orderGuid, processPaymentResult);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         {
             InitSettings();
 
-            string authorizationID = processPaymentResult.AuthorizationTransactionID;
+            string authorizationID = processPaymentResult.AuthorizationTransactionId;
             DoCaptureReq req = new DoCaptureReq();
             req.DoCaptureRequest = new DoCaptureRequestType();
             req.DoCaptureRequest.Version = this.APIVersion;
@@ -173,7 +173,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             if (Success)
             {
                 processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
-                processPaymentResult.CaptureTransactionID = response.DoCaptureResponseDetails.PaymentInfo.TransactionID;
+                processPaymentResult.CaptureTransactionId = response.DoCaptureResponseDetails.PaymentInfo.TransactionID;
                 processPaymentResult.CaptureTransactionResult = response.Ack.ToString();
             }
             else
@@ -260,10 +260,10 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// Do paypal express checkout
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
         public void DoExpressCheckout(PaymentInfo paymentInfo, 
-            Guid OrderGuid,  ProcessPaymentResult processPaymentResult)
+            Guid orderGuid,  ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
             TransactMode transactionMode = GetCurrentTransactionMode();
@@ -281,11 +281,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             else
                 details.PaymentAction = PaymentActionCodeType.Sale;
             details.Token = paymentInfo.PaypalToken;
-            details.PayerID = paymentInfo.PaypalPayerID;
+            details.PayerID = paymentInfo.PaypalPayerId;
             paymentDetails.OrderTotal = new BasicAmountType();
             paymentDetails.OrderTotal.Value = paymentInfo.OrderTotal.ToString("N", new CultureInfo("en-us"));
             paymentDetails.OrderTotal.currencyID = PaypalHelper.GetPaypalCurrency(CurrencyManager.PrimaryStoreCurrency);
-            paymentDetails.Custom = OrderGuid.ToString();
+            paymentDetails.Custom = orderGuid.ToString();
             paymentDetails.ButtonSource = "nopCommerceCart";
             
             DoExpressCheckoutPaymentResponseType response = service2.DoExpressCheckoutPayment(req);
@@ -293,7 +293,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             if (!PaypalHelper.CheckSuccess(response, out error))
                 throw new NopException(error);
 
-            processPaymentResult.AuthorizationTransactionID =  response.DoExpressCheckoutPaymentResponseDetails.PaymentInfo.TransactionID;
+            processPaymentResult.AuthorizationTransactionId =  response.DoExpressCheckoutPaymentResponseDetails.PaymentInfo.TransactionID;
             processPaymentResult.AuthorizationTransactionResult = response.Ack.ToString();
            
             if (transactionMode == TransactMode.Authorize)
@@ -338,9 +338,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

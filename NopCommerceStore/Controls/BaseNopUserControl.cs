@@ -39,14 +39,14 @@ namespace NopSolutions.NopCommerce.Web
         protected string GetLocaleResourceString(string ResourceName)
         {
             Language language = NopContext.Current.WorkingLanguage;
-            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageID);
+            return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageId);
         }
 
         protected string GetLocaleResourceString(string ResourceName, params object[] args)
         {
             Language language = NopContext.Current.WorkingLanguage;
             return string.Format(
-                LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageID),
+                LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageId),
                 args);
         }
     }

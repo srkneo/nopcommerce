@@ -38,22 +38,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
 		/// <summary>
 		/// Gets or sets the Pricelist identifier
 		/// </summary>
-		public int PricelistID { get; set; }
+		public int PricelistId { get; set; }
 		
 		/// <summary>
 		/// Gets or sets the Mode of list creation (Export all, assigned only, assigned only with special price)
 		/// </summary>
-		public int ExportModeID { get; set; }
+		public int ExportModeId { get; set; }
 		
 		/// <summary>
 		/// Gets or sets the CSV or XML
 		/// </summary>
-		public int ExportTypeID { get; set; }
+		public int ExportTypeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Affiliate connected to this pricelist (optional), links will be created with AffiliateID
+        /// Gets or sets the Affiliate connected to this pricelist (optional), links will be created with AffiliateId
         /// </summary>
-        public int AffiliateID { get; set; }
+        public int AffiliateId { get; set; }
 
 		/// <summary>
 		/// Gets or sets the Displayedname
@@ -108,7 +108,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the type of price adjustment (if used) (relative or absolute)
         /// </summary>
-        public int PriceAdjustmentTypeID { get; set; }
+        public int PriceAdjustmentTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the price will be adjusted by this amount (in accordance with PriceAdjustmentType)

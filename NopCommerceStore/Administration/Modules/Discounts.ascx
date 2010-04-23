@@ -12,8 +12,6 @@
 </div>
 <asp:GridView ID="gvDiscounts" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="DiscountID" HeaderText="Discount ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Discounts.Name %>" ItemStyle-Width="20%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
@@ -37,7 +35,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Discounts.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="DiscountDetails.aspx?DiscountID=<%#Eval("DiscountID")%>" title="<%#GetLocaleResourceString("Admin.Discounts.Edit.Tooltip")%>">
+                <a href="DiscountDetails.aspx?DiscountID=<%#Eval("DiscountId")%>" title="<%#GetLocaleResourceString("Admin.Discounts.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Discounts.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

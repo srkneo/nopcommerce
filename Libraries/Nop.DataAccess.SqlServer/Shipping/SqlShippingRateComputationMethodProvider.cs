@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     /// <summary>
     /// Shipping rate computation method provider for SQL Server
     /// </summary>
-    public partial class SQLShippingRateComputationMethodProvider : DBShippingRateComputationMethodProvider
+    public partial class SqlShippingRateComputationMethodProvider : DBShippingRateComputationMethodProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,15 +36,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         #region Utilities
         private DBShippingRateComputationMethod GetShippingRateComputationMethodFromReader(IDataReader dataReader)
         {
-            DBShippingRateComputationMethod shippingRateComputationMethod = new DBShippingRateComputationMethod();
-            shippingRateComputationMethod.ShippingRateComputationMethodID = NopSqlDataHelper.GetInt(dataReader, "ShippingRateComputationMethodID");
-            shippingRateComputationMethod.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            shippingRateComputationMethod.Description = NopSqlDataHelper.GetString(dataReader, "Description");
-            shippingRateComputationMethod.ConfigureTemplatePath = NopSqlDataHelper.GetString(dataReader, "ConfigureTemplatePath");
-            shippingRateComputationMethod.ClassName = NopSqlDataHelper.GetString(dataReader, "ClassName");
-            shippingRateComputationMethod.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
-            shippingRateComputationMethod.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return shippingRateComputationMethod;
+            var item = new DBShippingRateComputationMethod();
+            item.ShippingRateComputationMethodId = NopSqlDataHelper.GetInt(dataReader, "ShippingRateComputationMethodID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            item.ConfigureTemplatePath = NopSqlDataHelper.GetString(dataReader, "ConfigureTemplatePath");
+            item.ClassName = NopSqlDataHelper.GetString(dataReader, "ClassName");
+            item.IsActive = NopSqlDataHelper.GetBoolean(dataReader, "IsActive");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -87,37 +87,36 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Deletes a shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">Shipping rate computation method identifier</param>
-        public override void DeleteShippingRateComputationMethod(int ShippingRateComputationMethodID)
+        /// <param name="shippingRateComputationMethodId">Shipping rate computation method identifier</param>
+        public override void DeleteShippingRateComputationMethod(int shippingRateComputationMethodId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingRateComputationMethodDelete");
-            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, ShippingRateComputationMethodID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, shippingRateComputationMethodId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets a shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">Shipping rate computation method identifier</param>
+        /// <param name="shippingRateComputationMethodId">Shipping rate computation method identifier</param>
         /// <returns>Shipping rate computation method</returns>
-        public override DBShippingRateComputationMethod GetShippingRateComputationMethodByID(int ShippingRateComputationMethodID)
+        public override DBShippingRateComputationMethod GetShippingRateComputationMethodById(int shippingRateComputationMethodId)
         {
-
-            DBShippingRateComputationMethod shippingRateComputationMethod = null;
-            if (ShippingRateComputationMethodID == 0)
-                return shippingRateComputationMethod;
+            DBShippingRateComputationMethod item = null;
+            if (shippingRateComputationMethodId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingRateComputationMethodLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, ShippingRateComputationMethodID);
+            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, shippingRateComputationMethodId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    shippingRateComputationMethod = GetShippingRateComputationMethodFromReader(dataReader);
+                    item = GetShippingRateComputationMethodFromReader(dataReader);
                 }
             }
-            return shippingRateComputationMethod;
+            return item;
         }
 
         /// <summary>
@@ -145,62 +144,64 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Inserts a shipping rate computation method
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="IsActive">The value indicating whether the method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="isActive">The value indicating whether the method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping rate computation method</returns>
-        public override DBShippingRateComputationMethod InsertShippingRateComputationMethod(string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, bool IsActive, int DisplayOrder)
+        public override DBShippingRateComputationMethod InsertShippingRateComputationMethod(string name,
+            string description, string configureTemplatePath, string className,
+            bool isActive, int displayOrder)
         {
-            DBShippingRateComputationMethod shippingRateComputationMethod = null;
+            DBShippingRateComputationMethod item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingRateComputationMethodInsert");
             db.AddOutParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, ConfigureTemplatePath);
-            db.AddInParameter(dbCommand, "ClassName", DbType.String, ClassName);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, configureTemplatePath);
+            db.AddInParameter(dbCommand, "ClassName", DbType.String, className);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ShippingRateComputationMethodID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShippingRateComputationMethodID"));
-                shippingRateComputationMethod = GetShippingRateComputationMethodByID(ShippingRateComputationMethodID);
+                int shippingRateComputationMethodId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShippingRateComputationMethodID"));
+                item = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
             }
-            return shippingRateComputationMethod;
+            return item;
         }
 
         /// <summary>
         /// Updates the shipping rate computation method
         /// </summary>
-        /// <param name="ShippingRateComputationMethodID">The shipping rate computation method identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="ConfigureTemplatePath">The configure template path</param>
-        /// <param name="ClassName">The class name</param>
-        /// <param name="IsActive">The value indicating whether the method is active</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="configureTemplatePath">The configure template path</param>
+        /// <param name="className">The class name</param>
+        /// <param name="isActive">The value indicating whether the method is active</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping rate computation method</returns>
-        public override DBShippingRateComputationMethod UpdateShippingRateComputationMethod(int ShippingRateComputationMethodID, string Name, string Description,
-           string ConfigureTemplatePath, string ClassName, bool IsActive, int DisplayOrder)
+        public override DBShippingRateComputationMethod UpdateShippingRateComputationMethod(int shippingRateComputationMethodId,
+            string name, string description, string configureTemplatePath, string className,
+            bool isActive, int displayOrder)
         {
-            DBShippingRateComputationMethod shippingRateComputationMethod = null;
+            DBShippingRateComputationMethod item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingRateComputationMethodUpdate");
-            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, ShippingRateComputationMethodID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, ConfigureTemplatePath);
-            db.AddInParameter(dbCommand, "ClassName", DbType.String, ClassName);
-            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, IsActive);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ShippingRateComputationMethodID", DbType.Int32, shippingRateComputationMethodId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "ConfigureTemplatePath", DbType.String, configureTemplatePath);
+            db.AddInParameter(dbCommand, "ClassName", DbType.String, className);
+            db.AddInParameter(dbCommand, "IsActive", DbType.Boolean, isActive);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                shippingRateComputationMethod = GetShippingRateComputationMethodByID(ShippingRateComputationMethodID);
+                item = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
 
-            return shippingRateComputationMethod;
+            return item;
         }
         #endregion
     }

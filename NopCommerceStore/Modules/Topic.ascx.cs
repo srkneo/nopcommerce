@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (topic == null)
                 {
-                    topic = TopicManager.GetLocalizedTopic(this.TopicName, NopContext.Current.WorkingLanguage.LanguageID);
+                    topic = TopicManager.GetLocalizedTopic(this.TopicName, NopContext.Current.WorkingLanguage.LanguageId);
                 }
                 return topic;
             }

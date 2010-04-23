@@ -49,14 +49,14 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
 
         protected void BindData()
         {
-            var category = CategoryManager.GetCategoryByID(CategoryID);
+            var category = CategoryManager.GetCategoryById(this.CategoryId);
 
-            rptrCategoryBreadcrumb.DataSource = CategoryManager.GetBreadCrumb(CategoryID);
+            rptrCategoryBreadcrumb.DataSource = CategoryManager.GetBreadCrumb(this.CategoryId);
             rptrCategoryBreadcrumb.DataBind();
 
             lDescription.Text = category.Description;
 
-            var subCategoryCollection = CategoryManager.GetAllCategories(category.CategoryID);
+            var subCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
             if (subCategoryCollection.Count > 0)
             {
                 dlSubCategories.DataSource = subCategoryCollection;
@@ -104,9 +104,9 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 }
             }
 
-            var psoFilterOption = ctrlProductSpecificationFilter.GetAlreadyFilteredSpecOptionIDs();
+            var psoFilterOption = ctrlProductSpecificationFilter.GetAlreadyFilteredSpecOptionIds();
 
-            var productCollection = ProductManager.GetAllProducts(this.CategoryID,
+            var productCollection = ProductManager.GetAllProducts(this.CategoryId,
                 0, false, minPriceConverted, maxPriceConverted, pageSize, this.CurrentPageIndex, psoFilterOption, out totalRecords);
 
             if (productCollection.Count > 0)
@@ -131,9 +131,9 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             ctrlPriceRangeFilter.ExcludedQueryStringParams = productsPager.QueryStringProperty;
 
             ctrlProductSpecificationFilter.ExcludedQueryStringParams = productsPager.QueryStringProperty;
-            ctrlProductSpecificationFilter.CategoryID = this.CategoryID;
+            ctrlProductSpecificationFilter.CategoryId = this.CategoryId;
             
-            ctrlProductSpecificationFilter.ReservedQueryStringParams = "CategoryID,";
+            ctrlProductSpecificationFilter.ReservedQueryStringParams = "CategoryId,";
             ctrlProductSpecificationFilter.ReservedQueryStringParams += ctrlPriceRangeFilter.QueryStringProperty;
             ctrlProductSpecificationFilter.ReservedQueryStringParams += ",";
             ctrlProductSpecificationFilter.ReservedQueryStringParams += productsPager.QueryStringProperty;
@@ -150,12 +150,12 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var category = e.Item.DataItem as Category;
-                string categoryURL = SEOHelper.GetCategoryURL(category.CategoryID);
+                string categoryURL = SEOHelper.GetCategoryUrl(category.CategoryId);
 
                 var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                 if (hlImageLink != null)
                 {
-                    hlImageLink.ImageUrl = PictureManager.GetPictureUrl(category.PictureID, SettingManager.GetSettingValueInteger("Media.Category.ThumbnailImageSize", 125), true);
+                    hlImageLink.ImageUrl = PictureManager.GetPictureUrl(category.PictureId, SettingManager.GetSettingValueInteger("Media.Category.ThumbnailImageSize", 125), true);
                     hlImageLink.NavigateUrl = categoryURL;
                     hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.Name);
                     hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Category.ImageAlternateTextFormat"), category.Name);
@@ -183,11 +183,11 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             }
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryID");
+                return CommonHelper.QueryStringInt("CategoryId");
             }
         }
     }

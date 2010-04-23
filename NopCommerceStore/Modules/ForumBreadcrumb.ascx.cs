@@ -44,13 +44,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
         public void BindData()
         {
             hlHome.NavigateUrl = CommonHelper.GetStoreLocation();
-            hlForumsHome.NavigateUrl = SEOHelper.GetForumMainURL();
+            hlForumsHome.NavigateUrl = SEOHelper.GetForumMainUrl();
 
             //topic
-            var forumTopic = ForumManager.GetTopicByID(this.ForumTopicID);
+            var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
             if (forumTopic != null)
             {
-                hlForumTopic.NavigateUrl = SEOHelper.GetForumTopicURL(forumTopic.ForumTopicID);
+                hlForumTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
                 hlForumTopic.Text = Server.HtmlEncode(forumTopic.Subject);
             }
             else
@@ -62,16 +62,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
             Forum forum = null;
             if (forumTopic != null)
             {
-                forum = ForumManager.GetForumByID(forumTopic.ForumID);
+                forum = ForumManager.GetForumById(forumTopic.ForumId);
             }
             else
             {
-                forum = ForumManager.GetForumByID(this.ForumID);
+                forum = ForumManager.GetForumById(this.ForumId);
             }
 
             if (forum != null)
             {
-                hlForum.NavigateUrl = SEOHelper.GetForumURL(forum);
+                hlForum.NavigateUrl = SEOHelper.GetForumUrl(forum);
                 hlForum.Text = Server.HtmlEncode(forum.Name);
             }
             else
@@ -83,16 +83,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
             ForumGroup forumGroup = null;
             if (forum != null)
             {
-                forumGroup = ForumManager.GetForumGroupByID(forum.ForumGroupID);
+                forumGroup = ForumManager.GetForumGroupById(forum.ForumGroupId);
             }
             else
             {
-                forumGroup = ForumManager.GetForumGroupByID(this.ForumGroupID);
+                forumGroup = ForumManager.GetForumGroupById(this.ForumGroupId);
             }
 
             if (forumGroup != null)
             {
-                hlForumGroup.NavigateUrl = SEOHelper.GetForumGroupURL(forumGroup);
+                hlForumGroup.NavigateUrl = SEOHelper.GetForumGroupUrl(forumGroup);
                 hlForumGroup.Text = Server.HtmlEncode(forumGroup.Name);
             }
             else
@@ -102,48 +102,48 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         }
 
-        public int ForumGroupID
+        public int ForumGroupId
         {
             get
             {
-                if (ViewState["ForumGroupID"] == null)
+                if (ViewState["ForumGroupId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["ForumGroupID"];
+                    return (int)ViewState["ForumGroupId"];
             }
             set
             {
-                this.ViewState["ForumGroupID"] = value;
+                this.ViewState["ForumGroupId"] = value;
             }
         }
 
-        public int ForumID
+        public int ForumId
         {
             get
             {
-                if (ViewState["ForumID"] == null)
+                if (ViewState["ForumId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["ForumID"];
+                    return (int)ViewState["ForumId"];
             }
             set
             {
-                this.ViewState["ForumID"] = value;
+                this.ViewState["ForumId"] = value;
             }
         }
 
-        public int ForumTopicID
+        public int ForumTopicId
         {
             get
             {
-                if (ViewState["ForumTopicID"] == null)
+                if (ViewState["ForumTopicId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["ForumTopicID"];
+                    return (int)ViewState["ForumTopicId"];
             }
             set
             {
-                this.ViewState["ForumTopicID"] = value;
+                this.ViewState["ForumTopicId"] = value;
             }
         }
     }

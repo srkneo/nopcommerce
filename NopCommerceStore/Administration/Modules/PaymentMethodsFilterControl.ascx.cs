@@ -17,7 +17,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             private DataControlRowType _templateType;
             private string _columnName;
             private string _dataType;
-            private int _paymentMethodID;
+            private int _paymentMethodId;
             #endregion
 
             #region Ctor
@@ -25,12 +25,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
             }
 
-            public NopGridViewCustomTemplate(DataControlRowType type, string columnName, string dataType, int paymentMethodID)
+            public NopGridViewCustomTemplate(DataControlRowType type, string columnName, string dataType, int paymentMethodId)
             {
                 _templateType = type;
                 _columnName = columnName;
                 _dataType = dataType;
-                _paymentMethodID = paymentMethodID;
+                _paymentMethodId = paymentMethodId;
             }
             #endregion
 
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     case "Checkbox":
                         PaymentMethodCountryMappingHelperClass map1 = row.DataItem as PaymentMethodCountryMappingHelperClass;
-                        PaymentMethod pm = PaymentMethodManager.GetPaymentMethodByID(_paymentMethodID);
+                        PaymentMethod pm = PaymentMethodManager.GetPaymentMethodById(_paymentMethodId);
                         if (pm != null)
                         {
                             switch (pm.PaymentMethodType)
@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                                 case PaymentMethodTypeEnum.Unknown:
                                 case PaymentMethodTypeEnum.Standard:
                                     {
-                                        (ctrl as CheckBox).Checked = map1.Restrict[_paymentMethodID];
+                                        (ctrl as CheckBox).Checked = map1.Restrict[_paymentMethodId];
                                     }
                                     break;
                                 case PaymentMethodTypeEnum.Button:
@@ -74,21 +74,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
 
-            private void hfCountryID_DataBinding(Object sender, EventArgs e)
+            private void hfCountryId_DataBinding(Object sender, EventArgs e)
             {
                 HiddenField hf = sender as HiddenField;
                 GridViewRow row = hf.NamingContainer as GridViewRow;
 
                 PaymentMethodCountryMappingHelperClass map1 = row.DataItem as PaymentMethodCountryMappingHelperClass;
-                hf.Value = map1.CountryID.ToString();
+                hf.Value = map1.CountryId.ToString();
             }
             #endregion
 
             #region Methods
             public void InstantiateIn(Control container)
             {
-                DataControlFieldCell hc = null;
-
                 switch(_templateType)
                 {
                     case DataControlRowType.Header:
@@ -107,11 +105,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                             case "Checkbox":
                                 ctrl = new CheckBox();
-                                ctrl.ID = String.Format("cbRestrict_{0}", _paymentMethodID);
-                                HiddenField hfCountryID = new HiddenField();
-                                hfCountryID.ID = String.Format("hfCountryID_{0}", _paymentMethodID);
-                                hfCountryID.DataBinding += new EventHandler(hfCountryID_DataBinding);
-                                container.Controls.Add(hfCountryID);
+                                ctrl.ID = String.Format("cbRestrict_{0}", _paymentMethodId);
+                                HiddenField hfCountryId = new HiddenField();
+                                hfCountryId.ID = String.Format("hfCountryId_{0}", _paymentMethodId);
+                                hfCountryId.DataBinding += new EventHandler(hfCountryId_DataBinding);
+                                container.Controls.Add(hfCountryId);
                                 break;
 
                             default:
@@ -127,7 +125,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected class PaymentMethodCountryMappingHelperClass
         {
-            public int CountryID
+            public int CountryId
             {
                 get;
                 set;
@@ -159,7 +157,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             foreach(PaymentMethod paymentMethod in paymentMethodCollection)
             {
                 TemplateField tf = new TemplateField();
-                tf.ItemTemplate = new NopGridViewCustomTemplate(DataControlRowType.DataRow, "Restrict", "Checkbox", paymentMethod.PaymentMethodID);
+                tf.ItemTemplate = new NopGridViewCustomTemplate(DataControlRowType.DataRow, "Restrict", "Checkbox", paymentMethod.PaymentMethodId);
                 tf.HeaderTemplate = new NopGridViewCustomTemplate(DataControlRowType.Header, paymentMethod.Name, "String");
                 gvPaymentMethodCountryMap.Columns.Add(tf);
             }
@@ -183,13 +181,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             foreach(Country country in countryCollection)
             {
                 PaymentMethodCountryMappingHelperClass map1 = new PaymentMethodCountryMappingHelperClass();
-                map1.CountryID = country.CountryID;
+                map1.CountryId = country.CountryId;
                 map1.CountryName = country.Name;
                 map1.Restrict = new Dictionary<int, bool>();
 
                 foreach(PaymentMethod paymentMethod in paymentMethodCollection)
                 {
-                    map1.Restrict.Add(paymentMethod.PaymentMethodID, PaymentMethodManager.IsPaymentMethodCountryMappingExists(paymentMethod.PaymentMethodID, country.CountryID));
+                    map1.Restrict.Add(paymentMethod.PaymentMethodId, PaymentMethodManager.IsPaymentMethodCountryMappingExists(paymentMethod.PaymentMethodId, country.CountryId));
                 }
 
                 dt.Add(map1);
@@ -224,18 +222,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     {
                         foreach(PaymentMethod paymentMethod in paymentMethodCollection)
                         {
-                            CheckBox cbRestrict = row.FindControl(String.Format("cbRestrict_{0}", paymentMethod.PaymentMethodID)) as CheckBox;
-                            HiddenField hfCountryID = row.FindControl(String.Format("hfCountryID_{0}", paymentMethod.PaymentMethodID)) as HiddenField;
+                            CheckBox cbRestrict = row.FindControl(String.Format("cbRestrict_{0}", paymentMethod.PaymentMethodId)) as CheckBox;
+                            HiddenField hfCountryId = row.FindControl(String.Format("hfCountryId_{0}", paymentMethod.PaymentMethodId)) as HiddenField;
 
-                            int countryID = Int32.Parse(hfCountryID.Value);
+                            int countryId = Int32.Parse(hfCountryId.Value);
 
                             if(cbRestrict.Checked)
                             {
-                                PaymentMethodManager.CreatePaymentMethodCountryMapping(paymentMethod.PaymentMethodID, countryID);
+                                PaymentMethodManager.CreatePaymentMethodCountryMapping(paymentMethod.PaymentMethodId, countryId);
                             }
                             else
                             {
-                                PaymentMethodManager.DeletePaymentMethodCountryMapping(paymentMethod.PaymentMethodID, countryID);
+                                PaymentMethodManager.DeletePaymentMethodCountryMapping(paymentMethod.PaymentMethodId, countryId);
                             }
                         }
                     }

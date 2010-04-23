@@ -38,12 +38,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets or sets the product variant attribute value identifier
         /// </summary>
-        public int ProductVariantAttributeValueID { get; set; }
+        public int ProductVariantAttributeValueId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant attribute mapping identifier
         /// </summary>
-        public int ProductVariantAttributeID { get; set; }
+        public int ProductVariantAttributeId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant attribute name

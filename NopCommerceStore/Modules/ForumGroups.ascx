@@ -4,7 +4,7 @@
 <div class="forumgroups">
     <asp:Repeater ID="rptrForumGroups" runat="server">
         <ItemTemplate>
-            <nopCommerce:ForumGroup ID="ctrlForumGroup" runat="server" ForumGroupID='<%#Eval("ForumGroupID")%>' />
+            <nopCommerce:ForumGroup ID="ctrlForumGroup" runat="server" ForumGroupID='<%#Eval("ForumGroupId")%>' />
         </ItemTemplate>
     </asp:Repeater>
 </div>

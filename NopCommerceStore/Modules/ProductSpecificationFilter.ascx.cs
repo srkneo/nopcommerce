@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     rptAlreadyFilteredPSO.DataSource = alreadyFilteredOptions;
                     rptAlreadyFilteredPSO.DataBind();
 
-                    string url = CommonHelper.GetThisPageURL(true);
+                    string url = CommonHelper.GetThisPageUrl(true);
                     string[] alreadyFilteredSpecsQueryStringParams = getAlreadyFilteredSpecsQueryStringParams();
                     foreach (string qsp in alreadyFilteredSpecsQueryStringParams)
                     {
@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 int id = 0;
                 int.TryParse(Request.QueryString[qsp], out id);
-                var sao = SpecificationAttributeManager.GetSpecificationAttributeOptionByID(id);
+                var sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(id);
                 if (sao != null)
                 {
                     var sa = sao.SpecificationAttribute;
@@ -106,10 +106,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     {
                         result.Add(new SpecificationAttributeOptionFilter
                         {
-                            SpecificationAttributeID = sa.SpecificationAttributeID,
+                            SpecificationAttributeId = sa.SpecificationAttributeId,
                             SpecificationAttributeName = sa.Name,
                             DisplayOrder = sa.DisplayOrder,
-                            SpecificationAttributeOptionID = sao.SpecificationAttributeOptionID,
+                            SpecificationAttributeOptionId = sao.SpecificationAttributeOptionId,
                             SpecificationAttributeOptionName = sao.Name
                         });
                     }
@@ -122,7 +122,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         protected SpecificationAttributeOptionFilterCollection getNotFilteredSpecs()
         {
             //get all
-            var result = SpecificationAttributeManager.GetSpecificationAttributeOptionFilter(this.CategoryID);
+            var result = SpecificationAttributeManager.GetSpecificationAttributeOptionFilter(this.CategoryId);
            
             //remove already filtered
             var alreadyFilteredOptions = getAlreadyFilteredSpecs();
@@ -130,7 +130,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 var query = from s
                                 in result
-                            where s.SpecificationAttributeID == saof1.SpecificationAttributeID
+                            where s.SpecificationAttributeId == saof1.SpecificationAttributeId
                             select s;
 
                 List<SpecificationAttributeOptionFilter> toRemove = query.ToList();
@@ -221,7 +221,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (lnkFilter != null)
                 {
                     string name = row.SpecificationAttributeName.Replace(" ", "");
-                    string url = CommonHelper.ModifyQueryString(CommonHelper.GetThisPageURL(true), name + "=" + row.SpecificationAttributeOptionID, null);
+                    string url = CommonHelper.ModifyQueryString(CommonHelper.GetThisPageUrl(true), name + "=" + row.SpecificationAttributeOptionId, null);
                     url = excludeQueryStringParams(url);
                     lnkFilter.NavigateUrl = url;
                 }
@@ -239,14 +239,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #endregion
 
         #region Methods
-        public List<int> GetAlreadyFilteredSpecOptionIDs()
+        public List<int> GetAlreadyFilteredSpecOptionIds()
         {
             var result = new List<int>();
             var filterOptions = getAlreadyFilteredSpecs();
             foreach (var saof in filterOptions)
             {
-                if (!result.Contains(saof.SpecificationAttributeOptionID))
-                    result.Add(saof.SpecificationAttributeOptionID);
+                if (!result.Contains(saof.SpecificationAttributeOptionId))
+                    result.Add(saof.SpecificationAttributeOptionId);
             }
             return result;
         }
@@ -286,18 +286,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
         /// <summary>
         /// Category identifier
         /// </summary>
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                if (ViewState["CategoryID"] == null)
+                if (ViewState["CategoryId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["CategoryID"];
+                    return (int)ViewState["CategoryId"];
             }
             set
             {
-                ViewState["CategoryID"] = value;
+                ViewState["CategoryId"] = value;
             }
         }
         #endregion

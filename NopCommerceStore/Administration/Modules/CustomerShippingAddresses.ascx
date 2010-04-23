@@ -14,7 +14,7 @@
             </tr>
             <tr>
                 <td>
-                    <a href="AddressDetails.aspx?AddressID=<%#Eval("AddressID")%>">
+                    <a href="AddressDetails.aspx?AddressID=<%#Eval("AddressId")%>">
                         <%#GetLocaleResourceString("Admin.CustomerShippingAddresses.Edit")%>
                     </a>
                 </td>

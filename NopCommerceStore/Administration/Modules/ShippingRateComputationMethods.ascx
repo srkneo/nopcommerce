@@ -17,8 +17,6 @@
 <asp:GridView ID="gvShippingRateComputationMethods" runat="server" AutoGenerateColumns="False"
     Width="100%">
     <Columns>
-        <asp:BoundField DataField="ShippingRateComputationMethodID" HeaderText="ShippingRateComputationMethod ID"
-            Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ShippingRateComputationMethods.Name %>"
             ItemStyle-Width="60%">
             <ItemTemplate>
@@ -41,7 +39,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.ShippingRateComputationMethods.Edit %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="ShippingRateComputationMethodDetails.aspx?ShippingRateComputationMethodID=<%#Eval("ShippingRateComputationMethodID")%>"
+                <a href="ShippingRateComputationMethodDetails.aspx?ShippingRateComputationMethodID=<%#Eval("ShippingRateComputationMethodId")%>"
                     title="<%#GetLocaleResourceString("Admin.ShippingRateComputationMethods.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.ShippingRateComputationMethods.Edit")%></a>
             </ItemTemplate>

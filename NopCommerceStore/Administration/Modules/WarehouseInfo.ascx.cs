@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Warehouse warehouse = WarehouseManager.GetWarehouseByID(this.WarehouseID);
+            Warehouse warehouse = WarehouseManager.GetWarehouseById(this.WarehouseId);
             if (warehouse != null)
             {
                 this.txtName.Text = warehouse.Name;
@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtCity.Text = warehouse.City;
                 this.txtStateProvince.Text = warehouse.StateProvince;
                 this.txtZipPostalCode.Text = warehouse.ZipPostalCode;
-                CommonHelper.SelectListItem(this.ddlCountry, warehouse.CountryID);
+                CommonHelper.SelectListItem(this.ddlCountry, warehouse.CountryId);
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
                 this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(warehouse.CreatedOn).ToString();
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CountryCollection countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -80,11 +80,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Warehouse SaveInfo()
         {
-            Warehouse warehouse = WarehouseManager.GetWarehouseByID(this.WarehouseID);
+            Warehouse warehouse = WarehouseManager.GetWarehouseById(this.WarehouseId);
 
             if (warehouse != null)
             {
-                warehouse = WarehouseManager.UpdateWarehouse(warehouse.WarehouseID, txtName.Text,
+                warehouse = WarehouseManager.UpdateWarehouse(warehouse.WarehouseId, txtName.Text,
                     txtPhoneNumber.Text, txtEmail.Text, txtFaxNumber.Text,
                     txtAddress1.Text, txtAddress2.Text, txtCity.Text, txtStateProvince.Text, txtZipPostalCode.Text,
                     int.Parse(this.ddlCountry.SelectedItem.Value), warehouse.Deleted, warehouse.CreatedOn, DateTime.Now);
@@ -103,11 +103,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return warehouse;
         }
 
-        public int WarehouseID
+        public int WarehouseId
         {
             get
             {
-                return CommonHelper.QueryStringInt("WarehouseID");
+                return CommonHelper.QueryStringInt("WarehouseId");
             }
         }
     }

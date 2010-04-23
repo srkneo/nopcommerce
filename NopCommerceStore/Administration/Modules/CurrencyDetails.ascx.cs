@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Currency currency = ctrlCurrencyInfo.SaveInfo();
-                    Response.Redirect("CurrencyDetails.aspx?CurrencyID=" + currency.CurrencyID.ToString());
+                    Response.Redirect("CurrencyDetails.aspx?CurrencyID=" + currency.CurrencyId.ToString());
                     
                 }
                 catch (Exception exc)
@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                CurrencyManager.DeleteCurrency(this.CurrencyID);
+                CurrencyManager.DeleteCurrency(this.CurrencyId);
                 Response.Redirect("Currencies.aspx");
             }
             catch (Exception exc)
@@ -59,11 +59,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CurrencyID
+        public int CurrencyId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CurrencyID");
+                return CommonHelper.QueryStringInt("CurrencyId");
             }
         }
     }

@@ -53,9 +53,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (Cart.Count > 0)
             {
                 //payment method (if already selected)
-                int paymentMethodID = 0;
+                int paymentMethodId = 0;
                 if (NopContext.Current.User != null)
-                    paymentMethodID = NopContext.Current.User.LastPaymentMethodID;
+                    paymentMethodId = NopContext.Current.User.LastPaymentMethodId;
 
                 //subtotal
                 decimal subTotalDiscountBase = decimal.Zero;
@@ -130,7 +130,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 //payment method fee
                 bool displayPaymentMethodFee = true;
-                decimal paymentMethodAdditionalFee = PaymentManager.GetAdditionalHandlingFee(paymentMethodID);
+                decimal paymentMethodAdditionalFee = PaymentManager.GetAdditionalHandlingFee(paymentMethodId);
                 decimal paymentMethodAdditionalFeeWithTaxBase = TaxManager.GetPaymentMethodAdditionalFee(paymentMethodAdditionalFee, NopContext.Current.User);
                 if (paymentMethodAdditionalFeeWithTaxBase > decimal.Zero)
                 {
@@ -152,7 +152,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 else
                 {
                     string TaxError = string.Empty;
-                    decimal shoppingCartTaxBase = TaxManager.GetTaxTotal(Cart, paymentMethodID, NopContext.Current.User, ref TaxError);
+                    decimal shoppingCartTaxBase = TaxManager.GetTaxTotal(Cart, paymentMethodId, NopContext.Current.User, ref TaxError);
                     decimal shoppingCartTax = CurrencyManager.ConvertCurrency(shoppingCartTaxBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
 
                     if (String.IsNullOrEmpty(TaxError))
@@ -176,7 +176,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 phTaxTotal.Visible = displayTax;
 
                 //total
-                decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(Cart, paymentMethodID, NopContext.Current.User);
+                decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(Cart, paymentMethodId, NopContext.Current.User);
                 if (shoppingCartTotalBase.HasValue)
                 {
                     decimal shoppingCartTotal = CurrencyManager.ConvertCurrency(shoppingCartTotalBase.Value, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);

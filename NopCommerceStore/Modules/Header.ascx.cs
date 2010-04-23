@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 int totalRecords = 0;
                 var privateMessages = ForumManager.GetAllPrivateMessages(0,
-                    NopContext.Current.User.CustomerID, false, null, false, string.Empty, 1, 0, out totalRecords);
+                    NopContext.Current.User.CustomerId, false, null, false, string.Empty, 1, 0, out totalRecords);
 
                 if (totalRecords > 0)
                 {

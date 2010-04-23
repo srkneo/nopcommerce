@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.QuickPay
             cbUseSandbox.Checked = SettingManager.GetSettingValueBoolean(QuickPayConstants.SETTING_USE_SANDBOX, true);
             txtMD5Secret.Text = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MD5SECRET);
             txtCreditCard.Text = SettingManager.GetSettingValue(QuickPayConstants.SETTING_CREDITCARD_CODE_PROPERTY, "dankort");
-            txtMerchantID.Text = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MERCHANTID);
+            txtMerchantId.Text = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MERCHANTID);
             txtAdditionalFee.Value = SettingManager.GetSettingValueDecimalNative("PaymentMethod.QuickPay.AdditionalFee", decimal.Zero);
         }
 
@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.QuickPay
         {
             SettingManager.SetParam(QuickPayConstants.SETTING_USE_SANDBOX, cbUseSandbox.Checked.ToString());
             SettingManager.SetParam(QuickPayConstants.SETTING_MD5SECRET, txtMD5Secret.Text);
-            SettingManager.SetParam(QuickPayConstants.SETTING_MERCHANTID, txtMerchantID.Text);
+            SettingManager.SetParam(QuickPayConstants.SETTING_MERCHANTID, txtMerchantId.Text);
             SettingManager.SetParam(QuickPayConstants.SETTING_CREDITCARD_CODE_PROPERTY, txtCreditCard.Text);
             SettingManager.SetParamNative("PaymentMethod.QuickPay.AdditionalFee", txtAdditionalFee.Value);
         }

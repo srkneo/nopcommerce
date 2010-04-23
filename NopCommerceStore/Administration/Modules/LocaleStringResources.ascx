@@ -26,8 +26,6 @@
 <asp:GridView ID="gvLocaleStringResources" runat="server" AutoGenerateColumns="False"
     Width="100%" OnPageIndexChanging="gvLocaleStringResources_PageIndexChanging" AllowPaging="true" PageSize="150">
     <Columns>
-        <asp:BoundField DataField="LocaleStringResourceID" HeaderText="LocaleStringResource ID"
-            Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.LocaleStringResources.LanguageColumn %>"
             ItemStyle-Width="20%">
             <ItemTemplate>
@@ -41,7 +39,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.LocaleStringResources.EditColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="LocaleStringResourceDetails.aspx?LocaleStringResourceID=<%#Eval("LocaleStringResourceID")%>"
+                <a href="LocaleStringResourceDetails.aspx?LocaleStringResourceID=<%#Eval("LocaleStringResourceId")%>"
                     title="<%#GetLocaleResourceString("Admin.LocaleStringResources.EditColumn.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.LocaleStringResources.EditColumn")%></a>
             </ItemTemplate>

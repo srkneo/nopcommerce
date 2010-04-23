@@ -33,66 +33,70 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     public abstract partial class DBShippingMethodProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a shipping method
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        public abstract void DeleteShippingMethod(int ShippingMethodID);
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        public abstract void DeleteShippingMethod(int shippingMethodId);
 
         /// <summary>
         /// Gets a shipping method
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <returns>Shipping method</returns>
-        public abstract DBShippingMethod GetShippingMethodByID(int ShippingMethodID);
+        public abstract DBShippingMethod GetShippingMethodById(int shippingMethodId);
 
         /// <summary>
         /// Gets all shipping methods
         /// </summary>
-        /// <param name="FilterByCountryID">The country indentifier</param>
+        /// <param name="filterByCountryId">The country indentifier</param>
         /// <returns>Shipping method collection</returns>
-        public abstract DBShippingMethodCollection GetAllShippingMethods(int? FilterByCountryID);
+        public abstract DBShippingMethodCollection GetAllShippingMethods(int? filterByCountryId);
 
         /// <summary>
         /// Inserts a shipping method
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping method</returns>
-        public abstract DBShippingMethod InsertShippingMethod(string Name, string Description, int DisplayOrder);
+        public abstract DBShippingMethod InsertShippingMethod(string name,
+            string description, int displayOrder);
 
         /// <summary>
         /// Updates the shipping method
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Shipping method</returns>
-        public abstract DBShippingMethod UpdateShippingMethod(int ShippingMethodID, string Name, string Description, int DisplayOrder);
+        public abstract DBShippingMethod UpdateShippingMethod(int shippingMethodId, 
+            string name, string description, int displayOrder);
 
         /// <summary>
         /// Inserts shipping method country mapping
         /// </summary>
-        /// <param name="shippingMethodID">The shipping method identifier</param>
-        /// <param name="countryID">The country identifier</param>
-        public abstract void InsertShippingMethodCountryMapping(int shippingMethodID, int countryID);
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public abstract void InsertShippingMethodCountryMapping(int shippingMethodId, int countryId);
 
         /// <summary>
         /// Checking whether the shipping method country mapping is exists
         /// </summary>
-        /// <param name="shippingMethodID">The shipping method identifier</param>
-        /// <param name="countryID">The country identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public abstract bool IsShippingMethodCountryMappingExists(int shippingMethodID, int countryID);
+        public abstract bool IsShippingMethodCountryMappingExists(int shippingMethodId, int countryId);
 
         /// <summary>
         /// Deletes shipping method country mapping
         /// </summary>
-        /// <param name="shippingMethodID">The shipping method identifier</param>
-        /// <param name="countryID">The country identifier</param>
-        public abstract void DeleteShippingMethodCountryMapping(int shippingMethodID, int countryID);
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        public abstract void DeleteShippingMethodCountryMapping(int shippingMethodId, int countryId);
+        
         #endregion
     }
 }

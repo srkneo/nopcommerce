@@ -37,9 +37,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.ChronoPay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -59,13 +59,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.ChronoPay
             post.Url = gatewayUrl.ToString();
             post.Method = "POST";
 
-            post.Add("product_id", HostedPaymentSettings.ProductID);
+            post.Add("product_id", HostedPaymentSettings.ProductId);
             post.Add("product_name", HostedPaymentSettings.ProductName);
             post.Add("product_price", String.Format(CultureInfo.InvariantCulture, "{0:0.00}", order.OrderTotal));
             post.Add("product_price_currency", order.CustomerCurrencyCode);
             post.Add("cb_url", String.Format("{0}ChronoPayIPNHandler.aspx", CommonHelper.GetStoreLocation(false)));
             post.Add("cb_type", "P");
-            post.Add("cs1", order.OrderID.ToString());
+            post.Add("cs1", order.OrderId.ToString());
             post.Add("f_name", order.BillingFirstName);
             post.Add("s_name", order.BillingLastName);
             post.Add("street", order.BillingAddress1);
@@ -74,16 +74,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.ChronoPay
             post.Add("phone", order.BillingPhoneNumber);
             post.Add("email", order.BillingEmail);
 
-            StateProvince state = StateProvinceManager.GetStateProvinceByID(order.BillingStateProvinceID);
+            StateProvince state = StateProvinceManager.GetStateProvinceById(order.BillingStateProvinceId);
             if(state != null)
             {
                 post.Add("state", state.Abbreviation);
             }
 
-            Country country = CountryManager.GetCountryByID(order.BillingCountryID);
+            Country country = CountryManager.GetCountryById(order.BillingCountryId);
             if(country != null)
             {
-                post.Add("country", country.ThreeLetterISOCode);
+                post.Add("country", country.ThreeLetterIsoCode);
             }
 
             post.Add("sign", HostedPaymentHelper.CalcRequestSign(post.Params));
@@ -137,9 +137,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.ChronoPay
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NotImplementedException();
         }

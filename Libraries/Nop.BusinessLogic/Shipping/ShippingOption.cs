@@ -25,26 +25,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
     [Serializable]
     public partial class ShippingOption
     {
-        private int shippingRateComputationMethodID;
-        private decimal rate;
-        private string name;
-        private string description;
-        private int appliedDiscountID;
+        private int _shippingRateComputationMethodId;
+        private decimal _rate;
+        private string _name;
+        private string _description;
+        private int _appliedDiscountId;
 
         #region Properties
 
         /// <summary>
         /// Gets or sets shipping rate computation method
         /// </summary>
-        public int ShippingRateComputationMethodID
+        public int ShippingRateComputationMethodId
         {
             get
             {
-                return shippingRateComputationMethodID;
+                return _shippingRateComputationMethodId;
             }
             set
             {
-                shippingRateComputationMethodID = value;
+                _shippingRateComputationMethodId = value;
             }
         }
 
@@ -55,11 +55,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             get
             {
-                return rate;
+                return _rate;
             }
             set
             {
-                rate = value;
+                _rate = value;
             }
         }
 
@@ -70,11 +70,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             get
             {
-                return name;
+                return _name;
             }
             set
             {
-                name = value;
+                _name = value;
             }
         }
 
@@ -85,26 +85,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             get
             {
-                return description;
+                return _description;
             }
             set
             {
-                description = value;
+                _description = value;
             }
         }
 
         /// <summary>
         /// Gets or sets an applied discount identifier
         /// </summary>
-        public int AppliedDiscountID
+        public int AppliedDiscountId
         {
             get
             {
-                return appliedDiscountID;
+                return _appliedDiscountId;
             }
             set
             {
-                appliedDiscountID = value;
+                _appliedDiscountId = value;
             }
         }
         #endregion

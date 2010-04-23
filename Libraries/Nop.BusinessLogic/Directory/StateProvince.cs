@@ -39,12 +39,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets or sets the state/province identifier
         /// </summary>
-        public int StateProvinceID { get; set; }
+        public int StateProvinceId { get; set; }
 
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             get
             {
-                return CountryManager.GetCountryByID(CountryID);
+                return CountryManager.GetCountryById(this.CountryId);
             }
         }
         #endregion

@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Gets or sets the search log identifier
         /// </summary>
-        public int SearchLogID { get; set; }
+        public int SearchLogId { get; set; }
 
         /// <summary>
         /// Gets or sets the search term
@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation
@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         {
             get
             {
-                return CustomerManager.GetCustomerByID(CustomerID);
+                return CustomerManager.GetCustomerById(this.CustomerId);
             }
         }
         #endregion

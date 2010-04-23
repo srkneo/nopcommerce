@@ -36,27 +36,29 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Inserts an activity log type item
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Name">The display name</param>
-        /// <param name="Enabled">Value indicating whether the activity log type is enabled</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="name">The display name</param>
+        /// <param name="enabled">Value indicating whether the activity log type is enabled</param>
         /// <returns>Activity log type item</returns>
-        public abstract DBActivityLogType InsertActivityType(string SystemKeyword, string Name, bool Enabled);
+        public abstract DBActivityLogType InsertActivityType(string systemKeyword, 
+            string name, bool enabled);
        
         /// <summary>
         /// Updates an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Name">The display name</param>
-        /// <param name="Enabled">Value indicating whether the activity log type is enabled</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="name">The display name</param>
+        /// <param name="enabled">Value indicating whether the activity log type is enabled</param>
         /// <returns>Activity log type item</returns>
-        public abstract DBActivityLogType UpdateActivityType(int ActivityLogTypeID, string SystemKeyword, string Name, bool Enabled);
+        public abstract DBActivityLogType UpdateActivityType(int activityLogTypeId, 
+            string systemKeyword, string name, bool enabled);
         
         /// <summary>
         /// Deletes an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        public abstract void DeleteActivityType(int ActivityLogTypeID);
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        public abstract void DeleteActivityType(int activityLogTypeId);
         
         /// <summary>
         /// Gets all activity log type items
@@ -67,59 +69,61 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
         /// <returns>Activity log type item</returns>
-        public abstract DBActivityLogType GetActivityTypeByID(int ActivityLogTypeID);
+        public abstract DBActivityLogType GetActivityTypeById(int activityLogTypeId);
 
         /// <summary>
         /// Inserts an activity log item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Comment">The activity comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="comment">The activity comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Activity log item</returns>
-        public abstract DBActivityLog InsertActivity(int ActivityLogTypeID, int CustomerID, string Comment, DateTime CreatedOn);
+        public abstract DBActivityLog InsertActivity(int activityLogTypeId, 
+            int customerId, string comment, DateTime createdOn);
         
         /// <summary>
         /// Updates an activity log 
         /// </summary>
-        /// <param name="ActivityLogID">Activity log identifier</param>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Comment">The activity comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="activityLogId">Activity log identifier</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="comment">The activity comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Activity log item</returns>
-        public abstract DBActivityLog UpdateActivity(int ActivityLogID, int ActivityLogTypeID, int CustomerID, string Comment, DateTime CreatedOn);
+        public abstract DBActivityLog UpdateActivity(int activityLogId, 
+            int activityLogTypeId, int customerId, string comment, DateTime createdOn);
         
         /// <summary>
         /// Deletes an activity log item
         /// </summary>
-        /// <param name="ActivityLogID">Activity log type identifier</param>
-        public abstract void DeleteActivity(int ActivityLogID);
+        /// <param name="activityLogId">Activity log type identifier</param>
+        public abstract void DeleteActivity(int activityLogId);
         
         /// <summary>
         /// Gets all activity log items
         /// </summary>
-        /// <param name="CreatedOnFrom">Log item creation from; null to load all customers</param>
-        /// <param name="CreatedOnTo">Log item creation to; null to load all customers</param>
-        /// <param name="Email">Customer Email</param>
-        /// <param name="Username">Customer username</param>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="createdOnFrom">Log item creation from; null to load all customers</param>
+        /// <param name="createdOnTo">Log item creation to; null to load all customers</param>
+        /// <param name="email">Customer Email</param>
+        /// <param name="username">Customer username</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Activity log collection</returns>
-        public abstract DBActivityLogCollection GetAllActivities(DateTime? CreatedOnFrom, DateTime? CreatedOnTo,
-            string Email, string Username, int ActivityLogTypeID, 
-            int PageSize, int PageIndex, out int TotalRecords);
+        public abstract DBActivityLogCollection GetAllActivities(DateTime? createdOnFrom, 
+            DateTime? createdOnTo, string email, string username, int activityLogTypeId, 
+            int pageSize, int pageIndex, out int totalRecords);
         
         /// <summary>
         /// Gets an activity log item
         /// </summary>
-        /// <param name="ActivityLogID">Activity log identifier</param>
+        /// <param name="activityLogId">Activity log identifier</param>
         /// <returns>Activity log item</returns>
-        public abstract DBActivityLog GetActivityByID(int ActivityLogID);
+        public abstract DBActivityLog GetActivityById(int activityLogId);
 
         /// <summary>
         /// Clears activity log

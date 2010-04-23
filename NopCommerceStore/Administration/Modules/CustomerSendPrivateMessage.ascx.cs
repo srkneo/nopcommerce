@@ -76,16 +76,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 string subject = txtSubject.Text.Trim();
                 string message = txtMessageBBCode.Text.Trim();
 
-                var customer = CustomerManager.GetCustomerByID(this.CustomerID);
+                var customer = CustomerManager.GetCustomerById(this.CustomerId);
                 if (customer != null)
                 {
                     var pm = ForumManager.InsertPrivateMessage(
-                        NopContext.Current.User.CustomerID, 
-                        customer.CustomerID, subject, message,
+                        NopContext.Current.User.CustomerId, 
+                        customer.CustomerId, subject, message,
                         false, false, false, DateTime.Now);
                 }
 
-                Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}", CustomerID));
+                Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}", CustomerId));
             }
             catch (Exception exc)
             {
@@ -93,11 +93,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
     }

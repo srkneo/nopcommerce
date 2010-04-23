@@ -28,7 +28,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     public class AppliedGiftCard
     {
         #region Fields
-        private GiftCard gc = null;
+        private GiftCard _gc = null;
         #endregion
 
         #region Ctor
@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the goft card identifier
         /// </summary>
-        public int GiftCardID { get; set; }
+        public int GiftCardId { get; set; }
 
         /// <summary>
         /// Gets or sets the used value
@@ -65,9 +65,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                if (gc == null)
-                    gc = OrderManager.GetGiftCardByID(GiftCardID);
-                return gc;
+                if (_gc == null)
+                    _gc = OrderManager.GetGiftCardById(this.GiftCardId);
+                return _gc;
             }
         }
 

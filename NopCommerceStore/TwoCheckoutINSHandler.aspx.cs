@@ -45,10 +45,10 @@ namespace NopSolutions.NopCommerce.Web
             if (!Page.IsPostBack)
             {
                 //item_id_1 or vendor_order_id
-                string nopOrderIDStr = HttpContext.Current.Request.Form["item_id_1"];
-                int nopOrderID = 0;
-                int.TryParse(nopOrderIDStr, out nopOrderID);
-                Order order = OrderManager.GetOrderByID(nopOrderID);
+                string nopOrderIdStr = HttpContext.Current.Request.Form["item_id_1"];
+                int nopOrderId = 0;
+                int.TryParse(nopOrderIdStr, out nopOrderId);
+                Order order = OrderManager.GetOrderById(nopOrderId);
                 if (order != null)
                 {
                     //debug info
@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web
                         string value = HttpContext.Current.Request.Form[key];
                         sbDebug.AppendLine(key + ": " + value);
                     }
-                    OrderManager.InsertOrderNote(order.OrderID, sbDebug.ToString(), false, DateTime.Now);
+                    OrderManager.InsertOrderNote(order.OrderId, sbDebug.ToString(), false, DateTime.Now);
 
 
                     bool useSandbox = SettingManager.GetSettingValueBoolean("PaymentMethod.TwoCheckout.UseSandbox");
@@ -80,10 +80,10 @@ namespace NopSolutions.NopCommerce.Web
 
                     if (SettingManager.GetSettingValueBoolean("PaymentMethod.TwoCheckout.UseMD5Hashing"))
                     {
-                        string vendorID = SettingManager.GetSettingValue("PaymentMethod.TwoCheckout.VendorID");
+                        string vendorId = SettingManager.GetSettingValue("PaymentMethod.TwoCheckout.VendorId");
                         string secretWord = SettingManager.GetSettingValue("PaymentMethod.TwoCheckout.SecretWord");
 
-                        string compareHash1 = TwoCheckoutPaymentProcessor.CalculateMD5hash(sale_id + vendorID + invoice_id + secretWord);
+                        string compareHash1 = TwoCheckoutPaymentProcessor.CalculateMD5hash(sale_id + vendorId + invoice_id + secretWord);
                         if (String.IsNullOrEmpty(compareHash1))
                             throw new NopException("2Checkout empty hash string");
                         string compareHash2 = HttpContext.Current.Request.Form["md5_hash"];
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.Web
 
                         if (compareHash1.ToUpperInvariant() != compareHash2.ToUpperInvariant())
                         {
-                            OrderManager.InsertOrderNote(order.OrderID, "Hash validation failed", false, DateTime.Now);
+                            OrderManager.InsertOrderNote(order.OrderId, "Hash validation failed", false, DateTime.Now);
                             Response.Redirect(CommonHelper.GetStoreLocation());
                         }
                     }
@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.Web
                     sb.AppendLine("fraud_status: " + fraud_status);
                     sb.AppendLine("payment_type: " + payment_type);
                     sb.AppendLine("New payment status: " + PaymentStatusManager.GetPaymentStatusName((int)newPaymentStatus));
-                    OrderManager.InsertOrderNote(order.OrderID, sb.ToString(), false, DateTime.Now);
+                    OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.Now);
 
                     //new payment status
                     switch (newPaymentStatus)
@@ -134,7 +134,7 @@ namespace NopSolutions.NopCommerce.Web
                             {
                                 if (OrderManager.CanMarkOrderAsAuthorized(order))
                                 {
-                                    OrderManager.MarkAsAuthorized(order.OrderID);
+                                    OrderManager.MarkAsAuthorized(order.OrderId);
                                 }
                             }
                             break;
@@ -142,7 +142,7 @@ namespace NopSolutions.NopCommerce.Web
                             {
                                 if (OrderManager.CanMarkOrderAsPaid(order))
                                 {
-                                    OrderManager.MarkOrderAsPaid(order.OrderID);
+                                    OrderManager.MarkOrderAsPaid(order.OrderId);
                                 }
                             }
                             break;
@@ -150,7 +150,7 @@ namespace NopSolutions.NopCommerce.Web
                             {
                                 if (OrderManager.CanRefundOffline(order))
                                 {
-                                    OrderManager.RefundOffline(order.OrderID);
+                                    OrderManager.RefundOffline(order.OrderId);
                                 }
                             }
                             break;
@@ -158,7 +158,7 @@ namespace NopSolutions.NopCommerce.Web
                             {
                                 if (OrderManager.CanVoidOffline(order))
                                 {
-                                    OrderManager.VoidOffline(order.OrderID);
+                                    OrderManager.VoidOffline(order.OrderId);
                                 }
                             }
                             break;

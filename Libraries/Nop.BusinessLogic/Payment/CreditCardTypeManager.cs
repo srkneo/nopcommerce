@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return null;
 
             var item = new CreditCardType();
-            item.CreditCardTypeID = dbItem.CreditCardTypeID;
+            item.CreditCardTypeId = dbItem.CreditCardTypeId;
             item.Name = dbItem.Name;
             item.SystemKeyword = dbItem.SystemKeyword;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -72,21 +72,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets a credit card type
         /// </summary>
-        /// <param name="CreditCardTypeID">Credit card type identifier</param>
+        /// <param name="creditCardTypeId">Credit card type identifier</param>
         /// <returns>Credit card type</returns>
-        public static CreditCardType GetCreditCardTypeByID(int CreditCardTypeID)
+        public static CreditCardType GetCreditCardTypeById(int creditCardTypeId)
         {
-            if (CreditCardTypeID == 0)
+            if (creditCardTypeId == 0)
                 return null;
 
-            string key = string.Format(CREDITCARDS_BY_ID_KEY, CreditCardTypeID);
+            string key = string.Format(CREDITCARDS_BY_ID_KEY, creditCardTypeId);
             object obj2 = NopCache.Get(key);
             if (CreditCardTypeManager.CacheEnabled && (obj2 != null))
             {
                 return (CreditCardType)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.GetCreditCardTypeByID(CreditCardTypeID);
+            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.GetCreditCardTypeById(creditCardTypeId);
             var creditCardType = DBMapping(dbItem);
 
             if (CreditCardTypeManager.CacheEnabled)
@@ -99,13 +99,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Marks a credit card type as deleted
         /// </summary>
-        /// <param name="CreditCardTypeID">Credit card type identifier</param>
-        public static void MarkCreditCardTypeAsDeleted(int CreditCardTypeID)
+        /// <param name="creditCardTypeId">Credit card type identifier</param>
+        public static void MarkCreditCardTypeAsDeleted(int creditCardTypeId)
         {
-            var creditCardType = GetCreditCardTypeByID(CreditCardTypeID);
+            var creditCardType = GetCreditCardTypeById(creditCardTypeId);
             if (creditCardType != null)
             {
-                UpdateCreditCardType(creditCardType.CreditCardTypeID, creditCardType.Name, creditCardType.SystemKeyword, creditCardType.DisplayOrder, true);
+                UpdateCreditCardType(creditCardType.CreditCardTypeId, creditCardType.Name, creditCardType.SystemKeyword, creditCardType.DisplayOrder, true);
             }
             if (CreditCardTypeManager.CacheEnabled)
             {
@@ -139,14 +139,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Inserts a credit card type
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>A credit card type</returns>
-        public static CreditCardType InsertCreditCardType(string Name, string SystemKeyword, int DisplayOrder, bool Deleted)
+        public static CreditCardType InsertCreditCardType(string name,
+            string systemKeyword, int displayOrder, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.InsertCreditCardType(Name, SystemKeyword, DisplayOrder, Deleted);
+            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.InsertCreditCardType(name,
+                systemKeyword, displayOrder, deleted);
             var creditCardType = DBMapping(dbItem);
             if (CreditCardTypeManager.CacheEnabled)
             {
@@ -158,17 +160,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Updates the credit card type
         /// </summary>
-        /// <param name="CreditCardTypeID">Credit card type identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="creditCardTypeId">Credit card type identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>A credit card type</returns>
-        public static CreditCardType UpdateCreditCardType(int CreditCardTypeID, string Name, string SystemKeyword,
-            int DisplayOrder, bool Deleted)
+        public static CreditCardType UpdateCreditCardType(int creditCardTypeId,
+            string name, string systemKeyword, int displayOrder, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.UpdateCreditCardType(CreditCardTypeID, Name,
-                SystemKeyword, DisplayOrder, Deleted);
+            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.UpdateCreditCardType(creditCardTypeId,
+                name, systemKeyword, displayOrder, deleted);
             var creditCardType = DBMapping(dbItem);
             if (CreditCardTypeManager.CacheEnabled)
             {

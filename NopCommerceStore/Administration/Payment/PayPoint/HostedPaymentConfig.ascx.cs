@@ -12,7 +12,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.PayPoint
         {
             if(!Page.IsPostBack)
             {
-                txtMerchantID.Text = HostedPaymentSettings.MerchantID;
+                txtMerchantId.Text = HostedPaymentSettings.MerchantId;
                 txtGatewayUrl.Text = HostedPaymentSettings.GatewayUrl;
                 txtRemotePassword.Text = HostedPaymentSettings.RemotePassword;
                 txtDigestKey.Text = HostedPaymentSettings.DigestKey;
@@ -22,7 +22,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.PayPoint
 
         public void Save()
         {
-            HostedPaymentSettings.MerchantID = txtMerchantID.Text;
+            HostedPaymentSettings.MerchantId = txtMerchantId.Text;
             HostedPaymentSettings.GatewayUrl = txtGatewayUrl.Text;
             HostedPaymentSettings.RemotePassword = txtRemotePassword.Text;
             HostedPaymentSettings.DigestKey = txtDigestKey.Text;

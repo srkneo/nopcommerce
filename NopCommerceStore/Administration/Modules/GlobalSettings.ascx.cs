@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (!Page.IsPostBack)
             {
-                this.SelectTab(this.CommonSettingsTabs, this.TabID);
+                this.SelectTab(this.CommonSettingsTabs, this.TabId);
                 FillDropDowns();
                 BindData();
             }
@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void BindData()
         {
             txtStoreName.Text = SettingManager.StoreName;
-            txtStoreURL.Text = SettingManager.StoreURL;
+            txtStoreURL.Text = SettingManager.StoreUrl;
             cbStoreClosed.Checked = SettingManager.GetSettingValueBoolean("Common.StoreClosed");
             cbAnonymousCheckoutAllowed.Checked = CustomerManager.AnonymousCheckoutAllowed;
             cbUseOnePageCheckout.Checked = SettingManager.GetSettingValueBoolean("Checkout.UseOnePageCheckout");
@@ -153,7 +153,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             cbIsSMSAlertsEnabled.Checked = SMSManager.IsSMSAlertsEnabled;
             txtSMSAlertsPhoneNumber.Text = SMSManager.PhoneNumber;
-            txtSMSAlertsClickatellAPIID.Text = SMSManager.ClickatellAPIID;
+            txtSMSAlertsClickatellAPIId.Text = SMSManager.ClickatellAPIId;
             txtSMSAlertsClickatellUsername.Text = SMSManager.ClickatellUsername;
             txtSMSAlertsClickatellPassword.Text = SMSManager.ClickatellPassword;
 
@@ -225,7 +225,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
 
                     SettingManager.StoreName = txtStoreName.Text;
-                    SettingManager.StoreURL = txtStoreURL.Text;
+                    SettingManager.StoreUrl = txtStoreURL.Text;
                     SettingManager.SetParam("Common.StoreClosed", cbStoreClosed.Checked.ToString());
                     CustomerManager.AnonymousCheckoutAllowed = cbAnonymousCheckoutAllowed.Checked;
                     SettingManager.SetParam("Checkout.UseOnePageCheckout", cbUseOnePageCheckout.Checked.ToString());
@@ -295,8 +295,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     CustomerManager.AllowViewingProfiles = cbAllowViewingProfiles.Checked;
                     CustomerManager.AllowCustomersToUploadAvatars = cbCustomersAllowedToUploadAvatars.Checked;
                     CustomerManager.DefaultAvatarEnabled = cbDefaultAvatarEnabled.Checked;
-                    string defaultStoreTimeZoneID = ddlDefaultStoreTimeZone.SelectedItem.Value;
-                    DateTimeHelper.DefaultStoreTimeZone = DateTimeHelper.FindTimeZoneById(defaultStoreTimeZoneID);
+                    string defaultStoreTimeZoneId = ddlDefaultStoreTimeZone.SelectedItem.Value;
+                    DateTimeHelper.DefaultStoreTimeZone = DateTimeHelper.FindTimeZoneById(defaultStoreTimeZoneId);
                     DateTimeHelper.AllowCustomersToSetTimeZone = cbAllowCustomersToSetTimeZone.Checked;
 
 
@@ -323,7 +323,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     SMSManager.IsSMSAlertsEnabled = cbIsSMSAlertsEnabled.Checked;
                     SMSManager.PhoneNumber = txtSMSAlertsPhoneNumber.Text;
-                    SMSManager.ClickatellAPIID = txtSMSAlertsClickatellAPIID.Text;
+                    SMSManager.ClickatellAPIId = txtSMSAlertsClickatellAPIId.Text;
                     SMSManager.ClickatellUsername = txtSMSAlertsClickatellUsername.Text;
                     SMSManager.ClickatellPassword = txtSMSAlertsClickatellPassword.Text;
 
@@ -345,7 +345,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         "EditGlobalSettings",
                         GetLocaleResourceString("ActivityLog.EditGlobalSettings"));
 
-                    Response.Redirect(string.Format("GlobalSettings.aspx?TabID={0}", this.GetActiveTabID(this.CommonSettingsTabs)));
+                    Response.Redirect(string.Format("GlobalSettings.aspx?TabID={0}", this.GetActiveTabId(this.CommonSettingsTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -424,11 +424,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

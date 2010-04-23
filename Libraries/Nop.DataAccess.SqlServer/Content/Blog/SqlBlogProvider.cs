@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
     /// <summary>
     /// Blog provider for SQL Server
     /// </summary>
-    public partial class SQLBlogProvider : DBBlogProvider
+    public partial class SqlBlogProvider : DBBlogProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,26 +36,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         #region Utilities
         private DBBlogPost GetBlogPostFromReader(IDataReader dataReader)
         {
-            DBBlogPost blogPost = new DBBlogPost();
-            blogPost.BlogPostID = NopSqlDataHelper.GetInt(dataReader, "BlogPostID");
-            blogPost.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            blogPost.BlogPostTitle = NopSqlDataHelper.GetString(dataReader, "BlogPostTitle");
-            blogPost.BlogPostBody = NopSqlDataHelper.GetString(dataReader, "BlogPostBody");
-            blogPost.BlogPostAllowComments = NopSqlDataHelper.GetBoolean(dataReader, "BlogPostAllowComments");
-            blogPost.CreatedByID = NopSqlDataHelper.GetInt(dataReader, "CreatedByID");
-            blogPost.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return blogPost;
+            var item = new DBBlogPost();
+            item.BlogPostId = NopSqlDataHelper.GetInt(dataReader, "BlogPostID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.BlogPostTitle = NopSqlDataHelper.GetString(dataReader, "BlogPostTitle");
+            item.BlogPostBody = NopSqlDataHelper.GetString(dataReader, "BlogPostBody");
+            item.BlogPostAllowComments = NopSqlDataHelper.GetBoolean(dataReader, "BlogPostAllowComments");
+            item.CreatedById = NopSqlDataHelper.GetInt(dataReader, "CreatedByID");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
 
         private DBBlogComment GetBlogCommentFromReader(IDataReader dataReader)
         {
-            DBBlogComment blogComment = new DBBlogComment();
-            blogComment.BlogCommentID = NopSqlDataHelper.GetInt(dataReader, "BlogCommentID");
-            blogComment.BlogPostID = NopSqlDataHelper.GetInt(dataReader, "BlogPostID");
-            blogComment.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            blogComment.CommentText = NopSqlDataHelper.GetString(dataReader, "CommentText");
-            blogComment.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return blogComment;
+            var item = new DBBlogComment();
+            item.BlogCommentId = NopSqlDataHelper.GetInt(dataReader, "BlogCommentID");
+            item.BlogPostId = NopSqlDataHelper.GetInt(dataReader, "BlogPostID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.CommentText = NopSqlDataHelper.GetString(dataReader, "CommentText");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
         #endregion
 
@@ -98,53 +98,54 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// <summary>
         /// Deletes an blog post
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
-        public override void DeleteBlogPost(int BlogPostID)
+        /// <param name="blogPostId">Blog post identifier</param>
+        public override void DeleteBlogPost(int blogPostId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogPostDelete");
-            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, BlogPostID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, blogPostId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets an blog post
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
+        /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>Blog post</returns>
-        public override DBBlogPost GetBlogPostByID(int BlogPostID)
+        public override DBBlogPost GetBlogPostById(int blogPostId)
         {
-            DBBlogPost blogPost = null;
+            DBBlogPost item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogPostLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, BlogPostID);
+            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, blogPostId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    blogPost = GetBlogPostFromReader(dataReader);
+                    item = GetBlogPostFromReader(dataReader);
                 }
             }
-            return blogPost;
+            return item;
         }
 
         /// <summary>
         /// Gets all blog posts
         /// </summary>
-        /// <param name="LanguageID">Language identifier. 0 if you want to get all news</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Blog posts</returns>
-        public override DBBlogPostCollection GetAllBlogPosts(int LanguageID, int PageSize, int PageIndex, out int TotalRecords)
+        public override DBBlogPostCollection GetAllBlogPosts(int languageId, int pageSize,
+            int pageIndex, out int totalRecords)
         {
-            TotalRecords = 0;
+            totalRecords = 0;
             var result = new DBBlogPostCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogPostLoadAll");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
-            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, PageIndex);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, pageIndex);
             db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -154,7 +155,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
                     result.Add(item);
                 }
             }
-            TotalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
+            totalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
 
             return result;
         }
@@ -162,110 +163,113 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// <summary>
         /// Inserts an blog post
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BlogPostTitle">The blog post title</param>
-        /// <param name="BlogPostBody">The blog post title</param>
-        /// <param name="BlogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
-        /// <param name="CreatedByID">The user identifier who created the blog post</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="blogPostTitle">The blog post title</param>
+        /// <param name="blogPostBody">The blog post title</param>
+        /// <param name="blogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
+        /// <param name="createdById">The user identifier who created the blog post</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog post</returns>
-        public override DBBlogPost InsertBlogPost(int LanguageID, string BlogPostTitle, string BlogPostBody,
-            bool BlogPostAllowComments, int CreatedByID, DateTime CreatedOn)
+        public override DBBlogPost InsertBlogPost(int languageId, string blogPostTitle,
+            string blogPostBody, bool blogPostAllowComments,
+            int createdById, DateTime createdOn)
         {
-            DBBlogPost blogPost = null;
+            DBBlogPost item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogPostInsert");
             db.AddOutParameter(dbCommand, "BlogPostID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "BlogPostTitle", DbType.String, BlogPostTitle);
-            db.AddInParameter(dbCommand, "BlogPostBody", DbType.String, BlogPostBody);
-            db.AddInParameter(dbCommand, "BlogPostAllowComments", DbType.Boolean, BlogPostAllowComments);
-            db.AddInParameter(dbCommand, "CreatedByID", DbType.Int32, CreatedByID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "BlogPostTitle", DbType.String, blogPostTitle);
+            db.AddInParameter(dbCommand, "BlogPostBody", DbType.String, blogPostBody);
+            db.AddInParameter(dbCommand, "BlogPostAllowComments", DbType.Boolean, blogPostAllowComments);
+            db.AddInParameter(dbCommand, "CreatedByID", DbType.Int32, createdById);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int BlogPostID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@BlogPostID"));
-                blogPost = GetBlogPostByID(BlogPostID);
+                int blogPostId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@BlogPostID"));
+                item = GetBlogPostById(blogPostId);
             }
-            return blogPost;
+            return item;
         }
 
         /// <summary>
         /// Updates the blog post
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="BlogPostID">Blog post identifier</param>
-        /// <param name="BlogPostTitle">The blog post title</param>
-        /// <param name="BlogPostBody">The blog post title</param>
-        /// <param name="BlogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
-        /// <param name="CreatedByID">The user identifier who created the blog post</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="blogPostTitle">The blog post title</param>
+        /// <param name="blogPostBody">The blog post title</param>
+        /// <param name="blogPostAllowComments">A value indicating whether the blog post comments are allowed</param>
+        /// <param name="createdById">The user identifier who created the blog post</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog post</returns>
-        public override DBBlogPost UpdateBlogPost(int BlogPostID, int LanguageID, string BlogPostTitle, string BlogPostBody,
-            bool BlogPostAllowComments, int CreatedByID, DateTime CreatedOn)
+        public override DBBlogPost UpdateBlogPost(int blogPostId,
+            int languageId, string blogPostTitle,
+            string blogPostBody, bool blogPostAllowComments,
+            int createdById, DateTime createdOn)
         {
-            DBBlogPost blogPost = null;
+            DBBlogPost item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogPostUpdate");
-            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, BlogPostID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "BlogPostTitle", DbType.String, BlogPostTitle);
-            db.AddInParameter(dbCommand, "BlogPostBody", DbType.String, BlogPostBody);
-            db.AddInParameter(dbCommand, "BlogPostAllowComments", DbType.Boolean, BlogPostAllowComments);
-            db.AddInParameter(dbCommand, "CreatedByID", DbType.Int32, CreatedByID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, blogPostId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "BlogPostTitle", DbType.String, blogPostTitle);
+            db.AddInParameter(dbCommand, "BlogPostBody", DbType.String, blogPostBody);
+            db.AddInParameter(dbCommand, "BlogPostAllowComments", DbType.Boolean, blogPostAllowComments);
+            db.AddInParameter(dbCommand, "CreatedByID", DbType.Int32, createdById);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                blogPost = GetBlogPostByID(BlogPostID);
+                item = GetBlogPostById(blogPostId);
 
-            return blogPost;
+            return item;
         }
 
         /// <summary>
-        /// Deletes an blog comment
+        /// Deletes a blog comment
         /// </summary>
-        /// <param name="BlogCommentID">Blog comment identifier</param>
-        public override void DeleteBlogComment(int BlogCommentID)
+        /// <param name="blogCommentId">Blog comment identifier</param>
+        public override void DeleteBlogComment(int blogCommentId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogCommentDelete");
-            db.AddInParameter(dbCommand, "BlogCommentID", DbType.Int32, BlogCommentID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "BlogCommentID", DbType.Int32, blogCommentId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
-        /// Gets an blog comment
+        /// Gets a blog comment
         /// </summary>
-        /// <param name="BlogCommentID">Blog comment identifier</param>
-        /// <returns>An blog comment</returns>
-        public override DBBlogComment GetBlogCommentByID(int BlogCommentID)
+        /// <param name="blogCommentId">Blog comment identifier</param>
+        /// <returns>A blog comment</returns>
+        public override DBBlogComment GetBlogCommentById(int blogCommentId)
         {
-            DBBlogComment blogComment = null;
+            DBBlogComment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogCommentLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "BlogCommentID", DbType.Int32, BlogCommentID);
+            db.AddInParameter(dbCommand, "BlogCommentID", DbType.Int32, blogCommentId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    blogComment = GetBlogCommentFromReader(dataReader);
+                    item = GetBlogCommentFromReader(dataReader);
                 }
             }
-            return blogComment;
+            return item;
         }
 
         /// <summary>
         /// Gets a collection of blog comments by blog post identifier
         /// </summary>
-        /// <param name="BlogPostID">Blog post identifier</param>
+        /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>A collection of blog comments</returns>
-        public override DBBlogCommentCollection GetBlogCommentsByBlogPostID(int BlogPostID)
+        public override DBBlogCommentCollection GetBlogCommentsByBlogPostId(int blogPostId)
         {
             var result = new DBBlogCommentCollection();
-            if (BlogPostID == 0)
+            if (blogPostId == 0)
                 return result;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogCommentLoadByBlogPostID");
-            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, BlogPostID);
+            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, blogPostId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -299,56 +303,56 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         }
 
         /// <summary>
-        /// Inserts an blog comment
+        /// Inserts a blog comment
         /// </summary>
-        /// <param name="BlogPostID">The blog post identifier</param>
-        /// <param name="CustomerID">The customer identifier who commented the blog post</param>
-        /// <param name="CommentText">The comment text</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
-        public override DBBlogComment InsertBlogComment(int BlogPostID,
-            int CustomerID, string CommentText, DateTime CreatedOn)
+        public override DBBlogComment InsertBlogComment(int blogPostId,
+            int customerId, string commentText, DateTime createdOn)
         {
-            DBBlogComment blogComment = null;
+            DBBlogComment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogCommentInsert");
             db.AddOutParameter(dbCommand, "BlogCommentID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, BlogPostID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CommentText", DbType.String, CommentText);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, blogPostId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CommentText", DbType.String, commentText);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int BlogCommentID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@BlogCommentID"));
-                blogComment = GetBlogCommentByID(BlogCommentID);
+                int blogCommentId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@BlogCommentID"));
+                item = GetBlogCommentById(blogCommentId);
             }
-            return blogComment;
+            return item;
         }
 
         /// <summary>
         /// Updates the blog comment
         /// </summary>
-        /// <param name="BlogCommentID">The blog comment identifier</param>
-        /// <param name="BlogPostID">The blog post identifier</param>
-        /// <param name="CustomerID">The customer identifier who commented the blog post</param>
-        /// <param name="CommentText">The comment text</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="blogCommentId">The blog comment identifier</param>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
-        public override DBBlogComment UpdateBlogComment(int BlogCommentID, int BlogPostID,
-            int CustomerID, string CommentText, DateTime CreatedOn)
+        public override DBBlogComment UpdateBlogComment(int blogCommentId, int blogPostId,
+            int customerId, string commentText, DateTime createdOn)
         {
-            DBBlogComment blogComment = null;
+            DBBlogComment item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_BlogCommentUpdate");
-            db.AddInParameter(dbCommand, "BlogCommentID", DbType.Int32, BlogCommentID);
-            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, BlogPostID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CommentText", DbType.String, CommentText);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "BlogCommentID", DbType.Int32, blogCommentId);
+            db.AddInParameter(dbCommand, "BlogPostID", DbType.Int32, blogPostId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CommentText", DbType.String, commentText);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                blogComment = GetBlogCommentByID(BlogCommentID);
+                item = GetBlogCommentById(blogCommentId);
 
-            return blogComment;
+            return item;
         }
         #endregion
     }

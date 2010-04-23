@@ -34,7 +34,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (!string.IsNullOrEmpty(txtSearchTerms.Text))
             {
-                string url = SEOHelper.GetForumSearchURL(txtSearchTerms.Text);
+                string url = SEOHelper.GetForumSearchUrl(txtSearchTerms.Text);
                 Response.Redirect(url);
             }
         }

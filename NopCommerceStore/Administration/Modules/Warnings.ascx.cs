@@ -80,7 +80,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 foreach (Language language in publishedLanguages)
                 {
-                    LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, language.LanguageID);
+                    LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, language.LanguageId);
                     if (localizedMessageTemplate == null)
                     {
                         warningResult.AppendFormat("You don't have localized version of message template [{0}] for {1}. <a href=\"MessageTemplates.aspx\">Create it now</a>", messageTemplate.Name, language.Name);
@@ -94,7 +94,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 foreach (Language language in publishedLanguages)
                 {
-                    LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, language.LanguageID);
+                    LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, language.LanguageId);
                     if (localizedTopic == null)
                     {
                         warningResult.AppendFormat("You don't have localized version of topic [{0}] for {1}. <a href=\"Topics.aspx\">Create it now</a>", topic.Name, language.Name);

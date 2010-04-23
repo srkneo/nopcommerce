@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     StateProvince stateProvince = ctrlStateProvinceInfo.SaveInfo();
-                    Response.Redirect("StateProvinceDetails.aspx?StateProvinceID=" + stateProvince.StateProvinceID.ToString());
+                    Response.Redirect("StateProvinceDetails.aspx?StateProvinceID=" + stateProvince.StateProvinceId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -45,11 +45,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CountryID
+        public int CountryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CountryID");
+                return CommonHelper.QueryStringInt("CountryId");
             }
         }
     }

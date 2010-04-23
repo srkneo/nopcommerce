@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets or sets the ShippingByWeight identifier
         /// </summary>
-        public int ShippingByWeightID { get; set; }
+        public int ShippingByWeightId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping method identifier
         /// </summary>
-        public int ShippingMethodID { get; set; }
+        public int ShippingMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the "from" value
@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         {
             get
             {
-                return ShippingMethodManager.GetShippingMethodByID(ShippingMethodID);
+                return ShippingMethodManager.GetShippingMethodById(this.ShippingMethodId);
             }
         }
         #endregion

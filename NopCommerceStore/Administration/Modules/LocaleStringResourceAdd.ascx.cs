@@ -38,10 +38,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindData()
         {
-            Language language = LanguageManager.GetLanguageByID(this.LanguageID);
+            Language language = LanguageManager.GetLanguageById(this.LanguageId);
             if (language != null)
             {
-                hlBackToResources.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "LocaleStringResources.aspx?LanguageID=" + language.LanguageID.ToString();
+                hlBackToResources.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "LocaleStringResources.aspx?LanguageID=" + language.LanguageId.ToString();
             }
         }
 
@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     LocaleStringResource localeStringResource = ctrlLocaleStringResourceInfo.SaveInfo();
-                    Response.Redirect("LocaleStringResourceDetails.aspx?LocaleStringResourceID=" + localeStringResource.LocaleStringResourceID.ToString());
+                    Response.Redirect("LocaleStringResourceDetails.aspx?LocaleStringResourceID=" + localeStringResource.LocaleStringResourceId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -61,11 +61,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

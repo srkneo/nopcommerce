@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Log log = LogManager.GetLogByID(this.LogID);
+            Log log = LogManager.GetLogById(this.LogId);
             if (log != null)
             {
                 this.lblLogType.Text = Server.HtmlEncode(log.LogType.ToString());
@@ -43,9 +43,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.lblIPAddress.Text = Server.HtmlEncode(log.IPAddress);
                 Customer customer = log.Customer;
                 if (customer != null)
-                    this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
-                lblPageURL.Text = Server.HtmlEncode(log.PageURL);
-                lblReferrerURL.Text = Server.HtmlEncode(log.ReferrerURL);
+                    this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
+                lblPageURL.Text = Server.HtmlEncode(log.PageUrl);
+                lblReferrerURL.Text = Server.HtmlEncode(log.ReferrerUrl);
                 this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(log.CreatedOn).ToString();
             }
             else
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                LogManager.DeleteLog(this.LogID);
+                LogManager.DeleteLog(this.LogId);
                 Response.Redirect("Logs.aspx");
             }
             catch (Exception exc)
@@ -73,11 +73,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int LogID
+        public int LogId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LogID");
+                return CommonHelper.QueryStringInt("LogId");
             }
         }
     }

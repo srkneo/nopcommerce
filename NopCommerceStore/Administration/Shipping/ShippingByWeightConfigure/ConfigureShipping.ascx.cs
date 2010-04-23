@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightC
             ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
             foreach (ShippingMethod shippingMethod in shippingMethodCollection)
             {
-                ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodID.ToString());
+                ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());
                 ddlShippingMethod.Items.Add(item);
             }
         }
@@ -65,8 +65,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightC
         {
             try
             {
-                int shippingMethodID = int.Parse(this.ddlShippingMethod.SelectedItem.Value);
-                ShippingByWeight shippingByWeight = ShippingByWeightManager.InsertShippingByWeight(shippingMethodID,
+                int shippingMethodId = int.Parse(this.ddlShippingMethod.SelectedItem.Value);
+                ShippingByWeight shippingByWeight = ShippingByWeightManager.InsertShippingByWeight(shippingMethodId,
                     txtFrom.Value, txtTo.Value, cbUsePercentage.Checked,
                     txtShippingChargePercentage.Value, txtShippingChargeAmount.Value);
 
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightC
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvShippingByWeights.Rows[index];
 
-                HiddenField hfShippingByWeightID = row.FindControl("hfShippingByWeightID") as HiddenField;
+                HiddenField hfShippingByWeightId = row.FindControl("hfShippingByWeightId") as HiddenField;
                 DropDownList ddlShippingMethod = row.FindControl("ddlShippingMethod") as DropDownList;
                 DecimalTextBox txtFrom = row.FindControl("txtFrom") as DecimalTextBox;
                 DecimalTextBox txtTo = row.FindControl("txtTo") as DecimalTextBox;
@@ -93,13 +93,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightC
                 DecimalTextBox txtShippingChargePercentage = row.FindControl("txtShippingChargePercentage") as DecimalTextBox;
                 DecimalTextBox txtShippingChargeAmount = row.FindControl("txtShippingChargeAmount") as DecimalTextBox;
 
-                int shippingByWeightID = int.Parse(hfShippingByWeightID.Value);
-                int shippingMethodID = int.Parse(ddlShippingMethod.SelectedItem.Value);
-                ShippingByWeight shippingByWeight = ShippingByWeightManager.GetByID(shippingByWeightID);
+                int shippingByWeightId = int.Parse(hfShippingByWeightId.Value);
+                int shippingMethodId = int.Parse(ddlShippingMethod.SelectedItem.Value);
+                ShippingByWeight shippingByWeight = ShippingByWeightManager.GetById(shippingByWeightId);
 
                 if (shippingByWeight != null)
-                    ShippingByWeightManager.UpdateShippingByWeight(shippingByWeight.ShippingByWeightID,
-                      shippingMethodID, txtFrom.Value, txtTo.Value, cbUsePercentage.Checked,
+                    ShippingByWeightManager.UpdateShippingByWeight(shippingByWeight.ShippingByWeightId,
+                      shippingMethodId, txtFrom.Value, txtTo.Value, cbUsePercentage.Checked,
                       txtShippingChargePercentage.Value, txtShippingChargeAmount.Value);
 
                 BindData();
@@ -121,9 +121,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightC
                 ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
                 foreach (ShippingMethod shippingMethod in shippingMethodCollection)
                 {
-                    ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodID.ToString());
+                    ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());
                     ddlShippingMethod.Items.Add(item);
-                    if (shippingByWeight.ShippingMethodID == shippingMethod.ShippingMethodID)
+                    if (shippingByWeight.ShippingMethodId == shippingMethod.ShippingMethodId)
                         item.Selected = true;
                 }
             }
@@ -131,11 +131,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightC
 
         protected void gvShippingByWeights_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int shippingByWeightID = (int)gvShippingByWeights.DataKeys[e.RowIndex]["ShippingByWeightID"];
-            ShippingByWeight shippingByWeight = ShippingByWeightManager.GetByID(shippingByWeightID);
+            int shippingByWeightId = (int)gvShippingByWeights.DataKeys[e.RowIndex]["ShippingByWeightId"];
+            ShippingByWeight shippingByWeight = ShippingByWeightManager.GetById(shippingByWeightId);
             if (shippingByWeight != null)
             {
-                ShippingByWeightManager.DeleteShippingByWeight(shippingByWeight.ShippingByWeightID);
+                ShippingByWeightManager.DeleteShippingByWeight(shippingByWeight.ShippingByWeightId);
                 BindData();
             }
         }

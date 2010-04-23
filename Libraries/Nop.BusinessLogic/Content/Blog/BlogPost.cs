@@ -40,12 +40,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Gets or sets the blog post identifier
         /// </summary>
-        public int BlogPostID { get; set; }
+        public int BlogPostId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post title
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Gets or sets the user identifier who created the blog post
         /// </summary>
-        public int CreatedByID { get; set; }
+        public int CreatedById { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation
@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             get
             {
-                return LanguageManager.GetLanguageByID(LanguageID);
+                return LanguageManager.GetLanguageById(this.LanguageId);
             }
         }
 
@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             get
             {
-                return CustomerManager.GetCustomerByID(CreatedByID);
+                return CustomerManager.GetCustomerById(this.CreatedById);
             }
         }
 
@@ -104,7 +104,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             get
             {
-                return BlogManager.GetBlogCommentsByBlogPostID(BlogPostID);
+                return BlogManager.GetBlogCommentsByBlogPostId(this.BlogPostId);
             }
         }
         #endregion

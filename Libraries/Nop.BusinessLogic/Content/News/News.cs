@@ -39,12 +39,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets or sets the news identifier
         /// </summary>
-        public int NewsID { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the news title
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             get
             {
-                return LanguageManager.GetLanguageByID(LanguageID);
+                return LanguageManager.GetLanguageById(this.LanguageId);
             }
         }
 
@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             get
             {
-                return NewsManager.GetNewsCommentsByNewsID(NewsID);
+                return NewsManager.GetNewsCommentsByNewsId(this.NewsId);
             }
         }
         #endregion

@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Language language = ctrlLanguageInfo.SaveInfo();
-                    Response.Redirect("LanguageDetails.aspx?LanguageID=" + language.LanguageID.ToString());
+                    Response.Redirect("LanguageDetails.aspx?LanguageID=" + language.LanguageId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                LanguageManager.DeleteLanguage(this.LanguageID);
+                LanguageManager.DeleteLanguage(this.LanguageId);
                 Response.Redirect("Languages.aspx");
             }
             catch (Exception exc)
@@ -64,11 +64,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int LanguageID
+        public int LanguageId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LanguageID");
+                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
 
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                CommonHelper.WriteResponseXML(ExportManager.ExportResources(LanguageID), String.Format("language_{0}.xml", LanguageID));
+                CommonHelper.WriteResponseXml(ExportManager.ExportResources(this.LanguageId), String.Format("language_{0}.xml", LanguageId));
             }
             catch(Exception ex)
             {

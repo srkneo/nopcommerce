@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         public void CreateAttributeControls()
         {
-            var productVariant = ProductManager.GetProductVariantByID(this.ProductVariantID);
+            var productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
                 this.phAttributes.Controls.Clear();
@@ -94,13 +94,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         }
                         divAttribute.Controls.Add(attributeTitle);
 
-                        string controlID = string.Format("{0}_{1}", attribute.ProductAttribute.ProductAttributeID, attribute.ProductVariantAttributeID);
+                        string controlId = string.Format("{0}_{1}", attribute.ProductAttribute.ProductAttributeId, attribute.ProductVariantAttributeId);
                         switch (attribute.AttributeControlType)
                         {
                             case AttributeControlTypeEnum.DropdownList:
                                 {
                                     var ddlAttributes = new DropDownList();
-                                    ddlAttributes.ID = controlID;
+                                    ddlAttributes.ID = controlId;
                                     if (!attribute.IsRequired)
                                     {
                                         ddlAttributes.Items.Add(new ListItem("---", "0"));
@@ -118,7 +118,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                             if (priceAdjustmentBase > decimal.Zero)
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
                                         }
-                                        var pvaValueItem = new ListItem(pvaValueName, pvaValue.ProductVariantAttributeValueID.ToString());
+                                        var pvaValueItem = new ListItem(pvaValueName, pvaValue.ProductVariantAttributeValueId.ToString());
                                         if (!preSelectedSet && pvaValue.IsPreSelected)
                                         {
                                             pvaValueItem.Selected = pvaValue.IsPreSelected;
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             case AttributeControlTypeEnum.RadioList:
                                 {
                                     var rblAttributes = new RadioButtonList();
-                                    rblAttributes.ID = controlID;
+                                    rblAttributes.ID = controlId;
                                     var pvaValues = attribute.ProductVariantAttributeValues;
 
                                     bool preSelectedSet = false;
@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                             if (priceAdjustmentBase > decimal.Zero)
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
                                         }
-                                        var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueID.ToString());
+                                        var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueId.ToString());
                                         if (!preSelectedSet && pvaValue.IsPreSelected)
                                         {
                                             pvaValueItem.Selected = pvaValue.IsPreSelected;
@@ -160,7 +160,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             case AttributeControlTypeEnum.Checkboxes:
                                 {
                                     var cblAttributes = new CheckBoxList();
-                                    cblAttributes.ID = controlID;
+                                    cblAttributes.ID = controlId;
                                     var pvaValues = attribute.ProductVariantAttributeValues;
                                     foreach (var pvaValue in pvaValues)
                                     {
@@ -172,7 +172,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                             if (priceAdjustmentBase > decimal.Zero)
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
                                         }
-                                        var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueID.ToString());
+                                        var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueId.ToString());
                                         pvaValueItem.Selected = pvaValue.IsPreSelected;
                                         cblAttributes.Items.Add(pvaValueItem);
                                     }
@@ -182,7 +182,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             case AttributeControlTypeEnum.TextBox:
                                 {
                                     var txtAttribute = new TextBox();
-                                    txtAttribute.ID = controlID;
+                                    txtAttribute.ID = controlId;
                                     divAttribute.Controls.Add(txtAttribute);
                                 }
                                 break;
@@ -208,26 +208,26 @@ namespace NopSolutions.NopCommerce.Web.Modules
             get
             {
                 string selectedAttributes = string.Empty;
-                var productVariantAttributes = ProductAttributeManager.GetProductVariantAttributesByProductVariantID(this.ProductVariantID);
+                var productVariantAttributes = ProductAttributeManager.GetProductVariantAttributesByProductVariantId(this.ProductVariantId);
                 foreach (ProductVariantAttribute attribute in productVariantAttributes)
                 {
-                    string controlID = string.Format("{0}_{1}", attribute.ProductAttribute.ProductAttributeID, attribute.ProductVariantAttributeID);
+                    string controlId = string.Format("{0}_{1}", attribute.ProductAttribute.ProductAttributeId, attribute.ProductVariantAttributeId);
                     switch (attribute.AttributeControlType)
                     {
                         case AttributeControlTypeEnum.DropdownList:
                             {
-                                var ddlAttributes = phAttributes.FindControl(controlID) as DropDownList;
+                                var ddlAttributes = phAttributes.FindControl(controlId) as DropDownList;
                                 if (ddlAttributes != null)
                                 {
-                                    int selectedAttributeID = 0;
+                                    int selectedAttributeId = 0;
                                     if (!String.IsNullOrEmpty(ddlAttributes.SelectedValue))
                                     {
-                                        selectedAttributeID = int.Parse(ddlAttributes.SelectedValue);
+                                        selectedAttributeId = int.Parse(ddlAttributes.SelectedValue);
                                     }
-                                    if (selectedAttributeID > 0)
+                                    if (selectedAttributeId > 0)
                                     {
                                         selectedAttributes = ProductAttributeHelper.AddProductAttribute(selectedAttributes,
-                                            attribute, selectedAttributeID.ToString());
+                                            attribute, selectedAttributeId.ToString());
                                     }
                                 }
                             }
@@ -235,40 +235,40 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         case AttributeControlTypeEnum.RadioList:
                             {
                                 var rblAttributes =
-                                    phAttributes.FindControl(controlID) as RadioButtonList;
+                                    phAttributes.FindControl(controlId) as RadioButtonList;
                                 if (rblAttributes != null)
                                 {
-                                    int selectedAttributeID = 0;
+                                    int selectedAttributeId = 0;
                                     if (!String.IsNullOrEmpty(rblAttributes.SelectedValue))
                                     {
-                                        selectedAttributeID = int.Parse(rblAttributes.SelectedValue);
+                                        selectedAttributeId = int.Parse(rblAttributes.SelectedValue);
                                     }
-                                    if (selectedAttributeID > 0)
+                                    if (selectedAttributeId > 0)
                                     {
                                         selectedAttributes = ProductAttributeHelper.AddProductAttribute(selectedAttributes,
-                                            attribute, selectedAttributeID.ToString());
+                                            attribute, selectedAttributeId.ToString());
                                     }
                                 }
                             }
                             break;
                         case AttributeControlTypeEnum.Checkboxes:
                             {
-                                var cblAttributes = phAttributes.FindControl(controlID) as CheckBoxList;
+                                var cblAttributes = phAttributes.FindControl(controlId) as CheckBoxList;
                                 if (cblAttributes != null)
                                 {
                                     foreach (ListItem item in cblAttributes.Items)
                                     {
                                         if (item.Selected)
                                         {
-                                            int selectedAttributeID = 0;
+                                            int selectedAttributeId = 0;
                                             if (!String.IsNullOrEmpty(item.Value))
                                             {
-                                                selectedAttributeID = int.Parse(item.Value);
+                                                selectedAttributeId = int.Parse(item.Value);
                                             }
-                                            if (selectedAttributeID > 0)
+                                            if (selectedAttributeId > 0)
                                             {
                                                 selectedAttributes = ProductAttributeHelper.AddProductAttribute(selectedAttributes, 
-                                                    attribute, selectedAttributeID.ToString());
+                                                    attribute, selectedAttributeId.ToString());
                                             }
                                         }
                                     }
@@ -277,7 +277,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             break;
                         case AttributeControlTypeEnum.TextBox:
                             {
-                                var txtAttribute = phAttributes.FindControl(controlID) as TextBox;
+                                var txtAttribute = phAttributes.FindControl(controlId) as TextBox;
                                 if (txtAttribute != null)
                                 {
                                     string enteredText = txtAttribute.Text.Trim();
@@ -297,18 +297,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int ProductVariantID
+        public int ProductVariantId
         {
             get
             {
-                if (ViewState["ProductVariantID"] == null)
+                if (ViewState["ProductVariantId"] == null)
                     return 0;
                 else
-                    return (int)ViewState["ProductVariantID"];
+                    return (int)ViewState["ProductVariantId"];
             }
             set
             {
-                ViewState["ProductVariantID"] = value;
+                ViewState["ProductVariantId"] = value;
             }
         }
 

@@ -37,17 +37,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the recurring payment history identifier
         /// </summary>
-        public int RecurringPaymentHistoryID { get; set; }
+        public int RecurringPaymentHistoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the recurring payment identifier
         /// </summary>
-        public int RecurringPaymentID { get; set; }
+        public int RecurringPaymentId { get; set; }
 
         /// <summary>
         /// Gets or sets the order identifier
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of entity creation
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                return OrderManager.GetOrderByID(OrderID);
+                return OrderManager.GetOrderById(this.OrderId);
             }
         }
 

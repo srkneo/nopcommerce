@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     Affiliate affiliate = ctrlAffiliateInfo.SaveInfo();
-                    Response.Redirect("AffiliateDetails.aspx?AffiliateID=" + affiliate.AffiliateID.ToString());
+                    Response.Redirect("AffiliateDetails.aspx?AffiliateID=" + affiliate.AffiliateId.ToString());
                 }
                 catch (Exception exc)
                 {

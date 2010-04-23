@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Payment.Manual
             CreditCardTypeCollection creditCardTypeCollection = CreditCardTypeManager.GetAllCreditCardTypes();
             foreach (CreditCardType creditCardType in creditCardTypeCollection)
             {
-                ListItem ddlCreditCardTypeItem2 = new ListItem(creditCardType.Name, creditCardType.CreditCardTypeID.ToString());
+                ListItem ddlCreditCardTypeItem2 = new ListItem(creditCardType.Name, creditCardType.CreditCardTypeId.ToString());
                 this.ddlCreditCardType.Items.Add(ddlCreditCardTypeItem2);
             }
 
@@ -71,8 +71,8 @@ namespace NopSolutions.NopCommerce.Web.Templates.Payment.Manual
         public PaymentInfo GetPaymentInfo()
         {
             PaymentInfo paymentInfo = new PaymentInfo();
-            int creditCardTypeID =int.Parse(this.ddlCreditCardType.SelectedItem.Value);
-            CreditCardType creditCardType = CreditCardTypeManager.GetCreditCardTypeByID(creditCardTypeID);
+            int creditCardTypeId = int.Parse(this.ddlCreditCardType.SelectedItem.Value);
+            CreditCardType creditCardType = CreditCardTypeManager.GetCreditCardTypeById(creditCardTypeId);
             if (creditCardType == null)
                 throw new NopException("Couldn't load credit card type");
             paymentInfo.CreditCardType = creditCardType.SystemKeyword;
@@ -80,7 +80,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Payment.Manual
             paymentInfo.CreditCardNumber = this.creditCardNumber.Text;
             paymentInfo.CreditCardExpireYear = int.Parse((this.creditCardExpireYear.SelectedValue == null) ? "0" : this.creditCardExpireYear.SelectedValue);
             paymentInfo.CreditCardExpireMonth = int.Parse((this.creditCardExpireMonth.SelectedValue == null) ? "0" : this.creditCardExpireMonth.SelectedValue);
-            paymentInfo.CreditCardCVV2 = this.creditCardCVV2.Text;
+            paymentInfo.CreditCardCvv2 = this.creditCardCVV2.Text;
             return paymentInfo;
         }
 

@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
     /// <summary>
     /// Affiliate provider for SQL Server
     /// </summary>
-    public partial class SQLAffiliateProvider : DBAffiliateProvider
+    public partial class SqlAffiliateProvider : DBAffiliateProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,24 +36,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
         #region Utilities
         private DBAffiliate GetAffiliateFromReader(IDataReader dataReader)
         {
-            DBAffiliate affiliate = new DBAffiliate();
-            affiliate.AffiliateID = NopSqlDataHelper.GetInt(dataReader, "AffiliateID");
-            affiliate.FirstName = NopSqlDataHelper.GetString(dataReader, "FirstName");
-            affiliate.LastName = NopSqlDataHelper.GetString(dataReader, "LastName");
-            affiliate.MiddleName = NopSqlDataHelper.GetString(dataReader, "MiddleName");
-            affiliate.PhoneNumber = NopSqlDataHelper.GetString(dataReader, "PhoneNumber");
-            affiliate.Email = NopSqlDataHelper.GetString(dataReader, "Email");
-            affiliate.FaxNumber = NopSqlDataHelper.GetString(dataReader, "FaxNumber");
-            affiliate.Company = NopSqlDataHelper.GetString(dataReader, "Company");
-            affiliate.Address1 = NopSqlDataHelper.GetString(dataReader, "Address1");
-            affiliate.Address2 = NopSqlDataHelper.GetString(dataReader, "Address2");
-            affiliate.City = NopSqlDataHelper.GetString(dataReader, "City");
-            affiliate.StateProvince = NopSqlDataHelper.GetString(dataReader, "StateProvince");
-            affiliate.ZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ZipPostalCode");
-            affiliate.CountryID = NopSqlDataHelper.GetInt(dataReader, "CountryID");
-            affiliate.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            affiliate.Active = NopSqlDataHelper.GetBoolean(dataReader, "Active");
-            return affiliate;
+            var item = new DBAffiliate();
+            item.AffiliateId = NopSqlDataHelper.GetInt(dataReader, "AffiliateID");
+            item.FirstName = NopSqlDataHelper.GetString(dataReader, "FirstName");
+            item.LastName = NopSqlDataHelper.GetString(dataReader, "LastName");
+            item.MiddleName = NopSqlDataHelper.GetString(dataReader, "MiddleName");
+            item.PhoneNumber = NopSqlDataHelper.GetString(dataReader, "PhoneNumber");
+            item.Email = NopSqlDataHelper.GetString(dataReader, "Email");
+            item.FaxNumber = NopSqlDataHelper.GetString(dataReader, "FaxNumber");
+            item.Company = NopSqlDataHelper.GetString(dataReader, "Company");
+            item.Address1 = NopSqlDataHelper.GetString(dataReader, "Address1");
+            item.Address2 = NopSqlDataHelper.GetString(dataReader, "Address2");
+            item.City = NopSqlDataHelper.GetString(dataReader, "City");
+            item.StateProvince = NopSqlDataHelper.GetString(dataReader, "StateProvince");
+            item.ZipPostalCode = NopSqlDataHelper.GetString(dataReader, "ZipPostalCode");
+            item.CountryId = NopSqlDataHelper.GetInt(dataReader, "CountryID");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            item.Active = NopSqlDataHelper.GetBoolean(dataReader, "Active");
+            return item;
         }
         #endregion
 
@@ -96,24 +96,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
         /// <summary>
         /// Gets an affiliate by affiliate identifier
         /// </summary>
-        /// <param name="AffiliateID">Affiliate identifier</param>
+        /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Affiliate</returns>
-        public override DBAffiliate GetAffiliateByID(int AffiliateID)
+        public override DBAffiliate GetAffiliateById(int affiliateId)
         {
-            DBAffiliate affiliate = null;
-            if (AffiliateID == 0)
-                return affiliate;
+            DBAffiliate item = null;
+            if (affiliateId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AffiliateLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    affiliate = GetAffiliateFromReader(dataReader);
+                    item = GetAffiliateFromReader(dataReader);
                 }
             }
-            return affiliate;
+            return item;
         }
 
         /// <summary>
@@ -140,102 +140,104 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
         /// <summary>
         /// Inserts an affiliate
         /// </summary>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="MiddleName">The middle name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="Active">A value indicating whether the entity is active</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="middleName">The middle name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="active">A value indicating whether the entity is active</param>
         /// <returns>An affiliate</returns>
-        public override DBAffiliate InsertAffiliate(string FirstName, string LastName, string MiddleName,
-            string PhoneNumber, string Email, string FaxNumber, string Company, string Address1,
-            string Address2, string City, string StateProvince, string ZipPostalCode,
-            int CountryID, bool Deleted, bool Active)
+        public override DBAffiliate InsertAffiliate(string firstName,
+            string lastName, string middleName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, string stateProvince, string zipPostalCode,
+            int countryId, bool deleted, bool active)
         {
-            DBAffiliate affiliate = null;
+            DBAffiliate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AffiliateInsert");
             db.AddOutParameter(dbCommand, "AffiliateID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "FirstName", DbType.String, FirstName);
-            db.AddInParameter(dbCommand, "LastName", DbType.String, LastName);
-            db.AddInParameter(dbCommand, "MiddleName", DbType.String, MiddleName);
-            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, PhoneNumber);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, FaxNumber);
-            db.AddInParameter(dbCommand, "Company", DbType.String, Company);
-            db.AddInParameter(dbCommand, "Address1", DbType.String, Address1);
-            db.AddInParameter(dbCommand, "Address2", DbType.String, Address2);
-            db.AddInParameter(dbCommand, "City", DbType.String, City);
-            db.AddInParameter(dbCommand, "StateProvince", DbType.String, StateProvince);
-            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, ZipPostalCode);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, Active);
+            db.AddInParameter(dbCommand, "FirstName", DbType.String, firstName);
+            db.AddInParameter(dbCommand, "LastName", DbType.String, lastName);
+            db.AddInParameter(dbCommand, "MiddleName", DbType.String, middleName);
+            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, phoneNumber);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, faxNumber);
+            db.AddInParameter(dbCommand, "Company", DbType.String, company);
+            db.AddInParameter(dbCommand, "Address1", DbType.String, address1);
+            db.AddInParameter(dbCommand, "Address2", DbType.String, address2);
+            db.AddInParameter(dbCommand, "City", DbType.String, city);
+            db.AddInParameter(dbCommand, "StateProvince", DbType.String, stateProvince);
+            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, zipPostalCode);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, active);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int AffiliateID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@AffiliateID"));
-                affiliate = GetAffiliateByID(AffiliateID);
+                int affiliateId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@AffiliateID"));
+                item = GetAffiliateById(affiliateId);
             }
-            return affiliate;
+            return item;
         }
 
         /// <summary>
         /// Updates the affiliate
         /// </summary>
-        /// <param name="AffiliateID">The affiliate identifier</param>
-        /// <param name="FirstName">The first name</param>
-        /// <param name="LastName">The last name</param>
-        /// <param name="MiddleName">The middle name</param>
-        /// <param name="PhoneNumber">The phone number</param>
-        /// <param name="Email">The email</param>
-        /// <param name="FaxNumber">The fax number</param>
-        /// <param name="Company">The company</param>
-        /// <param name="Address1">The address 1</param>
-        /// <param name="Address2">The address 2</param>
-        /// <param name="City">The city</param>
-        /// <param name="StateProvince">The state/province</param>
-        /// <param name="ZipPostalCode">The zip/postal code</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="Active">A value indicating whether the entity is active</param>
+        /// <param name="affiliateId">The affiliate identifier</param>
+        /// <param name="firstName">The first name</param>
+        /// <param name="lastName">The last name</param>
+        /// <param name="middleName">The middle name</param>
+        /// <param name="phoneNumber">The phone number</param>
+        /// <param name="email">The email</param>
+        /// <param name="faxNumber">The fax number</param>
+        /// <param name="company">The company</param>
+        /// <param name="address1">The address 1</param>
+        /// <param name="address2">The address 2</param>
+        /// <param name="city">The city</param>
+        /// <param name="stateProvince">The state/province</param>
+        /// <param name="zipPostalCode">The zip/postal code</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="active">A value indicating whether the entity is active</param>
         /// <returns>An affiliate</returns>
-        public override DBAffiliate UpdateAffiliate(int AffiliateID, string FirstName, string LastName,
-            string MiddleName, string PhoneNumber, string Email, string FaxNumber, string Company,
-            string Address1, string Address2, string City, string StateProvince,
-            string ZipPostalCode, int CountryID, bool Deleted, bool Active)
+        public override DBAffiliate UpdateAffiliate(int affiliateId, string firstName,
+            string lastName, string middleName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
+            string address2, string city, string stateProvince, string zipPostalCode,
+            int countryId, bool deleted, bool active)
         {
-            DBAffiliate affiliate = null;
+            DBAffiliate item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_AffiliateUpdate");
-            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, AffiliateID);
-            db.AddInParameter(dbCommand, "FirstName", DbType.String, FirstName);
-            db.AddInParameter(dbCommand, "LastName", DbType.String, LastName);
-            db.AddInParameter(dbCommand, "MiddleName", DbType.String, MiddleName);
-            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, PhoneNumber);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, FaxNumber);
-            db.AddInParameter(dbCommand, "Company", DbType.String, Company);
-            db.AddInParameter(dbCommand, "Address1", DbType.String, Address1);
-            db.AddInParameter(dbCommand, "Address2", DbType.String, Address2);
-            db.AddInParameter(dbCommand, "City", DbType.String, City);
-            db.AddInParameter(dbCommand, "StateProvince", DbType.String, StateProvince);
-            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, ZipPostalCode);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, CountryID);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "Active", DbType.Boolean, Active);
+            db.AddInParameter(dbCommand, "AffiliateID", DbType.Int32, affiliateId);
+            db.AddInParameter(dbCommand, "FirstName", DbType.String, firstName);
+            db.AddInParameter(dbCommand, "LastName", DbType.String, lastName);
+            db.AddInParameter(dbCommand, "MiddleName", DbType.String, middleName);
+            db.AddInParameter(dbCommand, "PhoneNumber", DbType.String, phoneNumber);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "FaxNumber", DbType.String, faxNumber);
+            db.AddInParameter(dbCommand, "Company", DbType.String, company);
+            db.AddInParameter(dbCommand, "Address1", DbType.String, address1);
+            db.AddInParameter(dbCommand, "Address2", DbType.String, address2);
+            db.AddInParameter(dbCommand, "City", DbType.String, city);
+            db.AddInParameter(dbCommand, "StateProvince", DbType.String, stateProvince);
+            db.AddInParameter(dbCommand, "ZipPostalCode", DbType.String, zipPostalCode);
+            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "Active", DbType.Boolean, active);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                affiliate = GetAffiliateByID(AffiliateID);
+                item = GetAffiliateById(affiliateId);
 
-            return affiliate;
+            return item;
         }
 
         #endregion

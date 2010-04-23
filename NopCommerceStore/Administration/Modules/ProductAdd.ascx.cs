@@ -54,9 +54,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     //using (var scope = new System.Transactions.TransactionScope())
                     {
                         product = ctrlProductInfoAdd.SaveInfo();
-                        ctrlProductSEO.SaveInfo(product.ProductID);
-                        ctrlProductCategory.SaveInfo(product.ProductID);
-                        ctrlProductManufacturer.SaveInfo(product.ProductID);
+                        ctrlProductSEO.SaveInfo(product.ProductId);
+                        ctrlProductCategory.SaveInfo(product.ProductId);
+                        ctrlProductManufacturer.SaveInfo(product.ProductId);
 
                         CustomerActivityManager.InsertActivity(
                             "AddNewProduct",
@@ -68,7 +68,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
 
                     if (product != null)
-                        Response.Redirect("ProductDetails.aspx?ProductID=" + product.ProductID);
+                        Response.Redirect("ProductDetails.aspx?ProductID=" + product.ProductId);
                 }
                 catch (Exception exc)
                 {

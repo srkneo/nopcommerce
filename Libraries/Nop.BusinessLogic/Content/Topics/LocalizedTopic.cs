@@ -38,17 +38,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Gets or sets the localized topic identifier
         /// </summary>
-        public int TopicLocalizedID { get; set; }
+        public int TopicLocalizedId { get; set; }
 
         /// <summary>
         /// Gets or sets the topic identifier
         /// </summary>
-        public int TopicID { get; set; }
+        public int TopicId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the title
@@ -94,7 +94,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         {
             get
             {
-                return LanguageManager.GetLanguageByID(LanguageID);
+                return LanguageManager.GetLanguageById(this.LanguageId);
             }
         }
 
@@ -105,7 +105,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         {
             get
             {
-                return TopicManager.GetTopicByID(TopicID);
+                return TopicManager.GetTopicById(this.TopicId);
             }
         }
         #endregion

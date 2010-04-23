@@ -36,27 +36,27 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Gets or sets the shopping cart item identifier
         /// </summary>
-        public int ShoppingCartItemID { get; set; }
+        public int ShoppingCartItemId { get; set; }
 
         /// <summary>
         /// Gets or sets the shopping cart type identifier
         /// </summary>
-        public int ShoppingCartTypeID { get; set; }
+        public int ShoppingCartTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer session identifier
         /// </summary>
-        public Guid CustomerSessionGUID { get; set; }
+        public Guid CustomerSessionGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant attributes
         /// </summary>
-        public string AttributesXML { get; set; }
+        public string AttributesXml { get; set; }
 
         /// <summary>
         /// Gets or sets the price enter by a customer

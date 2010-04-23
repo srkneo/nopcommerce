@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web
             if (NopContext.Current.User == null)
                 return result;
 
-            result = ForumManager.GetAllPrivateMessages(NopContext.Current.User.CustomerID, 0, null, false, null,
+            result = ForumManager.GetAllPrivateMessages(NopContext.Current.User.CustomerId, 0, null, false, null,
                 string.Empty, PageSize, PageIndex, out totalRecords);
             return result;
         }
@@ -101,7 +101,7 @@ namespace NopSolutions.NopCommerce.Web
             if (NopContext.Current.User == null)
                 return result;
 
-            result = ForumManager.GetAllPrivateMessages(0, NopContext.Current.User.CustomerID, null, null, false,
+            result = ForumManager.GetAllPrivateMessages(0, NopContext.Current.User.CustomerId, null, null, false,
                 string.Empty, PageSize, PageIndex, out totalRecords);
             return result;
         }

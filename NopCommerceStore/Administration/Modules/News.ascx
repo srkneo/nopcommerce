@@ -17,7 +17,6 @@
 <asp:GridView ID="gvNews" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvNews_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="NewsID" HeaderText="News ID" Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.News.NewsTitle %>" ItemStyle-Width="30%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Title").ToString())%>
@@ -32,7 +31,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.News.ViewComments %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="NewsComments.aspx?NewsID=<%#Eval("NewsID")%>" title="<%#GetLocaleResourceString("Admin.News.ViewComments.Tooltip")%>">
+                <a href="NewsComments.aspx?NewsID=<%#Eval("NewsId")%>" title="<%#GetLocaleResourceString("Admin.News.ViewComments.Tooltip")%>">
                     <%# string.Format(GetLocaleResourceString("Admin.News.ViewComments.Link"), ((NewsCommentCollection)Eval("NewsComments")).Count)%>
                 </a>
             </ItemTemplate>
@@ -53,7 +52,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.News.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="NewsDetails.aspx?NewsID=<%#Eval("NewsID")%>" title="<%#GetLocaleResourceString("Admin.News.Edit.Tooltip")%>">
+                <a href="NewsDetails.aspx?NewsID=<%#Eval("NewsId")%>" title="<%#GetLocaleResourceString("Admin.News.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.News.Edit")%></a>
             </ItemTemplate>
         </asp:TemplateField>

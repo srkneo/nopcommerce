@@ -36,17 +36,17 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets or sets the activity log identifier
         /// </summary>
-        public int ActivityLogID { get; set; }
+        public int ActivityLogId { get; set; }
 
         /// <summary>
         /// Gets or sets the activity log type identifier
         /// </summary>
-        public int ActivityLogTypeID { get; set; }
+        public int ActivityLogTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the activity comment

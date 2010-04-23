@@ -248,29 +248,29 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.CanadaPost
         /// <summary>
         ///  Gets available shipping options
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
-        /// <param name="Error">Error</param>
+        /// <param name="shipmentPackage">Shipment package</param>
+        /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage ShipmentPackage, ref string Error)
+        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
             var shippingOptions = new ShippingOptionCollection();
-            if (ShipmentPackage == null)
+            if (shipmentPackage == null)
                 throw new ArgumentNullException("ShipmentPackage");
-            if (ShipmentPackage.Items == null)
+            if (shipmentPackage.Items == null)
                 throw new NopException("No shipment items");
-            if (ShipmentPackage.ShippingAddress == null)
+            if (shipmentPackage.ShippingAddress == null)
             {
-                Error = "Shipping address is not set";
+                error = "Shipping address is not set";
                 return shippingOptions;
             }
-            if (ShipmentPackage.ShippingAddress.Country == null)
+            if (shipmentPackage.ShippingAddress.Country == null)
             {
-                Error = "Shipping country is not set";
+                error = "Shipping country is not set";
                 return shippingOptions;
             }
-            if (ShipmentPackage.ShippingAddress.StateProvince == null)
+            if (shipmentPackage.ShippingAddress.StateProvince == null)
             {
-                Error = "Shipping state is not set";
+                error = "Shipping state is not set";
                 return shippingOptions;
             }
 
@@ -281,12 +281,12 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.CanadaPost
                 profile.MerchantId = SettingManager.GetSettingValue("ShippingRateComputationMethod.CanadaPost.CustomerID");
 
                 var destination = new Destination();
-                destination.City = ShipmentPackage.ShippingAddress.City;
-                destination.StateOrProvince = ShipmentPackage.ShippingAddress.StateProvince.Abbreviation;
-                destination.Country = ShipmentPackage.ShippingAddress.Country.TwoLetterISOCode;
-                destination.PostalCode = ShipmentPackage.ShippingAddress.ZipPostalCode;
+                destination.City = shipmentPackage.ShippingAddress.City;
+                destination.StateOrProvince = shipmentPackage.ShippingAddress.StateProvince.Abbreviation;
+                destination.Country = shipmentPackage.ShippingAddress.Country.TwoLetterIsoCode;
+                destination.PostalCode = shipmentPackage.ShippingAddress.ZipPostalCode;
 
-                var items = CreateItems(ShipmentPackage);
+                var items = CreateItems(shipmentPackage);
 
                 var lang = CanadaPostLanguageEnum.English;
                 if (NopContext.Current.WorkingLanguage.LanguageCulture.ToLowerInvariant().StartsWith("fr"))
@@ -295,7 +295,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.CanadaPost
                 var requestResult = GetShippingOptionsInternal(profile, destination, items, lang);
                 if (requestResult.IsError)
                 {
-                    Error = requestResult.StatusMessage;
+                    error = requestResult.StatusMessage;
                 }
                 else
                 {
@@ -319,20 +319,20 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.CanadaPost
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                Error = e.Message;
+                error = e.Message;
             }
 
-            if (String.IsNullOrEmpty(Error) && shippingOptions.Count == 0)
-                Error = "Shipping options could not be loaded";
+            if (String.IsNullOrEmpty(error) && shippingOptions.Count == 0)
+                error = "Shipping options could not be loaded";
             return shippingOptions;
         }
 
         /// <summary>
         /// Gets fixed shipping rate (if shipping rate computation method allows it and the rate can be calculated before checkout).
         /// </summary>
-        /// <param name="ShipmentPackage">Shipment package</param>
+        /// <param name="shipmentPackage">Shipment package</param>
         /// <returns>Fixed shipping rate; or null if shipping rate could not be calculated before checkout</returns>
-        public decimal? GetFixedRate(ShipmentPackage ShipmentPackage)
+        public decimal? GetFixedRate(ShipmentPackage shipmentPackage)
         {
             return null;
         }

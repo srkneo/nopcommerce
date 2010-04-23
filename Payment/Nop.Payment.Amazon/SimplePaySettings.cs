@@ -20,9 +20,15 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 
 namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
 {
+    /// <summary>
+    /// Settings
+    /// </summary>
     public class SimplePaySettings
     {
         #region Properties
+        /// <summary>
+        /// Gateway URL
+        /// </summary>
         public static string GatewayUrl
         {
             get
@@ -35,6 +41,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             }
         }
 
+        /// <summary>
+        /// Account ID
+        /// </summary>
         public static string AccountId
         {
             get
@@ -47,6 +56,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             }
         }
 
+        /// <summary>
+        /// Access Key
+        /// </summary>
         public static string AccessKey
         {
             get
@@ -59,6 +71,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             }
         }
 
+        /// <summary>
+        /// Secret key
+        /// </summary>
         public static string SecretKey
         {
             get
@@ -71,6 +86,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             }
         }
 
+        /// <summary>
+        /// Settle immediately
+        /// </summary>
         public static bool SettleImmediately
         {
             get
@@ -83,6 +101,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             }
         }
 
+        /// <summary>
+        /// Additional fee
+        /// </summary>
         public static decimal AdditionalFee
         {
             get

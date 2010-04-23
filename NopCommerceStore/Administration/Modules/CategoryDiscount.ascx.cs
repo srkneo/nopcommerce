@@ -39,17 +39,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            List<int> _discountIDs = new List<int>();
+            List<int> _discountIds = new List<int>();
 
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID);
+            Category category = CategoryManager.GetCategoryById(this.CategoryId);
             if (category != null)
             {
                 DiscountCollection discountCollection = category.Discounts;                
                 foreach (Discount dis in discountCollection)
-                    _discountIDs.Add(dis.DiscountID);
+                    _discountIds.Add(dis.DiscountId);
             }
 
-            DiscountMappingControl.SelectedDiscountIDs = _discountIDs;
+            DiscountMappingControl.SelectedDiscountIds = _discountIds;
             DiscountMappingControl.BindData(DiscountTypeEnum.AssignedToSKUs);
         }
 
@@ -63,27 +63,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            SaveInfo(this.CategoryID);
+            SaveInfo(this.CategoryId);
         }
 
-        public void SaveInfo(int catID)
+        public void SaveInfo(int catId)
         {
-            Category category = CategoryManager.GetCategoryByID(catID);
+            Category category = CategoryManager.GetCategoryById(catId);
 
             if (category != null)
             {
-                foreach (Discount discount in DiscountManager.GetDiscountsByCategoryID(category.CategoryID))
-                    DiscountManager.RemoveDiscountFromCategory(category.CategoryID, discount.DiscountID);
-                foreach (int discountID in DiscountMappingControl.SelectedDiscountIDs)
-                    DiscountManager.AddDiscountToCategory(category.CategoryID, discountID);
+                foreach (Discount discount in DiscountManager.GetDiscountsByCategoryId(category.CategoryId))
+                    DiscountManager.RemoveDiscountFromCategory(category.CategoryId, discount.DiscountId);
+                foreach (int discountId in DiscountMappingControl.SelectedDiscountIds)
+                    DiscountManager.AddDiscountToCategory(category.CategoryId, discountId);
             }
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryID");
+                return CommonHelper.QueryStringInt("CategoryId");
             }
         }
     }

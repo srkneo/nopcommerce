@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
     /// <summary>
     /// Checkout attribute provider for SQL Server
     /// </summary>
-    public partial class SQLCheckoutAttributeProvider : DBCheckoutAttributeProvider
+    public partial class SqlCheckoutAttributeProvider : DBCheckoutAttributeProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -37,14 +37,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         private DBCheckoutAttribute GetCheckoutAttributeFromReader(IDataReader dataReader)
         {
             var item = new DBCheckoutAttribute();
-            item.CheckoutAttributeID = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeID");
+            item.CheckoutAttributeId = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             item.TextPrompt = NopSqlDataHelper.GetString(dataReader, "TextPrompt");
             item.IsRequired = NopSqlDataHelper.GetBoolean(dataReader, "IsRequired");
             item.ShippableProductRequired = NopSqlDataHelper.GetBoolean(dataReader, "ShippableProductRequired");
             item.IsTaxExempt = NopSqlDataHelper.GetBoolean(dataReader, "IsTaxExempt");
-            item.TaxCategoryID = NopSqlDataHelper.GetInt(dataReader, "TaxCategoryID");
-            item.AttributeControlTypeID = NopSqlDataHelper.GetInt(dataReader, "AttributeControlTypeID");
+            item.TaxCategoryId = NopSqlDataHelper.GetInt(dataReader, "TaxCategoryID");
+            item.AttributeControlTypeId = NopSqlDataHelper.GetInt(dataReader, "AttributeControlTypeID");
             item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
             return item;
         }
@@ -52,9 +52,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         private DBCheckoutAttributeLocalized GetCheckoutAttributeLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBCheckoutAttributeLocalized();
-            item.CheckoutAttributeLocalizedID = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeLocalizedID");
-            item.CheckoutAttributeID = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.CheckoutAttributeLocalizedId = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeLocalizedID");
+            item.CheckoutAttributeId = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             item.TextPrompt = NopSqlDataHelper.GetString(dataReader, "TextPrompt");
             return item;
@@ -63,8 +63,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         private DBCheckoutAttributeValue GetCheckoutAttributeValueFromReader(IDataReader dataReader)
         {
             var item = new DBCheckoutAttributeValue();
-            item.CheckoutAttributeValueID = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeValueID");
-            item.CheckoutAttributeID = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeID");
+            item.CheckoutAttributeValueId = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeValueID");
+            item.CheckoutAttributeId = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             item.PriceAdjustment = NopSqlDataHelper.GetDecimal(dataReader, "PriceAdjustment");
             item.WeightAdjustment = NopSqlDataHelper.GetDecimal(dataReader, "WeightAdjustment");
@@ -76,9 +76,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         private DBCheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBCheckoutAttributeValueLocalized();
-            item.CheckoutAttributeValueLocalizedID = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeValueLocalizedID");
-            item.CheckoutAttributeValueID = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeValueID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.CheckoutAttributeValueLocalizedId = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeValueLocalizedID");
+            item.CheckoutAttributeValueId = NopSqlDataHelper.GetInt(dataReader, "CheckoutAttributeValueID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             return item;
         }
@@ -124,28 +124,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Deletes a checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        public override void DeleteCheckoutAttribute(int CheckoutAttributeID)
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        public override void DeleteCheckoutAttribute(int checkoutAttributeId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeDelete");
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets all checkout attributes
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="DontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="dontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
         /// <returns>Checkout attribute collection</returns>
-        public override DBCheckoutAttributeCollection GetAllCheckoutAttributes(int LanguageID, bool DontLoadShippableProductRequired)
+        public override DBCheckoutAttributeCollection GetAllCheckoutAttributes(int languageId, bool dontLoadShippableProductRequired)
         {
             var result = new DBCheckoutAttributeCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeLoadAll");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "DontLoadShippableProductRequired", DbType.Boolean, DontLoadShippableProductRequired);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "DontLoadShippableProductRequired", DbType.Boolean, dontLoadShippableProductRequired);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -160,16 +160,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets a checkout attribute 
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute</returns>
-        public override DBCheckoutAttribute GetCheckoutAttributeByID(int CheckoutAttributeID, int LanguageID)
+        public override DBCheckoutAttribute GetCheckoutAttributeById(int checkoutAttributeId, int languageId)
         {
             DBCheckoutAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -183,36 +183,36 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Inserts a checkout attribute
         /// </summary>
-        /// <param name="Name">Name</param>
-        /// <param name="TextPrompt">Text prompt</param>
-        /// <param name="IsRequired">Value indicating whether the entity is required</param>
-        /// <param name="ShippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
-        /// <param name="IsTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
-        /// <param name="AttributeControlTypeID">Attribute control type identifier</param>
-        /// <param name="DisplayOrder">Display order</param>
+        /// <param name="name">Name</param>
+        /// <param name="textPrompt">Text prompt</param>
+        /// <param name="isRequired">Value indicating whether the entity is required</param>
+        /// <param name="shippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
+        /// <param name="isTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
+        /// <param name="attributeControlTypeId">Attribute control type identifier</param>
+        /// <param name="displayOrder">Display order</param>
         /// <returns>Checkout attribute</returns>
-        public override DBCheckoutAttribute InsertCheckoutAttribute(string Name,
-            string TextPrompt, bool IsRequired, bool ShippableProductRequired,
-            bool IsTaxExempt, int TaxCategoryID, int AttributeControlTypeID,
-            int DisplayOrder)
+        public override DBCheckoutAttribute InsertCheckoutAttribute(string name,
+            string textPrompt, bool isRequired, bool shippableProductRequired,
+            bool isTaxExempt, int taxCategoryId, int attributeControlTypeId,
+            int displayOrder)
         {
             DBCheckoutAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeInsert");
             db.AddOutParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, TextPrompt);
-            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, IsRequired);
-            db.AddInParameter(dbCommand, "ShippableProductRequired", DbType.Boolean, ShippableProductRequired);
-            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, IsTaxExempt);
-            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, TaxCategoryID);
-            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, AttributeControlTypeID);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, textPrompt);
+            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, isRequired);
+            db.AddInParameter(dbCommand, "ShippableProductRequired", DbType.Boolean, shippableProductRequired);
+            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, isTaxExempt);
+            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, taxCategoryId);
+            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, attributeControlTypeId);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CheckoutAttributeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeID"));
-                item = GetCheckoutAttributeByID(CheckoutAttributeID, 0);
+                int checkoutAttributeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeID"));
+                item = GetCheckoutAttributeById(checkoutAttributeId, 0);
             }
             return item;
         }
@@ -220,51 +220,51 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Updates the checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="Name">Name</param>
-        /// <param name="TextPrompt">Text prompt</param>
-        /// <param name="IsRequired">Value indicating whether the entity is required</param>
-        /// <param name="ShippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
-        /// <param name="IsTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
-        /// <param name="AttributeControlTypeID">Attribute control type identifier</param>
-        /// <param name="DisplayOrder">Display order</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="name">Name</param>
+        /// <param name="textPrompt">Text prompt</param>
+        /// <param name="isRequired">Value indicating whether the entity is required</param>
+        /// <param name="shippableProductRequired">Value indicating whether shippable products are required in order to display this attribute</param>
+        /// <param name="isTaxExempt">Value indicating whether the attribute is marked as tax exempt</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
+        /// <param name="attributeControlTypeId">Attribute control type identifier</param>
+        /// <param name="displayOrder">Display order</param>
         /// <returns>Checkout attribute</returns>
-        public override DBCheckoutAttribute UpdateCheckoutAttribute(int CheckoutAttributeID,
-            string Name, string TextPrompt, bool IsRequired, bool ShippableProductRequired,
-            bool IsTaxExempt, int TaxCategoryID, int AttributeControlTypeID,
-            int DisplayOrder)
+        public override DBCheckoutAttribute UpdateCheckoutAttribute(int checkoutAttributeId,
+            string name, string textPrompt, bool isRequired, bool shippableProductRequired,
+            bool isTaxExempt, int taxCategoryId, int attributeControlTypeId,
+            int displayOrder)
         {
             DBCheckoutAttribute item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeUpdate");
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, TextPrompt);
-            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, IsRequired);
-            db.AddInParameter(dbCommand, "ShippableProductRequired", DbType.Boolean, ShippableProductRequired);
-            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, IsTaxExempt);
-            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, TaxCategoryID);
-            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, AttributeControlTypeID);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, textPrompt);
+            db.AddInParameter(dbCommand, "IsRequired", DbType.Boolean, isRequired);
+            db.AddInParameter(dbCommand, "ShippableProductRequired", DbType.Boolean, shippableProductRequired);
+            db.AddInParameter(dbCommand, "IsTaxExempt", DbType.Boolean, isTaxExempt);
+            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, taxCategoryId);
+            db.AddInParameter(dbCommand, "AttributeControlTypeID", DbType.Int32, attributeControlTypeId);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCheckoutAttributeByID(CheckoutAttributeID, 0);
+                item = GetCheckoutAttributeById(checkoutAttributeId, 0);
             return item;
         }
 
         /// <summary>
         /// Gets localized checkout attribute by id
         /// </summary>
-        /// <param name="CheckoutAttributeLocalizedID">Localized checkout attribute identifier</param>
+        /// <param name="checkoutAttributeLocalizedId">Localized checkout attribute identifier</param>
         /// <returns>Checkout attribute content</returns>
-        public override DBCheckoutAttributeLocalized GetCheckoutAttributeLocalizedByID(int CheckoutAttributeLocalizedID)
+        public override DBCheckoutAttributeLocalized GetCheckoutAttributeLocalizedById(int checkoutAttributeLocalizedId)
         {
             DBCheckoutAttributeLocalized item = null;
-            if (CheckoutAttributeLocalizedID == 0)
+            if (checkoutAttributeLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CheckoutAttributeLocalizedID", DbType.Int32, CheckoutAttributeLocalizedID);
+            db.AddInParameter(dbCommand, "CheckoutAttributeLocalizedID", DbType.Int32, checkoutAttributeLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -278,16 +278,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets localized checkout attribute by checkout attribute id and language id
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute content</returns>
-        public override DBCheckoutAttributeLocalized GetCheckoutAttributeLocalizedByCheckoutAttributeIDAndLanguageID(int CheckoutAttributeID, int LanguageID)
+        public override DBCheckoutAttributeLocalized GetCheckoutAttributeLocalizedByCheckoutAttributeIdAndLanguageId(int checkoutAttributeId, int languageId)
         {
             DBCheckoutAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeLocalizedLoadByCheckoutAttributeIDAndLanguageID");
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -301,26 +301,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Inserts a localized checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="TextPrompt">Text prompt</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="textPrompt">Text prompt</param>
         /// <returns>Checkout attribute content</returns>
-        public override DBCheckoutAttributeLocalized InsertCheckoutAttributeLocalized(int CheckoutAttributeID,
-            int LanguageID, string Name, string TextPrompt)
+        public override DBCheckoutAttributeLocalized InsertCheckoutAttributeLocalized(int checkoutAttributeId,
+            int languageId, string name, string textPrompt)
         {
             DBCheckoutAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeLocalizedInsert");
             db.AddOutParameter(dbCommand, "CheckoutAttributeLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, TextPrompt);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, textPrompt);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CheckoutAttributeLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeLocalizedID"));
-                item = GetCheckoutAttributeLocalizedByID(CheckoutAttributeLocalizedID);
+                int checkoutAttributeLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeLocalizedID"));
+                item = GetCheckoutAttributeLocalizedById(checkoutAttributeLocalizedId);
             }
             return item;
         }
@@ -328,25 +328,25 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Update a localized checkout attribute
         /// </summary>
-        /// <param name="CheckoutAttributeLocalizedID">Localized checkout attribute identifier</param>
-        /// <param name="CheckoutAttributeID">Checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="TextPrompt">Text prompt</param>
+        /// <param name="checkoutAttributeLocalizedId">Localized checkout attribute identifier</param>
+        /// <param name="checkoutAttributeId">Checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="textPrompt">Text prompt</param>
         /// <returns>Checkout attribute content</returns>
-        public override DBCheckoutAttributeLocalized UpdateCheckoutAttributeLocalized(int CheckoutAttributeLocalizedID,
-            int CheckoutAttributeID, int LanguageID, string Name, string TextPrompt)
+        public override DBCheckoutAttributeLocalized UpdateCheckoutAttributeLocalized(int checkoutAttributeLocalizedId,
+            int checkoutAttributeId, int languageId, string name, string textPrompt)
         {
             DBCheckoutAttributeLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeLocalizedUpdate");
-            db.AddInParameter(dbCommand, "CheckoutAttributeLocalizedID", DbType.Int32, CheckoutAttributeLocalizedID);
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, TextPrompt);
+            db.AddInParameter(dbCommand, "CheckoutAttributeLocalizedID", DbType.Int32, checkoutAttributeLocalizedId);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "TextPrompt", DbType.String, textPrompt);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCheckoutAttributeLocalizedByID(CheckoutAttributeLocalizedID);
+                item = GetCheckoutAttributeLocalizedById(checkoutAttributeLocalizedId);
 
             return item;
         }
@@ -354,28 +354,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Deletes a checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        public override void DeleteCheckoutAttributeValue(int CheckoutAttributeValueID)
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        public override void DeleteCheckoutAttributeValue(int checkoutAttributeValueId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueDelete");
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, CheckoutAttributeValueID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, checkoutAttributeValueId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets checkout attribute values by checkout attribute identifier
         /// </summary>
-        /// <param name="CheckoutAttributeID">The checkout attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute value collection</returns>
-        public override DBCheckoutAttributeValueCollection GetCheckoutAttributeValues(int CheckoutAttributeID, int LanguageID)
+        public override DBCheckoutAttributeValueCollection GetCheckoutAttributeValues(int checkoutAttributeId, int languageId)
         {
             var result = new DBCheckoutAttributeValueCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueLoadByCheckoutAttributeID");
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -390,16 +390,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets a checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute value</returns>
-        public override DBCheckoutAttributeValue GetCheckoutAttributeValueByID(int CheckoutAttributeValueID, int LanguageID)
+        public override DBCheckoutAttributeValue GetCheckoutAttributeValueById(int checkoutAttributeValueId, int languageId)
         {
             DBCheckoutAttributeValue item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, CheckoutAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, checkoutAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -413,31 +413,31 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Inserts a checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeID">The checkout attribute identifier</param>
-        /// <param name="Name">The checkout attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
+        /// <param name="name">The checkout attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Checkout attribute value</returns>
-        public override DBCheckoutAttributeValue InsertCheckoutAttributeValue(int CheckoutAttributeID,
-            string Name, decimal PriceAdjustment, decimal WeightAdjustment,
-            bool IsPreSelected, int DisplayOrder)
+        public override DBCheckoutAttributeValue InsertCheckoutAttributeValue(int checkoutAttributeId,
+            string name, decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
             DBCheckoutAttributeValue item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueInsert");
             db.AddOutParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, PriceAdjustment);
-            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, WeightAdjustment);
-            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, IsPreSelected);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, priceAdjustment);
+            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, weightAdjustment);
+            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, isPreSelected);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CheckoutAttributeValueID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeValueID"));
-                item = GetCheckoutAttributeValueByID(CheckoutAttributeValueID, 0);
+                int checkoutAttributeValueId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeValueID"));
+                item = GetCheckoutAttributeValueById(checkoutAttributeValueId, 0);
             }
             return item;
         }
@@ -445,46 +445,46 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Updates the checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">The checkout attribute value identifier</param>
-        /// <param name="CheckoutAttributeID">The checkout attribute identifier</param>
-        /// <param name="Name">The checkout attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="checkoutAttributeValueId">The checkout attribute value identifier</param>
+        /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
+        /// <param name="name">The checkout attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Checkout attribute value</returns>
-        public override DBCheckoutAttributeValue UpdateCheckoutAttributeValue(int CheckoutAttributeValueID,
-            int CheckoutAttributeID, string Name, decimal PriceAdjustment,
-            decimal WeightAdjustment, bool IsPreSelected, int DisplayOrder)
+        public override DBCheckoutAttributeValue UpdateCheckoutAttributeValue(int checkoutAttributeValueId,
+            int checkoutAttributeId, string name, decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder)
         {
             DBCheckoutAttributeValue item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueUpdate");
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, CheckoutAttributeValueID);
-            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, CheckoutAttributeID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, PriceAdjustment);
-            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, WeightAdjustment);
-            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, IsPreSelected);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, checkoutAttributeValueId);
+            db.AddInParameter(dbCommand, "CheckoutAttributeID", DbType.Int32, checkoutAttributeId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, priceAdjustment);
+            db.AddInParameter(dbCommand, "WeightAdjustment", DbType.Decimal, weightAdjustment);
+            db.AddInParameter(dbCommand, "IsPreSelected", DbType.Boolean, isPreSelected);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCheckoutAttributeValueByID(CheckoutAttributeValueID, 0);
+                item = GetCheckoutAttributeValueById(checkoutAttributeValueId, 0);
             return item;
         }
 
         /// <summary>
         /// Gets localized checkout attribute value by id
         /// </summary>
-        /// <param name="CheckoutAttributeValueLocalizedID">Localized checkout attribute value identifier</param>
+        /// <param name="checkoutAttributeValueLocalizedId">Localized checkout attribute value identifier</param>
         /// <returns>Localized checkout attribute value</returns>
-        public override DBCheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedByID(int CheckoutAttributeValueLocalizedID)
+        public override DBCheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedById(int checkoutAttributeValueLocalizedId)
         {
             DBCheckoutAttributeValueLocalized item = null;
-            if (CheckoutAttributeValueLocalizedID == 0)
+            if (checkoutAttributeValueLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueLocalizedID", DbType.Int32, CheckoutAttributeValueLocalizedID);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueLocalizedID", DbType.Int32, checkoutAttributeValueLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -498,16 +498,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Gets localized checkout attribute value by checkout attribute value id and language id
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized checkout attribute value</returns>
-        public override DBCheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIDAndLanguageID(int CheckoutAttributeValueID, int LanguageID)
+        public override DBCheckoutAttributeValueLocalized GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIdAndLanguageId(int checkoutAttributeValueId, int languageId)
         {
             DBCheckoutAttributeValueLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueLocalizedLoadByCheckoutAttributeValueIDAndLanguageID");
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, CheckoutAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, checkoutAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -521,24 +521,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Inserts a localized checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized checkout attribute value</returns>
-        public override DBCheckoutAttributeValueLocalized InsertCheckoutAttributeValueLocalized(int CheckoutAttributeValueID,
-            int LanguageID, string Name)
+        public override DBCheckoutAttributeValueLocalized InsertCheckoutAttributeValueLocalized(int checkoutAttributeValueId,
+            int languageId, string name)
         {
             DBCheckoutAttributeValueLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueLocalizedInsert");
             db.AddOutParameter(dbCommand, "CheckoutAttributeValueLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, CheckoutAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, checkoutAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CheckoutAttributeValueLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeValueLocalizedID"));
-                item = GetCheckoutAttributeValueLocalizedByID(CheckoutAttributeValueLocalizedID);
+                int checkoutAttributeValueLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CheckoutAttributeValueLocalizedID"));
+                item = GetCheckoutAttributeValueLocalizedById(checkoutAttributeValueLocalizedId);
             }
             return item;
         }
@@ -546,23 +546,23 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <summary>
         /// Update a localized checkout attribute value
         /// </summary>
-        /// <param name="CheckoutAttributeValueLocalizedID">Localized checkout attribute value identifier</param>
-        /// <param name="CheckoutAttributeValueID">Checkout attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="checkoutAttributeValueLocalizedId">Localized checkout attribute value identifier</param>
+        /// <param name="checkoutAttributeValueId">Checkout attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized checkout attribute value</returns>
-        public override DBCheckoutAttributeValueLocalized UpdateCheckoutAttributeValueLocalized(int CheckoutAttributeValueLocalizedID,
-            int CheckoutAttributeValueID, int LanguageID, string Name)
+        public override DBCheckoutAttributeValueLocalized UpdateCheckoutAttributeValueLocalized(int checkoutAttributeValueLocalizedId,
+            int checkoutAttributeValueId, int languageId, string name)
         {
             DBCheckoutAttributeValueLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CheckoutAttributeValueLocalizedUpdate");
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueLocalizedID", DbType.Int32, CheckoutAttributeValueLocalizedID);
-            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, CheckoutAttributeValueID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueLocalizedID", DbType.Int32, checkoutAttributeValueLocalizedId);
+            db.AddInParameter(dbCommand, "CheckoutAttributeValueID", DbType.Int32, checkoutAttributeValueId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCheckoutAttributeValueLocalizedByID(CheckoutAttributeValueLocalizedID);
+                item = GetCheckoutAttributeValueLocalizedById(checkoutAttributeValueLocalizedId);
 
             return item;
         }

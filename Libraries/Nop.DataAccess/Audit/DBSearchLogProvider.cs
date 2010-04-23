@@ -36,11 +36,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Get order product variant sales report
         /// </summary>
-        /// <param name="StartTime">Order start time; null to load all</param>
-        /// <param name="EndTime">Order end time; null to load all</param>
-        /// <param name="Count">Item count. 0 if you want to get all items</param>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="count">Item count. 0 if you want to get all items</param>
         /// <returns>Result</returns>
-        public abstract IDataReader SearchTermReport(DateTime? StartTime, DateTime? EndTime, int Count);
+        public abstract IDataReader SearchTermReport(DateTime? startTime, 
+            DateTime? endTime, int count);
        
         /// <summary>
         /// Gets all search log items
@@ -51,18 +52,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets a search log item
         /// </summary>
-        /// <param name="SearchLogID">The search log item identifier</param>
+        /// <param name="searchLogId">The search log item identifier</param>
         /// <returns>Search log item</returns>
-        public abstract DBSearchLog GetSearchLogByID(int SearchLogID);
+        public abstract DBSearchLog GetSearchLogById(int searchLogId);
 
         /// <summary>
         /// Inserts a search log item
         /// </summary>
-        /// <param name="SearchTerm">The search term</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="searchTerm">The search term</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Search log item</returns>
-        public abstract DBSearchLog InsertSearchLog(string SearchTerm, int CustomerID, DateTime CreatedOn);
+        public abstract DBSearchLog InsertSearchLog(string searchTerm, 
+            int customerId, DateTime createdOn);
 
         /// <summary>
         /// Clear search log

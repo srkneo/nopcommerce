@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     /// <summary>
     /// Shipping status provider for SQL Server
     /// </summary>
-    public partial class SQLShippingStatusProvider : DBShippingStatusProvider
+    public partial class SqlShippingStatusProvider : DBShippingStatusProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,10 +36,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         #region Utilities
         private DBShippingStatus GetShippingStatusFromReader(IDataReader dataReader)
         {
-            DBShippingStatus shippingStatus = new DBShippingStatus();
-            shippingStatus.ShippingStatusID = NopSqlDataHelper.GetInt(dataReader, "ShippingStatusID");
-            shippingStatus.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return shippingStatus;
+            var item = new DBShippingStatus();
+            item.ShippingStatusId = NopSqlDataHelper.GetInt(dataReader, "ShippingStatusID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
         #endregion
 
@@ -80,26 +80,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         }
 
         /// <summary>
-        /// Gets a shipping status by ID
+        /// Gets a shipping status by identifier
         /// </summary>
-        /// <param name="ShippingStatusID">Shipping status identifier</param>
+        /// <param name="shippingStatusId">Shipping status identifier</param>
         /// <returns>Shipping status</returns>
-        public override DBShippingStatus GetShippingStatusByID(int ShippingStatusID)
+        public override DBShippingStatus GetShippingStatusById(int shippingStatusId)
         {
-            DBShippingStatus shippingStatus = null;
-            if (ShippingStatusID == 0)
-                return shippingStatus;
+            DBShippingStatus item = null;
+            if (shippingStatusId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingStatusLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, ShippingStatusID);
+            db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    shippingStatus = GetShippingStatusFromReader(dataReader);
+                    item = GetShippingStatusFromReader(dataReader);
                 }
             }
-            return shippingStatus;
+            return item;
         }
 
         /// <summary>

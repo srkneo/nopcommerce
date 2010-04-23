@@ -35,7 +35,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Assist
             }
         }
 
-        public static string ShopID
+        public static string ShopId
         {
             get
             {

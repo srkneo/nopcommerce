@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tasks
             }
         }
 
-        private void run()
+        private void Run()
         {
             this._started = DateTime.Now;
             this._isRunning = true;
@@ -64,10 +64,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tasks
             this._isRunning = false;
         }
 
-        private void timerHandler(object state)
+        private void TimerHandler(object state)
         {
             this._timer.Change(-1, -1);
-            this.run();
+            this.Run();
             this._timer.Change(this.Interval, this.Interval);
         }
 
@@ -94,7 +94,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tasks
         {
             if (this._timer == null)
             {
-                this._timer = new Timer(new TimerCallback(this.timerHandler), null, this.Interval, this.Interval);
+                this._timer = new Timer(new TimerCallback(this.TimerHandler), null, this.Interval, this.Interval);
             }
         }
 

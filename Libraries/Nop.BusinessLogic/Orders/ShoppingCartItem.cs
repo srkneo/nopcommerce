@@ -43,27 +43,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the shopping cart item identifier
         /// </summary>
-        public int ShoppingCartItemID { get; set; }
+        public int ShoppingCartItemId { get; set; }
 
         /// <summary>
         /// Gets or sets the shopping cart type identifier
         /// </summary>
-        public int ShoppingCartTypeID { get; set; }
+        public int ShoppingCartTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the customer session identifier
         /// </summary>
-        public Guid CustomerSessionGUID { get; set; }
+        public Guid CustomerSessionGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
-        /// Gets or sets the product variant attribute
+        /// Gets or sets the product variant attributes
         /// </summary>
-        public string AttributesXML { get; set; }
+        public string AttributesXml { get; set; }
 
         /// <summary>
         /// Gets or sets the price enter by a customer
@@ -84,7 +84,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Gets or sets the date and time of instance update
         /// </summary>
         public DateTime UpdatedOn { get; set; }
-        #endregion
+        #endregion 
 
         #region Custom Properties
 
@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                return (ShoppingCartTypeEnum)ShoppingCartTypeID;
+                return (ShoppingCartTypeEnum)this.ShoppingCartTypeId;
             }
         }
 
@@ -108,7 +108,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             {
                 if (_cachedProductVariant == null)
                 {
-                    _cachedProductVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+                    _cachedProductVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 }
                 return _cachedProductVariant;
             }
@@ -122,12 +122,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             get
             {
                 decimal totalWeigth = decimal.Zero;
-                ProductVariant productVariant = ProductVariant;
+                ProductVariant productVariant = this.ProductVariant;
                 if (productVariant != null)
                 {
                     decimal attributesTotalWeight = decimal.Zero;
 
-                    ProductVariantAttributeValueCollection pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(this.AttributesXML);
+                    ProductVariantAttributeValueCollection pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(this.AttributesXml);
                     foreach (ProductVariantAttributeValue pvaValue in pvaValues)
                     {
                         attributesTotalWeight += pvaValue.WeightAdjustment;
@@ -205,7 +205,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             get
             {
-                return CustomerManager.GetCustomerSessionByGUID(this.CustomerSessionGUID);
+                return CustomerManager.GetCustomerSessionByGuid(this.CustomerSessionGuid);
             }
         }
         #endregion

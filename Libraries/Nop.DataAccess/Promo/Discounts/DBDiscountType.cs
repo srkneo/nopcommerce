@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         /// <summary>
         /// Gets or sets the discount type identifier
         /// </summary>
-        public int DiscountTypeID { get; set; }
+        public int DiscountTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

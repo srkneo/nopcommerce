@@ -40,12 +40,12 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the customer GUID
+        /// Gets or sets the customer Guid
         /// </summary>
-        public Guid CustomerGUID { get; set; }
+        public Guid CustomerGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the email
@@ -70,22 +70,22 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the affiliate identifier
         /// </summary>
-        public int AffiliateID { get; set; }
+        public int AffiliateId { get; set; }
 
         /// <summary>
         /// Gets or sets the billing address identifier
         /// </summary>
-        public int BillingAddressID { get; set; }
+        public int BillingAddressId { get; set; }
 
         /// <summary>
         /// Gets or sets the shipping address identifier
         /// </summary>
-        public int ShippingAddressID { get; set; }
+        public int ShippingAddressId { get; set; }
 
         /// <summary>
         /// Gets or sets the last payment method identifier
         /// </summary>
-        public int LastPaymentMethodID { get; set; }
+        public int LastPaymentMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the last applied coupon code
@@ -105,17 +105,17 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the currency identifier
         /// </summary>
-        public int CurrencyID { get; set; }
+        public int CurrencyId { get; set; }
 
         /// <summary>
         /// Gets or sets the tax display type identifier
         /// </summary>
-        public int TaxDisplayTypeID { get; set; }
+        public int TaxDisplayTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the customer is tax exempt
@@ -170,12 +170,12 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <summary>
         /// Gets or sets the time zone identifier
         /// </summary>
-        public string TimeZoneID { get; set; }
+        public string TimeZoneId { get; set; }
 
         /// <summary>
         /// Gets or sets the avatar identifier
         /// </summary>
-        public int AvatarID { get; set; }
+        public int AvatarId { get; set; }
 
         #endregion
     }

@@ -82,13 +82,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new Product();
-            item.ProductID = dbItem.ProductID;
+            item.ProductId = dbItem.ProductId;
             item.Name = dbItem.Name;
             item.ShortDescription = dbItem.ShortDescription;
             item.FullDescription = dbItem.FullDescription;
             item.AdminComment = dbItem.AdminComment;
-            item.ProductTypeID = dbItem.ProductTypeID;
-            item.TemplateID = dbItem.TemplateID;
+            item.ProductTypeId = dbItem.ProductTypeId;
+            item.TemplateId = dbItem.TemplateId;
             item.ShowOnHomePage = dbItem.ShowOnHomePage;
             item.MetaKeywords = dbItem.MetaKeywords;
             item.MetaDescription = dbItem.MetaDescription;
@@ -127,9 +127,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new ProductPicture();
-            item.ProductPictureID = dbItem.ProductPictureID;
-            item.ProductID = dbItem.ProductID;
-            item.PictureID = dbItem.PictureID;
+            item.ProductPictureId = dbItem.ProductPictureId;
+            item.ProductId = dbItem.ProductId;
+            item.PictureId = dbItem.PictureId;
             item.DisplayOrder = dbItem.DisplayOrder;
 
             return item;
@@ -156,9 +156,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new ProductReview();
-            item.ProductReviewID = dbItem.ProductReviewID;
-            item.ProductID = dbItem.ProductID;
-            item.CustomerID = dbItem.CustomerID;
+            item.ProductReviewId = dbItem.ProductReviewId;
+            item.ProductId = dbItem.ProductId;
+            item.CustomerId = dbItem.CustomerId;
             item.Title = dbItem.Title;
             item.ReviewText = dbItem.ReviewText;
             item.Rating = dbItem.Rating;
@@ -191,7 +191,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new ProductType();
-            item.ProductTypeID = dbItem.ProductTypeID;
+            item.ProductTypeId = dbItem.ProductTypeId;
             item.Name = dbItem.Name;
             item.DisplayOrder = dbItem.DisplayOrder;
             item.CreatedOn = dbItem.CreatedOn;
@@ -221,8 +221,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new ProductVariant();
-            item.ProductVariantID = dbItem.ProductVariantID;
-            item.ProductID = dbItem.ProductID;
+            item.ProductVariantId = dbItem.ProductVariantId;
+            item.ProductId = dbItem.ProductId;
             item.Name = dbItem.Name;
             item.SKU = dbItem.SKU;
             item.Description = dbItem.Description;
@@ -230,13 +230,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.ManufacturerPartNumber = dbItem.ManufacturerPartNumber;
             item.IsGiftCard = dbItem.IsGiftCard;
             item.IsDownload = dbItem.IsDownload;
-            item.DownloadID = dbItem.DownloadID;
+            item.DownloadId = dbItem.DownloadId;
             item.UnlimitedDownloads = dbItem.UnlimitedDownloads;
             item.MaxNumberOfDownloads = dbItem.MaxNumberOfDownloads;
             item.DownloadExpirationDays = dbItem.DownloadExpirationDays;
             item.DownloadActivationType = dbItem.DownloadActivationType;
             item.HasSampleDownload = dbItem.HasSampleDownload;
-            item.SampleDownloadID = dbItem.SampleDownloadID;
+            item.SampleDownloadId = dbItem.SampleDownloadId;
             item.HasUserAgreement = dbItem.HasUserAgreement;
             item.UserAgreementText = dbItem.UserAgreementText;
             item.IsRecurring = dbItem.IsRecurring;
@@ -247,12 +247,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.IsFreeShipping = dbItem.IsFreeShipping;
             item.AdditionalShippingCharge = dbItem.AdditionalShippingCharge;
             item.IsTaxExempt = dbItem.IsTaxExempt;
-            item.TaxCategoryID = dbItem.TaxCategoryID;
+            item.TaxCategoryId = dbItem.TaxCategoryId;
             item.ManageInventory = dbItem.ManageInventory;
             item.StockQuantity = dbItem.StockQuantity;
             item.DisplayStockAvailability = dbItem.DisplayStockAvailability;
             item.MinStockQuantity = dbItem.MinStockQuantity;
-            item.LowStockActivityID = dbItem.LowStockActivityID;
+            item.LowStockActivityId = dbItem.LowStockActivityId;
             item.NotifyAdminForQuantityBelow = dbItem.NotifyAdminForQuantityBelow;
             item.AllowOutOfStockOrders = dbItem.AllowOutOfStockOrders;
             item.OrderMinimumQuantity = dbItem.OrderMinimumQuantity;
@@ -269,7 +269,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.Length = dbItem.Length;
             item.Width = dbItem.Width;
             item.Height = dbItem.Height;
-            item.PictureID = dbItem.PictureID;
+            item.PictureId = dbItem.PictureId;
             item.AvailableStartDateTime = dbItem.AvailableStartDateTime;
             item.AvailableEndDateTime = dbItem.AvailableEndDateTime;
             item.Published = dbItem.Published;
@@ -301,9 +301,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new RelatedProduct();
-            item.RelatedProductID = dbItem.RelatedProductID;
-            item.ProductID1 = dbItem.ProductID1;
-            item.ProductID2 = dbItem.ProductID2;
+            item.RelatedProductId = dbItem.RelatedProductId;
+            item.ProductId1 = dbItem.ProductId1;
+            item.ProductId2 = dbItem.ProductId2;
             item.DisplayOrder = dbItem.DisplayOrder;
 
             return item;
@@ -330,10 +330,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new Pricelist();
-            item.PricelistID = dbItem.PricelistID;
-            item.ExportModeID = dbItem.ExportModeID;
-            item.ExportTypeID = dbItem.ExportTypeID;
-            item.AffiliateID = dbItem.AffiliateID;
+            item.PricelistId = dbItem.PricelistId;
+            item.ExportModeId = dbItem.ExportModeId;
+            item.ExportTypeId = dbItem.ExportTypeId;
+            item.AffiliateId = dbItem.AffiliateId;
             item.DisplayName = dbItem.DisplayName;
             item.ShortName = dbItem.ShortName;
             item.PricelistGuid = dbItem.PricelistGuid;
@@ -345,7 +345,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.Body = dbItem.Body;
             item.Footer = dbItem.Footer;
             item.PriceAdjustment = dbItem.PriceAdjustment;
-            item.PriceAdjustmentTypeID = dbItem.PriceAdjustmentTypeID;
+            item.PriceAdjustmentTypeId = dbItem.PriceAdjustmentTypeId;
             item.OverrideIndivAdjustment = dbItem.OverrideIndivAdjustment;
             item.CreatedOn = dbItem.CreatedOn;
             item.UpdatedOn = dbItem.UpdatedOn;
@@ -374,10 +374,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new ProductVariantPricelist();
-            item.ProductVariantPricelistID = dbItem.ProductVariantPricelistID;
-            item.ProductVariantID = dbItem.ProductVariantID;
-            item.PricelistID = dbItem.PricelistID;
-            item.PriceAdjustmentTypeID = dbItem.PriceAdjustmentTypeID;
+            item.ProductVariantPricelistId = dbItem.ProductVariantPricelistId;
+            item.ProductVariantId = dbItem.ProductVariantId;
+            item.PricelistId = dbItem.PricelistId;
+            item.PriceAdjustmentTypeId = dbItem.PriceAdjustmentTypeId;
             item.PriceAdjustment = dbItem.PriceAdjustment;
             item.UpdatedOn = dbItem.UpdatedOn;
 
@@ -405,8 +405,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new TierPrice();
-            item.TierPriceID = dbItem.TierPriceID;
-            item.ProductVariantID = dbItem.ProductVariantID;
+            item.TierPriceId = dbItem.TierPriceId;
+            item.ProductVariantId = dbItem.ProductVariantId;
             item.Quantity = dbItem.Quantity;
             item.Price = dbItem.Price;
 
@@ -419,9 +419,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new ProductLocalized();
-            item.ProductLocalizedID = dbItem.ProductLocalizedID;
-            item.ProductID = dbItem.ProductID;
-            item.LanguageID = dbItem.LanguageID;
+            item.ProductLocalizedId = dbItem.ProductLocalizedId;
+            item.ProductId = dbItem.ProductId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.ShortDescription = dbItem.ShortDescription;
             item.FullDescription = dbItem.FullDescription;
@@ -439,9 +439,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new ProductVariantLocalized();
-            item.ProductVariantLocalizedID = dbItem.ProductVariantLocalizedID;
-            item.ProductVariantID = dbItem.ProductVariantID;
-            item.LanguageID = dbItem.LanguageID;
+            item.ProductVariantLocalizedId = dbItem.ProductVariantLocalizedId;
+            item.ProductVariantId = dbItem.ProductVariantId;
+            item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
 
@@ -469,9 +469,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             var item = new CustomerRoleProductPrice();
-            item.CustomerRoleProductPriceID = dbItem.CustomerRoleProductPriceID;
-            item.CustomerRoleID = dbItem.CustomerRoleID;
-            item.ProductVariantID = dbItem.ProductVariantID;
+            item.CustomerRoleProductPriceId = dbItem.CustomerRoleProductPriceId;
+            item.CustomerRoleId = dbItem.CustomerRoleId;
+            item.ProductVariantId = dbItem.ProductVariantId;
             item.Price = dbItem.Price;
 
             return item;
@@ -485,20 +485,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Marks a product as deleted
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        public static void MarkProductAsDeleted(int ProductID)
+        /// <param name="productId">Product identifier</param>
+        public static void MarkProductAsDeleted(int productId)
         {
-            var product = GetProductByID(ProductID);
+            var product = GetProductById(productId);
             if (product != null)
             {
-                product = UpdateProduct(product.ProductID, product.Name, product.ShortDescription,
-                    product.FullDescription, product.AdminComment, product.ProductTypeID,
-                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription,
+                product = UpdateProduct(product.ProductId, product.Name, product.ShortDescription,
+                    product.FullDescription, product.AdminComment, product.ProductTypeId,
+                    product.TemplateId, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription,
                     product.MetaTitle, product.SEName, product.AllowCustomerReviews, product.AllowCustomerRatings, product.RatingSum,
                     product.TotalRatingVotes, product.Published, true, product.CreatedOn, product.UpdatedOn);
 
                 foreach (var productVariant in product.ProductVariants)
-                    MarkProductVariantAsDeleted(productVariant.ProductVariantID);
+                    MarkProductVariantAsDeleted(productVariant.ProductVariantId);
             }
         }
 
@@ -521,7 +521,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
             return GetAllProducts(showHidden, languageId);
         }
@@ -530,11 +530,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets all products
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(bool showHidden, int LanguageID)
+        public static ProductCollection GetAllProducts(bool showHidden, int languageId)
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(showHidden, LanguageID);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(showHidden, languageId);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -542,153 +542,157 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int PageSize, int PageIndex, out int TotalRecords)
+        public static ProductCollection GetAllProducts(int pageSize, int pageIndex, 
+            out int totalRecords)
         {
             return GetAllProducts(0, 0, null, null, null,
-                string.Empty, false, PageSize, PageIndex, null, out TotalRecords);
+                string.Empty, false, pageSize, pageIndex, null, out totalRecords);
         }
 
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="FeaturedProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
-            bool? FeaturedProducts, int PageSize, int PageIndex, out int TotalRecords)
+        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
+            bool? featuredProducts, int pageSize, int pageIndex, out int totalRecords)
         {
-            return GetAllProducts(CategoryID, ManufacturerID, FeaturedProducts, null, null,
-                string.Empty, false, PageSize, PageIndex, null, out TotalRecords);
+            return GetAllProducts(categoryId, manufacturerId, featuredProducts, null, null,
+                string.Empty, false, pageSize, pageIndex, null, out totalRecords);
         }
 
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="SearchDescriptions">A value indicating whether to search in descriptions</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="searchDescriptions">A value indicating whether to search in descriptions</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(string Keywords, bool SearchDescriptions,
-            int PageSize, int PageIndex, out int TotalRecords)
+        public static ProductCollection GetAllProducts(string keywords, 
+            bool searchDescriptions, int pageSize, int pageIndex, out int totalRecords)
         {
             return GetAllProducts(0, 0, null, null, null,
-                Keywords, SearchDescriptions, PageSize, PageIndex, null, out TotalRecords);
+                keywords, searchDescriptions, pageSize, pageIndex, null, out totalRecords);
         }
 
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="FeaturedProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="SearchDescriptions">A value indicating whether to search in descriptions</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="searchDescriptions">A value indicating whether to search in descriptions</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
-            bool? FeaturedProducts, string Keywords, bool SearchDescriptions,
-            int PageSize, int PageIndex, List<int> FilteredSpecs, out int TotalRecords)
+        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
+            bool? featuredProducts, string keywords, bool searchDescriptions,
+            int pageSize, int pageIndex, List<int> filteredSpecs, out int totalRecords)
         {
-            return GetAllProducts(CategoryID, ManufacturerID, FeaturedProducts, null, null,
-                Keywords, SearchDescriptions, PageSize, PageIndex, FilteredSpecs, out TotalRecords);
+            return GetAllProducts(categoryId, manufacturerId, featuredProducts, null, null,
+                keywords, searchDescriptions, pageSize, pageIndex, filteredSpecs, out totalRecords);
         }
 
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="FeaturedProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
-        /// <param name="PriceMin">Minimum price</param>
-        /// <param name="PriceMax">Maximum price</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="priceMin">Minimum price</param>
+        /// <param name="priceMax">Maximum price</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
-            bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax,
-            int PageSize, int PageIndex, List<int> FilteredSpecs, out int TotalRecords)
+        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
+            bool? featuredProducts, decimal? priceMin, decimal? priceMax,
+            int pageSize, int pageIndex, List<int> filteredSpecs, out int totalRecords)
         {
-            return GetAllProducts(CategoryID, ManufacturerID, FeaturedProducts, PriceMin, PriceMax,
-                string.Empty, false, PageSize, PageIndex, FilteredSpecs, out TotalRecords);
+            return GetAllProducts(categoryId, manufacturerId, featuredProducts, 
+                priceMin, priceMax, string.Empty, false, pageSize, pageIndex, 
+                filteredSpecs, out totalRecords);
         }
 
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="FeaturedProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
-        /// <param name="PriceMin">Minimum price</param>
-        /// <param name="PriceMax">Maximum price</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="SearchDescriptions">A value indicating whether to search in descriptions</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="priceMin">Minimum price</param>
+        /// <param name="priceMax">Maximum price</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="searchDescriptions">A value indicating whether to search in descriptions</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
-            bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax, string Keywords, bool SearchDescriptions,
-            int PageSize, int PageIndex, List<int> FilteredSpecs, out int TotalRecords)
+        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
+            bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
+            string keywords, bool searchDescriptions, int pageSize, int pageIndex,
+            List<int> filteredSpecs, out int totalRecords)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
-            return GetAllProducts(CategoryID, ManufacturerID,
-                FeaturedProducts, PriceMin, PriceMax, Keywords, SearchDescriptions,
-                PageSize, PageIndex, FilteredSpecs, languageId, out TotalRecords);
+            return GetAllProducts(categoryId, manufacturerId,
+                featuredProducts, priceMin, priceMax, keywords, searchDescriptions,
+                pageSize, pageIndex, filteredSpecs, languageId, out totalRecords);
         }
 
         /// <summary>
         /// Gets all products
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="FeaturedProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
-        /// <param name="PriceMin">Minimum price</param>
-        /// <param name="PriceMax">Maximum price</param>
-        /// <param name="Keywords">Keywords</param>
-        /// <param name="SearchDescriptions">A value indicating whether to search in descriptions</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="FilteredSpecs">Filtered product specification identifiers</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="priceMin">Minimum price</param>
+        /// <param name="priceMax">Maximum price</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="searchDescriptions">A value indicating whether to search in descriptions</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int CategoryID, int ManufacturerID,
-            bool? FeaturedProducts, decimal? PriceMin, decimal? PriceMax, string Keywords, bool SearchDescriptions,
-            int PageSize, int PageIndex, List<int> FilteredSpecs, int LanguageID, out int TotalRecords)
+        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
+            bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
+            string keywords, bool searchDescriptions, int pageSize, 
+            int pageIndex, List<int> filteredSpecs, int languageId, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(CategoryID,
-               ManufacturerID, FeaturedProducts, PriceMin, PriceMax, Keywords, SearchDescriptions,
-               PageSize, PageIndex, FilteredSpecs, LanguageID, showHidden, out TotalRecords);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(categoryId,
+               manufacturerId, featuredProducts, priceMin, priceMax, keywords, searchDescriptions,
+               pageSize, pageIndex, filteredSpecs, languageId, showHidden, out totalRecords);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -703,7 +707,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductsDisplayedOnHomePage(showHidden, languageId);
             var products = DBMapping(dbCollection);
@@ -713,36 +717,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets product
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product</returns>
-        public static Product GetProductByID(int ProductID)
+        public static Product GetProductById(int productId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
-            return GetProductByID(ProductID, languageId);
+            return GetProductById(productId, languageId);
         }
 
         /// <summary>
         /// Gets product
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product</returns>
-        public static Product GetProductByID(int ProductID, int LanguageID)
+        public static Product GetProductById(int productId, int languageId)
         {
-            if (ProductID == 0)
+            if (productId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTS_BY_ID_KEY, ProductID, LanguageID);
+            string key = string.Format(PRODUCTS_BY_ID_KEY, productId, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (Product)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductByID(ProductID, LanguageID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductById(productId, languageId);
             var product = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -756,41 +760,42 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a product
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ProductTypeID">The product type identifier</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="ShowOnHomePage">A value indicating whether to show the product on the home page</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="AllowCustomerReviews">A value indicating whether the product allows customer reviews</param>
-        /// <param name="AllowCustomerRatings">A value indicating whether the product allows customer ratings</param>
-        /// <param name="RatingSum">The rating sum</param>
-        /// <param name="TotalRatingVotes">The total rating votes</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of product creation</param>
-        /// <param name="UpdatedOn">The date and time of product update</param>
+        /// <param name="name">The name</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="productTypeId">The product type identifier</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="showOnHomePage">A value indicating whether to show the product on the home page</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="allowCustomerReviews">A value indicating whether the product allows customer reviews</param>
+        /// <param name="allowCustomerRatings">A value indicating whether the product allows customer ratings</param>
+        /// <param name="ratingSum">The rating sum</param>
+        /// <param name="totalRatingVotes">The total rating votes</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of product creation</param>
+        /// <param name="updatedOn">The date and time of product update</param>
         /// <returns>Product</returns>
-        public static Product InsertProduct(string Name, string ShortDescription,
-            string FullDescription, string AdminComment,
-            int ProductTypeID, int TemplateID, bool ShowOnHomePage,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, bool AllowCustomerReviews, bool AllowCustomerRatings, int RatingSum,
-            int TotalRatingVotes, bool Published, bool Deleted,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static Product InsertProduct(string name, string shortDescription,
+            string fullDescription, string adminComment, int productTypeId,
+            int templateId, bool showOnHomePage,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName, bool allowCustomerReviews, bool allowCustomerRatings,
+            int ratingSum, int totalRatingVotes, bool published,
+            bool deleted, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProduct(Name, ShortDescription,
-                FullDescription, AdminComment, ProductTypeID, TemplateID, ShowOnHomePage,
-                MetaKeywords, MetaDescription, MetaTitle, SEName, AllowCustomerReviews,
-                AllowCustomerRatings, RatingSum, TotalRatingVotes, Published, Deleted, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProduct(name, shortDescription,
+                fullDescription, adminComment, productTypeId, templateId, showOnHomePage,
+                metaKeywords, metaDescription, metaTitle, seName, allowCustomerReviews,
+                allowCustomerRatings, ratingSum, totalRatingVotes, published, deleted, 
+                createdOn, updatedOn);
 
             var product = DBMapping(dbItem);
 
@@ -806,43 +811,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates the product
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ProductTypeID">The product type identifier</param>
-        /// <param name="ShowOnHomePage">A value indicating whether to show the product on the home page</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="AllowCustomerReviews">A value indicating whether the product allows customer reviews</param>
-        /// <param name="AllowCustomerRatings">A value indicating whether the product allows customer ratings</param>
-        /// <param name="RatingSum">The rating sum</param>
-        /// <param name="TotalRatingVotes">The total rating votes</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="CreatedOn">The date and time of product creation</param>
-        /// <param name="UpdatedOn">The date and time of product update</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="productTypeId">The product type identifier</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="showOnHomePage">A value indicating whether to show the product on the home page</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="allowCustomerReviews">A value indicating whether the product allows customer reviews</param>
+        /// <param name="allowCustomerRatings">A value indicating whether the product allows customer ratings</param>
+        /// <param name="ratingSum">The rating sum</param>
+        /// <param name="totalRatingVotes">The total rating votes</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="createdOn">The date and time of product creation</param>
+        /// <param name="updatedOn">The date and time of product update</param>
         /// <returns>Product</returns>
-        public static Product UpdateProduct(int ProductID, string Name, string ShortDescription,
-            string FullDescription, string AdminComment,
-            int ProductTypeID, int TemplateID, bool ShowOnHomePage,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, bool AllowCustomerReviews, bool AllowCustomerRatings, int RatingSum,
-            int TotalRatingVotes, bool Published, bool Deleted,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static Product UpdateProduct(int productId,
+            string name, string shortDescription,
+            string fullDescription, string adminComment, int productTypeId,
+            int templateId, bool showOnHomePage,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName, bool allowCustomerReviews, bool allowCustomerRatings,
+            int ratingSum, int totalRatingVotes, bool published,
+            bool deleted, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProduct(ProductID, Name, ShortDescription,
-                FullDescription, AdminComment, ProductTypeID, TemplateID,
-                ShowOnHomePage, MetaKeywords, MetaDescription, MetaTitle,
-                SEName, AllowCustomerReviews, AllowCustomerRatings, RatingSum, TotalRatingVotes,
-                Published, Deleted, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProduct(productId, 
+                name, shortDescription, fullDescription, adminComment, 
+                productTypeId, templateId, showOnHomePage, metaKeywords,
+                metaDescription, metaTitle, seName, allowCustomerReviews, 
+                allowCustomerRatings, ratingSum, totalRatingVotes,
+                published, deleted, createdOn, updatedOn);
 
             var product = DBMapping(dbItem);
 
@@ -859,11 +866,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets localized product by id
         /// </summary>
-        /// <param name="ProductLocalizedID">Localized product identifier</param>
+        /// <param name="productLocalizedId">Localized product identifier</param>
         /// <returns>Product content</returns>
-        public static ProductLocalized GetProductLocalizedByID(int ProductLocalizedID)
+        public static ProductLocalized GetProductLocalizedById(int productLocalizedId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductLocalizedByID(ProductLocalizedID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductLocalizedById(productLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -871,12 +878,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets localized product by product id and language id
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product content</returns>
-        public static ProductLocalized GetProductLocalizedByProductIDAndLanguageID(int ProductID, int LanguageID)
+        public static ProductLocalized GetProductLocalizedByProductIdAndLanguageId(int productId, int languageId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductLocalizedByProductIDAndLanguageID(ProductID, LanguageID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductLocalizedByProductIdAndLanguageId(productId, languageId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -884,24 +891,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a localized product
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>ProductContent</returns>
-        public static ProductLocalized InsertProductLocalized(int ProductID,
-            int LanguageID, string Name, string ShortDescription, string FullDescription,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Product content</returns>
+        public static ProductLocalized InsertProductLocalized(int productId,
+            int languageId, string name, string shortDescription, string fullDescription,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductLocalized(ProductID,
-                LanguageID, Name, ShortDescription, FullDescription,
-                MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductLocalized(productId,
+                languageId, name, shortDescription, fullDescription,
+                metaKeywords, metaDescription, metaTitle, seName);
             var item = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -917,25 +924,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Update a localized product
         /// </summary>
-        /// <param name="ProductLocalizedID">Localized product identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="ShortDescription">The short description</param>
-        /// <param name="FullDescription">The full description</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>ProductContent</returns>
-        public static ProductLocalized UpdateProductLocalized(int ProductLocalizedID,
-            int ProductID, int LanguageID, string Name, string ShortDescription, string FullDescription,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="productLocalizedId">Localized product identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="shortDescription">The short description</param>
+        /// <param name="fullDescription">The full description</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Product content</returns>
+        public static ProductLocalized UpdateProductLocalized(int productLocalizedId,
+            int productId, int languageId, string name, string shortDescription,
+            string fullDescription, string metaKeywords, string metaDescription,
+            string metaTitle, string seName)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductLocalized(ProductLocalizedID,
-                ProductID, LanguageID, Name, ShortDescription, FullDescription,
-                MetaKeywords, MetaDescription, MetaTitle, SEName);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductLocalized(productLocalizedId,
+                productId, languageId, name, shortDescription, fullDescription,
+                metaKeywords, metaDescription, metaTitle, seName);
             var item = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -951,61 +958,61 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetProductsAlsoPurchasedByID(int ProductID)
+        public static ProductCollection GetProductsAlsoPurchasedById(int productId)
         {
-            int TotalRecords = 0;
-
-            var products = GetProductsAlsoPurchasedByID(ProductID, ProductManager.ProductsAlsoPurchasedNumber, 0, out TotalRecords);
+            int totalRecords = 0;
+            var products = GetProductsAlsoPurchasedById(productId, 
+                ProductManager.ProductsAlsoPurchasedNumber, 0, out totalRecords);
             return products;
         }
 
         /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetProductsAlsoPurchasedByID(int ProductID,
-            int PageSize, int PageIndex, out int TotalRecords)
+        public static ProductCollection GetProductsAlsoPurchasedById(int productId,
+            int pageSize, int pageIndex, out int totalRecords)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
-            return GetProductsAlsoPurchasedByID(ProductID, languageId,
-                PageSize, PageIndex, out  TotalRecords);
+            return GetProductsAlsoPurchasedById(productId, languageId,
+                pageSize, pageIndex, out totalRecords);
         }
 
         /// <summary>
         /// Gets a list of products purchased by other customers who purchased the above
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetProductsAlsoPurchasedByID(int ProductID,
-            int LanguageID, int PageSize, int PageIndex, out int TotalRecords)
+        public static ProductCollection GetProductsAlsoPurchasedById(int productId,
+            int languageId, int pageSize, int pageIndex, out int totalRecords)
         {
-            if (PageSize <= 0)
-                PageSize = 10;
-            if (PageSize == int.MaxValue)
-                PageSize = int.MaxValue - 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
-            if (PageIndex < 0)
-                PageIndex = 0;
-            if (PageIndex == int.MaxValue)
-                PageIndex = int.MaxValue - 1;
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
 
             bool showHidden = NopContext.Current.IsAdmin;
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductsAlsoPurchasedByID(ProductID,
-               LanguageID, showHidden, PageSize, PageIndex, out TotalRecords);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductsAlsoPurchasedById(productId,
+               languageId, showHidden, pageSize, pageIndex, out totalRecords);
             var products = DBMapping(dbCollection);
             return products;
         }
@@ -1013,9 +1020,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Sets a product rating
         /// </summary>
-        /// <param name="ProductID">Product identifer</param>
-        /// <param name="Rating">Rating</param>
-        public static void SetProductRating(int ProductID, int Rating)
+        /// <param name="productId">Product identifer</param>
+        /// <param name="rating">Rating</param>
+        public static void SetProductRating(int productId, int rating)
         {
             if (NopContext.Current.User == null)
             {
@@ -1026,11 +1033,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return;
             }
 
-            if (Rating < 1 || Rating > 5)
-                Rating = 1;
-            var RatedOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-            DBProviderManager<DBProductProvider>.Provider.SetProductRating(ProductID, NopContext.Current.User.CustomerID,
-                Rating, RatedOn);
+            if (rating < 1 || rating > 5)
+                rating = 1;
+            var ratedOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            DBProviderManager<DBProductProvider>.Provider.SetProductRating(productId, NopContext.Current.User.CustomerId,
+                rating, ratedOn);
 
             if (ProductManager.CacheEnabled)
             {
@@ -1055,14 +1062,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a "compare products" list
         /// </summary>
-        /// <returns></returns>
+        /// <returns>"Compare products" list</returns>
         public static ProductCollection GetCompareProducts()
         {
             var products = new ProductCollection();
-            var productIDs = GetCompareProductsIDs();
-            foreach (int productID in productIDs)
+            var productIds = GetCompareProductsIds();
+            foreach (int productId in productIds)
             {
-                var product = GetProductByID(productID);
+                var product = GetProductById(productId);
                 if (product != null && product.Published && !product.Deleted)
                     products.Add(product);
             }
@@ -1073,42 +1080,42 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets a "compare products" identifier list
         /// </summary>
         /// <returns>"compare products" identifier list</returns>
-        public static List<int> GetCompareProductsIDs()
+        public static List<int> GetCompareProductsIds()
         {
-            var productIDs = new List<int>();
+            var productIds = new List<int>();
             HttpCookie compareCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.CompareProducts");
             if ((compareCookie == null) || (compareCookie.Values == null))
-                return productIDs;
-            string[] values = compareCookie.Values.GetValues("CompareProductIDs");
+                return productIds;
+            string[] values = compareCookie.Values.GetValues("CompareProductIds");
             if (values == null)
-                return productIDs;
+                return productIds;
             foreach (string productId in values)
             {
                 int prodId = int.Parse(productId);
-                if (!productIDs.Contains(prodId))
-                    productIDs.Add(prodId);
+                if (!productIds.Contains(prodId))
+                    productIds.Add(prodId);
             }
 
-            return productIDs;
+            return productIds;
         }
 
         /// <summary>
         /// Removes a product from a "compare products" list
         /// </summary>
-        /// <param name="ProductID">Product identifer</param>
-        public static void RemoveProductFromCompareList(int ProductID)
+        /// <param name="productId">Product identifer</param>
+        public static void RemoveProductFromCompareList(int productId)
         {
-            var oldProductIDs = GetCompareProductsIDs();
-            var newProductIDs = new List<int>();
-            newProductIDs.AddRange(oldProductIDs);
-            newProductIDs.Remove(ProductID);
+            var oldProductIds = GetCompareProductsIds();
+            var newProductIds = new List<int>();
+            newProductIds.AddRange(oldProductIds);
+            newProductIds.Remove(productId);
 
             HttpCookie compareCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.CompareProducts");
             if ((compareCookie == null) || (compareCookie.Values == null))
                 return;
             compareCookie.Values.Clear();
-            foreach (int newProductID in newProductIDs)
-                compareCookie.Values.Add("CompareProductIDs", newProductID.ToString());
+            foreach (int newProductId in newProductIds)
+                compareCookie.Values.Add("CompareProductIds", newProductId.ToString());
             compareCookie.Expires = DateTime.Now.AddDays(10.0);
             HttpContext.Current.Response.Cookies.Set(compareCookie);
         }
@@ -1116,18 +1123,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Adds a product to a "compare products" list
         /// </summary>
-        /// <param name="ProductID">Product identifer</param>
-        public static void AddProductToCompareList(int ProductID)
+        /// <param name="productId">Product identifer</param>
+        public static void AddProductToCompareList(int productId)
         {
             if (!ProductManager.CompareProductsEnabled)
                 return;
 
-            var oldProductIDs = GetCompareProductsIDs();
-            var newProductIDs = new List<int>();
-            newProductIDs.Add(ProductID);
-            foreach (int oldProductID in oldProductIDs)
-                if (oldProductID != ProductID)
-                    newProductIDs.Add(oldProductID);
+            var oldProductIds = GetCompareProductsIds();
+            var newProductIds = new List<int>();
+            newProductIds.Add(productId);
+            foreach (int oldProductId in oldProductIds)
+                if (oldProductId != productId)
+                    newProductIds.Add(oldProductId);
 
             HttpCookie compareCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.CompareProducts");
             if (compareCookie == null)
@@ -1135,9 +1142,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             compareCookie.Values.Clear();
             int maxProducts = 4;
             int i = 1;
-            foreach (int newProductID in newProductIDs)
+            foreach (int newProductId in newProductIds)
             {
-                compareCookie.Values.Add("CompareProductIDs", newProductID.ToString());
+                compareCookie.Values.Add("CompareProductIds", newProductId.ToString());
                 if (i == maxProducts)
                     break;
                 i++;
@@ -1149,15 +1156,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a "recently viewed products" list
         /// </summary>
-        /// <param name="Number">Number of products to load</param>
+        /// <param name="number">Number of products to load</param>
         /// <returns>"recently viewed products" list</returns>
-        public static ProductCollection GetRecentlyViewedProducts(int Number)
+        public static ProductCollection GetRecentlyViewedProducts(int number)
         {
             var products = new ProductCollection();
-            var productIDs = GetRecentlyViewedProductsIDs(Number);
-            foreach (int productID in productIDs)
+            var productIds = GetRecentlyViewedProductsIds(number);
+            foreach (int productId in productIds)
             {
-                Product product = GetProductByID(productID);
+                Product product = GetProductById(productId);
                 if (product != null && product.Published && !product.Deleted)
                     products.Add(product);
             }
@@ -1168,55 +1175,55 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets a "recently viewed products" identifier list
         /// </summary>
         /// <returns>"recently viewed products" list</returns>
-        public static List<int> GetRecentlyViewedProductsIDs()
+        public static List<int> GetRecentlyViewedProductsIds()
         {
-            return GetRecentlyViewedProductsIDs(int.MaxValue);
+            return GetRecentlyViewedProductsIds(int.MaxValue);
         }
 
         /// <summary>
         /// Gets a "recently viewed products" identifier list
         /// </summary>
-        /// <param name="Number">Number of products to load</param>
+        /// <param name="number">Number of products to load</param>
         /// <returns>"recently viewed products" list</returns>
-        public static List<int> GetRecentlyViewedProductsIDs(int Number)
+        public static List<int> GetRecentlyViewedProductsIds(int number)
         {
-            var productIDs = new List<int>();
+            var productIds = new List<int>();
             HttpCookie recentlyViewedCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.RecentlyViewedProducts");
             if ((recentlyViewedCookie == null) || (recentlyViewedCookie.Values == null))
-                return productIDs;
-            string[] values = recentlyViewedCookie.Values.GetValues("RecentlyViewedProductIDs");
+                return productIds;
+            string[] values = recentlyViewedCookie.Values.GetValues("RecentlyViewedProductIds");
             if (values == null)
-                return productIDs;
+                return productIds;
             foreach (string productId in values)
             {
                 int prodId = int.Parse(productId);
-                if (!productIDs.Contains(prodId))
+                if (!productIds.Contains(prodId))
                 {
-                    productIDs.Add(prodId);
-                    if (productIDs.Count >= Number)
+                    productIds.Add(prodId);
+                    if (productIds.Count >= number)
                         break;
                 }
 
             }
 
-            return productIDs;
+            return productIds;
         }
 
         /// <summary>
         /// Adds a product to a recently viewed products list
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        public static void AddProductToRecentlyViewedList(int ProductID)
+        /// <param name="productId">Product identifier</param>
+        public static void AddProductToRecentlyViewedList(int productId)
         {
             if (!ProductManager.RecentlyViewedProductsEnabled)
                 return;
 
-            var oldProductIDs = GetRecentlyViewedProductsIDs();
-            var newProductIDs = new List<int>();
-            newProductIDs.Add(ProductID);
-            foreach (int oldProductID in oldProductIDs)
-                if (oldProductID != ProductID)
-                    newProductIDs.Add(oldProductID);
+            var oldProductIds = GetRecentlyViewedProductsIds();
+            var newProductIds = new List<int>();
+            newProductIds.Add(productId);
+            foreach (int oldProductId in oldProductIds)
+                if (oldProductId != productId)
+                    newProductIds.Add(oldProductId);
 
             HttpCookie recentlyViewedCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.RecentlyViewedProducts");
             if (recentlyViewedCookie == null)
@@ -1226,9 +1233,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (maxProducts <= 0)
                 maxProducts = 10;
             int i = 1;
-            foreach (int newProductID in newProductIDs)
+            foreach (int newProductId in newProductIds)
             {
-                recentlyViewedCookie.Values.Add("RecentlyViewedProductIDs", newProductID.ToString());
+                recentlyViewedCookie.Values.Add("RecentlyViewedProductIds", newProductId.ToString());
                 if (i == maxProducts)
                     break;
                 i++;
@@ -1240,17 +1247,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a recently added products list
         /// </summary>
-        /// <param name="Number">Number of products to load</param>
+        /// <param name="number">Number of products to load</param>
         /// <returns>"recently added" product list</returns>
-        public static ProductCollection GetRecentlyAddedProducts(int Number)
+        public static ProductCollection GetRecentlyAddedProducts(int number)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
             bool showHidden = NopContext.Current.IsAdmin;
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRecentlyAddedProducts(Number,
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRecentlyAddedProducts(number,
                 languageId, showHidden);
             var products = DBMapping(dbCollection);
             return products;
@@ -1259,14 +1266,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Direct add to cart allowed
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ProductVariantID">Default product variant identifier for adding to cart</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="productVariantId">Default product variant identifier for adding to cart</param>
         /// <returns>A value indicating whether direct add to cart is allowed</returns>
-        public static bool DirectAddToCartAllowed(int ProductID, out int ProductVariantID)
+        public static bool DirectAddToCartAllowed(int productId, out int productVariantId)
         {
             bool result = false;
-            ProductVariantID = 0;
-            var product = GetProductByID(ProductID);
+            productVariantId = 0;
+            var product = GetProductById(productId);
             if (product != null)
             {
                 var productVariants = product.ProductVariants;
@@ -1276,11 +1283,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     if (!defaultProductVariant.CustomerEntersPrice)
                     {
                         var addToCartWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(ShoppingCartTypeEnum.ShoppingCart,
-                            defaultProductVariant.ProductVariantID, string.Empty, decimal.Zero, 1);
+                            defaultProductVariant.ProductVariantId, string.Empty, decimal.Zero, 1);
 
                         if (addToCartWarnings.Count == 0)
                         {
-                            ProductVariantID = defaultProductVariant.ProductVariantID;
+                            productVariantId = defaultProductVariant.ProductVariantId;
                             result = true;
                         }
                     }
@@ -1292,14 +1299,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Creates a copy of product with all depended data
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name of product duplicate</param>
-        /// <param name="IsPublished">A value indicating whether the product duplicate should be published</param>
-        /// <param name="CopyImages">A value indicating whether the product images should be copied</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="name">The name of product duplicate</param>
+        /// <param name="isPublished">A value indicating whether the product duplicate should be published</param>
+        /// <param name="copyImages">A value indicating whether the product images should be copied</param>
         /// <returns>Product entity</returns>
-        public static Product DuplicateProduct(int ProductID, string Name, bool IsPublished, bool CopyImages)
+        public static Product DuplicateProduct(int productId, string name,
+            bool isPublished, bool copyImages)
         {
-            var product = GetProductByID(ProductID, 0);
+            var product = GetProductById(productId, 0);
             if (product == null)
                 return null;
 
@@ -1308,12 +1316,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             //using (var scope = new System.Transactions.TransactionScope())
             {
                 // product
-                productCopy = InsertProduct(Name, product.ShortDescription,
-                    product.FullDescription, product.AdminComment, product.ProductTypeID,
-                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords,
+                productCopy = InsertProduct(name, product.ShortDescription,
+                    product.FullDescription, product.AdminComment, product.ProductTypeId,
+                    product.TemplateId, product.ShowOnHomePage, product.MetaKeywords,
                     product.MetaDescription, product.MetaTitle, product.SEName,
                     product.AllowCustomerReviews, product.AllowCustomerRatings, 0, 0,
-                    IsPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
+                    isPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
 
                 if (productCopy == null)
                     return null;
@@ -1323,11 +1331,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 //localization
                 foreach (var lang in languages)
                 {
-                    var productLocalized = GetProductLocalizedByProductIDAndLanguageID(product.ProductID, lang.LanguageID);
+                    var productLocalized = GetProductLocalizedByProductIdAndLanguageId(product.ProductId, lang.LanguageId);
                     if (productLocalized != null)
                     {
-                        var productLocalizedCopy = InsertProductLocalized(productCopy.ProductID,
-                            productLocalized.LanguageID,
+                        var productLocalizedCopy = InsertProductLocalized(productCopy.ProductId,
+                            productLocalized.LanguageId,
                             productLocalized.Name,
                             productLocalized.ShortDescription,
                             productLocalized.FullDescription,
@@ -1339,7 +1347,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 }
 
                 // product pictures
-                if (CopyImages)
+                if (copyImages)
                 {
                     foreach (var productPicture in product.ProductPictures)
                     {
@@ -1347,8 +1355,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary,
                             picture.Extension,
                             picture.IsNew);
-                        InsertProductPicture(productCopy.ProductID,
-                            pictureCopy.PictureID,
+                        InsertProductPicture(productCopy.ProductId,
+                            pictureCopy.PictureId,
                             productPicture.DisplayOrder);
                     }
                 }
@@ -1356,8 +1364,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 // product <-> categories mappings
                 foreach (var productCategory in product.ProductCategories)
                 {
-                    CategoryManager.InsertProductCategory(productCopy.ProductID,
-                        productCategory.CategoryID,
+                    CategoryManager.InsertProductCategory(productCopy.ProductId,
+                        productCategory.CategoryId,
                         productCategory.IsFeaturedProduct,
                         productCategory.DisplayOrder);
                 }
@@ -1365,8 +1373,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 // product <-> manufacturers mappings
                 foreach (var productManufacturers in product.ProductManufacturers)
                 {
-                    ManufacturerManager.InsertProductManufacturer(productCopy.ProductID,
-                        productManufacturers.ManufacturerID,
+                    ManufacturerManager.InsertProductManufacturer(productCopy.ProductId,
+                        productManufacturers.ManufacturerId,
                         productManufacturers.IsFeaturedProduct,
                         productManufacturers.DisplayOrder);
                 }
@@ -1374,47 +1382,47 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 // product <-> releated products mappings
                 foreach (var relatedProduct in product.RelatedProducts)
                 {
-                    InsertRelatedProduct(productCopy.ProductID,
-                        relatedProduct.ProductID2,
+                    InsertRelatedProduct(productCopy.ProductId,
+                        relatedProduct.ProductId2,
                         relatedProduct.DisplayOrder);
                 }
 
                 // product specifications
-                foreach (var productSpecificationAttribute in SpecificationAttributeManager.GetProductSpecificationAttributesByProductID(product.ProductID))
+                foreach (var productSpecificationAttribute in SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product.ProductId))
                 {
-                    SpecificationAttributeManager.InsertProductSpecificationAttribute(productCopy.ProductID,
-                        productSpecificationAttribute.SpecificationAttributeOptionID,
+                    SpecificationAttributeManager.InsertProductSpecificationAttribute(productCopy.ProductId,
+                        productSpecificationAttribute.SpecificationAttributeOptionId,
                         productSpecificationAttribute.AllowFiltering,
                         productSpecificationAttribute.ShowOnProductPage,
                         productSpecificationAttribute.DisplayOrder);
                 }
 
                 // product variants
-                var productVariants = GetProductVariantsByProductID(product.ProductID, 0, true);
+                var productVariants = GetProductVariantsByProductId(product.ProductId, 0, true);
                 foreach (var productVariant in productVariants)
                 {
                     // product variant picture
-                    int pictureID = 0;
-                    if (CopyImages)
+                    int pictureId = 0;
+                    if (copyImages)
                     {
                         var picture = productVariant.Picture;
                         if (picture != null)
                         {
                             var pictureCopy = PictureManager.InsertPicture(picture.PictureBinary, picture.Extension, picture.IsNew);
-                            pictureID = pictureCopy.PictureID;
+                            pictureId = pictureCopy.PictureId;
                         }
                     }
 
                     // product variant download & sample download
-                    int downloadID = productVariant.DownloadID;
-                    int sampleDownloadID = productVariant.SampleDownloadID;
+                    int downloadId = productVariant.DownloadId;
+                    int sampleDownloadId = productVariant.SampleDownloadId;
                     if (productVariant.IsDownload)
                     {
                         var download = productVariant.Download;
                         if (download != null)
                         {
-                            var downloadCopy = DownloadManager.InsertDownload(download.UseDownloadURL, download.DownloadURL, download.DownloadBinary, download.ContentType, download.Filename, download.Extension, download.IsNew);
-                            downloadID = downloadCopy.DownloadID;
+                            var downloadCopy = DownloadManager.InsertDownload(download.UseDownloadUrl, download.DownloadUrl, download.DownloadBinary, download.ContentType, download.Filename, download.Extension, download.IsNew);
+                            downloadId = downloadCopy.DownloadId;
                         }
 
                         if (productVariant.HasSampleDownload)
@@ -1422,24 +1430,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                             var sampleDownload = productVariant.SampleDownload;
                             if (sampleDownload != null)
                             {
-                                var sampleDownloadCopy = DownloadManager.InsertDownload(sampleDownload.UseDownloadURL, sampleDownload.DownloadURL, sampleDownload.DownloadBinary, sampleDownload.ContentType, sampleDownload.Filename, sampleDownload.Extension, sampleDownload.IsNew);
-                                sampleDownloadID = sampleDownloadCopy.DownloadID;
+                                var sampleDownloadCopy = DownloadManager.InsertDownload(sampleDownload.UseDownloadUrl, sampleDownload.DownloadUrl, sampleDownload.DownloadBinary, sampleDownload.ContentType, sampleDownload.Filename, sampleDownload.Extension, sampleDownload.IsNew);
+                                sampleDownloadId = sampleDownloadCopy.DownloadId;
                             }
                         }
                     }
 
                     // product variant
-                    var productVariantCopy = InsertProductVariant(productCopy.ProductID, productVariant.Name,
+                    var productVariantCopy = InsertProductVariant(productCopy.ProductId, productVariant.Name,
                         productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                        productVariant.IsGiftCard, productVariant.IsDownload, downloadID,
+                        productVariant.IsGiftCard, productVariant.IsDownload, downloadId,
                         productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
                         productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
-                        productVariant.HasSampleDownload, sampleDownloadID,
+                        productVariant.HasSampleDownload, sampleDownloadId,
                         productVariant.HasUserAgreement, productVariant.UserAgreementText,
                         productVariant.IsRecurring, productVariant.CycleLength,
                         productVariant.CyclePeriod, productVariant.TotalCycles,
                         productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                        productVariant.IsTaxExempt, productVariant.TaxCategoryID,
+                        productVariant.IsTaxExempt, productVariant.TaxCategoryId,
                         productVariant.ManageInventory, productVariant.StockQuantity,
                         productVariant.DisplayStockAvailability, productVariant.MinStockQuantity, productVariant.LowStockActivity,
                         productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
@@ -1448,18 +1456,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         productVariant.Price, productVariant.OldPrice, 
                         productVariant.ProductCost, productVariant.CustomerEntersPrice,
                         productVariant.MinimumCustomerEnteredPrice, productVariant.MaximumCustomerEnteredPrice,
-                        productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, pictureID,
+                        productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, pictureId,
                         productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                         productVariant.Published, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
 
                     //localization
                     foreach (var lang in languages)
                     {
-                        var productVariantLocalized = GetProductVariantLocalizedByProductVariantIDAndLanguageID(productVariant.ProductVariantID, lang.LanguageID);
+                        var productVariantLocalized = GetProductVariantLocalizedByProductVariantIdAndLanguageId(productVariant.ProductVariantId, lang.LanguageId);
                         if (productVariantLocalized != null)
                         {
-                            var productVariantLocalizedCopy = InsertProductVariantLocalized(productVariantCopy.ProductVariantID,
-                                productVariantLocalized.LanguageID,
+                            var productVariantLocalizedCopy = InsertProductVariantLocalized(productVariantCopy.ProductVariantId,
+                                productVariantLocalized.LanguageId,
                                 productVariantLocalized.Name,
                                 productVariantLocalized.Description);
                         }
@@ -1468,31 +1476,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     // product variant <-> attributes mappings
                     foreach (var productVariantAttribute in productVariant.ProductVariantAttributes)
                     {
-                        var productVariantAttributeCopy = ProductAttributeManager.InsertProductVariantAttribute(productVariantCopy.ProductVariantID, productVariantAttribute.ProductAttributeID, productVariantAttribute.TextPrompt, productVariantAttribute.IsRequired, productVariantAttribute.AttributeControlType, productVariantAttribute.DisplayOrder);
+                        var productVariantAttributeCopy = ProductAttributeManager.InsertProductVariantAttribute(productVariantCopy.ProductVariantId, productVariantAttribute.ProductAttributeId, productVariantAttribute.TextPrompt, productVariantAttribute.IsRequired, productVariantAttribute.AttributeControlType, productVariantAttribute.DisplayOrder);
 
                         // product variant attribute values
-                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeID, 0);
+                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId, 0);
                         foreach (var productVariantAttributeValue in productVariantAttributeValues)
                         {
-                            var pvavCopy = ProductAttributeManager.InsertProductVariantAttributeValue(productVariantAttributeCopy.ProductVariantAttributeID, productVariantAttributeValue.Name, productVariantAttributeValue.PriceAdjustment, productVariantAttributeValue.WeightAdjustment, productVariantAttributeValue.IsPreSelected, productVariantAttributeValue.DisplayOrder);
+                            var pvavCopy = ProductAttributeManager.InsertProductVariantAttributeValue(productVariantAttributeCopy.ProductVariantAttributeId, productVariantAttributeValue.Name, productVariantAttributeValue.PriceAdjustment, productVariantAttributeValue.WeightAdjustment, productVariantAttributeValue.IsPreSelected, productVariantAttributeValue.DisplayOrder);
 
                             //localization
                             foreach (var lang in languages)
                             {
-                                var pvavLocalized = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(productVariantAttributeValue.ProductVariantAttributeValueID, lang.LanguageID);
+                                var pvavLocalized = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIdAndLanguageId(productVariantAttributeValue.ProductVariantAttributeValueId, lang.LanguageId);
                                 if (pvavLocalized != null)
                                 {
-                                    var pvavLocalizedCopy = ProductAttributeManager.InsertProductVariantAttributeValueLocalized(pvavCopy.ProductVariantAttributeValueID,
-                                        pvavLocalized.LanguageID,
+                                    var pvavLocalizedCopy = ProductAttributeManager.InsertProductVariantAttributeValueLocalized(pvavCopy.ProductVariantAttributeValueId,
+                                        pvavLocalized.LanguageId,
                                         pvavLocalized.Name);
                                 }
                             }
                         }
                     }
-                    foreach (var combination in ProductAttributeManager.GetAllProductVariantAttributeCombinations(productVariant.ProductVariantID))
+                    foreach (var combination in ProductAttributeManager.GetAllProductVariantAttributeCombinations(productVariant.ProductVariantId))
                     {
-                        ProductAttributeManager.InsertProductVariantAttributeCombination(productVariant.ProductVariantID,
-                              combination.AttributesXML,
+                        ProductAttributeManager.InsertProductVariantAttributeCombination(productVariant.ProductVariantId,
+                              combination.AttributesXml,
                               combination.StockQuantity,
                               combination.AllowOutOfStockOrders);
                     }
@@ -1500,13 +1508,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     // product variant <-> discounts mapping
                     foreach (var discount in productVariant.AllDiscounts)
                     {
-                        DiscountManager.AddDiscountToProductVariant(productVariantCopy.ProductVariantID, discount.DiscountID);
+                        DiscountManager.AddDiscountToProductVariant(productVariantCopy.ProductVariantId, discount.DiscountId);
                     }
 
                     // product variant tier prices
                     foreach (var tierPrice in productVariant.TierPrices)
                     {
-                        InsertTierPrice(productVariantCopy.ProductVariantID, tierPrice.Quantity, tierPrice.Price);
+                        InsertTierPrice(productVariantCopy.ProductVariantId, tierPrice.Quantity, tierPrice.Price);
                     }
                 }
 
@@ -1524,23 +1532,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Remove a product variant picture
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void RemoveProductVariantPicture(int ProductVariantID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        public static void RemoveProductVariantPicture(int productVariantId)
         {
-            var productVariant = GetProductVariantByID(ProductVariantID);
+            var productVariant = GetProductVariantById(productVariantId);
             if (productVariant != null)
             {
-                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                UpdateProductVariant(productVariant.ProductVariantId, productVariant.ProductId, productVariant.Name,
                     productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                    productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
+                    productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadId,
                     productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
                     productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
-                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                    productVariant.HasSampleDownload, productVariant.SampleDownloadId,
                     productVariant.HasUserAgreement, productVariant.UserAgreementText,
                     productVariant.IsRecurring, productVariant.CycleLength,
                     productVariant.CyclePeriod, productVariant.TotalCycles,
                     productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                    productVariant.IsTaxExempt, productVariant.TaxCategoryID, productVariant.ManageInventory,
+                    productVariant.IsTaxExempt, productVariant.TaxCategoryId, productVariant.ManageInventory,
                     productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
                     productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
                     productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
@@ -1571,24 +1579,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Remove a product variant download
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void RemoveProductVariantDownload(int ProductVariantID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        public static void RemoveProductVariantDownload(int productVariantId)
         {
-            var productVariant = GetProductVariantByID(ProductVariantID);
+            var productVariant = GetProductVariantById(productVariantId);
             if (productVariant != null)
             {
-                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                UpdateProductVariant(productVariant.ProductVariantId, productVariant.ProductId, productVariant.Name,
                     productVariant.SKU, productVariant.Description, productVariant.AdminComment,
                     productVariant.ManufacturerPartNumber, productVariant.IsGiftCard,
                     productVariant.IsDownload, 0,
                     productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
                     productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
-                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                    productVariant.HasSampleDownload, productVariant.SampleDownloadId,
                     productVariant.HasUserAgreement, productVariant.UserAgreementText,
                     productVariant.IsRecurring, productVariant.CycleLength,
                     productVariant.CyclePeriod, productVariant.TotalCycles,
                     productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                    productVariant.IsTaxExempt, productVariant.TaxCategoryID, productVariant.ManageInventory,
+                    productVariant.IsTaxExempt, productVariant.TaxCategoryId, productVariant.ManageInventory,
                     productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
                     productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
                     productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
@@ -1599,7 +1607,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.MinimumCustomerEnteredPrice, 
                     productVariant.MaximumCustomerEnteredPrice,
                     productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
-                    productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                    productVariant.PictureId, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                     productVariant.Published, productVariant.Deleted,
                     productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
             }
@@ -1608,16 +1616,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Remove a product variant sample download
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void RemoveProductVariantSampleDownload(int ProductVariantID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        public static void RemoveProductVariantSampleDownload(int productVariantId)
         {
-            var productVariant = GetProductVariantByID(ProductVariantID);
+            var productVariant = GetProductVariantById(productVariantId);
             if (productVariant != null)
             {
-                UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                UpdateProductVariant(productVariant.ProductVariantId, productVariant.ProductId, productVariant.Name,
                     productVariant.SKU, productVariant.Description, productVariant.AdminComment,
                     productVariant.ManufacturerPartNumber, productVariant.IsGiftCard,
-                    productVariant.IsDownload, productVariant.DownloadID,
+                    productVariant.IsDownload, productVariant.DownloadId,
                     productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
                     productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
                     productVariant.HasSampleDownload, 0,
@@ -1626,7 +1634,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.CyclePeriod, productVariant.TotalCycles,
                     productVariant.IsShipEnabled, productVariant.IsFreeShipping,
                     productVariant.AdditionalShippingCharge, productVariant.IsTaxExempt,
-                    productVariant.TaxCategoryID, productVariant.ManageInventory,
+                    productVariant.TaxCategoryId, productVariant.ManageInventory,
                     productVariant.StockQuantity, productVariant.DisplayStockAvailability, productVariant.MinStockQuantity,
                     productVariant.LowStockActivity, productVariant.NotifyAdminForQuantityBelow,
                     productVariant.AllowOutOfStockOrders, productVariant.OrderMinimumQuantity,
@@ -1635,7 +1643,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.ProductCost, productVariant.CustomerEntersPrice,
                     productVariant.MinimumCustomerEnteredPrice, productVariant.MaximumCustomerEnteredPrice,
                     productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height,
-                    productVariant.PictureID, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
+                    productVariant.PictureId, productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                     productVariant.Published, productVariant.Deleted,
                     productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
             }
@@ -1644,35 +1652,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Product variant</returns>
-        public static ProductVariant GetProductVariantByID(int ProductVariantID)
+        public static ProductVariant GetProductVariantById(int productVariantId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
-            return GetProductVariantByID(ProductVariantID, languageId);
+            return GetProductVariantById(productVariantId, languageId);
         }
 
         /// <summary>
         /// Gets a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant</returns>
-        public static ProductVariant GetProductVariantByID(int ProductVariantID, int LanguageID)
+        public static ProductVariant GetProductVariantById(int productVariantId, int languageId)
         {
-            if (ProductVariantID == 0)
+            if (productVariantId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTVARIANTS_BY_ID_KEY, ProductVariantID, LanguageID);
+            string key = string.Format(PRODUCTVARIANTS_BY_ID_KEY, productVariantId, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariant)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantByID(ProductVariantID, LanguageID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantById(productVariantId, languageId);
             var productVariant = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -1685,16 +1694,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a product variant by SKU
         /// </summary>
-        /// <param name="SKU">SKU</param>
+        /// <param name="sku">SKU</param>
         /// <returns>Product variant</returns>
-        public static ProductVariant GetProductVariantBySKU(string SKU)
+        public static ProductVariant GetProductVariantBySKU(string sku)
         {
-            if (String.IsNullOrEmpty(SKU))
+            if (String.IsNullOrEmpty(sku))
                 return null;
 
-            SKU = SKU.Trim();
+            sku = sku.Trim();
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantBySKU(SKU);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantBySKU(sku);
             var productVariant = DBMapping(dbItem);
             return productVariant;
         }
@@ -1702,107 +1711,110 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a product variant
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SKU">The SKU</param>
-        /// <param name="Description">The description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
-        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
-        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
-        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
-        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
-        /// <param name="DownloadActivationType">The download activation type</param>
-        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
-        /// <param name="SampleDownloadID">The sample download identifier</param>
-        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
-        /// <param name="UserAgreementText">The text of user agreement</param>
-        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
-        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
-        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
-        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
-        /// <param name="MinStockQuantity">The minimum stock quantity</param>
-        /// <param name="LowStockActivity">The low stock activity</param>
-        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
-        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
-        /// <param name="WarehouseId">The warehouse identifier</param>
-        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
-        /// <param name="Price">The price</param>
-        /// <param name="OldPrice">The old price</param>
-        /// <param name="ProductCost">The product cost</param>
-        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
-        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
-        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
-        /// <param name="Weight">The weight</param>
-        /// <param name="Length">The length</param>
-        /// <param name="Width">The width</param>
-        /// <param name="Height">The height</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="AvailableStartDateTime">The available start date and time</param>
-        /// <param name="AvailableEndDateTime">The available end date and time</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="sku">The SKU</param>
+        /// <param name="description">The description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="manufacturerPartNumber">The manufacturer part number</param>
+        /// <param name="isGiftCard">A value indicating whether the product variant is gift card</param>
+        /// <param name="isDownload">A value indicating whether the product variant is download</param>
+        /// <param name="downloadId">The download identifier</param>
+        /// <param name="unlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
+        /// <param name="maxNumberOfDownloads">The maximum number of downloads</param>
+        /// <param name="downloadExpirationDays">The number of days during customers keeps access to the file</param>
+        /// <param name="downloadActivationType">The download activation type</param>
+        /// <param name="hasSampleDownload">The value indicating whether the product variant has a sample download file</param>
+        /// <param name="sampleDownloadId">The sample download identifier</param>
+        /// <param name="hasUserAgreement">A value indicating whether the product variant has a user agreement</param>
+        /// <param name="userAgreementText">The text of user agreement</param>
+        /// <param name="isRecurring">A value indicating whether the product variant is recurring</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="isShipEnabled">A value indicating whether the entity is ship enabled</param>
+        /// <param name="isFreeShipping">A value indicating whether the entity is free shipping</param>
+        /// <param name="additionalShippingCharge">The additional shipping charge</param>
+        /// <param name="isTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="manageInventory">The value indicating how to manage inventory</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="displayStockAvailability">The value indicating whether to display stock availability</param>
+        /// <param name="minStockQuantity">The minimum stock quantity</param>
+        /// <param name="lowStockActivity">The low stock activity</param>
+        /// <param name="notifyAdminForQuantityBelow">The quantity when admin should be notified</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="orderMinimumQuantity">The order minimum quantity</param>
+        /// <param name="orderMaximumQuantity">The order maximum quantity</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
+        /// <param name="disableBuyButton">A value indicating whether to disable buy button</param>
+        /// <param name="price">The price</param>
+        /// <param name="oldPrice">The old price</param>
+        /// <param name="productCost">The product cost</param>
+        /// <param name="customerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="minimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="maximumCustomerEnteredPrice">The maximum price entered by a customer</param>
+        /// <param name="weight">The weight</param>
+        /// <param name="length">The length</param>
+        /// <param name="width">The width</param>
+        /// <param name="height">The height</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="availableStartDateTime">The available start date and time</param>
+        /// <param name="availableEndDateTime">The available end date and time</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product variant</returns>
-        public static ProductVariant InsertProductVariant(int ProductID, string Name,
-            string SKU, string Description, string AdminComment,
-            string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
-            bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
-            DownloadActivationTypeEnum DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring, int CycleLength,
-            int CyclePeriod, int TotalCycles, bool IsShipEnabled,
-            bool IsFreeShipping, decimal AdditionalShippingCharge,
-            bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
-            int StockQuantity, bool DisplayStockAvailability,
-            int MinStockQuantity, LowStockActivityEnum LowStockActivity,
-            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
-            int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price,
-            decimal OldPrice, decimal ProductCost, bool CustomerEntersPrice,
-            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
-            decimal Weight, decimal Length, decimal Width, decimal Height, int PictureID,
-            DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
-           bool Published, bool Deleted, int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static ProductVariant InsertProductVariant(int productId,
+            string name, string sku,
+            string description, string adminComment, string manufacturerPartNumber,
+            bool isGiftCard, bool isDownload, int downloadId, bool unlimitedDownloads,
+            int maxNumberOfDownloads, int? downloadExpirationDays,
+            DownloadActivationTypeEnum downloadActivationType, bool hasSampleDownload,
+            int sampleDownloadId, bool hasUserAgreement,
+            string userAgreementText, bool isRecurring,
+            int cycleLength, int cyclePeriod, int totalCycles,
+            bool isShipEnabled, bool isFreeShipping,
+            decimal additionalShippingCharge, bool isTaxExempt, int taxCategoryId,
+            int manageInventory, int stockQuantity, bool displayStockAvailability,
+            int minStockQuantity, LowStockActivityEnum lowStockActivity,
+            int notifyAdminForQuantityBelow, bool allowOutOfStockOrders,
+            int orderMinimumQuantity, int orderMaximumQuantity,
+            int warehouseId, bool disableBuyButton, decimal price,
+            decimal oldPrice, decimal productCost, bool customerEntersPrice,
+            decimal minimumCustomerEnteredPrice, decimal maximumCustomerEnteredPrice,
+            decimal weight, decimal length, decimal width, decimal height, int pictureId,
+            DateTime? availableStartDateTime, DateTime? availableEndDateTime,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            if (AvailableStartDateTime.HasValue)
-                AvailableStartDateTime = DateTimeHelper.ConvertToUtcTime(AvailableStartDateTime.Value);
-            if (AvailableEndDateTime.HasValue)
-                AvailableEndDateTime = DateTimeHelper.ConvertToUtcTime(AvailableEndDateTime.Value);
+            if (availableStartDateTime.HasValue)
+                availableStartDateTime = DateTimeHelper.ConvertToUtcTime(availableStartDateTime.Value);
+            if (availableEndDateTime.HasValue)
+                availableEndDateTime = DateTimeHelper.ConvertToUtcTime(availableEndDateTime.Value);
 
-            SKU = SKU.Trim();
+            sku = sku.Trim();
 
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariant(ProductID,
-                Name, SKU, Description, AdminComment, ManufacturerPartNumber, IsGiftCard, IsDownload,
-                DownloadID, UnlimitedDownloads, MaxNumberOfDownloads,
-                DownloadExpirationDays, (int)DownloadActivationType,
-                HasSampleDownload, SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength,
-                CyclePeriod, TotalCycles, IsShipEnabled, IsFreeShipping,
-                AdditionalShippingCharge, IsTaxExempt, TaxCategoryID, ManageInventory,
-                StockQuantity, DisplayStockAvailability, MinStockQuantity, (int)LowStockActivity,
-                NotifyAdminForQuantityBelow, AllowOutOfStockOrders, OrderMinimumQuantity,
-                OrderMaximumQuantity, WarehouseId, DisableBuyButton,
-                Price, OldPrice, ProductCost, CustomerEntersPrice,
-                MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice,
-                Weight, Length, Width, Height, PictureID,
-                AvailableStartDateTime, AvailableEndDateTime,
-                Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariant(productId,
+                name, sku, description, adminComment, manufacturerPartNumber, isGiftCard, isDownload,
+                downloadId, unlimitedDownloads, maxNumberOfDownloads,
+                downloadExpirationDays, (int)downloadActivationType,
+                hasSampleDownload, sampleDownloadId, hasUserAgreement, userAgreementText, isRecurring, cycleLength,
+                cyclePeriod, totalCycles, isShipEnabled, isFreeShipping,
+                additionalShippingCharge, isTaxExempt, taxCategoryId, manageInventory,
+                stockQuantity, displayStockAvailability, minStockQuantity, (int)lowStockActivity,
+                notifyAdminForQuantityBelow, allowOutOfStockOrders, orderMinimumQuantity,
+                orderMaximumQuantity, warehouseId, disableBuyButton,
+                price, oldPrice, productCost, customerEntersPrice,
+                minimumCustomerEnteredPrice, maximumCustomerEnteredPrice,
+                weight, length, width, height, pictureId,
+                availableStartDateTime, availableEndDateTime,
+                published, deleted, displayOrder, createdOn, updatedOn);
             var productVariant = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -1818,109 +1830,112 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates the product variant
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SKU">The SKU</param>
-        /// <param name="Description">The description</param>
-        /// <param name="AdminComment">The admin comment</param>
-        /// <param name="ManufacturerPartNumber">The manufacturer part number</param>
-        /// <param name="IsGiftCard">A value indicating whether the product variant is gift card</param>
-        /// <param name="IsDownload">A value indicating whether the product variant is download</param>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UnlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
-        /// <param name="MaxNumberOfDownloads">The maximum number of downloads</param>
-        /// <param name="DownloadExpirationDays">The number of days during customers keeps access to the file</param>
-        /// <param name="DownloadActivationType">The download activation type</param>
-        /// <param name="HasSampleDownload">The value indicating whether the product variant has a sample download file</param>
-        /// <param name="SampleDownloadID">The sample download identifier</param>
-        /// <param name="HasUserAgreement">A value indicating whether the product variant has a user agreement</param>
-        /// <param name="UserAgreementText">The text of user agreement</param>
-        /// <param name="IsRecurring">A value indicating whether the product variant is recurring</param>
-        /// <param name="CycleLength">The cycle length</param>
-        /// <param name="CyclePeriod">The cycle period</param>
-        /// <param name="TotalCycles">The total cycles</param>
-        /// <param name="IsShipEnabled">A value indicating whether the entity is ship enabled</param>
-        /// <param name="IsFreeShipping">A value indicating whether the entity is free shipping</param>
-        /// <param name="AdditionalShippingCharge">The additional shipping charge</param>
-        /// <param name="IsTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="ManageInventory">The value indicating how to manage inventory</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="DisplayStockAvailability">The value indicating whether to display stock availability</param>
-        /// <param name="MinStockQuantity">The minimum stock quantity</param>
-        /// <param name="LowStockActivity">The low stock activity</param>
-        /// <param name="NotifyAdminForQuantityBelow">The quantity when admin should be notified</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <param name="OrderMinimumQuantity">The order minimum quantity</param>
-        /// <param name="OrderMaximumQuantity">The order maximum quantity</param>
-        /// <param name="WarehouseId">The warehouse identifier</param>
-        /// <param name="DisableBuyButton">A value indicating whether to disable buy button</param>
-        /// <param name="Price">The price</param>
-        /// <param name="OldPrice">The old price</param>
-        /// <param name="ProductCost">The product cost</param>
-        /// <param name="CustomerEntersPrice">The value indicating whether a customer enters price</param>
-        /// <param name="MinimumCustomerEnteredPrice">The minimum price entered by a customer</param>
-        /// <param name="MaximumCustomerEnteredPrice">The maximum price entered by a customer</param>
-        /// <param name="Weight">The weight</param>
-        /// <param name="Length">The length</param>
-        /// <param name="Width">The width</param>
-        /// <param name="Height">The height</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="AvailableStartDateTime">The available start date and time</param>
-        /// <param name="AvailableEndDateTime">The available end date and time</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="sku">The SKU</param>
+        /// <param name="description">The description</param>
+        /// <param name="adminComment">The admin comment</param>
+        /// <param name="manufacturerPartNumber">The manufacturer part number</param>
+        /// <param name="isGiftCard">A value indicating whether the product variant is gift card</param>
+        /// <param name="isDownload">A value indicating whether the product variant is download</param>
+        /// <param name="downloadId">The download identifier</param>
+        /// <param name="unlimitedDownloads">The value indicating whether this downloadable product can be downloaded unlimited number of times</param>
+        /// <param name="maxNumberOfDownloads">The maximum number of downloads</param>
+        /// <param name="downloadExpirationDays">The number of days during customers keeps access to the file</param>
+        /// <param name="downloadActivationType">The download activation type</param>
+        /// <param name="hasSampleDownload">The value indicating whether the product variant has a sample download file</param>
+        /// <param name="sampleDownloadId">The sample download identifier</param>
+        /// <param name="hasUserAgreement">A value indicating whether the product variant has a user agreement</param>
+        /// <param name="userAgreementText">The text of user agreement</param>
+        /// <param name="isRecurring">A value indicating whether the product variant is recurring</param>
+        /// <param name="cycleLength">The cycle length</param>
+        /// <param name="cyclePeriod">The cycle period</param>
+        /// <param name="totalCycles">The total cycles</param>
+        /// <param name="isShipEnabled">A value indicating whether the entity is ship enabled</param>
+        /// <param name="isFreeShipping">A value indicating whether the entity is free shipping</param>
+        /// <param name="additionalShippingCharge">The additional shipping charge</param>
+        /// <param name="isTaxExempt">A value indicating whether the product variant is marked as tax exempt</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="manageInventory">The value indicating how to manage inventory</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="displayStockAvailability">The value indicating whether to display stock availability</param>
+        /// <param name="minStockQuantity">The minimum stock quantity</param>
+        /// <param name="lowStockActivity">The low stock activity</param>
+        /// <param name="notifyAdminForQuantityBelow">The quantity when admin should be notified</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="orderMinimumQuantity">The order minimum quantity</param>
+        /// <param name="orderMaximumQuantity">The order maximum quantity</param>
+        /// <param name="warehouseId">The warehouse identifier</param>
+        /// <param name="disableBuyButton">A value indicating whether to disable buy button</param>
+        /// <param name="price">The price</param>
+        /// <param name="oldPrice">The old price</param>
+        /// <param name="productCost">The product cost</param>
+        /// <param name="customerEntersPrice">The value indicating whether a customer enters price</param>
+        /// <param name="minimumCustomerEnteredPrice">The minimum price entered by a customer</param>
+        /// <param name="maximumCustomerEnteredPrice">The maximum price entered by a customer</param>
+        /// <param name="weight">The weight</param>
+        /// <param name="length">The length</param>
+        /// <param name="width">The width</param>
+        /// <param name="height">The height</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="availableStartDateTime">The available start date and time</param>
+        /// <param name="availableEndDateTime">The available end date and time</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Product variant</returns>
-        public static ProductVariant UpdateProductVariant(int ProductVariantID, int ProductID, string Name, string SKU, string Description, string AdminComment,
-            string ManufacturerPartNumber, bool IsGiftCard, bool IsDownload, int DownloadID,
-            bool UnlimitedDownloads, int MaxNumberOfDownloads, int? DownloadExpirationDays,
-            DownloadActivationTypeEnum DownloadActivationType, bool HasSampleDownload,
-            int SampleDownloadID, bool HasUserAgreement, string UserAgreementText, bool IsRecurring, int CycleLength,
-            int CyclePeriod, int TotalCycles, bool IsShipEnabled,
-            bool IsFreeShipping, decimal AdditionalShippingCharge,
-            bool IsTaxExempt, int TaxCategoryID, int ManageInventory,
-            int StockQuantity, bool DisplayStockAvailability,
-            int MinStockQuantity, LowStockActivityEnum LowStockActivity,
-            int NotifyAdminForQuantityBelow, bool AllowOutOfStockOrders,
-            int OrderMinimumQuantity, int OrderMaximumQuantity,
-            int WarehouseId, bool DisableBuyButton, decimal Price, 
-            decimal OldPrice, decimal ProductCost,  bool CustomerEntersPrice,
-            decimal MinimumCustomerEnteredPrice, decimal MaximumCustomerEnteredPrice,
-            decimal Weight, decimal Length, decimal Width,
-            decimal Height, int PictureID, DateTime? AvailableStartDateTime, DateTime? AvailableEndDateTime,
-            bool Published, bool Deleted, int DisplayOrder,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static ProductVariant UpdateProductVariant(int productVariantId,
+            int productId, string name, string sku,
+            string description, string adminComment, string manufacturerPartNumber,
+            bool isGiftCard, bool isDownload, int downloadId, bool unlimitedDownloads,
+            int maxNumberOfDownloads, int? downloadExpirationDays,
+            DownloadActivationTypeEnum downloadActivationType, bool hasSampleDownload,
+            int sampleDownloadId, bool hasUserAgreement,
+            string userAgreementText, bool isRecurring,
+            int cycleLength, int cyclePeriod, int totalCycles,
+            bool isShipEnabled, bool isFreeShipping,
+            decimal additionalShippingCharge, bool isTaxExempt, int taxCategoryId,
+            int manageInventory, int stockQuantity, bool displayStockAvailability,
+            int minStockQuantity, LowStockActivityEnum lowStockActivity,
+            int notifyAdminForQuantityBelow, bool allowOutOfStockOrders,
+            int orderMinimumQuantity, int orderMaximumQuantity,
+            int warehouseId, bool disableBuyButton, decimal price,
+            decimal oldPrice, decimal productCost, bool customerEntersPrice,
+            decimal minimumCustomerEnteredPrice, decimal maximumCustomerEnteredPrice,
+            decimal weight, decimal length, decimal width, decimal height, int pictureId,
+            DateTime? availableStartDateTime, DateTime? availableEndDateTime,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            if (AvailableStartDateTime.HasValue)
-                AvailableStartDateTime = DateTimeHelper.ConvertToUtcTime(AvailableStartDateTime.Value);
-            if (AvailableEndDateTime.HasValue)
-                AvailableEndDateTime = DateTimeHelper.ConvertToUtcTime(AvailableEndDateTime.Value);
+            if (availableStartDateTime.HasValue)
+                availableStartDateTime = DateTimeHelper.ConvertToUtcTime(availableStartDateTime.Value);
+            if (availableEndDateTime.HasValue)
+                availableEndDateTime = DateTimeHelper.ConvertToUtcTime(availableEndDateTime.Value);
 
-            SKU = SKU.Trim();
+            sku = sku.Trim();
 
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariant(ProductVariantID,
-                ProductID, Name, SKU, Description, AdminComment, ManufacturerPartNumber,
-                IsGiftCard, IsDownload, DownloadID, UnlimitedDownloads, MaxNumberOfDownloads,
-                DownloadExpirationDays, (int)DownloadActivationType, HasSampleDownload,
-                SampleDownloadID, HasUserAgreement, UserAgreementText, IsRecurring, CycleLength,
-                CyclePeriod, TotalCycles, IsShipEnabled, IsFreeShipping,
-                AdditionalShippingCharge, IsTaxExempt, TaxCategoryID,
-                ManageInventory, StockQuantity, DisplayStockAvailability,
-                MinStockQuantity, (int)LowStockActivity,
-                NotifyAdminForQuantityBelow, AllowOutOfStockOrders,
-                OrderMinimumQuantity, OrderMaximumQuantity, WarehouseId, DisableBuyButton,
-                Price, OldPrice, ProductCost, CustomerEntersPrice,
-                MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice,
-                Weight, Length, Width, Height, PictureID,
-                AvailableStartDateTime, AvailableEndDateTime,
-                Published, Deleted, DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariant(productVariantId,
+                productId, name, sku, description, adminComment, manufacturerPartNumber,
+                isGiftCard, isDownload, downloadId, unlimitedDownloads, maxNumberOfDownloads,
+                downloadExpirationDays, (int)downloadActivationType, hasSampleDownload,
+                sampleDownloadId, hasUserAgreement, userAgreementText, isRecurring, cycleLength,
+                cyclePeriod, totalCycles, isShipEnabled, isFreeShipping,
+                additionalShippingCharge, isTaxExempt, taxCategoryId,
+                manageInventory, stockQuantity, displayStockAvailability,
+                minStockQuantity, (int)lowStockActivity,
+                notifyAdminForQuantityBelow, allowOutOfStockOrders,
+                orderMinimumQuantity, orderMaximumQuantity, warehouseId, disableBuyButton,
+                price, oldPrice, productCost, customerEntersPrice,
+                minimumCustomerEnteredPrice, maximumCustomerEnteredPrice,
+                weight, length, width, height, pictureId,
+                availableStartDateTime, availableEndDateTime,
+                published, deleted, displayOrder, createdOn, updatedOn);
 
             var productVariant = DBMapping(dbItem);
 
@@ -1937,49 +1952,49 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets product variants by product identifier
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
+        /// <param name="productId">The product identifier</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID)
+        public static ProductVariantCollection GetProductVariantsByProductId(int productId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            return GetProductVariantsByProductID(ProductID, showHidden);
+            return GetProductVariantsByProductId(productId, showHidden);
         }
 
         /// <summary>
         /// Gets product variants by product identifier
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
+        /// <param name="productId">The product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
+        public static ProductVariantCollection GetProductVariantsByProductId(int productId,
             bool showHidden)
         {
             int languageId = 0;
             if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageID;
+                languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
-            return GetProductVariantsByProductID(ProductID, languageId, showHidden);
+            return GetProductVariantsByProductId(productId, languageId, showHidden);
         }
 
 
         /// <summary>
         /// Gets product variants by product identifier
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductID(int ProductID,
-            int LanguageID, bool showHidden)
+        public static ProductVariantCollection GetProductVariantsByProductId(int productId,
+            int languageId, bool showHidden)
         {
-            string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, ProductID, LanguageID);
+            string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, productId, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariantCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByProductID(ProductID, LanguageID, showHidden);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByProductId(productId, languageId, showHidden);
             var productVariants = DBMapping(dbCollection);
 
             if (ProductManager.CacheEnabled)
@@ -1992,14 +2007,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets restricted product variants by discount identifier
         /// </summary>
-        /// <param name="DiscountID">The discount identifier</param>
+        /// <param name="discountId">The discount identifier</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsRestrictedByDiscountID(int DiscountID)
+        public static ProductVariantCollection GetProductVariantsRestrictedByDiscountId(int discountId)
         {
-            if (DiscountID == 0)
+            if (discountId == 0)
                 return new ProductVariantCollection();
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsRestrictedByDiscountID(DiscountID);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsRestrictedByDiscountId(discountId);
             var productVariants = DBMapping(dbCollection);
             return productVariants;
         }
@@ -2007,11 +2022,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets localized product variant by id
         /// </summary>
-        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
+        /// <param name="productVariantLocalizedId">Localized product variant identifier</param>
         /// <returns>Product variant content</returns>
-        public static ProductVariantLocalized GetProductVariantLocalizedByID(int ProductVariantLocalizedID)
+        public static ProductVariantLocalized GetProductVariantLocalizedById(int productVariantLocalizedId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByID(ProductVariantLocalizedID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedById(productVariantLocalizedId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -2019,12 +2034,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets localized product variant by product variant id and language id
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant content</returns>
-        public static ProductVariantLocalized GetProductVariantLocalizedByProductVariantIDAndLanguageID(int ProductVariantID, int LanguageID)
+        public static ProductVariantLocalized GetProductVariantLocalizedByProductVariantIdAndLanguageId(int productVariantId, int languageId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByProductVariantIDAndLanguageID(ProductVariantID, LanguageID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantLocalizedByProductVariantIdAndLanguageId(productVariantId, languageId);
             var item = DBMapping(dbItem); 
             return item;
         }
@@ -2032,16 +2047,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a localized product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>ProductVariantLocalized</returns>
-        public static ProductVariantLocalized InsertProductVariantLocalized(int ProductVariantID,
-            int LanguageID, string Name, string Description)
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product variant content</returns>
+        public static ProductVariantLocalized InsertProductVariantLocalized(int productVariantId,
+            int languageId, string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantLocalized(ProductVariantID,
-                LanguageID, Name, Description);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantLocalized(productVariantId,
+                languageId, name, description);
             var item = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -2057,17 +2072,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Update a localized product variant
         /// </summary>
-        /// <param name="ProductVariantLocalizedID">Localized product variant identifier</param>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>ProductVariantContent</returns>
-        public static ProductVariantLocalized UpdateProductVariantLocalized(int ProductVariantLocalizedID,
-            int ProductVariantID, int LanguageID, string Name, string Description)
+        /// <param name="productVariantLocalizedId">Localized product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product variant content</returns>
+        public static ProductVariantLocalized UpdateProductVariantLocalized(int productVariantLocalizedId,
+            int productVariantId, int languageId, string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantLocalized(ProductVariantLocalizedID,
-                ProductVariantID, LanguageID, Name, Description);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantLocalized(productVariantLocalizedId,
+                productVariantId, languageId, name, description);
             var item = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -2083,23 +2098,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Marks a product variant as deleted
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        public static void MarkProductVariantAsDeleted(int ProductVariantID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        public static void MarkProductVariantAsDeleted(int productVariantId)
         {
-            var productVariant = GetProductVariantByID(ProductVariantID);
+            var productVariant = GetProductVariantById(productVariantId);
             if (productVariant != null)
             {
-                productVariant = UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
-                    productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                    productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
-                    productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
+                productVariant = UpdateProductVariant(productVariant.ProductVariantId, 
+                    productVariant.ProductId, productVariant.Name,
+                    productVariant.SKU, productVariant.Description, 
+                    productVariant.AdminComment, productVariant.ManufacturerPartNumber,
+                    productVariant.IsGiftCard, productVariant.IsDownload, 
+                    productVariant.DownloadId, productVariant.UnlimitedDownloads, 
+                    productVariant.MaxNumberOfDownloads,
                     productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
-                    productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                    productVariant.HasSampleDownload, productVariant.SampleDownloadId,
                     productVariant.HasUserAgreement, productVariant.UserAgreementText,
                     productVariant.IsRecurring, productVariant.CycleLength,
                     productVariant.CyclePeriod, productVariant.TotalCycles,
                     productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                    productVariant.IsTaxExempt, productVariant.TaxCategoryID,
+                    productVariant.IsTaxExempt, productVariant.TaxCategoryId,
                     productVariant.ManageInventory, productVariant.StockQuantity,
                     productVariant.DisplayStockAvailability,
                     productVariant.MinStockQuantity, productVariant.LowStockActivity,
@@ -2109,7 +2127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     productVariant.Price, productVariant.OldPrice,
                     productVariant.ProductCost, productVariant.CustomerEntersPrice,
                     productVariant.MinimumCustomerEnteredPrice, productVariant.MaximumCustomerEnteredPrice,
-                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, productVariant.PictureID,
+                    productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, productVariant.PictureId,
                     productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                     productVariant.Published, true, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
             }
@@ -2118,14 +2136,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Adjusts inventory
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <param name="decrease">A value indicating whether to increase or descrease product variant stock quantity</param>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="AttributesXML">Attributes in XML format</param>
-        public static void AdjustInventory(int ProductVariantID, bool decrease,
-            int Quantity, string AttributesXML)
+        /// <param name="quantity">Quantity</param>
+        /// <param name="attributesXml">Attributes in XML format</param>
+        public static void AdjustInventory(int productVariantId, bool decrease,
+            int quantity, string attributesXml)
         {
-            var productVariant = GetProductVariantByID(ProductVariantID);
+            var productVariant = GetProductVariantById(productVariantId);
             if (productVariant == null)
                 return;
 
@@ -2141,9 +2159,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     {
                         int newStockQuantity = 0;
                         if (decrease)
-                            newStockQuantity = productVariant.StockQuantity - Quantity;
+                            newStockQuantity = productVariant.StockQuantity - quantity;
                         else
-                            newStockQuantity = productVariant.StockQuantity + Quantity;
+                            newStockQuantity = productVariant.StockQuantity + quantity;
 
                         bool newPublished = productVariant.Published;
                         bool newDisableBuyButton = productVariant.DisableBuyButton;
@@ -2169,20 +2187,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
                         if (decrease && productVariant.NotifyAdminForQuantityBelow > newStockQuantity)
                         {
-                            MessageManager.SendQuantityBelowStoreOwnerNotification(productVariant, LocalizationManager.DefaultAdminLanguage.LanguageID);
+                            MessageManager.SendQuantityBelowStoreOwnerNotification(productVariant, LocalizationManager.DefaultAdminLanguage.LanguageId);
                         }
 
-                        productVariant = UpdateProductVariant(productVariant.ProductVariantID, productVariant.ProductID, productVariant.Name,
+                        productVariant = UpdateProductVariant(productVariant.ProductVariantId, productVariant.ProductId, productVariant.Name,
                              productVariant.SKU, productVariant.Description, productVariant.AdminComment, productVariant.ManufacturerPartNumber,
-                             productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadID,
+                             productVariant.IsGiftCard, productVariant.IsDownload, productVariant.DownloadId,
                              productVariant.UnlimitedDownloads, productVariant.MaxNumberOfDownloads,
                              productVariant.DownloadExpirationDays, (DownloadActivationTypeEnum)productVariant.DownloadActivationType,
-                             productVariant.HasSampleDownload, productVariant.SampleDownloadID,
+                             productVariant.HasSampleDownload, productVariant.SampleDownloadId,
                              productVariant.HasUserAgreement, productVariant.UserAgreementText,
                              productVariant.IsRecurring, productVariant.CycleLength,
                              productVariant.CyclePeriod, productVariant.TotalCycles,
                              productVariant.IsShipEnabled, productVariant.IsFreeShipping, productVariant.AdditionalShippingCharge,
-                             productVariant.IsTaxExempt, productVariant.TaxCategoryID,
+                             productVariant.IsTaxExempt, productVariant.TaxCategoryId,
                              productVariant.ManageInventory, newStockQuantity, productVariant.DisplayStockAvailability,
                              productVariant.MinStockQuantity, productVariant.LowStockActivity,
                              productVariant.NotifyAdminForQuantityBelow, productVariant.AllowOutOfStockOrders,
@@ -2193,7 +2211,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                              productVariant.MinimumCustomerEnteredPrice, 
                              productVariant.MaximumCustomerEnteredPrice,
                              productVariant.Weight, productVariant.Length, productVariant.Width,
-                             productVariant.Height, productVariant.PictureID,
+                             productVariant.Height, productVariant.PictureId,
                              productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
                              newPublished, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
 
@@ -2212,9 +2230,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
                             if (allProductVariantsUnpublished)
                             {
-                                UpdateProduct(product.ProductID, product.Name, product.ShortDescription,
-                                    product.FullDescription, product.AdminComment, product.ProductTypeID,
-                                    product.TemplateID, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription,
+                                UpdateProduct(product.ProductId, product.Name, product.ShortDescription,
+                                    product.FullDescription, product.AdminComment, product.ProductTypeId,
+                                    product.TemplateId, product.ShowOnHomePage, product.MetaKeywords, product.MetaDescription,
                                     product.MetaTitle, product.SEName, product.AllowCustomerReviews, product.AllowCustomerRatings, product.RatingSum,
                                     product.TotalRatingVotes, false, product.Deleted, product.CreatedOn, product.UpdatedOn);
                             }
@@ -2223,17 +2241,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     break;
                 case ManageInventoryMethodEnum.ManageStockByAttributes:
                     {
-                        var combination = ProductAttributeManager.FindProductVariantAttributeCombination(productVariant.ProductVariantID, AttributesXML);
+                        var combination = ProductAttributeManager.FindProductVariantAttributeCombination(productVariant.ProductVariantId, attributesXml);
                         if (combination != null)
                         {
                             int newStockQuantity = 0;
                             if (decrease)
-                                newStockQuantity = combination.StockQuantity - Quantity;
+                                newStockQuantity = combination.StockQuantity - quantity;
                             else
-                                newStockQuantity = combination.StockQuantity + Quantity;
+                                newStockQuantity = combination.StockQuantity + quantity;
 
-                            combination = ProductAttributeManager.UpdateProductVariantAttributeCombination(combination.ProductVariantAttributeCombinationID,
-                                combination.ProductVariantID, combination.AttributesXML, newStockQuantity, combination.AllowOutOfStockOrders);
+                            combination = ProductAttributeManager.UpdateProductVariantAttributeCombination(combination.ProductVariantAttributeCombinationId,
+                                combination.ProductVariantId, combination.AttributesXml, newStockQuantity, combination.AllowOutOfStockOrders);
                         }
                     }
                     break;
@@ -2249,23 +2267,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Deletes a product picture mapping
         /// </summary>
-        /// <param name="ProductPictureID">Product picture mapping identifier</param>
-        public static void DeleteProductPicture(int ProductPictureID)
+        /// <param name="productPictureId">Product picture mapping identifier</param>
+        public static void DeleteProductPicture(int productPictureId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteProductPicture(ProductPictureID);
+            DBProviderManager<DBProductProvider>.Provider.DeleteProductPicture(productPictureId);
         }
 
         /// <summary>
         /// Gets a product picture mapping
         /// </summary>
-        /// <param name="ProductPictureID">Product picture mapping identifier</param>
+        /// <param name="productPictureId">Product picture mapping identifier</param>
         /// <returns>Product picture mapping</returns>
-        public static ProductPicture GetProductPictureByID(int ProductPictureID)
+        public static ProductPicture GetProductPictureById(int productPictureId)
         {
-            if (ProductPictureID == 0)
+            if (productPictureId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductPictureByID(ProductPictureID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductPictureById(productPictureId);
             var productPicture = DBMapping(dbItem);
             return productPicture;
         }
@@ -2273,15 +2291,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a product picture mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="PictureID">Picture identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="pictureId">Picture identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product picture mapping</returns>
-        public static ProductPicture InsertProductPicture(int ProductID,
-            int PictureID, int DisplayOrder)
+        public static ProductPicture InsertProductPicture(int productId,
+            int pictureId, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductPicture(ProductID, 
-                PictureID, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductPicture(productId, 
+                pictureId, displayOrder);
             var productPicture = DBMapping(dbItem);
             return productPicture;
         }
@@ -2289,16 +2307,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates the product picture mapping
         /// </summary>
-        /// <param name="ProductPictureID">Product picture mapping identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="PictureID">Picture identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productPictureId">Product picture mapping identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="pictureId">Picture identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product picture mapping</returns>
-        public static ProductPicture UpdateProductPicture(int ProductPictureID, int ProductID,
-            int PictureID, int DisplayOrder)
+        public static ProductPicture UpdateProductPicture(int productPictureId, int productId,
+            int pictureId, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductPicture(ProductPictureID, ProductID,
-                PictureID, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductPicture(productPictureId, productId,
+                pictureId, displayOrder);
             var productPicture = DBMapping(dbItem);
             return productPicture;
         }
@@ -2306,11 +2324,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets all product picture mappings by product identifier
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product picture mapping collection</returns>
-        public static ProductPictureCollection GetProductPicturesByProductID(int ProductID)
+        public static ProductPictureCollection GetProductPicturesByProductId(int productId)
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductPicturesByProductID(ProductID);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductPicturesByProductId(productId);
             var productPictures = DBMapping(dbCollection);
             return productPictures;
         }
@@ -2322,14 +2340,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a product review
         /// </summary>
-        /// <param name="ProductReviewID">Product review identifier</param>
+        /// <param name="productReviewId">Product review identifier</param>
         /// <returns>Product review</returns>
-        public static ProductReview GetProductReviewByID(int ProductReviewID)
+        public static ProductReview GetProductReviewById(int productReviewId)
         {
-            if (ProductReviewID == 0)
+            if (productReviewId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductReviewByID(ProductReviewID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductReviewById(productReviewId);
             var productReview = DBMapping(dbItem);
             return productReview;
         }
@@ -2337,12 +2355,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a product review collection by product identifier
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Product review collection</returns>
-        public static ProductReviewCollection GetProductReviewByProductID(int ProductID)
+        public static ProductReviewCollection GetProductReviewByProductId(int productId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductReviewByProductID(ProductID, showHidden);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductReviewByProductId(productId, showHidden);
             var productReviews = DBMapping(dbCollection);
             return productReviews;
         }
@@ -2350,10 +2368,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Deletes a product review
         /// </summary>
-        /// <param name="ProductReviewID">Product review identifier</param>
-        public static void DeleteProductReview(int ProductReviewID)
+        /// <param name="productReviewId">Product review identifier</param>
+        public static void DeleteProductReview(int productReviewId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteProductReview(ProductReviewID);
+            DBProviderManager<DBProductProvider>.Provider.DeleteProductReview(productReviewId);
         }
 
         /// <summary>
@@ -2371,64 +2389,68 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a product review
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The review title</param>
-        /// <param name="ReviewText">The review text</param>
-        /// <param name="Rating">The review rating</param>
-        /// <param name="HelpfulYesTotal">Review helpful votes total</param>
-        /// <param name="HelpfulNoTotal">Review not helpful votes total</param>
-        /// <param name="IsApproved">A value indicating whether the product review is approved</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The review title</param>
+        /// <param name="reviewText">The review text</param>
+        /// <param name="rating">The review rating</param>
+        /// <param name="helpfulYesTotal">Review helpful votes total</param>
+        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
+        /// <param name="isApproved">A value indicating whether the product review is approved</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public static ProductReview InsertProductReview(int ProductID, int CustomerID,
-            string Title, string ReviewText, int Rating, int HelpfulYesTotal,
-            int HelpfulNoTotal, bool IsApproved, DateTime CreatedOn)
+        public static ProductReview InsertProductReview(int productId, 
+            int customerId, string title,
+            string reviewText, int rating, int helpfulYesTotal,
+            int helpfulNoTotal, bool isApproved, DateTime createdOn)
         {
-            return InsertProductReview(ProductID, CustomerID,
-             Title, ReviewText, Rating, HelpfulYesTotal,
-             HelpfulNoTotal, IsApproved, CreatedOn, ProductManager.NotifyAboutNewProductReviews);
+            return InsertProductReview(productId, customerId,
+             title, reviewText, rating, helpfulYesTotal,
+             helpfulNoTotal, isApproved, createdOn, 
+             ProductManager.NotifyAboutNewProductReviews);
         }
+
         /// <summary>
         /// Inserts a product review
         /// </summary>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The review title</param>
-        /// <param name="ReviewText">The review text</param>
-        /// <param name="Rating">The review rating</param>
-        /// <param name="HelpfulYesTotal">Review helpful votes total</param>
-        /// <param name="HelpfulNoTotal">Review not helpful votes total</param>
-        /// <param name="IsApproved">A value indicating whether the product review is approved</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The review title</param>
+        /// <param name="reviewText">The review text</param>
+        /// <param name="rating">The review rating</param>
+        /// <param name="helpfulYesTotal">Review helpful votes total</param>
+        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
+        /// <param name="isApproved">A value indicating whether the product review is approved</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <param name="notify">A value indicating whether to notify the store owner</param>
         /// <returns>Product review</returns>
-        public static ProductReview InsertProductReview(int ProductID, int CustomerID,
-            string Title, string ReviewText, int Rating, int HelpfulYesTotal,
-            int HelpfulNoTotal, bool IsApproved, DateTime CreatedOn, bool notify)
+        public static ProductReview InsertProductReview(int productId, 
+            int customerId, string title,
+            string reviewText, int rating, int helpfulYesTotal,
+            int helpfulNoTotal, bool isApproved, DateTime createdOn, bool notify)
         {
-            if (Rating < 1)
-                Rating = 1;
-            if (Rating > 5)
-                Rating = 5;
+            if (rating < 1)
+                rating = 1;
+            if (rating > 5)
+                rating = 5;
 
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductReview(ProductID, CustomerID,
-                Title, ReviewText, Rating, HelpfulYesTotal, HelpfulNoTotal,
-                IsApproved, CreatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductReview(productId, customerId,
+                title, reviewText, rating, helpfulYesTotal, helpfulNoTotal,
+                isApproved, createdOn);
             var productReview = DBMapping(dbItem);
             
             //activity log
             CustomerActivityManager.InsertActivity(
                 "WriteProductReview",
                 LocalizationManager.GetLocaleResourceString("ActivityLog.WriteProductReview"),
-                ProductID);
+                productId);
 
             //notify store owner
             if (notify)
             {
-                MessageManager.SendProductReviewNotificationMessage(productReview, LocalizationManager.DefaultAdminLanguage.LanguageID);
+                MessageManager.SendProductReviewNotificationMessage(productReview, LocalizationManager.DefaultAdminLanguage.LanguageId);
             }
 
             return productReview;
@@ -2437,27 +2459,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates the product review
         /// </summary>
-        /// <param name="ProductReviewID">The product review identifier</param>
-        /// <param name="ProductID">The product identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Title">The review title</param>
-        /// <param name="ReviewText">The review text</param>
-        /// <param name="Rating">The review rating</param>
-        /// <param name="HelpfulYesTotal">Review helpful votes total</param>
-        /// <param name="HelpfulNoTotal">Review not helpful votes total</param>
-        /// <param name="IsApproved">A value indicating whether the product review is approved</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="productReviewId">The product review identifier</param>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="title">The review title</param>
+        /// <param name="reviewText">The review text</param>
+        /// <param name="rating">The review rating</param>
+        /// <param name="helpfulYesTotal">Review helpful votes total</param>
+        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
+        /// <param name="isApproved">A value indicating whether the product review is approved</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public static ProductReview UpdateProductReview(int ProductReviewID,
-            int ProductID, int CustomerID, string Title,
-            string ReviewText, int Rating, int HelpfulYesTotal,
-            int HelpfulNoTotal, bool IsApproved, DateTime CreatedOn)
+        public static ProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string title,
+            string reviewText, int rating, int helpfulYesTotal,
+            int helpfulNoTotal, bool isApproved, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductReview(ProductReviewID,
-                ProductID, CustomerID, Title, ReviewText, Rating,
-                HelpfulYesTotal, HelpfulNoTotal, IsApproved, CreatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductReview(productReviewId,
+                productId, customerId, title, reviewText, rating,
+                helpfulYesTotal, helpfulNoTotal, isApproved, createdOn);
             var productReview = DBMapping(dbItem);
             return productReview;
         }
@@ -2465,9 +2486,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Sets a product rating helpfulness
         /// </summary>
-        /// <param name="ProductReviewID">Product review identifer</param>
-        /// <param name="WasHelpful">A value indicating whether the product review was helpful or not </param>
-        public static void SetProductRatingHelpfulness(int ProductReviewID, bool WasHelpful)
+        /// <param name="productReviewId">Product review identifer</param>
+        /// <param name="wasHelpful">A value indicating whether the product review was helpful or not </param>
+        public static void SetProductRatingHelpfulness(int productReviewId, bool wasHelpful)
         {
             if (NopContext.Current.User == null)
             {
@@ -2478,8 +2499,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return;
             }
 
-            DBProviderManager<DBProductProvider>.Provider.SetProductRatingHelpfulness(ProductReviewID,
-                NopContext.Current.User.CustomerID, WasHelpful);
+            DBProviderManager<DBProductProvider>.Provider.SetProductRatingHelpfulness(productReviewId,
+                NopContext.Current.User.CustomerId, wasHelpful);
         }
         
         #endregion
@@ -2500,14 +2521,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a product type
         /// </summary>
-        /// <param name="ProductTypeID">Product type identifier</param>
+        /// <param name="productTypeId">Product type identifier</param>
         /// <returns>Product type</returns>
-        public static ProductType GetProductTypeByID(int ProductTypeID)
+        public static ProductType GetProductTypeById(int productTypeId)
         {
-            if (ProductTypeID == 0)
+            if (productTypeId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductTypeByID(ProductTypeID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductTypeById(productTypeId);
             var productType = DBMapping(dbItem);
             return productType;
         }
@@ -2519,21 +2540,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Deletes a related product
         /// </summary>
-        /// <param name="RelatedProductID">Related product identifer</param>
-        public static void DeleteRelatedProduct(int RelatedProductID)
+        /// <param name="relatedProductId">Related product identifer</param>
+        public static void DeleteRelatedProduct(int relatedProductId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteRelatedProduct(RelatedProductID);
+            DBProviderManager<DBProductProvider>.Provider.DeleteRelatedProduct(relatedProductId);
         }
 
         /// <summary>
         /// Gets a related product collection by product identifier
         /// </summary>
-        /// <param name="ProductID1">The first product identifier</param>
+        /// <param name="productId1">The first product identifier</param>
         /// <returns>Related product collection</returns>
-        public static RelatedProductCollection GetRelatedProductsByProductID1(int ProductID1)
+        public static RelatedProductCollection GetRelatedProductsByProductId1(int productId1)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRelatedProductsByProductID1(ProductID1, showHidden);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRelatedProductsByProductId1(productId1, showHidden);
             var relatedProducts = DBMapping(dbCollection);
             return relatedProducts;
         }
@@ -2541,14 +2562,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a related product
         /// </summary>
-        /// <param name="RelatedProductID">Related product identifer</param>
+        /// <param name="relatedProductId">Related product identifer</param>
         /// <returns></returns>
-        public static RelatedProduct GetRelatedProductByID(int RelatedProductID)
+        public static RelatedProduct GetRelatedProductById(int relatedProductId)
         {
-            if (RelatedProductID == 0)
+            if (relatedProductId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetRelatedProductByID(RelatedProductID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetRelatedProductById(relatedProductId);
             var relatedProduct = DBMapping(dbItem);
             return relatedProduct;
         }
@@ -2556,13 +2577,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a related product
         /// </summary>
-        /// <param name="ProductID1">The first product identifier</param>
-        /// <param name="ProductID2">The second product identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId1">The first product identifier</param>
+        /// <param name="productId2">The second product identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Related product</returns>
-        public static RelatedProduct InsertRelatedProduct(int ProductID1, int ProductID2, int DisplayOrder)
+        public static RelatedProduct InsertRelatedProduct(int productId1, 
+            int productId2, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertRelatedProduct(ProductID1, ProductID2, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertRelatedProduct(productId1, productId2, displayOrder);
             var relatedProduct = DBMapping(dbItem);
             return relatedProduct;
         }
@@ -2570,15 +2592,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates a related product
         /// </summary>
-        /// <param name="RelatedProductID">The related product identifier</param>
-        /// <param name="ProductID1">The first product identifier</param>
-        /// <param name="ProductID2">The second product identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="relatedProductId">The related product identifier</param>
+        /// <param name="productId1">The first product identifier</param>
+        /// <param name="productId2">The second product identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Related product</returns>
-        public static RelatedProduct UpdateRelatedProduct(int RelatedProductID, int ProductID1, int ProductID2,
-            int DisplayOrder)
+        public static RelatedProduct UpdateRelatedProduct(int relatedProductId, 
+            int productId1, int productId2, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateRelatedProduct(RelatedProductID, ProductID1, ProductID2, DisplayOrder);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateRelatedProduct(relatedProductId, productId1, productId2, displayOrder);
             var relatedProduct = DBMapping(dbItem);
             return relatedProduct;
         }
@@ -2590,23 +2612,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets all product variants directly assigned to a pricelist
         /// </summary>
-        /// <param name="PricelistID"></param>
-        /// <returns></returns>
-        public static ProductVariantCollection GetProductVariantsByPricelistID(int PricelistID)
+        /// <param name="pricelistId">Pricelist identifier</param>
+        /// <returns>Product variants</returns>
+        public static ProductVariantCollection GetProductVariantsByPricelistId(int pricelistId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByPricelistID(PricelistID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByPricelistId(pricelistId);
             var newProductVariantCollection = ProductManager.DBMapping(dbItem);
 
             return newProductVariantCollection;
         }
 
         /// <summary>
-        /// Deletes a Pricelist
+        /// Deletes a pricelist
         /// </summary>
-        /// <param name="PricelistID">The PricelistID of the item to be deleted</param>
-        public static void DeletePricelist(int PricelistID)
+        /// <param name="pricelistId">The PricelistId of the item to be deleted</param>
+        public static void DeletePricelist(int pricelistId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeletePricelist(PricelistID);
+            DBProviderManager<DBProductProvider>.Provider.DeletePricelist(pricelistId);
         }
 
         /// <summary>
@@ -2621,29 +2643,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         /// <summary>
-        /// Gets a Pricelist
+        /// Gets a pricelist
         /// </summary>
-        /// <param name="PricelistID">Pricelist identifier</param>
+        /// <param name="pricelistId">Pricelist identifier</param>
         /// <returns>Pricelist</returns>
-        public static Pricelist GetPricelistByID(int PricelistID)
+        public static Pricelist GetPricelistById(int pricelistId)
         {
-            if (PricelistID == 0)
+            if (pricelistId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetPricelistByID(PricelistID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetPricelistById(pricelistId);
             var newPricelist = DBMapping(dbItem);
 
             return newPricelist;
         }
 
         /// <summary>
-        /// Gets a Pricelist
+        /// Gets a pricelist
         /// </summary>
-        /// <param name="PricelistGUID">Pricelist GUID</param>
+        /// <param name="pricelistGuid">Pricelist GUId</param>
         /// <returns>Pricelist</returns>
-        public static Pricelist GetPricelistByGUID(string PricelistGUID)
+        public static Pricelist GetPricelistByGuid(string pricelistGuid)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetPricelistByGUID(PricelistGUID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetPricelistByGuid(pricelistGuid);
             var newPricelist = DBMapping(dbItem);
             return newPricelist;
         }
@@ -2651,39 +2673,42 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a Pricelist
         /// </summary>
-        /// <param name="ExportMode">Mode of list creation (Export all, assigned only, assigned only with special price)</param>
-        /// <param name="ExportType">CSV or XML</param>
-        /// <param name="AffiliateID">Affiliate connected to this pricelist (optional), links will be created with AffiliateID</param>
-        /// <param name="DisplayName">Displayedname</param>
-        /// <param name="ShortName">shortname to identify the pricelist</param>
-        /// <param name="PricelistGuid">unique identifier to get pricelist "anonymous"</param>
-        /// <param name="CacheTime">how long will the pricelist be in cached before new creation</param>
-        /// <param name="FormatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
-        /// <param name="Description">Displayed description</param>
-        /// <param name="AdminNotes">Admin can put some notes here, not displayed in public</param>
-        /// <param name="Header">Headerline of the exported file (plain text)</param>
-        /// <param name="Body">template for an exportet productvariant, uses delimiters and replacement strings</param>
-        /// <param name="Footer">Footer line of the exportet file (plain text)</param>
-        /// <param name="PriceAdjustmentType">type of price adjustment (if used) (relative or absolute)</param>
-        /// <param name="PriceAdjustment">price will be adjusted by this amount (in accordance with PriceAdjustmentType)</param>
-        /// <param name="OverrideIndivAdjustment">use individual adjustment, if available, or override</param>
-        /// <param name="CreatedOn">when was this record originally created</param>
-        /// <param name="UpdatedOn">last time this recordset was updated</param>
+        /// <param name="exportMode">Mode of list creation (Export all, assigned only, assigned only with special price)</param>
+        /// <param name="exportType">CSV or XML</param>
+        /// <param name="affiliateId">Affiliate connected to this pricelist (optional), links will be created with AffiliateId</param>
+        /// <param name="displayName">Displayedname</param>
+        /// <param name="shortName">shortname to identify the pricelist</param>
+        /// <param name="pricelistGuid">unique identifier to get pricelist "anonymous"</param>
+        /// <param name="cacheTime">how long will the pricelist be in cached before new creation</param>
+        /// <param name="formatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
+        /// <param name="description">Displayed description</param>
+        /// <param name="adminNotes">Admin can put some notes here, not displayed in public</param>
+        /// <param name="header">Headerline of the exported file (plain text)</param>
+        /// <param name="body">template for an exportet productvariant, uses delimiters and replacement strings</param>
+        /// <param name="footer">Footer line of the exportet file (plain text)</param>
+        /// <param name="priceAdjustmentType">type of price adjustment (if used) (relative or absolute)</param>
+        /// <param name="priceAdjustment">price will be adjusted by this amount (in accordance with PriceAdjustmentType)</param>
+        /// <param name="overrideIndivAdjustment">use individual adjustment, if available, or override</param>
+        /// <param name="createdOn">when was this record originally created</param>
+        /// <param name="updatedOn">last time this recordset was updated</param>
         /// <returns>Pricelist</returns>
-        public static Pricelist InsertPricelist(PriceListExportModeEnum ExportMode, PriceListExportTypeEnum ExportType, int AffiliateID,
-            string DisplayName, string ShortName, string PricelistGuid, int CacheTime, string FormatLocalization,
-            string Description, string AdminNotes, string Header, string Body, string Footer,
-            PriceAdjustmentTypeEnum PriceAdjustmentType, decimal PriceAdjustment, bool OverrideIndivAdjustment,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static Pricelist InsertPricelist(PriceListExportModeEnum exportMode, 
+            PriceListExportTypeEnum exportType, int affiliateId,
+            string displayName, string shortName, string pricelistGuid, 
+            int cacheTime, string formatLocalization, string description,
+            string adminNotes, string header, string body, string footer,
+            PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment, 
+            bool overrideIndivAdjustment, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertPricelist((int)ExportMode, (int)ExportType, AffiliateID,
-                DisplayName, ShortName, PricelistGuid, CacheTime, FormatLocalization,
-                Description, AdminNotes, Header, Body, Footer,
-                (int)PriceAdjustmentType, PriceAdjustment, OverrideIndivAdjustment,
-                CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertPricelist((int)exportMode, 
+                (int)exportType, affiliateId, displayName, shortName, 
+                pricelistGuid, cacheTime, formatLocalization,
+                description, adminNotes, header, body, footer,
+                (int)priceAdjustmentType, priceAdjustment, 
+                overrideIndivAdjustment, createdOn, updatedOn);
             var newPricelist = DBMapping(dbItem);
 
             return newPricelist;
@@ -2692,41 +2717,43 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates the Pricelist
         /// </summary>
-        /// <param name="PricelistID">Unique Identifier</param>
-        /// <param name="ExportMode">Mode of list creation (Export all, assigned only, assigned only with special price)</param>
-        /// <param name="ExportType">CSV or XML</param>
-        /// <param name="AffiliateID">Affiliate connected to this pricelist (optional), links will be created with AffiliateID</param>
-        /// <param name="DisplayName">Displayedname</param>
-        /// <param name="ShortName">shortname to identify the pricelist</param>
-        /// <param name="PricelistGuid">unique identifier to get pricelist "anonymous"</param>
-        /// <param name="CacheTime">how long will the pricelist be in cached before new creation</param>
-        /// <param name="FormatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
-        /// <param name="Description">Displayed description</param>
-        /// <param name="AdminNotes">Admin can put some notes here, not displayed in public</param>
-        /// <param name="Header">Headerline of the exported file (plain text)</param>
-        /// <param name="Body">template for an exportet productvariant, uses delimiters and replacement strings</param>
-        /// <param name="Footer">Footer line of the exportet file (plain text)</param>
-        /// <param name="PriceAdjustmentType">type of price adjustment (if used) (relative or absolute)</param>
-        /// <param name="PriceAdjustment">price will be adjusted by this amount (in accordance with PriceAdjustmentType)</param>
-        /// <param name="OverrideIndivAdjustment">use individual adjustment, if available, or override</param>
-        /// <param name="CreatedOn">when was this record originally created</param>
-        /// <param name="UpdatedOn">last time this recordset was updated</param>
+        /// <param name="pricelistId">Unique Identifier</param>
+        /// <param name="exportMode">Mode of list creation (Export all, assigned only, assigned only with special price)</param>
+        /// <param name="exportType">CSV or XML</param>
+        /// <param name="affiliateId">Affiliate connected to this pricelist (optional), links will be created with AffiliateId</param>
+        /// <param name="displayName">Displayedname</param>
+        /// <param name="shortName">shortname to identify the pricelist</param>
+        /// <param name="pricelistGuid">unique identifier to get pricelist "anonymous"</param>
+        /// <param name="cacheTime">how long will the pricelist be in cached before new creation</param>
+        /// <param name="formatLocalization">what localization will be used (numeric formats, etc.) en-US, de-DE etc.</param>
+        /// <param name="description">Displayed description</param>
+        /// <param name="adminNotes">Admin can put some notes here, not displayed in public</param>
+        /// <param name="header">Headerline of the exported file (plain text)</param>
+        /// <param name="body">template for an exportet productvariant, uses delimiters and replacement strings</param>
+        /// <param name="footer">Footer line of the exportet file (plain text)</param>
+        /// <param name="priceAdjustmentType">type of price adjustment (if used) (relative or absolute)</param>
+        /// <param name="priceAdjustment">price will be adjusted by this amount (in accordance with PriceAdjustmentType)</param>
+        /// <param name="overrideIndivAdjustment">use individual adjustment, if available, or override</param>
+        /// <param name="createdOn">when was this record originally created</param>
+        /// <param name="updatedOn">last time this recordset was updated</param>
         /// <returns>Pricelist</returns>
-        public static Pricelist UpdatePricelist(int PricelistID, PriceListExportModeEnum ExportMode, PriceListExportTypeEnum ExportType, int AffiliateID,
-            string DisplayName, string ShortName, string PricelistGuid, int CacheTime, string FormatLocalization,
-            string Description, string AdminNotes,
-            string Header, string Body, string Footer,
-            PriceAdjustmentTypeEnum PriceAdjustmentType, decimal PriceAdjustment, bool OverrideIndivAdjustment,
-            DateTime CreatedOn, DateTime UpdatedOn)
+        public static Pricelist UpdatePricelist(int pricelistId, 
+            PriceListExportModeEnum exportMode, PriceListExportTypeEnum exportType, 
+            int affiliateId,  string displayName, string shortName, 
+            string pricelistGuid, int cacheTime, string formatLocalization,
+            string description, string adminNotes,
+            string header, string body, string footer,
+            PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment, 
+            bool overrideIndivAdjustment, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdatePricelist(PricelistID, (int)ExportMode,
-                (int)ExportType, AffiliateID, DisplayName, ShortName, PricelistGuid,
-                CacheTime, FormatLocalization, Description, AdminNotes, Header, Body, Footer,
-                (int)PriceAdjustmentType, PriceAdjustment, OverrideIndivAdjustment,
-                CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdatePricelist(pricelistId, 
+                (int)exportMode, (int)exportType, affiliateId, displayName, shortName, pricelistGuid,
+                cacheTime, formatLocalization, description, adminNotes, header, body, footer,
+                (int)priceAdjustmentType, priceAdjustment, overrideIndivAdjustment,
+                createdOn, updatedOn);
             var newPricelist = DBMapping(dbItem);
 
             return newPricelist;
@@ -2735,88 +2762,86 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Deletes a ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantPricelistID">ProductVariantPricelist identifier</param>
-        public static void DeleteProductVariantPricelist(int ProductVariantPricelistID)
+        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
+        public static void DeleteProductVariantPricelist(int productVariantPricelistId)
         {
-            if (ProductVariantPricelistID == 0)
+            if (productVariantPricelistId == 0)
                 return;
-            DBProviderManager<DBProductProvider>.Provider.DeleteProductVariantPricelist(ProductVariantPricelistID);
+            DBProviderManager<DBProductProvider>.Provider.DeleteProductVariantPricelist(productVariantPricelistId);
         }
 
         /// <summary>
         /// Gets a ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantPricelistID">ProductVariantPricelist identifier</param>
+        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
         /// <returns>ProductVariantPricelist</returns>
-        public static ProductVariantPricelist GetProductVariantPricelistByID(int ProductVariantPricelistID)
+        public static ProductVariantPricelist GetProductVariantPricelistById(int productVariantPricelistId)
         {
-            if (ProductVariantPricelistID == 0)
+            if (productVariantPricelistId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantPricelistByID(ProductVariantPricelistID);
-            var newProductVariantPricelist = DBMapping(dbItem);
-
-            return newProductVariantPricelist;
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantPricelistById(productVariantPricelistId);
+            var productVariantPricelist = DBMapping(dbItem);
+            return productVariantPricelist;
         }
 
         /// <summary>
         /// Gets ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantID">ProductVariant identifier</param>
-        /// <param name="PricelistID">Pricelist identifier</param>
+        /// <param name="productVariantId">ProductVariant identifier</param>
+        /// <param name="pricelistId">Pricelist identifier</param>
         /// <returns>ProductVariantPricelist</returns>
-        public static ProductVariantPricelist GetProductVariantPricelist(int ProductVariantID, int PricelistID)
+        public static ProductVariantPricelist GetProductVariantPricelist(int productVariantId, int pricelistId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantPricelist(ProductVariantID, PricelistID);
-            var newProductVariantPricelist = DBMapping(dbItem);
-
-            return newProductVariantPricelist;
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantPricelist(productVariantId, pricelistId);
+            var productVariantPricelist = DBMapping(dbItem);
+            return productVariantPricelist;
         }
 
         /// <summary>
         /// Inserts a ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifer</param>
-        /// <param name="PricelistID">The pricelist identifier</param>
-        /// <param name="PriceAdjustmentType">The type of price adjustment (if used) (relative or absolute)</param>
-        /// <param name="PriceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productVariantId">The product variant identifer</param>
+        /// <param name="pricelistId">The pricelist identifier</param>
+        /// <param name="priceAdjustmentType">The type of price adjustment (if used) (relative or absolute)</param>
+        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>ProductVariantPricelist</returns>
-        public static ProductVariantPricelist InsertProductVariantPricelist(int ProductVariantID, int PricelistID,
-            PriceAdjustmentTypeEnum PriceAdjustmentType, decimal PriceAdjustment,
-            DateTime UpdatedOn)
+        public static ProductVariantPricelist InsertProductVariantPricelist(int productVariantId, 
+            int pricelistId, PriceAdjustmentTypeEnum priceAdjustmentType,
+            decimal priceAdjustment, DateTime updatedOn)
         {
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantPricelist(ProductVariantID,
-                PricelistID, (int)PriceAdjustmentType, PriceAdjustment, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantPricelist(productVariantId,
+                pricelistId, (int)priceAdjustmentType, priceAdjustment, updatedOn);
             var newProductVariantPricelist = DBMapping(dbItem);
-
             return newProductVariantPricelist;
         }
 
         /// <summary>
         /// Updates the ProductVariantPricelist
         /// </summary>
-        /// <param name="ProductVariantPricelistID">The product variant pricelist identifier</param>
-        /// <param name="ProductVariantID">The product variant identifer</param>
-        /// <param name="PricelistID">The pricelist identifier</param>
-        /// <param name="PriceAdjustmentType">The type of price adjustment (if used) (relative or absolute)</param>
-        /// <param name="PriceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="productVariantPricelistId">The product variant pricelist identifier</param>
+        /// <param name="productVariantId">The product variant identifer</param>
+        /// <param name="pricelistId">The pricelist identifier</param>
+        /// <param name="priceAdjustmentType">The type of price adjustment (if used) (relative or absolute)</param>
+        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>ProductVariantPricelist</returns>
-        public static ProductVariantPricelist UpdateProductVariantPricelist(int ProductVariantPricelistID, int ProductVariantID, int PricelistID,
-            PriceAdjustmentTypeEnum PriceAdjustmentType, decimal PriceAdjustment,
-            DateTime UpdatedOn)
+        public static ProductVariantPricelist UpdateProductVariantPricelist(int productVariantPricelistId, 
+            int productVariantId, int pricelistId,
+            PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment,
+            DateTime updatedOn)
         {
-            if (ProductVariantPricelistID == 0)
+            if (productVariantPricelistId == 0)
                 return null;
 
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantPricelist(ProductVariantPricelistID,
-                ProductVariantID, PricelistID, (int)PriceAdjustmentType,
-                PriceAdjustment, UpdatedOn);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantPricelist(productVariantPricelistId,
+                productVariantId, pricelistId, (int)priceAdjustmentType,
+                priceAdjustment, updatedOn);
             var newProductVariantPricelist = DBMapping(dbItem);
 
             return newProductVariantPricelist;
@@ -2829,14 +2854,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a tier price
         /// </summary>
-        /// <param name="TierPriceID">Tier price identifier</param>
+        /// <param name="tierPriceId">Tier price identifier</param>
         /// <returns>Tier price</returns>
-        public static TierPrice GetTierPriceByID(int TierPriceID)
+        public static TierPrice GetTierPriceById(int tierPriceId)
         {
-            if (TierPriceID == 0)
+            if (tierPriceId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetTierPriceByID(TierPriceID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetTierPriceById(tierPriceId);
             var tierPrice = DBMapping(dbItem);
             return tierPrice;
         }
@@ -2844,21 +2869,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets tier prices by product variant identifier
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Tier price collection</returns>
-        public static TierPriceCollection GetTierPricesByProductVariantID(int ProductVariantID)
+        public static TierPriceCollection GetTierPricesByProductVariantId(int productVariantId)
         {
-            if (ProductVariantID == 0)
+            if (productVariantId == 0)
                 return new TierPriceCollection();
 
-            string key = string.Format(TIERPRICES_ALLBYPRODUCTVARIANTID_KEY, ProductVariantID);
+            string key = string.Format(TIERPRICES_ALLBYPRODUCTVARIANTID_KEY, productVariantId);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (TierPriceCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetTierPricesByProductVariantID(ProductVariantID);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetTierPricesByProductVariantId(productVariantId);
             var tierPriceCollection = DBMapping(dbCollection);
 
             if (ProductManager.CacheEnabled)
@@ -2871,10 +2896,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Deletes a tier price
         /// </summary>
-        /// <param name="TierPriceID">Tier price identifier</param>
-        public static void DeleteTierPrice(int TierPriceID)
+        /// <param name="tierPriceId">Tier price identifier</param>
+        public static void DeleteTierPrice(int tierPriceId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteTierPrice(TierPriceID);
+            DBProviderManager<DBProductProvider>.Provider.DeleteTierPrice(tierPriceId);
 
             if (ProductManager.CacheEnabled)
             {
@@ -2887,13 +2912,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a tier price
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="Price">The price</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="price">The price</param>
         /// <returns>Tier price</returns>
-        public static TierPrice InsertTierPrice(int ProductVariantID, int Quantity, decimal Price)
+        public static TierPrice InsertTierPrice(int productVariantId, 
+            int quantity, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertTierPrice(ProductVariantID, Quantity, Price);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertTierPrice(productVariantId, quantity, price);
             var tierPrice = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -2908,14 +2934,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates the tier price
         /// </summary>
-        /// <param name="TierPriceID">The tier price identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="Price">The price</param>
+        /// <param name="tierPriceId">The tier price identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="price">The price</param>
         /// <returns>Tier price</returns>
-        public static TierPrice UpdateTierPrice(int TierPriceID, int ProductVariantID, int Quantity, decimal Price)
+        public static TierPrice UpdateTierPrice(int tierPriceId, int productVariantId, 
+            int quantity, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateTierPrice(TierPriceID, ProductVariantID, Quantity, Price);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateTierPrice(tierPriceId,
+                productVariantId, quantity, price);
             var tierPrice = DBMapping(dbItem);
 
             if (ProductManager.CacheEnabled)
@@ -2935,23 +2963,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Deletes a product price by customer role by identifier 
         /// </summary>
-        /// <param name="CustomerRoleProductPriceID">The identifier</param>
-        public static void DeleteCustomerRoleProductPrice(int CustomerRoleProductPriceID)
+        /// <param name="customerRoleProductPriceId">The identifier</param>
+        public static void DeleteCustomerRoleProductPrice(int customerRoleProductPriceId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteCustomerRoleProductPrice(CustomerRoleProductPriceID);
+            DBProviderManager<DBProductProvider>.Provider.DeleteCustomerRoleProductPrice(customerRoleProductPriceId);
         }
 
         /// <summary>
         /// Gets a product price by customer role by identifier 
         /// </summary>
-        /// <param name="CustomerRoleProductPriceID">The identifier</param>
+        /// <param name="customerRoleProductPriceId">The identifier</param>
         /// <returns>Product price by customer role by identifier </returns>
-        public static CustomerRoleProductPrice GetCustomerRoleProductPriceByID(int CustomerRoleProductPriceID)
+        public static CustomerRoleProductPrice GetCustomerRoleProductPriceById(int customerRoleProductPriceId)
         {
-            if (CustomerRoleProductPriceID == 0)
+            if (customerRoleProductPriceId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetCustomerRoleProductPriceByID(CustomerRoleProductPriceID);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetCustomerRoleProductPriceById(customerRoleProductPriceId);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -2959,11 +2987,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets a collection of product prices by customer role
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>A collection of product prices by customer role</returns>
-        public static CustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int ProductVariantID)
+        public static CustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int productVariantId)
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllCustomerRoleProductPrices(ProductVariantID);
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllCustomerRoleProductPrices(productVariantId);
             var collection = DBMapping(dbCollection);
             return collection;
         }
@@ -2971,15 +2999,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Inserts a product price by customer role
         /// </summary>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Price">The price</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="price">The price</param>
         /// <returns>A product price by customer role</returns>
-        public static CustomerRoleProductPrice InsertCustomerRoleProductPrice(int CustomerRoleID,
-            int ProductVariantID, decimal Price)
+        public static CustomerRoleProductPrice InsertCustomerRoleProductPrice(int customerRoleId,
+            int productVariantId, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertCustomerRoleProductPrice(CustomerRoleID,
-                ProductVariantID, Price);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertCustomerRoleProductPrice(customerRoleId,
+                productVariantId, price);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -2987,16 +3015,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Updates a product price by customer role
         /// </summary>
-        /// <param name="CustomerRoleProductPriceID">The identifier</param>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="Price">The price</param>
+        /// <param name="customerRoleProductPriceId">The identifier</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="price">The price</param>
         /// <returns>A product price by customer role</returns>
-        public static CustomerRoleProductPrice UpdateCustomerRoleProductPrice(int CustomerRoleProductPriceID,
-            int CustomerRoleID, int ProductVariantID, decimal Price)
+        public static CustomerRoleProductPrice UpdateCustomerRoleProductPrice(int customerRoleProductPriceId,
+            int customerRoleId, int productVariantId, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateCustomerRoleProductPrice(CustomerRoleProductPriceID,
-                CustomerRoleID, ProductVariantID, Price);
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateCustomerRoleProductPrice(customerRoleProductPriceId,
+                customerRoleId, productVariantId, price);
             var item = DBMapping(dbItem);
             return item;
         }
@@ -3006,30 +3034,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Formats the text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatProductReviewText(string Text)
+        public static string FormatProductReviewText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            Text = HtmlHelper.FormatText(Text, false, true, false, false, false, false);
+            text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
 
-            return Text;
+            return text;
         }
 
         /// <summary>
         /// Formats the email a friend text
         /// </summary>
-        /// <param name="Text">Text</param>
+        /// <param name="text">Text</param>
         /// <returns>Formatted text</returns>
-        public static string FormatEmailAFriendText(string Text)
+        public static string FormatEmailAFriendText(string text)
         {
-            if (String.IsNullOrEmpty(Text))
+            if (String.IsNullOrEmpty(text))
                 return string.Empty;
 
-            Text = HtmlHelper.FormatText(Text, false, true, false, false, false, false);
-            return Text;
+            text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
+            return text;
         }
 
         #endregion

@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Setting setting = SettingManager.GetSettingByID(this.SettingID);
+            Setting setting = SettingManager.GetSettingById(this.SettingId);
             if (setting != null)
             {
                 this.txtName.Text = setting.Name;
@@ -50,10 +50,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Setting SaveInfo()
         {
-            Setting setting = SettingManager.GetSettingByID(this.SettingID);
+            Setting setting = SettingManager.GetSettingById(this.SettingId);
             if (setting != null)
             {
-                setting = SettingManager.UpdateSetting(setting.SettingID,
+                setting = SettingManager.UpdateSetting(setting.SettingId,
                    txtName.Text, txtValue.Text, txtDescription.Text);
             }
             else
@@ -64,11 +64,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return setting;
         }
 
-        public int SettingID
+        public int SettingId
         {
             get
             {
-                return CommonHelper.QueryStringInt("SettingID");
+                return CommonHelper.QueryStringInt("SettingId");
             }
         }
     }

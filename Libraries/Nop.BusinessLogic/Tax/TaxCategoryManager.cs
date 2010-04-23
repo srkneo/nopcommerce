@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return null;
 
             var item = new TaxCategory();
-            item.TaxCategoryID = dbItem.TaxCategoryID;
+            item.TaxCategoryId = dbItem.TaxCategoryId;
             item.Name = dbItem.Name;
             item.DisplayOrder = dbItem.DisplayOrder;
             item.CreatedOn = dbItem.CreatedOn;
@@ -73,10 +73,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Deletes a tax category
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        public static void DeleteTaxCategory(int TaxCategoryID)
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        public static void DeleteTaxCategory(int taxCategoryId)
         {
-            DBProviderManager<DBTaxCategoryProvider>.Provider.DeleteTaxCategory(TaxCategoryID);
+            DBProviderManager<DBTaxCategoryProvider>.Provider.DeleteTaxCategory(taxCategoryId);
             if (TaxCategoryManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXCATEGORIES_PATTERN_KEY);
@@ -109,21 +109,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Gets a tax category
         /// </summary>
-        /// <param name="TaxCategoryID">Tax category identifier</param>
+        /// <param name="taxCategoryId">Tax category identifier</param>
         /// <returns>Tax category</returns>
-        public static TaxCategory GetTaxCategoryByID(int TaxCategoryID)
+        public static TaxCategory GetTaxCategoryById(int taxCategoryId)
         {
-            if (TaxCategoryID == 0)
+            if (taxCategoryId == 0)
                 return null;
 
-            string key = string.Format(TAXCATEGORIES_BY_ID_KEY, TaxCategoryID);
+            string key = string.Format(TAXCATEGORIES_BY_ID_KEY, taxCategoryId);
             object obj2 = NopCache.Get(key);
             if (TaxCategoryManager.CacheEnabled && (obj2 != null))
             {
                 return (TaxCategory)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.GetTaxCategoryByID(TaxCategoryID);
+            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.GetTaxCategoryById(taxCategoryId);
             var taxCategory = DBMapping(dbItem);
 
             if (TaxCategoryManager.CacheEnabled)
@@ -136,19 +136,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Inserts a tax category
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Tax category</returns>
-        public static TaxCategory InsertTaxCategory(string Name,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static TaxCategory InsertTaxCategory(string name,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.InsertTaxCategory(Name,
-                 DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.InsertTaxCategory(name,
+                 displayOrder, createdOn, updatedOn);
             var taxCategory = DBMapping(dbItem);
 
             if (TaxCategoryManager.CacheEnabled)
@@ -161,20 +161,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <summary>
         /// Updates the tax category
         /// </summary>
-        /// <param name="TaxCategoryID">The tax category identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="taxCategoryId">The tax category identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Tax category</returns>
-        public static TaxCategory UpdateTaxCategory(int TaxCategoryID, string Name,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public static TaxCategory UpdateTaxCategory(int taxCategoryId, string name,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
-            UpdatedOn = DateTimeHelper.ConvertToUtcTime(UpdatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.UpdateTaxCategory(TaxCategoryID, Name,
-                DisplayOrder, CreatedOn, UpdatedOn);
+            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.UpdateTaxCategory(taxCategoryId, name,
+                displayOrder, createdOn, updatedOn);
             var taxCategory = DBMapping(dbItem);
 
             if (TaxCategoryManager.CacheEnabled)

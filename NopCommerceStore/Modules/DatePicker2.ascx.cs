@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     return new DateTime(Int32.Parse(lstYears.SelectedValue), Int32.Parse(lstMonths.SelectedValue), Int32.Parse(lstDays.SelectedValue));
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
                     return null;
                 }

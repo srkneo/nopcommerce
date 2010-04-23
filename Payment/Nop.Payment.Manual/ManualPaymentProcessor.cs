@@ -49,9 +49,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Manual
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.AllowStoringCreditCardNumber = true;
             TransactMode transactionMode = GetCurrentTransactionMode();
@@ -125,9 +125,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Manual
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.AllowStoringCreditCardNumber = true;
             TransactMode transactionMode = GetCurrentTransactionMode();
@@ -149,13 +149,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Manual
             //restore credit cart info
             if (paymentInfo.IsRecurringPayment)
             {
-                Order initialOrder = OrderManager.GetOrderByID(paymentInfo.InitialOrderID);
+                Order initialOrder = OrderManager.GetOrderById(paymentInfo.InitialOrderId);
                 if (initialOrder != null)
                 {
                     paymentInfo.CreditCardType = processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Decrypt(initialOrder.CardType) : string.Empty;
                     paymentInfo.CreditCardName = processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Decrypt(initialOrder.CardName) : string.Empty;
                     paymentInfo.CreditCardNumber = processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Decrypt(initialOrder.CardNumber) : string.Empty;
-                    paymentInfo.CreditCardCVV2 = processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Decrypt(initialOrder.CardCVV2) : string.Empty;
+                    paymentInfo.CreditCardCvv2 = processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Decrypt(initialOrder.CardCvv2) : string.Empty;
                     try
                     {
                         paymentInfo.CreditCardExpireMonth = Convert.ToInt32(processPaymentResult.AllowStoringCreditCardNumber ? SecurityHelper.Decrypt(initialOrder.CardExpirationMonth) : "0");

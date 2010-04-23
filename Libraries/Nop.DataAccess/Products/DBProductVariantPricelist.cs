@@ -38,22 +38,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the product variant pricelist identifier
         /// </summary>
-        public int ProductVariantPricelistID { get; set; }
+        public int ProductVariantPricelistId { get; set; }
 
         /// <summary>
         /// Gets or sets the product variant identifer
         /// </summary>
-        public int ProductVariantID { get; set; }
+        public int ProductVariantId { get; set; }
 
         /// <summary>
         /// Gets or sets the pricelist identifier
         /// </summary>
-        public int PricelistID { get; set; }
+        public int PricelistId { get; set; }
 
         /// <summary>
         /// Gets or sets the type of price adjustment (if used) (relative or absolute)
         /// </summary>
-        public int PriceAdjustmentTypeID { get; set; }
+        public int PriceAdjustmentTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the price will be adjusted by this amount (in accordance with PriceAdjustmentType)

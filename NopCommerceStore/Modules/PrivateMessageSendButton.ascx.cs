@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (ForumManager.AllowPrivateMessages)
             {
-                var customer = CustomerManager.GetCustomerByID(this.CustomerID);
+                var customer = CustomerManager.GetCustomerById(this.CustomerId);
                 if (customer != null && !customer.IsGuest)
                 {
                     this.Visible = true;
@@ -62,10 +62,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnSendPM_Click(object sender, EventArgs e)
         {
-            var customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            var customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer != null)
             {
-                string url = string.Format("{0}SendPM.aspx?ToID={1}", CommonHelper.GetStoreLocation(), customer.CustomerID).ToLowerInvariant();
+                string url = string.Format("{0}SendPM.aspx?ToID={1}", CommonHelper.GetStoreLocation(), customer.CustomerId).ToLowerInvariant();
                 Response.Redirect(url);
             }
             else
@@ -74,11 +74,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                object obj2 = this.ViewState["CustomerID"];
+                object obj2 = this.ViewState["CustomerId"];
                 if (obj2 != null)
                     return (int)obj2;
                 else
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             set
             {
-                this.ViewState["CustomerID"] = value;
+                this.ViewState["CustomerId"] = value;
             }
         }
     }

@@ -26,7 +26,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
         /// <summary>
         /// Gets or sets the merchant ID
         /// </summary>
-        public static string MerchantID
+        public static string MerchantId
         {
             get
             {
@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
         /// <summary>
         /// Gets or sets the sub ID
         /// </summary>
-        public static string SubID
+        public static string SubId
         {
             get
             {

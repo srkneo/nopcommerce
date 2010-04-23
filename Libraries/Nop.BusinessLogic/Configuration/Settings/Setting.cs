@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <summary>
         /// Gets or sets the setting identifier
         /// </summary>
-        public int SettingID { get; set; }
+        public int SettingId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -55,5 +55,4 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
 
         #endregion
     }
-
 }

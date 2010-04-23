@@ -15,7 +15,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.ChronoPay
         {
             if(!Page.IsPostBack)
             {
-                txtProductID.Text = HostedPaymentSettings.ProductID;
+                txtProductId.Text = HostedPaymentSettings.ProductId;
                 txtProductName.Text = HostedPaymentSettings.ProductName;
                 txtGatewayUrl.Text = HostedPaymentSettings.GatewayUrl;
                 txtSharedSecrect.Text = HostedPaymentSettings.SharedSecrect;
@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.ChronoPay
 
         public void Save()
         {
-            HostedPaymentSettings.ProductID = txtProductID.Text;
+            HostedPaymentSettings.ProductId = txtProductId.Text;
             HostedPaymentSettings.ProductName = txtProductName.Text;
             HostedPaymentSettings.GatewayUrl = txtGatewayUrl.Text;
             HostedPaymentSettings.AdditionalFee = txtAdditionalFee.Value;

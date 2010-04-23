@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets or sets the category identifier
         /// </summary>
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets or sets the template identifier
         /// </summary>
-        public int TemplateID { get; set; }
+        public int TemplateId { get; set; }
 
         /// <summary>
         /// Gets or sets the meta keywords
@@ -76,12 +76,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets or sets the parent category identifier
         /// </summary>
-        public int ParentCategoryID { get; set; }
+        public int ParentCategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the page size

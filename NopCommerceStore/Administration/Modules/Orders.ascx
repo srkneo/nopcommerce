@@ -84,7 +84,7 @@
                 ToolTip="<% $NopResources:Admin.Orders.GoDirectly.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <nopCommerce:SimpleTextBox runat="server" CssClass="adminInput" ID="txtOrderID" Width="150px"
+            <nopCommerce:SimpleTextBox runat="server" CssClass="adminInput" ID="txtOrderId" Width="150px"
                 ValidationGroup="GoDirectly" ErrorMessage="<% $NopResources:Admin.Orders.GoDirectly.ErrorMessage %>">
             </nopCommerce:SimpleTextBox>
             <asp:Button runat="server" Text="<% $NopResources:Admin.Orders.GoButton.Text %>"
@@ -98,7 +98,7 @@
 <asp:GridView ID="gvOrders" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvOrders_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="OrderID" HeaderText="<% $NopResources:Admin.Orders.OrderIDColumn %>"
+        <asp:BoundField DataField="OrderId" HeaderText="<% $NopResources:Admin.Orders.OrderIDColumn %>"
             ItemStyle-Width="10%"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Orders.OrderTotalColumn %>"
             ItemStyle-Width="10%">
@@ -109,30 +109,30 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Orders.OrderStatusColumn %>"
             ItemStyle-Width="10%">
             <ItemTemplate>
-                <%#OrderManager.GetOrderStatusName(Convert.ToInt32(Eval("OrderStatusID")))%>
+                <%#OrderManager.GetOrderStatusName(Convert.ToInt32(Eval("OrderStatusId")))%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Orders.PaymentStatusColumn %>"
             ItemStyle-Width="20%">
             <ItemTemplate>
-                <%#PaymentStatusManager.GetPaymentStatusName(Convert.ToInt32(Eval("PaymentStatusID")))%>
+                <%#PaymentStatusManager.GetPaymentStatusName(Convert.ToInt32(Eval("PaymentStatusId")))%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Orders.ShippingStatusColumn %>"
             ItemStyle-Width="15%">
             <ItemTemplate>
-                <%#ShippingStatusManager.GetShippingStatusName(Convert.ToInt32(Eval("ShippingStatusID")))%>
+                <%#ShippingStatusManager.GetShippingStatusName(Convert.ToInt32(Eval("ShippingStatusId")))%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Orders.CustomerColumn %>" ItemStyle-Width="15%">
             <ItemTemplate>
-                <%#GetCustomerInfo (Convert.ToInt32(Eval("CustomerID")))%>
+                <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Orders.ViewColumn %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderID")%>" title="<%#GetLocaleResourceString("Admin.Orders.ViewColumn.Tooltip")%>">
+                <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderId")%>" title="<%#GetLocaleResourceString("Admin.Orders.ViewColumn.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Orders.ViewColumn")%>
                 </a>
             </ItemTemplate>

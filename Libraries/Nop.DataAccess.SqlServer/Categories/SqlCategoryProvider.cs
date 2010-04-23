@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
     /// <summary>
     /// Category provider for SQL Server
     /// </summary>
-    public partial class SQLCategoryProvider : DBCategoryProvider
+    public partial class SqlCategoryProvider : DBCategoryProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,33 +36,33 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         #region Utilities
         private DBCategory GetCategoryFromReader(IDataReader dataReader)
         {
-            DBCategory category = new DBCategory();
-            category.CategoryID = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
-            category.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            category.Description = NopSqlDataHelper.GetString(dataReader, "Description");
-            category.TemplateID = NopSqlDataHelper.GetInt(dataReader, "TemplateID");
-            category.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
-            category.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
-            category.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
-            category.SEName = NopSqlDataHelper.GetString(dataReader, "SEName");
-            category.ParentCategoryID = NopSqlDataHelper.GetInt(dataReader, "ParentCategoryID");
-            category.PictureID = NopSqlDataHelper.GetInt(dataReader, "PictureID");
-            category.PageSize = NopSqlDataHelper.GetInt(dataReader, "PageSize");
-            category.PriceRanges = NopSqlDataHelper.GetString(dataReader, "PriceRanges");
-            category.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
-            category.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            category.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            category.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            category.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return category;
+            var item = new DBCategory();
+            item.CategoryId = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            item.TemplateId = NopSqlDataHelper.GetInt(dataReader, "TemplateID");
+            item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
+            item.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
+            item.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
+            item.SEName = NopSqlDataHelper.GetString(dataReader, "SEName");
+            item.ParentCategoryId = NopSqlDataHelper.GetInt(dataReader, "ParentCategoryID");
+            item.PictureId = NopSqlDataHelper.GetInt(dataReader, "PictureID");
+            item.PageSize = NopSqlDataHelper.GetInt(dataReader, "PageSize");
+            item.PriceRanges = NopSqlDataHelper.GetString(dataReader, "PriceRanges");
+            item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
 
         private DBCategoryLocalized GetCategoryLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBCategoryLocalized();
-            item.CategoryLocalizedID = NopSqlDataHelper.GetInt(dataReader, "CategoryLocalizedID");
-            item.CategoryID = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.CategoryLocalizedId = NopSqlDataHelper.GetInt(dataReader, "CategoryLocalizedID");
+            item.CategoryId = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
             item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
@@ -74,13 +74,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
 
         private DBProductCategory GetProductCategoryFromReader(IDataReader dataReader)
         {
-            DBProductCategory productCategory = new DBProductCategory();
-            productCategory.ProductCategoryID = NopSqlDataHelper.GetInt(dataReader, "ProductCategoryID");
-            productCategory.ProductID = NopSqlDataHelper.GetInt(dataReader, "ProductID");
-            productCategory.CategoryID = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
-            productCategory.IsFeaturedProduct = NopSqlDataHelper.GetBoolean(dataReader, "IsFeaturedProduct");
-            productCategory.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return productCategory;
+            var item = new DBProductCategory();
+            item.ProductCategoryId = NopSqlDataHelper.GetInt(dataReader, "ProductCategoryID");
+            item.ProductId = NopSqlDataHelper.GetInt(dataReader, "ProductID");
+            item.CategoryId = NopSqlDataHelper.GetInt(dataReader, "CategoryID");
+            item.IsFeaturedProduct = NopSqlDataHelper.GetBoolean(dataReader, "IsFeaturedProduct");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -123,19 +123,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets all categories
         /// </summary>
-        /// <param name="ParentCategoryID">Parent category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="parentCategoryId">Parent category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category collection</returns>
-        public override DBCategoryCollection GetAllCategories(int ParentCategoryID,
-            bool showHidden, int LanguageID)
+        public override DBCategoryCollection GetAllCategories(int parentCategoryId,
+            bool showHidden, int languageId)
         {
             var result = new DBCategoryCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "ParentCategoryID", DbType.Int32, ParentCategoryID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ParentCategoryID", DbType.Int32, parentCategoryId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -151,147 +151,148 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category</returns>
-        public override DBCategory GetCategoryByID(int CategoryID, int LanguageID)
+        public override DBCategory GetCategoryById(int categoryId, int languageId)
         {
-
-            DBCategory category = null;
-            if (CategoryID == 0)
-                return category;
+            DBCategory item = null;
+            if (categoryId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    category = GetCategoryFromReader(dataReader);
+                    item = GetCategoryFromReader(dataReader);
                 }
             }
-            return category;
+            return item;
         }
 
         /// <summary>
         /// Inserts category identifier
         /// </summary>
-        /// <param name="Name">The category name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="ParentCategoryID">The parent category identifier</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The category name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="parentCategoryId">The parent category identifier</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Category</returns>
-        public override DBCategory InsertCategory(string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int ParentCategoryID, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBCategory InsertCategory(string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int parentCategoryId, int pictureId,
+            int pageSize, string priceRanges, bool published, bool deleted,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            DBCategory category = null;
+            DBCategory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryInsert");
             db.AddOutParameter(dbCommand, "CategoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, TemplateID);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
-            db.AddInParameter(dbCommand, "ParentCategoryID", DbType.Int32, ParentCategoryID);
-            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, PictureID);
-            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
-            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, PriceRanges);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, templateId);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
+            db.AddInParameter(dbCommand, "ParentCategoryID", DbType.Int32, parentCategoryId);
+            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, pictureId);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, priceRanges);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CategoryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryID"));
-                category = GetCategoryByID(CategoryID, 0);
+                int categoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryID"));
+                item = GetCategoryById(categoryId, 0);
             }
-            return category;
+            return item;
         }
 
         /// <summary>
         /// Updates the category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="Name">The category name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="ParentCategoryID">The parent category identifier</param>
-        /// <param name="PictureID">The picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="name">The category name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="parentCategoryId">The parent category identifier</param>
+        /// <param name="pictureId">The picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Category</returns>
-        public override DBCategory UpdateCategory(int CategoryID, string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int ParentCategoryID, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBCategory UpdateCategory(int categoryId, string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int parentCategoryId, int pictureId,
+            int pageSize, string priceRanges, bool published, bool deleted,
+            int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            DBCategory category = null;
+            DBCategory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryUpdate");
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, TemplateID);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
-            db.AddInParameter(dbCommand, "ParentCategoryID", DbType.Int32, ParentCategoryID);
-            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, PictureID);
-            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
-            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, PriceRanges);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, templateId);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
+            db.AddInParameter(dbCommand, "ParentCategoryID", DbType.Int32, parentCategoryId);
+            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, pictureId);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, priceRanges);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                category = GetCategoryByID(CategoryID, 0);
+                item = GetCategoryById(categoryId, 0);
 
-            return category;
+            return item;
         }
 
         /// <summary>
         /// Gets localized category by id
         /// </summary>
-        /// <param name="CategoryLocalizedID">Localized category identifier</param>
+        /// <param name="categoryLocalizedId">Localized category identifier</param>
         /// <returns>Category content</returns>
-        public override DBCategoryLocalized GetCategoryLocalizedByID(int CategoryLocalizedID)
+        public override DBCategoryLocalized GetCategoryLocalizedById(int categoryLocalizedId)
         {
             DBCategoryLocalized item = null;
-            if (CategoryLocalizedID == 0)
+            if (categoryLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, CategoryLocalizedID);
+            db.AddInParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, categoryLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -305,16 +306,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets localized category by category id and language id
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Category content</returns>
-        public override DBCategoryLocalized GetCategoryLocalizedByCategoryIDAndLanguageID(int CategoryID, int LanguageID)
+        public override DBCategoryLocalized GetCategoryLocalizedByCategoryIdAndLanguageId(int categoryId, int languageId)
         {
             DBCategoryLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedLoadByCategoryIDAndLanguageID");
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -328,36 +329,36 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Inserts a localized category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBCategoryContent</returns>
-        public override DBCategoryLocalized InsertCategoryLocalized(int CategoryID,
-            int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Category content</returns>
+        public override DBCategoryLocalized InsertCategoryLocalized(int categoryId,
+            int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName)
         {
             DBCategoryLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedInsert");
             db.AddOutParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int CategoryLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryLocalizedID"));
-                item = GetCategoryLocalizedByID(CategoryLocalizedID);
+                int categoryLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryLocalizedID"));
+                item = GetCategoryLocalizedById(categoryLocalizedId);
             }
             return item;
         }
@@ -365,35 +366,35 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Update a localized category
         /// </summary>
-        /// <param name="CategoryLocalizedID">Localized category identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBCategoryContent</returns>
-        public override DBCategoryLocalized UpdateCategoryLocalized(int CategoryLocalizedID,
-            int CategoryID, int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="categoryLocalizedId">Localized category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se Name text</param>
+        /// <returns>Category content</returns>
+        public override DBCategoryLocalized UpdateCategoryLocalized(int categoryLocalizedId,
+            int categoryId, int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle,
+            string seName)
         {
             DBCategoryLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLocalizedUpdate");
-            db.AddInParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, CategoryLocalizedID);
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            db.AddInParameter(dbCommand, "CategoryLocalizedID", DbType.Int32, categoryLocalizedId);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCategoryLocalizedByID(CategoryLocalizedID);
+                item = GetCategoryLocalizedById(categoryLocalizedId);
 
             return item;
         }
@@ -401,27 +402,27 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Deletes a product category mapping
         /// </summary>
-        /// <param name="ProductCategoryID">Product category identifier</param>
-        public override void DeleteProductCategory(int ProductCategoryID)
+        /// <param name="productCategoryId">Product category identifier</param>
+        public override void DeleteProductCategory(int productCategoryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, ProductCategoryID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, productCategoryId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets product category mapping collection
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product a category mapping collection</returns>
-        public override DBProductCategoryCollection GetProductCategoriesByCategoryID(int CategoryID, bool showHidden)
+        public override DBProductCategoryCollection GetProductCategoriesByCategoryId(int categoryId, bool showHidden)
         {
             var result = new DBProductCategoryCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingLoadByCategoryID");
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -438,15 +439,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets a product category mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product category mapping collection</returns>
-        public override DBProductCategoryCollection GetProductCategoriesByProductID(int ProductID, bool showHidden)
+        public override DBProductCategoryCollection GetProductCategoriesByProductId(int productId, bool showHidden)
         {
             var result = new DBProductCategoryCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingLoadByProductID");
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -463,78 +464,77 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <summary>
         /// Gets a product category mapping 
         /// </summary>
-        /// <param name="ProductCategoryID">Product category mapping identifier</param>
+        /// <param name="productCategoryId">Product category mapping identifier</param>
         /// <returns>Product category mapping</returns>
-        public override DBProductCategory GetProductCategoryByID(int ProductCategoryID)
+        public override DBProductCategory GetProductCategoryById(int productCategoryId)
         {
-
-            DBProductCategory productCategory = null;
-            if (ProductCategoryID == 0)
-                return productCategory;
+            DBProductCategory item = null;
+            if (productCategoryId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, ProductCategoryID);
+            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, productCategoryId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    productCategory = GetProductCategoryFromReader(dataReader);
+                    item = GetProductCategoryFromReader(dataReader);
                 }
             }
-            return productCategory;
+            return item;
         }
 
         /// <summary>
         /// Inserts a product category mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product category mapping </returns>
-        public override DBProductCategory InsertProductCategory(int ProductID, int CategoryID,
-            bool IsFeaturedProduct, int DisplayOrder)
+        public override DBProductCategory InsertProductCategory(int productId, int categoryId,
+            bool isFeaturedProduct, int displayOrder)
         {
-            DBProductCategory productCategory = null;
+            DBProductCategory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingInsert");
             db.AddOutParameter(dbCommand, "ProductCategoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, IsFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductCategoryID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductCategoryID"));
-                productCategory = GetProductCategoryByID(ProductCategoryID);
+                int productCategoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductCategoryID"));
+                item = GetProductCategoryById(productCategoryId);
             }
-            return productCategory;
+            return item;
         }
 
         /// <summary>
         /// Updates the product category mapping 
         /// </summary>
-        /// <param name="ProductCategoryID">Product category mapping  identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productCategoryId">Product category mapping  identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product category mapping </returns>
-        public override DBProductCategory UpdateProductCategory(int ProductCategoryID,
-            int ProductID, int CategoryID, bool IsFeaturedProduct, int DisplayOrder)
+        public override DBProductCategory UpdateProductCategory(int productCategoryId,
+            int productId, int categoryId, bool isFeaturedProduct, int displayOrder)
         {
-            DBProductCategory productCategory = null;
+            DBProductCategory item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingUpdate");
-            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, ProductCategoryID);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, CategoryID);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, IsFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, productCategoryId);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productCategory = GetProductCategoryByID(ProductCategoryID);
+                item = GetProductCategoryById(productCategoryId);
 
-            return productCategory;
+            return item;
         }
         #endregion
     }

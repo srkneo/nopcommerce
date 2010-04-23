@@ -17,18 +17,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if(!IsPostBack)
             {
-                if (!this.OrderProductVariantGUID.HasValue)
+                if (!this.OrderProductVariantGuid.HasValue)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                var opv = OrderManager.GetOrderProductVariantByGUID(this.OrderProductVariantGUID.Value);
+                var opv = OrderManager.GetOrderProductVariantByGuid(this.OrderProductVariantGuid.Value);
                 if (opv == null)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                var productVariant = ProductManager.GetProductVariantByID(opv.ProductVariantID);
+                var productVariant = ProductManager.GetProductVariantById(opv.ProductVariantId);
                 if (productVariant == null || !productVariant.HasUserAgreement)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
@@ -49,12 +49,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if(cbIsAgree.Checked)
             {
-                if (!this.OrderProductVariantGUID.HasValue)
+                if (!this.OrderProductVariantGuid.HasValue)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
 
-                var opv = OrderManager.GetOrderProductVariantByGUID(this.OrderProductVariantGUID.Value);
+                var opv = OrderManager.GetOrderProductVariantByGuid(this.OrderProductVariantGuid.Value);
                 if (opv != null)
                 {
                     string url = DownloadManager.GetDownloadUrl(opv);
@@ -64,11 +64,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public Guid? OrderProductVariantGUID
+        public Guid? OrderProductVariantGuid
         {
             get
             {
-                return CommonHelper.QueryStringGUID("OrderProductVariantGUID");
+                return CommonHelper.QueryStringGuid("OrderProductVariantGUID");
             }
         }
     }

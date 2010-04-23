@@ -28,7 +28,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Maintenance
     /// <summary>
     /// Maintenance provider for SQL Server
     /// </summary>
-    public partial class SQLMaintenanceProvider : DBMaintenanceProvider
+    public partial class SqlMaintenanceProvider : DBMaintenanceProvider
     {
         #region Fields
         private string _sqlConnectionString;

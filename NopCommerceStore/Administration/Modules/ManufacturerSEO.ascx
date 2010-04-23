@@ -67,7 +67,7 @@
                 <i>
                     <%=GetLocaleResourceString("Admin.Localizable.EmptyFieldNote")%></i>
                 <table class="adminContent">
-                    <asp:Label ID="lblLanguageID" runat="server" Text='<%#Eval("LanguageID") %>' Visible="false"></asp:Label>
+                    <asp:Label ID="lblLanguageId" runat="server" Text='<%#Eval("LanguageId") %>' Visible="false"></asp:Label>
                     <tr>
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ID="lblLocalizedMetaKeywords" Text="<% $NopResources:Admin.ManufacturerSEO.MetaKeywords %>"

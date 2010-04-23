@@ -31,10 +31,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            StateProvince stateProvince = StateProvinceManager.GetStateProvinceByID(this.StateProvinceID);
+            StateProvince stateProvince = StateProvinceManager.GetStateProvinceById(this.StateProvinceId);
             if (stateProvince != null)
             {
-                CommonHelper.SelectListItem(this.ddlCountry, stateProvince.CountryID);
+                CommonHelper.SelectListItem(this.ddlCountry, stateProvince.CountryId);
                 this.txtName.Text = stateProvince.Name;
                 this.txtAbbreviation.Text = stateProvince.Abbreviation;
                 this.txtDisplayOrder.Value = stateProvince.DisplayOrder;
@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CountryCollection countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
-                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlCountry.Items.Add(ddlCountryItem2);
             }
         }
@@ -63,10 +63,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public StateProvince SaveInfo()
         {
-            StateProvince stateProvince = StateProvinceManager.GetStateProvinceByID(this.StateProvinceID);
+            StateProvince stateProvince = StateProvinceManager.GetStateProvinceById(this.StateProvinceId);
             if (stateProvince != null)
             {
-                stateProvince = StateProvinceManager.UpdateStateProvince(stateProvince.StateProvinceID,
+                stateProvince = StateProvinceManager.UpdateStateProvince(stateProvince.StateProvinceId,
                     int.Parse(this.ddlCountry.SelectedItem.Value), txtName.Text,
                     txtAbbreviation.Text, txtDisplayOrder.Value);
 
@@ -79,11 +79,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return stateProvince;
         }
 
-        public int StateProvinceID
+        public int StateProvinceId
         {
             get
             {
-                return CommonHelper.QueryStringInt("StateProvinceID");
+                return CommonHelper.QueryStringInt("StateProvinceId");
             }
         }
     }

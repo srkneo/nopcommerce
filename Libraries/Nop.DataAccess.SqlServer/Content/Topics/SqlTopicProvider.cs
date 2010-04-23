@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
     /// <summary>
     /// Topic provider for SQL Server
     /// </summary>
-    public partial class SQLTopicProvider : DBTopicProvider
+    public partial class SqlTopicProvider : DBTopicProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,83 +36,32 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         #region Utilities
         private DBTopic GetTopicFromReader(IDataReader dataReader)
         {
-            DBTopic topic = new DBTopic();
-            topic.TopicID = NopSqlDataHelper.GetInt(dataReader, "TopicID");
-            topic.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return topic;
+            var item = new DBTopic();
+            item.TopicId = NopSqlDataHelper.GetInt(dataReader, "TopicID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            return item;
         }
 
         private DBLocalizedTopic GetLocalizedTopicFromReader(IDataReader dataReader)
         {
-            DBLocalizedTopic localizedTopic = new DBLocalizedTopic();
-            localizedTopic.TopicLocalizedID = NopSqlDataHelper.GetInt(dataReader, "TopicLocalizedID");
-            localizedTopic.TopicID = NopSqlDataHelper.GetInt(dataReader, "TopicID");
-            localizedTopic.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            localizedTopic.Title = NopSqlDataHelper.GetString(dataReader, "Title");
-            localizedTopic.Body = NopSqlDataHelper.GetString(dataReader, "Body");
-            localizedTopic.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            localizedTopic.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            localizedTopic.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
-            localizedTopic.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
-            localizedTopic.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
-            return localizedTopic;
+            var item = new DBLocalizedTopic();
+            item.TopicLocalizedId = NopSqlDataHelper.GetInt(dataReader, "TopicLocalizedID");
+            item.TopicId = NopSqlDataHelper.GetInt(dataReader, "TopicID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            item.Title = NopSqlDataHelper.GetString(dataReader, "Title");
+            item.Body = NopSqlDataHelper.GetString(dataReader, "Body");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            item.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
+            item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
+            item.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
+            return item;
         }
 
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Deletes a topic
-        /// </summary>
-        /// <param name="TopicID">Topic identifier</param>
-        public override void DeleteTopic(int TopicID)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicDelete");
-            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, TopicID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Inserts a topic
-        /// </summary>
-        /// <param name="Name">The name</param>
-        /// <returns>Topic</returns>
-        public override DBTopic InsertTopic(string Name)
-        {
-            DBTopic topic = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicInsert");
-            db.AddOutParameter(dbCommand, "TopicID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int TopicID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TopicID"));
-                topic = GetTopicByID(TopicID);
-            }
-            return topic;
-        }
-
-        /// <summary>
-        /// Updates the topic
-        /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="Name">The name</param>
-        /// <returns>Topic</returns>
-        public override DBTopic UpdateTopic(int TopicID, string Name)
-        {
-            DBTopic topic = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicUpdate");
-            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, TopicID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                topic = GetTopicByID(TopicID);
-
-            return topic;
-        }
-
+        
         /// <summary>
         /// Initializes the provider with the property values specified in the application's configuration file. This method is not intended to be used directly from your code
         /// </summary>
@@ -148,26 +97,77 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         }
 
         /// <summary>
+        /// Deletes a topic
+        /// </summary>
+        /// <param name="topicId">Topic identifier</param>
+        public override void DeleteTopic(int topicId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicDelete");
+            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, topicId);
+            db.ExecuteNonQuery(dbCommand);
+        }
+
+        /// <summary>
         /// Gets a topic by template identifier
         /// </summary>
-        /// <param name="TopicID">Topic identifier</param>
+        /// <param name="topicId">Topic identifier</param>
         /// <returns>Topic</returns>
-        public override DBTopic GetTopicByID(int TopicID)
+        public override DBTopic GetTopicById(int topicId)
         {
-            DBTopic topic = null;
-            if (TopicID == 0)
-                return topic;
+            DBTopic item = null;
+            if (topicId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, TopicID);
+            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, topicId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    topic = GetTopicFromReader(dataReader);
+                    item = GetTopicFromReader(dataReader);
                 }
             }
-            return topic;
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a topic
+        /// </summary>
+        /// <param name="name">The name</param>
+        /// <returns>Topic</returns>
+        public override DBTopic InsertTopic(string name)
+        {
+            DBTopic item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicInsert");
+            db.AddOutParameter(dbCommand, "TopicID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int topicId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TopicID"));
+                item = GetTopicById(topicId);
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Updates the topic
+        /// </summary>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="name">The name</param>
+        /// <returns>Topic</returns>
+        public override DBTopic UpdateTopic(int topicId, string name)
+        {
+            DBTopic item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicUpdate");
+            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, topicId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetTopicById(topicId);
+
+            return item;
         }
 
         /// <summary>
@@ -193,95 +193,95 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         /// <summary>
         /// Gets a localized topic by identifier
         /// </summary>
-        /// <param name="LocalizedTopicID">Localized topic identifier</param>
+        /// <param name="localizedTopicId">Localized topic identifier</param>
         /// <returns>Localized topic</returns>
-        public override DBLocalizedTopic GetLocalizedTopicByID(int LocalizedTopicID)
+        public override DBLocalizedTopic GetLocalizedTopicById(int localizedTopicId)
         {
-            DBLocalizedTopic localizedTopic = null;
-            if (LocalizedTopicID == 0)
-                return localizedTopic;
+            DBLocalizedTopic item = null;
+            if (localizedTopicId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "TopicLocalizedID", DbType.Int32, LocalizedTopicID);
+            db.AddInParameter(dbCommand, "TopicLocalizedID", DbType.Int32, localizedTopicId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    localizedTopic = GetLocalizedTopicFromReader(dataReader);
+                    item = GetLocalizedTopicFromReader(dataReader);
                 }
             }
-            return localizedTopic;
+            return item;
         }
 
         /// <summary>
-        /// Gets a localized topic by parent TopicID and language identifier
+        /// Gets a localized topic by parent topic identifer and language identifier
         /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized topic</returns>
-        public override DBLocalizedTopic GetLocalizedTopic(int TopicID, int LanguageID)
+        public override DBLocalizedTopic GetLocalizedTopic(int topicId, int languageId)
         {
-            DBLocalizedTopic localizedTopic = null;
+            DBLocalizedTopic item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLocalizedLoadByTopicIDAndLanguageID");
-            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, TopicID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, topicId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    localizedTopic = GetLocalizedTopicFromReader(dataReader);
+                    item = GetLocalizedTopicFromReader(dataReader);
                 }
             }
-            return localizedTopic;
+            return item;
         }
 
         /// <summary>
         /// Gets a localized topic by name and language identifier
         /// </summary>
-        /// <param name="Name">Topic name</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="name">Topic name</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized topic</returns>
-        public override DBLocalizedTopic GetLocalizedTopic(string Name, int LanguageID)
+        public override DBLocalizedTopic GetLocalizedTopic(string name, int languageId)
         {
-            DBLocalizedTopic localizedTopic = null;
+            DBLocalizedTopic item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLocalizedLoadByNameAndLanguageID");
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    localizedTopic = GetLocalizedTopicFromReader(dataReader);
+                    item = GetLocalizedTopicFromReader(dataReader);
                 }
             }
-            return localizedTopic;
+            return item;
         }
 
         /// <summary>
         /// Deletes a localized topic
         /// </summary>
-        /// <param name="LocalizedTopicID">Topic identifier</param>
-        public override void DeleteLocalizedTopic(int LocalizedTopicID)
+        /// <param name="localizedTopicId">Topic identifier</param>
+        public override void DeleteLocalizedTopic(int localizedTopicId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLocalizedDelete");
-            db.AddInParameter(dbCommand, "TopicLocalizedID", DbType.Int32, LocalizedTopicID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "TopicLocalizedID", DbType.Int32, localizedTopicId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
         /// Gets all localized topics
         /// </summary>
-        /// <param name="TopicName">Topic name</param>
+        /// <param name="topicName">Topic name</param>
         /// <returns>Localized topic collection</returns>
-        public override DBLocalizedTopicCollection GetAllLocalizedTopics(string TopicName)
+        public override DBLocalizedTopicCollection GetAllLocalizedTopics(string topicName)
         {
             var result = new DBLocalizedTopicCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLocalizedLoadAllByName");
-            db.AddInParameter(dbCommand, "Name", DbType.String, TopicName);
+            db.AddInParameter(dbCommand, "Name", DbType.String, topicName);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -296,80 +296,79 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Topics
         /// <summary>
         /// Inserts a localized topic
         /// </summary>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
         /// <returns>Localized topic</returns>
-        public override DBLocalizedTopic InsertLocalizedTopic(int TopicID,
-            int LanguageID, string Title, string Body,
-            DateTime CreatedOn, DateTime UpdatedOn,
-            string MetaKeywords, string MetaDescription, string MetaTitle)
+        public override DBLocalizedTopic InsertLocalizedTopic(int topicId,
+            int languageId, string title, string body,
+            DateTime createdOn, DateTime updatedOn,
+            string metaKeywords, string metaDescription, string metaTitle)
         {
-            DBLocalizedTopic localizedTopic = null;
+            DBLocalizedTopic item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLocalizedInsert");
             db.AddOutParameter(dbCommand, "TopicLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, TopicID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Title", DbType.String, Title);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, topicId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Title", DbType.String, title);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
 
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int TopicLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TopicLocalizedID"));
-                localizedTopic = GetLocalizedTopicByID(TopicLocalizedID);
+                int topicLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TopicLocalizedID"));
+                item = GetLocalizedTopicById(topicLocalizedId);
             }
-            return localizedTopic;
+            return item;
         }
 
         /// <summary>
         /// Updates the localized topic
         /// </summary>
-        /// <param name="TopicLocalizedID">The localized topic identifier</param>
-        /// <param name="TopicID">The topic identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="Title">The title</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
+        /// <param name="topicLocalizedId">The localized topic identifier</param>
+        /// <param name="topicId">The topic identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="title">The title</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
         /// <returns>Localized topic</returns>
-        public override DBLocalizedTopic UpdateLocalizedTopic(int TopicLocalizedID,
-            int TopicID, int LanguageID,
-            string Title, string Body,
-            DateTime CreatedOn, DateTime UpdatedOn,
-            string MetaKeywords, string MetaDescription, string MetaTitle)
+        public override DBLocalizedTopic UpdateLocalizedTopic(int topicLocalizedId,
+            int topicId, int languageId, string title, string body,
+            DateTime createdOn, DateTime updatedOn,
+            string metaKeywords, string metaDescription, string metaTitle)
         {
-            DBLocalizedTopic localizedTopic = null;
+            DBLocalizedTopic item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_TopicLocalizedUpdate");
-            db.AddInParameter(dbCommand, "TopicLocalizedID", DbType.Int32, TopicLocalizedID);
-            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, TopicID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Title", DbType.String, Title);
-            db.AddInParameter(dbCommand, "Body", DbType.String, Body);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
+            db.AddInParameter(dbCommand, "TopicLocalizedID", DbType.Int32, topicLocalizedId);
+            db.AddInParameter(dbCommand, "TopicID", DbType.Int32, topicId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Title", DbType.String, title);
+            db.AddInParameter(dbCommand, "Body", DbType.String, body);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                localizedTopic = GetLocalizedTopicByID(TopicLocalizedID);
+                item = GetLocalizedTopicById(topicLocalizedId);
 
-            return localizedTopic;
+            return item;
         }
         #endregion
     }

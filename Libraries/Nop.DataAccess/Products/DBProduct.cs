@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -62,12 +62,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <summary>
         /// Gets or sets the product type identifier
         /// </summary>
-        public int ProductTypeID { get; set; }
+        public int ProductTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the template identifier
         /// </summary>
-        public int TemplateID { get; set; }
+        public int TemplateId { get; set; }
         
         /// <summary>
         /// Gets or sets a value indicating whether to show the product on home page

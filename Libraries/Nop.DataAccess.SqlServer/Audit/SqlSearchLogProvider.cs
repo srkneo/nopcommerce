@@ -28,7 +28,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
     /// <summary>
     /// Search log provider for SQL Server
     /// </summary>
-    public partial class SQLSearchLogProvider : DBSearchLogProvider
+    public partial class SqlSearchLogProvider : DBSearchLogProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         #region Utilities
         private DBSearchLog GetSearchLogFromReader(IDataReader dataReader)
         {
-            DBSearchLog searchLog = new DBSearchLog();
-            searchLog.SearchLogID = NopSqlDataHelper.GetInt(dataReader, "SearchLogID");
-            searchLog.SearchTerm = NopSqlDataHelper.GetString(dataReader, "SearchTerm");
-            searchLog.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            searchLog.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return searchLog;
+            var item = new DBSearchLog();
+            item.SearchLogId = NopSqlDataHelper.GetInt(dataReader, "SearchLogID");
+            item.SearchTerm = NopSqlDataHelper.GetString(dataReader, "SearchTerm");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
         #endregion
 
@@ -85,24 +85,25 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Get order product variant sales report
         /// </summary>
-        /// <param name="StartTime">Order start time; null to load all</param>
-        /// <param name="EndTime">Order end time; null to load all</param>
-        /// <param name="Count">Item count. 0 if you want to get all items</param>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="count">Item count. 0 if you want to get all items</param>
         /// <returns>Result</returns>
-        public override IDataReader SearchTermReport(DateTime? StartTime, DateTime? EndTime, int Count)
+        public override IDataReader SearchTermReport(DateTime? startTime,
+            DateTime? endTime, int count)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SearchTermReport");
-            if (StartTime.HasValue)
-                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, StartTime.Value);
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
             else
                 db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
-            if (EndTime.HasValue)
-                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, EndTime.Value);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
             else
                 db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);
 
-            db.AddInParameter(dbCommand, "Count", DbType.Int32, Count);
+            db.AddInParameter(dbCommand, "Count", DbType.Int32, count);
             return db.ExecuteReader(dbCommand);
         }
 
@@ -130,47 +131,48 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Gets a search log item
         /// </summary>
-        /// <param name="SearchLogID">The search log item identifier</param>
+        /// <param name="searchLogId">The search log item identifier</param>
         /// <returns>Search log item</returns>
-        public override DBSearchLog GetSearchLogByID(int SearchLogID)
+        public override DBSearchLog GetSearchLogById(int searchLogId)
         {
-            DBSearchLog searchLog = null;
+            DBSearchLog item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SearchLogLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "SearchLogID", DbType.Int32, SearchLogID);
+            db.AddInParameter(dbCommand, "SearchLogID", DbType.Int32, searchLogId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    searchLog = GetSearchLogFromReader(dataReader);
+                    item = GetSearchLogFromReader(dataReader);
                 }
             }
-            return searchLog;
+            return item;
         }
 
         /// <summary>
         /// Inserts a search log item
         /// </summary>
-        /// <param name="SearchTerm">The search term</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="searchTerm">The search term</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Search log item</returns>
-        public override DBSearchLog InsertSearchLog(string SearchTerm, int CustomerID, DateTime CreatedOn)
+        public override DBSearchLog InsertSearchLog(string searchTerm,
+            int customerId, DateTime createdOn)
         {
-            DBSearchLog searchLog = null;
+            DBSearchLog item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_SearchLogInsert");
             db.AddOutParameter(dbCommand, "SearchLogID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "SearchTerm", DbType.String, SearchTerm);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "SearchTerm", DbType.String, searchTerm);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int SearchLogID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SearchLogID"));
-                searchLog = GetSearchLogByID(SearchLogID);
+                int searchLogId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SearchLogID"));
+                item = GetSearchLogById(searchLogId);
             }
 
-            return searchLog;
+            return item;
         }
 
         /// <summary>

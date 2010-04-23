@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Customer customer = CustomerManager.GetCustomerByID(this.CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer != null)
             {
                
@@ -63,11 +63,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
     }

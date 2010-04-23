@@ -30,7 +30,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
     public partial class CustomerSession : BaseEntity
     {
         #region Fields
-        private Customer customer = null;
+        private Customer _customer = null;
         #endregion 
 
         #region Ctor
@@ -46,12 +46,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets or sets the customer session identifier
         /// </summary>
-        public Guid CustomerSessionGUID { get; set; }
+        public Guid CustomerSessionGuid { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
         /// Gets or sets the last accessed date and time
@@ -72,9 +72,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                if (customer == null)
-                    customer = CustomerManager.GetCustomerByID(CustomerID);
-                return customer;
+                if (_customer == null)
+                    _customer = CustomerManager.GetCustomerById(this.CustomerId);
+                return _customer;
             }
         }
         #endregion

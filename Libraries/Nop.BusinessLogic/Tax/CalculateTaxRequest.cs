@@ -40,14 +40,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public Address Address { get; set; }
 
         /// <summary>
-        /// Gets or sets a product variant (only one of them is used - TaxClassID or Item)
+        /// Gets or sets a product variant (only one of them is used - TaxClassId or Item)
         /// </summary>
         public ProductVariant Item { get; set; }
 
         /// <summary>
-        /// Gets or sets a tax class identifier (only one of them is used - TaxClassID or Item)
+        /// Gets or sets a tax class identifier (only one of them is used - TaxClassIs or Item)
         /// </summary>
-        public int TaxClassID { get; set; }
+        public int TaxClassId { get; set; }
 
         #endregion
     }

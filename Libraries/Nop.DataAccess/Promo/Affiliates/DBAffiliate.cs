@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
         /// <summary>
         /// Gets or sets the affiliate identifier
         /// </summary>
-        public int AffiliateID { get; set; }
+        public int AffiliateId { get; set; }
         
         /// <summary>
         /// Gets or sets the first name
@@ -102,7 +102,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Affiliates
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the entity has been deleted

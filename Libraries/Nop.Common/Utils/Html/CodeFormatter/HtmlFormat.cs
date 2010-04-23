@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.Common.Utils.Html.CodeFormatter
 		{
 			if(match.Groups[1].Success) //JavaScript code
 			{
-				string s = match.ToString();
+				//string s = match.ToString();
 				return jsf.FormatSubCode(match.ToString());
 			}
 			if(match.Groups[2].Success) //comment

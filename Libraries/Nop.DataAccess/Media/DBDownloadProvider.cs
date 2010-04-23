@@ -33,49 +33,51 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
     public abstract partial class DBDownloadProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets a download
         /// </summary>
-        /// <param name="DownloadID">Download identifier</param>
+        /// <param name="downloadId">Download identifier</param>
         /// <returns>Download</returns>
-        public abstract DBDownload GetDownloadByID(int DownloadID);
+        public abstract DBDownload GetDownloadById(int downloadId);
 
         /// <summary>
         /// Deletes a download
         /// </summary>
-        /// <param name="DownloadID">Download identifier</param>
-        public abstract void DeleteDownload(int DownloadID);
+        /// <param name="downloadId">Download identifier</param>
+        public abstract void DeleteDownload(int downloadId);
 
         /// <summary>
         /// Inserts a download
         /// </summary>
-        /// <param name="UseDownloadURL">The value indicating whether DownloadURL property should be used</param>
-        /// <param name="DownloadURL">The download URL</param>
-        /// <param name="DownloadBinary">The download binary</param>
-        /// <param name="ContentType">The content type</param>
-        /// <param name="Filename">The filename of the download</param>
-        /// <param name="Extension">The extension</param>
-        /// <param name="IsNew">A value indicating whether the download is new</param>
+        /// <param name="useDownloadUrl">The value indicating whether DownloadURL property should be used</param>
+        /// <param name="downloadUrl">The download URL</param>
+        /// <param name="downloadBinary">The download binary</param>
+        /// <param name="contentType">The content type</param>
+        /// <param name="filename">The filename of the download</param>
+        /// <param name="extension">The extension</param>
+        /// <param name="isNew">A value indicating whether the download is new</param>
         /// <returns>Download</returns>
-        public abstract DBDownload InsertDownload(bool UseDownloadURL, string DownloadURL,
-            byte[] DownloadBinary, string ContentType, string Filename, 
-            string Extension, bool IsNew);
+        public abstract DBDownload InsertDownload(bool useDownloadUrl, string downloadUrl,
+            byte[] downloadBinary, string contentType, string filename, 
+            string extension, bool isNew);
 
         /// <summary>
         /// Updates the download
         /// </summary>
-        /// <param name="DownloadID">The download identifier</param>
-        /// <param name="UseDownloadURL">The value indicating whether DownloadURL property should be used</param>
-        /// <param name="DownloadURL">The download URL</param>
-        /// <param name="DownloadBinary">The download binary</param>
-        /// <param name="ContentType">The content type</param>
-        /// <param name="Filename">The filename of the download</param>
-        /// <param name="Extension">The extension</param>
-        /// <param name="IsNew">A value indicating whether the download is new</param>
+        /// <param name="downloadId">The download identifier</param>
+        /// <param name="useDownloadUrl">The value indicating whether DownloadURL property should be used</param>
+        /// <param name="downloadUrl">The download URL</param>
+        /// <param name="downloadBinary">The download binary</param>
+        /// <param name="contentType">The content type</param>
+        /// <param name="filename">The filename of the download</param>
+        /// <param name="extension">The extension</param>
+        /// <param name="isNew">A value indicating whether the download is new</param>
         /// <returns>Download</returns>
-        public abstract DBDownload UpdateDownload(int DownloadID, bool UseDownloadURL, string DownloadURL,
-            byte[] DownloadBinary, string ContentType, string Filename, 
-            string Extension, bool IsNew);
+        public abstract DBDownload UpdateDownload(int downloadId,
+            bool useDownloadUrl, string downloadUrl,
+            byte[] downloadBinary, string contentType, string filename,
+            string extension, bool isNew);
         #endregion
     }
 }

@@ -38,11 +38,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product == null)
                 Response.Redirect("Products.aspx");
             lblProductName.Text = Server.HtmlEncode(product.Name);
-            hlProductURL.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + product.ProductID.ToString();
+            hlProductURL.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + product.ProductId.ToString();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -60,14 +60,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ProductVariant productVariant = ctrlProductVariantInfo.SaveInfo();
-                    ctrlProductVariantDiscounts.SaveInfo(productVariant.ProductVariantID);
+                    ctrlProductVariantDiscounts.SaveInfo(productVariant.ProductVariantId);
 
                     CustomerActivityManager.InsertActivity(
                         "AddNewProductVariant",
                         GetLocaleResourceString("ActivityLog.AddNewProductVariant"),
                         productVariant.FullProductName);
 
-                    Response.Redirect("ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantID);
+                    Response.Redirect("ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantId);
                 }
                 catch (Exception exc)
                 {
@@ -76,11 +76,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

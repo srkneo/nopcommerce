@@ -49,14 +49,14 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
 
         protected void BindData()
         {
-            var category = CategoryManager.GetCategoryByID(CategoryID);
+            var category = CategoryManager.GetCategoryById(this.CategoryId);
 
-            rptrCategoryBreadcrumb.DataSource = CategoryManager.GetBreadCrumb(CategoryID);
+            rptrCategoryBreadcrumb.DataSource = CategoryManager.GetBreadCrumb(this.CategoryId);
             rptrCategoryBreadcrumb.DataBind();
 
             lDescription.Text = category.Description;
 
-            var subCategoryCollection = CategoryManager.GetAllCategories(CategoryID);
+            var subCategoryCollection = CategoryManager.GetAllCategories(this.CategoryId);
             if (subCategoryCollection.Count > 0)
             {
                 rptrSubCategories.DataSource = subCategoryCollection;
@@ -104,9 +104,9 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 }
             }
 
-            var psoFilterOption = ctrlProductSpecificationFilter.GetAlreadyFilteredSpecOptionIDs();
+            var psoFilterOption = ctrlProductSpecificationFilter.GetAlreadyFilteredSpecOptionIds();
 
-            var productCollection = ProductManager.GetAllProducts(this.CategoryID,
+            var productCollection = ProductManager.GetAllProducts(this.CategoryId,
                 0, false, minPriceConverted, maxPriceConverted, pageSize, this.CurrentPageIndex, psoFilterOption, out totalRecords);
 
             if (productCollection.Count > 0)
@@ -130,9 +130,9 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             ctrlPriceRangeFilter.ExcludedQueryStringParams = catalogPager.QueryStringProperty;
 
             ctrlProductSpecificationFilter.ExcludedQueryStringParams = catalogPager.QueryStringProperty;
-            ctrlProductSpecificationFilter.CategoryID = this.CategoryID;
+            ctrlProductSpecificationFilter.CategoryId = this.CategoryId;
 
-            ctrlProductSpecificationFilter.ReservedQueryStringParams = "CategoryID,";
+            ctrlProductSpecificationFilter.ReservedQueryStringParams = "CategoryId,";
             ctrlProductSpecificationFilter.ReservedQueryStringParams += ctrlPriceRangeFilter.QueryStringProperty;
             ctrlProductSpecificationFilter.ReservedQueryStringParams += ",";
             ctrlProductSpecificationFilter.ReservedQueryStringParams += catalogPager.QueryStringProperty;
@@ -153,7 +153,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 var hlCategory = e.Item.FindControl("hlCategory") as HyperLink;
                 if (hlCategory != null)
                 {
-                    hlCategory.NavigateUrl = SEOHelper.GetCategoryURL(category.CategoryID);
+                    hlCategory.NavigateUrl = SEOHelper.GetCategoryUrl(category.CategoryId);
                     hlCategory.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.Name);
                     hlCategory.Text = Server.HtmlEncode(category.Name);
                 }
@@ -172,11 +172,11 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             }
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryID");
+                return CommonHelper.QueryStringInt("CategoryId");
             }
         }
     }

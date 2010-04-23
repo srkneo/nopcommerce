@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <summary>
         /// Gets or sets the payment method identifier
         /// </summary>
-        public int PaymentMethodID { get; set; }
+        public int PaymentMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -75,12 +75,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// Gets or sets the class name
         /// </summary>
         public string ClassName { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the system keyword
         /// </summary>
         public string SystemKeyword { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the payment method is active
         /// </summary>
@@ -103,15 +103,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         {
             get
             {
-                if (paymentMethodType == PaymentMethodTypeEnum.Unknown)
+                if (this.paymentMethodType == PaymentMethodTypeEnum.Unknown)
                 {
                     try
                     {
-                        paymentMethodType = PaymentManager.GetPaymentMethodType(this.PaymentMethodID);
+                        this.paymentMethodType = PaymentManager.GetPaymentMethodType(this.PaymentMethodId);
                     }
                     catch { }
                 }
-                return paymentMethodType;
+                return this.paymentMethodType;
             }
         }
                

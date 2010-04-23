@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    var customer = CustomerManager.GetCustomerByID(this.CustomerID);
+                    var customer = CustomerManager.GetCustomerById(this.CustomerId);
 
                     if (customer != null)
                     {
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         var email = MessageManager.InsertQueuedEmail(5, from, to, string.Empty, string.Empty, subject, body, DateTime.Now, 0, null);
                     }
 
-                    Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}", CustomerID));
+                    Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}", CustomerId));
                 }
                 catch (Exception exc)
                 {
@@ -73,11 +73,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int CustomerID
+        public int CustomerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CustomerID");
+                return CommonHelper.QueryStringInt("CustomerId");
             }
         }
     }

@@ -44,8 +44,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (SettingManager.GetSettingValueBoolean("Analytics.GoogleEnabled"))
             {
                 string googleJS = SettingManager.GetSettingValue("Analytics.GoogleJS");
-                //string googleID = SettingManager.GetSettingValue("Analytics.GoogleID");
-                //string analyticsString = string.Format(googleJS, googleID);
+                //string googleId = SettingManager.GetSettingValue("Analytics.GoogleId");
+                //string analyticsString = string.Format(googleJS, googleId);
                 //render output
                 output.Write(googleJS);
             }

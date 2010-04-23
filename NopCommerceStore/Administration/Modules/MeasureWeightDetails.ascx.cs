@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     MeasureWeight measureWeight = ctrlMeasureWeightInfo.SaveInfo();
-                    Response.Redirect("MeasureWeightDetails.aspx?MeasureWeightID=" + measureWeight.MeasureWeightID.ToString());
+                    Response.Redirect("MeasureWeightDetails.aspx?MeasureWeightID=" + measureWeight.MeasureWeightId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                MeasureManager.DeleteMeasureWeight(this.MeasureWeightID);
+                MeasureManager.DeleteMeasureWeight(this.MeasureWeightId);
                 Response.Redirect("Measures.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int MeasureWeightID
+        public int MeasureWeightId
         {
             get
             {
-                return CommonHelper.QueryStringInt("MeasureWeightID");
+                return CommonHelper.QueryStringInt("MeasureWeightId");
             }
         }
     }

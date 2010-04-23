@@ -60,7 +60,6 @@
 <asp:GridView ID="gvProducts" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvProducts_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:BoundField DataField="ProductID" HeaderText="Product ID" Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Products.Name %>" ItemStyle-Width="70%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
@@ -76,7 +75,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Products.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="ProductDetails.aspx?ProductID=<%#Eval("ProductID")%>" title="<%#GetLocaleResourceString("Admin.Products.Edit.Tooltip")%>">
+                <a href="ProductDetails.aspx?ProductID=<%#Eval("ProductId")%>" title="<%#GetLocaleResourceString("Admin.Products.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Products.Edit")%>
                 </a>
             </ItemTemplate>

@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 lProductName.Text = Server.HtmlEncode(product.Name);
@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var productPictures = product.ProductPictures;
                 if (productPictures.Count > 1)
                 {
-                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureID, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
+                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
                     defaultImage.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                     defaultImage.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                     lvProductPictures.DataSource = productPictures;
@@ -60,7 +60,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 else if (productPictures.Count == 1)
                 {
-                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureID, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
+                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
                     defaultImage.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                     defaultImage.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
                     lvProductPictures.Visible = false;
@@ -88,11 +88,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             base.OnPreRender(e);
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

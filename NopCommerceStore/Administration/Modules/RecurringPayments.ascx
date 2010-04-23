@@ -13,8 +13,6 @@
     Width="100%" OnPageIndexChanging="gvRecurringPayments_PageIndexChanging" AllowPaging="true"
     PageSize="15">
     <Columns>
-        <asp:BoundField DataField="RecurringPaymentID" HeaderText="Recurring Payment ID"
-            Visible="False"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.RecurringPayments.CustomerColumn %>"
             ItemStyle-Width="15%">
             <ItemTemplate>
@@ -55,7 +53,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.RecurringPayments.EditColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="RecurringPaymentDetails.aspx?RecurringPaymentID=<%#Eval("RecurringPaymentID")%>">
+                <a href="RecurringPaymentDetails.aspx?RecurringPaymentID=<%#Eval("RecurringPaymentId")%>">
                     <%#GetLocaleResourceString("Admin.RecurringPayments.EditColumn")%>
                 </a>
             </ItemTemplate>

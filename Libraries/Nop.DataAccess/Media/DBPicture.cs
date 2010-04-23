@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         /// <summary>
         /// Gets or sets the picture identifier
         /// </summary>
-        public int PictureID { get; set; }
+        public int PictureId { get; set; }
 
         /// <summary>
         /// Gets or sets the picture binary

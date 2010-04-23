@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ManufacturerCollection manufacturers = ManufacturerManager.GetAllManufacturers();
             foreach (Manufacturer manufacturer in manufacturers)
             {
-                ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerID.ToString());
+                ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerId.ToString());
                 this.ddlManufacturer.Items.Add(item2);
             }
         }
@@ -59,11 +59,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected ProductCollection GetProducts()
         {
             string productName = txtProductName.Text;
-            int categoryID = ParentCategory.SelectedCategoryId;
-            int manufacturerID = int.Parse(this.ddlManufacturer.SelectedItem.Value);
+            int categoryId = ParentCategory.SelectedCategoryId;
+            int manufacturerId = int.Parse(this.ddlManufacturer.SelectedItem.Value);
 
             int totalRecords = 0;
-            ProductCollection products = ProductManager.GetAllProducts(categoryID, manufacturerID, null,
+            ProductCollection products = ProductManager.GetAllProducts(categoryId, manufacturerId, null,
                 null, null, productName, false, 1000, 0, null, out totalRecords);
             return products;
         }
@@ -105,7 +105,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 RelatedProductCollection existingRelatedProducts = product.RelatedProducts;
@@ -115,15 +115,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     try
                     {
                         CheckBox cbProductInfo = row.FindControl("cbProductInfo") as CheckBox;
-                        HiddenField hfProductID = row.FindControl("hfProductID") as HiddenField;
+                        HiddenField hfProductId = row.FindControl("hfProductId") as HiddenField;
                         NumericTextBox txtRowDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
-                        int productID = int.Parse(hfProductID.Value);
+                        int productId = int.Parse(hfProductId.Value);
                         int displayOrder = txtRowDisplayOrder.Value;
                         if (cbProductInfo.Checked)
                         {
-                            if (existingRelatedProducts.FindRelatedProduct(this.ProductID, productID) == null)
+                            if (existingRelatedProducts.FindRelatedProduct(this.ProductId, productId) == null)
                             {
-                                ProductManager.InsertRelatedProduct(this.ProductID, productID, displayOrder);
+                                ProductManager.InsertRelatedProduct(this.ProductId, productId, displayOrder);
                             }
                         }
                     }
@@ -134,7 +134,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
 
-            this.Page.ClientScript.RegisterStartupScript(typeof(RelatedProductAddControl), "closerefresh", "<script language=javascript>try {window.opener.document.forms[0]." + this.BtnID + ".click();}catch (e){} window.close();</script>");
+            this.Page.ClientScript.RegisterStartupScript(typeof(RelatedProductAddControl), "closerefresh", "<script language=javascript>try {window.opener.document.forms[0]." + this.BtnId + ".click();}catch (e){} window.close();</script>");
         }
 
         protected void gvProducts_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -143,29 +143,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             BindGrid();
         }
 
-        private string BtnID
+        private string BtnId
         {
             get
             {
-                object obj2 = base.Request.QueryString["BtnID"];
-                if (obj2 == null)
-                {
-                    return string.Empty;
-                }
-                return obj2.ToString();
+                return CommonHelper.QueryString("BtnId");
             }
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                object obj2 = base.Request.QueryString["pid"];
-                if (obj2 == null)
-                {
-                    return 0;
-                }
-                return int.Parse(obj2.ToString());
+                return CommonHelper.QueryStringInt("pid");
             }
         }
     }

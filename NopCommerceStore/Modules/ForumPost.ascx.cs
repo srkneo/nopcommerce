@@ -51,14 +51,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (forumPost != null)
             {
-                lAnchor.Text = string.Format("<a name=\"{0}\"></a>", forumPost.ForumPostID);
+                lAnchor.Text = string.Format("<a name=\"{0}\"></a>", forumPost.ForumPostId);
 
                 btnEdit.Visible = ForumManager.IsUserAllowedToEditPost(NopContext.Current.User, forumPost);
                 btnDelete.Visible = ForumManager.IsUserAllowedToDeletePost(NopContext.Current.User, forumPost);
 
                 lblDate.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn).ToString("f");
                 lText.Text = ForumManager.FormatPostText(forumPost.Text);
-                lblForumPostID.Text = forumPost.ForumPostID.ToString();
+                lblForumPostId.Text = forumPost.ForumPostId.ToString();
 
                 var customer = forumPost.User;
                 if (customer != null)
@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if (CustomerManager.AllowViewingProfiles && !customer.IsGuest)
                     {
                         hlUser.Text = Server.HtmlEncode(CustomerManager.FormatUserName(customer));
-                        hlUser.NavigateUrl = SEOHelper.GetUserProfileURL(customer.CustomerID);
+                        hlUser.NavigateUrl = SEOHelper.GetUserProfileUrl(customer.CustomerId);
                         lblUser.Visible = false;
                     }
                     else
@@ -131,7 +131,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                     if(CustomerManager.ShowCustomersLocation && !customer.IsGuest)
                     {
-                        var country = CountryManager.GetCountryByID(customer.CountryID);
+                        var country = CountryManager.GetCountryById(customer.CountryId);
                         if (country != null)
                         {
                             lblLocation.Text = Server.HtmlEncode(country.Name);
@@ -148,7 +148,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                     if(ForumManager.AllowPrivateMessages && !customer.IsGuest)
                     {
-                        btnSendPM.CustomerID = customer.CustomerID;
+                        btnSendPM.CustomerId = customer.CustomerId;
                         phPM.Visible = true;
                     }
                     else
@@ -174,46 +174,46 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnEdit_Click(object sender, EventArgs e)
         {
-            int forumPostID = 0;
-            int.TryParse(lblForumPostID.Text, out forumPostID);
-            var forumPost = ForumManager.GetPostByID(forumPostID);
+            int forumPostId = 0;
+            int.TryParse(lblForumPostId.Text, out forumPostId);
+            var forumPost = ForumManager.GetPostById(forumPostId);
             if (forumPost != null)
             {
                 if (!ForumManager.IsUserAllowedToEditPost(NopContext.Current.User, forumPost))
                 {
-                    string loginURL = SEOHelper.GetLoginPageURL(true);
+                    string loginURL = SEOHelper.GetLoginPageUrl(true);
                     Response.Redirect(loginURL);
                 }
 
-                string url = SEOHelper.GetEditForumPostURL(forumPost.ForumPostID);
+                string url = SEOHelper.GetEditForumPostUrl(forumPost.ForumPostId);
                 Response.Redirect(url);
             }
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            int forumPostID = 0;
-            int.TryParse(lblForumPostID.Text, out forumPostID);
-            var forumPost = ForumManager.GetPostByID(forumPostID);
+            int forumPostId = 0;
+            int.TryParse(lblForumPostId.Text, out forumPostId);
+            var forumPost = ForumManager.GetPostById(forumPostId);
             if (forumPost != null)
             {
                 var forumTopic = forumPost.Topic;
                 if (!ForumManager.IsUserAllowedToDeletePost(NopContext.Current.User, forumPost))
                 {
-                    string loginURL = SEOHelper.GetLoginPageURL(true);
+                    string loginURL = SEOHelper.GetLoginPageUrl(true);
                     Response.Redirect(loginURL);
                 }
 
-                ForumManager.DeletePost(forumPost.ForumPostID);
+                ForumManager.DeletePost(forumPost.ForumPostId);
 
                 string url = string.Empty;
                 if (forumTopic != null)
                 {
-                    url = SEOHelper.GetForumTopicURL(forumTopic.ForumTopicID);
+                    url = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
                 }
                 else
                 {
-                    url = SEOHelper.GetForumMainURL();
+                    url = SEOHelper.GetForumMainUrl();
                 }
                 Response.Redirect(url);
             }
@@ -221,12 +221,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BtnQuote_OnClick(object sender, EventArgs e)
         {
-            int forumPostID = 0;
-            int.TryParse(lblForumPostID.Text, out forumPostID);
-            var forumPost = ForumManager.GetPostByID(forumPostID);
+            int forumPostId = 0;
+            int.TryParse(lblForumPostId.Text, out forumPostId);
+            var forumPost = ForumManager.GetPostById(forumPostId);
             if(forumPost != null)
             {
-                Response.Redirect(SEOHelper.GetNewForumPostURL(forumPost.TopicID, forumPost.ForumPostID));
+                Response.Redirect(SEOHelper.GetNewForumPostUrl(forumPost.TopicId, forumPost.ForumPostId));
             }
         }
 

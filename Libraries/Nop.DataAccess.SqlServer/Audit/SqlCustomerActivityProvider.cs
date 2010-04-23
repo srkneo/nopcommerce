@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
     /// <summary>
     /// Customer activity provider for SQL Server
     /// </summary>
-    public partial class SQLCustomerActivityProvider : DBCustomerActivityProvider
+    public partial class SqlCustomerActivityProvider : DBCustomerActivityProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,23 +36,23 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         #region Utilities
         private DBActivityLogType GetActivityLogTypeFromReader(IDataReader dataReader)
         {
-            DBActivityLogType activityType = new DBActivityLogType();
-            activityType.ActivityLogTypeID = NopSqlDataHelper.GetInt(dataReader, "ActivityLogTypeID");
-            activityType.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
-            activityType.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            activityType.Enabled = NopSqlDataHelper.GetBoolean(dataReader, "Enabled");
-            return activityType;
+            var item = new DBActivityLogType();
+            item.ActivityLogTypeId = NopSqlDataHelper.GetInt(dataReader, "ActivityLogTypeID");
+            item.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Enabled = NopSqlDataHelper.GetBoolean(dataReader, "Enabled");
+            return item;
         }
         
         private DBActivityLog GetActivityLogFromReader(IDataReader dataReader)
         {
-            DBActivityLog activity = new DBActivityLog();
-            activity.ActivityLogID = NopSqlDataHelper.GetInt(dataReader, "ActivityLogID");
-            activity.ActivityLogTypeID = NopSqlDataHelper.GetInt(dataReader, "ActivityLogTypeID");
-            activity.CustomerID = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            activity.Comment = NopSqlDataHelper.GetString(dataReader, "Comment");
-            activity.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return activity;
+            var item = new DBActivityLog();
+            item.ActivityLogId = NopSqlDataHelper.GetInt(dataReader, "ActivityLogID");
+            item.ActivityLogTypeId = NopSqlDataHelper.GetInt(dataReader, "ActivityLogTypeID");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.Comment = NopSqlDataHelper.GetString(dataReader, "Comment");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
         }
         #endregion
 
@@ -94,61 +94,63 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         /// <summary>
         /// Inserts an activity log type item
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Name">The display name</param>
-        /// <param name="Enabled">Value indicating whether the activity log type is enabled</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="name">The display name</param>
+        /// <param name="enabled">Value indicating whether the activity log type is enabled</param>
         /// <returns>Activity log type item</returns>
-        public override DBActivityLogType InsertActivityType(string SystemKeyword, string Name, bool Enabled)
+        public override DBActivityLogType InsertActivityType(string systemKeyword,
+            string name, bool enabled)
         {
-            DBActivityLogType activityType = null;
+            DBActivityLogType item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogTypeInsert");
             db.AddOutParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Enabled", DbType.Boolean, Enabled);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Enabled", DbType.Boolean, enabled);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ActivityLogTypeID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ActivityLogTypeID"));
-                activityType = GetActivityTypeByID(ActivityLogTypeID);
+                int activityLogTypeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ActivityLogTypeID"));
+                item = GetActivityTypeById(activityLogTypeId);
             }
-            return activityType;
+            return item;
         }
-        
+
         /// <summary>
         /// Updates an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Name">The display name</param>
-        /// <param name="Enabled">Value indicating whether the activity log type is enabled</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="name">The display name</param>
+        /// <param name="enabled">Value indicating whether the activity log type is enabled</param>
         /// <returns>Activity log type item</returns>
-        public override DBActivityLogType UpdateActivityType(int ActivityLogTypeID, string SystemKeyword, string Name, bool Enabled)
+        public override DBActivityLogType UpdateActivityType(int activityLogTypeId,
+            string systemKeyword, string name, bool enabled)
         {
-            DBActivityLogType activityType = null;
+            DBActivityLogType item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogTypeUpdate");
-            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, ActivityLogTypeID);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, SystemKeyword);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Enabled", DbType.Boolean, Enabled);
+            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, activityLogTypeId);
+            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Enabled", DbType.Boolean, enabled);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                activityType = GetActivityTypeByID(ActivityLogTypeID);
-            return activityType;
+                item = GetActivityTypeById(activityLogTypeId);
+            return item;
         }
-        
+
         /// <summary>
         /// Deletes an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        public override void DeleteActivityType(int ActivityLogTypeID)
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        public override void DeleteActivityType(int activityLogTypeId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogTypeDelete");
-            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, ActivityLogTypeID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, activityLogTypeId);
+            db.ExecuteNonQuery(dbCommand);
         }
-        
+
         /// <summary>
         /// Gets all activity log type items
         /// </summary>
@@ -169,124 +171,126 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
 
             return result;
         }
-        
+
         /// <summary>
         /// Gets an activity log type item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
         /// <returns>Activity log type item</returns>
-        public override DBActivityLogType GetActivityTypeByID(int ActivityLogTypeID)
+        public override DBActivityLogType GetActivityTypeById(int activityLogTypeId)
         {
-            DBActivityLogType activityType = null;
+            DBActivityLogType item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogTypeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, ActivityLogTypeID);
+            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, activityLogTypeId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
-                    activityType = GetActivityLogTypeFromReader(dataReader);
+                    item = GetActivityLogTypeFromReader(dataReader);
             }
-            return activityType;
+            return item;
         }
 
         /// <summary>
         /// Inserts an activity log item
         /// </summary>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Comment">The activity comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="comment">The activity comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Activity log item</returns>
-        public override DBActivityLog InsertActivity(int ActivityLogTypeID, int CustomerID, string Comment, DateTime CreatedOn)
+        public override DBActivityLog InsertActivity(int activityLogTypeId,
+            int customerId, string comment, DateTime createdOn)
         {
-            DBActivityLog activity = null;
+            DBActivityLog item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogInsert");
             db.AddOutParameter(dbCommand, "ActivityLogID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, ActivityLogTypeID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "Comment", DbType.String, Comment);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, activityLogTypeId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ActivityLogID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ActivityLogID"));
-                activity = GetActivityByID(ActivityLogID);
+                int activityLogId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ActivityLogID"));
+                item = GetActivityById(activityLogId);
             }
-            return activity;
+            return item;
         }
-        
+
         /// <summary>
         /// Updates an activity log 
         /// </summary>
-        /// <param name="ActivityLogID">Activity log identifier</param>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="CustomerID">The customer identifier</param>
-        /// <param name="Comment">The activity comment</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="activityLogId">Activity log identifier</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="comment">The activity comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Activity log item</returns>
-        public override DBActivityLog UpdateActivity(int ActivityLogID, int ActivityLogTypeID, int CustomerID, string Comment, DateTime CreatedOn)
+        public override DBActivityLog UpdateActivity(int activityLogId,
+            int activityLogTypeId, int customerId, string comment, DateTime createdOn)
         {
-            DBActivityLog activity = null;
+            DBActivityLog item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogUpdate");
-            db.AddInParameter(dbCommand, "ActivityLogID", DbType.Int32, ActivityLogID);
-            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, ActivityLogTypeID);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, CustomerID);
-            db.AddInParameter(dbCommand, "Comment", DbType.String, Comment);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
+            db.AddInParameter(dbCommand, "ActivityLogID", DbType.Int32, activityLogId);
+            db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, activityLogTypeId);
+            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                activity = GetActivityByID(ActivityLogID);
-            return activity;
+                item = GetActivityById(activityLogId);
+            return item;
         }
-        
+
         /// <summary>
         /// Deletes an activity log item
         /// </summary>
-        /// <param name="ActivityLogID">Activity log type identifier</param>
-        public override void DeleteActivity(int ActivityLogID)
+        /// <param name="activityLogId">Activity log type identifier</param>
+        public override void DeleteActivity(int activityLogId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogDelete");
-            db.AddInParameter(dbCommand, "ActivityLogID", DbType.Int32, ActivityLogID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ActivityLogID", DbType.Int32, activityLogId);
+            db.ExecuteNonQuery(dbCommand);
         }
-        
+
         /// <summary>
         /// Gets all activity log items
         /// </summary>
-        /// <param name="CreatedOnFrom">Log item creation from; null to load all customers</param>
-        /// <param name="CreatedOnTo">Log item creation to; null to load all customers</param>
-        /// <param name="Email">Customer Email</param>
-        /// <param name="Username">Customer username</param>
-        /// <param name="ActivityLogTypeID">Activity log type identifier</param>
-        /// <param name="PageSize">Page size</param>
-        /// <param name="PageIndex">Page index</param>
-        /// <param name="TotalRecords">Total records</param>
+        /// <param name="createdOnFrom">Log item creation from; null to load all customers</param>
+        /// <param name="createdOnTo">Log item creation to; null to load all customers</param>
+        /// <param name="email">Customer Email</param>
+        /// <param name="username">Customer username</param>
+        /// <param name="activityLogTypeId">Activity log type identifier</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>Activity log collection</returns>
-        public override DBActivityLogCollection GetAllActivities(DateTime? CreatedOnFrom, DateTime? CreatedOnTo,
-            string Email, string Username, int ActivityLogTypeID,
-            int PageSize, int PageIndex, out int TotalRecords)
+        public override DBActivityLogCollection GetAllActivities(DateTime? createdOnFrom,
+            DateTime? createdOnTo, string email, string username, int activityLogTypeId,
+            int pageSize, int pageIndex, out int totalRecords)
         {
-            TotalRecords = 0;
+            totalRecords = 0;
             var result = new DBActivityLogCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogLoadAll");
-            if (CreatedOnFrom.HasValue)
-                db.AddInParameter(dbCommand, "CreatedOnFrom", DbType.DateTime, CreatedOnFrom.Value);
+            if (createdOnFrom.HasValue)
+                db.AddInParameter(dbCommand, "CreatedOnFrom", DbType.DateTime, createdOnFrom.Value);
             else
                 db.AddInParameter(dbCommand, "CreatedOnFrom", DbType.DateTime, null);
-            if (CreatedOnTo.HasValue)
-                db.AddInParameter(dbCommand, "CreatedOnTo", DbType.DateTime, CreatedOnTo.Value);
+            if (createdOnTo.HasValue)
+                db.AddInParameter(dbCommand, "CreatedOnTo", DbType.DateTime, createdOnTo.Value);
             else
                 db.AddInParameter(dbCommand, "CreatedOnTo", DbType.DateTime, null);
-            db.AddInParameter(dbCommand, "Email", DbType.String, Email);
-            db.AddInParameter(dbCommand, "Username", DbType.String, Username);
-            if (ActivityLogTypeID > 0)
-                db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, ActivityLogTypeID);
+            db.AddInParameter(dbCommand, "Email", DbType.String, email);
+            db.AddInParameter(dbCommand, "Username", DbType.String, username);
+            if (activityLogTypeId > 0)
+                db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, activityLogTypeId);
             else
                 db.AddInParameter(dbCommand, "ActivityLogTypeID", DbType.Int32, null);
-            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
-            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, PageIndex);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, pageIndex);
             db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -296,28 +300,28 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
                     result.Add(item);
                 }
             }
-            TotalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
+            totalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
 
             return result;
         }
-        
+
         /// <summary>
         /// Gets an activity log item
         /// </summary>
-        /// <param name="ActivityLogID">Activity log identifier</param>
+        /// <param name="activityLogId">Activity log identifier</param>
         /// <returns>Activity log item</returns>
-        public override DBActivityLog GetActivityByID(int ActivityLogID)
+        public override DBActivityLog GetActivityById(int activityLogId)
         {
-            DBActivityLog activity = null;
+            DBActivityLog item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ActivityLogID", DbType.Int32, ActivityLogID);
+            db.AddInParameter(dbCommand, "ActivityLogID", DbType.Int32, activityLogId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
-                    activity = GetActivityLogFromReader(dataReader);
+                    item = GetActivityLogFromReader(dataReader);
             }
-            return activity;
+            return item;
         }
 
         /// <summary>
@@ -327,7 +331,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ActivityLogClearAll");
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.ExecuteNonQuery(dbCommand);
         }
         #endregion
     }

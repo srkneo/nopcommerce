@@ -148,9 +148,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWayUK
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
@@ -190,13 +190,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWayUK
             strPost += Format("CustomerCountry", order.BillingCountry);
             strPost += Format("CustomerEmail", order.BillingEmail);
             strPost += Format("CustomerPhone", order.BillingPhoneNumber);
-            strPost += Format("InvoiceDescription", order.OrderID.ToString());
+            strPost += Format("InvoiceDescription", order.OrderId.ToString());
             strPost += Format("CancelURL", CommonHelper.GetStoreLocation(false) + "eWayMerchantReturn.aspx");
             strPost += Format("ReturnUrl", CommonHelper.GetStoreLocation(false) + "eWayMerchantReturn.aspx");
 
-            strPost += Format("MerchantReference", order.OrderID.ToString());
-            strPost += Format("MerchantInvoice", order.OrderID.ToString());
-            strPost += Format("MerchantOption1", order.OrderID.ToString());
+            strPost += Format("MerchantReference", order.OrderId.ToString());
+            strPost += Format("MerchantInvoice", order.OrderId.ToString());
+            strPost += Format("MerchantOption1", order.OrderId.ToString());
 
             string url = paymentPage + "Request?" + strPost;
 
@@ -272,9 +272,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWayUK
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

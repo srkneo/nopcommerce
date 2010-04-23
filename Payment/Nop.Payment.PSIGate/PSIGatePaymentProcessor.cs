@@ -79,9 +79,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PSIGate
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
 
@@ -99,7 +99,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PSIGate
                 builder.Append("<Bprovince>" + XmlHelper.XmlEncode(paymentInfo.BillingAddress.StateProvince.Abbreviation) + "</Bprovince>");
             builder.Append("<Bpostalcode>" + XmlHelper.XmlEncode(paymentInfo.BillingAddress.ZipPostalCode) + "</Bpostalcode>");
             if (paymentInfo.BillingAddress.Country != null)
-                builder.Append("<Bcountry>" + XmlHelper.XmlEncode(paymentInfo.BillingAddress.Country.TwoLetterISOCode) + "</Bcountry>");
+                builder.Append("<Bcountry>" + XmlHelper.XmlEncode(paymentInfo.BillingAddress.Country.TwoLetterIsoCode) + "</Bcountry>");
             builder.Append("<Phone>" + XmlHelper.XmlEncode(paymentInfo.BillingAddress.PhoneNumber) + "</Phone>");
             builder.Append("<Fax>" + XmlHelper.XmlEncode(paymentInfo.BillingAddress.FaxNumber) + "</Fax>");
             builder.Append("<Email>" + XmlHelper.XmlEncode(paymentInfo.BillingAddress.Email) + "</Email>");
@@ -120,7 +120,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PSIGate
             }
             builder.Append("<CardExpMonth>" + XmlHelper.XmlEncode(cardExpMonth) + "</CardExpMonth>");
             builder.Append("<CardExpYear>" + XmlHelper.XmlEncode(paymentInfo.CreditCardExpireYear.ToString().Substring(2, 2)) + "</CardExpYear>");
-            builder.Append("<CardIDNumber>" + XmlHelper.XmlEncode(paymentInfo.CreditCardCVV2) + "</CardIDNumber>");
+            builder.Append("<CardIDNumber>" + XmlHelper.XmlEncode(paymentInfo.CreditCardCvv2) + "</CardIDNumber>");
             builder.Append("</Order>");
             string orderInfo = builder.ToString();
 
@@ -164,7 +164,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PSIGate
                 {
                     if ((rdr3.NodeType == XmlNodeType.Element) && (rdr3.Name == "OrderID"))
                     {
-                        processPaymentResult.AuthorizationTransactionID = rdr3.ReadElementString("OrderID");
+                        processPaymentResult.AuthorizationTransactionId = rdr3.ReadElementString("OrderID");
                     }
                     else
                     {
@@ -252,9 +252,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PSIGate
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

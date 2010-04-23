@@ -133,9 +133,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayJunction
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             InitSettings();
             TransactMode transactionMode = GetCurrentTransactionMode();
@@ -162,7 +162,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayJunction
             string encodedCCNumber = Encode("dc_number", paymentInfo.CreditCardNumber);
             string encodedExpMonth = Encode("dc_expiration_month", paymentInfo.CreditCardExpireMonth.ToString("D2"));
             string encodedExpYear = Encode("dc_expiration_year", paymentInfo.CreditCardExpireYear.ToString().Substring(2, 2));
-            string encodedCVVCode = Encode("dc_verification_number", paymentInfo.CreditCardCVV2);
+            string encodedCVVCode = Encode("dc_verification_number", paymentInfo.CreditCardCvv2);
             string encodedAddress = Encode("dc_address", paymentInfo.BillingAddress.Address1);
             string encodedCity = Encode("dc_city", paymentInfo.BillingAddress.City);
             string encodedZipCode = Encode("dc_zipcode", paymentInfo.BillingAddress.ZipPostalCode);
@@ -228,12 +228,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayJunction
                     if (transactionMode == TransactMode.Authorize)
                     {
                         processPaymentResult.PaymentStatus = PaymentStatusEnum.Authorized;
-                        processPaymentResult.AuthorizationTransactionID = dc_transaction_id;
+                        processPaymentResult.AuthorizationTransactionId = dc_transaction_id;
                     }
                     else
                     {
                         processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
-                        processPaymentResult.CaptureTransactionID = dc_transaction_id;
+                        processPaymentResult.CaptureTransactionId = dc_transaction_id;
                     }
                 }
                 else
@@ -309,9 +309,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayJunction
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

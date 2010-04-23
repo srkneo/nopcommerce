@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     TaxCategory taxCategory = ctrlTaxCategoryInfo.SaveInfo();
-                    Response.Redirect("TaxCategoryDetails.aspx?TaxCategoryID=" + taxCategory.TaxCategoryID.ToString());
+                    Response.Redirect("TaxCategoryDetails.aspx?TaxCategoryID=" + taxCategory.TaxCategoryId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -47,15 +47,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            TaxCategoryManager.DeleteTaxCategory(this.TaxCategoryID);
+            TaxCategoryManager.DeleteTaxCategory(this.TaxCategoryId);
             Response.Redirect("TaxCategories.aspx");
         }
 
-        public int TaxCategoryID
+        public int TaxCategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("TaxCategoryID");
+                return CommonHelper.QueryStringInt("TaxCategoryId");
             }
         }
     }

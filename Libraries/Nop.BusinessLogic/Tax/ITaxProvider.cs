@@ -31,9 +31,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// Gets tax rate
         /// </summary>
         /// <param name="calculateTaxRequest">Tax calculation request</param>
-        /// <param name="Error">Error</param>
+        /// <param name="error">Error</param>
         /// <returns>Tax</returns>
-        decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string Error);
+        decimal GetTaxRate(CalculateTaxRequest calculateTaxRequest, ref string error);
         #endregion
     }
 }

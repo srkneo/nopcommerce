@@ -33,18 +33,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     public abstract partial class DBShippingByWeightAndCountryProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">ShippingByWeightAndCountry identifier</param>
+        /// <param name="shippingByWeightAndCountryId">ShippingByWeightAndCountry identifier</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public abstract DBShippingByWeightAndCountry GetByID(int ShippingByWeightAndCountryID);
+        public abstract DBShippingByWeightAndCountry GetById(int shippingByWeightAndCountryId);
 
         /// <summary>
         /// Deletes a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">ShippingByWeightAndCountry identifier</param>
-        public abstract void DeleteShippingByWeightAndCountry(int ShippingByWeightAndCountryID);
+        /// <param name="shippingByWeightAndCountryId">ShippingByWeightAndCountry identifier</param>
+        public abstract void DeleteShippingByWeightAndCountry(int shippingByWeightAndCountryId);
 
         /// <summary>
         /// Gets all ShippingByWeightAndCountrys
@@ -55,40 +56,42 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Inserts a ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public abstract DBShippingByWeightAndCountry InsertShippingByWeightAndCountry(int ShippingMethodID,
-            int CountryID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount);
+        public abstract DBShippingByWeightAndCountry InsertShippingByWeightAndCountry(int shippingMethodId,
+            int countryId, decimal from, decimal to, bool usePercentage, 
+            decimal shippingChargePercentage, decimal shippingChargeAmount);
 
         /// <summary>
         /// Updates the ShippingByWeightAndCountry
         /// </summary>
-        /// <param name="ShippingByWeightAndCountryID">The ShippingByWeightAndCountry identifier</param>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingByWeightAndCountryId">The ShippingByWeightAndCountry identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByWeightAndCountry</returns>
-        public abstract DBShippingByWeightAndCountry UpdateShippingByWeightAndCountry(int ShippingByWeightAndCountryID,
-            int ShippingMethodID, int CountryID, decimal From, decimal To, bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount);
+        public abstract DBShippingByWeightAndCountry UpdateShippingByWeightAndCountry(int shippingByWeightAndCountryId,
+            int shippingMethodId, int countryId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount);
 
         /// <summary>
         /// Gets all ShippingByWeightAndCountrys by shipping method identifier
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="CountryID">The country identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="countryId">The country identifier</param>
         /// <returns>ShippingByWeightAndCountry collection</returns>
-        public abstract DBShippingByWeightAndCountryCollection GetAllByShippingMethodIDAndCountryID(int ShippingMethodID, int CountryID);
+        public abstract DBShippingByWeightAndCountryCollection GetAllByShippingMethodIdAndCountryId(int shippingMethodId, int countryId);
+        
         #endregion
     }
 }

@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             DiscountTypeCollection discountTypes = DiscountManager.GetAllDiscountTypes();
             foreach (DiscountType discountType in discountTypes)
             {
-                ListItem item2 = new ListItem(discountType.Name, discountType.DiscountTypeID.ToString());
+                ListItem item2 = new ListItem(discountType.Name, discountType.DiscountTypeId.ToString());
                 this.ddlDiscountType.Items.Add(item2);
             }
 
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             DiscountRequirementCollection discountRequirements = DiscountManager.GetAllDiscountRequirements();
             foreach (DiscountRequirement discountRequirement in discountRequirements)
             {
-                ListItem item2 = new ListItem(discountRequirement.Name, discountRequirement.DiscountRequirementID.ToString());
+                ListItem item2 = new ListItem(discountRequirement.Name, discountRequirement.DiscountRequirementId.ToString());
                 this.ddlDiscountRequirement.Items.Add(item2);
             }
 
@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             DiscountLimitationCollection discountLimitations = DiscountManager.GetAllDiscountLimitations();
             foreach (DiscountLimitation discountLimitation in discountLimitations)
             {
-                ListItem item2 = new ListItem(discountLimitation.Name, discountLimitation.DiscountLimitationID.ToString());
+                ListItem item2 = new ListItem(discountLimitation.Name, discountLimitation.DiscountLimitationId.ToString());
                 this.ddlDiscountLimitation.Items.Add(item2);
             }
         }
@@ -68,7 +68,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             for (int i = 0; i < productVariants.Count; i++)
             {
                 ProductVariant pv = productVariants[i];
-                result.Append(pv.ProductVariantID.ToString());
+                result.Append(pv.ProductVariantId.ToString());
                 if (i != productVariants.Count - 1)
                 {
                     result.Append(", ");
@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     int id = 0;
                     if (int.TryParse(val1.Trim(), out id))
                     {
-                        if (ProductManager.GetProductVariantByID(id) != null)
+                        if (ProductManager.GetProductVariantById(id) != null)
                             result.Add(id);
                     }
                 }
@@ -98,13 +98,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindData()
         {
-            Discount discount = DiscountManager.GetDiscountByID(this.DiscountID);
+            Discount discount = DiscountManager.GetDiscountById(this.DiscountId);
             if (discount != null)
             {
-                CommonHelper.SelectListItem(this.ddlDiscountType, discount.DiscountTypeID);
-                CommonHelper.SelectListItem(this.ddlDiscountRequirement, discount.DiscountRequirementID);
-                this.txtRestrictedProductVariants.Text = generateListOfRestrictedProductVariants(ProductManager.GetProductVariantsRestrictedByDiscountID(discount.DiscountID));
-                CommonHelper.SelectListItem(this.ddlDiscountLimitation, discount.DiscountLimitationID);
+                CommonHelper.SelectListItem(this.ddlDiscountType, discount.DiscountTypeId);
+                CommonHelper.SelectListItem(this.ddlDiscountRequirement, discount.DiscountRequirementId);
+                this.txtRestrictedProductVariants.Text = generateListOfRestrictedProductVariants(ProductManager.GetProductVariantsRestrictedByDiscountId(discount.DiscountId));
+                CommonHelper.SelectListItem(this.ddlDiscountLimitation, discount.DiscountLimitationId);
                 this.txtName.Text = discount.Name;
                 this.cbUsePercentage.Checked = discount.UsePercentage;
                 this.txtDiscountPercentage.Value = discount.DiscountPercentage;
@@ -115,17 +115,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtCouponCode.Text = discount.CouponCode;
 
                 CustomerRoleCollection customerRoles = discount.CustomerRoles;
-                List<int> _customerRoleIDs = new List<int>();
+                List<int> _customerRoleIds = new List<int>();
                 foreach (CustomerRole customerRole in customerRoles)
-                    _customerRoleIDs.Add(customerRole.CustomerRoleID);
-                CustomerRoleMappingControl.SelectedCustomerRoleIDs = _customerRoleIDs;
+                    _customerRoleIds.Add(customerRole.CustomerRoleId);
+                CustomerRoleMappingControl.SelectedCustomerRoleIds = _customerRoleIds;
                 CustomerRoleMappingControl.BindData();
 
             }
             else
             {
-                List<int> _customerRoleIDs = new List<int>();
-                CustomerRoleMappingControl.SelectedCustomerRoleIDs = _customerRoleIDs;
+                List<int> _customerRoleIds = new List<int>();
+                CustomerRoleMappingControl.SelectedCustomerRoleIds = _customerRoleIds;
                 CustomerRoleMappingControl.BindData();
 
                 this.pnlUsageHistory.Visible = false;
@@ -134,10 +134,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindUsageHistory()
         {
-            Discount discount = DiscountManager.GetDiscountByID(this.DiscountID);
+            Discount discount = DiscountManager.GetDiscountById(this.DiscountId);
             if (discount != null)
             {
-                gvDiscountUsageHistory.DataSource = DiscountManager.GetAllDiscountUsageHistoryEntries(discount.DiscountID, null, null);
+                gvDiscountUsageHistory.DataSource = DiscountManager.GetAllDiscountUsageHistoryEntries(discount.DiscountId, null, null);
                 gvDiscountUsageHistory.DataBind();
             }
         }
@@ -159,9 +159,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             DiscountTypeEnum discountType = (DiscountTypeEnum)int.Parse(this.ddlDiscountType.SelectedItem.Value);
             DiscountRequirementEnum discountRequirement = (DiscountRequirementEnum)int.Parse(this.ddlDiscountRequirement.SelectedItem.Value);
-            int[] restrictedProductVariantIDs = new int[0];
+            int[] restrictedProductVariantIds = new int[0];
             if (discountRequirement == DiscountRequirementEnum.HadPurchasedAllOfTheseProductVariants || discountRequirement == DiscountRequirementEnum.HadPurchasedOneOfTheseProductVariants)
-                restrictedProductVariantIDs = parseListOfRestrictedProductVariants(txtRestrictedProductVariants.Text);
+                restrictedProductVariantIds = parseListOfRestrictedProductVariants(txtRestrictedProductVariants.Text);
             DiscountLimitationEnum discountLimitation = (DiscountLimitationEnum)int.Parse(this.ddlDiscountLimitation.SelectedItem.Value);
 
             if(!ctrlStartDatePicker.SelectedDate.HasValue)
@@ -181,11 +181,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             discountStartDate = DateTime.SpecifyKind(discountStartDate, DateTimeKind.Utc);
             discountEndDate = DateTime.SpecifyKind(discountEndDate, DateTimeKind.Utc);
             
-            Discount discount = DiscountManager.GetDiscountByID(this.DiscountID);
+            Discount discount = DiscountManager.GetDiscountById(this.DiscountId);
 
             if (discount != null)
             {
-                discount = DiscountManager.UpdateDiscount(discount.DiscountID,
+                discount = DiscountManager.UpdateDiscount(discount.DiscountId,
                     discountType,
                     discountRequirement,
                     discountLimitation,
@@ -201,14 +201,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 //discount requirements
                 foreach (CustomerRole customerRole in discount.CustomerRoles)
-                    CustomerManager.RemoveDiscountFromCustomerRole(customerRole.CustomerRoleID, discount.DiscountID);
-                foreach (int customerRoleID in CustomerRoleMappingControl.SelectedCustomerRoleIDs)
-                    CustomerManager.AddDiscountToCustomerRole(customerRoleID, discount.DiscountID);
+                    CustomerManager.RemoveDiscountFromCustomerRole(customerRole.CustomerRoleId, discount.DiscountId);
+                foreach (int customerRoleId in CustomerRoleMappingControl.SelectedCustomerRoleIds)
+                    CustomerManager.AddDiscountToCustomerRole(customerRoleId, discount.DiscountId);
 
-                foreach (ProductVariant pv in ProductManager.GetProductVariantsRestrictedByDiscountID(discount.DiscountID))
-                    DiscountManager.RemoveDiscountRestriction(pv.ProductVariantID, discount.DiscountID);
-                foreach (int productVariantID in restrictedProductVariantIDs)
-                    DiscountManager.AddDiscountRestriction(productVariantID, discount.DiscountID);
+                foreach (ProductVariant pv in ProductManager.GetProductVariantsRestrictedByDiscountId(discount.DiscountId))
+                    DiscountManager.RemoveDiscountRestriction(pv.ProductVariantId, discount.DiscountId);
+                foreach (int productVariantId in restrictedProductVariantIds)
+                    DiscountManager.AddDiscountRestriction(productVariantId, discount.DiscountId);
             }
             else
             {
@@ -226,29 +226,29 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     false);
 
                 //discount requirements
-                foreach (int customerRoleID in CustomerRoleMappingControl.SelectedCustomerRoleIDs)
-                    CustomerManager.AddDiscountToCustomerRole(customerRoleID, discount.DiscountID);
+                foreach (int customerRoleId in CustomerRoleMappingControl.SelectedCustomerRoleIds)
+                    CustomerManager.AddDiscountToCustomerRole(customerRoleId, discount.DiscountId);
 
-                foreach (int productVariantID in restrictedProductVariantIDs)
-                    DiscountManager.AddDiscountRestriction(productVariantID, discount.DiscountID);
+                foreach (int productVariantId in restrictedProductVariantIds)
+                    DiscountManager.AddDiscountRestriction(productVariantId, discount.DiscountId);
             }
 
             return discount;
         }
 
-        protected string GetCustomerInfo(int CustomerID)
+        protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
-            Customer customer = CustomerManager.GetCustomerByID(CustomerID);
+            Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer != null)
             {
                 if (customer.IsGuest)
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, GetLocaleResourceString("Admin.DiscountInfo.UsageHistory.CustomerColumn.Guest"));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, GetLocaleResourceString("Admin.DiscountInfo.UsageHistory.CustomerColumn.Guest"));
                 }
                 else
                 {
-                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerID, Server.HtmlEncode(customer.Email));
+                    customerInfo = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 }
             }
             return customerInfo;
@@ -297,11 +297,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
         
-        public int DiscountID
+        public int DiscountId
         {
             get
             {
-                return CommonHelper.QueryStringInt("DiscountID");
+                return CommonHelper.QueryStringInt("DiscountId");
             }
         }
     }

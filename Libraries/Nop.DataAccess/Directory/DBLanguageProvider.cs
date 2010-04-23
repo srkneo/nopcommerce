@@ -33,11 +33,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
     public abstract partial class DBLanguageProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        public abstract void DeleteLanguage(int LanguageID);
+        /// <param name="languageId">Language identifier</param>
+        public abstract void DeleteLanguage(int languageId);
 
         /// <summary>
         /// Gets all languages
@@ -49,34 +50,36 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Gets a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Language</returns>
-        public abstract DBLanguage GetLanguageByID(int LanguageID);
+        public abstract DBLanguage GetLanguageById(int languageId);
 
         /// <summary>
         /// Inserts a language
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="LanguageCulture">The language culture</param>
-        /// <param name="FlagImageFileName">The flag image file name</param>
-        /// <param name="Published">A value indicating whether the language is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="languageCulture">The language culture</param>
+        /// <param name="flagImageFileName">The flag image file name</param>
+        /// <param name="published">A value indicating whether the language is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Language</returns>
-        public abstract DBLanguage InsertLanguage(string Name, string LanguageCulture,
-            string FlagImageFileName, bool Published, int DisplayOrder);
+        public abstract DBLanguage InsertLanguage(string name, string languageCulture,
+            string flagImageFileName, bool published, int displayOrder);
 
         /// <summary>
         /// Updates a language
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="LanguageCulture">The language culture</param>
-        /// <param name="FlagImageFileName">The flag image file name</param>
-        /// <param name="Published">A value indicating whether the language is published</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="languageCulture">The language culture</param>
+        /// <param name="flagImageFileName">The flag image file name</param>
+        /// <param name="published">A value indicating whether the language is published</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Language</returns>
-        public abstract DBLanguage UpdateLanguage(int LanguageID, string Name,
-            string LanguageCulture, string FlagImageFileName, bool Published, int DisplayOrder);
+        public abstract DBLanguage UpdateLanguage(int languageId, 
+            string name, string languageCulture,
+            string flagImageFileName, bool published, int displayOrder);
+
         #endregion
     }
 }

@@ -26,16 +26,16 @@ using NopSolutions.NopCommerce.Common.Utils;
 public class GetDownload : IHttpHandler
 {
 
-    private void processOrderProductVariantDownload(HttpContext context, Guid orderProductVariantGUID)
+    private void processOrderProductVariantDownload(HttpContext context, Guid orderProductVariantGuid)
     {
-        OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantByGUID(orderProductVariantGUID);
+        OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantByGuid(orderProductVariantGuid);
         if (orderProductVariant == null)
         {
             returnError(context, "Order product variant doesn't exist.");
             return;
         }
 
-        Order order = OrderManager.GetOrderByID(orderProductVariant.OrderID);
+        Order order = OrderManager.GetOrderById(orderProductVariant.OrderId);
         if (order == null)
         {
             returnError(context, "Order doesn't exist.");
@@ -52,11 +52,11 @@ public class GetDownload : IHttpHandler
         {
             if (NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL();
+                string loginURL = SEOHelper.GetLoginPageUrl();
                 context.Response.Redirect(loginURL);
             }
 
-            if (order.CustomerID != NopContext.Current.User.CustomerID)
+            if (order.CustomerID != NopContext.Current.User.CustomerId)
             {
                 returnError(context, "This is not your order.");
                 return;
@@ -75,7 +75,7 @@ public class GetDownload : IHttpHandler
             bool isAgree = CommonHelper.QueryStringBool("Agree");
             if(!isAgree)
             {
-                context.Response.Redirect(String.Format("{0}useragreement.aspx?orderproductvariantguid={1}", CommonHelper.GetStoreHost(false), orderProductVariantGUID));
+                context.Response.Redirect(String.Format("{0}useragreement.aspx?orderproductvariantguid={1}", CommonHelper.GetStoreHost(false), orderProductVariantGuid));
             }
         }
 
@@ -101,7 +101,7 @@ public class GetDownload : IHttpHandler
                 return;
             }
 
-            orderProductVariant = OrderManager.IncreaseOrderProductDownloadCount(orderProductVariant.OrderProductVariantID);
+            orderProductVariant = OrderManager.IncreaseOrderProductDownloadCount(orderProductVariant.OrderProductVariantId);
 
             context.Response.Redirect(download.DownloadURL);
         }
@@ -117,7 +117,7 @@ public class GetDownload : IHttpHandler
             if (!string.IsNullOrEmpty(download.Filename))
                 fileName = download.Filename;
             else
-                fileName = orderProductVariant.OrderProductVariantID.ToString();
+                fileName = orderProductVariant.OrderProductVariantId.ToString();
 
             //use stored data
             context.Response.Clear();
@@ -146,13 +146,13 @@ public class GetDownload : IHttpHandler
                 }
             }
 
-            orderProductVariant = OrderManager.IncreaseOrderProductDownloadCount(orderProductVariant.OrderProductVariantID);
+            orderProductVariant = OrderManager.IncreaseOrderProductDownloadCount(orderProductVariant.OrderProductVariantId);
         }
     }
 
-    private void processSampleDownloadProductVariant(HttpContext context, int productVariantID)
+    private void processSampleDownloadProductVariant(HttpContext context, int productVariantId)
     {
-        ProductVariant productVariant = ProductManager.GetProductVariantByID(productVariantID);
+        ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
         if (productVariant == null)
         {
             returnError(context, string.Format("Product variant doesn't exist."));
@@ -195,7 +195,7 @@ public class GetDownload : IHttpHandler
             if (!string.IsNullOrEmpty(sampleDownload.Filename))
                 fileName = sampleDownload.Filename;
             else
-                fileName = productVariant.ProductVariantID.ToString();
+                fileName = productVariant.ProductVariantId.ToString();
 
             //use stored data
             context.Response.Clear();
@@ -228,19 +228,19 @@ public class GetDownload : IHttpHandler
 
     public void ProcessRequest(HttpContext context)
     {
-        Guid? orderProductVariantGUID = CommonHelper.QueryStringGUID("OrderProductVariantGUID");
-        int sampleDownloadProductVariantID = CommonHelper.QueryStringInt("SampleDownloadProductVariantID");
+        Guid? orderProductVariantGuid = CommonHelper.QueryStringGuid("OrderProductVariantGUID");
+        int sampleDownloadProductVariantId = CommonHelper.QueryStringInt("SampleDownloadProductVariantId");
 
-        if (orderProductVariantGUID.HasValue)
-            processOrderProductVariantDownload(context, orderProductVariantGUID.Value);
-        else if (sampleDownloadProductVariantID > 0)
-            processSampleDownloadProductVariant(context, sampleDownloadProductVariantID);
+        if (orderProductVariantGuid.HasValue)
+            processOrderProductVariantDownload(context, orderProductVariantGuid.Value);
+        else if (sampleDownloadProductVariantId > 0)
+            processSampleDownloadProductVariant(context, sampleDownloadProductVariantId);
     }
     
-    private void returnError(HttpContext context, string Message)
+    private void returnError(HttpContext context, string message)
     {
         context.Response.Clear();
-        context.Response.Write(Message);
+        context.Response.Write(message);
         context.Response.Flush();
     }
     

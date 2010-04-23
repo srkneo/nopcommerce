@@ -177,7 +177,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if((NopContext.Current.User == null) || (NopContext.Current.User.IsGuest && !CustomerManager.AnonymousCheckoutAllowed))
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -198,8 +198,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     List<String> sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(
                         sci.ShoppingCartType, 
-                        sci.ProductVariantID, 
-                        sci.AttributesXML, 
+                        sci.ProductVariantId, 
+                        sci.AttributesXml, 
                         sci.CustomerEnteredPrice,
                         sci.Quantity);
                     if (sciWarnings.Count > 0)

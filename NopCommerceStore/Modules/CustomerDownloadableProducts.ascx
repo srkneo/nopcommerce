@@ -6,8 +6,6 @@
             <asp:GridView ID="gvOrderProductVariants" runat="server" AutoGenerateColumns="False"
                 Width="100%">
                 <Columns>
-                    <asp:BoundField DataField="OrderProductVariantID" HeaderText="OrderProductVariantID"
-                        Visible="False"></asp:BoundField>
                     <asp:TemplateField HeaderText="<% $NopResources:Account.DownloadableProducts.ProductsGrid.Order %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="15%">
                         <ItemTemplate>
@@ -28,8 +26,8 @@
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" ItemStyle-Width="45%">
                         <ItemTemplate>
                             <div style="padding-left: 10px; padding-right: 10px;">
-                                <em><a href='<%#GetProductURL(Convert.ToInt32(Eval("ProductVariantID")))%>'>
-                                    <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantID"))))%></a></em>
+                                <em><a href='<%#GetProductUrl(Convert.ToInt32(Eval("ProductVariantId")))%>'>
+                                    <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantId"))))%></a></em>
                                 <%#GetAttributeDescription((OrderProductVariant)Container.DataItem)%>
                             </div>
                         </ItemTemplate>
@@ -38,10 +36,10 @@
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="25%">
                         <ItemTemplate>
                             <div style="padding-left: 10px; padding-right: 10px;">
-                                <%#GetDownloadURL(Container.DataItem as OrderProductVariant)%>
+                                <%#GetDownloadUrl(Container.DataItem as OrderProductVariant)%>
                             </div>
                             <div style="padding-left: 10px; padding-right: 10px;">
-                                <%#GetLicenseDownloadURL(Container.DataItem as OrderProductVariant)%>
+                                <%#GetLicenseDownloadUrl(Container.DataItem as OrderProductVariant)%>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

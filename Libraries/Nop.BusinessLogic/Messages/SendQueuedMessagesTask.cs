@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                     bcc.Add(str1);
                 }
                 List<string> cc = new List<string>();
-                foreach (string str1 in queuedEmail.Cc.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (string str1 in queuedEmail.CC.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     cc.Add(str1);
                 }
@@ -62,16 +62,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                        new MailAddress(queuedEmail.From, queuedEmail.FromName),
                        new MailAddress(queuedEmail.To, queuedEmail.ToName), bcc, cc);
 
-                    MessageManager.UpdateQueuedEmail(queuedEmail.QueuedEmailID, queuedEmail.Priority,
+                    MessageManager.UpdateQueuedEmail(queuedEmail.QueuedEmailId, queuedEmail.Priority,
                         queuedEmail.From, queuedEmail.FromName, queuedEmail.To, queuedEmail.ToName,
-                        queuedEmail.Cc, queuedEmail.Bcc, queuedEmail.Subject, queuedEmail.Body,
+                        queuedEmail.CC, queuedEmail.Bcc, queuedEmail.Subject, queuedEmail.Body,
                         queuedEmail.CreatedOn, ++queuedEmail.SendTries, DateTime.Now);
                 }
                 catch (Exception exc)
                 {
-                    MessageManager.UpdateQueuedEmail(queuedEmail.QueuedEmailID, queuedEmail.Priority,
+                    MessageManager.UpdateQueuedEmail(queuedEmail.QueuedEmailId, queuedEmail.Priority,
                         queuedEmail.From, queuedEmail.FromName, queuedEmail.To, queuedEmail.ToName,
-                        queuedEmail.Cc, queuedEmail.Bcc, queuedEmail.Subject, queuedEmail.Body,
+                        queuedEmail.CC, queuedEmail.Bcc, queuedEmail.Subject, queuedEmail.Body,
                         queuedEmail.CreatedOn, ++queuedEmail.SendTries, queuedEmail.SentOn);
 
                     LogManager.InsertLog(LogTypeEnum.MailError, string.Format("Error sending e-mail. {0}", exc.Message), exc);

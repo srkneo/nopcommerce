@@ -51,7 +51,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
         * @param parameters request parameters
         * @return String to Sign
         */
-        public static String SignParameters(NameValueCollection parameters, String key, String HttpMethod, String Host, String RequestURI) //throws Exception
+        public static string SignParameters(NameValueCollection parameters, String key, 
+            String HttpMethod, String Host, String RequestURI) //throws Exception
         {
             String signatureVersion = parameters[SIGNATURE_VERSION_KEYNAME];
             String algorithm = HMAC_SHA1_ALGORITHM;
@@ -81,7 +82,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
 	    * @param parameters request parameters
 	    * @return String to Sign
 	    */
-        private static String CalculateSignV1(NameValueCollection parameters)
+        private static string CalculateSignV1(NameValueCollection parameters)
         {
             StringBuilder data = new StringBuilder();
             IDictionary<String, String> sorted = new SortedDictionary<String, String>(StringComparer.OrdinalIgnoreCase);
@@ -109,7 +110,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
     	 * @param requestURI - Path
 	     * @return
     	 */
-        private static String CalculateSignV2(NameValueCollection parameters, String httpMethod, String hostHeader, String requestURI)// throws SignatureException
+        private static string CalculateSignV2(NameValueCollection parameters, String httpMethod, String hostHeader, String requestURI)// throws SignatureException
         {
             StringBuilder stringToSign = new StringBuilder();
             if (httpMethod == null) throw new Exception("HttpMethod cannot be null");
@@ -209,7 +210,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             {
                 signatureVersion = parameters[SIGNATURE_VERSION_KEYNAME];
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
                 signatureVersion = null;
             }
@@ -239,7 +240,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
                 throw new Exception("'signatureMethod' is missing from the parameters.");
             }
 
-            String signatureAlgorithm = getSignatureAlgorithm(signatureMethod);
+            String signatureAlgorithm = GetSignatureAlgorithm(signatureMethod);
             if (signatureAlgorithm == null)
             {
                 throw new Exception("'signatureMethod' present in parameters is invalid. " +
@@ -252,7 +253,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
                 throw new Exception("'certificateUrl' is missing from the parameters.");
             }
 
-            String certificate = getPublicKeyCertificateAsString(certificateUrl);
+            String certificate = GetPublicKeyCertificateAsString(certificateUrl);
             if (certificate == null)
             {
                 throw new Exception("public key certificate could not fetched from url: " + certificateUrl);
@@ -264,7 +265,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             {
                 Uri uri = new Uri(urlEndPoint);
                 String hostHeader = getHostHeader(uri);
-                String requestURI = getRequestURI(uri);
+                String requestURI = GetRequestURI(uri);
                 stringToSign = CalculateSignV2(parameters, httpMethod, hostHeader, requestURI);
             }
             catch (Exception e)
@@ -274,7 +275,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             //3. verify signature 
             try
             {
-                byte[] signatureBytes = base64DecodeToBytes(signature);
+                byte[] signatureBytes = Base64DecodeToBytes(signature);
                 X509Certificate2 x509Cert = new X509Certificate2(StrToByteArray(certificate));
                 RSACryptoServiceProvider RSA = (RSACryptoServiceProvider)x509Cert.PublicKey.Key;
                 return RSA.VerifyData(StrToByteArray(stringToSign), new SHA1Managed(), signatureBytes);
@@ -285,7 +286,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             }
         }
 
-        private static  Boolean ValidateSignatureV1(NameValueCollection parameters)
+        private static bool ValidateSignatureV1(NameValueCollection parameters)
         {
             String stringToSign = CalculateSignV1(parameters);
             String signature = parameters[SIGNATURE_KEYNAME];
@@ -311,7 +312,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
         }
 
 
-        public static  String v2UrlEncode(String data, bool path)
+        public static string V2UrlEncode(String data, bool path)
         {
             StringBuilder encoded = new StringBuilder();
             String unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~" + (path ? "/" : "");
@@ -331,13 +332,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
         }
 
 
-        
-        public static  String urlDecode(String value)
+
+        public static string UrlDecode(String value)
         {
             return HttpUtility.UrlDecode(value, Encoding.UTF8);
         }
 
-        private static  String getHostHeader(Uri uri)
+        private static string getHostHeader(Uri uri)
         {
             int port = uri.Port;
             if (port != -1)
@@ -349,25 +350,27 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             return uri.Host.ToLower() + (port != -1 ? ":" + port : "");
         }
 
-        private static  String getRequestURI(Uri uri) {
+        private static string GetRequestURI(Uri uri)
+        {
             String requestURI = uri.LocalPath;
             if (requestURI == null || requestURI.Equals(EMPTY_STRING)) {
                 requestURI = "/";
             } else {
-                requestURI = urlDecode(requestURI);
+                requestURI = UrlDecode(requestURI);
             }
             return requestURI;
         }
 
-        private static  String getSignatureAlgorithm(String signatureMethod) {
+        private static string GetSignatureAlgorithm(string signatureMethod)
+        {
             if ("RSA-SHA1".Equals(signatureMethod)) {
                 return RSA_SHA1_ALGORITHM;
             }
             return null;
         }
 
-        private static  String getPublicKeyCertificateAsString(String certificateUrl) {
-
+        private static string GetPublicKeyCertificateAsString(string certificateUrl)
+        {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(certificateUrl);
             request.AllowAutoRedirect = false;
             HttpWebResponse resp = (HttpWebResponse)request.GetResponse();
@@ -377,14 +380,22 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Amazon
             return data;
         }
 
-        // Base64 decode a string
-        public static byte[] base64DecodeToBytes(String data)
+        /// <summary>
+        /// Base64 decode a string
+        /// </summary>
+        /// <param name="data">Data</param>
+        /// <returns>Data</returns>
+        public static byte[] Base64DecodeToBytes(string data)
         {
             return Convert.FromBase64String(data);
         }
 
-        // Convert a string to a byte array.
-        public static byte[] StrToByteArray(String str)
+        /// <summary>
+        /// Convert a string to a byte array
+        /// </summary>
+        /// <param name="str">String</param>
+        /// <returns>Byte array</returns>
+        public static byte[] StrToByteArray(string str)
         {
             return new UTF8Encoding().GetBytes(str);
         }

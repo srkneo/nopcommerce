@@ -41,14 +41,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Payment.CDGcommerce
         private void BindData()
         {
             txtRestrictKey.Text = SettingManager.GetSettingValue("PaymentMethod.CDGcommerce.RestrictKey");
-            txtLoginID.Text = SettingManager.GetSettingValue("PaymentMethod.CDGcommerce.LoginID");
+            txtLoginId.Text = SettingManager.GetSettingValue("PaymentMethod.CDGcommerce.LoginId");
             txtAdditionalFee.Value = SettingManager.GetSettingValueDecimalNative("PaymentMethod.CDGcommerce.AdditionalFee");
         }
 
         public void Save()
         {
             SettingManager.SetParam("PaymentMethod.CDGcommerce.RestrictKey", txtRestrictKey.Text);
-            SettingManager.SetParam("PaymentMethod.CDGcommerce.LoginID", txtLoginID.Text);
+            SettingManager.SetParam("PaymentMethod.CDGcommerce.LoginId", txtLoginId.Text);
             SettingManager.SetParamNative("PaymentMethod.CDGcommerce.AdditionalFee", txtAdditionalFee.Value);
         }
     }

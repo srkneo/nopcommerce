@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var product = ProductManager.GetProductByID(ProductID);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
                 this.Visible = SettingManager.GetSettingValueBoolean("Common.EnableEmailAFirend");
             else
@@ -51,15 +51,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void btnEmailAFriend_Click(object sender, EventArgs e)
         {
-            string url = SEOHelper.GetProductEmailAFriendURL(this.ProductID);
+            string url = SEOHelper.GetProductEmailAFriendUrl(this.ProductId);
             Response.Redirect(url);
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

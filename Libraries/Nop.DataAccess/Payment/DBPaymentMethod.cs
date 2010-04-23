@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <summary>
         /// Gets or sets the payment method identifier
         /// </summary>
-        public int PaymentMethodID { get; set; }
+        public int PaymentMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

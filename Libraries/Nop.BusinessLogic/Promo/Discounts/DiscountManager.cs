@@ -69,10 +69,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return null;
 
             var item = new Discount();
-            item.DiscountID = dbItem.DiscountID;
-            item.DiscountTypeID = dbItem.DiscountTypeID;
-            item.DiscountRequirementID = dbItem.DiscountRequirementID;
-            item.DiscountLimitationID = dbItem.DiscountLimitationID;
+            item.DiscountId = dbItem.DiscountId;
+            item.DiscountTypeId = dbItem.DiscountTypeId;
+            item.DiscountRequirementId = dbItem.DiscountRequirementId;
+            item.DiscountLimitationId = dbItem.DiscountLimitationId;
             item.Name = dbItem.Name;
             item.UsePercentage = dbItem.UsePercentage;
             item.DiscountPercentage = dbItem.DiscountPercentage;
@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return null;
 
             var item = new DiscountRequirement();
-            item.DiscountRequirementID = dbItem.DiscountRequirementID;
+            item.DiscountRequirementId = dbItem.DiscountRequirementId;
             item.Name = dbItem.Name;
 
             return item;
@@ -134,7 +134,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return null;
 
             var item = new DiscountType();
-            item.DiscountTypeID = dbItem.DiscountTypeID;
+            item.DiscountTypeId = dbItem.DiscountTypeId;
             item.Name = dbItem.Name;
 
             return item;
@@ -161,7 +161,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return null;
 
             var item = new DiscountLimitation();
-            item.DiscountLimitationID = dbItem.DiscountLimitationID;
+            item.DiscountLimitationId = dbItem.DiscountLimitationId;
             item.Name = dbItem.Name;
 
             return item;
@@ -188,10 +188,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return null;
 
             var item = new DiscountUsageHistory();
-            item.DiscountUsageHistoryID = dbItem.DiscountUsageHistoryID;
-            item.DiscountID = dbItem.DiscountID;
-            item.CustomerID = dbItem.CustomerID;
-            item.OrderID = dbItem.OrderID;
+            item.DiscountUsageHistoryId = dbItem.DiscountUsageHistoryId;
+            item.DiscountId = dbItem.DiscountId;
+            item.CustomerId = dbItem.CustomerId;
+            item.OrderId = dbItem.OrderId;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
@@ -205,16 +205,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets a preferred discount
         /// </summary>
-        /// <param name="Discounts">Discounts to analyze</param>
-        /// <param name="Amount">Amount</param>
+        /// <param name="discounts">Discounts to analyze</param>
+        /// <param name="amount">Amount</param>
         /// <returns>Preferred discount</returns>
-        public static Discount GetPreferredDiscount(DiscountCollection Discounts, decimal Amount)
+        public static Discount GetPreferredDiscount(DiscountCollection discounts, 
+            decimal amount)
         {
             Discount preferredDiscount = null;
             decimal maximumDiscountValue = decimal.Zero;
-            foreach (var _discount in Discounts)
+            foreach (var _discount in discounts)
             {
-                decimal currentDiscountValue = _discount.GetDiscountAmount(Amount);
+                decimal currentDiscountValue = _discount.GetDiscountAmount(amount);
                 if (currentDiscountValue > maximumDiscountValue)
                 {
                     maximumDiscountValue = currentDiscountValue;
@@ -228,21 +229,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets a discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
+        /// <param name="discountId">Discount identifier</param>
         /// <returns>Discount</returns>
-        public static Discount GetDiscountByID(int DiscountID)
+        public static Discount GetDiscountById(int discountId)
         {
-            if (DiscountID == 0)
+            if (discountId == 0)
                 return null;
 
-            string key = string.Format(DISCOUNTS_BY_ID_KEY, DiscountID);
+            string key = string.Format(DISCOUNTS_BY_ID_KEY, discountId);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
                 return (Discount)obj2;
             }
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountByID(DiscountID);
+            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountById(discountId);
             var discount = DBMapping(dbItem);
 
             if (DiscountManager.CacheEnabled)
@@ -255,13 +256,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Marks discount as deleted
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void MarkDiscountAsDeleted(int DiscountID)
+        /// <param name="discountId">Discount identifier</param>
+        public static void MarkDiscountAsDeleted(int discountId)
         {
-            Discount discount = GetDiscountByID(DiscountID);
+            Discount discount = GetDiscountById(discountId);
             if (discount != null)
             {
-                UpdateDiscount(discount.DiscountID, discount.DiscountType, 
+                UpdateDiscount(discount.DiscountId, discount.DiscountType, 
                     discount.DiscountRequirement, discount.DiscountLimitation,
                     discount.Name, discount.UsePercentage, discount.DiscountPercentage,
                     discount.DiscountAmount, discount.StartDate,
@@ -283,23 +284,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets all discounts
         /// </summary>
-        /// <param name="DiscountType">Discount type; null to load all discount</param>
+        /// <param name="discountType">Discount type; null to load all discount</param>
         /// <returns>Discount collection</returns>
-        public static DiscountCollection GetAllDiscounts(DiscountTypeEnum? DiscountType)
+        public static DiscountCollection GetAllDiscounts(DiscountTypeEnum? discountType)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(DISCOUNTS_ALL_KEY, showHidden, DiscountType);
+            string key = string.Format(DISCOUNTS_ALL_KEY, showHidden, discountType);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
                 return (DiscountCollection)obj2;
             }
 
-            int? discountTypeID = null;
-            if (DiscountType.HasValue)
-                discountTypeID = (int)DiscountType.Value;
+            int? discountTypeId = null;
+            if (discountType.HasValue)
+                discountTypeId = (int)discountType.Value;
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscounts(showHidden, discountTypeID);
+            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscounts(showHidden, discountTypeId);
             var discounts = DBMapping(dbCollection);
 
             if (DiscountManager.CacheEnabled)
@@ -312,36 +313,38 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Inserts a discount
         /// </summary>
-        /// <param name="DiscountType">The discount type</param>
-        /// <param name="DiscountRequirement">The discount requirement</param>
-        /// <param name="DiscountLimitation">The discount limitation</param>
-        /// <param name="Name">The name</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="DiscountPercentage">The discount percentage</param>
-        /// <param name="DiscountAmount">The discount amount</param>
-        /// <param name="StartDate">The discount start date and time</param>
-        /// <param name="EndDate">The discount end date and time</param>
-        /// <param name="RequiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="CouponCode">The coupon code</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="discountType">The discount type</param>
+        /// <param name="discountRequirement">The discount requirement</param>
+        /// <param name="discountLimitation">The discount limitation</param>
+        /// <param name="name">The name</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="discountPercentage">The discount percentage</param>
+        /// <param name="discountAmount">The discount amount</param>
+        /// <param name="startDate">The discount start date and time</param>
+        /// <param name="endDate">The discount end date and time</param>
+        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
+        /// <param name="couponCode">The coupon code</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>Discount</returns>
-        public static Discount InsertDiscount(DiscountTypeEnum DiscountType,
-            DiscountRequirementEnum DiscountRequirement, DiscountLimitationEnum DiscountLimitation,
-            string Name, bool UsePercentage, decimal DiscountPercentage, decimal DiscountAmount,
-            DateTime StartDate, DateTime EndDate, bool RequiresCouponCode, string CouponCode, bool Deleted)
+        public static Discount InsertDiscount(DiscountTypeEnum discountType,
+            DiscountRequirementEnum discountRequirement,
+            DiscountLimitationEnum discountLimitation, string name, bool usePercentage, 
+            decimal discountPercentage, decimal discountAmount,
+            DateTime startDate, DateTime endDate, bool requiresCouponCode, 
+            string couponCode, bool deleted)
         {
-            if (StartDate.CompareTo(EndDate) >= 0)
+            if (startDate.CompareTo(endDate) >= 0)
                 throw new NopException("Start date should be less then expiration date");
 
-            if (RequiresCouponCode && String.IsNullOrEmpty(CouponCode))
+            if (requiresCouponCode && String.IsNullOrEmpty(couponCode))
             {
                 throw new NopException("Discount requires coupon code. Coupon code could not be empty.");
             }
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.InsertDiscount((int)DiscountType,
-                (int)DiscountRequirement, (int)DiscountLimitation, Name,
-                UsePercentage, DiscountPercentage, DiscountAmount,
-                StartDate, EndDate, RequiresCouponCode, CouponCode, Deleted);
+            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.InsertDiscount((int)discountType,
+                (int)discountRequirement, (int)discountLimitation, name,
+                usePercentage, discountPercentage, discountAmount,
+                startDate, endDate, requiresCouponCode, couponCode, deleted);
             var discount = DBMapping(dbItem);
 
             if (DiscountManager.CacheEnabled)
@@ -354,38 +357,38 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Updates the discount
         /// </summary>
-        /// <param name="DiscountID">Discount identifier</param>
-        /// <param name="DiscountType">The discount type</param>
-        /// <param name="DiscountRequirement">The discount requirement</param>
-        /// <param name="DiscountLimitation">The discount limitation</param>
-        /// <param name="Name">The name</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="DiscountPercentage">The discount percentage</param>
-        /// <param name="DiscountAmount">The discount amount</param>
-        /// <param name="StartDate">The discount start date and time</param>
-        /// <param name="EndDate">The discount end date and time</param>
-        /// <param name="RequiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="CouponCode">The coupon code</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="discountId">Discount identifier</param>
+        /// <param name="discountType">The discount type</param>
+        /// <param name="discountRequirement">The discount requirement</param>
+        /// <param name="discountLimitation">The discount limitation</param>
+        /// <param name="name">The name</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="discountPercentage">The discount percentage</param>
+        /// <param name="discountAmount">The discount amount</param>
+        /// <param name="startDate">The discount start date and time</param>
+        /// <param name="endDate">The discount end date and time</param>
+        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
+        /// <param name="couponCode">The coupon code</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <returns>Discount</returns>
-        public static Discount UpdateDiscount(int DiscountID, DiscountTypeEnum DiscountType,
-            DiscountRequirementEnum DiscountRequirement, DiscountLimitationEnum DiscountLimitation,
-            string Name, bool UsePercentage, decimal DiscountPercentage, decimal DiscountAmount,
-            DateTime StartDate, DateTime EndDate, bool RequiresCouponCode, 
-            string CouponCode, bool Deleted)
+        public static Discount UpdateDiscount(int discountId, DiscountTypeEnum discountType,
+            DiscountRequirementEnum discountRequirement, DiscountLimitationEnum discountLimitation,
+            string name, bool usePercentage, decimal discountPercentage, decimal discountAmount,
+            DateTime startDate, DateTime endDate, bool requiresCouponCode, 
+            string couponCode, bool deleted)
         {
-            if (StartDate.CompareTo(EndDate) >= 0)
+            if (startDate.CompareTo(endDate) >= 0)
                 throw new NopException("Start date should be less then expiration date");
 
-            if (RequiresCouponCode && String.IsNullOrEmpty(CouponCode))
+            if (requiresCouponCode && String.IsNullOrEmpty(couponCode))
             {
                 throw new NopException("Discount requires coupon code. Coupon code could not be empty.");
             }
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.UpdateDiscount(DiscountID, (int)DiscountType,
-                (int)DiscountRequirement, (int)DiscountLimitation, Name, 
-                UsePercentage, DiscountPercentage, DiscountAmount, StartDate, EndDate,
-                RequiresCouponCode, CouponCode, Deleted);
+            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.UpdateDiscount(discountId, (int)discountType,
+                (int)discountRequirement, (int)discountLimitation, name, 
+                usePercentage, discountPercentage, discountAmount, startDate, endDate,
+                requiresCouponCode, couponCode, deleted);
             var discount = DBMapping(dbItem);
 
             if (DiscountManager.CacheEnabled)
@@ -398,11 +401,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Adds a discount to a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void AddDiscountToProductVariant(int ProductVariantID, int DiscountID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void AddDiscountToProductVariant(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountToProductVariant(ProductVariantID, DiscountID);
+            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountToProductVariant(productVariantId, discountId);
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -412,11 +415,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Removes a discount from a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void RemoveDiscountFromProductVariant(int ProductVariantID, int DiscountID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void RemoveDiscountFromProductVariant(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountFromProductVariant(ProductVariantID, DiscountID);
+            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountFromProductVariant(productVariantId, discountId);
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -426,19 +429,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets a discount collection of a product variant
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Discount collection</returns>
-        public static DiscountCollection GetDiscountsByProductVariantID(int ProductVariantID)
+        public static DiscountCollection GetDiscountsByProductVariantId(int productVariantId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(DISCOUNTS_BY_PRODUCTVARIANTID_KEY, ProductVariantID, showHidden);
+            string key = string.Format(DISCOUNTS_BY_PRODUCTVARIANTID_KEY, productVariantId, showHidden);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
                 return (DiscountCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByProductVariantID(ProductVariantID, showHidden);
+            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByProductVariantId(productVariantId, showHidden);
             var discounts = DBMapping(dbCollection);
 
             if (DiscountManager.CacheEnabled)
@@ -451,11 +454,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Adds a discount to a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void AddDiscountToCategory(int CategoryID, int DiscountID)
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void AddDiscountToCategory(int categoryId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountToCategory(CategoryID, DiscountID);
+            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountToCategory(categoryId, discountId);
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -465,11 +468,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Removes a discount from a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void RemoveDiscountFromCategory(int CategoryID, int DiscountID)
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void RemoveDiscountFromCategory(int categoryId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountFromCategory(CategoryID, DiscountID);
+            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountFromCategory(categoryId, discountId);
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -479,19 +482,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets a discount collection of a category
         /// </summary>
-        /// <param name="CategoryID">Category identifier</param>
+        /// <param name="categoryId">Category identifier</param>
         /// <returns>Discount collection</returns>
-        public static DiscountCollection GetDiscountsByCategoryID(int CategoryID)
+        public static DiscountCollection GetDiscountsByCategoryId(int categoryId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            string key = string.Format(DISCOUNTS_BY_CATEGORYID_KEY, CategoryID, showHidden);
+            string key = string.Format(DISCOUNTS_BY_CATEGORYID_KEY, categoryId, showHidden);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
                 return (DiscountCollection)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByCategoryID(CategoryID, showHidden);
+            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByCategoryId(categoryId, showHidden);
             var discounts = DBMapping(dbCollection);
 
             if (DiscountManager.CacheEnabled)
@@ -504,21 +507,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Adds a discount requirement
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void AddDiscountRestriction(int ProductVariantID, int DiscountID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void AddDiscountRestriction(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountRestriction(ProductVariantID, DiscountID);
+            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountRestriction(productVariantId, discountId);
         }
 
         /// <summary>
         /// Removes discount requirement
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
-        /// <param name="DiscountID">Discount identifier</param>
-        public static void RemoveDiscountRestriction(int ProductVariantID, int DiscountID)
+        /// <param name="productVariantId">Product variant identifier</param>
+        /// <param name="discountId">Discount identifier</param>
+        public static void RemoveDiscountRestriction(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountRestriction(ProductVariantID, DiscountID);
+            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountRestriction(productVariantId, discountId);
         }
 
         #endregion
@@ -601,23 +604,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Deletes a discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">Discount usage history entry identifier</param>
-        public static void DeleteDiscountUsageHistory(int DiscountUsageHistoryID)
+        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
+        public static void DeleteDiscountUsageHistory(int discountUsageHistoryId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.DeleteDiscountUsageHistory(DiscountUsageHistoryID);
+            DBProviderManager<DBDiscountProvider>.Provider.DeleteDiscountUsageHistory(discountUsageHistoryId);
         }
 
         /// <summary>
         /// Gets a discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">Discount usage history entry identifier</param>
+        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
         /// <returns>Discount usage history entry</returns>
-        public static DiscountUsageHistory GetDiscountUsageHistoryByID(int DiscountUsageHistoryID)
+        public static DiscountUsageHistory GetDiscountUsageHistoryById(int discountUsageHistoryId)
         {
-            if (DiscountUsageHistoryID == 0)
+            if (discountUsageHistoryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountUsageHistoryByID(DiscountUsageHistoryID);
+            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountUsageHistoryById(discountUsageHistoryId);
             var discountUsageHistory = DBMapping(dbItem);
             return discountUsageHistory;
         }
@@ -625,14 +628,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets all discount usage history entries
         /// </summary>
-        /// <param name="DiscountID">Discount type identifier; null to load all</param>
-        /// <param name="CustomerID">Customer identifier; null to load all</param>
-        /// <param name="OrderID">Order identifier; null to load all</param>
+        /// <param name="discountId">Discount type identifier; null to load all</param>
+        /// <param name="customerId">Customer identifier; null to load all</param>
+        /// <param name="orderId">Order identifier; null to load all</param>
         /// <returns>Discount usage history entries</returns>
-        public static DiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? DiscountID,
-            int? CustomerID, int? OrderID)
+        public static DiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? discountId,
+            int? customerId, int? orderId)
         {
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscountUsageHistoryEntries(DiscountID, CustomerID, OrderID);
+            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscountUsageHistoryEntries(discountId, customerId, orderId);
             var discountUsageHistoryEntries = DBMapping(dbCollection);
             return discountUsageHistoryEntries;
         }
@@ -640,18 +643,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Inserts a discount usage history entry
         /// </summary>
-        /// <param name="DiscountID">Discount type identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="discountId">Discount type identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Discount usage history entry</returns>
-        public static DiscountUsageHistory InsertDiscountUsageHistory(int DiscountID,
-            int CustomerID, int OrderID, DateTime CreatedOn)
+        public static DiscountUsageHistory InsertDiscountUsageHistory(int discountId,
+            int customerId, int orderId, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.InsertDiscountUsageHistory(DiscountID, 
-                CustomerID, OrderID, CreatedOn);
+            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.InsertDiscountUsageHistory(discountId, 
+                customerId, orderId, createdOn);
             var discountUsageHistory = DBMapping(dbItem);
             return discountUsageHistory;
         }
@@ -659,19 +662,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Updates the discount usage history entry
         /// </summary>
-        /// <param name="DiscountUsageHistoryID">discount usage history entry identifier</param>
-        /// <param name="DiscountID">Discount type identifier</param>
-        /// <param name="CustomerID">Customer identifier</param>
-        /// <param name="OrderID">Order identifier</param>
-        /// <param name="CreatedOn">A date and time of instance creation</param>
+        /// <param name="discountUsageHistoryId">discount usage history entry identifier</param>
+        /// <param name="discountId">Discount type identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Discount</returns>
-        public static DiscountUsageHistory UpdateDiscountUsageHistory(int DiscountUsageHistoryID, int DiscountID,
-            int CustomerID, int OrderID, DateTime CreatedOn)
+        public static DiscountUsageHistory UpdateDiscountUsageHistory(int discountUsageHistoryId, 
+            int discountId, int customerId, int orderId, DateTime createdOn)
         {
-            CreatedOn = DateTimeHelper.ConvertToUtcTime(CreatedOn);
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.UpdateDiscountUsageHistory(DiscountUsageHistoryID,
-                DiscountID, CustomerID, OrderID, CreatedOn);
+            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.UpdateDiscountUsageHistory(discountUsageHistoryId,
+                discountId, customerId, orderId, createdOn);
             var discountUsageHistory = DBMapping(dbItem);
             return discountUsageHistory;
         }

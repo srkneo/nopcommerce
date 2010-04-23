@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
+            Category category = CategoryManager.GetCategoryById(this.CategoryId, 0);
 
             if (this.HasLocalizableContent)
             {
@@ -55,8 +55,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 this.txtName.Text = category.Name;
                 this.txtDescription.Content = category.Description;
-                CommonHelper.SelectListItem(this.ddlTemplate, category.TemplateID);
-                ParentCategory.SelectedCategoryId = category.ParentCategoryID;
+                CommonHelper.SelectListItem(this.ddlTemplate, category.TemplateId);
+                ParentCategory.SelectedCategoryId = category.ParentCategoryId;
 
                 Picture categoryPicture = category.Picture;
                 this.btnRemoveCategoryImage.Visible = categoryPicture != null;
@@ -74,7 +74,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.btnRemoveCategoryImage.Visible = false;
                 this.iCategoryPicture.Visible = false;
 
-                ParentCategory.SelectedCategoryId = this.ParentCategoryID;
+                ParentCategory.SelectedCategoryId = this.ParentCategoryId;
                 ParentCategory.BindData();
             }
         }
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CategoryTemplateCollection categoryTemplates = TemplateManager.GetAllCategoryTemplates();
             foreach (CategoryTemplate categoryTemplate in categoryTemplates)
             {
-                ListItem item2 = new ListItem(categoryTemplate.Name, categoryTemplate.CategoryTemplateID.ToString());
+                ListItem item2 = new ListItem(categoryTemplate.Name, categoryTemplate.CategoryTemplateId.ToString());
                 this.ddlTemplate.Items.Add(item2);
             }
         }
@@ -112,7 +112,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         
         public Category SaveInfo()
         {
-            Category category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
+            Category category = CategoryManager.GetCategoryById(this.CategoryId, 0);
 
             if (category != null)
             {
@@ -122,17 +122,17 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     byte[] categoryPictureBinary = PictureManager.GetPictureBits(categoryPictureFile.InputStream, categoryPictureFile.ContentLength);
                     if (categoryPicture != null)
-                        categoryPicture = PictureManager.UpdatePicture(categoryPicture.PictureID, categoryPictureBinary, categoryPictureFile.ContentType, true);
+                        categoryPicture = PictureManager.UpdatePicture(categoryPicture.PictureId, categoryPictureBinary, categoryPictureFile.ContentType, true);
                     else
                         categoryPicture = PictureManager.InsertPicture(categoryPictureBinary, categoryPictureFile.ContentType, true);
                 }
-                int categoryPictureID = 0;
+                int categoryPictureId = 0;
                 if (categoryPicture != null)
-                    categoryPictureID = categoryPicture.PictureID;
+                    categoryPictureId = categoryPicture.PictureId;
 
-                category = CategoryManager.UpdateCategory(category.CategoryID, txtName.Text, txtDescription.Content, int.Parse(this.ddlTemplate.SelectedItem.Value),
+                category = CategoryManager.UpdateCategory(category.CategoryId, txtName.Text, txtDescription.Content, int.Parse(this.ddlTemplate.SelectedItem.Value),
                      category.MetaKeywords, category.MetaDescription, category.MetaTitle, category.SEName, ParentCategory.SelectedCategoryId,
-                    categoryPictureID, category.PageSize, txtPriceRanges.Text, cbPublished.Checked, category.Deleted, txtDisplayOrder.Value, category.CreatedOn, DateTime.Now);
+                    categoryPictureId, category.PageSize, txtPriceRanges.Text, cbPublished.Checked, category.Deleted, txtDisplayOrder.Value, category.CreatedOn, DateTime.Now);
             }
             else
             {
@@ -143,22 +143,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     byte[] categoryPictureBinary = PictureManager.GetPictureBits(categoryPictureFile.InputStream, categoryPictureFile.ContentLength);
                     categoryPicture = PictureManager.InsertPicture(categoryPictureBinary, categoryPictureFile.ContentType, true);
                 }
-                int categoryPictureID = 0;
+                int categoryPictureId = 0;
                 if (categoryPicture != null)
-                    categoryPictureID = categoryPicture.PictureID;
+                    categoryPictureId = categoryPicture.PictureId;
 
                 DateTime nowDT = DateTime.Now;
                 category = CategoryManager.InsertCategory(txtName.Text, txtDescription.Content, int.Parse(this.ddlTemplate.SelectedItem.Value),
                          string.Empty, string.Empty, string.Empty, string.Empty, ParentCategory.SelectedCategoryId,
-                         categoryPictureID, 10, txtPriceRanges.Text, cbPublished.Checked, false, txtDisplayOrder.Value, nowDT, nowDT);
+                         categoryPictureId, 10, txtPriceRanges.Text, cbPublished.Checked, false, txtDisplayOrder.Value, nowDT, nowDT);
             }
 
-            saveLocalizableContent(category);
+            SaveLocalizableContent(category);
 
             return category;
         }
 
-        protected void saveLocalizableContent(Category category)
+        protected void SaveLocalizableContent(Category category)
         {
             if (category == null)
                 return;
@@ -174,29 +174,29 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtLocalizedDescription");
                     var lblLanguageId = (Label)item.FindControl("lblLanguageId");
 
-                    int languageID = int.Parse(lblLanguageId.Text);
+                    int languageId = int.Parse(lblLanguageId.Text);
                     string name = txtLocalizedCategoryName.Text;
                     string description = txtLocalizedDescription.Content;
 
                     bool allFieldsAreEmpty = (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(description));
 
-                    var content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(category.CategoryID, languageID);
+                    var content = CategoryManager.GetCategoryLocalizedByCategoryIdAndLanguageId(category.CategoryId, languageId);
                     if (content == null)
                     {
-                        if (!allFieldsAreEmpty && languageID > 0)
+                        if (!allFieldsAreEmpty && languageId > 0)
                         {
                             //only insert if one of the fields are filled out (avoid too many empty records in db...)
-                            content = CategoryManager.InsertCategoryLocalized(category.CategoryID,
-                                   languageID, name, description, string.Empty, string.Empty,
+                            content = CategoryManager.InsertCategoryLocalized(category.CategoryId,
+                                   languageId, name, description, string.Empty, string.Empty,
                                    string.Empty, string.Empty);
                         }
                     }
                     else
                     {
-                        if (languageID > 0)
+                        if (languageId > 0)
                         {
-                            content = CategoryManager.UpdateCategoryLocalized(content.CategoryLocalizedID, content.CategoryID,
-                                languageID, name, description,
+                            content = CategoryManager.UpdateCategoryLocalized(content.CategoryLocalizedId, content.CategoryId,
+                                languageId, name, description,
                                 content.MetaKeywords, content.MetaDescription,
                                 content.MetaTitle, content.SEName);
                         }
@@ -213,9 +213,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 var txtLocalizedDescription = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtLocalizedDescription");
                 var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
 
-                int languageID = int.Parse(lblLanguageId.Text);
+                int languageId = int.Parse(lblLanguageId.Text);
 
-                var content = CategoryManager.GetCategoryLocalizedByCategoryIDAndLanguageID(this.CategoryID, languageID);
+                var content = CategoryManager.GetCategoryLocalizedByCategoryIdAndLanguageId(this.CategoryId, languageId);
 
                 if (content != null)
                 {
@@ -230,11 +230,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                var category = CategoryManager.GetCategoryByID(this.CategoryID, 0);
+                var category = CategoryManager.GetCategoryById(this.CategoryId, 0);
                 if (category != null)
                 {
-                    PictureManager.DeletePicture(category.PictureID);
-                    CategoryManager.RemoveCategoryPicture(category.CategoryID);
+                    PictureManager.DeletePicture(category.PictureId);
+                    CategoryManager.RemoveCategoryPicture(category.CategoryId);
                     BindData();
                 }
             }
@@ -244,19 +244,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ParentCategoryID
+        public int ParentCategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ParentCategoryID");
+                return CommonHelper.QueryStringInt("ParentCategoryId");
             }
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return CommonHelper.QueryStringInt("CategoryID");
+                return CommonHelper.QueryStringInt("CategoryId");
             }
         }
     }

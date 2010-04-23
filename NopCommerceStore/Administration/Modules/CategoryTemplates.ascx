@@ -13,8 +13,6 @@
 <asp:GridView ID="gvCategoryTemplates" runat="server" AutoGenerateColumns="False"
     Width="100%">
     <Columns>
-        <asp:BoundField DataField="CategoryTemplateID" HeaderText="CategoryTemplate ID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.CategoryTemplates.Name %>"
             ItemStyle-Width="60%">
             <ItemTemplate>
@@ -30,7 +28,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.CategoryTemplates.Edit %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="CategoryTemplateDetails.aspx?CategoryTemplateID=<%#Eval("CategoryTemplateID")%>"
+                <a href="CategoryTemplateDetails.aspx?CategoryTemplateID=<%#Eval("CategoryTemplateId")%>"
                     title="<%=GetLocaleResourceString("Admin.CategoryTemplates.Edit.Tooltip")%>">
                     <%=GetLocaleResourceString("Admin.CategoryTemplates.Edit")%></a>
             </ItemTemplate>

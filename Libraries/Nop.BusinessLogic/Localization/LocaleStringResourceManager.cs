@@ -58,8 +58,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
                 return null;
 
             var item = new LocaleStringResource();
-            item.LocaleStringResourceID = dbItem.LocaleStringResourceID;
-            item.LanguageID = dbItem.LanguageID;
+            item.LocaleStringResourceId = dbItem.LocaleStringResourceId;
+            item.LanguageId = dbItem.LanguageId;
             item.ResourceName = dbItem.ResourceName;
             item.ResourceValue = dbItem.ResourceValue;
 
@@ -71,10 +71,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Deletes a locale string resource
         /// </summary>
-        /// <param name="LocaleStringResourceID">Locale string resource identifier</param>
-        public static void DeleteLocaleStringResource(int LocaleStringResourceID)
+        /// <param name="localeStringResourceId">Locale string resource identifier</param>
+        public static void DeleteLocaleStringResource(int localeStringResourceId)
         {
-            DBProviderManager<DBLocaleStringResourceProvider>.Provider.DeleteLocaleStringResource(LocaleStringResourceID);
+            DBProviderManager<DBLocaleStringResourceProvider>.Provider.DeleteLocaleStringResource(localeStringResourceId);
             if (LocaleStringResourceManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
@@ -84,14 +84,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Gets a locale string resource
         /// </summary>
-        /// <param name="LocaleStringResourceID">Locale string resource identifier</param>
+        /// <param name="localeStringResourceId">Locale string resource identifier</param>
         /// <returns>Locale string resource</returns>
-        public static LocaleStringResource GetLocaleStringResourceByID(int LocaleStringResourceID)
+        public static LocaleStringResource GetLocaleStringResourceById(int localeStringResourceId)
         {
-            if (LocaleStringResourceID == 0)
+            if (localeStringResourceId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBLocaleStringResourceProvider>.Provider.GetLocaleStringResourceByID(LocaleStringResourceID);
+            var dbItem = DBProviderManager<DBLocaleStringResourceProvider>.Provider.GetLocaleStringResourceById(localeStringResourceId);
             var localeStringResource = DBMapping(dbItem);
             return localeStringResource;
         }
@@ -99,18 +99,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Gets all locale string resources by language identifier
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="LanguageId">Language identifier</param>
         /// <returns>Locale string resource collection</returns>
-        public static LocaleStringResourceDictionary GetAllResourcesByLanguageID(int LanguageID)
+        public static LocaleStringResourceDictionary GetAllResourcesByLanguageId(int LanguageId)
         {
-            string key = string.Format(LOCALSTRINGRESOURCES_ALL_KEY, LanguageID);
+            string key = string.Format(LOCALSTRINGRESOURCES_ALL_KEY, LanguageId);
             object obj2 = NopCache.Get(key);
             if (LocaleStringResourceManager.CacheEnabled && (obj2 != null))
             {
                 return (LocaleStringResourceDictionary)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBLocaleStringResourceProvider>.Provider.GetAllResourcesByLanguageID(LanguageID);
+            var dbCollection = DBProviderManager<DBLocaleStringResourceProvider>.Provider.GetAllResourcesByLanguageId(LanguageId);
             var localeStringResourceDictionary = DBMapping(dbCollection);
 
             if (LocaleStringResourceManager.CacheEnabled)
@@ -123,13 +123,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Inserts a locale string resource
         /// </summary>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="ResourceName">The resource name</param>
-        /// <param name="ResourceValue">The resource value</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="resourceName">The resource name</param>
+        /// <param name="resourceValue">The resource value</param>
         /// <returns>Locale string resource</returns>
-        public static LocaleStringResource InsertLocaleStringResource(int LanguageID, string ResourceName, string ResourceValue)
+        public static LocaleStringResource InsertLocaleStringResource(int languageId,
+            string resourceName, string resourceValue)
         {
-            var dbItem = DBProviderManager<DBLocaleStringResourceProvider>.Provider.InsertLocaleStringResource(LanguageID, ResourceName, ResourceValue);
+            var dbItem = DBProviderManager<DBLocaleStringResourceProvider>.Provider.InsertLocaleStringResource(languageId, 
+                resourceName, resourceValue);
             var localeStringResource = DBMapping(dbItem);
             if (LocaleStringResourceManager.CacheEnabled)
             {
@@ -141,21 +143,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Gets all locale string resources as XML
         /// </summary>
-        /// <param name="LanguageID">The Language identifier</param>
+        /// <param name="languageId">The Language identifier</param>
         /// <returns>XML</returns>
-        public static string GetAllLocaleStringResourcesAsXML(int LanguageID)
+        public static string GetAllLocaleStringResourcesAsXml(int languageId)
         {
-            return DBProviderManager<DBLocaleStringResourceProvider>.Provider.GetAllLocaleStringResourcesAsXML(LanguageID);
+            return DBProviderManager<DBLocaleStringResourceProvider>.Provider.GetAllLocaleStringResourcesAsXml(languageId);
         }
 
         /// <summary>
         /// Inserts all locale string resources from XML
         /// </summary>
-        /// <param name="LanguageID">The Language identifier</param>
+        /// <param name="languageId">The Language identifier</param>
         /// <param name="xml">The XML package</param>
-        public static void InsertAllLocaleStringResourcesFromXML(int LanguageID, string xml)
+        public static void InsertAllLocaleStringResourcesFromXml(int languageId, string xml)
         {
-            DBProviderManager<DBLocaleStringResourceProvider>.Provider.InsertAllLocaleStringResourcesFromXML(LanguageID, xml);
+            DBProviderManager<DBLocaleStringResourceProvider>.Provider.InsertAllLocaleStringResourcesFromXml(languageId, xml);
             if (LocaleStringResourceManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
@@ -166,14 +168,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <summary>
         /// Updates the locale string resource
         /// </summary>
-        /// <param name="LocaleStringResourceID">The locale string resource identifier</param>
-        /// <param name="LanguageID">The language identifier</param>
-        /// <param name="ResourceName">The resource name</param>
-        /// <param name="ResourceValue">The resource value</param>
+        /// <param name="localeStringResourceId">The locale string resource identifier</param>
+        /// <param name="languageId">The language identifier</param>
+        /// <param name="resourceName">The resource name</param>
+        /// <param name="resourceValue">The resource value</param>
         /// <returns>Locale string resource</returns>
-        public static LocaleStringResource UpdateLocaleStringResource(int LocaleStringResourceID, int LanguageID, string ResourceName, string ResourceValue)
+        public static LocaleStringResource UpdateLocaleStringResource(int localeStringResourceId,
+            int languageId, string resourceName, string resourceValue)
         {
-            var dbItem = DBProviderManager<DBLocaleStringResourceProvider>.Provider.UpdateLocaleStringResource(LocaleStringResourceID, LanguageID, ResourceName, ResourceValue);
+            var dbItem = DBProviderManager<DBLocaleStringResourceProvider>.Provider.UpdateLocaleStringResource(localeStringResourceId,
+                languageId, resourceName, resourceValue);
             var localeStringResource = DBMapping(dbItem);
             if (LocaleStringResourceManager.CacheEnabled)
             {

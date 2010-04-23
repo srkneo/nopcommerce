@@ -5,7 +5,7 @@
         <%=GetLocaleResourceString("Breadcrumb.Top")%></a> /
     <asp:Repeater ID="rptrCategoryBreadcrumb" runat="server">
         <ItemTemplate>
-            <a href='<%#SEOHelper.GetCategoryURL(Convert.ToInt32(Eval("CategoryID"))) %>'>
+            <a href='<%#SEOHelper.GetCategoryUrl(Convert.ToInt32(Eval("CategoryId"))) %>'>
                 <%#Server.HtmlEncode(Eval("Name").ToString()) %></a>
         </ItemTemplate>
         <SeparatorTemplate>

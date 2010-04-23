@@ -35,10 +35,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Affiliate affiliate = AffiliateManager.GetAffiliateByID(this.AffiliateID);
+            Affiliate affiliate = AffiliateManager.GetAffiliateById(this.AffiliateId);
             if (affiliate != null)
             {
-                gvAffiliateCustomers.DataSource = CustomerManager.GetAffiliatedCustomers(this.AffiliateID);
+                gvAffiliateCustomers.DataSource = CustomerManager.GetAffiliatedCustomers(this.AffiliateId);
                 gvAffiliateCustomers.DataBind();
             }
             else
@@ -57,11 +57,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
         }
 
-        public int AffiliateID
+        public int AffiliateId
         {
             get
             {
-                return CommonHelper.QueryStringInt("AffiliateID");
+                return CommonHelper.QueryStringInt("AffiliateId");
             }
         }
     }

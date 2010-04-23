@@ -5,13 +5,11 @@
 </div>
 <asp:GridView ID="gvBestSellers" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:BoundField DataField="ProductVariantID" HeaderText="ProductVariantID" Visible="False">
-        </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.BestSellersStat.Product%>" ItemStyle-Width="65%">
             <ItemTemplate>
                 <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
-                    <a href='<%#GetProductURL(Convert.ToInt32(Eval("ProductVariantID")))%>' title="View product variant details">
-                        <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantID"))))%></a>
+                    <a href='<%#GetProductUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="View product variant details">
+                        <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantId"))))%></a>
                 </div>
             </ItemTemplate>
         </asp:TemplateField>

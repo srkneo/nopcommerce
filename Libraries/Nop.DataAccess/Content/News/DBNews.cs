@@ -37,12 +37,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <summary>
         /// Gets or sets the news identifier
         /// </summary>
-        public int NewsID { get; set; }
+        public int NewsId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier
         /// </summary>
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the news title

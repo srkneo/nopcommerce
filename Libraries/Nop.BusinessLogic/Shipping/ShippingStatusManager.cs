@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return null;
 
             var item = new ShippingStatus();
-            item.ShippingStatusID = dbItem.ShippingStatusID;
+            item.ShippingStatusId = dbItem.ShippingStatusId;
             item.Name = dbItem.Name;
 
             return item;
@@ -71,17 +71,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <summary>
         /// Gets a shipping status full name
         /// </summary>
-        /// <param name="ShippingStatusID">Shipping status identifier</param>
+        /// <param name="shippingStatusId">Shipping status identifier</param>
         /// <returns>Shipping status name</returns>
-        public static string GetShippingStatusName(int ShippingStatusID)
+        public static string GetShippingStatusName(int shippingStatusId)
         {
-            var shippingStatus = GetShippingStatusByID(ShippingStatusID);
+            var shippingStatus = GetShippingStatusById(shippingStatusId);
             if (shippingStatus != null)
             {
                 string name = string.Empty;
                 if (NopContext.Current != null)
                 {
-                    name = LocalizationManager.GetLocaleResourceString(string.Format("ShippingStatus.{0}", (ShippingStatusEnum)shippingStatus.ShippingStatusID), NopContext.Current.WorkingLanguage.LanguageID, true, shippingStatus.Name);
+                    name = LocalizationManager.GetLocaleResourceString(string.Format("ShippingStatus.{0}", (ShippingStatusEnum)shippingStatus.ShippingStatusId), NopContext.Current.WorkingLanguage.LanguageId, true, shippingStatus.Name);
                 }
                 else
                 {
@@ -91,28 +91,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             }
             else
             {
-                return ((ShippingStatusEnum)ShippingStatusID).ToString();
+                return ((ShippingStatusEnum)shippingStatusId).ToString();
             }
         }
 
         /// <summary>
-        /// Gets a shipping status by ID
+        /// Gets a shipping status by identifier
         /// </summary>
-        /// <param name="ShippingStatusID">Shipping status identifier</param>
+        /// <param name="shippingStatusId">Shipping status identifier</param>
         /// <returns>Shipping status</returns>
-        public static ShippingStatus GetShippingStatusByID(int ShippingStatusID)
+        public static ShippingStatus GetShippingStatusById(int shippingStatusId)
         {
-            if (ShippingStatusID == 0)
+            if (shippingStatusId == 0)
                 return null;
 
-            string key = string.Format(SHIPPINGTATUSES_BY_ID_KEY, ShippingStatusID);
+            string key = string.Format(SHIPPINGTATUSES_BY_ID_KEY, shippingStatusId);
             object obj2 = NopCache.Get(key);
             if (ShippingStatusManager.CacheEnabled && (obj2 != null))
             {
                 return (ShippingStatus)obj2;
             }
 
-            var dbItem = DBProviderManager<DBShippingStatusProvider>.Provider.GetShippingStatusByID(ShippingStatusID);
+            var dbItem = DBProviderManager<DBShippingStatusProvider>.Provider.GetShippingStatusById(shippingStatusId);
             var shippingStatus = DBMapping(dbItem);
 
             if (ShippingStatusManager.CacheEnabled)

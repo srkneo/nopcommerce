@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         /// </summary>
         private void BindData()
         {
-            BannedIpNetwork ipNetwork = IpBlacklistManager.GetBannedIpNetworkById(BannedIpNetworkID);
+            BannedIpNetwork ipNetwork = IpBlacklistManager.GetBannedIpNetworkById(this.BannedIpNetworkId);
             if (ipNetwork != null)
             {
                 txtBannedIP.Text = ipNetwork.ToString();
@@ -77,11 +77,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!IpBlacklistManager.IsValidIp(rangeItems[1].Trim()))
                 throw new NopException("The following isn't a valid IP address: " + rangeItems[1]);
 
-            BannedIpNetwork ipNetwork = IpBlacklistManager.GetBannedIpNetworkById(BannedIpNetworkID);
+            BannedIpNetwork ipNetwork = IpBlacklistManager.GetBannedIpNetworkById(this.BannedIpNetworkId);
             //if ip network is not null update
             if (ipNetwork != null)
             {
-                ipNetwork = IpBlacklistManager.UpdateBannedIpNetwork(BannedIpNetworkID, rangeItems[0], rangeItems[1],
+                ipNetwork = IpBlacklistManager.UpdateBannedIpNetwork(this.BannedIpNetworkId, rangeItems[0], rangeItems[1],
                     txtComment.Text, txtIpException.Text, ipNetwork.CreatedOn, nowDT);
             }
             else //insert
@@ -96,11 +96,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         /// <summary>
         /// Gets BannedIpNetworkID from query string
         /// </summary>
-        public int BannedIpNetworkID
+        public int BannedIpNetworkId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BannedIpNetworkID");
+                return CommonHelper.QueryStringInt("BannedIpNetworkId");
             }
         }
 

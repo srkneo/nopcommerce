@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Directory
         /// <summary>
         /// Gets or sets the currency identifier
         /// </summary>
-        public int CurrencyID { get; set; }
+        public int CurrencyId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

@@ -109,11 +109,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         {
             get
             {
-                string defaultTimeZoneID = SettingManager.GetSettingValue("Common.DefaultStoreTimeZoneID");
+                string defaultTimeZoneId = SettingManager.GetSettingValue("Common.DefaultStoreTimeZoneId");
                 TimeZoneInfo timeZoneInfo = null;
                 try
                 {
-                    timeZoneInfo = DateTimeHelper.FindTimeZoneById(defaultTimeZoneID);
+                    timeZoneInfo = DateTimeHelper.FindTimeZoneById(defaultTimeZoneId);
                 }
                 catch (Exception exc)
                 {
@@ -127,13 +127,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
             }
             set
             {
-                string defaultTimeZoneID = string.Empty;
+                string defaultTimeZoneId = string.Empty;
                 if (value != null)
                 {
-                    defaultTimeZoneID = value.Id;
+                    defaultTimeZoneId = value.Id;
                 }
 
-                SettingManager.SetParam("Common.DefaultStoreTimeZoneID", defaultTimeZoneID);
+                SettingManager.SetParam("Common.DefaultStoreTimeZoneId", defaultTimeZoneId);
             }
         }
 
@@ -148,14 +148,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                 TimeZoneInfo timeZoneInfo = null;
                 if (DateTimeHelper.AllowCustomersToSetTimeZone)
                 {
-                    string timeZoneID = string.Empty;
+                    string timeZoneId = string.Empty;
                     Customer customer = NopContext.Current.User;
                     if (customer != null)
-                        timeZoneID = customer.TimeZoneID;
-
+                        timeZoneId = customer.TimeZoneId;
+                    
                     try
                     {
-                        timeZoneInfo = DateTimeHelper.FindTimeZoneById(timeZoneID);
+                        timeZoneInfo = DateTimeHelper.FindTimeZoneById(timeZoneId);
                     }
                     catch (Exception exc)
                     {
@@ -175,16 +175,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
                 if (!DateTimeHelper.AllowCustomersToSetTimeZone)
                     return;
 
-                string timeZoneID = string.Empty;
+                string timeZoneId = string.Empty;
                 if (value != null)
                 {
-                    timeZoneID = value.Id;
+                    timeZoneId = value.Id;
                 }
 
                 var customer = NopContext.Current.User;
                 if (customer != null)
                 {
-                    customer = CustomerManager.SetTimeZoneID(customer.CustomerID, timeZoneID);
+                    customer = CustomerManager.SetTimeZoneId(customer.CustomerId, timeZoneId);
                 }
             }
         }

@@ -47,23 +47,23 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             gvBestSellers.DataBind();
         }
 
-        public string GetProductURL(int ProductVariantID)
+        public string GetProductUrl(int productVariantId)
         {
             string result = string.Empty;
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
-                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantID.ToString();
+                result = "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantId.ToString();
             else
-                result = "Not available. Product variant ID=" + productVariant.ProductVariantID.ToString();
+                result = "Not available. Product variant ID=" + productVariant.ProductVariantId.ToString();
             return result;
         }
 
-        public string GetProductVariantName(int ProductVariantID)
+        public string GetProductVariantName(int productVariantId)
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantByID(ProductVariantID);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
                 return productVariant.FullProductName;
-            return "Not available. ID=" + ProductVariantID.ToString();
+            return "Not available. ID=" + productVariantId.ToString();
         }
     }
 }

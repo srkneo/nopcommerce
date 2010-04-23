@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     MeasureDimension measureDimension = ctrlMeasureDimensionInfo.SaveInfo();
-                    Response.Redirect("MeasureDimensionDetails.aspx?MeasureDimensionID=" + measureDimension.MeasureDimensionID.ToString());
+                    Response.Redirect("MeasureDimensionDetails.aspx?MeasureDimensionID=" + measureDimension.MeasureDimensionId.ToString());
                 }
                 catch (Exception exc)
                 {

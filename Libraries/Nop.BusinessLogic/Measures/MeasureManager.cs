@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
                 return null;
 
             var item = new MeasureDimension();
-            item.MeasureDimensionID = dbItem.MeasureDimensionID;
+            item.MeasureDimensionId = dbItem.MeasureDimensionId;
             item.Name = dbItem.Name;
             item.SystemKeyword = dbItem.SystemKeyword;
             item.Ratio = dbItem.Ratio;
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
                 return null;
 
             var item = new MeasureWeight();
-            item.MeasureWeightID = dbItem.MeasureWeightID;
+            item.MeasureWeightId = dbItem.MeasureWeightId;
             item.Name = dbItem.Name;
             item.SystemKeyword = dbItem.SystemKeyword;
             item.Ratio = dbItem.Ratio;
@@ -108,10 +108,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Deletes measure dimension
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
-        public static void DeleteMeasureDimension(int MeasureDimensionID)
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
+        public static void DeleteMeasureDimension(int measureDimensionId)
         {
-            DBProviderManager<DBMeasureProvider>.Provider.DeleteMeasureDimension(MeasureDimensionID);
+            DBProviderManager<DBMeasureProvider>.Provider.DeleteMeasureDimension(measureDimensionId);
             if (MeasureManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(MEASUREDIMENSIONS_PATTERN_KEY);
@@ -121,21 +121,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Gets a measure dimension by identifier
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
         /// <returns>Measure dimension</returns>
-        public static MeasureDimension GetMeasureDimensionByID(int MeasureDimensionID)
+        public static MeasureDimension GetMeasureDimensionById(int measureDimensionId)
         {
-            if (MeasureDimensionID == 0)
+            if (measureDimensionId == 0)
                 return null;
 
-            string key = string.Format(MEASUREDIMENSIONS_BY_ID_KEY, MeasureDimensionID);
+            string key = string.Format(MEASUREDIMENSIONS_BY_ID_KEY, measureDimensionId);
             object obj2 = NopCache.Get(key);
             if (MeasureManager.CacheEnabled && (obj2 != null))
             {
                 return (MeasureDimension)obj2;
             }
 
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.GetMeasureDimensionByID(MeasureDimensionID);
+            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.GetMeasureDimensionById(measureDimensionId);
             var measureDimension = DBMapping(dbItem);
 
             if (MeasureManager.CacheEnabled)
@@ -148,16 +148,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Gets a measure dimension by system keyword
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
+        /// <param name="systemKeyword">The system keyword</param>
         /// <returns>Measure dimension</returns>
-        public static MeasureDimension GetMeasureDimensionBySystemKeyword(string SystemKeyword)
+        public static MeasureDimension GetMeasureDimensionBySystemKeyword(string systemKeyword)
         {
-            if (String.IsNullOrEmpty(SystemKeyword))
+            if (String.IsNullOrEmpty(systemKeyword))
                 return null;
 
             var measureDimensions = GetAllMeasureDimensions();
             foreach (var measureDimension in measureDimensions)
-                if (measureDimension.SystemKeyword.ToLowerInvariant() == SystemKeyword.ToLowerInvariant())
+                if (measureDimension.SystemKeyword.ToLowerInvariant() == systemKeyword.ToLowerInvariant())
                     return measureDimension;
             return null;
         }
@@ -188,16 +188,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Inserts a measure dimension
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure dimension</returns>
-        public static MeasureDimension InsertMeasureDimension(string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public static MeasureDimension InsertMeasureDimension(string name,
+            string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.InsertMeasureDimension(Name,
-                SystemKeyword, Ratio, DisplayOrder);
+            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.InsertMeasureDimension(name,
+                systemKeyword, ratio, displayOrder);
             var measure = DBMapping(dbItem);
 
             if (MeasureManager.CacheEnabled)
@@ -210,17 +210,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Updates the measure dimension
         /// </summary>
-        /// <param name="MeasureDimensionID">Measure dimension identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="measureDimensionId">Measure dimension identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure dimension</returns>
-        public static MeasureDimension UpdateMeasureDimension(int MeasureDimensionID, string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public static MeasureDimension UpdateMeasureDimension(int measureDimensionId,
+            string name, string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.UpdateMeasureDimension(MeasureDimensionID,
-                Name, SystemKeyword, Ratio, DisplayOrder);
+            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.UpdateMeasureDimension(measureDimensionId,
+                name, systemKeyword, ratio, displayOrder);
             var measure = DBMapping(dbItem);
             
             if (MeasureManager.CacheEnabled)
@@ -233,20 +233,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Converts dimension
         /// </summary>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="SourceMeasureDimension">Source dimension</param>
-        /// <param name="TargetMeasureDimension">Target dimension</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="sourceMeasureDimension">Source dimension</param>
+        /// <param name="targetMeasureDimension">Target dimension</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertDimension(decimal Quantity, 
-            MeasureDimension SourceMeasureDimension, MeasureDimension TargetMeasureDimension)
+        public static decimal ConvertDimension(decimal quantity, 
+            MeasureDimension sourceMeasureDimension, MeasureDimension targetMeasureDimension)
         {
-            decimal result = Quantity;
-            if (SourceMeasureDimension.MeasureDimensionID == TargetMeasureDimension.MeasureDimensionID)
+            decimal result = quantity;
+            if (sourceMeasureDimension.MeasureDimensionId == targetMeasureDimension.MeasureDimensionId)
                 return result;
-            if (result != decimal.Zero && SourceMeasureDimension.MeasureDimensionID != TargetMeasureDimension.MeasureDimensionID)
+            if (result != decimal.Zero && sourceMeasureDimension.MeasureDimensionId != targetMeasureDimension.MeasureDimensionId)
             {
-                result = ConvertToPrimaryMeasureDimension(result, SourceMeasureDimension);
-                result = ConvertFromPrimaryMeasureDimension(result, TargetMeasureDimension);
+                result = ConvertToPrimaryMeasureDimension(result, sourceMeasureDimension);
+                result = ConvertFromPrimaryMeasureDimension(result, targetMeasureDimension);
             }
             result = Math.Round(result, 2);
             return result;
@@ -255,18 +255,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Converts to primary measure dimension
         /// </summary>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="SourceMeasureDimension">Source dimension</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="sourceMeasureDimension">Source dimension</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertToPrimaryMeasureDimension(decimal Quantity, MeasureDimension SourceMeasureDimension)
+        public static decimal ConvertToPrimaryMeasureDimension(decimal quantity, 
+            MeasureDimension sourceMeasureDimension)
         {
-            decimal result = Quantity;
-            if (result != decimal.Zero && SourceMeasureDimension.MeasureDimensionID != BaseDimensionIn.MeasureDimensionID)
+            decimal result = quantity;
+            if (result != decimal.Zero && sourceMeasureDimension.MeasureDimensionId != BaseDimensionIn.MeasureDimensionId)
             {
-                decimal ExchangeRatio = SourceMeasureDimension.Ratio;
-                if (ExchangeRatio == decimal.Zero)
-                    throw new NopException(string.Format("Exchange ratio not set for dimension [{0}]", SourceMeasureDimension.Name));
-                result = result / ExchangeRatio;
+                decimal exchangeRatio = sourceMeasureDimension.Ratio;
+                if (exchangeRatio == decimal.Zero)
+                    throw new NopException(string.Format("Exchange ratio not set for dimension [{0}]", sourceMeasureDimension.Name));
+                result = result / exchangeRatio;
             }
             return result;
         }
@@ -274,18 +275,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Converts from primary dimension
         /// </summary>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="TargetMeasureDimension">Target dimension</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="targetMeasureDimension">Target dimension</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertFromPrimaryMeasureDimension(decimal Quantity, MeasureDimension TargetMeasureDimension)
+        public static decimal ConvertFromPrimaryMeasureDimension(decimal quantity, 
+            MeasureDimension targetMeasureDimension)
         {
-            decimal result = Quantity;
-            if (result != decimal.Zero && TargetMeasureDimension.MeasureDimensionID != BaseDimensionIn.MeasureDimensionID)
+            decimal result = quantity;
+            if (result != decimal.Zero && targetMeasureDimension.MeasureDimensionId != BaseDimensionIn.MeasureDimensionId)
             {
-                decimal ExchangeRatio = TargetMeasureDimension.Ratio;
-                if (ExchangeRatio == decimal.Zero)
-                    throw new NopException(string.Format("Exchange ratio not set for dimension [{0}]", TargetMeasureDimension.Name));
-                result = result * ExchangeRatio;
+                decimal exchangeRatio = targetMeasureDimension.Ratio;
+                if (exchangeRatio == decimal.Zero)
+                    throw new NopException(string.Format("Exchange ratio not set for dimension [{0}]", targetMeasureDimension.Name));
+                result = result * exchangeRatio;
             }
             return result;
         }
@@ -297,10 +299,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Deletes measure weight
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
-        public static void DeleteMeasureWeight(int MeasureWeightID)
+        /// <param name="measureWeightId">Measure weight identifier</param>
+        public static void DeleteMeasureWeight(int measureWeightId)
         {
-            DBProviderManager<DBMeasureProvider>.Provider.DeleteMeasureWeight(MeasureWeightID);
+            DBProviderManager<DBMeasureProvider>.Provider.DeleteMeasureWeight(measureWeightId);
             if (MeasureManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(MEASUREWEIGHTS_PATTERN_KEY);
@@ -310,21 +312,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Gets a measure weight by identifier
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
+        /// <param name="measureWeightId">Measure weight identifier</param>
         /// <returns>Measure weight</returns>
-        public static MeasureWeight GetMeasureWeightByID(int MeasureWeightID)
+        public static MeasureWeight GetMeasureWeightById(int measureWeightId)
         {
-            if (MeasureWeightID == 0)
+            if (measureWeightId == 0)
                 return null;
 
-            string key = string.Format(MEASUREWEIGHTS_BY_ID_KEY, MeasureWeightID);
+            string key = string.Format(MEASUREWEIGHTS_BY_ID_KEY, measureWeightId);
             object obj2 = NopCache.Get(key);
             if (MeasureManager.CacheEnabled && (obj2 != null))
             {
                 return (MeasureWeight)obj2;
             }
 
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.GetMeasureWeightByID(MeasureWeightID);
+            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.GetMeasureWeightById(measureWeightId);
             var measureWeight = DBMapping(dbItem);
 
             if (MeasureManager.CacheEnabled)
@@ -337,16 +339,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Gets a measure weight by system keyword
         /// </summary>
-        /// <param name="SystemKeyword">The system keyword</param>
+        /// <param name="systemKeyword">The system keyword</param>
         /// <returns>Measure weight</returns>
-        public static MeasureWeight GetMeasureWeightBySystemKeyword(string SystemKeyword)
+        public static MeasureWeight GetMeasureWeightBySystemKeyword(string systemKeyword)
         {
-            if (String.IsNullOrEmpty(SystemKeyword))
+            if (String.IsNullOrEmpty(systemKeyword))
                 return null;
 
             var measureWeights = GetAllMeasureWeights();
             foreach (var measureWeight in measureWeights)
-                if (measureWeight.SystemKeyword.ToLowerInvariant() == SystemKeyword.ToLowerInvariant())
+                if (measureWeight.SystemKeyword.ToLowerInvariant() == systemKeyword.ToLowerInvariant())
                     return measureWeight;
             return null;
         }
@@ -377,16 +379,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Inserts a measure weight
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure weight</returns>
-        public static MeasureWeight InsertMeasureWeight(string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public static MeasureWeight InsertMeasureWeight(string name,
+            string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.InsertMeasureWeight(Name,
-                SystemKeyword, Ratio, DisplayOrder);
+            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.InsertMeasureWeight(name,
+                systemKeyword, ratio, displayOrder);
             var weight = DBMapping(dbItem);
 
             if (MeasureManager.CacheEnabled)
@@ -399,17 +401,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Updates the measure weight
         /// </summary>
-        /// <param name="MeasureWeightID">Measure weight identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Ratio">The ratio</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="measureWeightId">Measure weight identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="ratio">The ratio</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A measure weight</returns>
-        public static MeasureWeight UpdateMeasureWeight(int MeasureWeightID, string Name,
-            string SystemKeyword, decimal Ratio, int DisplayOrder)
+        public static MeasureWeight UpdateMeasureWeight(int measureWeightId, string name,
+            string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.UpdateMeasureWeight(MeasureWeightID,
-                Name, SystemKeyword, Ratio, DisplayOrder);
+            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.UpdateMeasureWeight(measureWeightId,
+                name, systemKeyword, ratio, displayOrder);
             var weight = DBMapping(dbItem);
 
             if (MeasureManager.CacheEnabled)
@@ -422,20 +424,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Converts weight
         /// </summary>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="SourceMeasureWeight">Source weight</param>
-        /// <param name="TargetMeasureWeight">Target weight</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="sourceMeasureWeight">Source weight</param>
+        /// <param name="targetMeasureWeight">Target weight</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertWeight(decimal Quantity,
-            MeasureWeight SourceMeasureWeight, MeasureWeight TargetMeasureWeight)
+        public static decimal ConvertWeight(decimal quantity,
+            MeasureWeight sourceMeasureWeight, MeasureWeight targetMeasureWeight)
         {
-            decimal result = Quantity;
-            if (SourceMeasureWeight.MeasureWeightID == TargetMeasureWeight.MeasureWeightID)
+            decimal result = quantity;
+            if (sourceMeasureWeight.MeasureWeightId == targetMeasureWeight.MeasureWeightId)
                 return result;
-            if (result != decimal.Zero && SourceMeasureWeight.MeasureWeightID != TargetMeasureWeight.MeasureWeightID)
+            if (result != decimal.Zero && sourceMeasureWeight.MeasureWeightId != targetMeasureWeight.MeasureWeightId)
             {
-                result = ConvertToPrimaryMeasureWeight(result, SourceMeasureWeight);
-                result = ConvertFromPrimaryMeasureWeight(result, TargetMeasureWeight);
+                result = ConvertToPrimaryMeasureWeight(result, sourceMeasureWeight);
+                result = ConvertFromPrimaryMeasureWeight(result, targetMeasureWeight);
             }
             result = Math.Round(result, 2);
             return result;
@@ -444,18 +446,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Converts to primary measure weight
         /// </summary>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="SourceMeasureWeight">Source weight</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="sourceMeasureWeight">Source weight</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertToPrimaryMeasureWeight(decimal Quantity, MeasureWeight SourceMeasureWeight)
+        public static decimal ConvertToPrimaryMeasureWeight(decimal quantity, MeasureWeight sourceMeasureWeight)
         {
-            decimal result = Quantity;
-            if (result != decimal.Zero && SourceMeasureWeight.MeasureWeightID != BaseWeightIn.MeasureWeightID)
+            decimal result = quantity;
+            if (result != decimal.Zero && sourceMeasureWeight.MeasureWeightId != BaseWeightIn.MeasureWeightId)
             {
-                decimal ExchangeRatio = SourceMeasureWeight.Ratio;
-                if (ExchangeRatio == decimal.Zero)
-                    throw new NopException(string.Format("Exchange ratio not set for weight [{0}]", SourceMeasureWeight.Name));
-                result = result / ExchangeRatio;
+                decimal exchangeRatio = sourceMeasureWeight.Ratio;
+                if (exchangeRatio == decimal.Zero)
+                    throw new NopException(string.Format("Exchange ratio not set for weight [{0}]", sourceMeasureWeight.Name));
+                result = result / exchangeRatio;
             }
             return result;
         }
@@ -463,18 +465,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <summary>
         /// Converts from primary weight
         /// </summary>
-        /// <param name="Quantity">Quantity</param>
-        /// <param name="TargetMeasureWeight">Target weight</param>
+        /// <param name="quantity">Quantity</param>
+        /// <param name="targetMeasureWeight">Target weight</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertFromPrimaryMeasureWeight(decimal Quantity, MeasureWeight TargetMeasureWeight)
+        public static decimal ConvertFromPrimaryMeasureWeight(decimal quantity, 
+            MeasureWeight targetMeasureWeight)
         {
-            decimal result = Quantity;
-            if (result != decimal.Zero && TargetMeasureWeight.MeasureWeightID != BaseWeightIn.MeasureWeightID)
+            decimal result = quantity;
+            if (result != decimal.Zero && targetMeasureWeight.MeasureWeightId != BaseWeightIn.MeasureWeightId)
             {
-                decimal ExchangeRatio = TargetMeasureWeight.Ratio;
-                if (ExchangeRatio == decimal.Zero)
-                    throw new NopException(string.Format("Exchange ratio not set for weight [{0}]", TargetMeasureWeight.Name));
-                result = result * ExchangeRatio;
+                decimal exchangeRatio = targetMeasureWeight.Ratio;
+                if (exchangeRatio == decimal.Zero)
+                    throw new NopException(string.Format("Exchange ratio not set for weight [{0}]", targetMeasureWeight.Name));
+                result = result * exchangeRatio;
             }
             return result;
         }
@@ -492,12 +495,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             get
             {
                 int baseDimensionIn = SettingManager.GetSettingValueInteger("Common.BaseDimensionIn");
-                return MeasureManager.GetMeasureDimensionByID(baseDimensionIn);
+                return MeasureManager.GetMeasureDimensionById(baseDimensionIn);
             }
             set
             {
                 if (value != null)
-                    SettingManager.SetParam("Common.BaseDimensionIn", value.MeasureDimensionID.ToString());
+                    SettingManager.SetParam("Common.BaseDimensionIn", value.MeasureDimensionId.ToString());
             }
         }
        
@@ -509,12 +512,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             get
             {
                 int baseWeightIn = SettingManager.GetSettingValueInteger("Common.BaseWeightIn");
-                return MeasureManager.GetMeasureWeightByID(baseWeightIn);
+                return MeasureManager.GetMeasureWeightById(baseWeightIn);
             }
             set
             {
                 if (value != null)
-                    SettingManager.SetParam("Common.BaseWeightIn", value.MeasureWeightID.ToString());
+                    SettingManager.SetParam("Common.BaseWeightIn", value.MeasureWeightId.ToString());
             }
         }
 

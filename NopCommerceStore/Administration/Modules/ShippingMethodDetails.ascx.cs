@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ShippingMethod shippingMethod = ctrlShippingMethodInfo.SaveInfo();
-                    Response.Redirect("ShippingMethodDetails.aspx?ShippingMethodID=" + shippingMethod.ShippingMethodID.ToString());
+                    Response.Redirect("ShippingMethodDetails.aspx?ShippingMethodID=" + shippingMethod.ShippingMethodId.ToString());
                 }
                 catch (Exception exc)
                 {
@@ -49,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ShippingMethodManager.DeleteShippingMethod(this.ShippingMethodID);
+                ShippingMethodManager.DeleteShippingMethod(this.ShippingMethodId);
                 Response.Redirect("ShippingMethods.aspx");
             }
             catch (Exception exc)
@@ -58,11 +58,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int ShippingMethodID
+        public int ShippingMethodId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ShippingMethodID");
+                return CommonHelper.QueryStringInt("ShippingMethodId");
             }
         }
     }

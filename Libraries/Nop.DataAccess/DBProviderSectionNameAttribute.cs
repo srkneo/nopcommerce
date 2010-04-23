@@ -5,6 +5,9 @@ using System.Text;
 
 namespace NopSolutions.NopCommerce.DataAccess
 {
+    /// <summary>
+    /// Provider section name attribute
+    /// </summary>
     public partial class DBProviderSectionNameAttribute : Attribute
     {
         #region Ctor

@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
             ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
             foreach (ShippingMethod shippingMethod in shippingMethodCollection)
             {
-                ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodID.ToString());
+                ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());
                 ddlShippingMethod.Items.Add(item);
             }
 
@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
             CountryCollection countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
-                ListItem item = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem item = new ListItem(country.Name, country.CountryId.ToString());
                 ddlCountry.Items.Add(item);
             }
         }
@@ -72,10 +72,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
         {
             try
             {
-                int shippingMethodID = int.Parse(this.ddlShippingMethod.SelectedItem.Value);
-                int countryID = int.Parse(this.ddlCountry.SelectedItem.Value);
-                ShippingByWeightAndCountry shippingByWeightAndCountry = ShippingByWeightAndCountryManager.InsertShippingByWeightAndCountry(shippingMethodID,
-                    countryID, txtFrom.Value, txtTo.Value, cbUsePercentage.Checked,
+                int shippingMethodId = int.Parse(this.ddlShippingMethod.SelectedItem.Value);
+                int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
+                ShippingByWeightAndCountry shippingByWeightAndCountry = ShippingByWeightAndCountryManager.InsertShippingByWeightAndCountry(shippingMethodId,
+                    countryId, txtFrom.Value, txtTo.Value, cbUsePercentage.Checked,
                     txtShippingChargePercentage.Value, txtShippingChargeAmount.Value);
 
                 BindData();
@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvShippingByWeightAndCountry.Rows[index];
 
-                HiddenField hfShippingByWeightAndCountryID = row.FindControl("hfShippingByWeightAndCountryID") as HiddenField;
+                HiddenField hfShippingByWeightAndCountryId = row.FindControl("hfShippingByWeightAndCountryId") as HiddenField;
                 DropDownList ddlShippingMethod = row.FindControl("ddlShippingMethod") as DropDownList;
                 DropDownList ddlCountry = row.FindControl("ddlCountry") as DropDownList;
                 DecimalTextBox txtFrom = row.FindControl("txtFrom") as DecimalTextBox;
@@ -102,14 +102,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
                 DecimalTextBox txtShippingChargePercentage = row.FindControl("txtShippingChargePercentage") as DecimalTextBox;
                 DecimalTextBox txtShippingChargeAmount = row.FindControl("txtShippingChargeAmount") as DecimalTextBox;
 
-                int shippingByWeightAndCountryID = int.Parse(hfShippingByWeightAndCountryID.Value);
-                int shippingMethodID = int.Parse(ddlShippingMethod.SelectedItem.Value);
-                int countryID = int.Parse(ddlCountry.SelectedItem.Value);
-                ShippingByWeightAndCountry shippingByWeightAndCountry = ShippingByWeightAndCountryManager.GetByID(shippingByWeightAndCountryID);
+                int shippingByWeightAndCountryId = int.Parse(hfShippingByWeightAndCountryId.Value);
+                int shippingMethodId = int.Parse(ddlShippingMethod.SelectedItem.Value);
+                int countryId = int.Parse(ddlCountry.SelectedItem.Value);
+                ShippingByWeightAndCountry shippingByWeightAndCountry = ShippingByWeightAndCountryManager.GetById(shippingByWeightAndCountryId);
 
                 if (shippingByWeightAndCountry != null)
-                    ShippingByWeightAndCountryManager.UpdateShippingByWeightAndCountry(shippingByWeightAndCountry.ShippingByWeightAndCountryID,
-                      shippingMethodID, countryID, txtFrom.Value, txtTo.Value, cbUsePercentage.Checked,
+                    ShippingByWeightAndCountryManager.UpdateShippingByWeightAndCountry(shippingByWeightAndCountry.ShippingByWeightAndCountryId,
+                      shippingMethodId, countryId, txtFrom.Value, txtTo.Value, cbUsePercentage.Checked,
                       txtShippingChargePercentage.Value, txtShippingChargeAmount.Value);
 
                 BindData();
@@ -131,9 +131,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
                 ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
                 foreach (ShippingMethod shippingMethod in shippingMethodCollection)
                 {
-                    ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodID.ToString());
+                    ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());
                     ddlShippingMethod.Items.Add(item);
-                    if (shippingByWeightAndCountry.ShippingMethodID == shippingMethod.ShippingMethodID)
+                    if (shippingByWeightAndCountry.ShippingMethodId == shippingMethod.ShippingMethodId)
                         item.Selected = true;
                 }
 
@@ -143,9 +143,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
                 CountryCollection countryCollection = CountryManager.GetAllCountries();
                 foreach (Country country in countryCollection)
                 {
-                    ListItem item = new ListItem(country.Name, country.CountryID.ToString());
+                    ListItem item = new ListItem(country.Name, country.CountryId.ToString());
                     ddlCountry.Items.Add(item);
-                    if (shippingByWeightAndCountry.CountryID == country.CountryID)
+                    if (shippingByWeightAndCountry.CountryId == country.CountryId)
                         item.Selected = true;
                 }
             }
@@ -153,11 +153,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
 
         protected void gvShippingByWeightAndCountry_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int shippingByWeightAndCountryID = (int)gvShippingByWeightAndCountry.DataKeys[e.RowIndex]["ShippingByWeightAndCountryID"];
-            ShippingByWeightAndCountry shippingByWeightAndCountry = ShippingByWeightAndCountryManager.GetByID(shippingByWeightAndCountryID);
+            int shippingByWeightAndCountryId = (int)gvShippingByWeightAndCountry.DataKeys[e.RowIndex]["ShippingByWeightAndCountryId"];
+            ShippingByWeightAndCountry shippingByWeightAndCountry = ShippingByWeightAndCountryManager.GetById(shippingByWeightAndCountryId);
             if (shippingByWeightAndCountry != null)
             {
-                ShippingByWeightAndCountryManager.DeleteShippingByWeightAndCountry(shippingByWeightAndCountry.ShippingByWeightAndCountryID);
+                ShippingByWeightAndCountryManager.DeleteShippingByWeightAndCountry(shippingByWeightAndCountry.ShippingByWeightAndCountryId);
                 BindData();
             }
         }

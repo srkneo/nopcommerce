@@ -33,264 +33,269 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
     public abstract partial class DBProductAttributeProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Deletes a product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        public abstract void DeleteProductAttribute(int ProductAttributeID);
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        public abstract void DeleteProductAttribute(int productAttributeId);
 
         /// <summary>
         /// Gets all product attributes
         /// </summary>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute collection</returns>
-        public abstract DBProductAttributeCollection GetAllProductAttributes(int LanguageID);
+        public abstract DBProductAttributeCollection GetAllProductAttributes(int languageId);
 
         /// <summary>
         /// Gets a product attribute 
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute </returns>
-        public abstract DBProductAttribute GetProductAttributeByID(int ProductAttributeID, int LanguageID);
+        public abstract DBProductAttribute GetProductAttributeById(int productAttributeId, int languageId);
 
         /// <summary>
         /// Inserts a product attribute
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
         /// <returns>Product attribute </returns>
-        public abstract DBProductAttribute InsertProductAttribute(string Name, string Description);
+        public abstract DBProductAttribute InsertProductAttribute(string name,
+            string description);
 
         /// <summary>
         /// Updates the product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
         /// <returns>Product attribute </returns>
-        public abstract DBProductAttribute UpdateProductAttribute(int ProductAttributeID, string Name,
-            string Description);
+        public abstract DBProductAttribute UpdateProductAttribute(int productAttributeId,
+            string name, string description);
         
         /// <summary>
         /// Gets localized product attribute by id
         /// </summary>
-        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
+        /// <param name="productAttributeLocalizedId">Localized product attribute identifier</param>
         /// <returns>Product attribute content</returns>
-        public abstract DBProductAttributeLocalized GetProductAttributeLocalizedByID(int ProductAttributeLocalizedID);
+        public abstract DBProductAttributeLocalized GetProductAttributeLocalizedById(int productAttributeLocalizedId);
 
         /// <summary>
         /// Gets localized product attribute by product attribute id and language id
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute content</returns>
-        public abstract DBProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIDAndLanguageID(int ProductAttributeID, int LanguageID);
+        public abstract DBProductAttributeLocalized GetProductAttributeLocalizedByProductAttributeIdAndLanguageId(int productAttributeId, int languageId);
 
         /// <summary>
         /// Inserts a localized product attribute
         /// </summary>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>DBProductAttributeLocalized</returns>
-        public abstract DBProductAttributeLocalized InsertProductAttributeLocalized(int ProductAttributeID,
-            int LanguageID, string Name, string Description);
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product attribute content</returns>
+        public abstract DBProductAttributeLocalized InsertProductAttributeLocalized(int productAttributeId,
+            int languageId, string name, string description);
 
         /// <summary>
         /// Update a localized product attribute
         /// </summary>
-        /// <param name="ProductAttributeLocalizedID">Localized product attribute identifier</param>
-        /// <param name="ProductAttributeID">Product attribute identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <returns>DBProductAttributeLocalized</returns>
-        public abstract DBProductAttributeLocalized UpdateProductAttributeLocalized(int ProductAttributeLocalizedID,
-            int ProductAttributeID, int LanguageID, string Name, string Description);      
+        /// <param name="productAttributeLocalizedId">Localized product attribute identifier</param>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <returns>Product attribute content</returns>
+        public abstract DBProductAttributeLocalized UpdateProductAttributeLocalized(int productAttributeLocalizedId,
+            int productAttributeId, int languageId, string name, string description);
 
         /// <summary>
         /// Deletes a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">Product variant attribute mapping identifier</param>
-        public abstract void DeleteProductVariantAttribute(int ProductVariantAttributeID);
+        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
+        public abstract void DeleteProductVariantAttribute(int productVariantAttributeId);
 
         /// <summary>
         /// Gets product variant attribute mappings by product identifier
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public abstract DBProductVariantAttributeCollection GetProductVariantAttributesByProductVariantID(int ProductVariantID);
+        public abstract DBProductVariantAttributeCollection GetProductVariantAttributesByProductVariantId(int productVariantId);
 
         /// <summary>
         /// Gets a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">Product variant attribute mapping identifier</param>
+        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
         /// <returns>Product variant attribute mapping</returns>
-        public abstract DBProductVariantAttribute GetProductVariantAttributeByID(int ProductVariantAttributeID);
+        public abstract DBProductVariantAttribute GetProductVariantAttributeById(int productVariantAttributeId);
 
         /// <summary>
         /// Inserts a product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductAttributeID">The product attribute identifier</param>
-        /// <param name="TextPrompt">The text prompt</param>
-        /// <param name="IsRequired">The value indicating whether the entity is required</param>
-        /// <param name="AttributeControlTypeID">The attribute control type identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productAttributeId">The product attribute identifier</param>
+        /// <param name="textPrompt">The text prompt</param>
+        /// <param name="isRequired">The value indicating whether the entity is required</param>
+        /// <param name="attributeControlTypeId">The attribute control type identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute mapping</returns>
-        public abstract DBProductVariantAttribute InsertProductVariantAttribute(int ProductVariantID,
-            int ProductAttributeID, string  TextPrompt, bool IsRequired, int AttributeControlTypeID, int DisplayOrder);
+        public abstract DBProductVariantAttribute InsertProductVariantAttribute(int productVariantId,
+            int productAttributeId, string textPrompt, bool isRequired,
+            int attributeControlTypeId, int displayOrder);
 
         /// <summary>
         /// Updates the product variant attribute mapping
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="ProductAttributeID">The product attribute identifier</param>
-        /// <param name="TextPrompt">The text prompt</param>
-        /// <param name="IsRequired">The value indicating whether the entity is required</param>
-        /// <param name="AttributeControlTypeID">The attribute control type identifier</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="productAttributeId">The product attribute identifier</param>
+        /// <param name="textPrompt">The text prompt</param>
+        /// <param name="isRequired">The value indicating whether the entity is required</param>
+        /// <param name="attributeControlTypeId">The attribute control type identifier</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute mapping</returns>
-        public abstract DBProductVariantAttribute UpdateProductVariantAttribute(int ProductVariantAttributeID, int ProductVariantID,
-            int ProductAttributeID, string TextPrompt, bool IsRequired, int AttributeControlTypeID, int DisplayOrder);
+        public abstract DBProductVariantAttribute UpdateProductVariantAttribute(int productVariantAttributeId,
+            int productVariantId, int productAttributeId, string textPrompt, bool isRequired,
+            int attributeControlTypeId, int displayOrder);
 
         /// <summary>
         /// Deletes a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        public abstract void DeleteProductVariantAttributeValue(int ProductVariantAttributeValueID);
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        public abstract void DeleteProductVariantAttributeValue(int productVariantAttributeValueId);
 
         /// <summary>
         /// Gets product variant attribute values by product identifier
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public abstract DBProductVariantAttributeValueCollection GetProductVariantAttributeValues(int ProductVariantAttributeID, int LanguageID);
+        public abstract DBProductVariantAttributeValueCollection GetProductVariantAttributeValues(int productVariantAttributeId, int languageId);
 
         /// <summary>
         /// Gets a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValue GetProductVariantAttributeValueByID(int ProductVariantAttributeValueID, int LanguageID);
+        public abstract DBProductVariantAttributeValue GetProductVariantAttributeValueById(int productVariantAttributeValueId, int languageId);
 
         /// <summary>
         /// Inserts a product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="Name">The product variant attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="name">The product variant attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValue InsertProductVariantAttributeValue(int ProductVariantAttributeID,
-            string Name, decimal PriceAdjustment, decimal WeightAdjustment,
-            bool IsPreSelected, int DisplayOrder);
+        public abstract DBProductVariantAttributeValue InsertProductVariantAttributeValue(int productVariantAttributeId,
+            string name, decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder);
 
         /// <summary>
         /// Updates the product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">The product variant attribute value identifier</param>
-        /// <param name="ProductVariantAttributeID">The product variant attribute mapping identifier</param>
-        /// <param name="Name">The product variant attribute name</param>
-        /// <param name="PriceAdjustment">The price adjustment</param>
-        /// <param name="WeightAdjustment">The weight adjustment</param>
-        /// <param name="IsPreSelected">The value indicating whether the value is pre-selected</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productVariantAttributeValueId">The product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
+        /// <param name="name">The product variant attribute name</param>
+        /// <param name="priceAdjustment">The price adjustment</param>
+        /// <param name="weightAdjustment">The weight adjustment</param>
+        /// <param name="isPreSelected">The value indicating whether the value is pre-selected</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValue UpdateProductVariantAttributeValue(int ProductVariantAttributeValueID,
-            int ProductVariantAttributeID, string Name, decimal PriceAdjustment, 
-            decimal WeightAdjustment, bool IsPreSelected, int DisplayOrder);
+        public abstract DBProductVariantAttributeValue UpdateProductVariantAttributeValue(int productVariantAttributeValueId,
+            int productVariantAttributeId, string name,
+            decimal priceAdjustment, decimal weightAdjustment,
+            bool isPreSelected, int displayOrder);
 
         /// <summary>
         /// Gets localized product variant attribute value by id
         /// </summary>
-        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeValueLocalizedId">Localized product variant attribute value identifier</param>
         /// <returns>Localized product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByID(int ProductVariantAttributeValueLocalizedID);
+        public abstract DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedById(int productVariantAttributeValueLocalizedId);
 
         /// <summary>
         /// Gets localized product variant attribute value by product variant attribute value id and language id
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Localized product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIDAndLanguageID(int ProductVariantAttributeValueID, int LanguageID);
+        public abstract DBProductVariantAttributeValueLocalized GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIdAndLanguageId(int productVariantAttributeValueId, int languageId);
 
         /// <summary>
         /// Inserts a localized product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int ProductVariantAttributeValueID,
-            int LanguageID, string Name);
+        public abstract DBProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int productVariantAttributeValueId,
+            int languageId, string name);
 
         /// <summary>
         /// Update a localized product variant attribute value
         /// </summary>
-        /// <param name="ProductVariantAttributeValueLocalizedID">Localized product variant attribute value identifier</param>
-        /// <param name="ProductVariantAttributeValueID">Product variant attribute value identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
+        /// <param name="productVariantAttributeValueLocalizedId">Localized product variant attribute value identifier</param>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
         /// <returns>Localized product variant attribute value</returns>
-        public abstract DBProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int ProductVariantAttributeValueLocalizedID,
-            int ProductVariantAttributeValueID, int LanguageID, string Name);
+        public abstract DBProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int productVariantAttributeValueLocalizedId,
+            int productVariantAttributeValueId, int languageId, string name);
 
         /// <summary>
         /// Deletes a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
-        public abstract void DeleteProductVariantAttributeCombination(int ProductVariantAttributeCombinationID);
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
+        public abstract void DeleteProductVariantAttributeCombination(int productVariantAttributeCombinationId);
 
         /// <summary>
         /// Gets all product variant attribute combinations
         /// </summary>
-        /// <param name="ProductVariantID">Product variant identifier</param>
+        /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Product variant attribute combination collection</returns>
-        public abstract DBProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int ProductVariantID);
+        public abstract DBProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int productVariantId);
 
         /// <summary>
         /// Gets a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
         /// <returns>Product variant attribute combination</returns>
-        public abstract DBProductVariantAttributeCombination GetProductVariantAttributeCombinationByID(int ProductVariantAttributeCombinationID);
+        public abstract DBProductVariantAttributeCombination GetProductVariantAttributeCombinationById(int productVariantAttributeCombinationId);
 
         /// <summary>
         /// Inserts a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The attributes</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The attributes</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
         /// <returns>Product variant attribute combination</returns>
-        public abstract DBProductVariantAttributeCombination InsertProductVariantAttributeCombination(int ProductVariantID,
-            string AttributesXML,
-            int StockQuantity,
-            bool AllowOutOfStockOrders);
+        public abstract DBProductVariantAttributeCombination InsertProductVariantAttributeCombination(int productVariantId,
+            string attributesXml,
+            int stockQuantity,
+            bool allowOutOfStockOrders);
 
         /// <summary>
         /// Updates a product variant attribute combination
         /// </summary>
-        /// <param name="ProductVariantAttributeCombinationID">Product variant attribute combination identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The attributes</param>
-        /// <param name="StockQuantity">The stock quantity</param>
-        /// <param name="AllowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
+        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The attributes</param>
+        /// <param name="stockQuantity">The stock quantity</param>
+        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
         /// <returns>Product variant attribute combination</returns>
-        public abstract DBProductVariantAttributeCombination UpdateProductVariantAttributeCombination(int ProductVariantAttributeCombinationID,
-            int ProductVariantID,
-            string AttributesXML,
-            int StockQuantity,
-            bool AllowOutOfStockOrders);
+        public abstract DBProductVariantAttributeCombination UpdateProductVariantAttributeCombination(int productVariantAttributeCombinationId,
+            int productVariantId,
+            string attributesXml,
+            int stockQuantity,
+            bool allowOutOfStockOrders);
 
         #endregion
     } 

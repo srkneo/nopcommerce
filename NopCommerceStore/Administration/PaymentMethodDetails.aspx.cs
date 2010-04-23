@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
 
         private void BindData()
         {
-            PaymentMethod paymentMethod = PaymentMethodManager.GetPaymentMethodByID(this.PaymentMethodID);
+            PaymentMethod paymentMethod = PaymentMethodManager.GetPaymentMethodById(this.PaymentMethodId);
             if (paymentMethod != null)
             {
                 this.txtName.Text = paymentMethod.Name;
@@ -58,7 +58,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
         
         private void CreateChildControlsTree()
         {
-            PaymentMethod paymentMethod = PaymentMethodManager.GetPaymentMethodByID(this.PaymentMethodID);
+            PaymentMethod paymentMethod = PaymentMethodManager.GetPaymentMethodById(this.PaymentMethodId);
             if (paymentMethod != null)
             {
                 Control child = null;
@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                     child = base.LoadControl(paymentMethod.ConfigureTemplatePath);
                     this.ConfigureMethodHolder.Controls.Add(child);
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                 }
             }
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
             if (!Page.IsPostBack)
             {
                 this.BindData();
-                this.SelectTab(this.PaymentTabs, this.TabID);
+                this.SelectTab(this.PaymentTabs, this.TabId);
             }
         }
 
@@ -102,11 +102,11 @@ namespace NopSolutions.NopCommerce.Web.Administration
             {
                 try
                 {
-                    var paymentMethod = PaymentMethodManager.GetPaymentMethodByID(this.PaymentMethodID);
+                    var paymentMethod = PaymentMethodManager.GetPaymentMethodById(this.PaymentMethodId);
 
                     if (paymentMethod != null)
                     {
-                        paymentMethod = PaymentMethodManager.UpdatePaymentMethod(paymentMethod.PaymentMethodID, txtName.Text,
+                        paymentMethod = PaymentMethodManager.UpdatePaymentMethod(paymentMethod.PaymentMethodId, txtName.Text,
                            txtVisibleName.Text, txtDescription.Text, txtConfigureTemplatePath.Text, txtUserTemplatePath.Text,
                             txtClassName.Text, txtSystemKeyword.Text, cbActive.Checked, txtDisplayOrder.Value);
 
@@ -119,7 +119,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                             GetLocaleResourceString("ActivityLog.EditPaymentMethod"),
                             paymentMethod.Name);
 
-                        Response.Redirect(string.Format("PaymentMethodDetails.aspx?PaymentMethodID={0}&TabID={1}", paymentMethod.PaymentMethodID, this.GetActiveTabID(this.PaymentTabs)));
+                        Response.Redirect(string.Format("PaymentMethodDetails.aspx?PaymentMethodID={0}&TabID={1}", paymentMethod.PaymentMethodId, this.GetActiveTabId(this.PaymentTabs)));
                     }
                     else
                         Response.Redirect("PaymentMethods.aspx");
@@ -135,7 +135,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
         {
             try
             {
-                PaymentMethodManager.DeletePaymentMethod(this.PaymentMethodID);
+                PaymentMethodManager.DeletePaymentMethod(this.PaymentMethodId);
                 Response.Redirect("PaymentMethods.aspx");
             }
             catch (Exception exc)
@@ -144,19 +144,19 @@ namespace NopSolutions.NopCommerce.Web.Administration
             }
         }
 
-        public int PaymentMethodID
+        public int PaymentMethodId
         {
             get
             {
-                return CommonHelper.QueryStringInt("PaymentMethodID");
+                return CommonHelper.QueryStringInt("PaymentMethodId");
             }
         }
 
-        protected string TabID
+        protected string TabId
         {
             get
             {
-                return CommonHelper.QueryString("TabID");
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 pnlData.Visible = true;
@@ -65,8 +65,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (product != null)
                 {
                     RelatedProductHelperClass rphc = new RelatedProductHelperClass();
-                    rphc.RelatedProductID = relatedProduct.RelatedProductID;
-                    rphc.ProductID2 = product.ProductID;
+                    rphc.RelatedProductId = relatedProduct.RelatedProductId;
+                    rphc.ProductId2 = product.ProductId;
                     rphc.ProductInfo2 = product.Name;
                     rphc.IsMapped = true;
                     rphc.DisplayOrder = relatedProduct.DisplayOrder;
@@ -80,8 +80,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         [Serializable]
         private class RelatedProductHelperClass
         {
-            public int RelatedProductID { get; set; }
-            public int ProductID2 { get; set; }
+            public int RelatedProductId { get; set; }
+            public int ProductId2 { get; set; }
             public string ProductInfo2 { get; set; }
             public bool IsMapped { get; set; }
             public int DisplayOrder { get; set; }
@@ -89,30 +89,30 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo()
         {
-            Product product = ProductManager.GetProductByID(this.ProductID);
+            Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 foreach (GridViewRow row in gvRelatedProducts.Rows)
                 {
                     CheckBox cbProductInfo2 = row.FindControl("cbProductInfo2") as CheckBox;
-                    HiddenField hfProductID2 = row.FindControl("hfProductID2") as HiddenField;
-                    HiddenField hfRelatedProductID = row.FindControl("hfRelatedProductID") as HiddenField;
+                    HiddenField hfProductId2 = row.FindControl("hfProductId2") as HiddenField;
+                    HiddenField hfRelatedProductId = row.FindControl("hfRelatedProductId") as HiddenField;
                     NumericTextBox txtRowDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
-                    int relatedProductID = int.Parse(hfRelatedProductID.Value);
-                    int productID2 = int.Parse(hfProductID2.Value);
+                    int relatedProductId = int.Parse(hfRelatedProductId.Value);
+                    int productId2 = int.Parse(hfProductId2.Value);
                     int displayOrder = txtRowDisplayOrder.Value;
 
-                    if (relatedProductID > 0 && !cbProductInfo2.Checked)
-                        ProductManager.DeleteRelatedProduct(relatedProductID);
-                    if (relatedProductID > 0 && cbProductInfo2.Checked)
-                        ProductManager.UpdateRelatedProduct(relatedProductID, product.ProductID, productID2, displayOrder);
+                    if (relatedProductId > 0 && !cbProductInfo2.Checked)
+                        ProductManager.DeleteRelatedProduct(relatedProductId);
+                    if (relatedProductId > 0 && cbProductInfo2.Checked)
+                        ProductManager.UpdateRelatedProduct(relatedProductId, product.ProductId, productId2, displayOrder);
                 }
             }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnAddNew.OnClientClick = string.Format("javascript:OpenWindow('RelatedProductAdd.aspx?pid={0}&BtnID={1}', 800, 600, true); return false;", this.ProductID, btnRefresh.ClientID);
+            btnAddNew.OnClientClick = string.Format("javascript:OpenWindow('RelatedProductAdd.aspx?pid={0}&BtnId={1}', 800, 600, true); return false;", this.ProductId, btnRefresh.ClientID);
             
             if (!Page.IsPostBack)
             {
@@ -125,11 +125,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.BindData();
         }
 
-        public int ProductID
+        public int ProductId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ProductID");
+                return CommonHelper.QueryStringInt("ProductId");
             }
         }
     }

@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             pnlError.Visible = false;
 
-            var blogPost = BlogManager.GetBlogPostByID(this.BlogPostID);
+            var blogPost = BlogManager.GetBlogPostById(this.BlogPostId);
             if (blogPost != null)
             {
                 this.lBlogPostTitle.Text = Server.HtmlEncode(blogPost.BlogPostTitle);
@@ -90,7 +90,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (Page.IsValid)
                 {
-                    var blogPost = BlogManager.GetBlogPostByID(this.BlogPostID);
+                    var blogPost = BlogManager.GetBlogPostById(this.BlogPostId);
                     if (blogPost != null && blogPost.BlogPostAllowComments)
                     {
                         if (!BlogManager.AllowNotRegisteredUsersToLeaveComments
@@ -105,11 +105,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             throw new NopException(GetLocaleResourceString("Blog.PleaseEnterCommentText"));
                         }
 
-                        int customerID = 0;
+                        int customerId = 0;
                         if (NopContext.Current.User != null && !NopContext.Current.User.IsGuest)
-                            customerID = NopContext.Current.User.CustomerID;
+                            customerId = NopContext.Current.User.CustomerId;
 
-                        BlogManager.InsertBlogComment(blogPost.BlogPostID, customerID, comment, DateTime.Now);
+                        BlogManager.InsertBlogComment(blogPost.BlogPostId, customerId, comment, DateTime.Now);
                         txtComment.Text = string.Empty;
                         BindData();
                     }
@@ -124,11 +124,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        public int BlogPostID
+        public int BlogPostId
         {
             get
             {
-                return CommonHelper.QueryStringInt("BlogPostID");
+                return CommonHelper.QueryStringInt("BlogPostId");
             }
         }
     }

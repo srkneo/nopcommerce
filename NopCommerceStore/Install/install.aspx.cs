@@ -509,21 +509,21 @@ namespace NopSolutions.NopCommerce.Web.Install
                         return;
                     }
                     
-                    admin = CustomerManager.UpdateCustomer(admin.CustomerID,
-                        admin.CustomerGUID, email, email,
-                        admin.PasswordHash, admin.SaltKey, admin.AffiliateID,
-                        admin.BillingAddressID, admin.ShippingAddressID, admin.LastPaymentMethodID,
+                    admin = CustomerManager.UpdateCustomer(admin.CustomerId,
+                        admin.CustomerGuid, email, email,
+                        admin.PasswordHash, admin.SaltKey, admin.AffiliateId,
+                        admin.BillingAddressId, admin.ShippingAddressId, admin.LastPaymentMethodId,
                         admin.LastAppliedCouponCode, admin.GiftCardCouponCodes,
-                        admin.CheckoutAttributes, admin.LanguageID,
-                        admin.CurrencyID, admin.TaxDisplayType, admin.IsTaxExempt,
+                        admin.CheckoutAttributes, admin.LanguageId,
+                        admin.CurrencyId, admin.TaxDisplayType, admin.IsTaxExempt,
                         admin.IsAdmin, admin.IsGuest, admin.IsForumModerator,
                         admin.TotalForumPosts, admin.Signature, admin.AdminComment,
                         admin.Active, admin.Deleted, admin.RegistrationDate,
-                        admin.TimeZoneID, admin.AvatarID);
+                        admin.TimeZoneId, admin.AvatarId);
 
                     this.AdminUserEmail = admin.Email;
 
-                    CustomerManager.ModifyPassword(admin.CustomerID, txtAdminPassword.Text);
+                    CustomerManager.ModifyPassword(admin.CustomerId, txtAdminPassword.Text);
 
                     SettingManager.SetParam("InstallationWizard.AdminAccountChanged", "true");
 

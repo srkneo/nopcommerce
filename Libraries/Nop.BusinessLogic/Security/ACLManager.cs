@@ -66,9 +66,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
                 return null;
 
             var item = new ACL();
-            item.ACLID = dbItem.ACLID;
-            item.CustomerActionID = dbItem.CustomerActionID;
-            item.CustomerRoleID = dbItem.CustomerRoleID;
+            item.AclId = dbItem.AclId;
+            item.CustomerActionId = dbItem.CustomerActionId;
+            item.CustomerRoleId = dbItem.CustomerRoleId;
             item.Allow = dbItem.Allow;
 
             return item;
@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
                 return null;
 
             var item = new CustomerAction();
-            item.CustomerActionID = dbItem.CustomerActionID;
+            item.CustomerActionId = dbItem.CustomerActionId;
             item.Name = dbItem.Name;
             item.SystemKeyword = dbItem.SystemKeyword;
             item.Comment = dbItem.Comment;
@@ -112,10 +112,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Deletes a customer action
         /// </summary>
-        /// <param name="CustomerActionID">Customer action identifier</param>
-        public static void DeleteCustomerAction(int CustomerActionID)
+        /// <param name="customerActionId">Customer action identifier</param>
+        public static void DeleteCustomerAction(int customerActionId)
         {
-            DBProviderManager<DBACLProvider>.Provider.DeleteCustomerAction(CustomerActionID);
+            DBProviderManager<DBACLProvider>.Provider.DeleteCustomerAction(customerActionId);
             if (ACLManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
@@ -125,21 +125,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Gets a customer action by identifier
         /// </summary>
-        /// <param name="CustomerActionID">Customer action identifier</param>
+        /// <param name="customerActionId">Customer action identifier</param>
         /// <returns>Customer action</returns>
-        public static CustomerAction GetCustomerActionByID(int CustomerActionID)
+        public static CustomerAction GetCustomerActionById(int customerActionId)
         {
-            if (CustomerActionID == 0)
+            if (customerActionId == 0)
                 return null;
 
-            string key = string.Format(CUSTOMERACTIONS_BY_ID_KEY, CustomerActionID);
+            string key = string.Format(CUSTOMERACTIONS_BY_ID_KEY, customerActionId);
             object obj2 = NopCache.Get(key);
             if (ACLManager.CacheEnabled && (obj2 != null))
             {
                 return (CustomerAction)obj2;
             }
 
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.GetCustomerActionByID(CustomerActionID);
+            var dbItem = DBProviderManager<DBACLProvider>.Provider.GetCustomerActionById(customerActionId);
             var customerAction = DBMapping(dbItem);
 
             if (ACLManager.CacheEnabled)
@@ -174,16 +174,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Inserts a customer action
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A customer action</returns>
-        public static CustomerAction InsertCustomerAction(string Name,
-            string SystemKeyword, string Comment, string DisplayOrder)
+        public static CustomerAction InsertCustomerAction(string name,
+            string systemKeyword, string comment, string displayOrder)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.InsertCustomerAction(Name,
-                SystemKeyword, Comment, DisplayOrder);
+            var dbItem = DBProviderManager<DBACLProvider>.Provider.InsertCustomerAction(name,
+                systemKeyword, comment, displayOrder);
             var customerAction = DBMapping(dbItem);
 
             if (ACLManager.CacheEnabled)
@@ -197,17 +197,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Updates the customer action
         /// </summary>
-        /// <param name="CustomerActionID">The customer action identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="SystemKeyword">The system keyword</param>
-        /// <param name="Comment">The comment</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="customerActionId">The customer action identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>A customer action</returns>
-        public static CustomerAction UpdateCustomerAction(int CustomerActionID,
-            string Name, string SystemKeyword, string Comment, string DisplayOrder)
+        public static CustomerAction UpdateCustomerAction(int customerActionId,
+            string name, string systemKeyword, string comment, string displayOrder)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.UpdateCustomerAction(CustomerActionID,
-                Name, SystemKeyword, Comment, DisplayOrder);
+            var dbItem = DBProviderManager<DBACLProvider>.Provider.UpdateCustomerAction(customerActionId,
+                name, systemKeyword, comment, displayOrder);
             var customerAction = DBMapping(dbItem);
 
             if (ACLManager.CacheEnabled)
@@ -223,23 +223,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Deletes an ACL
         /// </summary>
-        /// <param name="ACLID">ACL identifier</param>
-        public static void DeleteACL(int ACLID)
+        /// <param name="aclId">ACL identifier</param>
+        public static void DeleteAcl(int aclId)
         {
-            DBProviderManager<DBACLProvider>.Provider.DeleteACL(ACLID);
+            DBProviderManager<DBACLProvider>.Provider.DeleteAcl(aclId);
         }
 
         /// <summary>
         /// Gets an ACL by identifier
         /// </summary>
-        /// <param name="ACLID">ACL identifier</param>
+        /// <param name="aclId">ACL identifier</param>
         /// <returns>ACL</returns>
-        public static ACL GetACLByID(int ACLID)
+        public static ACL GetAclById(int aclId)
         {
-            if (ACLID == 0)
+            if (aclId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.GetACLByID(ACLID);
+            var dbItem = DBProviderManager<DBACLProvider>.Provider.GetAclById(aclId);
             var acl = DBMapping(dbItem);
             return acl;
         }
@@ -247,15 +247,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Gets all ACL
         /// </summary>
-        /// <param name="CustomerActionID">Customer action identifier; 0 to load all records</param>
-        /// <param name="CustomerRoleID">Customer role identifier; 0 to load all records</param>
-        /// <param name="Allow">Value indicating whether action is allowed; null to load all records</param>
+        /// <param name="customerActionId">Customer action identifier; 0 to load all records</param>
+        /// <param name="customerRoleId">Customer role identifier; 0 to load all records</param>
+        /// <param name="allow">Value indicating whether action is allowed; null to load all records</param>
         /// <returns>ACL collection</returns>
-        public static ACLCollection GetAllACL(int CustomerActionID,
-            int CustomerRoleID, bool? Allow)
+        public static ACLCollection GetAllAcl(int customerActionId,
+            int customerRoleId, bool? allow)
         {
-            var dbCollection = DBProviderManager<DBACLProvider>.Provider.GetAllACL(CustomerActionID,
-                CustomerRoleID, Allow);
+            var dbCollection = DBProviderManager<DBACLProvider>.Provider.GetAllAcl(customerActionId,
+                customerRoleId, allow);
             var aclCollection = DBMapping(dbCollection);
             return aclCollection;
         }
@@ -263,15 +263,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Inserts an ACL
         /// </summary>
-        /// <param name="CustomerActionID">The customer action identifier</param>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="Allow">The value indicating whether action is allowed</param>
+        /// <param name="customerActionId">The customer action identifier</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="allow">The value indicating whether action is allowed</param>
         /// <returns>An ACL</returns>
-        public static ACL InsertACL(int CustomerActionID,
-            int CustomerRoleID, bool Allow)
+        public static ACL InsertAcl(int customerActionId,
+            int customerRoleId, bool allow)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.InsertACL(CustomerActionID,
-                CustomerRoleID, Allow);
+            var dbItem = DBProviderManager<DBACLProvider>.Provider.InsertAcl(customerActionId,
+                customerRoleId, allow);
             var acl = DBMapping(dbItem);
             return acl;
         }
@@ -279,16 +279,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Updates the ACL
         /// </summary>
-        /// <param name="ACLID">The ACL identifier</param>
-        /// <param name="CustomerActionID">The customer action identifier</param>
-        /// <param name="CustomerRoleID">The customer role identifier</param>
-        /// <param name="Allow">The value indicating whether action is allowed</param>
+        /// <param name="aclId">The ACL identifier</param>
+        /// <param name="customerActionId">The customer action identifier</param>
+        /// <param name="customerRoleId">The customer role identifier</param>
+        /// <param name="allow">The value indicating whether action is allowed</param>
         /// <returns>An ACL</returns>
-        public static ACL UpdateACL(int ACLID, int CustomerActionID,
-            int CustomerRoleID, bool Allow)
+        public static ACL UpdateAcl(int aclId, int customerActionId,
+            int customerRoleId, bool allow)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.UpdateACL(ACLID,
-                CustomerActionID, CustomerRoleID, Allow);
+            var dbItem = DBProviderManager<DBACLProvider>.Provider.UpdateAcl(aclId,
+                customerActionId, customerRoleId, allow);
             var acl = DBMapping(dbItem);
             return acl;
         }
@@ -298,30 +298,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Indicates whether action is allowed
         /// </summary>
-        /// <param name="ActionSystemKeyword">Action system keyword</param>
+        /// <param name="actionSystemKeyword">Action system keyword</param>
         /// <returns>Result</returns>
-        public static bool IsActionAllowed(string ActionSystemKeyword)
+        public static bool IsActionAllowed(string actionSystemKeyword)
         {
-            int userID = 0;
+            int userId = 0;
             if (NopContext.Current != null &&
                 NopContext.Current.User != null)
-                userID = NopContext.Current.User.CustomerID;
-            return IsActionAllowed(userID, ActionSystemKeyword);
+                userId = NopContext.Current.User.CustomerId;
+            return IsActionAllowed(userId, actionSystemKeyword);
         }
 
         /// <summary>
         /// Indicates whether action is allowed
         /// </summary>
-        /// <param name="CustomerID">Customer identifer</param>
-        /// <param name="ActionSystemKeyword">Action system keyword</param>
+        /// <param name="customerId">Customer identifer</param>
+        /// <param name="actionSystemKeyword">Action system keyword</param>
         /// <returns>Result</returns>
-        public static bool IsActionAllowed(int CustomerID, string ActionSystemKeyword)
+        public static bool IsActionAllowed(int customerId, string actionSystemKeyword)
         {
             if (!ACLManager.Enabled)
                 return true;
 
-            bool result = DBProviderManager<DBACLProvider>.Provider.IsActionAllowed(CustomerID,
-                ActionSystemKeyword);
+            bool result = DBProviderManager<DBACLProvider>.Provider.IsActionAllowed(customerId,
+                actionSystemKeyword);
 
             return result;
         }

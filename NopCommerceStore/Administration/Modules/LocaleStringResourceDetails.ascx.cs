@@ -32,13 +32,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceByID(this.LocaleStringResourceID);
+            LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceById(this.LocaleStringResourceId);
             if (localeStringResource != null)
             {
-                Language language = LanguageManager.GetLanguageByID(localeStringResource.LanguageID);
+                Language language = LanguageManager.GetLanguageById(localeStringResource.LanguageId);
                 if (language != null)
                 {
-                    hlBackToResources.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "LocaleStringResources.aspx?LanguageID=" + localeStringResource.LanguageID.ToString();
+                    hlBackToResources.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "LocaleStringResources.aspx?LanguageID=" + localeStringResource.LanguageId.ToString();
                 }                
             }
             else
@@ -60,7 +60,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     LocaleStringResource localeStringResource = ctrlLocaleStringResourceInfo.SaveInfo();
-                    Response.Redirect("LocaleStringResources.aspx?LanguageID=" + localeStringResource.LanguageID.ToString());
+                    Response.Redirect("LocaleStringResources.aspx?LanguageID=" + localeStringResource.LanguageId.ToString());
                     
                 }
                 catch (Exception exc)
@@ -74,10 +74,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                LocaleStringResourceManager.DeleteLocaleStringResource(this.LocaleStringResourceID);
-                LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceByID(this.LocaleStringResourceID);
+                LocaleStringResourceManager.DeleteLocaleStringResource(this.LocaleStringResourceId);
+                LocaleStringResource localeStringResource = LocaleStringResourceManager.GetLocaleStringResourceById(this.LocaleStringResourceId);
                 if (localeStringResource != null)
-                    Response.Redirect("LocaleStringResources.aspx?LanguageID=" + localeStringResource.LanguageID.ToString());
+                    Response.Redirect("LocaleStringResources.aspx?LanguageID=" + localeStringResource.LanguageId.ToString());
                 else
                     Response.Redirect("LocaleStringResources.aspx");
             }
@@ -87,11 +87,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int LocaleStringResourceID
+        public int LocaleStringResourceId
         {
             get
             {
-                return CommonHelper.QueryStringInt("LocaleStringResourceID");
+                return CommonHelper.QueryStringInt("LocaleStringResourceId");
             }
         }
     }

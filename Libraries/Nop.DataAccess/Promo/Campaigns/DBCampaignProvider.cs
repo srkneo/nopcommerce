@@ -33,18 +33,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Campaigns
     public abstract partial class DBCampaignProvider : BaseDBProvider   
     {
         #region Methods
+
         /// <summary>
         /// Gets a campaign by campaign identifier
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
+        /// <param name="campaignId">Campaign identifier</param>
         /// <returns>Message template</returns>
-        public abstract DBCampaign GetCampaignByID(int CampaignID);
+        public abstract DBCampaign GetCampaignById(int campaignId);
 
         /// <summary>
         /// Deletes a campaign
         /// </summary>
-        /// <param name="CampaignID">Campaign identifier</param>
-        public abstract void DeleteCampaign(int CampaignID);
+        /// <param name="campaignId">Campaign identifier</param>
+        public abstract void DeleteCampaign(int campaignId);
 
         /// <summary>
         /// Gets all campaigns
@@ -55,24 +56,26 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Campaigns
         /// <summary>
         /// Inserts a campaign
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="name">The name</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Campaign</returns>
-        public abstract DBCampaign InsertCampaign(string Name, string Subject, string Body, DateTime CreatedOn);
+        public abstract DBCampaign InsertCampaign(string name, 
+            string subject, string body, DateTime createdOn);
 
         /// <summary>
         /// Updates the campaign
         /// </summary>
-        /// <param name="CampaignID">The campaign identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Subject">The subject</param>
-        /// <param name="Body">The body</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
+        /// <param name="campaignId">The campaign identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="subject">The subject</param>
+        /// <param name="body">The body</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Campaign</returns>
-        public abstract DBCampaign UpdateCampaign(int CampaignID,
-           string Name, string Subject, string Body, DateTime CreatedOn);
+        public abstract DBCampaign UpdateCampaign(int campaignId,
+            string name, string subject, string body, DateTime createdOn);
+
         #endregion
     }
 }

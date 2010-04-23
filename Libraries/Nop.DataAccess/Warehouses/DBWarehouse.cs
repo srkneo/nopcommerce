@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Warehouses
         /// <summary>
         /// Gets or sets the warehouse identifier
         /// </summary>
-        public int WarehouseID { get; set; }
+        public int WarehouseId { get; set; }
 
         /// <summary>
         /// Gets or sets the name
@@ -87,7 +87,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Warehouses
         /// <summary>
         /// Gets or sets the country identifier
         /// </summary>
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the entity has been deleted

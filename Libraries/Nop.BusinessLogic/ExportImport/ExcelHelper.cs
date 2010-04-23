@@ -37,11 +37,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
     public partial class ExcelHelper : IDisposable 
     {
         #region Fileds
-        private string excelObject = "Provider=Microsoft.{0}.OLEDB.{1};Data Source={2};Extended Properties=\"Excel {3};HDR={4};IMEX={5}\"";
-        private string filepath = string.Empty;
-        private string hdr = "No";
-        private string imex = "1";
-        private OleDbConnection con = null;
+        private string _excelObject = "Provider=Microsoft.{0}.OLEDB.{1};Data Source={2};Extended Properties=\"Excel {3};HDR={4};IMEX={5}\"";
+        private string _filepath = string.Empty;
+        private string _hdr = "No";
+        private string _imex = "1";
+        private OleDbConnection _con = null;
         #endregion
 
         #region Ctor
@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <param name="filepath">Excel file path</param>
         public ExcelHelper(string filepath)
         {
-            this.filepath = filepath;
+            this._filepath = filepath;
         }
         #endregion
 
@@ -177,10 +177,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// <summary>
         /// Execute new command
         /// </summary>
-        /// <param name="Command">Command</param>
-        public void ExecuteCommand(string Command)
+        /// <param name="command">Command</param>
+        public void ExecuteCommand(string command)
         {
-            using (OleDbCommand cmd = new OleDbCommand(Command, this.Connection))
+            using (OleDbCommand cmd = new OleDbCommand(command, this.Connection))
             {
                 if (this.Connection.State != ConnectionState.Open) this.Connection.Open();
                 cmd.ExecuteNonQuery();
@@ -266,12 +266,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         public void Dispose()
         {
-            if (this.con != null && this.con.State == ConnectionState.Open)
-                this.con.Close();
-            if (this.con != null)
-                this.con.Dispose();
-            this.con = null;
-            this.filepath = string.Empty;
+            if (this._con != null && this._con.State == ConnectionState.Open)
+                this._con.Close();
+            if (this._con != null)
+                this._con.Dispose();
+            this._con = null;
+            this._filepath = string.Empty;
         }
         #endregion
 
@@ -284,18 +284,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
             get
             {
                 string result = string.Empty;
-                if (String.IsNullOrEmpty(this.filepath))
+                if (String.IsNullOrEmpty(this._filepath))
                     return result;
 
                 //Check for File Format
-                FileInfo fi = new FileInfo(this.filepath);
+                FileInfo fi = new FileInfo(this._filepath);
                 if (fi.Extension.Equals(".xls"))
                 {
-                    result = string.Format(this.excelObject, "Jet", "4.0", this.filepath, "8.0", this.hdr, this.imex);
+                    result = string.Format(this._excelObject, "Jet", "4.0", this._filepath, "8.0", this._hdr, this._imex);
                 }
                 else if (fi.Extension.Equals(".xlsx"))
                 {
-                    result = string.Format(this.excelObject, "Ace", "12.0", this.filepath, "12.0", this.hdr, this.imex);
+                    result = string.Format(this._excelObject, "Ace", "12.0", this._filepath, "12.0", this._hdr, this._imex);
                 }
                 return result;
             }
@@ -308,42 +308,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         {
             get
             {
-                if (con == null)
+                if (_con == null)
                 {
-                    OleDbConnection _con = new OleDbConnection { ConnectionString = this.ConnectionString };
-                    this.con = _con;
+                    this._con = new OleDbConnection { ConnectionString = this.ConnectionString };
                 }
-                return this.con;
+                return this._con;
             }
         }
 
         /// <summary>
         /// Gets or sets a HDR
         /// </summary>
-        public string HDR
+        public string Hdr
         {
             get
             {
-                return this.hdr;
+                return this._hdr;
             }
             set
             {
-                this.hdr = value;
+                this._hdr = value;
             }
         }
 
         /// <summary>
         /// Gets or sets an IMEX
         /// </summary>
-        public string IMEX
+        public string Imex
         {
             get
             {
-                return this.imex;
+                return this._imex;
             }
             set
             {
-                this.imex = value;
+                this._imex = value;
             }
         }
         #endregion

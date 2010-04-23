@@ -43,11 +43,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var customerCurrency = NopContext.Current.WorkingCurrency;
                 foreach (var currency in currencies)
                 {
-                    var item = new ListItem(currency.Name, currency.CurrencyID.ToString());
+                    var item = new ListItem(currency.Name, currency.CurrencyId.ToString());
                     this.ddlCurrencies.Items.Add(item);
                 }
                 if (customerCurrency != null)
-                    CommonHelper.SelectListItem(this.ddlCurrencies, customerCurrency.CurrencyID);
+                    CommonHelper.SelectListItem(this.ddlCurrencies, customerCurrency.CurrencyId);
             }
             else
                 this.Visible = false;
@@ -63,8 +63,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void ddlCurrencies_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            int currencyID = int.Parse(this.ddlCurrencies.SelectedItem.Value);
-            var currency = CurrencyManager.GetCurrencyByID(currencyID);
+            int currencyId = int.Parse(this.ddlCurrencies.SelectedItem.Value);
+            var currency = CurrencyManager.GetCurrencyById(currencyId);
             if (currency != null && currency.Published)
             {
                 NopContext.Current.WorkingCurrency = currency;

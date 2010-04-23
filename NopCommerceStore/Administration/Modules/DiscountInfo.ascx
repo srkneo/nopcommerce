@@ -183,18 +183,16 @@
                             Width="100%" OnPageIndexChanging="gvDiscountUsageHistory_PageIndexChanging" AllowPaging="true"
                             PageSize="15">
                             <Columns>
-                                <asp:BoundField DataField="DiscountUsageHistoryID" HeaderText="Discount Usage History ID"
-                                    Visible="false"></asp:BoundField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.DiscountInfo.UsageHistory.CustomerColumn %>"
                                     ItemStyle-Width="40%">
                                     <ItemTemplate>
-                                        <%#GetCustomerInfo (Convert.ToInt32(Eval("CustomerID")))%>
+                                        <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.DiscountInfo.UsageHistory.OrderColumn %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="40%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderID")%>">
+                                        <a href="OrderDetails.aspx?OrderID=<%#Eval("OrderId")%>">
                                             <%#GetLocaleResourceString("Admin.DiscountInfo.UsageHistory.OrderColumn.View")%>
                                         </a>
                                     </ItemTemplate>
@@ -209,7 +207,7 @@
                                     ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <asp:Button ID="DeleteUsageHistoryButton" runat="server" CssClass="adminButton" CommandName="DeleteUsageHistory"
-                                            Text="<% $NopResources:Admin.DiscountInfo.UsageHistory.DeleteButton.Text %>" CommandArgument='<%#Eval("DiscountUsageHistoryID")%>'
+                                            Text="<% $NopResources:Admin.DiscountInfo.UsageHistory.DeleteButton.Text %>" CommandArgument='<%#Eval("DiscountUsageHistoryId")%>'
                                             OnCommand="DeleteUsageHistoryButton_OnCommand" CausesValidation="false" ToolTip="<% $NopResources:Admin.DiscountInfo.UsageHistory.DeleteButton.Tooltip %>" />
                                     </ItemTemplate>
                                 </asp:TemplateField>

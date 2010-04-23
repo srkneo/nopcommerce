@@ -39,17 +39,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets or sets the ProductManufacturer identifier
         /// </summary>
-        public int ProductManufacturerID { get; set; }
+        public int ProductManufacturerId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
         /// </summary>
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets the manufacturer identifier
         /// </summary>
-        public int ManufacturerID { get; set; }
+        public int ManufacturerId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the product is featured
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                return ManufacturerManager.GetManufacturerByID(ManufacturerID);
+                return ManufacturerManager.GetManufacturerById(this.ManufacturerId);
             }
         }
 
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                return ProductManager.GetProductByID(ProductID);
+                return ProductManager.GetProductById(this.ProductId);
             }
         }
 

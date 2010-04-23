@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     ProductTemplate productTemplate = ctrlProductTemplateInfo.SaveInfo();
-                    Response.Redirect("ProductTemplateDetails.aspx?ProductTemplateID=" + productTemplate.ProductTemplateID.ToString());
+                    Response.Redirect("ProductTemplateDetails.aspx?ProductTemplateID=" + productTemplate.ProductTemplateId.ToString());
                 }
                 catch (Exception exc)
                 {

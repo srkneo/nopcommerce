@@ -35,7 +35,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductManager.DeletePricelist(this.PricelistID);
+                ProductManager.DeletePricelist(this.PricelistId);
                 Response.Redirect(string.Format("Pricelist.aspx"));
             }
             catch (Exception exc)
@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     Pricelist pricelist = ctrlPricelistInfo.SaveInfo();
                     if (pricelist != null)
                     {
-                        Response.Redirect("PricelistDetails.aspx?PricelistID=" + pricelist.PricelistID.ToString());
+                        Response.Redirect("PricelistDetails.aspx?PricelistID=" + pricelist.PricelistId.ToString());
                     }
                     else
                     {
@@ -67,11 +67,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public int PricelistID
+        public int PricelistId
         {
             get
             {
-                return CommonHelper.QueryStringInt("PricelistID");
+                return CommonHelper.QueryStringInt("PricelistId");
             }
         }
     }

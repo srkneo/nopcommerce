@@ -37,63 +37,65 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <summary>
         /// Deletes expired shopping cart items
         /// </summary>
-        /// <param name="OlderThan">Older than date and time</param>
-        public abstract void DeleteExpiredShoppingCartItems(DateTime OlderThan);
+        /// <param name="olderThan">Older than date and time</param>
+        public abstract void DeleteExpiredShoppingCartItems(DateTime olderThan);
 
         /// <summary>
         /// Deletes a shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartItemID">The shopping cart item identifier</param>
-        public abstract void DeleteShoppingCartItem(int ShoppingCartItemID);
+        /// <param name="shoppingCartItemId">The shopping cart item identifier</param>
+        public abstract void DeleteShoppingCartItem(int shoppingCartItemId);
 
         /// <summary>
         /// Gets a shopping cart by customer session GUID
         /// </summary>
-        /// <param name="ShoppingCartTypeID">Shopping cart type identifier</param>
-        /// <param name="CustomerSessionGUID">The customer session identifier</param>
+        /// <param name="shoppingCartTypeId">Shopping cart type identifier</param>
+        /// <param name="customerSessionGuid">The customer session identifier</param>
         /// <returns>Cart</returns>
-        public abstract DBShoppingCart GetShoppingCartByCustomerSessionGUID(int ShoppingCartTypeID, Guid CustomerSessionGUID);
+        public abstract DBShoppingCart GetShoppingCartByCustomerSessionGuid(int shoppingCartTypeId,
+            Guid customerSessionGuid);
 
         /// <summary>
         /// Gets a shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartItemID">The shopping cart item identifier</param>
+        /// <param name="shoppingCartItemId">The shopping cart item identifier</param>
         /// <returns>Shopping cart item</returns>
-        public abstract DBShoppingCartItem GetShoppingCartItemByID(int ShoppingCartItemID);
+        public abstract DBShoppingCartItem GetShoppingCartItemById(int shoppingCartItemId);
 
         /// <summary>
         /// Inserts a shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartTypeID">The shopping cart type identifier</param>
-        /// <param name="CustomerSessionGUID">The customer session identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The product variant attributes</param>
-        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="shoppingCartTypeId">The shopping cart type identifier</param>
+        /// <param name="customerSessionGuid">The customer session identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The product variant attributes</param>
+        /// <param name="customerEnteredPrice">The price enter by a customer</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public abstract DBShoppingCartItem InsertShoppingCartItem(int ShoppingCartTypeID, 
-            Guid CustomerSessionGUID, int ProductVariantID, string AttributesXML, 
-            decimal CustomerEnteredPrice, int Quantity,DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBShoppingCartItem InsertShoppingCartItem(int shoppingCartTypeId,
+            Guid customerSessionGuid, int productVariantId, string attributesXml, 
+            decimal customerEnteredPrice, int quantity, 
+            DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
         /// Updates the shopping cart item
         /// </summary>
-        /// <param name="ShoppingCartItemID">The shopping cart item identifier</param>
-        /// <param name="ShoppingCartTypeID">The shopping cart type identifier</param>
-        /// <param name="CustomerSessionGUID">The customer session identifier</param>
-        /// <param name="ProductVariantID">The product variant identifier</param>
-        /// <param name="AttributesXML">The product variant attributes</param>
-        /// <param name="CustomerEnteredPrice">The price enter by a customer</param>
-        /// <param name="Quantity">The quantity</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="shoppingCartItemId">The shopping cart item identifier</param>
+        /// <param name="shoppingCartTypeId">The shopping cart type identifier</param>
+        /// <param name="customerSessionGuid">The customer session identifier</param>
+        /// <param name="productVariantId">The product variant identifier</param>
+        /// <param name="attributesXml">The product variant attributes</param>
+        /// <param name="customerEnteredPrice">The price enter by a customer</param>
+        /// <param name="quantity">The quantity</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Shopping cart item</returns>
-        public abstract DBShoppingCartItem UpdateShoppingCartItem(int ShoppingCartItemID, 
-            int ShoppingCartTypeID, Guid CustomerSessionGUID, int ProductVariantID, 
-            string AttributesXML, decimal CustomerEnteredPrice, int Quantity,
-            DateTime CreatedOn, DateTime UpdatedOn);
+        public abstract DBShoppingCartItem UpdateShoppingCartItem(int shoppingCartItemId,
+            int shoppingCartTypeId, Guid customerSessionGuid,
+            int productVariantId, string attributesXml,
+            decimal customerEnteredPrice, int quantity, DateTime createdOn, DateTime updatedOn);
         #endregion
     }
 }

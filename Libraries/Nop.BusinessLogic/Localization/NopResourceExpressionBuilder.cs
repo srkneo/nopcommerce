@@ -89,13 +89,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         {
             var lsr = new LocaleStringResource();
             lsr.ResourceName = expression;
-            //try
-            //{
-            //    lsr.LanguageID = NopContext.Current.WorkingLanguage.LanguageID;
-            //}
-            //catch (Exception exc)
-            //{
-            //}
             return lsr;
         }
         #endregion

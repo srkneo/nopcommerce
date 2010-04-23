@@ -33,18 +33,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
     public abstract partial class DBShippingByTotalProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Get a ShippingByTotal
         /// </summary>
-        /// <param name="ShippingByTotalID">ShippingByTotal identifier</param>
+        /// <param name="shippingByTotalId">ShippingByTotal identifier</param>
         /// <returns>ShippingByTotal</returns>
-        public abstract DBShippingByTotal GetByID(int ShippingByTotalID);
+        public abstract DBShippingByTotal GetById(int shippingByTotalId);
 
         /// <summary>
         /// Deletes a ShippingByTotal
         /// </summary>
-        /// <param name="ShippingByTotalID">ShippingByTotal identifier</param>
-        public abstract void DeleteShippingByTotal(int ShippingByTotalID);
+        /// <param name="shippingByTotalId">ShippingByTotal identifier</param>
+        public abstract void DeleteShippingByTotal(int shippingByTotalId);
 
         /// <summary>
         /// Gets all ShippingByTotals
@@ -55,36 +56,39 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Inserts a ShippingByTotal
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByTotal</returns>
-        public abstract DBShippingByTotal InsertShippingByTotal(int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount);
+        public abstract DBShippingByTotal InsertShippingByTotal(int shippingMethodId, 
+            decimal from, decimal to, bool usePercentage, 
+            decimal shippingChargePercentage, decimal shippingChargeAmount);
 
         /// <summary>
         /// Updates the ShippingByTotal
         /// </summary>
-        /// <param name="ShippingByTotalID">The ShippingByTotal identifier</param>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
-        /// <param name="From">The "from" value</param>
-        /// <param name="To">The "to" value</param>
-        /// <param name="UsePercentage">A value indicating whether to use percentage</param>
-        /// <param name="ShippingChargePercentage">The shipping charge percentage</param>
-        /// <param name="ShippingChargeAmount">The shipping charge amount</param>
+        /// <param name="shippingByTotalId">The ShippingByTotal identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
+        /// <param name="from">The "from" value</param>
+        /// <param name="to">The "to" value</param>
+        /// <param name="usePercentage">A value indicating whether to use percentage</param>
+        /// <param name="shippingChargePercentage">The shipping charge percentage</param>
+        /// <param name="shippingChargeAmount">The shipping charge amount</param>
         /// <returns>ShippingByTotal</returns>
-        public abstract DBShippingByTotal UpdateShippingByTotal(int ShippingByTotalID, int ShippingMethodID, decimal From, decimal To,
-            bool UsePercentage, decimal ShippingChargePercentage, decimal ShippingChargeAmount);
+        public abstract DBShippingByTotal UpdateShippingByTotal(int shippingByTotalId, 
+            int shippingMethodId, decimal from, decimal to, bool usePercentage,
+            decimal shippingChargePercentage, decimal shippingChargeAmount);
 
         /// <summary>
         /// Gets all ShippingByTotals by shipping method identifier
         /// </summary>
-        /// <param name="ShippingMethodID">The shipping method identifier</param>
+        /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <returns>ShippingByTotal collection</returns>
-        public abstract DBShippingByTotalCollection GetAllByShippingMethodID(int ShippingMethodID);
+        public abstract DBShippingByTotalCollection GetAllByShippingMethodId(int shippingMethodId);
+        
         #endregion
     }
 }

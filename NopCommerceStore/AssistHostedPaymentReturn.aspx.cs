@@ -26,7 +26,7 @@ namespace NopSolutions.NopCommerce.Web
 
             if(NopContext.Current.User == null)
             {
-                string loginURL = SEOHelper.GetLoginPageURL(true);
+                string loginURL = SEOHelper.GetLoginPageUrl(true);
                 Response.Redirect(loginURL);
             }
 
@@ -34,8 +34,8 @@ namespace NopSolutions.NopCommerce.Web
 
             if(!Page.IsPostBack)
             {
-                Order order = OrderManager.GetOrderByID(CommonHelper.QueryStringInt("Order_IDP"));
-                if(order == null || NopContext.Current.User.CustomerID != order.CustomerID)
+                Order order = OrderManager.GetOrderById(CommonHelper.QueryStringInt("Order_IDP"));
+                if(order == null || NopContext.Current.User.CustomerId != order.CustomerId)
                 {
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }
@@ -44,14 +44,14 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     if(OrderManager.CanMarkOrderAsAuthorized(order))
                     {
-                        OrderManager.MarkAsAuthorized(order.OrderID);
+                        OrderManager.MarkAsAuthorized(order.OrderId);
                     }
                 }
                 else
                 {
                     if(OrderManager.CanMarkOrderAsPaid(order))
                     {
-                        OrderManager.MarkOrderAsPaid(order.OrderID);
+                        OrderManager.MarkOrderAsPaid(order.OrderId);
                     }
                 }
 

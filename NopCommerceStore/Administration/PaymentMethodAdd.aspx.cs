@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
                         txtVisibleName.Text, txtDescription.Text, txtConfigureTemplatePath.Text,
                         txtUserTemplatePath.Text, txtClassName.Text,txtSystemKeyword.Text,
                         cbActive.Checked, txtDisplayOrder.Value);
-                    Response.Redirect("PaymentMethodDetails.aspx?PaymentMethodID=" + paymentMethod.PaymentMethodID.ToString());
+                    Response.Redirect("PaymentMethodDetails.aspx?PaymentMethodID=" + paymentMethod.PaymentMethodId.ToString());
                 }
                 catch (Exception exc)
                 {

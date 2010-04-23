@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <summary>
         /// Gets or sets the shipping rate computation method identifier
         /// </summary>
-        public int ShippingRateComputationMethodID { get; set; }
+        public int ShippingRateComputationMethodId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets or sets the product type identifier
         /// </summary>
-        public int ProductTypeID { get; set; }
+        public int ProductTypeId { get; set; }
 
         /// <summary>
         /// Gets or sets the name

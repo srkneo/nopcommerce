@@ -31,15 +31,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
     public partial class SelectDiscountsControl : BaseNopAdministrationUserControl
     {
-        protected List<int> selectedDiscountIDs = new List<int>();
+        protected List<int> selectedDiscountIds = new List<int>();
 
         public void BindData(DiscountTypeEnum? DiscountType)
         {
             DiscountCollection discountCollection = DiscountManager.GetAllDiscounts(DiscountType);
             foreach (Discount discount in discountCollection)
             {
-                ListItem item = new ListItem(discount.Name, discount.DiscountID.ToString());
-                if (this.selectedDiscountIDs.Contains(discount.DiscountID))
+                ListItem item = new ListItem(discount.Name, discount.DiscountId.ToString());
+                if (this.selectedDiscountIds.Contains(discount.DiscountId))
                     item.Selected = true;
                 this.cblDiscounts.Items.Add(item);
             }
@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public List<int> SelectedDiscountIDs
+        public List<int> SelectedDiscountIds
         {
             get
             {
@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
             set
             {
-                this.selectedDiscountIDs = value;
+                this.selectedDiscountIds = value;
             }
         }
     }

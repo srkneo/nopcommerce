@@ -66,13 +66,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var bestSellersReportLine = e.Item.DataItem as BestSellersReportLine;
-                var productVariant = ProductManager.GetProductVariantByID(bestSellersReportLine.ProductVariantID);
+                var productVariant = ProductManager.GetProductVariantById(bestSellersReportLine.ProductVariantId);
                 if (productVariant != null)
                 {
                     var product = productVariant.Product;
                     if (product != null)
                     {
-                        string productURL = SEOHelper.GetProductURL(product);
+                        string productURL = SEOHelper.GetProductUrl(product);
 
                         var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                         if (hlImageLink != null)

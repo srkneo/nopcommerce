@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Dibs
     public class FlexWinPaymentProcessor : IPaymentMethod
     {
         #region Methods
-        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             processPaymentResult.PaymentStatus = PaymentStatusEnum.Pending;
         }
@@ -53,20 +53,20 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Dibs
             }
             post.Add("uniqueoid", "yes");
 
-            Language lang = LanguageManager.GetLanguageByID(order.CustomerLanguageID);
+            Language lang = LanguageManager.GetLanguageById(order.CustomerLanguageId);
             int currency = DibsHelper.GetCurrencyNumberByCode(CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
             int amount = (int)((double)order.OrderTotal * 100);
-            int merhcantID = FlexWinSettings.MerchantID;
+            int merhcantID = FlexWinSettings.MerchantId;
 
             post.Add("lang", DibsHelper.GetLanguageCodeByLanguageCulture(lang.LanguageCulture));
             post.Add("currency", currency.ToString());
             post.Add("color", FlexWinSettings.ColorTheme);
             post.Add("decorator", FlexWinSettings.Decorator);
             post.Add("merchant", merhcantID.ToString());
-            post.Add("orderid", order.OrderID.ToString());
+            post.Add("orderid", order.OrderId.ToString());
             post.Add("amount", amount.ToString());
-            post.Add("md5key", FlexWinHelper.CalcMD5Key(merhcantID, order.OrderID, currency, amount));
-            post.Add("accepturl", String.Format("{0}DibsFlexWinReturn.aspx?x={1}", CommonHelper.GetStoreHost(false), order.OrderID));
+            post.Add("md5key", FlexWinHelper.CalcMD5Key(merhcantID, order.OrderId, currency, amount));
+            post.Add("accepturl", String.Format("{0}DibsFlexWinReturn.aspx?x={1}", CommonHelper.GetStoreHost(false), order.OrderId));
             post.Add("cancelurl", String.Format("{0}shoppingcart.aspx", CommonHelper.GetStoreHost(false)));
             post.Add("delivery1.Name", order.ShippingFullName);
             post.Add("delivery2.Address", order.ShippingAddress1);
@@ -118,9 +118,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Dibs
         /// </summary>
         /// <param name="paymentInfo">Payment info required for an order processing</param>
         /// <param name="customer">Customer</param>
-        /// <param name="OrderGuid">Unique order identifier</param>
+        /// <param name="orderGuid">Unique order identifier</param>
         /// <param name="processPaymentResult">Process payment result</param>
-        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid OrderGuid, ref ProcessPaymentResult processPaymentResult)
+        public void ProcessRecurringPayment(PaymentInfo paymentInfo, Customer customer, Guid orderGuid, ref ProcessPaymentResult processPaymentResult)
         {
             throw new NopException("Recurring payments not supported");
         }

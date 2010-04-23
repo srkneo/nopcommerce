@@ -9,13 +9,11 @@
             <td class="adminData">
                 <asp:GridView ID="gvProductVariants" runat="server" AutoGenerateColumns="False" Width="100%">
                     <Columns>
-                        <asp:BoundField DataField="ShoppingCartItemID" HeaderText="Item ID" Visible="False">
-                        </asp:BoundField>
                         <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerShoppingCart.Name %>"
                             ItemStyle-Width="45%">
                             <ItemTemplate>
                                 <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
-                                    <em><a href='<%#GetProductVariantURL((ShoppingCartItem)Container.DataItem)%>' title="<%#GetLocaleResourceString("Admin.CustomerShoppingCart.Name.Tooltip")%>">
+                                    <em><a href='<%#GetProductVariantUrl((ShoppingCartItem)Container.DataItem)%>' title="<%#GetLocaleResourceString("Admin.CustomerShoppingCart.Name.Tooltip")%>">
                                         <%#Server.HtmlEncode(GetProductVariantName((ShoppingCartItem)Container.DataItem))%></a></em>
                                     <%#GetAttributeDescription((ShoppingCartItem)Container.DataItem)%>
                                 </div>

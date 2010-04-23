@@ -34,18 +34,19 @@ namespace NopSolutions.NopCommerce.DataAccess.Configuration.Settings
     public abstract partial class DBSettingProvider : BaseDBProvider
     {
         #region Methods
+
         /// <summary>
         /// Gets a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifer</param>
+        /// <param name="settingId">Setting identifer</param>
         /// <returns>Setting</returns>
-        public abstract DBSetting GetSettingByID(int SettingID);
+        public abstract DBSetting GetSettingById(int settingId);
 
         /// <summary>
         /// Deletes a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifer</param>
-        public abstract void DeleteSetting(int SettingID);
+        /// <param name="settingId">Setting identifer</param>
+        public abstract void DeleteSetting(int settingId);
 
         /// <summary>
         /// Gets all settings
@@ -56,21 +57,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Configuration.Settings
         /// <summary>
         /// Adds a setting
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public abstract DBSetting AddSetting(string Name, string Value, string Description);
+        public abstract DBSetting AddSetting(string name, string value, string description);
 
         /// <summary>
         /// Updates a setting
         /// </summary>
-        /// <param name="SettingID">Setting identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Value">The value</param>
-        /// <param name="Description">The description</param>
+        /// <param name="settingId">Setting identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="value">The value</param>
+        /// <param name="description">The description</param>
         /// <returns>Setting</returns>
-        public abstract DBSetting UpdateSetting(int SettingID, string Name, string Value, string Description);
+        public abstract DBSetting UpdateSetting(int settingId, string name, string value, 
+            string description);
         #endregion
     }
 }

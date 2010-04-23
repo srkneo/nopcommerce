@@ -27,7 +27,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
     /// <summary>
     /// Manufacturer provider for SQL Server
     /// </summary>
-    public partial class SQLManufacturerProvider : DBManufacturerProvider
+    public partial class SqlManufacturerProvider : DBManufacturerProvider
     {
         #region Fields
         private string _sqlConnectionString;
@@ -36,32 +36,32 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         #region Utilities
         private DBManufacturer GetManufacturerFromReader(IDataReader dataReader)
         {
-            DBManufacturer manufacturer = new DBManufacturer();
-            manufacturer.ManufacturerID = NopSqlDataHelper.GetInt(dataReader, "ManufacturerID");
-            manufacturer.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            manufacturer.Description = NopSqlDataHelper.GetString(dataReader, "Description");
-            manufacturer.TemplateID = NopSqlDataHelper.GetInt(dataReader, "TemplateID");
-            manufacturer.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
-            manufacturer.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
-            manufacturer.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
-            manufacturer.SEName = NopSqlDataHelper.GetString(dataReader, "SEName");
-            manufacturer.PictureID = NopSqlDataHelper.GetInt(dataReader, "PictureID");
-            manufacturer.PageSize = NopSqlDataHelper.GetInt(dataReader, "PageSize");
-            manufacturer.PriceRanges = NopSqlDataHelper.GetString(dataReader, "PriceRanges");
-            manufacturer.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
-            manufacturer.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
-            manufacturer.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            manufacturer.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            manufacturer.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return manufacturer;
+            var item = new DBManufacturer();
+            item.ManufacturerId = NopSqlDataHelper.GetInt(dataReader, "ManufacturerID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
+            item.TemplateId = NopSqlDataHelper.GetInt(dataReader, "TemplateID");
+            item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
+            item.MetaDescription = NopSqlDataHelper.GetString(dataReader, "MetaDescription");
+            item.MetaTitle = NopSqlDataHelper.GetString(dataReader, "MetaTitle");
+            item.SEName = NopSqlDataHelper.GetString(dataReader, "SEName");
+            item.PictureId = NopSqlDataHelper.GetInt(dataReader, "PictureID");
+            item.PageSize = NopSqlDataHelper.GetInt(dataReader, "PageSize");
+            item.PriceRanges = NopSqlDataHelper.GetString(dataReader, "PriceRanges");
+            item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
+            item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
+            return item;
         }
 
         private DBManufacturerLocalized GetManufacturerLocalizedFromReader(IDataReader dataReader)
         {
-            DBManufacturerLocalized item = new DBManufacturerLocalized();
-            item.ManufacturerLocalizedID = NopSqlDataHelper.GetInt(dataReader, "ManufacturerLocalizedID");
-            item.ManufacturerID = NopSqlDataHelper.GetInt(dataReader, "ManufacturerID");
-            item.LanguageID = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
+            var item = new DBManufacturerLocalized();
+            item.ManufacturerLocalizedId = NopSqlDataHelper.GetInt(dataReader, "ManufacturerLocalizedID");
+            item.ManufacturerId = NopSqlDataHelper.GetInt(dataReader, "ManufacturerID");
+            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
             item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
             item.Description = NopSqlDataHelper.GetString(dataReader, "Description");
             item.MetaKeywords = NopSqlDataHelper.GetString(dataReader, "MetaKeywords");
@@ -73,13 +73,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
 
         private DBProductManufacturer GetProductManufacturerFromReader(IDataReader dataReader)
         {
-            DBProductManufacturer productManufacturer = new DBProductManufacturer();
-            productManufacturer.ProductManufacturerID = NopSqlDataHelper.GetInt(dataReader, "ProductManufacturerID");
-            productManufacturer.ProductID = NopSqlDataHelper.GetInt(dataReader, "ProductID");
-            productManufacturer.ManufacturerID = NopSqlDataHelper.GetInt(dataReader, "ManufacturerID");
-            productManufacturer.IsFeaturedProduct = NopSqlDataHelper.GetBoolean(dataReader, "IsFeaturedProduct");
-            productManufacturer.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return productManufacturer;
+            var item = new DBProductManufacturer();
+            item.ProductManufacturerId = NopSqlDataHelper.GetInt(dataReader, "ProductManufacturerID");
+            item.ProductId = NopSqlDataHelper.GetInt(dataReader, "ProductID");
+            item.ManufacturerId = NopSqlDataHelper.GetInt(dataReader, "ManufacturerID");
+            item.IsFeaturedProduct = NopSqlDataHelper.GetBoolean(dataReader, "IsFeaturedProduct");
+            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
+            return item;
         }
         #endregion
 
@@ -123,15 +123,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// Gets all manufacturers
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer collection</returns>
-        public override DBManufacturerCollection GetAllManufacturers(bool showHidden, int LanguageID)
+        public override DBManufacturerCollection GetAllManufacturers(bool showHidden, int languageId)
         {
             var result = new DBManufacturerCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLoadAll");
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
@@ -147,144 +147,145 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Gets a manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer</returns>
-        public override DBManufacturer GetManufacturerByID(int ManufacturerID, int LanguageID)
+        public override DBManufacturer GetManufacturerById(int manufacturerId, int languageId)
         {
-
-            DBManufacturer manufacturer = null;
-            if (ManufacturerID == 0)
-                return manufacturer;
+            DBManufacturer item = null;
+            if (manufacturerId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    manufacturer = GetManufacturerFromReader(dataReader);
+                    item = GetManufacturerFromReader(dataReader);
                 }
             }
-            return manufacturer;
+            return item;
         }
 
         /// <summary>
         /// Inserts a manufacturer
         /// </summary>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="PictureID">The parent picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="pictureId">The parent picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer</returns>
-        public override DBManufacturer InsertManufacturer(string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBManufacturer InsertManufacturer(string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int pictureId, int pageSize, string priceRanges,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBManufacturer manufacturer = null;
+            DBManufacturer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerInsert");
             db.AddOutParameter(dbCommand, "ManufacturerID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, TemplateID);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
-            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, PictureID);
-            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
-            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, PriceRanges);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, templateId);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
+            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, pictureId);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, priceRanges);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ManufacturerID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerID"));
-                manufacturer = GetManufacturerByID(ManufacturerID, 0);
+                int manufacturerId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerID"));
+                item = GetManufacturerById(manufacturerId, 0);
             }
-            return manufacturer;
+            return item;
         }
 
         /// <summary>
         /// Updates the manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="Name">The name</param>
-        /// <param name="Description">The description</param>
-        /// <param name="TemplateID">The template identifier</param>
-        /// <param name="MetaKeywords">The meta keywords</param>
-        /// <param name="MetaDescription">The meta description</param>
-        /// <param name="MetaTitle">The meta title</param>
-        /// <param name="SEName">The search-engine name</param>
-        /// <param name="PictureID">The parent picture identifier</param>
-        /// <param name="PageSize">The page size</param>
-        /// <param name="PriceRanges">The price ranges</param>
-        /// <param name="Published">A value indicating whether the entity is published</param>
-        /// <param name="Deleted">A value indicating whether the entity has been deleted</param>
-        /// <param name="DisplayOrder">The display order</param>
-        /// <param name="CreatedOn">The date and time of instance creation</param>
-        /// <param name="UpdatedOn">The date and time of instance update</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="name">The name</param>
+        /// <param name="description">The description</param>
+        /// <param name="templateId">The template identifier</param>
+        /// <param name="metaKeywords">The meta keywords</param>
+        /// <param name="metaDescription">The meta description</param>
+        /// <param name="metaTitle">The meta title</param>
+        /// <param name="seName">The search-engine name</param>
+        /// <param name="pictureId">The parent picture identifier</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="priceRanges">The price ranges</param>
+        /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
+        /// <param name="displayOrder">The display order</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="updatedOn">The date and time of instance update</param>
         /// <returns>Manufacturer</returns>
-        public override DBManufacturer UpdateManufacturer(int ManufacturerID, string Name, string Description,
-            int TemplateID, string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName, int PictureID, int PageSize, string PriceRanges, bool Published, bool Deleted,
-            int DisplayOrder, DateTime CreatedOn, DateTime UpdatedOn)
+        public override DBManufacturer UpdateManufacturer(int manufacturerId,
+            string name, string description,
+            int templateId, string metaKeywords, string metaDescription, string metaTitle,
+            string seName, int pictureId, int pageSize, string priceRanges,
+            bool published, bool deleted, int displayOrder,
+            DateTime createdOn, DateTime updatedOn)
         {
-            DBManufacturer manufacturer = null;
+            DBManufacturer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerUpdate");
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, TemplateID);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
-            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, PictureID);
-            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, PageSize);
-            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, PriceRanges);
-            db.AddInParameter(dbCommand, "Published", DbType.Boolean, Published);
-            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, Deleted);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, CreatedOn);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, UpdatedOn);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "TemplateID", DbType.Int32, templateId);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
+            db.AddInParameter(dbCommand, "PictureID", DbType.Int32, pictureId);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PriceRanges", DbType.String, priceRanges);
+            db.AddInParameter(dbCommand, "Published", DbType.Boolean, published);
+            db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                manufacturer = GetManufacturerByID(ManufacturerID, 0);
+                item = GetManufacturerById(manufacturerId, 0);
 
-
-            return manufacturer;
+            return item;
         }
 
         /// <summary>
         /// Gets localized manufacturer by id
         /// </summary>
-        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
+        /// <param name="manufacturerLocalizedId">Localized manufacturer identifier</param>
         /// <returns>Manufacturer content</returns>
-        public override DBManufacturerLocalized GetManufacturerLocalizedByID(int ManufacturerLocalizedID)
+        public override DBManufacturerLocalized GetManufacturerLocalizedById(int manufacturerLocalizedId)
         {
             DBManufacturerLocalized item = null;
-            if (ManufacturerLocalizedID == 0)
+            if (manufacturerLocalizedId == 0)
                 return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, ManufacturerLocalizedID);
+            db.AddInParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, manufacturerLocalizedId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -298,16 +299,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Gets localized manufacturer by manufacturer id and language id
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer content</returns>
-        public override DBManufacturerLocalized GetManufacturerLocalizedByManufacturerIDAndLanguageID(int ManufacturerID, int LanguageID)
+        public override DBManufacturerLocalized GetManufacturerLocalizedByManufacturerIdAndLanguageId(int manufacturerId, int languageId)
         {
             DBManufacturerLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedLoadByManufacturerIDAndLanguageID");
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
@@ -321,36 +322,35 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Inserts a localized manufacturer
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBManufacturerContent</returns>
-        public override DBManufacturerLocalized InsertManufacturerLocalized(int ManufacturerID,
-            int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se name text</param>
+        /// <returns>Manufacturer content</returns>
+        public override DBManufacturerLocalized InsertManufacturerLocalized(int manufacturerId,
+            int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
             DBManufacturerLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedInsert");
             db.AddOutParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ManufacturerLocalizedID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerLocalizedID"));
-                item = GetManufacturerLocalizedByID(ManufacturerLocalizedID);
+                int manufacturerLocalizedId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ManufacturerLocalizedID"));
+                item = GetManufacturerLocalizedById(manufacturerLocalizedId);
             }
             return item;
         }
@@ -358,64 +358,62 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Update a localized manufacturer
         /// </summary>
-        /// <param name="ManufacturerLocalizedID">Localized manufacturer identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="LanguageID">Language identifier</param>
-        /// <param name="Name">Name text</param>
-        /// <param name="Description">Description text</param>
-        /// <param name="MetaKeywords">Meta keywords text</param>
-        /// <param name="MetaDescription">Meta descriptions text</param>
-        /// <param name="MetaTitle">Metat title text</param>
-        /// <param name="SEName">Se Name text</param>
-        /// <returns>DBManufacturerContent</returns>
-        public override DBManufacturerLocalized UpdateManufacturerLocalized(int ManufacturerLocalizedID,
-            int ManufacturerID, int LanguageID, string Name, string Description,
-            string MetaKeywords, string MetaDescription, string MetaTitle,
-            string SEName)
+        /// <param name="manufacturerLocalizedId">Localized manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <param name="name">Name text</param>
+        /// <param name="description">Description text</param>
+        /// <param name="metaKeywords">Meta keywords text</param>
+        /// <param name="metaDescription">Meta descriptions text</param>
+        /// <param name="metaTitle">Metat title text</param>
+        /// <param name="seName">Se name text</param>
+        /// <returns>Manufacturer content</returns>
+        public override DBManufacturerLocalized UpdateManufacturerLocalized(int manufacturerLocalizedId,
+            int manufacturerId, int languageId, string name, string description,
+            string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
             DBManufacturerLocalized item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ManufacturerLocalizedUpdate");
-            db.AddInParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, ManufacturerLocalizedID);
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, LanguageID);
-            db.AddInParameter(dbCommand, "Name", DbType.String, Name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, Description);
-            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, MetaKeywords);
-            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, MetaDescription);
-            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, MetaTitle);
-            db.AddInParameter(dbCommand, "SEName", DbType.String, SEName);
+            db.AddInParameter(dbCommand, "ManufacturerLocalizedID", DbType.Int32, manufacturerLocalizedId);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "Description", DbType.String, description);
+            db.AddInParameter(dbCommand, "MetaKeywords", DbType.String, metaKeywords);
+            db.AddInParameter(dbCommand, "MetaDescription", DbType.String, metaDescription);
+            db.AddInParameter(dbCommand, "MetaTitle", DbType.String, metaTitle);
+            db.AddInParameter(dbCommand, "SEName", DbType.String, seName);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetManufacturerLocalizedByID(ManufacturerID);
+                item = GetManufacturerLocalizedById(manufacturerId);
 
             return item;
         }
 
-
         /// <summary>
         /// Deletes a product manufacturer mapping
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifer</param>
-        public override void DeleteProductManufacturer(int ProductManufacturerID)
+        /// <param name="productManufacturerId">Product manufacturer mapping identifer</param>
+        public override void DeleteProductManufacturer(int productManufacturerId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, ProductManufacturerID);
-            int retValue = db.ExecuteNonQuery(dbCommand);
+            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, productManufacturerId);
+            db.ExecuteNonQuery(dbCommand);
         }
 
         /// <summary>
-        /// Gets product manufacturer collection
+        /// Gets product product manufacturer collection
         /// </summary>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product manufacturer collection</returns>
-        public override DBProductManufacturerCollection GetProductManufacturersByManufacturerID(int ManufacturerID, bool showHidden)
+        public override DBProductManufacturerCollection GetProductManufacturersByManufacturerId(int manufacturerId, bool showHidden)
         {
             var result = new DBProductManufacturerCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingLoadByManufacturerID");
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -432,15 +430,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Gets a product manufacturer mapping collection
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product manufacturer mapping collection</returns>
-        public override DBProductManufacturerCollection GetProductManufacturersByProductID(int ProductID, bool showHidden)
+        public override DBProductManufacturerCollection GetProductManufacturersByProductId(int productId, bool showHidden)
         {
             var result = new DBProductManufacturerCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingLoadByProductID");
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
@@ -457,77 +455,77 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <summary>
         /// Gets a product manufacturer mapping 
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifier</param>
+        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
         /// <returns>Product manufacturer mapping</returns>
-        public override DBProductManufacturer GetProductManufacturerByID(int ProductManufacturerID)
+        public override DBProductManufacturer GetProductManufacturerById(int productManufacturerId)
         {
-
-            DBProductManufacturer productManufacturer = null;
-            if (ProductManufacturerID == 0)
-                return productManufacturer;
+            DBProductManufacturer item = null;
+            if (productManufacturerId == 0)
+                return item;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, ProductManufacturerID);
+            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, productManufacturerId);
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 if (dataReader.Read())
                 {
-                    productManufacturer = GetProductManufacturerFromReader(dataReader);
+                    item = GetProductManufacturerFromReader(dataReader);
                 }
             }
-            return productManufacturer;
+            return item;
         }
 
         /// <summary>
         /// Inserts a product manufacturer mapping
         /// </summary>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product manufacturer mapping </returns>
-        public override DBProductManufacturer InsertProductManufacturer(int ProductID, int ManufacturerID, bool IsFeaturedProduct, int DisplayOrder)
+        public override DBProductManufacturer InsertProductManufacturer(int productId,
+            int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
-            DBProductManufacturer productManufacturer = null;
+            DBProductManufacturer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingInsert");
             db.AddOutParameter(dbCommand, "ProductManufacturerID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, IsFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
-                int ProductManufacturerID = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductManufacturerID"));
-                productManufacturer = GetProductManufacturerByID(ProductManufacturerID);
+                int productManufacturerId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductManufacturerID"));
+                item = GetProductManufacturerById(productManufacturerId);
             }
-            return productManufacturer;
+            return item;
         }
 
         /// <summary>
         /// Updates the product manufacturer mapping
         /// </summary>
-        /// <param name="ProductManufacturerID">Product manufacturer mapping identifier</param>
-        /// <param name="ProductID">Product identifier</param>
-        /// <param name="ManufacturerID">Manufacturer identifier</param>
-        /// <param name="IsFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="DisplayOrder">The display order</param>
+        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
+        /// <param name="displayOrder">The display order</param>
         /// <returns>Product manufacturer mapping </returns>
-        public override DBProductManufacturer UpdateProductManufacturer(int ProductManufacturerID,
-            int ProductID, int ManufacturerID, bool IsFeaturedProduct, int DisplayOrder)
+        public override DBProductManufacturer UpdateProductManufacturer(int productManufacturerId,
+            int productId, int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
-            DBProductManufacturer productManufacturer = null;
+            DBProductManufacturer item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingUpdate");
-            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, ProductManufacturerID);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, ProductID);
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, ManufacturerID);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, IsFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, DisplayOrder);
+            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, productManufacturerId);
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
+            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             if (db.ExecuteNonQuery(dbCommand) > 0)
-                productManufacturer = GetProductManufacturerByID(ProductManufacturerID);
+                item = GetProductManufacturerById(productManufacturerId);
 
-            return productManufacturer;
+            return item;
         }
         
         #endregion

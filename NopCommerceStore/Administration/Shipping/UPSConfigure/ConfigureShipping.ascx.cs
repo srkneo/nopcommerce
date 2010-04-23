@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.UPSConfigure
             CountryCollection countries = CountryManager.GetAllCountries();
             foreach (Country country in countries)
             {
-                ListItem ddlItem1 = new ListItem(country.Name, country.CountryID.ToString());
+                ListItem ddlItem1 = new ListItem(country.Name, country.CountryId.ToString());
                 this.ddlShippedFromCountry.Items.Add(ddlItem1);
             }
         }
@@ -78,8 +78,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.UPSConfigure
             txtPassword.Text = SettingManager.GetSettingValue("ShippingRateComputationMethod.UPS.Password");
             txtAdditionalHandlingCharge.Value = SettingManager.GetSettingValueDecimalNative("ShippingRateComputationMethod.UPS.AdditionalHandlingCharge");
 
-            int defaultShippedFromCountryID = SettingManager.GetSettingValueInteger("ShippingRateComputationMethod.UPS.DefaultShippedFromCountryID");
-            CommonHelper.SelectListItem(ddlShippedFromCountry, defaultShippedFromCountryID);
+            int defaultShippedFromCountryId = SettingManager.GetSettingValueInteger("ShippingRateComputationMethod.UPS.DefaultShippedFromCountryId");
+            CommonHelper.SelectListItem(ddlShippedFromCountry, defaultShippedFromCountryId);
             txtShippedFromZipPostalCode.Text = SettingManager.GetSettingValue("ShippingRateComputationMethod.UPS.DefaultShippedFromZipPostalCode");
 
 
@@ -116,8 +116,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.UPSConfigure
             SettingManager.SetParam("ShippingRateComputationMethod.UPS.Username", txtUsername.Text);
             SettingManager.SetParam("ShippingRateComputationMethod.UPS.Password", txtPassword.Text);
             SettingManager.SetParamNative("ShippingRateComputationMethod.UPS.AdditionalHandlingCharge", txtAdditionalHandlingCharge.Value);
-            int defaultShippedFromCountryID = int.Parse(this.ddlShippedFromCountry.SelectedItem.Value);
-            SettingManager.SetParam("ShippingRateComputationMethod.UPS.DefaultShippedFromCountryID", defaultShippedFromCountryID.ToString());
+            int defaultShippedFromCountryId = int.Parse(this.ddlShippedFromCountry.SelectedItem.Value);
+            SettingManager.SetParam("ShippingRateComputationMethod.UPS.DefaultShippedFromCountryId", defaultShippedFromCountryId.ToString());
             SettingManager.SetParam("ShippingRateComputationMethod.UPS.DefaultShippedFromZipPostalCode", txtShippedFromZipPostalCode.Text);
 
             SettingManager.SetParam("ShippingRateComputationMethod.UPS.CustomerClassification", customerClassification.ToString());

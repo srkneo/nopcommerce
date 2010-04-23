@@ -39,14 +39,14 @@ namespace NopSolutions.NopCommerce.Web
 
         private void CreateChildControlsTree()
         {
-            manufacturer = ManufacturerManager.GetManufacturerByID(this.ManufacturerID);
+            manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
             if (manufacturer != null)
             {
                 Control child = null;
 
                 var manufacturerTemplate = manufacturer.ManufacturerTemplate;
                 if (manufacturerTemplate == null)
-                    throw new NopException(string.Format("Manufacturer template path can not be empty. ManufacturerID={0}", manufacturer.ManufacturerID));
+                    throw new NopException(string.Format("Manufacturer template path can not be empty. ManufacturerID={0}", manufacturer.ManufacturerId));
 
                 child = base.LoadControl(manufacturerTemplate.TemplatePath);
                 this.ManufacturerPlaceHolder.Controls.Add(child);
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSSL();
+                CommonHelper.EnsureNonSsl();
             }
 
             if (manufacturer == null || manufacturer.Deleted || !manufacturer.Published)
@@ -80,11 +80,11 @@ namespace NopSolutions.NopCommerce.Web
             SEOHelper.RenderMetaTag(this, "keywords", manufacturer.MetaKeywords, true);
         }
 
-        public int ManufacturerID
+        public int ManufacturerId
         {
             get
             {
-                return CommonHelper.QueryStringInt("ManufacturerID");
+                return CommonHelper.QueryStringInt("ManufacturerId");
             }
         }
     }
