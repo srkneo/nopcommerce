@@ -438,13 +438,14 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
         /// <summary>
         /// Post cart to google
         /// </summary>
-        /// <param name="Req">Pre-generated request</param>
-        /// <param name="Cart">Shopping cart</param>
+        /// <param name="req">Pre-generated request</param>
+        /// <param name="cart">Shopping cart</param>
         /// <returns>Response</returns>
-        public GCheckoutResponse PostCartToGoogle(CheckoutShoppingCartRequest Req, NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCart Cart)
+        public GCheckoutResponse PostCartToGoogle(CheckoutShoppingCartRequest req,
+            NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCart cart)
         {
             //items
-            foreach (NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCartItem sci in Cart)
+            foreach (NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCartItem sci in cart)
             {
                 ProductVariant productVariant = sci.ProductVariant;
                 if (productVariant != null)
@@ -452,7 +453,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                     string description = ProductAttributeHelper.FormatAttributes(productVariant, sci.AttributesXml, NopContext.Current.User, ", ", false);
                     string fullName = productVariant.FullProductName;
                     decimal unitPrice = TaxManager.GetPrice(sci.ProductVariant, PriceHelper.GetUnitPrice(sci, NopContext.Current.User, true));
-                    Req.AddItem(fullName, description, sci.ShoppingCartItemId.ToString(), unitPrice, sci.Quantity);
+                    req.AddItem(fullName, description, sci.ShoppingCartItemId.ToString(), unitPrice, sci.Quantity);
                 }
             }
 
@@ -462,26 +463,26 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
             List<AppliedGiftCard> appliedGiftCards = null;
             decimal subtotalBaseWithoutPromo = decimal.Zero;
             decimal subtotalBaseWithPromo = decimal.Zero;
-            string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(Cart,
+            string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(cart,
                 NopContext.Current.User, out subTotalDiscountBase,
                 out appliedDiscount, out appliedGiftCards,
                 out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
             if (subTotalDiscountBase > decimal.Zero)
-                Req.AddItem("Discount", string.Empty, string.Empty, (decimal)(-1.0) * subTotalDiscountBase, 1);
+                req.AddItem("Discount", string.Empty, string.Empty, (decimal)(-1.0) * subTotalDiscountBase, 1);
             foreach (AppliedGiftCard agc in appliedGiftCards)
             {
-                Req.AddItem(string.Format("Gift Card - {0}", agc.GiftCard.GiftCardCouponCode), string.Empty, string.Empty, (decimal)(-1.0) * agc.AmountCanBeUsed, 1);
+                req.AddItem(string.Format("Gift Card - {0}", agc.GiftCard.GiftCardCouponCode), string.Empty, string.Empty, (decimal)(-1.0) * agc.AmountCanBeUsed, 1);
             }
 
-            bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(Cart);
+            bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
             if (shoppingCartRequiresShipping)
             {
                 string shippingError = string.Empty;
                 //TODO AddMerchantCalculatedShippingMethod
                 //TODO AddCarrierCalculatedShippingOption
-                ShippingOptionCollection shippingOptions = ShippingManager.GetShippingOptions(Cart, NopContext.Current.User, null, ref shippingError);
+                ShippingOptionCollection shippingOptions = ShippingManager.GetShippingOptions(cart, NopContext.Current.User, null, ref shippingError);
                 foreach (ShippingOption shippingOption in shippingOptions)
-                    Req.AddFlatRateShippingMethod(shippingOption.Name, TaxManager.GetShippingPrice(shippingOption.Rate, NopContext.Current.User));
+                    req.AddFlatRateShippingMethod(shippingOption.Name, TaxManager.GetShippingPrice(shippingOption.Rate, NopContext.Current.User));
             }
 
             //add only US, GB states
@@ -506,14 +507,14 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
             customerInfo.SetAttribute("CustomerID", NopContext.Current.User.CustomerId.ToString());
             customerInfo.SetAttribute("CustomerLanguageID", NopContext.Current.WorkingLanguage.LanguageId.ToString());
             customerInfo.SetAttribute("CustomerCurrencyID", NopContext.Current.WorkingCurrency.CurrencyId.ToString());
-            Req.AddMerchantPrivateDataNode(customerInfo);
+            req.AddMerchantPrivateDataNode(customerInfo);
 
-            Req.ContinueShoppingUrl = CommonHelper.GetStoreLocation(false);
-            Req.EditCartUrl = CommonHelper.GetStoreLocation(false) + "ShoppingCart.aspx";
+            req.ContinueShoppingUrl = CommonHelper.GetStoreLocation(false);
+            req.EditCartUrl = CommonHelper.GetStoreLocation(false) + "ShoppingCart.aspx";
 
-            GCheckoutResponse Resp = Req.Send();
+            GCheckoutResponse resp = req.Send();
 
-            return Resp;
+            return resp;
         }
 
         /// <summary>

@@ -50,8 +50,7 @@ namespace NopSolutions.NopCommerce.Web
 
             CommonHelper.SetResponseNoCache(Response);
 
-            ShoppingCart cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
-            if (cart.Count == 0)
+            if (this.Cart.Count == 0)
                 Response.Redirect("~/shoppingcart.aspx");
 
             //user validation
@@ -79,7 +78,7 @@ namespace NopSolutions.NopCommerce.Web
             }
             else
             {
-                foreach (ShoppingCartItem sci in Cart)
+                foreach (ShoppingCartItem sci in this.Cart)
                 {
                     var sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(
                         sci.ShoppingCartType,

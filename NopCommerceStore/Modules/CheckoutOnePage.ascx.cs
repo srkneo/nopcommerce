@@ -194,7 +194,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             else
             {
-                foreach (ShoppingCartItem sci in Cart)
+                foreach (ShoppingCartItem sci in this.Cart)
                 {
                     List<String> sciWarnings = ShoppingCartManager.GetShoppingCartItemWarnings(
                         sci.ShoppingCartType, 

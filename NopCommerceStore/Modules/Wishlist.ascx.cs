@@ -51,14 +51,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         public void BindData()
         {
-            var Cart = ShoppingCartManager.GetShoppingCartByCustomerSessionGuid(ShoppingCartTypeEnum.Wishlist, this.CustomerSessionGuid);
+            var cart = ShoppingCartManager.GetShoppingCartByCustomerSessionGuid(ShoppingCartTypeEnum.Wishlist, this.CustomerSessionGuid);
 
-            if (Cart.Count > 0)
+            if (cart.Count > 0)
             {
                 pnlEmptyCart.Visible = false;
                 pnlCart.Visible = true;
 
-                rptShoppingCart.DataSource = Cart;
+                rptShoppingCart.DataSource = cart;
                 rptShoppingCart.DataBind();
                 ValidateWishlist();
                 ValidateWishlistItems();
@@ -80,8 +80,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
             bool hasErrors = false;
 
             //shopping cart
-            var Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.Wishlist);
-            var warnings = ShoppingCartManager.GetShoppingCartWarnings(Cart, string.Empty, false);
+            var cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.Wishlist);
+            var warnings = ShoppingCartManager.GetShoppingCartWarnings(cart, string.Empty, false);
             if (warnings.Count > 0)
             {
                 hasErrors = true;

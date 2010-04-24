@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 {
     public partial class PaypalExpressButton : BaseNopUserControl
     {
-        ShoppingCart Cart = null;
+        ShoppingCart cart = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             var ppePaymentMethod = PaymentMethodManager.GetPaymentMethodBySystemKeyword("PayPalExpress");
@@ -57,14 +57,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 return;
             }
 
-            Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
-            if (Cart.Count == 0)
+            cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
+            if (cart.Count == 0)
             {
                 this.Visible = false;
                 return;
             }
 
-            if (Cart.IsRecurring && PaymentManager.SupportRecurringPayments(ppePaymentMethod.PaymentMethodId) == RecurringPaymentTypeEnum.NotSupported)
+            if (cart.IsRecurring && PaymentManager.SupportRecurringPayments(ppePaymentMethod.PaymentMethodId) == RecurringPaymentTypeEnum.NotSupported)
             {
                 this.Visible = false;
                 return;
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var ppePaymentMethod = PaymentMethodManager.GetPaymentMethodBySystemKeyword("PayPalExpress");
             if (ppePaymentMethod != null && ppePaymentMethod.IsActive)
             {
-                decimal? cartTotal = ShoppingCartManager.GetShoppingCartTotal(Cart, ppePaymentMethod.PaymentMethodId, NopContext.Current.User);
+                decimal? cartTotal = ShoppingCartManager.GetShoppingCartTotal(cart, ppePaymentMethod.PaymentMethodId, NopContext.Current.User);
                 if (cartTotal.HasValue)
                 {
                     string expressCheckoutURL = payPalExpress.SetExpressCheckout(cartTotal.Value,

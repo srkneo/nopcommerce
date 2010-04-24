@@ -84,7 +84,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 Response.Redirect(loginURL);
             }
 
-            if (Cart.Count == 0)
+            if (this.Cart.Count == 0)
                 Response.Redirect("~/shoppingcart.aspx");
         }
 

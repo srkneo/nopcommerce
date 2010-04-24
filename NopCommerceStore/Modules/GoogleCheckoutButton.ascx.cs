@@ -59,14 +59,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 return;
             }
 
-            var Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
-            if (Cart.Count == 0)
+            var cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
+            if (cart.Count == 0)
             {
                 this.Visible = false;
                 return;
             }
 
-            if (Cart.IsRecurring && PaymentManager.SupportRecurringPayments(gcPaymentMethod.PaymentMethodId) == RecurringPaymentTypeEnum.NotSupported)
+            if (cart.IsRecurring && PaymentManager.SupportRecurringPayments(gcPaymentMethod.PaymentMethodId) == RecurringPaymentTypeEnum.NotSupported)
             {
                 this.Visible = false;
                 return;
@@ -95,8 +95,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var Req = GCheckoutButton1.CreateRequest();
             var googleCheckoutPaymentProcessor = new GoogleCheckoutPaymentProcessor();
 
-            NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCart Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
-            var Resp = googleCheckoutPaymentProcessor.PostCartToGoogle(Req, Cart);
+            NopSolutions.NopCommerce.BusinessLogic.Orders.ShoppingCart cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
+            var Resp = googleCheckoutPaymentProcessor.PostCartToGoogle(Req, cart);
             if (Resp.IsGood)
             {
                 Response.Redirect(Resp.RedirectUrl);

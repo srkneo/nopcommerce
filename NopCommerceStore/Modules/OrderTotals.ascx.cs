@@ -48,9 +48,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
     {
         public void BindData()
         {
-            var Cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
+            var cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
 
-            if (Cart.Count > 0)
+            if (cart.Count > 0)
             {
                 //payment method (if already selected)
                 int paymentMethodId = 0;
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 //don't include checkout attributes on shopping cart page
                 decimal subtotalBaseWithoutPromo = decimal.Zero;
                 decimal subtotalBaseWithPromo = decimal.Zero;
-                string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(Cart,
+                string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(cart,
                     NopContext.Current.User, out subTotalDiscountBase,
                     out appliedDiscount, out appliedGiftCards,
                     out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
@@ -106,10 +106,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
 
                 //shipping info
-                bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(Cart);
+                bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
                 if (shoppingCartRequiresShipping)
                 {
-                    decimal? shoppingCartShippingBase = ShippingManager.GetShoppingCartShippingTotal(Cart, NopContext.Current.User);
+                    decimal? shoppingCartShippingBase = ShippingManager.GetShoppingCartShippingTotal(cart, NopContext.Current.User);
                     if (shoppingCartShippingBase.HasValue)
                     {
                         decimal shoppingCartShipping = CurrencyManager.ConvertCurrency(shoppingCartShippingBase.Value, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
@@ -152,7 +152,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 else
                 {
                     string TaxError = string.Empty;
-                    decimal shoppingCartTaxBase = TaxManager.GetTaxTotal(Cart, paymentMethodId, NopContext.Current.User, ref TaxError);
+                    decimal shoppingCartTaxBase = TaxManager.GetTaxTotal(cart, paymentMethodId, NopContext.Current.User, ref TaxError);
                     decimal shoppingCartTax = CurrencyManager.ConvertCurrency(shoppingCartTaxBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
 
                     if (String.IsNullOrEmpty(TaxError))
@@ -176,7 +176,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 phTaxTotal.Visible = displayTax;
 
                 //total
-                decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(Cart, paymentMethodId, NopContext.Current.User);
+                decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(cart, paymentMethodId, NopContext.Current.User);
                 if (shoppingCartTotalBase.HasValue)
                 {
                     decimal shoppingCartTotal = CurrencyManager.ConvertCurrency(shoppingCartTotalBase.Value, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
