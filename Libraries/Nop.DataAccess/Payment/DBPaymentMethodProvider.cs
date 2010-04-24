@@ -108,12 +108,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         public abstract void InsertPaymentMethodCountryMapping(int paymentMethodId, int countryId);
 
         /// <summary>
-        /// Checking whether the payment method country mapping is exists
+        /// Checking whether the payment method country mapping exists
         /// </summary>
         /// <param name="paymentMethodId">The payment method identifier</param>
         /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public abstract bool IsPaymentMethodCountryMappingExists(int paymentMethodId, int countryId);
+        public abstract bool DoesPaymentMethodCountryMappingExist(int paymentMethodId, int countryId);
 
         /// <summary>
         /// Deletes payment method country mapping

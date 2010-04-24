@@ -184,14 +184,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         }
 
         /// <summary>
-        /// Checking whether the shipping method country mapping is exists
+        /// Checking whether the shipping method country mapping exists
         /// </summary>
         /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public static bool IsShippingMethodCountryMappingExists(int shippingMethodId, int countryId)
+        public static bool DoesShippingMethodCountryMappingExist(int shippingMethodId, int countryId)
         {
-            return DBProviderManager<DBShippingMethodProvider>.Provider.IsShippingMethodCountryMappingExists(shippingMethodId, countryId);
+            return DBProviderManager<DBShippingMethodProvider>.Provider.DoesShippingMethodCountryMappingExist(shippingMethodId, countryId);
         }
 
         /// <summary>

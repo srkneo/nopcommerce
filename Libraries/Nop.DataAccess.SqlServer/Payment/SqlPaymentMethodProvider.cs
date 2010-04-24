@@ -266,12 +266,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         }
 
         /// <summary>
-        /// Checking whether the payment method country mapping is exists
+        /// Checking whether the payment method country mapping exists
         /// </summary>
         /// <param name="paymentMethodId">The payment method identifier</param>
         /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public override bool IsPaymentMethodCountryMappingExists(int paymentMethodId, int countryId)
+        public override bool DoesPaymentMethodCountryMappingExist(int paymentMethodId, int countryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethod_RestrictedCountriesContains");

@@ -187,7 +187,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 foreach(PaymentMethod paymentMethod in paymentMethodCollection)
                 {
-                    map1.Restrict.Add(paymentMethod.PaymentMethodId, PaymentMethodManager.IsPaymentMethodCountryMappingExists(paymentMethod.PaymentMethodId, country.CountryId));
+                    map1.Restrict.Add(paymentMethod.PaymentMethodId, PaymentMethodManager.DoesPaymentMethodCountryMappingExist(paymentMethod.PaymentMethodId, country.CountryId));
                 }
 
                 dt.Add(map1);

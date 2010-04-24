@@ -83,12 +83,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         public abstract void InsertShippingMethodCountryMapping(int shippingMethodId, int countryId);
 
         /// <summary>
-        /// Checking whether the shipping method country mapping is exists
+        /// Checking whether the shipping method country mapping exists
         /// </summary>
         /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public abstract bool IsShippingMethodCountryMappingExists(int shippingMethodId, int countryId);
+        public abstract bool DoesShippingMethodCountryMappingExist(int shippingMethodId, int countryId);
 
         /// <summary>
         /// Deletes shipping method country mapping

@@ -205,12 +205,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         }
 
         /// <summary>
-        /// Checking whether the shipping method country mapping is exists
+        /// Checking whether the shipping method country mapping exists
         /// </summary>
         /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public override bool IsShippingMethodCountryMappingExists(int shippingMethodId, int countryId)
+        public override bool DoesShippingMethodCountryMappingExist(int shippingMethodId, int countryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethod_RestrictedCountriesContains");

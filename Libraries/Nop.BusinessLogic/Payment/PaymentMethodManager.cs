@@ -234,14 +234,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         }
 
         /// <summary>
-        /// Checking whether the payment method country mapping is exists
+        /// Checking whether the payment method country mapping exists
         /// </summary>
         /// <param name="paymentMethodId">The payment method identifier</param>
         /// <param name="countryId">The country identifier</param>
         /// <returns>True if mapping exist, otherwise false</returns>
-        public static bool IsPaymentMethodCountryMappingExists(int paymentMethodId, int countryId)
+        public static bool DoesPaymentMethodCountryMappingExist(int paymentMethodId, int countryId)
         {
-            return DBProviderManager<DBPaymentMethodProvider>.Provider.IsPaymentMethodCountryMappingExists(paymentMethodId, countryId);
+            return DBProviderManager<DBPaymentMethodProvider>.Provider.DoesPaymentMethodCountryMappingExist(paymentMethodId, countryId);
         }
 
         /// <summary>

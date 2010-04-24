@@ -168,7 +168,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 foreach(ShippingMethod shippingMethod in shippingMethodCollection)
                 {
-                    map1.Restrict.Add(shippingMethod.ShippingMethodId, ShippingMethodManager.IsShippingMethodCountryMappingExists(shippingMethod.ShippingMethodId, country.CountryId));
+                    map1.Restrict.Add(shippingMethod.ShippingMethodId, ShippingMethodManager.DoesShippingMethodCountryMappingExist(shippingMethod.ShippingMethodId, country.CountryId));
                 }
 
                 dt.Add(map1);
