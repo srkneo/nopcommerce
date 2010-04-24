@@ -56,7 +56,7 @@ public class GetDownload : IHttpHandler
                 context.Response.Redirect(loginURL);
             }
 
-            if (order.CustomerID != NopContext.Current.User.CustomerId)
+            if (order.CustomerId != NopContext.Current.User.CustomerId)
             {
                 returnError(context, "This is not your order.");
                 return;
@@ -92,10 +92,10 @@ public class GetDownload : IHttpHandler
             return;
         }
 
-        if (download.UseDownloadURL)
+        if (download.UseDownloadUrl)
         {
             //use URL
-            if (String.IsNullOrEmpty(download.DownloadURL))
+            if (String.IsNullOrEmpty(download.DownloadUrl))
             {
                 returnError(context, "Download URL is empty.");
                 return;
@@ -103,7 +103,7 @@ public class GetDownload : IHttpHandler
 
             orderProductVariant = OrderManager.IncreaseOrderProductDownloadCount(orderProductVariant.OrderProductVariantId);
 
-            context.Response.Redirect(download.DownloadURL);
+            context.Response.Redirect(download.DownloadUrl);
         }
         else
         {
@@ -172,16 +172,16 @@ public class GetDownload : IHttpHandler
             return;
         }
 
-        if (sampleDownload.UseDownloadURL)
+        if (sampleDownload.UseDownloadUrl)
         {
             //use URL
-            if (String.IsNullOrEmpty(sampleDownload.DownloadURL))
+            if (String.IsNullOrEmpty(sampleDownload.DownloadUrl))
             {
                 returnError(context, "Download URL is empty.");
                 return;
             }
 
-            context.Response.Redirect(sampleDownload.DownloadURL);
+            context.Response.Redirect(sampleDownload.DownloadUrl);
         }
         else
         {

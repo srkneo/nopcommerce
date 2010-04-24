@@ -38,16 +38,16 @@ public class GetDownloadAdmin : IHttpHandler
             return;
         }
 
-        if (download.UseDownloadURL)
+        if (download.UseDownloadUrl)
         {
             //use URL
-            if (String.IsNullOrEmpty(download.DownloadURL))
+            if (String.IsNullOrEmpty(download.DownloadUrl))
             {
                 returnError(context, string.Format("Download URL is empty. Download ID={0}", downloadId));
                 return;
             }
 
-            context.Response.Redirect(download.DownloadURL);
+            context.Response.Redirect(download.DownloadUrl);
         }
         else
         {
