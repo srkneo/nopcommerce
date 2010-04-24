@@ -10,10 +10,10 @@ namespace NopSolutions.NopCommerce.Web.Templates.Payment.SecurePay
 {
     public partial class XmlPayment : BaseNopUserControl, IPaymentMethodModule
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void OnInit(EventArgs e)
         {
-            if(!Page.IsPostBack)
-                BindData();
+            BindData();
+            base.OnInit(e);
         }
 
         private void BindData()
