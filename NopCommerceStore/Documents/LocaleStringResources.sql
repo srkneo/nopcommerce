@@ -593,9 +593,177 @@ set @resources='
   <LocaleResource Name="PaymentStatus.Voided">
     <Value>Voided</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.Title">
+    <Value>Reward Points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.Enabled">
+    <Value>Enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.Enabled.Tooltip">
+    <Value>Check if you want to enable the Reward Points Program.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.Rate">
+    <Value>Exchange rate:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.Rate.Tooltip">
+    <Value>Specify reward points exchange rate.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.Rate.Tooltip2">
+    <Value>1 reward point = </Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.EarningRewardPoints">
+    <Value>Earning Reward Points:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForRegistration">
+    <Value>Points for registration:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForRegistration.Tooltip">
+    <Value>Specify number of points awarded for registration.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForRegistration.RequiredErrorMessage">
+    <Value>Points for registration is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForRegistration.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases">
+    <Value>Points for purchases:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases.Tooltip">
+    <Value>Specify number of points awarded for purchases.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases_Amount.RequiredErrorMessage">
+    <Value>Points for purchases is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases_Amount.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases_Points.RequiredErrorMessage">
+    <Value>Points for purchases is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases_Points.RangeErrorMessage">
+    <Value>The value must be from 0 to 999999.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases.Awarded">
+    <Value>Awarded order status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases.Awarded.Tooltip">
+    <Value>Points are awarded when the order status is...</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases.Canceled">
+    <Value>Canceled order status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.RewardPoints.PointsForPurchases.Canceled.Tooltip">
+    <Value>Points are canceled when the order status is...</Value>
+  </LocaleResource>
+  <LocaleResource Name="Checkout.UseRewardPoints">
+    <Value>Use my reward points, {0} reward points ({1}) available</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShoppingCart.Totals.RewardPoints">
+    <Value>{0} reward points</Value>
+  </LocaleResource>
+  <LocaleResource Name="RewardPoints.Message.RedeemedForOrder">
+    <Value>Redeemed for order #{0}</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerDetails.RewardPoints">
+    <Value>Reward Points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Disabled">
+    <Value>The Reward Points Program is disabled</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Grid.Points">
+    <Value>Points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Grid.Balance">
+    <Value>Balance</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Grid.Message">
+    <Value>Message</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Grid.Date">
+    <Value>Date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add">
+    <Value>Add points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add.Points">
+    <Value>Points:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add.Points.Tooltip">
+    <Value>Enter points to add.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add.Points.RequiredErrorMessage">
+    <Value>Points field is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add.Points.RangeErrorMessage">
+    <Value>The value must be from -999999 to 999999.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add.Message">
+    <Value>Message:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add.Message.Tooltip">
+    <Value>Enter message (comment).</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.Add.Message.ErrorMessage">
+    <Value>Message is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerRewardPoints.AddButton.Text">
+    <Value>Add reward points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Order.Totals.RewardPoints">
+    <Value>{0} reward points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Order.ProductsGrid.Total">
+    <Value>Total</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.RewardPoints">
+    <Value>{0} reward points:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.RewardPoints.Tooltip">
+    <Value>Redeemed reward points.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.Overview">
+    <Value>Reward Points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.History">
+    <Value>History</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.NoHistory">
+    <Value>There is no balance history yet</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.CurrentBalance">
+    <Value>Your current balance is {0} reward points ({1}).</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.CurrentRate">
+    <Value>Each {0} spent will earn {1} reward points.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.Grid.Points">
+    <Value>Points</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.Grid.Balance">
+    <Value>Balance</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.Grid.Message">
+    <Value>Message</Value>
+  </LocaleResource>
+  <LocaleResource Name="Customer.RewardPoints.Grid.Date">
+    <Value>Date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Account.RewardPoints">
+    <Value>Reward Points</Value>
+  </LocaleResource>
+  <LocaleResource Name="RewardPoints.Message.EarnedForRegistration">
+    <Value>Registered as customer</Value>
+  </LocaleResource>
+  <LocaleResource Name="RewardPoints.Message.EarnedForOrder">
+    <Value>Earned promotion for order #{0}</Value>
+  </LocaleResource>
+  <LocaleResource Name="RewardPoints.Message.ReducedForOrder">
+    <Value>Reduced promotion for order #{0}</Value>
+  </LocaleResource>
 </Language>
 '
- 		
+
 CREATE TABLE #LocaleStringResourceTmp
 	(
 		[LanguageID] [int] NOT NULL,

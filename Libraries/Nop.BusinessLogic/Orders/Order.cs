@@ -30,6 +30,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     {
         #region Fields
         private Customer _customer = null;
+        private RewardPointsHistory _rph = null;
         #endregion
 
         #region Ctor
@@ -469,6 +470,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         #endregion
 
         #region Custom Properties
+
         /// <summary>
         /// Gets the customer
         /// </summary>
@@ -603,6 +605,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             }
         }
 
+        /// <summary>
+        /// Gets a redeemed reward points history entry
+        /// </summary>
+        public RewardPointsHistory RedeemedRewardPoints
+        {
+            get
+            {
+                if (_rph == null)
+                {
+                    int rpTotalRecords = 0;
+                    if (this.Customer == null)
+                        return null;
+
+                    var rphc = OrderManager.GetAllRewardPointsHistoryEntries(this.Customer.CustomerId,
+                        this.OrderId, 1, 0, out rpTotalRecords);
+                    if (rphc.Count > 0)
+                    {
+                        _rph = rphc[0];
+                    }
+                }
+                return _rph;
+            }
+        }
         #endregion
     }
 }

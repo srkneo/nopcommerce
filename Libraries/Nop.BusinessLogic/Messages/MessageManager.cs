@@ -328,7 +328,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                     CusTaxTotal = taxStr;
                 }
             }
-
+            
             //total
             CusTotal = PriceHelper.FormatPrice(order.OrderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false);
 
@@ -337,11 +337,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"2\"></td><td colspan=\"2\">");
             sb.AppendLine("<table class=\"table\" style=\"border:0px solid grey;padding:2px;border-collapse:collapse;\">");
+            //subtotal
             sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + LocalizationManager.GetLocaleResourceString("Order.Sub-Total", languageId) + "</strong></td> <td style=\"text-align:right;\"><strong>" + CusSubTotal + "</strong></td></tr>");
+            //discount
             if (dislayDiscount)
             {
                 sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + LocalizationManager.GetLocaleResourceString("Order.Discount", languageId) + "</strong></td> <td style=\"text-align:right;\"><strong>" + CusDiscount + "</strong></td></tr>");
             }
+
             //gift cards
             var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             foreach (var giftCardUsageHistory in gcuhC)
@@ -350,22 +353,39 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                 string giftCardAmount = PriceHelper.FormatPrice(-giftCardUsageHistory.UsedValueInCustomerCurrency, true, order.CustomerCurrencyCode, false);
                 sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + giftCardText + "</strong></td> <td style=\"text-align:right;\"><strong>" + giftCardAmount + "</strong></td></tr>");
             }
+
+            //shipping
             if (dislayShipping)
             {
                 sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + LocalizationManager.GetLocaleResourceString("Order.Shipping", languageId) + "</strong></td> <td style=\"text-align:right;\"><strong>" + CusShipTotal + "</strong></td></tr>");
             }
+
+            //payment method fee
             if (displayPaymentMethodFee)
             {
                 string paymentMethodFeeTitle = LocalizationManager.GetLocaleResourceString("Order.PaymentMethodAdditionalFee", languageId);
                 sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + paymentMethodFeeTitle + "</strong></td> <td style=\"text-align:right;\"><strong>" + CusPaymentMethodAdditionalFee + "</strong></td></tr>");
             }
+
+            //tax
             if (displayTax)
             {
                 sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + LocalizationManager.GetLocaleResourceString("Order.Tax", languageId) + "</strong></td> <td style=\"text-align:right;\"><strong>" + CusTaxTotal + "</strong></td></tr>");
             }
+
+            //reward points
+            if (order.RedeemedRewardPoints != null)
+            {
+                string rpTitle = string.Format(LocalizationManager.GetLocaleResourceString("Order.Totals.RewardPoints", languageId), -order.RedeemedRewardPoints.Points);
+                string rpAmount = PriceHelper.FormatPrice(-order.RedeemedRewardPoints.UsedAmountInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + rpTitle + "</strong></td> <td style=\"text-align:right;\"><strong>" + rpAmount + "</strong></td></tr>");
+            }
+
+            //total
             sb.AppendLine("<tr><td style=\"text-align:right;\" colspan=\"3\"><strong>" + LocalizationManager.GetLocaleResourceString("Order.OrderTotal", languageId) + "</strong></td> <td style=\"text-align:right;\"><strong>" + CusTotal + "</strong></td></tr>");
             sb.AppendLine("</table>");
             sb.AppendLine("</td></tr>");
+
             #endregion
             
             sb.AppendLine("</tbody></table>");

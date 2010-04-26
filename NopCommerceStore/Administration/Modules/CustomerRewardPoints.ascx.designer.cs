@@ -8,126 +8,108 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NopSolutions.NopCommerce.Web.Modules {
+namespace NopSolutions.NopCommerce.Web.Administration.Modules {
     
     
-    public partial class OrderTotalsControl {
+    public partial class CustomerRewardPointsControl {
         
         /// <summary>
-        /// lblSubTotalAmount control.
+        /// pnlData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubTotalAmount;
+        protected global::System.Web.UI.WebControls.Panel pnlData;
         
         /// <summary>
-        /// phSubTotalDiscount control.
+        /// upPoints control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phSubTotalDiscount;
+        protected global::System.Web.UI.UpdatePanel upPoints;
         
         /// <summary>
-        /// lblSubTotalDiscountAmount control.
+        /// gvRewardPointsHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubTotalDiscountAmount;
+        protected global::System.Web.UI.WebControls.GridView gvRewardPointsHistory;
         
         /// <summary>
-        /// rptrGiftCards control.
+        /// up1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptrGiftCards;
+        protected global::System.Web.UI.UpdateProgress up1;
         
         /// <summary>
-        /// lblShippingAmount control.
+        /// lblNewPoints control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblShippingAmount;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblNewPoints;
         
         /// <summary>
-        /// phPaymentMethodAdditionalFee control.
+        /// txtNewPoints control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phPaymentMethodAdditionalFee;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.NumericTextBox txtNewPoints;
         
         /// <summary>
-        /// lblPaymentMethodAdditionalFee control.
+        /// lblNewMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPaymentMethodAdditionalFee;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblNewMessage;
         
         /// <summary>
-        /// phTaxTotal control.
+        /// txtNewMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phTaxTotal;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtNewMessage;
         
         /// <summary>
-        /// lblTaxAmount control.
+        /// btnAddPoints control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTaxAmount;
+        protected global::System.Web.UI.WebControls.Button btnAddPoints;
         
         /// <summary>
-        /// phRewardPoints control.
+        /// pnlMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phRewardPoints;
+        protected global::System.Web.UI.WebControls.Panel pnlMessage;
         
         /// <summary>
-        /// lRewardPointsTitle control.
+        /// lMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lRewardPointsTitle;
-        
-        /// <summary>
-        /// lblRewardPointsAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRewardPointsAmount;
-        
-        /// <summary>
-        /// lblTotalAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalAmount;
+        protected global::System.Web.UI.WebControls.Literal lMessage;
     }
 }

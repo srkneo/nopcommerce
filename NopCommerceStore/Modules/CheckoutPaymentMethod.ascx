@@ -2,6 +2,11 @@
     CodeBehind="CheckoutPaymentMethod.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="PaypalExpressButton" Src="~/Modules/PaypalExpressButton.ascx" %>
 <div class="checkout-data">
+    <asp:Panel runat="server" ID="pnlRewardPoints" CssClass="userewardpoints">
+        <asp:CheckBox runat="server" ID="cbUseRewardPoints" Text="Use my reward points" />
+    </asp:Panel>
+    <div class="clear">
+    </div>
     <nopCommerce:PaypalExpressButton runat="server" ID="btnPaypalExpressButton"></nopCommerce:PaypalExpressButton>
     <br />
     <div class="payment-methods">

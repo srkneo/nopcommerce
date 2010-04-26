@@ -25,6 +25,8 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
+using NopSolutions.NopCommerce.BusinessLogic.Audit;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
@@ -36,7 +38,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Audit;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -204,6 +205,19 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
             phTaxTotal.Visible = displayTax;
 
+            //reward points           
+            if (order.RedeemedRewardPoints!=null)
+            { 
+                phRewardPoints.Visible = true;
+                lRewardPointsTitle.Text = string.Format(GetLocaleResourceString("Order.Totals.RewardPoints"), -order.RedeemedRewardPoints.Points);
+                lblRewardPointsAmount.Text = PriceHelper.FormatPrice(-order.RedeemedRewardPoints.UsedAmountInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+            }
+            else
+            {
+                phRewardPoints.Visible = false;
+            }
+
+            //total
             string orderTotalStr = PriceHelper.FormatPrice(order.OrderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false);
             this.lblOrderTotal.Text = orderTotalStr;
             this.lblOrderTotal2.Text = orderTotalStr;

@@ -120,6 +120,8 @@
     <Compile Include="Manufacturers\DBManufacturerLocalized.cs" />
     <Compile Include="Messages\DBNewsLetterSubscription.cs" />
     <Compile Include="Messages\DBNewsLetterSubscriptionCollection.cs" />
+    <Compile Include="Orders\DBRewardPointsHistory.cs" />
+    <Compile Include="Orders\DBRewardPointsHistoryCollection.cs" />
     <Compile Include="Orders\DBGiftCard.cs" />
     <Compile Include="Orders\DBGiftCardCollection.cs" />
     <Compile Include="Orders\DBGiftCardUsageHistory.cs" />

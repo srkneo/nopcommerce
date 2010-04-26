@@ -81,12 +81,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             var payPalExpress = new PayPalExpressPaymentProcessor();
-
-
             var ppePaymentMethod = PaymentMethodManager.GetPaymentMethodBySystemKeyword("PayPalExpress");
             if (ppePaymentMethod != null && ppePaymentMethod.IsActive)
             {
-                decimal? cartTotal = ShoppingCartManager.GetShoppingCartTotal(cart, ppePaymentMethod.PaymentMethodId, NopContext.Current.User);
+                decimal? cartTotal = ShoppingCartManager.GetShoppingCartTotal(cart, 
+                    ppePaymentMethod.PaymentMethodId, NopContext.Current.User, false);
                 if (cartTotal.HasValue)
                 {
                     string expressCheckoutURL = payPalExpress.SetExpressCheckout(cartTotal.Value,

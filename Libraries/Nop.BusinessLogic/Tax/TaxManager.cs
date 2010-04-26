@@ -474,6 +474,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 }
             }
 
+            if (price < decimal.Zero)
+                price = decimal.Zero;
             price = Math.Round(price, 2);
 
             return price;

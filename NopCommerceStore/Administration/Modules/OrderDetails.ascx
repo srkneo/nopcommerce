@@ -21,7 +21,7 @@
 </div>
 <ajaxToolkit:TabContainer runat="server" ID="OrderTabs" ActiveTabIndex="0">
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderInfo" HeaderText="<% $NopResources:Admin.OrderDetails.OrderInfo %>">
-        <contenttemplate>
+        <ContentTemplate>
             <table class="adminContent">
                 <tr>
                     <td class="adminTitle">
@@ -110,7 +110,7 @@
                         <asp:Label ID="lblOrderSubtotalExclTax" runat="server"></asp:Label>
                     </td>
                 </tr>
-                <tr>
+                <tr runat="server" ID="pnlDiscount">
                     <td class="adminTitle">
                         <nopCommerce:ToolTipLabel runat="server" ID="lblOrderDiscountTitle" Text="<% $NopResources:Admin.OrderDetails.Discount %>"
                             ToolTip="<% $NopResources:Admin.OrderDetails.Discount.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
@@ -179,6 +179,15 @@
                     </td>
                     <td class="adminData">
                         <asp:Label ID="lblOrderTax" runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr runat="server" id="pnlRewardPoints">
+                    <td class="adminTitle">
+                        <nopCommerce:ToolTipLabel runat="server" ID="lblRewardPointsTitle" Text="<% $NopResources:Admin.OrderDetails.RewardPoints %>"
+                            ToolTip="<% $NopResources:Admin.OrderDetails.RewardPoints.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                    </td>
+                    <td class="adminData">
+                        <asp:Label ID="lblRewardPointsAmount" runat="server"></asp:Label>
                     </td>
                 </tr>
                 <tr>
@@ -303,7 +312,7 @@
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderBillingInfo" HeaderText="<% $NopResources:Admin.OrderDetails.BillingInfo %>">
         <contenttemplate>

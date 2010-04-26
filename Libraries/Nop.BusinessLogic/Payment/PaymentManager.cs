@@ -85,7 +85,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             if (paymentMethod == null)
                 return decimal.Zero;
             var iPaymentMethod = Activator.CreateInstance(Type.GetType(paymentMethod.ClassName)) as IPaymentMethod;
-            return iPaymentMethod.GetAdditionalHandlingFee();
+
+            decimal result = iPaymentMethod.GetAdditionalHandlingFee();
+            if (result < decimal.Zero)
+                result = decimal.Zero;
+            result = Math.Round(result, 2);
+            return result;
         }
 
         /// <summary>

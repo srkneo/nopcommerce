@@ -491,6 +491,33 @@ namespace NopSolutions.NopCommerce.Web.Modules {
         protected global::System.Web.UI.WebControls.Label lblOrderTax;
         
         /// <summary>
+        /// phRewardPoints control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phRewardPoints;
+        
+        /// <summary>
+        /// lRewardPointsTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lRewardPointsTitle;
+        
+        /// <summary>
+        /// lblRewardPointsAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRewardPointsAmount;
+        
+        /// <summary>
         /// lblOrderTotal2 control.
         /// </summary>
         /// <remarks>

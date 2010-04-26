@@ -279,6 +279,19 @@
                                             </td>
                                         </tr>
                                     </asp:PlaceHolder>
+                                    <asp:PlaceHolder runat="server" ID="phRewardPoints">
+                                        <tr>
+                                            <td width="100%" align="right">
+                                                <b>
+                                                    <asp:Literal runat="server" ID="lRewardPointsTitle"></asp:Literal>:</b>
+                                            </td>
+                                            <td align="right">
+                                                <span style="white-space: nowrap;">
+                                                    <asp:Label ID="lblRewardPointsAmount" runat="server"></asp:Label>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </asp:PlaceHolder>
                                     <tr>
                                         <td width="100%" align="right">
                                             <b>

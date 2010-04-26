@@ -1354,6 +1354,17 @@ textarea
 	text-align: left;
 }
 
+.checkout-data .userewardpoints
+{
+	margin: 0px;
+	padding: 10px 10px 10px 10px;
+	font-size: 11px;
+	color: #555;
+	background: rgb(247, 245, 232);
+	margin-bottom: 10px;
+	border: dotted 1px #d3d3d3;
+}	
+
 .checkout-data .payment-methods
 {
 	text-align: left;
@@ -1501,8 +1512,11 @@ textarea
 
 .downloable-products
 {
-	margin-bottom: 15px;
-	padding: 0px;
+    margin: 0px 0 0 0;
+	padding: 5px 5px 5px 5px;
+	font-size: 11px;
+	color: #555;
+	background-color: inherit;
 }
 
 .downloable-products .info
@@ -3224,6 +3238,37 @@ textarea
 	font-size: 11px;
 	color: #555;
 	background-color: inherit;
+}
+
+.customer-rewardpoints
+{
+	margin: 0px 0 0 0;
+	padding: 5px 5px 5px 5px;
+	font-size: 11px;
+	color: #555;
+	background-color: inherit;
+}
+
+.customer-rewardpoints .section-title
+{
+	padding: 10px 10px 5px 0px;
+	font-weight: bold;
+	clear: both;
+	font-size: 12px;
+}
+
+.customer-rewardpoints .reward-points-overview
+{
+	padding: 10px 10px 5px 0px;
+	width: 100%;
+}
+
+.customer-rewardpoints .reward-points-history
+{
+	text-align: left;
+	padding: 10px;
+	border: 1px solid rgb(232, 230, 210);
+	height: auto;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*

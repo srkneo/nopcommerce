@@ -34,6 +34,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
     {
         #region Methods
 
+        #region Orders
+
         /// <summary>
         /// Gets an order
         /// </summary>
@@ -61,37 +63,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public abstract DBOrderCollection SearchOrders(DateTime? startTime, 
             DateTime? endTime, string customerEmail, int? orderStatusId, 
             int? paymentStatusId, int? shippingStatusId);
-
-        /// <summary>
-        /// Get order product variant sales report
-        /// </summary>
-        /// <param name="startTime">Order start time; null to load all</param>
-        /// <param name="endTime">Order end time; null to load all</param>
-        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
-        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
-        /// <returns>Result</returns>
-        public abstract IDataReader OrderProductVariantReport(DateTime? startTime, 
-            DateTime? endTime, int? orderStatusId, int? paymentStatusId);
-
-        /// <summary>
-        /// Get the bests sellers report
-        /// </summary>
-        /// <param name="lastDays">Last number of days</param>
-        /// <param name="recordsToReturn">Number of products to return</param>
-        /// <param name="orderBy">1 - order by total count, 2 - Order by total amount</param>
-        /// <returns>Result</returns>
-        public abstract List<DBBestSellersReportLine> BestSellersReport(int lastDays, 
-            int recordsToReturn, int orderBy);
-
-        /// <summary>
-        /// Get order average report
-        /// </summary>
-        /// <param name="orderStatusId">Order status identifier</param>
-        /// <param name="startTime">Start date</param>
-        /// <param name="endTime">End date</param>
-        /// <returns>Result</returns>
-        public abstract DBOrderAverageReportLine OrderAverageReport(int orderStatusId, 
-            DateTime? startTime, DateTime? endTime);
 
         /// <summary>
         /// Gets all orders by customer identifier
@@ -459,49 +430,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             bool deleted,
             DateTime createdOn);
 
-        /// <summary>
-        /// Gets an order note
-        /// </summary>
-        /// <param name="orderNoteId">Order note identifier</param>
-        /// <returns>Order note</returns>
-        public abstract DBOrderNote GetOrderNoteById(int orderNoteId);
+        #endregion
 
-        /// <summary>
-        /// Gets an order notes by order identifier
-        /// </summary>
-        /// <param name="orderId">Order identifier</param>
-        /// <param name="showHidden">A value indicating whether all orders should be loaded</param>
-        /// <returns>Order note collection</returns>
-        public abstract DBOrderNoteCollection GetOrderNoteByOrderId(int orderId, bool showHidden);
+        #region Orders product variants
 
-        /// <summary>
-        /// Deletes an order note
-        /// </summary>
-        /// <param name="orderNoteId">Order note identifier</param>
-        public abstract void DeleteOrderNote(int orderNoteId);
-
-        /// <summary>
-        /// Inserts an order note
-        /// </summary>
-        /// <param name="orderId">The order identifier</param>
-        /// <param name="note">The note</param>
-        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
-        /// <param name="createdOn">The date and time of order note creation</param>
-        /// <returns>Order note</returns>
-        public abstract DBOrderNote InsertOrderNote(int orderId, string note,
-            bool displayToCustomer, DateTime createdOn);
-
-        /// <summary>
-        /// Updates the order note
-        /// </summary>
-        /// <param name="orderNoteId">The order note identifier</param>
-        /// <param name="orderId">The order identifier</param>
-        /// <param name="note">The note</param>
-        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
-        /// <param name="createdOn">The date and time of order note creation</param>
-        /// <returns>Order note</returns>
-        public abstract DBOrderNote UpdateOrderNote(int orderNoteId, int orderId, 
-            string note, bool displayToCustomer, DateTime createdOn);
 
         /// <summary>
         /// Gets an order product variant
@@ -529,7 +461,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="shippingStatusId">Order shipping status identifier; null to load all records</param>
         /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
         /// <returns>Order collection</returns>
-        public abstract DBOrderProductVariantCollection GetAllOrderProductVariants(int? orderId, 
+        public abstract DBOrderProductVariantCollection GetAllOrderProductVariants(int? orderId,
             int? customerId, DateTime? startTime, DateTime? endTime,
             int? orderStatusId, int? paymentStatusId, int? shippingStatusId,
             bool loadDownloableProductsOnly);
@@ -557,24 +489,24 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="isDownloadActivated">The value indicating whether download is activated</param>
         /// <param name="licenseDownloadId">A license download identifier (in case this is a downloadable product)</param>
         /// <returns>Order product variant</returns>
-        public abstract DBOrderProductVariant InsertOrderProductVariant(Guid orderProductVariantGuid, 
-            int orderId, 
-            int productVariantId, 
+        public abstract DBOrderProductVariant InsertOrderProductVariant(Guid orderProductVariantGuid,
+            int orderId,
+            int productVariantId,
             decimal unitPriceInclTax,
-            decimal unitPriceExclTax, 
-            decimal priceInclTax, 
+            decimal unitPriceExclTax,
+            decimal priceInclTax,
             decimal priceExclTax,
-            decimal unitPriceInclTaxInCustomerCurrency, 
+            decimal unitPriceInclTaxInCustomerCurrency,
             decimal unitPriceExclTaxInCustomerCurrency,
             decimal priceInclTaxInCustomerCurrency,
             decimal priceExclTaxInCustomerCurrency,
             string attributeDescription,
             string attributesXml,
             int quantity,
-            decimal discountAmountInclTax, 
+            decimal discountAmountInclTax,
             decimal discountAmountExclTax,
             int downloadCount,
-            bool isDownloadActivated, 
+            bool isDownloadActivated,
             int licenseDownloadId);
 
         /// <summary>
@@ -621,6 +553,58 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             int downloadCount,
             bool isDownloadActivated,
             int licenseDownloadId);
+        
+        #endregion
+
+        #region Order notes
+
+        /// <summary>
+        /// Gets an order note
+        /// </summary>
+        /// <param name="orderNoteId">Order note identifier</param>
+        /// <returns>Order note</returns>
+        public abstract DBOrderNote GetOrderNoteById(int orderNoteId);
+
+        /// <summary>
+        /// Gets an order notes by order identifier
+        /// </summary>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="showHidden">A value indicating whether all orders should be loaded</param>
+        /// <returns>Order note collection</returns>
+        public abstract DBOrderNoteCollection GetOrderNoteByOrderId(int orderId, bool showHidden);
+
+        /// <summary>
+        /// Deletes an order note
+        /// </summary>
+        /// <param name="orderNoteId">Order note identifier</param>
+        public abstract void DeleteOrderNote(int orderNoteId);
+
+        /// <summary>
+        /// Inserts an order note
+        /// </summary>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="note">The note</param>
+        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
+        /// <param name="createdOn">The date and time of order note creation</param>
+        /// <returns>Order note</returns>
+        public abstract DBOrderNote InsertOrderNote(int orderId, string note,
+            bool displayToCustomer, DateTime createdOn);
+
+        /// <summary>
+        /// Updates the order note
+        /// </summary>
+        /// <param name="orderNoteId">The order note identifier</param>
+        /// <param name="orderId">The order identifier</param>
+        /// <param name="note">The note</param>
+        /// <param name="displayToCustomer">A value indicating whether the customer can see a note</param>
+        /// <param name="createdOn">The date and time of order note creation</param>
+        /// <returns>Order note</returns>
+        public abstract DBOrderNote UpdateOrderNote(int orderNoteId, int orderId,
+            string note, bool displayToCustomer, DateTime createdOn);
+
+        #endregion
+
+        #region Order statuses
 
         /// <summary>
         /// Gets an order status by Id
@@ -635,6 +619,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <returns>Order status collection</returns>
         public abstract DBOrderStatusCollection GetAllOrderStatuses();
 
+        #endregion
+
+        #region Reports
+
         /// <summary>
         /// Gets an order report
         /// </summary>
@@ -642,9 +630,45 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
         /// <param name="shippingStatusId">Order shipping status identifier; null to load all orders</param>
         /// <returns>IdataReader</returns>
-        public abstract IDataReader GetOrderReport(int? orderStatusId, 
+        public abstract IDataReader GetOrderReport(int? orderStatusId,
             int? paymentStatusId, int? shippingStatusId);
-        
+
+        /// <summary>
+        /// Get order product variant sales report
+        /// </summary>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
+        /// <returns>Result</returns>
+        public abstract IDataReader OrderProductVariantReport(DateTime? startTime,
+            DateTime? endTime, int? orderStatusId, int? paymentStatusId);
+
+        /// <summary>
+        /// Get the bests sellers report
+        /// </summary>
+        /// <param name="lastDays">Last number of days</param>
+        /// <param name="recordsToReturn">Number of products to return</param>
+        /// <param name="orderBy">1 - order by total count, 2 - Order by total amount</param>
+        /// <returns>Result</returns>
+        public abstract List<DBBestSellersReportLine> BestSellersReport(int lastDays,
+            int recordsToReturn, int orderBy);
+
+        /// <summary>
+        /// Get order average report
+        /// </summary>
+        /// <param name="orderStatusId">Order status identifier</param>
+        /// <param name="startTime">Start date</param>
+        /// <param name="endTime">End date</param>
+        /// <returns>Result</returns>
+        public abstract DBOrderAverageReportLine OrderAverageReport(int orderStatusId,
+            DateTime? startTime, DateTime? endTime);
+
+
+        #endregion
+
+        #region Recurring payments
+
         /// <summary>
         /// Gets a recurring payment
         /// </summary>
@@ -664,7 +688,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="deleted">The value indicating whether the entity has been deleted</param>
         /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment</returns>
-        public abstract DBRecurringPayment InsertRecurringPayment(int initialOrderId, 
+        public abstract DBRecurringPayment InsertRecurringPayment(int initialOrderId,
             int cycleLength, int cyclePeriod, int totalCycles,
             DateTime startDate, bool isActive, bool deleted, DateTime createdOn);
 
@@ -716,7 +740,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="orderId">The order identifier</param>
         /// <param name="createdOn">The date and time of payment creation</param>
         /// <returns>Recurring payment history</returns>
-        public abstract DBRecurringPaymentHistory InsertRecurringPaymentHistory(int recurringPaymentId, 
+        public abstract DBRecurringPaymentHistory InsertRecurringPaymentHistory(int recurringPaymentId,
             int orderId, DateTime createdOn);
 
         /// <summary>
@@ -736,8 +760,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="recurringPaymentId">The recurring payment identifier; 0 to load all records</param>
         /// <param name="orderId">The order identifier; 0 to load all records</param>
         /// <returns>Recurring payment history collection</returns>
-        public abstract DBRecurringPaymentHistoryCollection SearchRecurringPaymentHistory(int recurringPaymentId, 
+        public abstract DBRecurringPaymentHistoryCollection SearchRecurringPaymentHistory(int recurringPaymentId,
             int orderId);
+
+        #endregion
+
+        #region Gift Cards
 
         /// <summary>
         /// Deletes a gift card
@@ -866,6 +894,74 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             int giftCardId, int customerId, int orderId, decimal usedValue,
             decimal usedValueInCustomerCurrency, DateTime createdOn);
         
+        #endregion
+
+        #region Reward points
+
+        /// <summary>
+        /// Deletes a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        public abstract void DeleteRewardPointsHistory(int rewardPointsHistoryId);
+
+        /// <summary>
+        /// Gets a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        /// <returns>Reward point history entry</returns>
+        public abstract DBRewardPointsHistory GetRewardPointsHistoryById(int rewardPointsHistoryId);
+
+        /// <summary>
+        /// Gets all reward point history entries
+        /// </summary>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Reward point history entries</returns>
+        public abstract DBRewardPointsHistoryCollection GetAllRewardPointsHistoryEntries(int? customerId,
+            int? orderId, int pageSize, int pageIndex, out int totalRecords);
+
+        /// <summary>
+        /// Inserts a reward point history entry
+        /// </summary>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="points">Points redeemed/added</param>
+        /// <param name="pointsBalance">Points balance</param>
+        /// <param name="usedAmount">Used amount</param>
+        /// <param name="usedAmountInCustomerCurrency">Used amount (customer currency)</param>
+        /// <param name="customerCurrencyCode">Customer currency code</param>
+        /// <param name="message">Customer currency code</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Reward point history entry</returns>
+        public abstract DBRewardPointsHistory InsertRewardPointsHistory(int customerId,
+            int orderId, int points, int pointsBalance, decimal usedAmount,
+            decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
+            string message, DateTime createdOn);
+
+        /// <summary>
+        /// Updates a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="points">Points redeemed/added</param>
+        /// <param name="pointsBalance">Points balance</param>
+        /// <param name="usedAmount">Used amount</param>
+        /// <param name="usedAmountInCustomerCurrency">Used amount (customer currency)</param>
+        /// <param name="customerCurrencyCode">Customer currency code</param>
+        /// <param name="message">Customer currency code</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Reward point history entry</returns>
+        public abstract DBRewardPointsHistory UpdateRewardPointsHistory(int rewardPointsHistoryId,
+            int customerId, int orderId, int points, int pointsBalance, decimal usedAmount,
+            decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
+            string message, DateTime createdOn);
+        
+        #endregion
+
         #endregion
     }
 }

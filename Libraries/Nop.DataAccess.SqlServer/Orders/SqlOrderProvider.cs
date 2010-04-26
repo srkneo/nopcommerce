@@ -242,6 +242,22 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             return item;
         }
 
+        private DBRewardPointsHistory GetRewardPointsHistoryFromReader(IDataReader dataReader)
+        {
+            var item = new DBRewardPointsHistory();
+            item.RewardPointsHistoryId = NopSqlDataHelper.GetInt(dataReader, "RewardPointsHistoryId");
+            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.OrderId = NopSqlDataHelper.GetInt(dataReader, "OrderID");
+            item.Points = NopSqlDataHelper.GetInt(dataReader, "Points");
+            item.PointsBalance = NopSqlDataHelper.GetInt(dataReader, "PointsBalance");
+            item.UsedAmount = NopSqlDataHelper.GetDecimal(dataReader, "UsedAmount");
+            item.UsedAmountInCustomerCurrency = NopSqlDataHelper.GetDecimal(dataReader, "UsedAmountInCustomerCurrency");
+            item.CustomerCurrencyCode = NopSqlDataHelper.GetString(dataReader, "CustomerCurrencyCode");
+            item.Message = NopSqlDataHelper.GetString(dataReader, "Message");
+            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
+            return item;
+        }
+
         #endregion
 
         #region Methods
@@ -2074,6 +2090,150 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
                 item = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Deletes a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        public override void DeleteRewardPointsHistory(int rewardPointsHistoryId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_RewardPointsHistoryDelete");
+            db.AddInParameter(dbCommand, "RewardPointsHistoryId", DbType.Int32, rewardPointsHistoryId);
+            db.ExecuteNonQuery(dbCommand);
+        }
+
+        /// <summary>
+        /// Gets a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        /// <returns>Reward point history entry</returns>
+        public override DBRewardPointsHistory GetRewardPointsHistoryById(int rewardPointsHistoryId)
+        {
+            DBRewardPointsHistory item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_RewardPointsHistoryLoadByPrimaryKey");
+            db.AddInParameter(dbCommand, "RewardPointsHistoryId", DbType.Int32, rewardPointsHistoryId);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetRewardPointsHistoryFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Gets all reward point history entries
+        /// </summary>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Reward point history entries</returns>
+        public override DBRewardPointsHistoryCollection GetAllRewardPointsHistoryEntries(int? customerId,
+            int? orderId, int pageSize, int pageIndex, out int totalRecords)
+        {
+            totalRecords = 0;
+            var result = new DBRewardPointsHistoryCollection();
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_RewardPointsHistoryLoadAll");
+            db.AddInParameter(dbCommand, "CustomerId", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "OrderId", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, pageIndex);
+            db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                while (dataReader.Read())
+                {
+                    var item = GetRewardPointsHistoryFromReader(dataReader);
+                    result.Add(item);
+                }
+            }
+            totalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Inserts a reward point history entry
+        /// </summary>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="points">Points redeemed/added</param>
+        /// <param name="pointsBalance">Points balance</param>
+        /// <param name="usedAmount">Used amount</param>
+        /// <param name="usedAmountInCustomerCurrency">Used amount (customer currency)</param>
+        /// <param name="customerCurrencyCode">Customer currency code</param>
+        /// <param name="message">Customer currency code</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Reward point history entry</returns>
+        public override DBRewardPointsHistory InsertRewardPointsHistory(int customerId,
+            int orderId, int points, int pointsBalance, decimal usedAmount,
+            decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
+            string message, DateTime createdOn)
+        {
+            DBRewardPointsHistory item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_RewardPointsHistoryInsert");
+            db.AddOutParameter(dbCommand, "RewardPointsHistoryId", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "CustomerId", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "Points", DbType.Int32, points);
+            db.AddInParameter(dbCommand, "PointsBalance", DbType.Int32, pointsBalance);
+            db.AddInParameter(dbCommand, "UsedAmount", DbType.Decimal, usedAmount);
+            db.AddInParameter(dbCommand, "UsedAmountInCustomerCurrency", DbType.Decimal, usedAmountInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, customerCurrencyCode);
+            db.AddInParameter(dbCommand, "Message", DbType.String, message);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int rewardPointsHistoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@RewardPointsHistoryId"));
+                item = GetRewardPointsHistoryById(rewardPointsHistoryId);
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Updates a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="points">Points redeemed/added</param>
+        /// <param name="pointsBalance">Points balance</param>
+        /// <param name="usedAmount">Used amount</param>
+        /// <param name="usedAmountInCustomerCurrency">Used amount (customer currency)</param>
+        /// <param name="customerCurrencyCode">Customer currency code</param>
+        /// <param name="message">Customer currency code</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Reward point history entry</returns>
+        public override DBRewardPointsHistory UpdateRewardPointsHistory(int rewardPointsHistoryId,
+            int customerId, int orderId, int points, int pointsBalance, decimal usedAmount,
+            decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
+            string message, DateTime createdOn)
+        {
+            DBRewardPointsHistory item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_RewardPointsHistoryUpdate");
+            db.AddInParameter(dbCommand, "RewardPointsHistoryId", DbType.Int32, rewardPointsHistoryId);
+            db.AddInParameter(dbCommand, "CustomerId", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
+            db.AddInParameter(dbCommand, "Points", DbType.Int32, points);
+            db.AddInParameter(dbCommand, "PointsBalance", DbType.Int32, pointsBalance);
+            db.AddInParameter(dbCommand, "UsedAmount", DbType.Decimal, usedAmount);
+            db.AddInParameter(dbCommand, "UsedAmountInCustomerCurrency", DbType.Decimal, usedAmountInCustomerCurrency);
+            db.AddInParameter(dbCommand, "CustomerCurrencyCode", DbType.String, customerCurrencyCode);
+            db.AddInParameter(dbCommand, "Message", DbType.String, message);
+            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetRewardPointsHistoryById(rewardPointsHistoryId);
 
             return item;
         }

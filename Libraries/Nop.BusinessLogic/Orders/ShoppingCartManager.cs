@@ -270,12 +270,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Gets shopping cart total
         /// </summary>
         /// <param name="cart">Cart</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
         /// <param name="customer">Customer</param>
         /// <returns>Shopping cart total;Null if shopping cart total couldn't be calculated now</returns>
-        public static decimal? GetShoppingCartTotal(ShoppingCart cart, 
-            Customer customer)
+        public static decimal? GetShoppingCartTotal(ShoppingCart cart,
+            int paymentMethodId, Customer customer)
         {
-            return GetShoppingCartTotal(cart, 0, customer);
+            bool useRewardPoints = false;
+            if (customer != null)
+                useRewardPoints = customer.UseRewardPointsDuringCheckout;
+            return GetShoppingCartTotal(cart, paymentMethodId, customer, useRewardPoints);
         }
 
         /// <summary>
@@ -284,14 +288,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="cart">Cart</param>
         /// <param name="paymentMethodId">Payment method identifier</param>
         /// <param name="customer">Customer</param>
+        /// <param name="useRewardPoints">A value indicating whether to use reward points</param>
         /// <returns>Shopping cart total;Null if shopping cart total couldn't be calculated now</returns>
-        public static decimal? GetShoppingCartTotal(ShoppingCart cart, 
-            int paymentMethodId, Customer customer)
+        public static decimal? GetShoppingCartTotal(ShoppingCart cart,
+            int paymentMethodId, Customer customer, bool useRewardPoints)
+        {
+            int redeemedRewardPoints = 0;
+            decimal redeemedRewardPointsAmount = decimal.Zero;
+            return GetShoppingCartTotal(cart, paymentMethodId, customer,
+                useRewardPoints, out redeemedRewardPoints, out redeemedRewardPointsAmount);
+        }
+
+        /// <summary>
+        /// Gets shopping cart total
+        /// </summary>
+        /// <param name="cart">Cart</param>
+        /// <param name="paymentMethodId">Payment method identifier</param>
+        /// <param name="customer">Customer</param>
+        /// <param name="useRewardPoints">A value indicating whether to use reward points</param>
+        /// <param name="redeemedRewardPoints">Reward points to redeem</param>
+        /// <param name="redeemedRewardPointsAmount">Reward points amount in primary store currency to redeem</param>
+        /// <returns>Shopping cart total;Null if shopping cart total couldn't be calculated now</returns>
+        public static decimal? GetShoppingCartTotal(ShoppingCart cart,
+            int paymentMethodId, Customer customer, bool useRewardPoints,
+            out int redeemedRewardPoints, out decimal redeemedRewardPointsAmount)
         {
             string subTotalError = string.Empty;
             string shippingError = string.Empty;
             string paymentMethodAdditionalFeeError = string.Empty;
             string taxError = string.Empty;
+            redeemedRewardPoints = 0;
+            redeemedRewardPointsAmount = decimal.Zero;
 
             //subtotal without tax
             decimal subTotalDiscountBase = decimal.Zero;
@@ -324,8 +351,40 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (!String.IsNullOrEmpty(taxError))
                 return null;
 
+            //order total
+            decimal? result = null;
             if (shoppingCartShipping.HasValue)
-                return Math.Round(subtotalBaseWithPromo + shoppingCartShipping.Value + paymentMethodAdditionalFeeWithoutTax + shoppingCartTax, 2);
+            {
+                result = subtotalBaseWithPromo + shoppingCartShipping.Value + paymentMethodAdditionalFeeWithoutTax + shoppingCartTax;
+                result = Math.Round(result.Value, 2);
+            }
+
+            //reward points
+            if (OrderManager.RewardPointsEnabled && useRewardPoints && customer != null)
+            {
+                int rewardPointsBalance = customer.RewardPointsBalance;
+                decimal rewardPointsBalanceAmount = OrderManager.ConvertRewardPointsToAmount(rewardPointsBalance);
+                if (result.HasValue)
+                {
+                    if (result.Value > rewardPointsBalanceAmount)
+                    {
+                        redeemedRewardPoints = rewardPointsBalance;
+                        redeemedRewardPointsAmount = rewardPointsBalanceAmount;
+                    }
+                    else
+                    {
+                        redeemedRewardPointsAmount = result.Value;
+                        redeemedRewardPoints = OrderManager.ConvertAmountToRewardPoints(redeemedRewardPointsAmount);
+                    }
+                }
+            }
+
+            if (result.HasValue)
+            {
+                result = result.Value - redeemedRewardPointsAmount;
+                result = Math.Round(result.Value, 2);
+                return result;
+            }
             else
                 return null;
         }

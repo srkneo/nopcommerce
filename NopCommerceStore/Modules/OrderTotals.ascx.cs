@@ -176,7 +176,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 phTaxTotal.Visible = displayTax;
 
                 //total
-                decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(cart, paymentMethodId, NopContext.Current.User);
+                int redeemedRewardPoints = 0;
+                decimal redeemedRewardPointsAmount = decimal.Zero;
+                bool useRewardPoints = false;
+                if (NopContext.Current.User != null)
+                    useRewardPoints = NopContext.Current.User.UseRewardPointsDuringCheckout;
+                decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(cart,
+                    paymentMethodId, NopContext.Current.User, useRewardPoints,
+                    out redeemedRewardPoints, out redeemedRewardPointsAmount);
                 if (shoppingCartTotalBase.HasValue)
                 {
                     decimal shoppingCartTotal = CurrencyManager.ConvertCurrency(shoppingCartTotalBase.Value, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
@@ -187,6 +194,20 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     lblTotalAmount.Text = GetLocaleResourceString("ShoppingCart.CalculatedDuringCheckout");
                     lblTotalAmount.CssClass = string.Empty;
+                }
+
+                //reward points
+                if (redeemedRewardPointsAmount > decimal.Zero)
+                {
+                    phRewardPoints.Visible = true;
+
+                    decimal redeemedRewardPointsAmountInCustomerCurrency = CurrencyManager.ConvertCurrency(redeemedRewardPointsAmount, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                    lRewardPointsTitle.Text = string.Format(GetLocaleResourceString("ShoppingCart.Totals.RewardPoints"), redeemedRewardPoints);
+                    lblRewardPointsAmount.Text = PriceHelper.FormatPrice(-redeemedRewardPointsAmountInCustomerCurrency, true, false);
+                }
+                else
+                {
+                    phRewardPoints.Visible = false;
                 }
             }
             else

@@ -505,8 +505,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             //discount
-            this.lblOrderDiscount.Text = PriceHelper.FormatPrice(order.OrderDiscount, true, false);
-            
+            if (order.OrderDiscount > 0)
+            {
+                pnlDiscount.Visible = true;
+                this.lblOrderDiscount.Text = PriceHelper.FormatPrice(-order.OrderDiscount, true, false);
+            }
+            else
+            {
+                pnlDiscount.Visible = false;
+            }
             
             //gift cards
             GiftCardUsageHistoryCollection gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
@@ -523,6 +530,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             
             //tax
             this.lblOrderTax.Text = PriceHelper.FormatPrice(order.OrderTax, true, false);
+
+            //reward points
+            if (order.RedeemedRewardPoints!=null)
+            {
+                pnlRewardPoints.Visible = true;
+                lblRewardPointsTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.RewardPoints"), -order.RedeemedRewardPoints.Points);
+                lblRewardPointsAmount.Text = PriceHelper.FormatPrice(-order.RedeemedRewardPoints.UsedAmount, true, false);
+            }
+            else
+            {
+                pnlRewardPoints.Visible = false;
+            }
 
             //total
             this.lblOrderTotal.Text = PriceHelper.FormatPrice(order.OrderTotal, true, false);

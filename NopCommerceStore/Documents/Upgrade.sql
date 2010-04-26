@@ -6257,3 +6257,246 @@ BEGIN
 		OrderID = @OrderID
 END
 GO
+
+
+--Reward Points
+if not exists (select 1 from sysobjects where id = object_id(N'[dbo].[Nop_RewardPointsHistory]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+	CREATE TABLE [dbo].[Nop_RewardPointsHistory](
+	[RewardPointsHistoryID] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerID] [int] NOT NULL,
+	[OrderID] [int] NOT NULL,
+	[Points] [int] NOT NULL,
+	[PointsBalance] [int] NOT NULL,
+	[UsedAmount] [money] NOT NULL,
+	[UsedAmountInCustomerCurrency] [money] NOT NULL,
+	[CustomerCurrencyCode] [nvarchar](5) NOT NULL,
+	[Message] [nvarchar](1000) NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+ CONSTRAINT [Nop_RewardPointsHistory_PK] PRIMARY KEY CLUSTERED 
+(
+	[RewardPointsHistoryID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+IF EXISTS (SELECT 1
+           FROM   sysobjects
+           WHERE  name = 'FK_Nop_RewardPointsHistory_Nop_Customer'
+           AND parent_obj = Object_id('Nop_RewardPointsHistory')
+           AND Objectproperty(id,N'IsForeignKey') = 1)
+ALTER TABLE dbo.Nop_RewardPointsHistory
+DROP CONSTRAINT FK_Nop_RewardPointsHistory_Nop_Customer
+GO
+ALTER TABLE [dbo].[Nop_RewardPointsHistory]  WITH CHECK ADD  CONSTRAINT [FK_Nop_RewardPointsHistory_Nop_Customer] FOREIGN KEY([CustomerID])
+REFERENCES [dbo].[Nop_Customer] ([CustomerID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RewardPointsHistoryDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RewardPointsHistoryDelete]
+GO
+CREATE PROCEDURE [dbo].[Nop_RewardPointsHistoryDelete]
+(
+	@RewardPointsHistoryID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	DELETE
+	FROM [Nop_RewardPointsHistory]
+	WHERE
+		RewardPointsHistoryID = @RewardPointsHistoryID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RewardPointsHistoryInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RewardPointsHistoryInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_RewardPointsHistoryInsert]
+(
+	@RewardPointsHistoryID int = NULL output,
+	@CustomerID int,
+	@OrderID int,
+	@Points int,
+	@PointsBalance int,
+	@UsedAmount money,
+	@UsedAmountInCustomerCurrency money,
+	@CustomerCurrencyCode nvarchar(5),
+	@Message nvarchar(1000),
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_RewardPointsHistory]
+	(
+		[CustomerID],
+		[OrderID],
+		[Points],
+		[PointsBalance],
+		[UsedAmount],
+		[UsedAmountInCustomerCurrency],
+		[CustomerCurrencyCode],
+		[Message],
+		[CreatedOn]
+	)
+	VALUES
+	(
+		@CustomerID,
+		@OrderID,
+		@Points,
+		@PointsBalance,
+		@UsedAmount,
+		@UsedAmountInCustomerCurrency,
+		@CustomerCurrencyCode,
+		@Message,
+		@CreatedOn
+	)
+
+	set @RewardPointsHistoryID=SCOPE_IDENTITY()
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RewardPointsHistoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RewardPointsHistoryLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_RewardPointsHistoryLoadAll]
+(
+	@CustomerID int,
+	@OrderID int,
+	@PageIndex int = 0, 
+	@PageSize int = 2147483644,
+	@TotalRecords int = null OUTPUT
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		RewardPointsHistoryID int NOT NULL,
+		CreatedOn datetime NOT NULL
+	)
+
+	INSERT INTO #PageIndex (RewardPointsHistoryID, CreatedOn)
+	SELECT DISTINCT
+		rph.RewardPointsHistoryID,
+		rph.CreatedOn
+	FROM [Nop_RewardPointsHistory] rph with (NOLOCK)
+	WHERE 
+		(
+			@CustomerID IS NULL OR @CustomerID=0
+			OR (rph.CustomerID=@CustomerID)
+		)
+		AND
+		(
+			@OrderID IS NULL OR @OrderID=0
+			OR (rph.OrderID=@OrderID)
+		)
+	ORDER BY rph.CreatedOn DESC, RewardPointsHistoryID
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT
+		rph.*
+	FROM
+		#PageIndex [pi]
+		INNER JOIN [Nop_RewardPointsHistory] rph on rph.RewardPointsHistoryID = [pi].RewardPointsHistoryID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RewardPointsHistoryLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RewardPointsHistoryLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_RewardPointsHistoryLoadByPrimaryKey]
+(
+	@RewardPointsHistoryID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		*
+	FROM [Nop_RewardPointsHistory]
+	WHERE
+		RewardPointsHistoryID = @RewardPointsHistoryID
+END
+GO
+
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RewardPointsHistoryUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RewardPointsHistoryUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_RewardPointsHistoryUpdate]
+(
+	@RewardPointsHistoryID int,
+	@CustomerID int,
+	@OrderID int,
+	@Points int,
+	@PointsBalance int,
+	@UsedAmount money,
+	@UsedAmountInCustomerCurrency money,
+	@CustomerCurrencyCode nvarchar(5),
+	@Message nvarchar(1000),
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	UPDATE [Nop_RewardPointsHistory]
+	SET
+		[CustomerID] = @CustomerID,
+		[OrderID] = @OrderID,
+		[Points] = @Points,
+		[PointsBalance] = @PointsBalance,
+		[UsedAmount] = @UsedAmount,
+		[UsedAmountInCustomerCurrency] = @UsedAmountInCustomerCurrency,
+		[CustomerCurrencyCode] = @CustomerCurrencyCode,
+		[Message] = @Message,
+		[CreatedOn] = @CreatedOn
+	WHERE
+		RewardPointsHistoryID=@RewardPointsHistoryID
+END
+GO

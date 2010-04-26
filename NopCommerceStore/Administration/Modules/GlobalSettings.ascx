@@ -2,6 +2,7 @@
     CodeBehind="GlobalSettings.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="NumericTextBox" Src="NumericTextBox.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="DecimalTextBox" Src="DecimalTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="EmailTextBox" Src="EmailTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ThemeSelector" Src="ThemeSelectorControl.ascx" %>
@@ -17,100 +18,98 @@
 </div>
 <div>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            toggleCustomersAllowedToUploadAvatars();
+            toggleProductsAlsoPurchased();
+            toggleRecentlyViewedProducts();
+            toggleRecentlyAddedProducts();
+            toggleShowBestsellersOnHomePage();
+            toggleSMSAlerts();
+            toggleLiveChat();
+        });
 
+        function toggleCustomersAllowedToUploadAvatars() {
+            if (getE('<%=cbCustomersAllowedToUploadAvatars.ClientID %>').checked) {
+                $('#pnlDefaultAvatarEnabled').show();
+            }
+            else {
+                $('#pnlDefaultAvatarEnabled').hide();
+            }
+        }
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        toggleCustomersAllowedToUploadAvatars();
-        toggleProductsAlsoPurchased();
-        toggleRecentlyViewedProducts();
-        toggleRecentlyAddedProducts();
-        toggleShowBestsellersOnHomePage();
-        toggleSMSAlerts();
-        toggleLiveChat();
-    });
+        function toggleLiveChat() {
+            if (getE('<%=cbLiveChatEnabled.ClientID %>').checked) {
+                $('#pnlLiveChatBtnCode').show();
+                $('#pnlLiveChatMonCode').show();
+            }
+            else {
+                $('#pnlLiveChatBtnCode').hide();
+                $('#pnlLiveChatMonCode').hide();
+            }
+        }
 
-    function toggleCustomersAllowedToUploadAvatars() {
-        if (getE('<%=cbCustomersAllowedToUploadAvatars.ClientID %>').checked) {
-            $('#pnlDefaultAvatarEnabled').show();
+        function toggleSMSAlerts() {
+            if (getE('<%=cbIsSMSAlertsEnabled.ClientID %>').checked) {
+                $('#pnlSMSAlertsPhoneNumber').show();
+                $('#pnlSMSAlertsClickatellAPIId').show();
+                $('#pnlSMSAlertsClickatellUsername').show();
+                $('#pnlSMSAlertsClickatellPassword').show();
+                $('#pnlSMSAlertsTest_0').show();
+                $('#pnlSMSAlertsTest_1').show();
+                $('#pnlSMSAlertsTest_2').show();
+                $('#pnlSMSAlertsTest_3').show();
+                $('#pnlSMSAlertsTest_4').show();
+            }
+            else {
+                $('#pnlSMSAlertsPhoneNumber').hide();
+                $('#pnlSMSAlertsClickatellAPIId').hide();
+                $('#pnlSMSAlertsClickatellUsername').hide();
+                $('#pnlSMSAlertsClickatellPassword').hide();
+                $('#pnlSMSAlertsTest_0').hide();
+                $('#pnlSMSAlertsTest_1').hide();
+                $('#pnlSMSAlertsTest_2').hide();
+                $('#pnlSMSAlertsTest_3').hide();
+                $('#pnlSMSAlertsTest_4').hide();
+            }
         }
-        else {
-            $('#pnlDefaultAvatarEnabled').hide();
-        }
-    }
 
-    function toggleLiveChat() {
-        if (getE('<%=cbLiveChatEnabled.ClientID %>').checked) {
-            $('#pnlLiveChatBtnCode').show();
-            $('#pnlLiveChatMonCode').show();
+        function toggleProductsAlsoPurchased() {
+            if (getE('<%=cbProductsAlsoPurchased.ClientID %>').checked) {
+                $('#pnlProductsAlsoPurchasedNumber').show();
+            }
+            else {
+                $('#pnlProductsAlsoPurchasedNumber').hide();
+            }
         }
-        else {
-            $('#pnlLiveChatBtnCode').hide();
-            $('#pnlLiveChatMonCode').hide();
-        }
-    }
 
-    function toggleSMSAlerts() {
-        if (getE('<%=cbIsSMSAlertsEnabled.ClientID %>').checked) {
-            $('#pnlSMSAlertsPhoneNumber').show();
-            $('#pnlSMSAlertsClickatellAPIId').show();
-            $('#pnlSMSAlertsClickatellUsername').show();
-            $('#pnlSMSAlertsClickatellPassword').show();
-            $('#pnlSMSAlertsTest_0').show();
-            $('#pnlSMSAlertsTest_1').show();
-            $('#pnlSMSAlertsTest_2').show();
-            $('#pnlSMSAlertsTest_3').show();
-            $('#pnlSMSAlertsTest_4').show();
+        function toggleRecentlyViewedProducts() {
+            if (getE('<%=cbRecentlyViewedProductsEnabled.ClientID %>').checked) {
+                $('#pnlRecentlyViewedProductsNumber').show();
+            }
+            else {
+                $('#pnlRecentlyViewedProductsNumber').hide();
+            }
         }
-        else {
-            $('#pnlSMSAlertsPhoneNumber').hide();
-            $('#pnlSMSAlertsClickatellAPIId').hide();
-            $('#pnlSMSAlertsClickatellUsername').hide();
-            $('#pnlSMSAlertsClickatellPassword').hide();
-            $('#pnlSMSAlertsTest_0').hide();
-            $('#pnlSMSAlertsTest_1').hide();
-            $('#pnlSMSAlertsTest_2').hide();
-            $('#pnlSMSAlertsTest_3').hide();
-            $('#pnlSMSAlertsTest_4').hide();
-        }
-    }
 
-    function toggleProductsAlsoPurchased() {
-        if (getE('<%=cbProductsAlsoPurchased.ClientID %>').checked) {
-            $('#pnlProductsAlsoPurchasedNumber').show();
+        function toggleRecentlyAddedProducts() {
+            if (getE('<%=cbRecentlyAddedProductsEnabled.ClientID %>').checked) {
+                $('#pnlRecentlyAddedProductsNumber').show();
+            }
+            else {
+                $('#pnlRecentlyAddedProductsNumber').hide();
+            }
         }
-        else {
-            $('#pnlProductsAlsoPurchasedNumber').hide();
-        }
-    }
 
-    function toggleRecentlyViewedProducts() {
-        if (getE('<%=cbRecentlyViewedProductsEnabled.ClientID %>').checked) {
-            $('#pnlRecentlyViewedProductsNumber').show();
+        function toggleShowBestsellersOnHomePage() {
+            if (getE('<%=cbShowBestsellersOnHomePage.ClientID %>').checked) {
+                $('#pnlShowBestsellersOnHomePageNumber').show();
+            }
+            else {
+                $('#pnlShowBestsellersOnHomePageNumber').hide();
+            }
         }
-        else {
-            $('#pnlRecentlyViewedProductsNumber').hide();
-        }
-    }
-
-    function toggleRecentlyAddedProducts() {
-        if (getE('<%=cbRecentlyAddedProductsEnabled.ClientID %>').checked) {
-            $('#pnlRecentlyAddedProductsNumber').show();
-        }
-        else {
-            $('#pnlRecentlyAddedProductsNumber').hide();
-        }
-    }
-
-    function toggleShowBestsellersOnHomePage() {
-        if (getE('<%=cbShowBestsellersOnHomePage.ClientID %>').checked) {
-            $('#pnlShowBestsellersOnHomePageNumber').show();
-        }
-        else {
-            $('#pnlShowBestsellersOnHomePageNumber').hide();
-        }
-    }
-</script>
+    </script>
 
     <ajaxToolkit:TabContainer runat="server" ID="CommonSettingsTabs" ActiveTabIndex="0">
         <ajaxToolkit:TabPanel runat="server" ID="pnlGeneral" HeaderText="<% $NopResources:Admin.GlobalSettings.General.Title %>">
@@ -243,7 +242,8 @@
                     </tr>
                     <tr>
                         <td class="adminTitle">
-                            <nopCommerce:ToolTipLabel ID="lblFavicon" runat="server" ToolTipImage="~/Administration/Common/ico-help.gif" Text="<% $NopResources:Admin.GlobalSettings.SEODisplay.Favicon %>" ToolTip="<% $NopResources:Admin.GlobalSettings.SEODisplay.Favicon.Tooltip %>" />
+                            <nopCommerce:ToolTipLabel ID="lblFavicon" runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                Text="<% $NopResources:Admin.GlobalSettings.SEODisplay.Favicon %>" ToolTip="<% $NopResources:Admin.GlobalSettings.SEODisplay.Favicon.Tooltip %>" />
                         </td>
                         <td class="adminData">
                             <asp:Image runat="server" ID="imgFavicon" AlternateText="favicon" />
@@ -279,7 +279,7 @@
                         <td class="adminData">
                             <asp:CheckBox runat="server" ID="cbShowBlogHeaderRssURL" />
                         </td>
-                    </tr>                    
+                    </tr>
                     <tr class="adminSeparator">
                         <td colspan="2">
                             <hr />
@@ -524,15 +524,15 @@
                             <asp:Image runat="server" ID="imgPdfLogoPreview" AlternateText="Logo preview" />
                             <br />
                             <asp:Button ID="btnPdfLogoRemove" CssClass="adminInput" CausesValidation="false"
-                                runat="server" Text="<% $NopResources:Admin.GlobalSettings.Media.PdfLogoRemove %>" OnClick="BtnPdfLogoRemove_OnClick"
-                                Visible="false" ToolTip="<% $NopResources:Admin.GlobalSettings.Media.PdfLogoRemove.Tooltip %>" />
+                                runat="server" Text="<% $NopResources:Admin.GlobalSettings.Media.PdfLogoRemove %>"
+                                OnClick="BtnPdfLogoRemove_OnClick" Visible="false" ToolTip="<% $NopResources:Admin.GlobalSettings.Media.PdfLogoRemove.Tooltip %>" />
                             <br />
                             <asp:FileUpload runat="server" ID="uplPdfLogo" />
                         </td>
                     </tr>
                 </table>
             </ContentTemplate>
-        </ajaxToolkit:TabPanel>        
+        </ajaxToolkit:TabPanel>
         <ajaxToolkit:TabPanel runat="server" ID="pnlMailSettings" HeaderText="<% $NopResources:Admin.GlobalSettings.MailSettings.Title %>">
             <ContentTemplate>
                 <table class="adminContent">
@@ -664,23 +664,23 @@
         <ajaxToolkit:TabPanel runat="server" ID="pnlSMSAlerts" HeaderText="<% $NopResources:Admin.GlobalSettings.SMSAlerts.Title %>">
             <ContentTemplate>
                 <table class="adminContent">
-                <tr>
-                <td class="adminTitle" colspan="2">
-                To receive an SMS notification when an order is placed from your store you need
-                    to follow a few simple steps, which are shown below:
-                    <ul>
-                        <li><a href="http://www.clickatell.com" target='_blank'>Register for a Clickatell account
-                            here</a></li>
-                        <li>Clickatell works with all countries and includes 10 free messages so you can test
-                            SMS notifications</li>
-                        <li>Fill in the form below with your Clickatell account details, including the number
-                            you want the notification messages to be sent to</li>
-                        <li>Click 'Save' button</li>
-                        <li>Now when you receive a new order, an SMS text message will be sent to the number
-                            you enter below automatically</li>
-                    </ul>
-                </td>
-                </tr>
+                    <tr>
+                        <td class="adminTitle" colspan="2">
+                            To receive an SMS notification when an order is placed from your store you need
+                            to follow a few simple steps, which are shown below:
+                            <ul>
+                                <li><a href="http://www.clickatell.com" target='_blank'>Register for a Clickatell account
+                                    here</a></li>
+                                <li>Clickatell works with all countries and includes 10 free messages so you can test
+                                    SMS notifications</li>
+                                <li>Fill in the form below with your Clickatell account details, including the number
+                                    you want the notification messages to be sent to</li>
+                                <li>Click 'Save' button</li>
+                                <li>Now when you receive a new order, an SMS text message will be sent to the number
+                                    you enter below automatically</li>
+                            </ul>
+                        </td>
+                    </tr>
                     <tr>
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
@@ -753,7 +753,8 @@
                         </td>
                         <td class="adminData">
                             <asp:TextBox runat="server" CssClass="adminInput" ID="txtTestPhone" ValidationGroup="SendTestSMS" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTestPhone" ErrorMessage="*" ValidationGroup="SendTestSMS" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="txtTestPhone" ErrorMessage="*"
+                                ValidationGroup="SendTestSMS" />
                         </td>
                     </tr>
                     <tr id="pnlSMSAlertsTest_3">
@@ -782,36 +783,26 @@
                         <td class="adminTitle" colspan="2">
                             Please find our step by step set up guide detailed below:
                             <ul>
-                                <li>
-                                    <b>Download</b>. 
-                                    Download the software here: <a href="http://solutions.liveperson.com/help/download.asp" target='_blank'>http://solutions.liveperson.com/help/download.asp</a>
+                                <li><b>Download</b>. Download the software here: <a href="http://solutions.liveperson.com/help/download.asp"
+                                    target='_blank'>http://solutions.liveperson.com/help/download.asp</a> </li>
+                                <li><b>Learn how to setup</b>. Getting started for Pro Administrators: <a href="http://solutions.liveperson.com/training/gettingstarted_pro_admin.asp"
+                                    target='_blank'>http://solutions.liveperson.com/training/gettingstarted_pro_admin.asp</a>
                                 </li>
-                                <li>
-                                    <b>Learn how to setup</b>. 
-                                    Getting started for Pro Administrators: <a href="http://solutions.liveperson.com/training/gettingstarted_pro_admin.asp" target='_blank'>http://solutions.liveperson.com/training/gettingstarted_pro_admin.asp</a>
-                                </li>
-                                <li>
-                                    <b>Apply Knowledge</b>. 
-                                    Login in your Admin Console, configure your account and embed your pages: <a href="https://server.iad.liveperson.net/hc/web/public/pub/ma/lp/login.jsp" target='_blank'>https://server.iad.liveperson.net/hc/web/public/pub/ma/lp/login.jsp</a>
+                                <li><b>Apply Knowledge</b>. Login in your Admin Console, configure your account and
+                                    embed your pages: <a href="https://server.iad.liveperson.net/hc/web/public/pub/ma/lp/login.jsp"
+                                        target='_blank'>https://server.iad.liveperson.net/hc/web/public/pub/ma/lp/login.jsp</a>
                                     <ul>
-                                        <li>
-                                            Click on the 'Admin Console' button on the toolbar.
-                                        </li>
-                                        <li>
-                                            Click on 'Account Setup' and then 'Page Code Builder'.
-                                        </li>
-                                        <li>
-                                            Follow the wizard to generate the monitor code and button tag code you wish to use on your store.
-                                        </li>
-                                        <li>
-                                            Paste the provided values from the 'Button Tag' and 'Monitor Tag' text boxes in to the appropriate boxes below.
-                                        </li>
-                                    </ul>       
+                                        <li>Click on the 'Admin Console' button on the toolbar. </li>
+                                        <li>Click on 'Account Setup' and then 'Page Code Builder'. </li>
+                                        <li>Follow the wizard to generate the monitor code and button tag code you wish to use
+                                            on your store. </li>
+                                        <li>Paste the provided values from the 'Button Tag' and 'Monitor Tag' text boxes in
+                                            to the appropriate boxes below. </li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <b>Learn how to use the Operator Console (Agent)</b>. 
-                                    Getting started for Pro Operators: <a href="http://solutions.liveperson.com/training/gettingstarted_pro_op.asp" target='_blank'>http://solutions.liveperson.com/training/gettingstarted_pro_op.asp</a>
-                                </li>
+                                <li><b>Learn how to use the Operator Console (Agent)</b>. Getting started for Pro Operators:
+                                    <a href="http://solutions.liveperson.com/training/gettingstarted_pro_op.asp" target='_blank'>
+                                        http://solutions.liveperson.com/training/gettingstarted_pro_op.asp</a> </li>
                             </ul>
                         </td>
                     </tr>
@@ -832,7 +823,8 @@
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.LiveChat.BtnCode.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <asp:TextBox runat="server" ID="txtLiveChatBtnCode" TextMode="MultiLine" Rows="5" CssClass="adminInput" />
+                            <asp:TextBox runat="server" ID="txtLiveChatBtnCode" TextMode="MultiLine" Rows="5"
+                                CssClass="adminInput" />
                         </td>
                     </tr>
                     <tr id="pnlLiveChatMonCode">
@@ -842,7 +834,108 @@
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.LiveChat.MonCode.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <asp:TextBox runat="server" ID="txtLiveChatMonCode" TextMode="MultiLine" Rows="5" CssClass="adminInput" />
+                            <asp:TextBox runat="server" ID="txtLiveChatMonCode" TextMode="MultiLine" Rows="5"
+                                CssClass="adminInput" />
+                        </td>
+                    </tr>
+                </table>
+            </ContentTemplate>
+        </ajaxToolkit:TabPanel>
+        <ajaxToolkit:TabPanel runat="server" ID="pnlRewardPoints" HeaderText="<% $NopResources:Admin.GlobalSettings.RewardPoints.Title %>">
+            <ContentTemplate>
+                <table class="adminContent">
+                    <tr>
+                        <td class="adminTitle" colspan="2">
+                            The Reward Points Program allows customers to earn points for certain actions they
+                            take on the site. Points are awarded based on making purchases and customer actions
+                            such as registration.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblRewardPointsEnabled" Text="<% $NopResources:Admin.GlobalSettings.RewardPoints.Enabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.RewardPoints.Enabled.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbRewardPointsEnabled" Checked="false" TextAlign="Left" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblRewardPointsRate" Text="<% $NopResources:Admin.GlobalSettings.RewardPoints.Rate %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.RewardPoints.Rate.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <%=GetLocaleResourceString("Admin.GlobalSettings.RewardPoints.Rate.Tooltip2")%>
+                            <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="50px" ID="txtRewardPointsRate"
+                                RequiredErrorMessage="Reward points rate is required" MinimumValue="0" MaximumValue="999999"
+                                RangeErrorMessage="The value must be from 0 to 999999"></nopCommerce:DecimalTextBox>
+                            <%=CurrencyManager.PrimaryStoreCurrency.CurrencyCode%>
+                        </td>
+                    </tr>
+                    <tr class="adminSeparator">
+                        <td colspan="2">
+                            <hr />
+                            <%=GetLocaleResourceString("Admin.GlobalSettings.RewardPoints.EarningRewardPoints")%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblRewardPointsForRegistration" Text="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForRegistration %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForRegistration.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtRewardPointsForRegistration"
+                                RequiredErrorMessage="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForRegistration.RequiredErrorMessage %>"
+                                MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForRegistration.RangeErrorMessage %>"
+                                Width="50px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblRewardPointsForPurchases" Text="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            Each
+                            <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="50px" ID="txtRewardPointsForPurchases_Amount"
+                                RequiredErrorMessage="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases_Amount.RequiredErrorMessage %>"
+                                MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases_Amount.RangeErrorMessage %>">
+                            </nopCommerce:DecimalTextBox>
+                            <%=CurrencyManager.PrimaryStoreCurrency.CurrencyCode%>
+                            spent will earn
+                            <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtRewardPointsForPurchases_Points"
+                                RequiredErrorMessage="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases_Points.RequiredErrorMessage %>"
+                                MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases_Points.RangeErrorMessage %>"
+                                Width="50px" />
+                            reward points.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblRewardPointsAwardedOrderStatus" Text="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases.Awarded %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases.Awarded.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:DropDownList ID="ddlRewardPointsAwardedOrderStatus" runat="server" CssClass="adminInput">
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblRewardPointsCanceledOrderStatus"
+                                Text="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases.Canceled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.RewardPoints.PointsForPurchases.Canceled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:DropDownList ID="ddlRewardPointsCanceledOrderStatus" runat="server" CssClass="adminInput">
+                            </asp:DropDownList>
                         </td>
                     </tr>
                 </table>
@@ -1130,8 +1223,7 @@
                     </tr>
                     <tr>
                         <td class="adminTitle">
-                            <nopCommerce:ToolTipLabel runat="server" ID="lblProductReviewsMustBeApproved"
-                                Text="<% $NopResources:Admin.GlobalSettings.Other.ProductReviewsMustBeApproved %>"
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblProductReviewsMustBeApproved" Text="<% $NopResources:Admin.GlobalSettings.Other.ProductReviewsMustBeApproved %>"
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.Other.ProductReviewsMustBeApproved.Tooltip %>"
                                 ToolTipImage="~/Administration/Common/ico-help.gif" />
                         </td>
@@ -1277,5 +1369,4 @@
             </ContentTemplate>
         </ajaxToolkit:TabPanel>
     </ajaxToolkit:TabContainer>
-
 </div>

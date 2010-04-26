@@ -87,6 +87,19 @@
                     </td>
                 </tr>
             </asp:PlaceHolder>
+            <asp:PlaceHolder runat="server" ID="phRewardPoints">
+                <tr>
+                    <td class="cart_total_left">
+                        <strong>
+                            <asp:Literal runat="server" ID="lRewardPointsTitle"></asp:Literal>:</strong>
+                    </td>
+                    <td class="cart_total_right">
+                        <span style="white-space: nowrap;">
+                            <asp:Label ID="lblRewardPointsAmount" runat="server" CssClass="productPrice" />
+                        </span>
+                    </td>
+                </tr>
+            </asp:PlaceHolder>
             <tr>
                 <td class="cart_total_left">
                     <strong>

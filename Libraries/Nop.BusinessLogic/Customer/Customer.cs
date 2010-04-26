@@ -42,6 +42,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         private CustomerRoleCollection _customerRolesCache = null;
         private Address _billingAddressCache = null;
         private Address _shippingAddressCache = null;
+        private RewardPointsHistoryCollection _rewardPointsHistoryCache = null;
         #endregion
 
         #region Ctor
@@ -53,13 +54,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         }
         #endregion
 
-        #region Utilities
-        private void ResetCachedValues()
+        #region Methods
+        /// <summary>
+        /// Resets cached values for an instance
+        /// </summary>
+        public void ResetCachedValues()
         {
             _customerAttributesCache = null;
             _customerRolesCache = null;
             _billingAddressCache = null;
             _shippingAddressCache = null;
+            _rewardPointsHistoryCache = null;
         }
         #endregion
 
@@ -276,17 +281,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         }
 
         /// <summary>
-        /// Gets the last payment method
-        /// </summary>
-        public PaymentMethod LastPaymentMethod
-        {
-            get
-            {
-                return PaymentMethodManager.GetPaymentMethodById(this.LastPaymentMethodId);
-            }
-        }
-
-        /// <summary>
         /// Gets the language
         /// </summary>
         public Language Language
@@ -342,6 +336,43 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         }
 
         /// <summary>
+        /// Gets the tax display type
+        /// </summary>
+        public TaxDisplayTypeEnum TaxDisplayType
+        {
+            get
+            {
+                return (TaxDisplayTypeEnum)this.TaxDisplayTypeId;
+            }
+            set
+            {
+                this.TaxDisplayTypeId = (int)value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the avatar
+        /// </summary>
+        public Picture Avatar
+        {
+            get
+            {
+                return PictureManager.GetPictureById(this.AvatarId);
+            }
+        }
+
+        /// <summary>
+        /// Gets the last payment method
+        /// </summary>
+        public PaymentMethod LastPaymentMethod
+        {
+            get
+            {
+                return PaymentMethodManager.GetPaymentMethodById(this.LastPaymentMethodId);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the last shipping option
         /// </summary>
         public ShippingOption LastShippingOption
@@ -391,32 +422,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 }
 
                 ResetCachedValues();
-            }
-        }
-
-        /// <summary>
-        /// Gets the tax display type
-        /// </summary>
-        public TaxDisplayTypeEnum TaxDisplayType
-        {
-            get
-            {
-                return (TaxDisplayTypeEnum)this.TaxDisplayTypeId;
-            }
-            set
-            {
-                this.TaxDisplayTypeId = (int)value;
-            }
-        }
-        
-        /// <summary>
-        /// Gets the avatar
-        /// </summary>
-        public Picture Avatar
-        {
-            get
-            {
-                return PictureManager.GetPictureById(this.AvatarId);
             }
         }
 
@@ -977,6 +982,70 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                         accountActivationAttr = CustomerManager.InsertCustomerAttribute(this.CustomerId, "AccountActivationToken", value);
                     }
                 }
+                ResetCachedValues();
+            }
+        }
+
+        /// <summary>
+        /// Gets reward points collection
+        /// </summary>
+        public RewardPointsHistoryCollection RewardPointsHistory
+        {
+            get
+            {
+                if (this.CustomerId == 0)
+                    return new RewardPointsHistoryCollection();
+                if (_rewardPointsHistoryCache == null)
+                {
+                    int totalRecords = 0;
+                    _rewardPointsHistoryCache = OrderManager.GetAllRewardPointsHistoryEntries(this.CustomerId,
+                        null, int.MaxValue, 0, out totalRecords);
+                }
+                return _rewardPointsHistoryCache;
+            }
+        }
+
+        /// <summary>
+        /// Gets reward points balance
+        /// </summary>
+        public int RewardPointsBalance
+        {
+            get
+            {
+                int result = 0;
+                if (this.RewardPointsHistory.Count > 0)
+                    result = this.RewardPointsHistory[0].PointsBalance;
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use reward points during checkout
+        /// </summary>
+        public bool UseRewardPointsDuringCheckout
+        {
+            get
+            {
+                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                CustomerAttribute useRewardPointsAttr = customerAttributes.FindAttribute("UseRewardPointsDuringCheckout", this.CustomerId);
+                if (useRewardPointsAttr != null)
+                {
+                    bool _useRewardPoints = false;
+                    bool.TryParse(useRewardPointsAttr.Value, out _useRewardPoints);
+                    return _useRewardPoints;
+                }
+                else
+                    return false;
+            }
+            set
+            {
+                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                CustomerAttribute useRewardPointsAttr = customerAttributes.FindAttribute("UseRewardPointsDuringCheckout", this.CustomerId);
+                if (useRewardPointsAttr != null)
+                    useRewardPointsAttr = CustomerManager.UpdateCustomerAttribute(useRewardPointsAttr.CustomerAttributeId, useRewardPointsAttr.CustomerId, "UseRewardPointsDuringCheckout", value.ToString());
+                else
+                    useRewardPointsAttr = CustomerManager.InsertCustomerAttribute(this.CustomerId, "UseRewardPointsDuringCheckout", value.ToString());
+
                 ResetCachedValues();
             }
         }

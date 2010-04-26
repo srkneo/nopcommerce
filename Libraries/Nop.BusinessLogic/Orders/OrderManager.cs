@@ -440,6 +440,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return item;
         }
 
+        private static RewardPointsHistoryCollection DBMapping(DBRewardPointsHistoryCollection dbCollection)
+        {
+            if (dbCollection == null)
+                return null;
+
+            var collection = new RewardPointsHistoryCollection();
+            foreach (var dbItem in dbCollection)
+            {
+                var item = DBMapping(dbItem);
+                collection.Add(item);
+            }
+
+            return collection;
+        }
+
+        private static RewardPointsHistory DBMapping(DBRewardPointsHistory dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new RewardPointsHistory();
+            item.RewardPointsHistoryId = dbItem.RewardPointsHistoryId;
+            item.CustomerId = dbItem.CustomerId;
+            item.OrderId = dbItem.OrderId;
+            item.Points = dbItem.Points;
+            item.PointsBalance = dbItem.PointsBalance;
+            item.UsedAmount = dbItem.UsedAmount;
+            item.UsedAmountInCustomerCurrency = dbItem.UsedAmountInCustomerCurrency;
+            item.CustomerCurrencyCode = dbItem.CustomerCurrencyCode;
+            item.Message = dbItem.Message;
+            item.CreatedOn = dbItem.CreatedOn;
+
+            return item;
+        }
+
         /// <summary>
         /// Sets an order status
         /// </summary>
@@ -536,6 +571,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.Deleted,
                     order.CreatedOn);
 
+                //order notes, notifications
                 InsertOrderNote(orderId, string.Format("Order status has been changed to {0}", os.ToString()), false, DateTime.Now);
 
                 if (order.OrderStatus != OrderStatusEnum.Complete &&
@@ -554,6 +590,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     InsertOrderNote(orderId, string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId), false, DateTime.Now);
                 }
 
+                //reward points
+                if (OrderManager.RewardPointsEnabled)
+                {
+                    if (OrderManager.RewardPointsForPurchases_Amount > decimal.Zero)
+                    {
+                        int points = (int)Math.Truncate(updatedOrder.OrderTotal / OrderManager.RewardPointsForPurchases_Amount * OrderManager.RewardPointsForPurchases_Points);
+                        if (points != 0)
+                        {
+                            if (OrderManager.RewardPointsForPurchases_Awarded == updatedOrder.OrderStatus)
+                            {
+                                var rph = InsertRewardPointsHistory(order.CustomerId,
+                                    0, points, decimal.Zero,
+                                    decimal.Zero, string.Empty,
+                                    string.Format(LocalizationManager.GetLocaleResourceString("RewardPoints.Message.EarnedForOrder"), order.OrderId),
+                                    DateTime.Now);
+                            }
+
+
+                            if (OrderManager.RewardPointsForPurchases_Canceled == updatedOrder.OrderStatus)
+                            {
+                                var rph = InsertRewardPointsHistory(order.CustomerId,
+                                    0, -points, decimal.Zero,
+                                    decimal.Zero, string.Empty,
+                                    string.Format(LocalizationManager.GetLocaleResourceString("RewardPoints.Message.ReducedForOrder"), order.OrderId),
+                                    DateTime.Now);
+                            }
+                        }
+                    }
+                }
                 return updatedOrder;
             }
             return null;
@@ -2323,9 +2388,125 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
         #endregion
 
+        #region Reward points
+
+        /// <summary>
+        /// Deletes a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        public static void DeleteRewardPointsHistory(int rewardPointsHistoryId)
+        {
+            DBProviderManager<DBOrderProvider>.Provider.DeleteRewardPointsHistory(rewardPointsHistoryId);
+        }
+
+        /// <summary>
+        /// Gets a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        /// <returns>Reward point history entry</returns>
+        public static RewardPointsHistory GetRewardPointsHistoryById(int rewardPointsHistoryId)
+        {
+            if (rewardPointsHistoryId == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRewardPointsHistoryById(rewardPointsHistoryId);
+            var rewardPointsHistory = DBMapping(dbItem);
+            return rewardPointsHistory;
+        }
+
+        /// <summary>
+        /// Gets all reward point history entries
+        /// </summary>
+        /// <param name="customerId">Customer identifier; null to load all records</param>
+        /// <param name="orderId">Order identifier; null to load all records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Reward point history entries</returns>
+        public static RewardPointsHistoryCollection GetAllRewardPointsHistoryEntries(int? customerId,
+            int? orderId, int pageSize, int pageIndex, out int totalRecords)
+        {
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
+
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
+
+            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllRewardPointsHistoryEntries(customerId,
+                orderId, pageSize, pageIndex, out totalRecords);
+            var rewardPointsHistoryEntries = DBMapping(dbCollection);
+            return rewardPointsHistoryEntries;
+        }
+
+        /// <summary>
+        /// Inserts a reward point history entry
+        /// </summary>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="points">Points redeemed/added</param>
+        /// <param name="usedAmount">Used amount</param>
+        /// <param name="usedAmountInCustomerCurrency">Used amount (customer currency)</param>
+        /// <param name="customerCurrencyCode">Customer currency code</param>
+        /// <param name="message">Customer currency code</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Reward point history entry</returns>
+        public static RewardPointsHistory InsertRewardPointsHistory(int customerId,
+            int orderId, int points, decimal usedAmount,
+            decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
+            string message, DateTime createdOn)
+        {
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+
+            Customer customer = CustomerManager.GetCustomerById(customerId);
+            if (customer == null)
+                throw new NopException("Customer not found. ID=" + customerId);
+
+            int newPointsBalance = customer.RewardPointsBalance + points;
+
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRewardPointsHistory(customerId,
+                orderId, points, newPointsBalance, usedAmount, usedAmountInCustomerCurrency,
+                customerCurrencyCode, message, createdOn);
+            var rewardPointsHistory = DBMapping(dbItem);
+            return rewardPointsHistory;
+        }
+
+        /// <summary>
+        /// Updates a reward point history entry
+        /// </summary>
+        /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="points">Points redeemed/added</param>
+        /// <param name="pointsBalance">Points balance</param>
+        /// <param name="usedAmount">Used amount</param>
+        /// <param name="usedAmountInCustomerCurrency">Used amount (customer currency)</param>
+        /// <param name="customerCurrencyCode">Customer currency code</param>
+        /// <param name="message">Customer currency code</param>
+        /// <param name="createdOn">A date and time of instance creation</param>
+        /// <returns>Reward point history entry</returns>
+        public static RewardPointsHistory UpdateRewardPointsHistory(int rewardPointsHistoryId,
+            int customerId, int orderId, int points, int pointsBalance, decimal usedAmount,
+            decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
+            string message, DateTime createdOn)
+        {
+            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+
+            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRewardPointsHistory(rewardPointsHistoryId,
+                customerId, orderId, points, pointsBalance, usedAmount,
+                usedAmountInCustomerCurrency, customerCurrencyCode, message, createdOn);
+            var rewardPointsHistory = DBMapping(dbItem);
+            return rewardPointsHistory;
+        }
+
         #endregion
 
-        #region Helper methods
+        #endregion
+
+        #region Etc
         /// <summary>
         /// Gets a value indicating whether download is allowed
         /// </summary>
@@ -2422,10 +2603,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
             return text;
         }
-
-        #endregion
-
-        #region Order workflow
 
         /// <summary>
         /// Places an order
@@ -2734,17 +2911,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 }
 
 
-                //order total
+                //order total, reward points
                 decimal? orderTotal = null;
                 decimal orderTotalInCustomerCurrency = decimal.Zero;
+                int redeemedRewardPoints = 0;
+                decimal redeemedRewardPointsAmount = decimal.Zero;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    orderTotal = ShoppingCartManager.GetShoppingCartTotal(cart, paymentInfo.PaymentMethodId, customer);
+                    bool useRewardPoints = customer.UseRewardPointsDuringCheckout;
+
+                    orderTotal = ShoppingCartManager.GetShoppingCartTotal(cart,
+                        paymentInfo.PaymentMethodId, customer, useRewardPoints,
+                        out redeemedRewardPoints, out redeemedRewardPointsAmount);
                     if (!orderTotal.HasValue)
                         throw new NopException("Order total couldn't be calculated");
 
                     //in customer currency
-                    orderTotalInCustomerCurrency = CurrencyManager.ConvertCurrency(orderTotal.Value, CurrencyManager.PrimaryStoreCurrency, paymentInfo.CustomerCurrency);
+                    orderTotalInCustomerCurrency = CurrencyManager.ConvertCurrency(orderTotal.Value, 
+                        CurrencyManager.PrimaryStoreCurrency, paymentInfo.CustomerCurrency);
                 }
                 else
                 {
@@ -3209,6 +3393,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                         amountUsed, amountUsedInCustomerCurrency, DateTime.Now);
                                 }
                             }
+                        }
+
+                        //reward points history
+                        if (redeemedRewardPointsAmount > decimal.Zero)
+                        {
+                            decimal redeemedRewardPointsAmountInCustomerCurrency = CurrencyManager.ConvertCurrency(redeemedRewardPointsAmount, CurrencyManager.PrimaryStoreCurrency, paymentInfo.CustomerCurrency);
+                            string message = string.Format(LocalizationManager.GetLocaleResourceString("RewardPoints.Message.RedeemedForOrder", order.CustomerLanguageId), order.OrderId);
+
+                            RewardPointsHistory rph = OrderManager.InsertRewardPointsHistory(customer.CustomerId,
+                                order.OrderId, -redeemedRewardPoints,
+                                redeemedRewardPointsAmount,
+                                redeemedRewardPointsAmountInCustomerCurrency,
+                                customerCurrencyCode,
+                                message,
+                                DateTime.Now);
                         }
 
                         //recurring orders
@@ -4218,11 +4417,46 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return order;
         }
 
+        /// <summary>
+        /// Converts reward points to amount primary store currency
+        /// </summary>
+        /// <param name="rewardPoints">Reward points</param>
+        /// <returns>Converted value</returns>
+        public static decimal ConvertRewardPointsToAmount(int rewardPoints)
+        {
+            decimal result = decimal.Zero;
+            if (rewardPoints <= 0)
+                return decimal.Zero;
+
+            result = rewardPoints * OrderManager.RewardPointsExchangeRate;            
+            result = Math.Round(result, 2);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts an amount in primary store currency to reward points
+        /// </summary>
+        /// <param name="rewardPoints">Reward points</param>
+        /// <returns>Converted value</returns>
+        public static int ConvertAmountToRewardPoints(decimal amount)
+        {
+            int result = 0;
+            if (amount <= 0)
+                return 0;
+
+            if (OrderManager.RewardPointsExchangeRate > 0)
+            {
+                result = (int)Math.Ceiling(amount / OrderManager.RewardPointsExchangeRate);
+            }
+            return result;
+        }
+
         #endregion
 
         #endregion
 
         #region Property
+
         /// <summary>
         /// Gets a value indicating whether cache is enabled
         /// </summary>
@@ -4248,6 +4482,112 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 SettingManager.SetParam("Order.IsReOrderAllowed", value.ToString());
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Reward Points Program is enabled
+        /// </summary>
+        public static bool RewardPointsEnabled
+        {
+            get
+            {
+                return SettingManager.GetSettingValueBoolean("RewardPoints.Enabled", false);
+            }
+            set
+            {
+                SettingManager.SetParam("RewardPoints.Enabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Reward Points exchange rate
+        /// </summary>
+        public static decimal RewardPointsExchangeRate
+        {
+            get
+            {
+                return SettingManager.GetSettingValueDecimalNative("RewardPoints.Rate", 1.00M);
+            }
+            set
+            {
+                SettingManager.SetParamNative("RewardPoints.Rate", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a number of points awarded for registration
+        /// </summary>
+        public static int RewardPointsForRegistration
+        {
+            get
+            {
+                return SettingManager.GetSettingValueInteger("RewardPoints.Earning.ForRegistration", 0);
+            }
+            set
+            {
+                SettingManager.SetParam("RewardPoints.Earning.ForRegistration", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a number of points awarded for purchases (amount in primary store currency)
+        /// </summary>
+        public static decimal RewardPointsForPurchases_Amount
+        {
+            get
+            {
+                return SettingManager.GetSettingValueDecimalNative("RewardPoints.Earning.RewardPointsForPurchases.Amount", 10.00M);
+            }
+            set
+            {
+                SettingManager.SetParamNative("RewardPoints.Earning.RewardPointsForPurchases.Amount", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a number of points awarded for purchases
+        /// </summary>
+        public static int RewardPointsForPurchases_Points
+        {
+            get
+            {
+                return SettingManager.GetSettingValueInteger("RewardPoints.Earning.RewardPointsForPurchases.Points", 1);
+            }
+            set
+            {
+                SettingManager.SetParam("RewardPoints.Earning.RewardPointsForPurchases.Points", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Points are awarded when the order status is
+        /// </summary>
+        public static OrderStatusEnum RewardPointsForPurchases_Awarded
+        {
+            get
+            {
+                return (OrderStatusEnum)SettingManager.GetSettingValueInteger("RewardPoints.Earning.RewardPointsForPurchases.AwardedOS", (int)OrderStatusEnum.Complete);
+            }
+            set
+            {
+                SettingManager.SetParam("RewardPoints.Earning.RewardPointsForPurchases.AwardedOS", ((int)value).ToString());
+            }
+        }
+
+        /// <summary>
+        /// Points are canceled when the order is
+        /// </summary>
+        public static OrderStatusEnum RewardPointsForPurchases_Canceled
+        {
+            get
+            {
+                return (OrderStatusEnum)SettingManager.GetSettingValueInteger("RewardPoints.Earning.RewardPointsForPurchases.CanceledOS", (int)OrderStatusEnum.Cancelled);
+            }
+            set
+            {
+                SettingManager.SetParam("RewardPoints.Earning.RewardPointsForPurchases.CanceledOS", ((int)value).ToString());
+            }
+        }
+        
         #endregion
     }
 }

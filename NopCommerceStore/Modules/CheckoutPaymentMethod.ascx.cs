@@ -63,6 +63,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (Page.IsValid)
             {
+                //reward points
+                NopContext.Current.User.UseRewardPointsDuringCheckout = cbUseRewardPoints.Checked;
+
+                //payment methods
                 int paymentMethodId = this.SelectedPaymentMethodId;
                 var paymentMethod = PaymentMethodManager.GetPaymentMethodById(paymentMethodId);
                 if (paymentMethod != null && paymentMethod.IsActive)
@@ -116,6 +120,29 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         public void BindData()
         {
+            //reward points
+            if (OrderManager.RewardPointsEnabled && !this.Cart.IsRecurring)
+            {
+                int rewardPointsBalance = NopContext.Current.User.RewardPointsBalance;
+                decimal rewardPointsAmountBase = OrderManager.ConvertRewardPointsToAmount(rewardPointsBalance);
+                decimal rewardPointsAmount = CurrencyManager.ConvertCurrency(rewardPointsAmountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                if (rewardPointsAmount > decimal.Zero)
+                {
+                    string rewardPointsAmountStr = PriceHelper.FormatPrice(rewardPointsAmount, true, false);
+                    cbUseRewardPoints.Text = GetLocaleResourceString("Checkout.UseRewardPoints", rewardPointsBalance, rewardPointsAmountStr);
+                    pnlRewardPoints.Visible = true;
+                }
+                else
+                {
+                    pnlRewardPoints.Visible = false;
+                }
+            }
+            else
+            {
+                pnlRewardPoints.Visible = false;
+            }
+
+            //payment methods
             int? filterByCountryId = null;
             if (NopContext.Current.User.BillingAddress != null && NopContext.Current.User.BillingAddress.Country != null)
             {
@@ -157,12 +184,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     phSelectPaymentMethod.Visible = false;
                     pnlPaymentMethodsError.Visible = false;
+
+                    //no reward points in this case
+                    pnlRewardPoints.Visible = false;
                 }
                 else
                 {
                     phSelectPaymentMethod.Visible = false;
-                    pnlPaymentMethodsError.Visible = true;
+                    pnlPaymentMethodsError.Visible = true;                    
                     lPaymentMethodsError.Text = GetLocaleResourceString("Checkout.NoPaymentMethods");
+
+                    //no reward points in this case
+                    pnlRewardPoints.Visible = false;
                 }
             }
             else if (boundPaymentMethods.Count == 1)
@@ -171,24 +204,6 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 pnlPaymentMethodsError.Visible = false;
                 dlPaymentMethod.DataSource = boundPaymentMethods;
                 dlPaymentMethod.DataBind();
-
-                //if (hasButtonMethods)
-                //{
-                //    phSelectPaymentMethod.Visible = true;
-                //    pnlPaymentMethodsError.Visible = false;
-                //    dlPaymentMethod.DataSource = boundPaymentMethods;
-                //    dlPaymentMethod.DataBind();
-                //}
-                //else
-                //{
-                //    phSelectPaymentMethod.Visible = true;
-                //    pnlPaymentMethodsError.Visible = false;
-                //    NopContext.Current.User = CustomerManager.SetLastPaymentMethodId(NopContext.Current.User.CustomerId, boundPaymentMethods[0].PaymentMethodId);
-                //    CheckoutStepEventArgs args1 = new CheckoutStepEventArgs() { PaymentMethodSelected = true };
-                //    OnCheckoutStepChanged(args1);
-                //    if (!this.OnePageCheckout)
-                //        Response.Redirect("~/checkoutpaymentinfo.aspx");
-                //}
             }
             else
             {

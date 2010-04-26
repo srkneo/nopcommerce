@@ -30,6 +30,7 @@ using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.SEO;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Orders;
 namespace NopSolutions.NopCommerce.Web
 {
     /// <summary>
@@ -59,6 +60,7 @@ namespace NopSolutions.NopCommerce.Web
         protected void Page_PreRender(object sender, EventArgs e)
         {
             pnlAvatar.Visible = CustomerManager.AllowCustomersToUploadAvatars;
+            pnlRewardPoints.Visible = OrderManager.RewardPointsEnabled;
         }
     }
 }

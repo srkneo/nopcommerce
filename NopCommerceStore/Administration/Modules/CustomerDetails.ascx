@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerShippingAddresses" Src="CustomerShippingAddresses.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerOrders" Src="CustomerOrders.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerRoleMappings" Src="CustomerRoleMappings.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="CustomerRewardPoints" Src="CustomerRewardPoints.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerShoppingCart" Src="CustomerShoppingCart.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerSendEmail" Src="CustomerSendEmail.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerSendPrivateMessage" Src="CustomerSendPrivateMessage.ascx" %>
@@ -49,6 +50,11 @@
     <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerRoleMappings" HeaderText="<% $NopResources:Admin.CustomerDetails.Roles %>">
         <ContentTemplate>
             <nopCommerce:CustomerRoleMappings runat="server" ID="ctrlCustomerRoleMappings"></nopCommerce:CustomerRoleMappings>
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerRewardPoints" HeaderText="<% $NopResources:Admin.CustomerDetails.RewardPoints %>">
+        <ContentTemplate>
+            <nopCommerce:CustomerRewardPoints runat="server" ID="ctrlCustomerRewardPoints"></nopCommerce:CustomerRewardPoints>
         </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerShoppingCart" HeaderText="<% $NopResources:Admin.CustomerDetails.CurrentCart %>">

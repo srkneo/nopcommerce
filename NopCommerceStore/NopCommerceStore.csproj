@@ -441,6 +441,13 @@
     <Compile Include="Administration\Modules\CheckoutAttributeValues.ascx.designer.cs">
       <DependentUpon>CheckoutAttributeValues.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Modules\CustomerRewardPoints.ascx.cs">
+      <DependentUpon>CustomerRewardPoints.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CustomerRewardPoints.ascx.designer.cs">
+      <DependentUpon>CustomerRewardPoints.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Modules\ProductPricesByCustomerRole.ascx.cs">
       <DependentUpon>ProductPricesByCustomerRole.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3653,6 +3660,13 @@
     <Compile Include="Modules\CheckoutAttributes.ascx.designer.cs">
       <DependentUpon>CheckoutAttributes.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\CustomerRewardPoints.ascx.cs">
+      <DependentUpon>CustomerRewardPoints.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\CustomerRewardPoints.ascx.designer.cs">
+      <DependentUpon>CustomerRewardPoints.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\DatePicker2.ascx.cs">
       <DependentUpon>DatePicker2.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5824,6 +5838,7 @@
     <Content Include="Administration\Modules\CheckoutAttributeAdd.ascx" />
     <Content Include="Administration\Modules\CheckoutAttributeDetails.ascx" />
     <Content Include="Administration\Modules\CheckoutAttributeValues.ascx" />
+    <Content Include="Administration\Modules\CustomerRewardPoints.ascx" />
     <Content Include="Administration\Modules\ProductPricesByCustomerRole.ascx" />
     <Content Include="Administration\Modules\GiftCardInfo.ascx" />
     <Content Include="Administration\Modules\GiftCardDetails.ascx" />
@@ -6478,6 +6493,7 @@
     <Content Include="images\flags\zm.png" />
     <Content Include="images\flags\zw.png" />
     <Content Include="Modules\CheckoutAttributes.ascx" />
+    <Content Include="Modules\CustomerRewardPoints.ascx" />
     <Content Include="Modules\DatePicker2.ascx" />
     <Content Include="QuickPayCancel.aspx" />
     <Content Include="QuickPayReturn.aspx" />

@@ -6,6 +6,7 @@
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerOrders" Src="~/Modules/CustomerOrders.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerChangePassword" Src="~/Modules/CustomerChangePassword.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerAvatar" Src="~/Modules/CustomerAvatar.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="CustomerRewardPoints" Src="~/Modules/CustomerRewardPoints.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerDownloadableProducts" Src="~/Modules/CustomerDownloadableProducts.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cph1" runat="Server">
     <div class="account-page">
@@ -36,6 +37,11 @@
                 <ajaxToolkit:TabPanel runat="server" ID="pnlDP" HeaderText="<% $NopResources:Account.DownloadableProducts %>">
                     <ContentTemplate>
                         <nopCommerce:CustomerDownloadableProducts ID="ctrlDP" runat="server" />
+                    </ContentTemplate>
+                </ajaxToolkit:TabPanel>
+                <ajaxToolkit:TabPanel runat="server" ID="pnlRewardPoints" HeaderText="<% $NopResources:Account.RewardPoints %>">
+                    <ContentTemplate>
+                        <nopCommerce:CustomerRewardPoints ID="ctrlRewardPoints" runat="server" />
                     </ContentTemplate>
                 </ajaxToolkit:TabPanel>
                 <ajaxToolkit:TabPanel runat="server" ID="pnlChangePassword" HeaderText="<% $NopResources:Account.ChangePassword %>">

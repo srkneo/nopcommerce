@@ -172,10 +172,34 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 imgPdfLogoPreview.Visible = false;
             }
+
+            //reward point
+            cbRewardPointsEnabled.Checked = OrderManager.RewardPointsEnabled;
+            txtRewardPointsRate.Value = OrderManager.RewardPointsExchangeRate;
+            txtRewardPointsForRegistration.Value = OrderManager.RewardPointsForRegistration;
+            txtRewardPointsForPurchases_Amount.Value = OrderManager.RewardPointsForPurchases_Amount;
+            txtRewardPointsForPurchases_Points.Value = OrderManager.RewardPointsForPurchases_Points;
+            CommonHelper.SelectListItem(ddlRewardPointsAwardedOrderStatus, ((int)OrderManager.RewardPointsForPurchases_Awarded).ToString());
+            CommonHelper.SelectListItem(ddlRewardPointsCanceledOrderStatus, ((int)OrderManager.RewardPointsForPurchases_Canceled).ToString());
         }
 
         private void FillDropDowns()
         {
+            this.ddlRewardPointsAwardedOrderStatus.Items.Clear();
+            OrderStatusCollection orderStatuses1 = OrderManager.GetAllOrderStatuses();
+            foreach (OrderStatus orderStatus in orderStatuses1)
+            {
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
+                this.ddlRewardPointsAwardedOrderStatus.Items.Add(item2);
+            }
+            this.ddlRewardPointsCanceledOrderStatus.Items.Clear();
+            OrderStatusCollection orderStatuses2 = OrderManager.GetAllOrderStatuses();
+            foreach (OrderStatus orderStatus in orderStatuses2)
+            {
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
+                this.ddlRewardPointsCanceledOrderStatus.Items.Add(item2);
+            }
+
             this.ddlDefaultStoreTimeZone.Items.Clear();
             ReadOnlyCollection<TimeZoneInfo> timeZones = DateTimeHelper.GetSystemTimeZones();
             foreach (TimeZoneInfo timeZone in timeZones)
@@ -341,6 +365,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         postedFile.SaveAs(PDFHelper.LogoFilePath);
                     }
 
+                    //reward point
+                    OrderManager.RewardPointsEnabled = cbRewardPointsEnabled.Checked;
+                    OrderManager.RewardPointsExchangeRate = txtRewardPointsRate.Value;
+                    OrderManager.RewardPointsForRegistration = txtRewardPointsForRegistration.Value;
+                    OrderManager.RewardPointsForPurchases_Amount = txtRewardPointsForPurchases_Amount.Value;
+                    OrderManager.RewardPointsForPurchases_Points = txtRewardPointsForPurchases_Points.Value;
+                    OrderManager.RewardPointsForPurchases_Awarded = (OrderStatusEnum)int.Parse(ddlRewardPointsAwardedOrderStatus.SelectedItem.Value);
+                    OrderManager.RewardPointsForPurchases_Canceled = (OrderStatusEnum)int.Parse(ddlRewardPointsCanceledOrderStatus.SelectedItem.Value);
+                    
                     CustomerActivityManager.InsertActivity(
                         "EditGlobalSettings",
                         GetLocaleResourceString("ActivityLog.EditGlobalSettings"));

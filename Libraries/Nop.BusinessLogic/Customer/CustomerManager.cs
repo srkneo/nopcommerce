@@ -479,6 +479,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = SetDefaultBillingAddress(customer.CustomerId, 0);
                 customer.LastShippingOption = null;
                 customer = SetLastPaymentMethodId(customer.CustomerId, 0);
+                customer.UseRewardPointsDuringCheckout = false;
                 if (clearCouponCodes)
                 {
                     customer = ApplyDiscountCouponCode(customer.CustomerId, string.Empty);
@@ -1314,6 +1315,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 isGuest, isForumModerator, totalForumPosts, signature, 
                 adminComment, active,  deleted, registrationDate, timeZoneId, avatarId);
             var customer = DBMapping(dbItem);
+            
+            //reward points
+            if (!isGuest &&
+                OrderManager.RewardPointsEnabled &&
+                OrderManager.RewardPointsForRegistration > 0)
+            {
+                var rph = OrderManager.InsertRewardPointsHistory(customer.CustomerId, 0,
+                    OrderManager.RewardPointsForRegistration, decimal.Zero, decimal.Zero,
+                    string.Empty, LocalizationManager.GetLocaleResourceString("RewardPoints.Message.EarnedForRegistration"),
+                    DateTime.Now);
+            }
 
             return customer;
         }
