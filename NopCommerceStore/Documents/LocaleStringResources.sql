@@ -760,6 +760,9 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="RewardPoints.Message.ReducedForOrder">
     <Value>Reduced promotion for order #{0}</Value>
+  </LocaleResource>  
+  <LocaleResource Name="Admin.ConfigurationHome.ACL.Description">
+    <Value>Manage access control list.</Value>
   </LocaleResource>
 </Language>
 '
