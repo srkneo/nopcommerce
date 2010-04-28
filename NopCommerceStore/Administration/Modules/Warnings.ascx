@@ -8,6 +8,6 @@
         </div>
     </div>
     <div>
-        <asp:Label runat="server" ID="lblWarnings"></asp:Label>
+        <asp:Label runat="server" ID="lblWarnings" EnableViewState="false"></asp:Label>
     </div>
 </div>

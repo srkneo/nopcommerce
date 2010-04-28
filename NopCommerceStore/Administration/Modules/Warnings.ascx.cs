@@ -23,36 +23,30 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
+using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
  
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
     public partial class WarningsControl : BaseNopAdministrationUserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!Page.IsPostBack)
-            {
-                BindData();
-            }
-        }
-
-        protected void BindData()
+        protected override void OnPreRender(EventArgs e)
         {
             StringBuilder warningResult = new StringBuilder();
+
+            //currencies
             if (CurrencyManager.PrimaryExchangeRateCurrency == null)
             {
                 warningResult.Append("Primary exchange rate currency is not set. <a href=\"Currencies.aspx\">Set now</a>");
                 warningResult.Append("<br />");
                 warningResult.Append("<br />");
             }
-
             if (CurrencyManager.PrimaryStoreCurrency == null)
             {
                 warningResult.Append("Primary store currency is not set. <a href=\"Currencies.aspx\">Set now</a>");
@@ -60,13 +54,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 warningResult.Append("<br />");
             }
 
+            //measures
             if (MeasureManager.BaseWeightIn == null)
             {
                 warningResult.Append("The weight that will can used as a default is not set. <a href=\"GlobalSettings.aspx\">Set now</a>");
                 warningResult.Append("<br />");
                 warningResult.Append("<br />");
             }
-
             if (MeasureManager.BaseDimensionIn == null)
             {
                 warningResult.Append("The dimension that will can used as a default is not set. <a href=\"GlobalSettings.aspx\">Set now</a>");
@@ -74,8 +68,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 warningResult.Append("<br />");
             }
 
+            //languages
             LanguageCollection publishedLanguages = LanguageManager.GetAllLanguages(false);
-            
             foreach (MessageTemplate messageTemplate in MessageManager.GetAllMessageTemplates())
             {
                 foreach (Language language in publishedLanguages)
@@ -89,7 +83,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
                 }
             }
-
             foreach (Topic topic in TopicManager.GetAllTopics())
             {
                 foreach (Language language in publishedLanguages)
@@ -104,13 +97,30 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
 
-            string warnings =  warningResult.ToString();
+            //shipping methods
+            var srcmList = ShippingRateComputationMethodManager.GetAllShippingRateComputationMethods(false);
+            int offlineSrcmCount = 0;
+            foreach (var srcm in srcmList)
+            {
+                if (srcm.ShippingRateComputationMethodType == ShippingRateComputationMethodTypeEnum.Offline)
+                    offlineSrcmCount++;
+            }
+            if (offlineSrcmCount > 1)
+            {
+                warningResult.Append("Only one offline shipping rate computation method is recommended to use");
+                warningResult.Append("<br />");
+                warningResult.Append("<br />");
+            }
+
+            string warnings = warningResult.ToString();
             if (!String.IsNullOrEmpty(warnings))
             {
                 lblWarnings.Text = warnings;
             }
             else
                 this.Visible = false;
+
+            base.OnPreRender(e);
         }
     }
 }
