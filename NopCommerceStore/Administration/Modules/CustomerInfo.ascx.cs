@@ -53,27 +53,59 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     txtUsername.Text = customer.Username;
                     lblUsername.Text = customer.Username;
                 }
-                
-                if (customer.Gender.ToLower() == "m")
-                    rbGenderM.Checked = true;
-                else
-                    rbGenderF.Checked = true;
+
+                if (CustomerManager.FormFieldGenderEnabled)
+                {
+                    if (customer.Gender.ToLower() == "m")
+                        rbGenderM.Checked = true;
+                    else
+                        rbGenderF.Checked = true;
+                }
 
                 txtFirstName.Text = customer.FirstName;
                 txtLastName.Text = customer.LastName;
-
-                ctrlDateOfBirhtDatePicker.SelectedDate = customer.DateOfBirth;
-
-                txtCompany.Text = customer.Company;
-                txtStreetAddress.Text = customer.StreetAddress;
-                txtStreetAddress2.Text = customer.StreetAddress2;
-                txtZipPostalCode.Text = customer.ZipPostalCode;
-                txtCity.Text = customer.City;
-                CommonHelper.SelectListItem(ddlCountry, customer.CountryId.ToString());
-                FillStateProvinceDropDowns();
-                CommonHelper.SelectListItem(ddlStateProvince, customer.StateProvinceId.ToString());
-                txtPhoneNumber.Text = customer.PhoneNumber;
-                txtFaxNumber.Text = customer.FaxNumber;
+                if (CustomerManager.FormFieldDateOfBirthEnabled)
+                {
+                    ctrlDateOfBirthDatePicker.SelectedDate = customer.DateOfBirth;
+                }
+                if (CustomerManager.FormFieldCompanyEnabled)
+                {
+                    txtCompany.Text = customer.Company;
+                }
+                if (CustomerManager.FormFieldStreetAddressEnabled)
+                {
+                    txtStreetAddress.Text = customer.StreetAddress;
+                }
+                if (CustomerManager.FormFieldStreetAddress2Enabled)
+                {
+                    txtStreetAddress2.Text = customer.StreetAddress2;
+                }
+                if (CustomerManager.FormFieldPostCodeEnabled)
+                {
+                    txtZipPostalCode.Text = customer.ZipPostalCode;
+                }
+                if (CustomerManager.FormFieldCityEnabled)
+                {
+                    txtCity.Text = customer.City;
+                }
+                if (CustomerManager.FormFieldCountryEnabled)
+                {
+                    CommonHelper.SelectListItem(this.ddlCountry, customer.CountryId.ToString());
+                }
+                if (CustomerManager.FormFieldCountryEnabled &&
+                    CustomerManager.FormFieldStateEnabled)
+                {
+                    FillStateProvinceDropDowns();
+                    CommonHelper.SelectListItem(ddlStateProvince, customer.StateProvinceId.ToString());
+                }
+                if (CustomerManager.FormFieldPhoneEnabled)
+                {
+                    txtPhoneNumber.Text = customer.PhoneNumber;
+                }
+                if (CustomerManager.FormFieldFaxEnabled)
+                {
+                    txtFaxNumber.Text = customer.FaxNumber;
+                }
                 cbNewsletter.Checked = customer.ReceiveNewsletter;
 
                 if (DateTimeHelper.AllowCustomersToSetTimeZone)
@@ -232,25 +264,57 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
 
-            if (rbGenderM.Checked)
-                customer.Gender = "M";
-            else
-                customer.Gender = "F";
-
+            //form fields
+            if (CustomerManager.FormFieldGenderEnabled)
+            {
+                if (rbGenderM.Checked)
+                    customer.Gender = "M";
+                else
+                    customer.Gender = "F";
+            }
             customer.FirstName = txtFirstName.Text;
             customer.LastName = txtLastName.Text;
-
-            customer.DateOfBirth = ctrlDateOfBirhtDatePicker.SelectedDate;
-
-            customer.Company = txtCompany.Text;
-            customer.StreetAddress = txtStreetAddress.Text;
-            customer.StreetAddress2 = txtStreetAddress2.Text;
-            customer.ZipPostalCode = txtZipPostalCode.Text;
-            customer.City = txtCity.Text;
-            customer.CountryId = int.Parse(ddlCountry.SelectedItem.Value);
-            customer.StateProvinceId = int.Parse(ddlStateProvince.SelectedItem.Value);
-            customer.PhoneNumber = txtPhoneNumber.Text;
-            customer.FaxNumber = txtFaxNumber.Text;
+            if (CustomerManager.FormFieldDateOfBirthEnabled)
+            {
+                customer.DateOfBirth = ctrlDateOfBirthDatePicker.SelectedDate;
+            }
+            if (CustomerManager.FormFieldCompanyEnabled)
+            {
+                customer.Company = txtCompany.Text;
+            }
+            if (CustomerManager.FormFieldStreetAddressEnabled)
+            {
+                customer.StreetAddress = txtStreetAddress.Text;
+            }
+            if (CustomerManager.FormFieldStreetAddress2Enabled)
+            {
+                customer.StreetAddress2 = txtStreetAddress2.Text;
+            } 
+            if (CustomerManager.FormFieldPostCodeEnabled)
+            {
+                customer.ZipPostalCode = txtZipPostalCode.Text;
+            }
+            if (CustomerManager.FormFieldCityEnabled)
+            {
+                customer.City = txtCity.Text;
+            }
+            if (CustomerManager.FormFieldCountryEnabled)
+            {
+                customer.CountryId = int.Parse(ddlCountry.SelectedItem.Value);
+            }
+            if (CustomerManager.FormFieldCountryEnabled && 
+                CustomerManager.FormFieldStateEnabled)
+            {
+                customer.StateProvinceId = int.Parse(ddlStateProvince.SelectedItem.Value);
+            }
+            if (CustomerManager.FormFieldPhoneEnabled)
+            {
+                customer.PhoneNumber = txtPhoneNumber.Text;
+            }
+            if (CustomerManager.FormFieldFaxEnabled)
+            {
+                customer.FaxNumber = txtFaxNumber.Text;
+            }
             customer.ReceiveNewsletter = cbNewsletter.Checked;
 
             if (DateTimeHelper.AllowCustomersToSetTimeZone)

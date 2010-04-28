@@ -181,6 +181,26 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             txtRewardPointsForPurchases_Points.Value = OrderManager.RewardPointsForPurchases_Points;
             CommonHelper.SelectListItem(ddlRewardPointsAwardedOrderStatus, ((int)OrderManager.RewardPointsForPurchases_Awarded).ToString());
             CommonHelper.SelectListItem(ddlRewardPointsCanceledOrderStatus, ((int)OrderManager.RewardPointsForPurchases_Canceled).ToString());
+
+            //form fields
+            cbffGenderEnabled.Checked = CustomerManager.FormFieldGenderEnabled;
+            cbffDateOfBirthEnabled.Checked = CustomerManager.FormFieldDateOfBirthEnabled;
+            cbffCompanyEnabled.Checked = CustomerManager.FormFieldCompanyEnabled;
+            cbffCompanyRequired.Checked = CustomerManager.FormFieldCompanyRequired;
+            cbffStreetAddressEnabled.Checked = CustomerManager.FormFieldStreetAddressEnabled;
+            cbffStreetAddressRequired.Checked = CustomerManager.FormFieldStreetAddressRequired;
+            cbffStreetAddress2Enabled.Checked = CustomerManager.FormFieldStreetAddress2Enabled;
+            cbffStreetAddress2Required.Checked = CustomerManager.FormFieldStreetAddress2Required;
+            cbffPostCodeEnabled.Checked = CustomerManager.FormFieldPostCodeEnabled;
+            cbffPostCodeRequired.Checked = CustomerManager.FormFieldPostCodeRequired;
+            cbffCityEnabled.Checked = CustomerManager.FormFieldCityEnabled;
+            cbffCityRequired.Checked = CustomerManager.FormFieldCityRequired;
+            cbffCountryEnabled.Checked = CustomerManager.FormFieldCountryEnabled;
+            cbffStateEnabled.Checked = CustomerManager.FormFieldStateEnabled;
+            cbffPhoneEnabled.Checked = CustomerManager.FormFieldPhoneEnabled;
+            cbffPhoneRequired.Checked = CustomerManager.FormFieldPhoneRequired;
+            cbffFaxEnabled.Checked = CustomerManager.FormFieldFaxEnabled;
+            cbffFaxRequired.Checked = CustomerManager.FormFieldFaxRequired;
         }
 
         private void FillDropDowns()
@@ -373,7 +393,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     OrderManager.RewardPointsForPurchases_Points = txtRewardPointsForPurchases_Points.Value;
                     OrderManager.RewardPointsForPurchases_Awarded = (OrderStatusEnum)int.Parse(ddlRewardPointsAwardedOrderStatus.SelectedItem.Value);
                     OrderManager.RewardPointsForPurchases_Canceled = (OrderStatusEnum)int.Parse(ddlRewardPointsCanceledOrderStatus.SelectedItem.Value);
-                    
+
+                    //form fields
+                    CustomerManager.FormFieldGenderEnabled = cbffGenderEnabled.Checked;
+                    CustomerManager.FormFieldDateOfBirthEnabled = cbffDateOfBirthEnabled.Checked;
+                    CustomerManager.FormFieldCompanyEnabled = cbffCompanyEnabled.Checked;
+                    CustomerManager.FormFieldCompanyRequired = cbffCompanyRequired.Checked;
+                    CustomerManager.FormFieldStreetAddressEnabled = cbffStreetAddressEnabled.Checked;
+                    CustomerManager.FormFieldStreetAddressRequired = cbffStreetAddressRequired.Checked;
+                    CustomerManager.FormFieldStreetAddress2Enabled= cbffStreetAddress2Enabled.Checked;
+                    CustomerManager.FormFieldStreetAddress2Required= cbffStreetAddress2Required.Checked;
+                    CustomerManager.FormFieldPostCodeEnabled = cbffPostCodeEnabled.Checked;
+                    CustomerManager.FormFieldPostCodeRequired = cbffPostCodeRequired.Checked;
+                    CustomerManager.FormFieldCityEnabled = cbffCityEnabled.Checked;
+                    CustomerManager.FormFieldCityRequired = cbffCityRequired.Checked;
+                    CustomerManager.FormFieldCountryEnabled = cbffCountryEnabled.Checked;
+                    CustomerManager.FormFieldStateEnabled = cbffStateEnabled.Checked;
+                    CustomerManager.FormFieldPhoneEnabled = cbffPhoneEnabled.Checked;
+                    CustomerManager.FormFieldPhoneRequired = cbffPhoneRequired.Checked;
+                    CustomerManager.FormFieldFaxEnabled = cbffFaxEnabled.Checked;
+                    CustomerManager.FormFieldFaxRequired = cbffFaxRequired.Checked;
+
                     CustomerActivityManager.InsertActivity(
                         "EditGlobalSettings",
                         GetLocaleResourceString("ActivityLog.EditGlobalSettings"));

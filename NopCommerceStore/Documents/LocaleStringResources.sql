@@ -760,9 +760,132 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="RewardPoints.Message.ReducedForOrder">
     <Value>Reduced promotion for order #{0}</Value>
-  </LocaleResource>  
+  </LocaleResource>
   <LocaleResource Name="Admin.ConfigurationHome.ACL.Description">
     <Value>Manage access control list.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.Title">
+    <Value>Form Fields:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.Description">
+    <Value>You can create and manage the form fields available during registration (public store) below.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.GenderEnabled">
+    <Value>''Gender'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.GenderEnabled.Tooltip">
+    <Value>Set if ''Gender'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.DateOfBirthEnabled">
+    <Value>''Date of Birth'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.DateOfBirthEnabled.Tooltip">
+    <Value>Set if ''Date of Birth'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CompanyEnabled">
+    <Value>''Company'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CompanyEnabled.Tooltip">
+    <Value>Set if ''Company'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CompanyRequired">
+    <Value>''Company'' required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CompanyRequired.Tooltip">
+    <Value>Set if ''Company'' is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddressEnabled">
+    <Value>''Street Address'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddressEnabled.Tooltip">
+    <Value>Set if ''Street Address'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddressRequired">
+    <Value>''Street Address'' required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddressRequired.Tooltip">
+    <Value>Set if ''Street Address'' is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Enabled">
+    <Value>''Street Address 2'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Enabled.Tooltip">
+    <Value>Set if ''Street Address 2'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Required">
+    <Value>''Street Address 2'' required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Required.Tooltip">
+    <Value>Set if ''Street Address 2'' is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PostCodeEnabled">
+    <Value>''Post Code'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PostCodeEnabled.Tooltip">
+    <Value>Set if ''Post Code'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PostCodeRequired">
+    <Value>''Post Code'' required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PostCodeRequired.Tooltip">
+    <Value>Set if ''Post Code'' is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CityEnabled">
+    <Value>''City'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CityEnabled.Tooltip">
+    <Value>Set if ''City'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CityRequired">
+    <Value>''City'' required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CityRequired.Tooltip">
+    <Value>Set if ''City'' is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CountryEnabled">
+    <Value>''Country'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.CountryEnabled.Tooltip">
+    <Value>Set if ''Country'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StateEnabled">
+    <Value>''State/Province'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.StateEnabled.Tooltip">
+    <Value>Set if ''State/Province'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PhoneEnabled">
+    <Value>''Phone Number'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PhoneEnabled.Tooltip">
+    <Value>Set if ''Phone Number'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PhoneRequired">
+    <Value>''Phone Number'' required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.PhoneRequired.Tooltip">
+    <Value>Set if ''Phone Number'' is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.FaxEnabled">
+    <Value>''Fax Number'' enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.FaxEnabled.Tooltip">
+    <Value>Set if ''Fax Number'' is enabled.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.FaxRequired">
+    <Value>''Fax Number'' required:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Profiles.FormFields.FaxRequired.Tooltip">
+    <Value>Set if ''Fax Number'' is required.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Account.CompanyIsRequired">
+    <Value>Company is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Account.StreetAddress2IsRequired">
+    <Value>Street address 2 is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Account.FaxIsRequired">
+    <Value>Fax is required</Value>
   </LocaleResource>
 </Language>
 '

@@ -1118,6 +1118,194 @@
                             </asp:DropDownList>
                         </td>
                     </tr>
+                    <tr class="adminSeparator">
+                        <td colspan="2">
+                            <hr />
+                            <strong><%=GetLocaleResourceString("Admin.GlobalSettings.Profiles.FormFields.Title")%></strong>
+                            <br />
+                            <i><%=GetLocaleResourceString("Admin.GlobalSettings.Profiles.FormFields.Description")%></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffGenderEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.GenderEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.GenderEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffGenderEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffDateOfBirthEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.DateOfBirthEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.DateOfBirthEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffDateOfBirthEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffCompanyEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CompanyEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CompanyEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffCompanyEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffCompanyRequired" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CompanyRequired %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CompanyRequired.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffCompanyRequired" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>                  
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffStreetAddressEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddressEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddressEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffStreetAddressEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffStreetAddressRequired" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddressRequired %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddressRequired.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffStreetAddressRequired" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>        
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffStreetAddress2Enabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Enabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Enabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffStreetAddress2Enabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffStreetAddress2Required" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Required %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StreetAddress2Required.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffStreetAddress2Required" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffPostCodeEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PostCodeEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PostCodeEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffPostCodeEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffPostCodeRequired" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PostCodeRequired %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PostCodeRequired.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffPostCodeRequired" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffCityEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CityEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CityEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffCityEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffCityRequired" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CityRequired %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CityRequired.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffCityRequired" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffCountryEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CountryEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.CountryEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffCountryEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffStateEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StateEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.StateEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffStateEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffPhoneEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PhoneEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PhoneEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffPhoneEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffPhoneRequired" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PhoneRequired %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.PhoneRequired.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffPhoneRequired" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffFaxEnabled" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.FaxEnabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.FaxEnabled.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffFaxEnabled" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblffFaxRequired" Text="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.FaxRequired %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Profiles.FormFields.FaxRequired.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox ID="cbffFaxRequired" runat="server"></asp:CheckBox>
+                        </td>
+                    </tr>
                 </table>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>

@@ -432,15 +432,59 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         /// <param name="address">Address to validate</param>
         /// <returns>Result</returns>
-        public static  bool CanUseAddressAsBillingAddress(Address address)
+        public static bool CanUseAddressAsBillingAddress(Address address)
         {
             if (address == null)
+                return false;
+
+            if (address.FirstName == null)
+                return false;
+            if (String.IsNullOrEmpty(address.FirstName.Trim()))
+                return false;
+
+            if (address.LastName == null)
+                return false;
+            if (String.IsNullOrEmpty(address.LastName.Trim()))
+                return false;
+
+            if (address.PhoneNumber == null)
+                return false;
+            if (String.IsNullOrEmpty(address.PhoneNumber.Trim()))
+                return false;
+
+            if (address.Email == null)
+                return false;
+            if (String.IsNullOrEmpty(address.Email.Trim()))
+                return false;
+
+            if (address.Address1 == null)
+                return false;
+            if (String.IsNullOrEmpty(address.Address1.Trim()))
+                return false;
+
+            if (address.Address2 == null)
+                return false;
+            if (String.IsNullOrEmpty(address.Address2.Trim()))
+                return false;
+
+            if (address.City == null)
+                return false;
+            if (String.IsNullOrEmpty(address.City.Trim()))
+                return false;
+
+            if (address.ZipPostalCode == null)
+                return false;
+            if (String.IsNullOrEmpty(address.ZipPostalCode.Trim()))
                 return false;
 
             if (address.Country == null)
                 return false;
 
             if (!address.Country.AllowsBilling)
+                return false;
+
+            if (address.Country.StateProvinces.Count > 0 &&
+                address.StateProvince == null)
                 return false;
 
             return true;
@@ -456,10 +500,54 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (address == null)
                 return false;
 
+            if (address.FirstName == null)
+                return false;
+            if (String.IsNullOrEmpty(address.FirstName.Trim()))
+                return false;
+
+            if (address.LastName == null)
+                return false;
+            if (String.IsNullOrEmpty(address.LastName.Trim()))
+                return false;
+
+            if (address.PhoneNumber == null)
+                return false;
+            if (String.IsNullOrEmpty(address.PhoneNumber.Trim()))
+                return false;
+
+            if (address.Email == null)
+                return false;
+            if (String.IsNullOrEmpty(address.Email.Trim()))
+                return false;
+
+            if (address.Address1 == null)
+                return false;
+            if (String.IsNullOrEmpty(address.Address1.Trim()))
+                return false;
+
+            if (address.Address2 == null)
+                return false;
+            if (String.IsNullOrEmpty(address.Address2.Trim()))
+                return false;
+
+            if (address.City == null)
+                return false;
+            if (String.IsNullOrEmpty(address.City.Trim()))
+                return false;
+
+            if (address.ZipPostalCode == null)
+                return false;
+            if (String.IsNullOrEmpty(address.ZipPostalCode.Trim()))
+                return false;
+
             if (address.Country == null)
                 return false;
 
             if (!address.Country.AllowsShipping)
+                return false;
+
+            if (address.Country.StateProvinces.Count > 0 &&
+                address.StateProvince == null)
                 return false;
 
             return true;
@@ -2148,6 +2236,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         #endregion
 
         #region Property
+
         /// <summary>
         /// Gets a value indicating whether cache is enabled
         /// </summary>
@@ -2366,6 +2455,295 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 SettingManager.SetParam("Common.AllowAnonymousUsersToSetProductRatings", value.ToString());
             }
         }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Gender' is enabled
+        /// </summary>
+        public static bool FormFieldGenderEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.GenderEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.GenderEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Date of Birth' is enabled
+        /// </summary>
+        public static bool FormFieldDateOfBirthEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.DateOfBirthEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.DateOfBirthEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Company' is enabled
+        /// </summary>
+        public static bool FormFieldCompanyEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.CompanyEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.CompanyEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Company' is required
+        /// </summary>
+        public static bool FormFieldCompanyRequired
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.CompanyRequired", false);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.CompanyRequired", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Street Address' is enabled
+        /// </summary>
+        public static bool FormFieldStreetAddressEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.StreetAddressEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.StreetAddressEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Street Address' is required
+        /// </summary>
+        public static bool FormFieldStreetAddressRequired
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.StreetAddressRequired", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.StreetAddressRequired", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Street Address 2' is enabled
+        /// </summary>
+        public static bool FormFieldStreetAddress2Enabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.StreetAddress2Enabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.StreetAddress2Enabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Street Address 2' is required
+        /// </summary>
+        public static bool FormFieldStreetAddress2Required
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.StreetAddress2Required", false);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.StreetAddress2Required", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Post Code' is enabled
+        /// </summary>
+        public static bool FormFieldPostCodeEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.PostCodeEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.PostCodeEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Post Code' is required
+        /// </summary>
+        public static bool FormFieldPostCodeRequired
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.PostCodeRequired", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.PostCodeRequired", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'City' is enabled
+        /// </summary>
+        public static bool FormFieldCityEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.CityEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.CityEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'City' is required
+        /// </summary>
+        public static bool FormFieldCityRequired
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.CityRequired", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.CityRequired", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Country' is enabled
+        /// </summary>
+        public static bool FormFieldCountryEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.CountryEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.CountryEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'State' is enabled
+        /// </summary>
+        public static bool FormFieldStateEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.StateEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.StateEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Phone' is enabled
+        /// </summary>
+        public static bool FormFieldPhoneEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.PhoneEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.PhoneEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Phone' is required
+        /// </summary>
+        public static bool FormFieldPhoneRequired
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.PhoneRequired", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.PhoneRequired", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Fax' is enabled
+        /// </summary>
+        public static bool FormFieldFaxEnabled
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.FaxEnabled", true);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.FaxEnabled", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether 'Fax' is required
+        /// </summary>
+        public static bool FormFieldFaxRequired
+        {
+            get
+            {
+                bool setting = SettingManager.GetSettingValueBoolean("FormField.FaxRequired", false);
+                return setting;
+            }
+            set
+            {
+                SettingManager.SetParam("FormField.FaxRequired", value.ToString());
+            }
+        }
+
         #endregion
     }
 }

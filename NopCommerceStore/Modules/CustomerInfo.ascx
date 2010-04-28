@@ -19,16 +19,18 @@
     <div class="section-body">
         <table class="table-container">
             <tbody>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.Gender")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:RadioButton runat="server" ID="rbGenderM" GroupName="Gender" Text="<% $NopResources:Account.GenderMale %>"
-                            Checked="true" />
-                        <asp:RadioButton runat="server" ID="rbGenderF" GroupName="Gender" Text="<% $NopResources:Account.GenderFemale %>" />
-                    </td>
-                </tr>
+                <asp:PlaceHolder runat="server" ID="phGender">
+                    <tr class="row">
+                        <td class="item-name">
+                            <%=GetLocaleResourceString("Account.Gender")%>:
+                        </td>
+                        <td class="item-value">
+                            <asp:RadioButton runat="server" ID="rbGenderM" GroupName="Gender" Text="<% $NopResources:Account.GenderMale %>"
+                                Checked="true" />
+                            <asp:RadioButton runat="server" ID="rbGenderF" GroupName="Gender" Text="<% $NopResources:Account.GenderFemale %>" />
+                        </td>
+                    </tr>
+                </asp:PlaceHolder>
                 <tr class="row">
                     <td class="item-name">
                         <%=GetLocaleResourceString("Account.FirstName")%>:
@@ -51,6 +53,7 @@
                             ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
                     </td>
                 </tr>
+                <asp:PlaceHolder runat="server" ID="phDateOfBirth">
                 <tr class="row">
                     <td class="item-name">
                         <%=GetLocaleResourceString("Account.DateOfBirth")%>:
@@ -59,6 +62,7 @@
                         <nopCommerce:DatePicker2 runat="server" ID="dtDateOfBirth" />
                     </td>
                 </tr>
+                </asp:PlaceHolder>
                 <tr class="row">
                     <td class="item-name">
                         <%=GetLocaleResourceString("Account.E-Mail")%>:
@@ -78,132 +82,163 @@
     </div>
     <div class="clear">
     </div>
-    <div class="section-title">
-        <%=GetLocaleResourceString("Account.CompanyDetails")%>
-    </div>
-    <div class="clear">
-    </div>
-    <div class="section-body">
-        <table class="table-container">
-            <tbody>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.CompanyName")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:TextBox ID="txtCompany" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="clear">
-    </div>
-    <div class="section-title">
-        <%=GetLocaleResourceString("Account.YourAddress")%>
-    </div>
-    <div class="clear">
-    </div>
-    <div class="section-body">
-        <table class="table-container">
-            <tbody>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.StreetAddress")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:TextBox ID="txtStreetAddress" runat="server"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvStreetAddress" runat="server" ControlToValidate="txtStreetAddress"
-                            ErrorMessage="<% $NopResources:Account.StreetAddressIsRequired %>" ToolTip="<% $NopResources:Account.StreetAddressIsRequired %>"
-                            ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
-                    </td>
-                </tr>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.StreetAddress2")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:TextBox ID="txtStreetAddress2" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.PostCode")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:TextBox ID="txtZipPostalCode" runat="server"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvZipPostalCode" runat="server" ControlToValidate="txtZipPostalCode"
-                            ErrorMessage="<% $NopResources:Account.ZipPostalCodeIsRequired %>" ToolTip="<% $NopResources:Account.ZipPostalCodeIsRequired %>"
-                            ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
-                    </td>
-                </tr>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.City")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:TextBox ID="txtCity" runat="server" MaxLength="40"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvCity" runat="server" ControlToValidate="txtCity"
-                            ErrorMessage="<% $NopResources:Account.CityIsRequired %>" ToolTip="<% $NopResources:Account.CityIsRequired %>"
-                            ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
-                    </td>
-                </tr>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.Country")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:DropDownList ID="ddlCountry" AutoPostBack="True" runat="server" OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged"
-                            Width="137px">
-                        </asp:DropDownList>
-                    </td>
-                </tr>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.StateProvince")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:DropDownList ID="ddlStateProvince" AutoPostBack="False" runat="server" Width="137px">
-                        </asp:DropDownList>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="clear">
-    </div>
-    <div class="section-title">
-        <%=GetLocaleResourceString("Account.YourContactInformation")%>
-    </div>
-    <div class="clear">
-    </div>
-    <div class="section-body">
-        <table class="table-container">
-            <tbody>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.TelephoneNumber")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:TextBox ID="txtPhoneNumber" runat="server"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvPhoneNumber" runat="server" ControlToValidate="txtPhoneNumber"
-                            ErrorMessage="<% $NopResources:Account.PhoneNumberIsRequired %>" ToolTip="<% $NopResources:Account.PhoneNumberIsRequired %>"
-                            ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
-                    </td>
-                </tr>
-                <tr class="row">
-                    <td class="item-name">
-                        <%=GetLocaleResourceString("Account.FaxNumber")%>:
-                    </td>
-                    <td class="item-value">
-                        <asp:TextBox ID="txtFaxNumber" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="clear">
-    </div>
+    <asp:PlaceHolder runat="server" ID="phCompanyDetails">
+        <div class="section-title">
+            <%=GetLocaleResourceString("Account.CompanyDetails")%>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="section-body">
+            <table class="table-container">
+                <tbody>
+                    <tr class="row">
+                        <td class="item-name">
+                            <%=GetLocaleResourceString("Account.CompanyName")%>:
+                        </td>
+                        <td class="item-value">
+                            <asp:TextBox ID="txtCompany" runat="server"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="rfvCompany" runat="server" ControlToValidate="txtCompany"
+                                ErrorMessage="<% $NopResources:Account.CompanyIsRequired %>" ToolTip="<% $NopResources:Account.CompanyIsRequired %>"
+                                ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="clear">
+        </div>
+    </asp:PlaceHolder>
+    <asp:PlaceHolder runat="server" ID="phYourAddress">
+        <div class="section-title">
+            <%=GetLocaleResourceString("Account.YourAddress")%>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="section-body">
+            <table class="table-container">
+                <tbody>
+                    <asp:PlaceHolder runat="server" ID="phStreetAddress">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.StreetAddress")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:TextBox ID="txtStreetAddress" runat="server"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvStreetAddress" runat="server" ControlToValidate="txtStreetAddress"
+                                    ErrorMessage="<% $NopResources:Account.StreetAddressIsRequired %>" ToolTip="<% $NopResources:Account.StreetAddressIsRequired %>"
+                                    ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder runat="server" ID="phStreetAddress2">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.StreetAddress2")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:TextBox ID="txtStreetAddress2" runat="server"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvStreetAddress2" runat="server" ControlToValidate="txtStreetAddress2"
+                                    ErrorMessage="<% $NopResources:Account.StreetAddress2IsRequired %>" ToolTip="<% $NopResources:Account.StreetAddress2IsRequired %>"
+                                    ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder runat="server" ID="phPostCode">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.PostCode")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:TextBox ID="txtZipPostalCode" runat="server"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvZipPostalCode" runat="server" ControlToValidate="txtZipPostalCode"
+                                    ErrorMessage="<% $NopResources:Account.ZipPostalCodeIsRequired %>" ToolTip="<% $NopResources:Account.ZipPostalCodeIsRequired %>"
+                                    ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder runat="server" ID="phCity">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.City")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:TextBox ID="txtCity" runat="server" MaxLength="40"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvCity" runat="server" ControlToValidate="txtCity"
+                                    ErrorMessage="<% $NopResources:Account.CityIsRequired %>" ToolTip="<% $NopResources:Account.CityIsRequired %>"
+                                    ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder runat="server" ID="phCountry">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.Country")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:DropDownList ID="ddlCountry" AutoPostBack="True" runat="server" OnSelectedIndexChanged="ddlCountry_SelectedIndexChanged"
+                                    Width="137px">
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder runat="server" ID="phStateProvince">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.StateProvince")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:DropDownList ID="ddlStateProvince" AutoPostBack="False" runat="server" Width="137px">
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                </tbody>
+            </table>
+        </div>
+        <div class="clear">
+        </div>
+    </asp:PlaceHolder>
+    <asp:PlaceHolder runat="server" ID="phYourContactInformation">
+        <div class="section-title">
+            <%=GetLocaleResourceString("Account.YourContactInformation")%>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="section-body">
+            <table class="table-container">
+                <tbody>
+                    <asp:PlaceHolder runat="server" ID="phTelephoneNumber">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.TelephoneNumber")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:TextBox ID="txtPhoneNumber" runat="server"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvPhoneNumber" runat="server" ControlToValidate="txtPhoneNumber"
+                                    ErrorMessage="<% $NopResources:Account.PhoneNumberIsRequired %>" ToolTip="<% $NopResources:Account.PhoneNumberIsRequired %>"
+                                    ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                    <asp:PlaceHolder runat="server" ID="phFaxNumber">
+                        <tr class="row">
+                            <td class="item-name">
+                                <%=GetLocaleResourceString("Account.FaxNumber")%>:
+                            </td>
+                            <td class="item-value">
+                                <asp:TextBox ID="txtFaxNumber" runat="server"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvFaxNumber" runat="server" ControlToValidate="txtFaxNumber"
+                                    ErrorMessage="<% $NopResources:Account.FaxIsRequired %>" ToolTip="<% $NopResources:Account.FaxIsRequired %>"
+                                    ValidationGroup="CustomerInfo">*</asp:RequiredFieldValidator>
+                            </td>
+                        </tr>
+                    </asp:PlaceHolder>
+                </tbody>
+            </table>
+        </div>
+        <div class="clear">
+        </div>
+    </asp:PlaceHolder>
     <div class="section-title">
         <%=GetLocaleResourceString("Account.Options")%>
     </div>

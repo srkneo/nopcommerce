@@ -140,6 +140,70 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         break;
                 }
             }
+
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            //form fields
+            var phGender = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phGender");
+            var phDateOfBirth = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phDateOfBirth");
+            var phCompanyDetails = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phCompanyDetails");
+            var rfvCompany = (RequiredFieldValidator)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rfvCompany");
+            var phStreetAddress = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phStreetAddress");
+            var rfvStreetAddress = (RequiredFieldValidator)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rfvStreetAddress");
+            var phStreetAddress2 = CreateUserWizardStep1.ContentTemplateContainer.FindControl("phStreetAddress2");
+            var rfvStreetAddress2 = (RequiredFieldValidator)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rfvStreetAddress2");
+            var phPostCode = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phPostCode");
+            var rfvZipPostalCode = (RequiredFieldValidator)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rfvZipPostalCode");
+            var phCity = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phCity");
+            var rfvCity = (RequiredFieldValidator)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rfvCity");
+            var phCountry = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phCountry");
+            var phStateProvince = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phStateProvince");
+            var phYourAddress = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phYourAddress");
+            var phTelephoneNumber = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phTelephoneNumber");
+            var rfvPhoneNumber = (RequiredFieldValidator)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rfvPhoneNumber");
+            var phFaxNumber = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phFaxNumber");
+            var rfvFaxNumber = (RequiredFieldValidator)CreateUserWizardStep1.ContentTemplateContainer.FindControl("rfvFaxNumber");
+            var phYourContactInformation = (PlaceHolder)CreateUserWizardStep1.ContentTemplateContainer.FindControl("phYourContactInformation");
+            
+            phGender.Visible = CustomerManager.FormFieldGenderEnabled;
+            phDateOfBirth.Visible = CustomerManager.FormFieldDateOfBirthEnabled;
+
+            phCompanyDetails.Visible = CustomerManager.FormFieldCompanyEnabled;
+            rfvCompany.Enabled = CustomerManager.FormFieldCompanyEnabled &&
+                CustomerManager.FormFieldCompanyRequired;
+            phStreetAddress.Visible = CustomerManager.FormFieldStreetAddressEnabled;
+            rfvStreetAddress.Enabled = CustomerManager.FormFieldStreetAddressEnabled &&
+                CustomerManager.FormFieldStreetAddressRequired;
+            phStreetAddress2.Visible = CustomerManager.FormFieldStreetAddress2Enabled;
+            rfvStreetAddress2.Enabled = CustomerManager.FormFieldStreetAddress2Enabled &&
+                CustomerManager.FormFieldStreetAddress2Required;
+            phPostCode.Visible = CustomerManager.FormFieldPostCodeEnabled;
+            rfvZipPostalCode.Enabled = CustomerManager.FormFieldPostCodeEnabled &&
+                CustomerManager.FormFieldPostCodeRequired;
+            phCity.Visible = CustomerManager.FormFieldCityEnabled;
+            rfvCity.Enabled = CustomerManager.FormFieldCityEnabled &&
+                CustomerManager.FormFieldCityRequired;
+            phCountry.Visible = CustomerManager.FormFieldCountryEnabled;
+            phStateProvince.Visible = CustomerManager.FormFieldCountryEnabled &&
+                CustomerManager.FormFieldStateEnabled;
+            phYourAddress.Visible = CustomerManager.FormFieldStreetAddressEnabled ||
+                CustomerManager.FormFieldStreetAddress2Enabled ||
+                CustomerManager.FormFieldPostCodeEnabled ||
+                CustomerManager.FormFieldCityEnabled ||
+                CustomerManager.FormFieldCountryEnabled;
+
+            phTelephoneNumber.Visible = CustomerManager.FormFieldPhoneEnabled;
+            rfvPhoneNumber.Enabled = CustomerManager.FormFieldPhoneEnabled &&
+                CustomerManager.FormFieldPhoneRequired;
+            phFaxNumber.Visible = CustomerManager.FormFieldFaxEnabled;
+            rfvFaxNumber.Enabled = CustomerManager.FormFieldFaxEnabled &&
+                CustomerManager.FormFieldFaxRequired;
+            phYourContactInformation.Visible = CustomerManager.FormFieldPhoneEnabled ||
+                CustomerManager.FormFieldFaxEnabled;
+
+            base.OnInit(e);
         }
 
         public void CreatedUser(object sender, EventArgs e)
@@ -160,10 +224,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var ddlCountry = (DropDownList)CreateUserWizardStep1.ContentTemplateContainer.FindControl("ddlCountry");
             var ddlStateProvince = (DropDownList)CreateUserWizardStep1.ContentTemplateContainer.FindControl("ddlStateProvince");
             var cbNewsletter = (CheckBox)CreateUserWizardStep1.ContentTemplateContainer.FindControl("cbNewsletter");
-            var dtDateOfBirth = CreateUserWizardStep1.ContentTemplateContainer.FindControl("dtDateOfBirth") as DatePicker2Control;
-
-
-
+            var dtDateOfBirth = (DatePicker2Control)CreateUserWizardStep1.ContentTemplateContainer.FindControl("dtDateOfBirth");
+            
             Customer customer = null;
             if (CustomerManager.UsernamesEnabled)
             {
@@ -173,25 +235,56 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 customer = CustomerManager.GetCustomerByEmail(UserName.Text.Trim());
             }
-
-            if (rbGenderM.Checked)
-                customer.Gender = "M";
-            else
-                customer.Gender = "F";
-
+            if (CustomerManager.FormFieldGenderEnabled)
+            {
+                if (rbGenderM.Checked)
+                    customer.Gender = "M";
+                else
+                    customer.Gender = "F";
+            }
             customer.FirstName = txtFirstName.Text;
             customer.LastName = txtLastName.Text;
-            customer.DateOfBirth = dtDateOfBirth.SelectedDate;
-
-            customer.Company = txtCompany.Text;
-            customer.StreetAddress = txtStreetAddress.Text;
-            customer.StreetAddress2 = txtStreetAddress2.Text;
-            customer.ZipPostalCode = txtZipPostalCode.Text;
-            customer.City = txtCity.Text;
-            customer.PhoneNumber = txtPhoneNumber.Text;
-            customer.FaxNumber = txtFaxNumber.Text;
-            customer.CountryId = int.Parse(ddlCountry.SelectedItem.Value);
-            customer.StateProvinceId = int.Parse(ddlStateProvince.SelectedItem.Value);
+            if (CustomerManager.FormFieldDateOfBirthEnabled)
+            {
+                customer.DateOfBirth = dtDateOfBirth.SelectedDate;
+            }
+            if (CustomerManager.FormFieldCompanyEnabled)
+            {
+                customer.Company = txtCompany.Text;
+            }
+            if (CustomerManager.FormFieldStreetAddressEnabled)
+            {
+                customer.StreetAddress = txtStreetAddress.Text;
+            }
+            if (CustomerManager.FormFieldStreetAddress2Enabled)
+            {
+                customer.StreetAddress2 = txtStreetAddress2.Text;
+            }
+            if (CustomerManager.FormFieldPostCodeEnabled)
+            {
+                customer.ZipPostalCode = txtZipPostalCode.Text;
+            }
+            if (CustomerManager.FormFieldCityEnabled)
+            {
+                customer.City = txtCity.Text;
+            }
+            if (CustomerManager.FormFieldCountryEnabled)
+            {
+                customer.CountryId = int.Parse(ddlCountry.SelectedItem.Value);
+            }
+            if (CustomerManager.FormFieldCountryEnabled &&
+                        CustomerManager.FormFieldStateEnabled)
+            {
+                customer.StateProvinceId = int.Parse(ddlStateProvince.SelectedItem.Value);
+            }
+            if (CustomerManager.FormFieldPhoneEnabled)
+            {
+                customer.PhoneNumber = txtPhoneNumber.Text;
+            }
+            if (CustomerManager.FormFieldFaxEnabled)
+            {
+                customer.FaxNumber = txtFaxNumber.Text;
+            }
             customer.ReceiveNewsletter = cbNewsletter.Checked;
 
             //billing address

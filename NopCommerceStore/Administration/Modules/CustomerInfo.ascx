@@ -13,7 +13,7 @@
         <td class="adminData">
             <nopCommerce:EmailTextBox runat="server" ID="txtEmail" CssClass="adminInput" />
         </td>
-    </tr>
+    </tr>    
     <tr runat="server" id="pnlUsername">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblCustomerUsernameTitle" Text="<% $NopResources:Admin.CustomerInfo.Username %>"
@@ -37,6 +37,8 @@
                 OnClick="BtnChangePassword_OnClick" />
         </td>
     </tr>
+    <% if (CustomerManager.FormFieldGenderEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblGenderTitle" Text="<% $NopResources:Admin.CustomerInfo.Gender %>"
@@ -48,6 +50,7 @@
             <asp:RadioButton runat="server" ID="rbGenderF" GroupName="Gender" Text="<% $NopResources:Admin.CustomerInfo.Gender.Female %>" />
         </td>
     </tr>
+    <% } %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblFirstNameTitle" Text="<% $NopResources:Admin.CustomerInfo.FirstName %>"
@@ -66,15 +69,20 @@
             <asp:TextBox runat="server" ID="txtLastName" CssClass="adminInput" />
         </td>
     </tr>
+    <% if (CustomerManager.FormFieldDateOfBirthEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblDateOfBirthTitle" Text="<% $NopResources:Admin.CustomerInfo.DateOfBirth %>"
                 ToolTip="<% $NopResources:Admin.CustomerInfo.DateOfBirth.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <nopCommerce:DatePicker runat="server" ID="ctrlDateOfBirhtDatePicker" />
+            <nopCommerce:DatePicker runat="server" ID="ctrlDateOfBirthDatePicker" />
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldCompanyEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblCompanyTitle" Text="<% $NopResources:Admin.CustomerInfo.Company %>"
@@ -84,6 +92,9 @@
             <asp:TextBox ID="txtCompany" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldStreetAddressEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblStreetAddressTitle" Text="<% $NopResources:Admin.CustomerInfo.Address %>"
@@ -93,6 +104,9 @@
             <asp:TextBox ID="txtStreetAddress" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldStreetAddress2Enabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblStreetAddress2Title" Text="<% $NopResources:Admin.CustomerInfo.Address2 %>"
@@ -102,6 +116,9 @@
             <asp:TextBox ID="txtStreetAddress2" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldPostCodeEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblZipPostalCodeTitle" Text="<% $NopResources:Admin.CustomerInfo.Zip %>"
@@ -111,6 +128,9 @@
             <asp:TextBox ID="txtZipPostalCode" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldCityEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblCityTitle" Text="<% $NopResources:Admin.CustomerInfo.City %>"
@@ -120,6 +140,9 @@
             <asp:TextBox ID="txtCity" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldCountryEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblCountryTitle" Text="<% $NopResources:Admin.CustomerInfo.Country %>"
@@ -130,6 +153,9 @@
             </asp:DropDownList>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldCountryEnabled && CustomerManager.FormFieldStateEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblStateProvinceTitle" Text="<% $NopResources:Admin.CustomerInfo.State %>"
@@ -140,6 +166,9 @@
             </asp:DropDownList>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldPhoneEnabled)
+       { %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblTelephoneNumberTitle" Text="<% $NopResources:Admin.CustomerInfo.Phone %>"
@@ -149,6 +178,9 @@
             <asp:TextBox ID="txtPhoneNumber" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
+    <% } %>
+    <% if (CustomerManager.FormFieldFaxEnabled)
+       { %>
     <tr runat="server" id="pnlFaxNumber">
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblFaxNumberTitle" Text="<% $NopResources:Admin.CustomerInfo.Fax %>"
@@ -158,6 +190,7 @@
             <asp:TextBox ID="txtFaxNumber" runat="server" CssClass="adminInput"></asp:TextBox>
         </td>
     </tr>
+    <% } %>
     <tr>
         <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblNewsletterTitle" Text="<% $NopResources:Admin.CustomerInfo.Newsletter %>"

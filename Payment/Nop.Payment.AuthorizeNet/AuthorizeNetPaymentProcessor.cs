@@ -382,8 +382,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
                 }
 
                 subscription.customer = new CustomerType();
-                subscription.customer.email = customer.Email;
-                subscription.customer.phoneNumber = customer.PhoneNumber;
+                subscription.customer.email = customer.BillingAddress.Email;
+                subscription.customer.phoneNumber = customer.BillingAddress.PhoneNumber;
 
                 subscription.order = new OrderType();
                 subscription.order.description = string.Format("{0} {1}", SettingManager.StoreName, "Recurring payment");
