@@ -36,11 +36,6 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-            }
-
             if (!ProductManager.RecentlyAddedProductsEnabled)
             {
                 Response.Redirect(CommonHelper.GetStoreLocation());
@@ -48,6 +43,14 @@ namespace NopSolutions.NopCommerce.Web
 
             string title = GetLocaleResourceString("PageTitle.RecentlyAddedProducts");
             SEOHelper.RenderTitle(this, title, true);
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.No;
+            }
         }
     }
 }

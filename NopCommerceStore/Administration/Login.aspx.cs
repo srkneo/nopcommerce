@@ -46,11 +46,6 @@ namespace NopSolutions.NopCommerce.Web.Administration
         {
             this.ApplyLocalization();
 
-            if(!Page.IsPostBack)
-            {
-                CommonHelper.EnsureSsl();
-            }
-
             CommonHelper.SetResponseNoCache(Response);
 
             string title = GetLocaleResourceString("PageTitle.Login");

@@ -36,11 +36,6 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-            }
-
             string title = GetLocaleResourceString("PageTitle.ContactUs");
             SEOHelper.RenderTitle(this, title, true);
         }

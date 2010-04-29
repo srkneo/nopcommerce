@@ -38,11 +38,6 @@ namespace NopSolutions.NopCommerce.Web
         {
             CommonHelper.SetResponseNoCache(Response);
 
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-            }
-
             if (!ProductManager.RecentlyViewedProductsEnabled)
             {
                 Response.Redirect(CommonHelper.GetStoreLocation());

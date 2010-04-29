@@ -37,11 +37,6 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureSsl();
-            }
-
             CommonHelper.SetResponseNoCache(Response);
 
             if (SettingManager.GetSettingValueBoolean("Checkout.UseOnePageCheckout"))
@@ -55,6 +50,14 @@ namespace NopSolutions.NopCommerce.Web
             if (!Page.IsPostBack)
             {
                 ctrlCheckoutPaymentMethod.BindData();
+            }
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
             }
         }
     }

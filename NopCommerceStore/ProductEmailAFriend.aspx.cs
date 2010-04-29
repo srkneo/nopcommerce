@@ -34,13 +34,16 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-            }
-
             string title = GetLocaleResourceString("PageTitle.ProductEmailAFriend");
             SEOHelper.RenderTitle(this, title, true);
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.No;
+            }
         }
     }
 }

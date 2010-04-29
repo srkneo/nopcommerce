@@ -63,11 +63,6 @@ namespace NopSolutions.NopCommerce.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureSsl();
-            }
-            
             string title = GetLocaleResourceString("PageTitle.AddressEdit");
             SEOHelper.RenderTitle(this, title, true);
 
@@ -156,6 +151,14 @@ namespace NopSolutions.NopCommerce.Web
             get
             {
                 return CommonHelper.QueryStringBool("Delete");
+            }
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
             }
         }
     }

@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 // The contents of this file are subject to the nopCommerce Public License Version 1.0 ("License"); you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at  http://www.nopCommerce.com/License.aspx. 
 // 
@@ -13,54 +13,33 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Collections;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Web;
-using System.Web.Caching;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
-using NopSolutions.NopCommerce.BusinessLogic.Payment;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.SEO;
-using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.Web.Templates.Payment;
 
 namespace NopSolutions.NopCommerce.Web
 {
-    public partial class CheckoutPaymentInfoPage : BaseNopPage
+    public enum PageSslProtectionEnum 
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            CommonHelper.SetResponseNoCache(Response);
-
-            if (SettingManager.GetSettingValueBoolean("Checkout.UseOnePageCheckout"))
-            {
-                Response.Redirect("~/checkout.aspx");
-            }
-
-            string title = GetLocaleResourceString("PageTitle.CheckoutPaymentInfo");
-            SEOHelper.RenderTitle(this, title, true);
-
-
-            if (!Page.IsPostBack)
-            {
-                ctrlCheckoutPaymentInfo.BindData();
-            }
-        }
-
-        public override PageSslProtectionEnum SslProtected
-        {
-            get
-            {
-                return PageSslProtectionEnum.Yes;
-            }
-        }
+        Yes,
+        No,
+        DoesntMatter
     }
 }

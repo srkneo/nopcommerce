@@ -62,11 +62,6 @@ namespace NopSolutions.NopCommerce.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-            }
-
             if (manufacturer == null || manufacturer.Deleted || !manufacturer.Published)
                 Response.Redirect(CommonHelper.GetStoreLocation());
             
@@ -85,6 +80,14 @@ namespace NopSolutions.NopCommerce.Web
             get
             {
                 return CommonHelper.QueryStringInt("ManufacturerId");
+            }
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.No;
             }
         }
     }

@@ -40,13 +40,19 @@ namespace NopSolutions.NopCommerce.Web.Boards
         {
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureNonSsl();
-
                 lblCurrentTime.Text = DateTimeHelper.ConvertToUserTime(DateTime.Now).ToString("F");
             }
 
             string title = GetLocaleResourceString("PageTitle.Boards.Default");
             SEOHelper.RenderTitle(this, title, true);
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.No;
+            }
         }
     }
 }

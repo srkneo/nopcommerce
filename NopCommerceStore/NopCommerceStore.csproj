@@ -3617,6 +3617,8 @@
     <Compile Include="Controls\CheckoutStepEventArgs.cs">
     </Compile>
     <Compile Include="Controls\CheckoutStepChangedEventHandler.cs" />
+    <Compile Include="Controls\PageSslProtectionEnum.cs">
+    </Compile>
     <Compile Include="Controls\ForumHelper.cs" />
     <Compile Include="CheckoutOnepage.aspx.cs">
       <DependentUpon>CheckoutOnepage.aspx</DependentUpon>

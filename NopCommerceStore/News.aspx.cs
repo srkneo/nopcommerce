@@ -38,10 +38,13 @@ namespace NopSolutions.NopCommerce.Web
             {
                 Response.Redirect(CommonHelper.GetStoreLocation());
             }
+        }
 
-            if (!Page.IsPostBack)
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
             {
-                CommonHelper.EnsureNonSsl();
+                return PageSslProtectionEnum.No;
             }
         }
     }

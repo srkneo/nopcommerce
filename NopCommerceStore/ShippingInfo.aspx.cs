@@ -35,9 +35,13 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
             {
-                CommonHelper.EnsureNonSsl();
+                return PageSslProtectionEnum.No;
             }
         }
     }

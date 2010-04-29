@@ -38,14 +38,16 @@ namespace NopSolutions.NopCommerce.Web.Boards
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-
-            }
-
             string title = GetLocaleResourceString("PageTitle.Boards.Search");
             SEOHelper.RenderTitle(this, title, true);
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.No;
+            }
         }
     }
 }

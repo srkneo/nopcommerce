@@ -42,13 +42,16 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect(CommonHelper.GetStoreLocation());
             }
 
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-            }
-
             string title = GetLocaleResourceString("PageTitle.Blog");
             SEOHelper.RenderTitle(this, title, true);
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.No;
+            }
         }
     }
 }

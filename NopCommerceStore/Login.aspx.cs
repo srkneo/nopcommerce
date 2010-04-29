@@ -33,15 +33,18 @@ namespace NopSolutions.NopCommerce.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureSsl();
-            }
-
             CommonHelper.SetResponseNoCache(Response);
 
             string title = GetLocaleResourceString("PageTitle.Login");
             SEOHelper.RenderTitle(this, title, true);
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
+            }
         }
     }
 }

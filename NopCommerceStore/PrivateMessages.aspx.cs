@@ -57,8 +57,6 @@ namespace NopSolutions.NopCommerce.Web
 
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureSsl();
-
                 if (this.Tab.ToLowerInvariant() == "sent")
                 {
                     PrivateMessagesTabs.ActiveTab = pnlPrivateMessagesSentItems;
@@ -71,6 +69,14 @@ namespace NopSolutions.NopCommerce.Web
             get
             {
                 return CommonHelper.QueryString("Tab");
+            }
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
             }
         }
     }

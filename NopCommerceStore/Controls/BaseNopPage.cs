@@ -93,6 +93,26 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect("~/StoreClosed.htm");
             }
 
+            //SSL
+            switch (this.SslProtected)
+            {
+                case PageSslProtectionEnum.Yes:
+                    {
+                        CommonHelper.EnsureSsl();
+                    }
+                    break;
+                case PageSslProtectionEnum.No:
+                    {
+                        CommonHelper.EnsureNonSsl();
+                    }
+                    break;
+                case PageSslProtectionEnum.DoesntMatter:
+                    {
+                        //do nothing in this case
+                    }
+                    break;
+            }
+
             //allow navigation only for registered customers
             if (CustomerManager.AllowNavigationOnlyRegisteredCustomers)
             {
@@ -171,6 +191,19 @@ namespace NopSolutions.NopCommerce.Web
         {
             Language language = NopContext.Current.WorkingLanguage;
             return LocalizationManager.GetLocaleResourceString(ResourceName, language.LanguageId);
+        }
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Gets a value indicating whether this page is SSL protected
+        /// </summary>
+        public virtual PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.DoesntMatter;
+            }
         }
         #endregion
     }

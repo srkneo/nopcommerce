@@ -38,13 +38,16 @@ namespace NopSolutions.NopCommerce.Web
         {
             CommonHelper.SetResponseNoCache(Response);
 
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureSsl();
-            }
-
             string title = GetLocaleResourceString("PageTitle.PasswordRecovery");
             SEOHelper.RenderTitle(this, title, true);
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
+            }
         }
     }
 }

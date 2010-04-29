@@ -46,8 +46,6 @@ namespace NopSolutions.NopCommerce.Web
 
             if (!Page.IsPostBack)
             {
-                CommonHelper.EnsureSsl();
-
                 Customer customer = CustomerManager.GetCustomerByGuid(this.CustomerGuid.HasValue ? this.CustomerGuid.Value : Guid.Empty);
                 if (customer != null)
                 {
@@ -84,6 +82,14 @@ namespace NopSolutions.NopCommerce.Web
             get
             {
                 return CommonHelper.QueryStringGuid("CustomerGUID");
+            }
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
             }
         }
     }

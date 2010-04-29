@@ -38,11 +38,6 @@ namespace NopSolutions.NopCommerce.Web.Boards
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureNonSsl();
-            }
-
             ForumTopic forumTopic = ForumManager.GetTopicById(this.TopicId);
             if (forumTopic != null)
             {
@@ -56,6 +51,14 @@ namespace NopSolutions.NopCommerce.Web.Boards
             get
             {
                 return CommonHelper.QueryStringInt("TopicId");
+            }
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.No;
             }
         }
     }

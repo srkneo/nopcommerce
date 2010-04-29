@@ -42,11 +42,6 @@ namespace NopSolutions.NopCommerce.Web
         {
             CommonHelper.SetResponseNoCache(Response);
 
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureSsl();
-            }
-
             if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
             {
                 string loginURL = SEOHelper.GetLoginPageUrl(true);
@@ -61,6 +56,14 @@ namespace NopSolutions.NopCommerce.Web
         {
             pnlAvatar.Visible = CustomerManager.AllowCustomersToUploadAvatars;
             pnlRewardPoints.Visible = OrderManager.RewardPointsEnabled;
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
+            }
         }
     }
 }

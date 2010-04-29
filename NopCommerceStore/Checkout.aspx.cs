@@ -43,11 +43,6 @@ namespace NopSolutions.NopCommerce.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                CommonHelper.EnsureSsl();
-            }
-
             CommonHelper.SetResponseNoCache(Response);
 
             if (this.Cart.Count == 0)
@@ -112,6 +107,14 @@ namespace NopSolutions.NopCommerce.Web
                     cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
                 }
                 return cart;
+            }
+        }
+
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
+            {
+                return PageSslProtectionEnum.Yes;
             }
         }
     }

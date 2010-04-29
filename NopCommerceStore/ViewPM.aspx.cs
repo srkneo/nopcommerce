@@ -53,10 +53,13 @@ namespace NopSolutions.NopCommerce.Web
 
             string title = GetLocaleResourceString("PageTitle.ViewPM");
             SEOHelper.RenderTitle(this, title, true);
+        }
 
-            if (!Page.IsPostBack)
+        public override PageSslProtectionEnum SslProtected
+        {
+            get
             {
-                CommonHelper.EnsureSsl();
+                return PageSslProtectionEnum.Yes;
             }
         }
     }
