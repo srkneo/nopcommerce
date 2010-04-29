@@ -887,6 +887,9 @@ set @resources='
   <LocaleResource Name="Account.FaxIsRequired">
     <Value>Fax is required</Value>
   </LocaleResource>
+  <LocaleResource Name="PDFInvoice.RewardPoints">
+    <Value>{0} reward points:</Value>
+  </LocaleResource>
 </Language>
 '
 

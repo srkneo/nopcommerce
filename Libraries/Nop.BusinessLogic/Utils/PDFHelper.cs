@@ -458,6 +458,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 }
             }
 
+            //tax
             string taxStr = string.Empty;
             bool displayTax = true;
             if(TaxManager.HideTaxInOrderSummary && order.CustomerTaxDisplayType == TaxDisplayTypeEnum.IncludingTax)
@@ -481,6 +482,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 p11.Format.Alignment = ParagraphAlignment.Right;
             }
 
+            //reward points
+            if (order.RedeemedRewardPoints != null)
+            {
+                string rpTitle = string.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.RewardPoints", languageId), -order.RedeemedRewardPoints.Points);
+                string rpAmount = PriceHelper.FormatPrice(-order.RedeemedRewardPoints.UsedAmountInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                
+                var p11 = sec.AddParagraph(String.Format("{0} {1}", rpTitle, rpAmount));
+                p11.Format.Alignment = ParagraphAlignment.Right;
+            }
+           
+            //order total
             string orderTotalStr = PriceHelper.FormatPrice(order.OrderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false);
             var p12 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderTotal", languageId), orderTotalStr));
             p12.Format.Font.Bold = true;
