@@ -9,6 +9,12 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class NewsLetterSubscriptionActivationPage : BaseNopPage
     {
-        
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

@@ -34,5 +34,13 @@ namespace NopSolutions.NopCommerce.Web
             ci.Image.Save(this.Response.OutputStream, ImageFormat.Jpeg);
             ci.Dispose();
         }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

@@ -39,5 +39,13 @@ namespace NopSolutions.NopCommerce.Web
             string loginURL = SEOHelper.GetLoginPageUrl();
             Response.Redirect(loginURL);
         }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

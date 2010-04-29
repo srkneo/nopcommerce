@@ -44,5 +44,13 @@ namespace NopSolutions.NopCommerce.Web
                 return PageSslProtectionEnum.Yes;
             }
         }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

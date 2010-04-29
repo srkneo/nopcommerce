@@ -118,14 +118,9 @@ namespace NopSolutions.NopCommerce.Web
             {
                 if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
                 {
-                    //it's not login/logout/passwordrecovery/captchaimage/register/accountactivation page
-                    if (!CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/login.aspx") &&
-                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/logout.aspx") &&
-                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/passwordrecovery.aspx") &&
-                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/captchaimage.aspx") &&
-                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/accountactivation.aspx") &&
-                       !CommonHelper.GetThisPageUrl(false).ToLowerInvariant().Contains("/register.aspx"))
+                    if (!this.AllowGuestNavigation)
                     {
+                        //it's not login/logout/passwordrecovery/captchaimage/register/accountactivation page (be default)
                         string loginURL = SEOHelper.GetLoginPageUrl(false);
                         Response.Redirect(loginURL);
                     }
@@ -205,6 +200,18 @@ namespace NopSolutions.NopCommerce.Web
                 return PageSslProtectionEnum.DoesntMatter;
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether this page can be visited by anonymous customer when "Allow navigation only for registered customers" settings is set to true
+        /// </summary>
+        public virtual bool AllowGuestNavigation
+        {
+            get
+            {
+                return false;
+            }
+        }
+                
         #endregion
     }
 }
