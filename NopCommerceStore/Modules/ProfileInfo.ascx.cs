@@ -199,7 +199,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var lblPosted = e.Item.FindControl("lblPosted") as Label;
                 if (lblPosted != null)
                 {
-                    lblPosted.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn).ToString("MMMM dd, yyyy");
+                    lblPosted.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn).ToString("f");
                 }
 
                 var lblPost = e.Item.FindControl("lblPost") as Label;

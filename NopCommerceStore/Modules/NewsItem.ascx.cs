@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (news != null && news.Published)
             {
                 this.lTitle.Text = Server.HtmlEncode(news.Title);
-                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(news.CreatedOn).ToString();
+                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(news.CreatedOn).ToString("D");
                 this.lFull.Text = news.Full;
 
                 if (news.AllowComments)

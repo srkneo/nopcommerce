@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (blogPost != null)
             {
                 this.lBlogPostTitle.Text = Server.HtmlEncode(blogPost.BlogPostTitle);
-                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogPost.CreatedOn).ToString();
+                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogPost.CreatedOn).ToString("D");
                 this.lBlogPostBody.Text = blogPost.BlogPostBody;
 
                 if (blogPost.BlogPostAllowComments)

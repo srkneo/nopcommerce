@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (newsComment != null)
             {
-                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(newsComment.CreatedOn).ToString();
+                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(newsComment.CreatedOn).ToString("g");
                 lblTitle.Text = Server.HtmlEncode(newsComment.Title);
                 lblComment.Text = NewsManager.FormatCommentText(newsComment.Comment);
                 lblNewsCommentId.Text = newsComment.NewsCommentId.ToString();
