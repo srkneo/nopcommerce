@@ -91,8 +91,13 @@ namespace NopSolutions.NopCommerce.Froogle
                         writer.WriteElementString("g", "image_link", googleBaseNamespace, imageUrl);
                         decimal price = productVariant.Price;
                         writer.WriteElementString("g", "price", googleBaseNamespace, price.ToString(new CultureInfo("en-US", false).NumberFormat));
-                        writer.WriteStartElement("g", "product_type", googleBaseNamespace);
-                        writer.WriteFullEndElement(); // g:brand
+                        
+                        //uncomment and set your product_type attribute
+                        //writer.WriteStartElement("g", "product_type", googleBaseNamespace);
+                        //writer.WriteCData("Clothing & Accessories > Clothing Accessories > Hair Accessories > Hair Pins & Clips");
+                        //writer.WriteFullEndElement(); // g:brand
+
+
                         //if (productVariant.Weight != decimal.Zero)
                         //{
                         //    writer.WriteElementString("g", "weight", googleBaseNamespace, string.Format(CultureInfo.InvariantCulture, "{0} {1}", productVariant.Weight.ToString(new CultureInfo("en-US", false).NumberFormat), MeasureManager.BaseWeightIn.SystemKeyword));
