@@ -431,7 +431,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
             var shippingOptions = new ShippingOptionCollection();
 
             if (shipmentPackage == null)
-                throw new ArgumentNullException("ShipmentPackage");
+                throw new ArgumentNullException("shipmentPackage");
             if (shipmentPackage.Items == null)
                 throw new NopException("No shipment items");
             if (shipmentPackage.ShippingAddress == null)
@@ -458,7 +458,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
                 shippingOption.Rate += additionalHandlingCharge;
             }
 
-            if (String.IsNullOrEmpty(error) && shippingOptions.Count == 0)
+            if (String.IsNullOrEmpty(error))
                 error = "Shipping options could not be loaded";
             return shippingOptions;
         }

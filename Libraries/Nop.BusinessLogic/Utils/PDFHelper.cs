@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
         {
             if(String.IsNullOrEmpty(filePath))
             {
-                throw new ArgumentNullException("FilePath");
+                throw new ArgumentNullException("filePath");
             }
 
             Document doc = new Document();
@@ -179,7 +179,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 throw new ArgumentNullException("order");
 
             if(String.IsNullOrEmpty(filePath))
-                throw new ArgumentNullException("FilePath");
+                throw new ArgumentNullException("filePath");
 
             Document doc = new Document();
 
@@ -516,7 +516,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
         {
             if(String.IsNullOrEmpty(filePath))
             {
-                throw new ArgumentNullException("FilePath");
+                throw new ArgumentNullException("filePath");
             }
 
             Document doc = new Document();

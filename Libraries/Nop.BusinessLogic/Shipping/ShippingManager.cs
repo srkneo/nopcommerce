@@ -412,7 +412,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             int? allowedShippingRateComputationMethodId, ref string error)
         {
             if (cart == null)
-                throw new ArgumentNullException("Cart");
+                throw new ArgumentNullException("cart");
 
             var shippingOptions = new ShippingOptionCollection();
 
@@ -441,6 +441,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                         shippingOptions.Add(so2);
                     }
                 }
+            }
+
+            if (shippingOptions.Count == 0)
+            {
+                error = "Shipping options could not be loaded";
             }
 
             //additional shipping charges

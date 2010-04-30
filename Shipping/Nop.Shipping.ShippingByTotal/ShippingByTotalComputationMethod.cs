@@ -80,7 +80,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.ShippingByTotalCM
             var shippingOptions = new ShippingOptionCollection();
 
             if (shipmentPackage == null)
-                throw new ArgumentNullException("ShipmentPackage");
+                throw new ArgumentNullException("shipmentPackage");
             if (shipmentPackage.Items == null)
                 throw new NopException("No shipment items");
             if (shipmentPackage.ShippingAddress == null)

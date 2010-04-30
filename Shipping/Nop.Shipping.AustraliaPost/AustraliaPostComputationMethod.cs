@@ -140,7 +140,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
 
             if (shipmentPackage == null)
             {
-                throw new ArgumentNullException("ShipmentPackage");
+                throw new ArgumentNullException("shipmentPackage");
             }
             if (shipmentPackage.Items == null)
             {
@@ -195,7 +195,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
                     shippingOption.Rate += AustraliaPostSettings.AdditionalHandlingCharge;
                 }
 
-                if(String.IsNullOrEmpty(error) && shippingOptions.Count == 0)
+                if(String.IsNullOrEmpty(error))
                 {
                     error = "Shipping options could not be loaded";
                 }
