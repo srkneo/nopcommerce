@@ -167,6 +167,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.CustomerShoppingCartControl ctrlCurrentShoppingCart;
         
         /// <summary>
+        /// pnlCustomerWishlist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.TabPanel pnlCustomerWishlist;
+        
+        /// <summary>
+        /// ctrlCurrentWishlist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.CustomerWishlistControl ctrlCurrentWishlist;
+        
+        /// <summary>
         /// pnlCustomerSendEmail control.
         /// </summary>
         /// <remarks>

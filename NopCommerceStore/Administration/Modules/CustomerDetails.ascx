@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerRoleMappings" Src="CustomerRoleMappings.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerRewardPoints" Src="CustomerRewardPoints.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerShoppingCart" Src="CustomerShoppingCart.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="CustomerWishlist" Src="CustomerWishlist.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerSendEmail" Src="CustomerSendEmail.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerSendPrivateMessage" Src="CustomerSendPrivateMessage.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ConfirmationBox" Src="ConfirmationBox.ascx" %>
@@ -60,6 +61,11 @@
     <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerShoppingCart" HeaderText="<% $NopResources:Admin.CustomerDetails.CurrentCart %>">
         <ContentTemplate>
             <nopCommerce:CustomerShoppingCart runat="server" ID="ctrlCurrentShoppingCart"></nopCommerce:CustomerShoppingCart>
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerWishlist" HeaderText="<% $NopResources:Admin.CustomerDetails.CurrentWishlist %>">
+        <ContentTemplate>
+            <nopCommerce:CustomerWishlist runat="server" ID="ctrlCurrentWishlist"></nopCommerce:CustomerWishlist>
         </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerSendEmail" HeaderText="<% $NopResources:Admin.CustomerDetails.CustomerSendEmail %>">

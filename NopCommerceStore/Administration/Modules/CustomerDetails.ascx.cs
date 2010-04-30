@@ -59,6 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         ctrlCustomerOrders.SaveInfo();
                         ctrlCustomerRoleMappings.SaveInfo();
                         ctrlCurrentShoppingCart.SaveInfo();
+                        ctrlCurrentWishlist.SaveInfo();
                         ctrlCustomerRewardPoints.SaveInfo();
 
                         CustomerActivityManager.InsertActivity(

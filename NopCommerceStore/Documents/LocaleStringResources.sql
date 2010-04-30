@@ -890,6 +890,27 @@ set @resources='
   <LocaleResource Name="PDFInvoice.RewardPoints">
     <Value>{0} reward points:</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.CustomerDetails.CurrentWishlist">
+    <Value>Current Wishlist</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerWishlist.Empty">
+    <Value>Wishlist is empty</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerWishlist.Name">
+    <Value>Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerWishlist.Name.Tooltip">
+    <Value>View details</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerWishlist.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerWishlist.Quantity">
+    <Value>Quantity</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerWishlist.Total">
+    <Value>Total</Value>
+  </LocaleResource>
 </Language>
 '
 

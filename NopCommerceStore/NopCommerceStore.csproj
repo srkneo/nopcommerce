@@ -441,6 +441,13 @@
     <Compile Include="Administration\Modules\CheckoutAttributeValues.ascx.designer.cs">
       <DependentUpon>CheckoutAttributeValues.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Modules\CustomerWishlist.ascx.cs">
+      <DependentUpon>CustomerWishlist.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CustomerWishlist.ascx.designer.cs">
+      <DependentUpon>CustomerWishlist.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Modules\CustomerRewardPoints.ascx.cs">
       <DependentUpon>CustomerRewardPoints.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5840,6 +5847,7 @@
     <Content Include="Administration\Modules\CheckoutAttributeAdd.ascx" />
     <Content Include="Administration\Modules\CheckoutAttributeDetails.ascx" />
     <Content Include="Administration\Modules\CheckoutAttributeValues.ascx" />
+    <Content Include="Administration\Modules\CustomerWishlist.ascx" />
     <Content Include="Administration\Modules\CustomerRewardPoints.ascx" />
     <Content Include="Administration\Modules\ProductPricesByCustomerRole.ascx" />
     <Content Include="Administration\Modules\GiftCardInfo.ascx" />
