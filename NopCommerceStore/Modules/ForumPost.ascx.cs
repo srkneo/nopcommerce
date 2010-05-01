@@ -55,6 +55,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 btnEdit.Visible = ForumManager.IsUserAllowedToEditPost(NopContext.Current.User, forumPost);
                 btnDelete.Visible = ForumManager.IsUserAllowedToDeletePost(NopContext.Current.User, forumPost);
+                btnDelete.OnClientClick = string.Format("return confirm('{0}')", GetLocaleResourceString("Common.AreYouSure"));
 
                 lblDate.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn).ToString("f");
                 lText.Text = ForumManager.FormatPostText(forumPost.Text);
@@ -207,6 +208,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 ForumManager.DeletePost(forumPost.ForumPostId);
 
                 string url = string.Empty;
+                //get topic one more time because it can be deleted
+                forumTopic = ForumManager.GetTopicById(forumPost.TopicId);
                 if (forumTopic != null)
                 {
                     url = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);

@@ -911,6 +911,9 @@ set @resources='
   <LocaleResource Name="Admin.CustomerWishlist.Total">
     <Value>Total</Value>
   </LocaleResource>
+  <LocaleResource Name="Common.AreYouSure">
+    <Value>Are you sure?</Value>
+  </LocaleResource>
 </Language>
 '
 

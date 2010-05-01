@@ -57,9 +57,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 btnEdit.Visible = ForumManager.IsUserAllowedToEditTopic(NopContext.Current.User, forumTopic);
                 btnDelete.Visible = ForumManager.IsUserAllowedToDeleteTopic(NopContext.Current.User, forumTopic);
+                btnDelete.OnClientClick = string.Format("return confirm('{0}')", GetLocaleResourceString("Common.AreYouSure"));
                 btnMoveTopic.Visible = ForumManager.IsUserAllowedToMoveTopic(NopContext.Current.User, forumTopic);
-                //btnReply.Visible = ForumManager.IsUserAllowedToCreatePost(NopContext.Current.User, forumTopic);
-
+                
                 lblTopicSubject.Text = Server.HtmlEncode(forumTopic.Subject);
 
                 int totalRecords = 0;
