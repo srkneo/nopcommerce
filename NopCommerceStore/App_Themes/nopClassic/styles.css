@@ -1108,6 +1108,13 @@ textarea
 	padding-left: 5px;
 }
 
+.order-summary-content .removegiftcardbutton
+{
+	padding-right: 5px;
+	padding-left: 18px;
+	background: url('images/ico-delete.gif') no-repeat;
+}
+
 .order-summary-content .selected-checkout-attributes
 {
     margin: 0px;

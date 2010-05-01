@@ -28,12 +28,14 @@
                 </tr>
             </asp:PlaceHolder>
             <asp:Repeater runat="server" ID="rptrGiftCards" OnItemDataBound="rptrGiftCards_ItemDataBound"
-                Visible="false">
+                Visible="false" OnItemCommand="rptrGiftCards_ItemCommand" >
                 <ItemTemplate>
                     <tr>
                         <td class="cart_total_left">
                             <strong>
-                                <asp:Literal runat="server" ID="lGiftCard"></asp:Literal>:</strong>
+                                <asp:Literal runat="server" ID="lGiftCard"></asp:Literal><asp:LinkButton runat="server"
+                                    ID="btnRemoveGC" Text="" CommandName="remove" CommandArgument='<%# Eval("GiftCardId")%>'
+                                    CssClass="removegiftcardbutton" />:</strong>
                         </td>
                         <td class="cart_total_right">
                             <span style="white-space: nowrap;">

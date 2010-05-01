@@ -222,6 +222,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         }
 
         /// <summary>
+        /// Removes a coupon code
+        /// </summary>
+        /// <param name="giftCartCouponCodes">Existing gift cart coupon codes</param>
+        /// <param name="couponCode">Coupon code to remove</param>
+        /// <returns>New coupon codes document</returns>
+        public static string RemoveCouponCode(string giftCartCouponCodes, string couponCode)
+        {
+            string result = string.Empty;
+            var existingCouponCodes = GetCouponCodes(giftCartCouponCodes);
+            foreach (string existingCouponCode in existingCouponCodes)
+            {
+                if (!existingCouponCode.Equals(couponCode))
+                {
+                    result = AddCouponCode(result, existingCouponCode);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Generate new gift card code
         /// </summary>
         /// <returns>Result</returns>

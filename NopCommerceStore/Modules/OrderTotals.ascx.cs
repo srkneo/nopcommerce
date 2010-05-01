@@ -236,5 +236,23 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 
             }
         }
+
+        protected void rptrGiftCards_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "remove")
+            {
+                int giftCardId = Convert.ToInt32(e.CommandArgument);
+                GiftCard gc = OrderManager.GetGiftCardById(giftCardId);
+                if (gc != null)
+                {
+                    string couponCodesXML = string.Empty;
+                    if (NopContext.Current.User != null)
+                        couponCodesXML = NopContext.Current.User.GiftCardCouponCodes;
+                    couponCodesXML = GiftCardHelper.RemoveCouponCode(couponCodesXML, gc.GiftCardCouponCode);
+                    CustomerManager.ApplyGiftCardCouponCode(couponCodesXML);
+                }
+                this.BindData();
+            }
+        }
     }
 }
