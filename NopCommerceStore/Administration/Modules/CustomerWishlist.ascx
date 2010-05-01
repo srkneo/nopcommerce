@@ -1,7 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.CustomerWishlistControl"
     CodeBehind="CustomerWishlist.ascx.cs" %>
-<asp:Panel runat="server" ID="pnlEmptyCart">
-    <%=GetLocaleResourceString("Admin.CustomerWishlist.Empty")%>
+<asp:Panel runat="server" ID="pnlMessage">
+    <asp:Label runat="server" ID="lblMessage" />
 </asp:Panel>
 <asp:Panel runat="server" ID="pnlCart">
     <table class="adminContent">

@@ -25,6 +25,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
@@ -45,17 +46,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             if (customer != null)
             {
-                ShoppingCart cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerId, ShoppingCartTypeEnum.Wishlist);
-                if (cart.Count > 0)
+                if (SettingManager.GetSettingValueBoolean("Common.EnableWishlist"))
                 {
-                    pnlEmptyCart.Visible = false;
-                    pnlCart.Visible = true;
-                    gvProductVariants.DataSource = cart;
-                    gvProductVariants.DataBind();
+                    ShoppingCart cart = ShoppingCartManager.GetCustomerShoppingCart(customer.CustomerId, ShoppingCartTypeEnum.Wishlist);
+                    if (cart.Count > 0)
+                    {
+                        pnlMessage.Visible = false;
+                        pnlCart.Visible = true;
+                        gvProductVariants.DataSource = cart;
+                        gvProductVariants.DataBind();
+                    }
+                    else
+                    {
+                        pnlMessage.Visible = true;
+                        lblMessage.Text = GetLocaleResourceString("Admin.CustomerWishlist.Empty");
+                        pnlCart.Visible = false;
+                    }
                 }
                 else
                 {
-                    pnlEmptyCart.Visible = true;
+                    pnlMessage.Visible = true;
+                    lblMessage.Text = GetLocaleResourceString("Admin.CustomerWishlist.Disabled");
                     pnlCart.Visible = false;
                 }
             }
