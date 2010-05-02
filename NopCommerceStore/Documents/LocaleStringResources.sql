@@ -917,6 +917,18 @@ set @resources='
   <LocaleResource Name="Admin.CustomerWishlist.Disabled">
     <Value>Wishlist is disabled</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Categories.Name">
+    <Value>Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Categories.Published">
+    <Value>Published</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Categories.Edit">
+    <Value>Edit</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Categories.Edit.Tooltip">
+    <Value>Edit category</Value>
+  </LocaleResource>
 </Language>
 '
 

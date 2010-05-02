@@ -42,19 +42,39 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!Page.IsPostBack)
             {
                 BindData();
+                BindGrid();
             }
         }
 
         private void BindData()
         {
             cbShowCategoriesOnMainPage.Checked = SettingManager.GetSettingValueBoolean("Display.ShowCategoriesOnMainPage");
+        }
 
-            string menu = GetCategories(0);
-            string categoryAddURL = CommonHelper.GetStoreAdminLocation() + "CategoryAdd.aspx";
-            menu = string.Format("<siteMapNode title=\"{0}\" url=\"{1}\">" + menu + "<siteMapNode  title=\"{2} \" url=\"{3}\"></siteMapNode></siteMapNode>", GetLocaleResourceString("Admin.Categories.Categories"), string.Empty, GetLocaleResourceString("Admin.Categories.AddNewCategory"), categoryAddURL);
+        private void BindGrid()
+        {
+            var categories = GetAllCategories(0);
+            gvCategories.DataSource = categories;
+            gvCategories.DataBind();
+        }
 
-            ds.Data = menu;
-            CategoryTreeView.DataBind();
+        protected string GetCategoryFullName(Category category)
+        {
+            string result = string.Empty;
+
+            while (category != null && !category.Deleted)
+            {
+                if (String.IsNullOrEmpty(result))
+                {
+                    result = category.Name;
+                }
+                else
+                {
+                    result = category.Name + " >> " + result;
+                }
+                category = category.ParentCategory;
+            }
+            return Server.HtmlEncode(result);
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -72,42 +92,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected string GetCategories(int forParentEntityId)
+        protected void gvCategories_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            StringBuilder tmpS = new StringBuilder(4096);
+            gvCategories.PageIndex = e.NewPageIndex;
+            BindGrid();
+        }
 
-            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(forParentEntityId);
-
-            for (int i = 0; i < categoryCollection.Count; i++)
+        protected CategoryCollection GetAllCategories(int forParentEntityId)
+        {
+            var result = new CategoryCollection();
+            var categories = CategoryManager.GetAllCategories(forParentEntityId);
+            foreach (var category in categories)
             {
-                Category category = categoryCollection[i];
-                string categoryDetailsURL = CommonHelper.GetStoreAdminLocation() + "CategoryDetails.aspx?CategoryID=" + category.CategoryId.ToString();
-                tmpS.Append("<siteMapNode  title=\"" + XmlHelper.XmlEncodeAttribute(category.Name)
-                    + "\" url=\"" + categoryDetailsURL + "\">");
-                if (CategoryManager.GetAllCategories(category.CategoryId).Count > 0)
-                    tmpS.Append(GetCategories(category.CategoryId));
-
-                string categoryAddURL = CommonHelper.GetStoreAdminLocation() + "CategoryAdd.aspx?ParentCategoryID=" + category.CategoryId.ToString();
-                tmpS.Append("<siteMapNode  title=\"" + GetLocaleResourceString("Admin.Categories.AddNewCategory") + "\" url=\"" + categoryAddURL + "\"></siteMapNode>");
-
-                bool hideProducts = SettingManager.GetSettingValueBoolean("Display.HideProductsOnCategoriesHomePage");
-                if (!hideProducts)
-                {
-                    tmpS.Append("<siteMapNode  title=\"" + GetLocaleResourceString("Admin.Categories.Products") + "\" url=\"" + string.Empty + "\">");
-                    int totalRecords = 0;
-                    ProductCollection products = ProductManager.GetAllProducts(category.CategoryId, 0, null, int.MaxValue, 0, out totalRecords);
-                    foreach (Product product in products)
-                    {
-                        string productDetailsURL = CommonHelper.GetStoreAdminLocation() + "ProductDetails.aspx?ProductID=" + product.ProductId.ToString();
-                        tmpS.Append("<siteMapNode  title=\"" + XmlHelper.XmlEncodeAttribute(product.Name) + "\" url=\"" + productDetailsURL + "\">");
-                        tmpS.Append("</siteMapNode>");
-                    }
-                    tmpS.Append("</siteMapNode>");
-                }
-
-                tmpS.Append("</siteMapNode>");
+                result.Add(category);
+                result.AddRange(GetAllCategories(category.CategoryId));
             }
-            return tmpS.ToString();
+            return result;
         }
 
         protected void btnExportXML_Click(object sender, EventArgs e)
