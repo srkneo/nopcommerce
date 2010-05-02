@@ -23,7 +23,6 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
@@ -61,6 +60,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 this.BindData();
             }
+            else
+            {
+                UpdateState();
+            }
         }
 
         public void SaveInfo()
@@ -73,35 +76,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Product product = ProductManager.GetProductById(prodId);
             if (product != null)
             {
-                foreach (GridViewRow row in gvManufacturerMappings.Rows)
+                foreach (var item in this.GridState.Values)
                 {
-                    CheckBox cbManufacturerInfo = row.FindControl("cbManufacturerInfo") as CheckBox;
-                    HiddenField hfManufacturerId = row.FindControl("hfManufacturerId") as HiddenField;
-                    HiddenField hfProductManufacturerId = row.FindControl("hfProductManufacturerId") as HiddenField;
-                    CheckBox cbFeatured = row.FindControl("cbFeatured") as CheckBox;
-                    NumericTextBox txtRowDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
-                    int productManufacturerId = int.Parse(hfProductManufacturerId.Value);
-                    int manufacturerId = int.Parse(hfManufacturerId.Value);
-                    int displayOrder = txtRowDisplayOrder.Value;
-
-                    if (productManufacturerId > 0 && !cbManufacturerInfo.Checked)
-                        ManufacturerManager.DeleteProductManufacturer(productManufacturerId);
-                    if (productManufacturerId > 0 && cbManufacturerInfo.Checked)
-                        ManufacturerManager.UpdateProductManufacturer(productManufacturerId, product.ProductId, manufacturerId, cbFeatured.Checked, displayOrder);
-                    if (productManufacturerId == 0 && cbManufacturerInfo.Checked)
-                        ManufacturerManager.InsertProductManufacturer(product.ProductId, manufacturerId, cbFeatured.Checked, displayOrder);
+                    if (item.ProductManufacturerId > 0 && !item.IsMapped)
+                        ManufacturerManager.DeleteProductManufacturer(item.ProductManufacturerId);
+                    if (item.ProductManufacturerId > 0 && item.IsMapped)
+                        ManufacturerManager.UpdateProductManufacturer(item.ProductManufacturerId, product.ProductId, item.ManufacturerId, item.IsFeatured, item.DisplayOrder);
+                    if (item.ProductManufacturerId == 0 && item.IsMapped)
+                        ManufacturerManager.InsertProductManufacturer(product.ProductId, item.ManufacturerId, item.IsFeatured, item.DisplayOrder);
                 }
             }
         }
 
-        public int ProductId
+        protected void gvManufacturerMappings_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            get
-            {
-                return CommonHelper.QueryStringInt("ProductId");
-            }
+            this.gvManufacturerMappings.PageIndex = e.NewPageIndex;
+            this.BindData();
         }
-
+        
         private List<ProductManufacturerMappingHelperClass> GetProductManufacturerMappings(ProductManufacturerCollection ExistingProductManufacturerCollection)
         {
             ManufacturerCollection manufacturerCollection = ManufacturerManager.GetAllManufacturers();
@@ -127,12 +119,91 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pmm.ManufacturerId = manufacturer.ManufacturerId;
                 pmm.ManufacturerInfo = manufacturer.Name;
 
+                MapState(manufacturer.ManufacturerId, pmm);
+
                 result.Add(pmm);
             }
 
             return result;
         }
 
+        private Dictionary<int, ProductManufacturerMappingHelperClass> _gridState;
+        private Dictionary<int, ProductManufacturerMappingHelperClass> GridState
+        {
+            get
+            {
+                if (_gridState == null)
+                {
+                    _gridState = ViewState["ProductManufacturerState"] as Dictionary<int, ProductManufacturerMappingHelperClass>;
+                    if (_gridState == null)
+                    {
+                        _gridState = new Dictionary<int, ProductManufacturerMappingHelperClass>();
+                        ViewState["ProductManufacturerState"] = _gridState;
+                    }
+                }
+                return _gridState;
+            }
+
+            set
+            {
+                _gridState = value;
+                ViewState["ProductManufacturerState"] = value;
+            }
+        }
+
+        private void UpdateState()
+        {
+            Dictionary<int, ProductManufacturerMappingHelperClass> state = this.GridState;
+            foreach (GridViewRow row in gvManufacturerMappings.Rows)
+            {
+                CheckBox cbManufacturerInfo = row.FindControl("cbManufacturerInfo") as CheckBox;
+                HiddenField hfManufacturerId = row.FindControl("hfManufacturerId") as HiddenField;
+                HiddenField hfProductManufacturerId = row.FindControl("hfProductManufacturerId") as HiddenField;
+                CheckBox cbFeatured = row.FindControl("cbFeatured") as CheckBox;
+                NumericTextBox txtRowDisplayOrder = row.FindControl("txtDisplayOrder") as NumericTextBox;
+                int productManufacturerId = int.Parse(hfProductManufacturerId.Value);
+                int manufacturerId = int.Parse(hfManufacturerId.Value);
+                int displayOrder = txtRowDisplayOrder.Value;
+
+                if (cbManufacturerInfo.Checked || (productManufacturerId > 0))
+                {
+                    state[manufacturerId] = new ProductManufacturerMappingHelperClass()
+                    {
+                        ManufacturerId = manufacturerId,
+                        ProductManufacturerId = productManufacturerId,
+                        IsMapped = cbManufacturerInfo.Checked,
+                        DisplayOrder = displayOrder,
+                        IsFeatured = cbFeatured.Checked
+                    };
+                }
+                else if (state.ContainsKey(manufacturerId))
+                {
+                    state.Remove(manufacturerId);
+                }
+            }
+            this.GridState = state;
+        }
+
+        private void MapState(int Id, ProductManufacturerMappingHelperClass rp)
+        {
+            if (this.GridState.ContainsKey(Id))
+            {
+                ProductManufacturerMappingHelperClass srp = this.GridState[Id];
+                rp.IsMapped = srp.IsMapped;
+                rp.DisplayOrder = srp.DisplayOrder;
+                rp.IsFeatured = srp.IsFeatured;
+            }
+        }
+
+        public int ProductId
+        {
+            get
+            {
+                return CommonHelper.QueryStringInt("ProductId");
+            }
+        }
+
+        [Serializable]
         private class ProductManufacturerMappingHelperClass
         {
             public int ProductManufacturerId { get; set; }

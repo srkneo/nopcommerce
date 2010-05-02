@@ -48,6 +48,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             gvManufacturers.DataBind();
         }
 
+        protected void gvManufacturers_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvManufacturers.PageIndex = e.NewPageIndex;
+            BindGrid();
+        }
+
         protected void btnExportXML_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)

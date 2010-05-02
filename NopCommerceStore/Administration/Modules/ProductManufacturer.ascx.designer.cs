@@ -14,6 +14,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
     public partial class ProductManufacturerControl {
         
         /// <summary>
+        /// upMan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upMan;
+        
+        /// <summary>
         /// gvManufacturerMappings control.
         /// </summary>
         /// <remarks>
@@ -21,5 +30,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvManufacturerMappings;
+        
+        /// <summary>
+        /// up1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress up1;
     }
 }

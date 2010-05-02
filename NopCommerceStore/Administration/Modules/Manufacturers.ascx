@@ -14,7 +14,8 @@
     </div>
 </div>
 <table class="adminContent">
-    <asp:GridView ID="gvManufacturers" runat="server" AutoGenerateColumns="False" Width="100%">
+    <asp:GridView ID="gvManufacturers" runat="server" AutoGenerateColumns="False" Width="100%"
+    OnPageIndexChanging="gvManufacturers_PageIndexChanging" AllowPaging="true" PageSize="15">
         <Columns>
             <asp:TemplateField HeaderText="<% $NopResources:Admin.Manufacturers.Name %>" ItemStyle-Width="65%">
                 <ItemTemplate>
