@@ -255,7 +255,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (String.IsNullOrEmpty(couponCode))
                 return;
 
-            bool isDiscountValid = true;
+            var discounts = DiscountManager.GetAllDiscounts(null);
+            var discount = discounts.FindByCouponCode(couponCode);
+            bool isDiscountValid = discount != null;
             if (isDiscountValid)
             {
                 pnlDiscountWarnings.Visible = false;

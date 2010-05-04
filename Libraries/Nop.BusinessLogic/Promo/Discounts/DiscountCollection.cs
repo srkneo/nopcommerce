@@ -32,14 +32,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         public bool ContainsDiscount(string discountName)
         {
             bool result = false;
-            foreach (Discount _discount in this)
-                if (_discount.Name == discountName)
+            foreach (var discount in this)
+                if (discount.Name == discountName)
                 {
                     result = true;
                     break;
                 }
-
             return result;
+        }
+
+        /// <summary>
+        /// Finds the specified discount.
+        /// </summary>
+        /// <param name="couponCode">Coupon code</param>
+        /// <returns>Found discount</returns>
+        public Discount FindByCouponCode(string couponCode)
+        {
+            if (couponCode == null)
+                return null;
+
+            foreach (var discount in this)
+                if (discount.CouponCode.Equals(couponCode, StringComparison.InvariantCultureIgnoreCase))
+                    return discount;
+
+            return null;
         }
     }
 }
