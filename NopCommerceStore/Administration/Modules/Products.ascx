@@ -1,6 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.ProductsControl" CodeBehind="Products.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SelectCategoryControl" Src="SelectCategoryControl.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="ConfirmationBox" Src="ConfirmationBox.ascx" %>
 
 <div class="section-header">
     <div class="title">
@@ -22,6 +23,11 @@
             CssClass="adminButtonBlue" ID="btnImportXLS" OnClick="btnImportXLS_Click" ToolTip="<% $NopResources:Admin.Products.ImportXLSButton.Tooltip %>" />
         <input type="button" onclick="location.href='ProductAdd.aspx'" value="<%=GetLocaleResourceString("Admin.Products.AddButton.Text")%>"
             id="btnAddNew" class="adminButtonBlue" title="<%=GetLocaleResourceString("Admin.Products.AddButton.Tooltip")%>" />
+        <asp:Button runat="server" Text="<% $NopResources:Admin.Products.DeleteButton.Text %>"
+            CssClass="adminButtonBlue" ID="btnDelete" OnClick="btnDelete_Click" />
+            <nopCommerce:ConfirmationBox runat="server" ID="cbDelete" TargetControlID="btnDelete"
+    YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+    ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
     </div>
 </div>
 <table width="100%">
@@ -57,10 +63,23 @@
 </table>
 <p>
 </p>
+
+<script type="text/javascript">
+
+    $(window).bind('load', function() {
+        var cbHeader = $(".cbHeader input");
+        var cbRowItem = $(".cbRowItem input");
+        cbHeader.bind("click", function() {
+            cbRowItem.each(function() { this.checked = cbHeader[0].checked; })
+        });
+        cbRowItem.bind("click", function() { if ($(this).checked == false) cbHeader[0].checked = false; });
+    });
+    
+</script>
 <asp:GridView ID="gvProducts" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvProducts_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
-        <asp:TemplateField HeaderText="<% $NopResources:Admin.Products.Name %>" ItemStyle-Width="70%">
+        <asp:TemplateField HeaderText="<% $NopResources:Admin.Products.Name %>" ItemStyle-Width="60%">
             <ItemTemplate>
                 <%#Server.HtmlEncode(Eval("Name").ToString())%>
             </ItemTemplate>
@@ -75,9 +94,20 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Products.Edit %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="ProductDetails.aspx?ProductID=<%#Eval("ProductId")%>" title="<%#GetLocaleResourceString("Admin.Products.Edit.Tooltip")%>">
+                <a href="ProductDetails.aspx?ProductId=<%#Eval("ProductId")%>" title="<%#GetLocaleResourceString("Admin.Products.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Products.Edit")%>
                 </a>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
+            <HeaderTemplate>
+                <%#GetLocaleResourceString("Admin.Products.Delete")%>
+                <br />
+                <asp:CheckBox ID="cbSelectAll" runat="server" CssClass="cbHeader" />
+            </HeaderTemplate>
+            <ItemTemplate>
+                <asp:CheckBox ID="cbProduct" runat="server" CssClass="cbRowItem" />
+                <asp:HiddenField ID="hfProductId" runat="server" Value='<%# Eval("ProductId") %>' />
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>

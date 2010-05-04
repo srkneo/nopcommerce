@@ -929,6 +929,12 @@ set @resources='
   <LocaleResource Name="Admin.Categories.Edit.Tooltip">
     <Value>Edit category</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Products.DeleteButton.Text">
+    <Value>Delete selected</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Products.Delete">
+    <Value>Delete</Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -55,6 +55,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             BindGrid();
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+
+            base.OnPreRender(e);
+        }
+
         protected void FillDropDowns()
         {
             ParentCategory.EmptyItemText = GetLocaleResourceString("Admin.Common.All");
@@ -142,6 +150,31 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     ProcessException(ex);
                 }
             }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+                try
+                {
+                    foreach (GridViewRow row in gvProducts.Rows)
+                    {
+                        var cbProduct = row.FindControl("cbProduct") as CheckBox;
+                        var hfProductId = row.FindControl("hfProductId") as HiddenField;
+
+                        bool isChecked = cbProduct.Checked;
+                        int productId = int.Parse(hfProductId.Value);
+                        if (isChecked)
+                        {
+                            ProductManager.MarkProductAsDeleted(productId);
+                        }
+                    }
+
+                    BindGrid();
+                }
+                catch(Exception ex)
+                {
+                    ProcessException(ex);
+                }
         }
 
         protected void btnExportXML_Click(object sender, EventArgs e)

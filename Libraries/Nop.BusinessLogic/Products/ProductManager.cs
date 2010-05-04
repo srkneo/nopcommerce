@@ -488,6 +488,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productId">Product identifier</param>
         public static void MarkProductAsDeleted(int productId)
         {
+            if (productId == 0)
+                return;
+
             var product = GetProductById(productId);
             if (product != null)
             {
