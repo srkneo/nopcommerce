@@ -46,8 +46,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
 {
     public partial class OrderTotalsControl : BaseNopUserControl
     {
-        public void BindData()
+        public void BindData(bool isShoppingCart)
         {
+            this.IsShoppingCart = isShoppingCart;
             var cart = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
 
             if (cart.Count > 0)
@@ -233,7 +234,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 decimal remainingAmountBase = GiftCardHelper.GetGiftCardRemainingAmount(appliedGiftCard.GiftCard) - amountCanBeUsed;
                 decimal remainingAmount = CurrencyManager.ConvertCurrency(remainingAmountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
                 lGiftCardRemaining.Text = string.Format(GetLocaleResourceString("ShoppingCart.Totals.GiftCardInfo.Remaining"), PriceHelper.FormatPrice(remainingAmount, true, false));
-                
+
+                var btnRemoveGC = e.Item.FindControl("btnRemoveGC") as LinkButton;
+                btnRemoveGC.Visible = this.IsShoppingCart;
             }
         }
 
@@ -241,17 +244,34 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (e.CommandName == "remove")
             {
-                int giftCardId = Convert.ToInt32(e.CommandArgument);
-                GiftCard gc = OrderManager.GetGiftCardById(giftCardId);
-                if (gc != null)
+                if (this.IsShoppingCart)
                 {
-                    string couponCodesXML = string.Empty;
-                    if (NopContext.Current.User != null)
-                        couponCodesXML = NopContext.Current.User.GiftCardCouponCodes;
-                    couponCodesXML = GiftCardHelper.RemoveCouponCode(couponCodesXML, gc.GiftCardCouponCode);
-                    CustomerManager.ApplyGiftCardCouponCode(couponCodesXML);
+                    int giftCardId = Convert.ToInt32(e.CommandArgument);
+                    GiftCard gc = OrderManager.GetGiftCardById(giftCardId);
+                    if (gc != null)
+                    {
+                        string couponCodesXML = string.Empty;
+                        if (NopContext.Current.User != null)
+                            couponCodesXML = NopContext.Current.User.GiftCardCouponCodes;
+                        couponCodesXML = GiftCardHelper.RemoveCouponCode(couponCodesXML, gc.GiftCardCouponCode);
+                        CustomerManager.ApplyGiftCardCouponCode(couponCodesXML);
+                    }
+                    this.BindData(this.IsShoppingCart);
                 }
-                this.BindData();
+            }
+        }
+
+        [DefaultValue(false)]
+        public bool IsShoppingCart
+        {
+            get
+            {
+                object obj2 = this.ViewState["IsShoppingCart"];
+                return ((obj2 != null) && ((bool)obj2));
+            }
+            set
+            {
+                this.ViewState["IsShoppingCart"] = value;
             }
         }
     }

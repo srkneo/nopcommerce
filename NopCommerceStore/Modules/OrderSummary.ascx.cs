@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 pnlCart.Visible = false;
             }
 
-            this.ctrlOrderTotals.BindData();
+            this.ctrlOrderTotals.BindData(this.IsShoppingCart);
         }
 
         /// <summary>
