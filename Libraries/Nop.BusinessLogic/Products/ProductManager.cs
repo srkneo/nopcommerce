@@ -1324,7 +1324,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     product.TemplateId, product.ShowOnHomePage, product.MetaKeywords,
                     product.MetaDescription, product.MetaTitle, product.SEName,
                     product.AllowCustomerReviews, product.AllowCustomerRatings, 0, 0,
-                    isPublished, product.Deleted, product.CreatedOn, product.UpdatedOn);
+                    isPublished, product.Deleted, DateTime.UtcNow, DateTime.UtcNow);
 
                 if (productCopy == null)
                     return null;
@@ -1461,7 +1461,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         productVariant.MinimumCustomerEnteredPrice, productVariant.MaximumCustomerEnteredPrice,
                         productVariant.Weight, productVariant.Length, productVariant.Width, productVariant.Height, pictureId,
                         productVariant.AvailableStartDateTime, productVariant.AvailableEndDateTime,
-                        productVariant.Published, productVariant.Deleted, productVariant.DisplayOrder, productVariant.CreatedOn, productVariant.UpdatedOn);
+                        productVariant.Published, productVariant.Deleted, productVariant.DisplayOrder, DateTime.UtcNow, DateTime.UtcNow);
 
                     //localization
                     foreach (var lang in languages)
