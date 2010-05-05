@@ -941,6 +941,15 @@ set @resources='
   <LocaleResource Name="Order.ProductsGrid.Download.na">
     <Value>n/a</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GiftCardInfo.IsRecipientNotified">
+    <Value>Is recipient notified:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GiftCardInfo.IsRecipientNotified.Tooltip">
+    <Value>Is recipient has been notified.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GiftCardInfo.NotifyRecipientButton">
+    <Value>Notify Recipient</Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -56,13 +56,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtSenderName.Text = gc.SenderName;
                 this.txtSenderEmail.Text = gc.SenderEmail;
                 this.txtMessage.Text = gc.Message;
-                if (gc.IsSenderNotified)
+                if (gc.IsRecipientNotified)
                 {
-                    lblIsSenderNotified.Text = GetLocaleResourceString("Admin.Common.Yes");
+                    lblIsRecipientNotified.Text = GetLocaleResourceString("Admin.Common.Yes");
                 }
                 else
                 {
-                    lblIsSenderNotified.Text = GetLocaleResourceString("Admin.Common.No");
+                    lblIsRecipientNotified.Text = GetLocaleResourceString("Admin.Common.No");
                 }
                 this.lblPurchasedOn.Text = DateTimeHelper.ConvertToUserTime(gc.CreatedOn).ToString();
 
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     gc.PurchasedOrderProductVariantId, initialValue, isGiftCardActivated,
                     giftCardCouponCode, recipientName, recipientEmail,
                     senderName, senderEmail, message,
-                    gc.IsSenderNotified, gc.CreatedOn);
+                    gc.IsRecipientNotified, gc.CreatedOn);
             }
             else
             {
@@ -165,7 +165,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected void btnNotifySender_Click(object sender, EventArgs e)
+        protected void btnNotifyRecipient_Click(object sender, EventArgs e)
         {
             try
             {

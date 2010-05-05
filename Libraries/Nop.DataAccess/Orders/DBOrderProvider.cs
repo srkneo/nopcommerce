@@ -810,14 +810,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="message">Message</param>
-        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="isRecipientNotified">Value indicating whether recipient is notified</param>
         /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
         public abstract DBGiftCard InsertGiftCard(int purchasedOrderProductVariantId,
             decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
             string recipientName, string recipientEmail,
-            string senderName, string senderEmail, string message, 
-            bool isSenderNotified, DateTime createdOn);
+            string senderName, string senderEmail, string message,
+            bool isRecipientNotified, DateTime createdOn);
 
         /// <summary>
         /// Updates the gift card
@@ -832,7 +832,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="message">Message</param>
-        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="isRecipientNotified">Value indicating whether recipient is notified</param>
         /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
         public abstract DBGiftCard UpdateGiftCard(int giftCardId, 
@@ -840,7 +840,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
             string recipientName, string recipientEmail,
             string senderName, string senderEmail, string message,
-            bool isSenderNotified, DateTime createdOn);
+            bool isRecipientNotified, DateTime createdOn);
         
         /// <summary>
         /// Deletes a gift card usage history entry

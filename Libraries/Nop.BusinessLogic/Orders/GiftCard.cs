@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public string SenderName { get; set; }
 
         /// <summary>
-        /// Gets or sets a sender emai
+        /// Gets or sets a sender email
         /// </summary>
         public string SenderEmail { get; set; }
 
@@ -92,9 +92,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether sender is notified
+        /// Gets or sets a value indicating whether recipient is notified
         /// </summary>
-        public bool IsSenderNotified { get; set; }
+        public bool IsRecipientNotified { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation

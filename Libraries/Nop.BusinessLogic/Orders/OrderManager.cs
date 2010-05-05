@@ -402,7 +402,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.SenderName = dbItem.SenderName;
             item.SenderEmail = dbItem.SenderEmail;
             item.Message = dbItem.Message;
-            item.IsSenderNotified = dbItem.IsSenderNotified;
+            item.IsRecipientNotified = dbItem.IsRecipientNotified;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
@@ -2250,20 +2250,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="message">Message</param>
-        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="isRecipientNotified">Value indicating whether recipient is notified</param>
         /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
         public static GiftCard InsertGiftCard(int purchasedOrderProductVariantId,
             decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
             string recipientName, string recipientEmail,
             string senderName, string senderEmail, string message,
-            bool isSenderNotified, DateTime createdOn)
+            bool isRecipientNotified, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertGiftCard(purchasedOrderProductVariantId,
                 amount, isGiftCardActivated, giftCardCouponCode, recipientName, recipientEmail,
-                senderName, senderEmail, message, isSenderNotified, createdOn);
+                senderName, senderEmail, message, isRecipientNotified, createdOn);
             var giftCard = DBMapping(dbItem);
             return giftCard;
         }
@@ -2281,7 +2281,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="message">Message</param>
-        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="isRecipientNotified">Value indicating whether recipient is notified</param>
         /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
         public static GiftCard UpdateGiftCard(int giftCardId,
@@ -2289,14 +2289,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
             string recipientName, string recipientEmail,
             string senderName, string senderEmail, string message,
-            bool isSenderNotified, DateTime createdOn)
+            bool isRecipientNotified, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateGiftCard(giftCardId,
                 purchasedOrderProductVariantId, amount, isGiftCardActivated, 
                 giftCardCouponCode, recipientName, recipientEmail,
-                senderName, senderEmail, message, isSenderNotified, createdOn);
+                senderName, senderEmail, message, isRecipientNotified, createdOn);
             var giftCard = DBMapping(dbItem);
             return giftCard;
         }

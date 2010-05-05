@@ -86,9 +86,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether sender is notified
+        /// Gets or sets a value indicating whether recipient is notified
         /// </summary>
-        public bool IsSenderNotified { get; set; }
+        public bool IsRecipientNotified { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation

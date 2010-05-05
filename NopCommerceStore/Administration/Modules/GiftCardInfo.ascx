@@ -121,13 +121,13 @@
                 
                 <tr>
                     <td class="adminTitle">
-                        <nopCommerce:ToolTipLabel runat="server" ID="lblIsSenderNotifiedTooltip" Text="<% $NopResources:Admin.GiftCardInfo.IsSenderNotified %>"
-                            ToolTip="<% $NopResources:Admin.GiftCardInfo.IsSenderNotified.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        <nopCommerce:ToolTipLabel runat="server" ID="lblIsRecipientNotifiedTooltip" Text="<% $NopResources:Admin.GiftCardInfo.IsRecipientNotified %>"
+                            ToolTip="<% $NopResources:Admin.GiftCardInfo.IsRecipientNotified.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
-                        <asp:Label runat="server" ID="lblIsSenderNotified"></asp:Label>
-                        <asp:Button ID="btnNotifySender" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.GiftCardInfo.NotifySenderButton %>"
-                            OnClick="btnNotifySender_Click"></asp:Button>
+                        <asp:Label runat="server" ID="lblIsRecipientNotified"></asp:Label>
+                        <asp:Button ID="btnNotifyRecipient" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.GiftCardInfo.NotifyRecipientButton %>"
+                            OnClick="btnNotifyRecipient_Click"></asp:Button>
                     </td>
                 </tr>
                 <tr>

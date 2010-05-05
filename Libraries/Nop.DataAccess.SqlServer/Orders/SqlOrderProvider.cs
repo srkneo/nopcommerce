@@ -224,7 +224,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             item.SenderName = NopSqlDataHelper.GetString(dataReader, "SenderName");
             item.SenderEmail = NopSqlDataHelper.GetString(dataReader, "SenderEmail");
             item.Message = NopSqlDataHelper.GetString(dataReader, "Message");
-            item.IsSenderNotified = NopSqlDataHelper.GetBoolean(dataReader, "IsSenderNotified");
+            item.IsRecipientNotified = NopSqlDataHelper.GetBoolean(dataReader, "IsRecipientNotified");
             item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
             return item;
         }
@@ -1885,14 +1885,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="message">Message</param>
-        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="isRecipientNotified">Value indicating whether recipient is notified</param>
         /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
         public override DBGiftCard InsertGiftCard(int purchasedOrderProductVariantId,
             decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
             string recipientName, string recipientEmail,
             string senderName, string senderEmail, string message,
-            bool isSenderNotified, DateTime createdOn)
+            bool isRecipientNotified, DateTime createdOn)
         {
             DBGiftCard item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
@@ -1907,7 +1907,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             db.AddInParameter(dbCommand, "SenderName", DbType.String, senderName);
             db.AddInParameter(dbCommand, "SenderEmail", DbType.String, senderEmail);
             db.AddInParameter(dbCommand, "Message", DbType.String, message);
-            db.AddInParameter(dbCommand, "IsSenderNotified", DbType.Boolean, isSenderNotified);
+            db.AddInParameter(dbCommand, "IsRecipientNotified", DbType.Boolean, isRecipientNotified);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
@@ -1930,7 +1930,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="senderName">Sender name</param>
         /// <param name="senderEmail">Sender email</param>
         /// <param name="message">Message</param>
-        /// <param name="isSenderNotified">Value indicating whether sender is notified</param>
+        /// <param name="isRecipientNotified">Value indicating whether recipient is notified</param>
         /// <param name="createdOn">A date and time of instance creation</param>
         /// <returns>Gift card</returns>
         public override DBGiftCard UpdateGiftCard(int giftCardId,
@@ -1938,7 +1938,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             decimal amount, bool isGiftCardActivated, string giftCardCouponCode,
             string recipientName, string recipientEmail,
             string senderName, string senderEmail, string message,
-            bool isSenderNotified, DateTime createdOn)
+            bool isRecipientNotified, DateTime createdOn)
         {
             DBGiftCard item = null;
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
@@ -1953,7 +1953,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             db.AddInParameter(dbCommand, "SenderName", DbType.String, senderName);
             db.AddInParameter(dbCommand, "SenderEmail", DbType.String, senderEmail);
             db.AddInParameter(dbCommand, "Message", DbType.String, message);
-            db.AddInParameter(dbCommand, "IsSenderNotified", DbType.Boolean, isSenderNotified);
+            db.AddInParameter(dbCommand, "IsRecipientNotified", DbType.Boolean, isRecipientNotified);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             if (db.ExecuteNonQuery(dbCommand) > 0)
                 item = GetGiftCardById(giftCardId);

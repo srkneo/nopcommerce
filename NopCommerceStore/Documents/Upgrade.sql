@@ -6500,3 +6500,115 @@ BEGIN
 		RewardPointsHistoryID=@RewardPointsHistoryID
 END
 GO
+
+-- rename IsSenderNotified to IsRecipientNotified
+
+IF EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_GiftCard]') and NAME='IsSenderNotified')
+BEGIN
+ ALTER TABLE [dbo].[Nop_GiftCard] ADD IsRecipientNotified BIT NOT NULL CONSTRAINT [DF_Nop_GiftCard_IsRecipientNotified] DEFAULT ((0))
+ EXEC('UPDATE [dbo].[Nop_GiftCard] SET IsRecipientNotified=IsSenderNotified')
+ ALTER TABLE [dbo].[Nop_GiftCard] DROP COLUMN IsSenderNotified
+END
+GO
+
+-- SP [dbo].[Nop_GiftCardUpdate]
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_GiftCardUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_GiftCardUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_GiftCardUpdate]
+(
+	@GiftCardID int,
+	@PurchasedOrderProductVariantID int,
+	@Amount money,
+	@IsGiftCardActivated bit,
+	@GiftCardCouponCode nvarchar(100),
+	@RecipientName nvarchar(100),
+	@RecipientEmail nvarchar(100),
+	@SenderName nvarchar(100),
+	@SenderEmail nvarchar(100),
+	@Message nvarchar(4000),
+	@IsRecipientNotified bit,
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	UPDATE [Nop_GiftCard]
+	SET
+		[PurchasedOrderProductVariantID] = @PurchasedOrderProductVariantID,
+		[Amount] = @Amount,
+		[IsGiftCardActivated] = @IsGiftCardActivated,
+		[GiftCardCouponCode]= @GiftCardCouponCode,
+		[RecipientName]=@RecipientName,
+		[RecipientEmail]=@RecipientEmail,
+		[SenderName]=@SenderName,
+		[SenderEmail]=@SenderEmail,
+		[Message]=@Message,
+		[IsRecipientNotified]=@IsRecipientNotified,
+		[CreatedOn] = @CreatedOn
+	WHERE
+		GiftCardID=@GiftCardID
+END
+GO
+
+-- SP [dbo].[Nop_GiftCardInsert]
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_GiftCardInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_GiftCardInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_GiftCardInsert]
+(
+	@GiftCardID int = NULL output,
+	@PurchasedOrderProductVariantID int,
+	@Amount money,
+	@IsGiftCardActivated bit,
+	@GiftCardCouponCode nvarchar(100),
+	@RecipientName nvarchar(100),
+	@RecipientEmail nvarchar(100),
+	@SenderName nvarchar(100),
+	@SenderEmail nvarchar(100),
+	@Message nvarchar(4000),
+	@IsRecipientNotified bit,
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_GiftCard]
+	(
+		[PurchasedOrderProductVariantID],
+		[Amount],
+		[IsGiftCardActivated],
+		[GiftCardCouponCode],
+		[RecipientName],
+		[RecipientEmail],
+		[SenderName],
+		[SenderEmail],
+		[Message],
+		[IsRecipientNotified],
+		[CreatedOn]
+	)
+	VALUES
+	(
+		@PurchasedOrderProductVariantID,
+		@Amount,
+		@IsGiftCardActivated,
+		@GiftCardCouponCode,
+		@RecipientName,
+		@RecipientEmail,
+		@SenderName,
+		@SenderEmail,
+		@Message,
+		@IsRecipientNotified,
+		@CreatedOn
+	)
+
+	set @GiftCardID=SCOPE_IDENTITY()
+END
+GO
