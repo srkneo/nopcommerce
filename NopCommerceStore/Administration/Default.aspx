@@ -40,7 +40,7 @@
                                 <nopCommerce:OrderStatistics runat="server" ID="ctrlOrderStatistics" />
                             </td> 
                             <td class="customerstatistics">
-                                <nopCommerce:CustomerStatistics runat="server" ID="ctrlCustomerStatistics" />
+                                <nopCommerce:CustomerStatistics runat="server" ID="ctrlCustomerStatistics" DisplayTitle="true" />
                             </td>                                    
                         </tr>
                     </tbody>

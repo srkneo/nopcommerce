@@ -38,6 +38,7 @@
     <siteMapNode title="Customers" url="~/administration/customershome.aspx" IconUrl="~/administration/common/ico-customers.png" description="Customers Home" nopResourceTitle="Admin.Sitemap.CustomersHomeTitle" nopResourceDescription="Admin.Sitemap.CustomersHomeDescription" >
       <siteMapNode title="Manage Customers" url="~/administration/customers.aspx" description="Manage Customers" nopResourceTitle="Admin.Sitemap.CustomersTitle" nopResourceDescription="Admin.Sitemap.CustomersDescription" />
       <siteMapNode title="Customer Roles" url="~/administration/customerroles.aspx" description="Manage Customer Roles" nopResourceTitle="Admin.Sitemap.CustomerRolesTitle" nopResourceDescription="Admin.Sitemap.CustomerRolesDescription" />
+      <siteMapNode title="Customer Statistics" url="~/administration/customerreports.aspx" description="Customer Statistics" nopResourceTitle="Admin.Sitemap.CustomerReportsTitle" nopResourceDescription="Admin.Sitemap.CustomerReportsDescription" />
     </siteMapNode>
     <!-- End Customers -->
 

@@ -683,6 +683,46 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         }
 
         /// <summary>
+        /// Get best customers
+        /// </summary>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all records</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all records</param>
+        /// <param name="shippingStatusId">Order shipping status identifier; null to load all records</param>
+        /// <param name="orderBy">1 - order by order total, 2 - order by number of orders</param>
+        /// <returns>Report</returns>
+        public override IDataReader GetBestCustomersReport(DateTime? startTime,
+            DateTime? endTime, int? orderStatusId, int? paymentStatusId,
+            int? shippingStatusId, int orderBy)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerBestReport");
+            if (startTime.HasValue)
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, startTime.Value);
+            else
+                db.AddInParameter(dbCommand, "StartTime", DbType.DateTime, null);
+            if (endTime.HasValue)
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, endTime.Value);
+            else
+                db.AddInParameter(dbCommand, "EndTime", DbType.DateTime, null);
+            if (orderStatusId.HasValue)
+                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId.Value);
+            else
+                db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, null);
+            if (paymentStatusId.HasValue)
+                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId.Value);
+            else
+                db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, null);
+            if (shippingStatusId.HasValue)
+                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, shippingStatusId);
+            else
+                db.AddInParameter(dbCommand, "ShippingStatusID", DbType.Int32, null);
+            db.AddInParameter(dbCommand, "OrderBy", DbType.Int32, orderBy);
+            return db.ExecuteReader(dbCommand);
+        }
+
+        /// <summary>
         /// Deletes a customer attribute
         /// </summary>
         /// <param name="customerAttributeId">Customer attribute identifier</param>

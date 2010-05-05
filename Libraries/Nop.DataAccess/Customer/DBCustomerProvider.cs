@@ -255,6 +255,20 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             bool deleted, DateTime registrationDate, string timeZoneId, int avatarId);
 
         /// <summary>
+        /// Get best customers
+        /// </summary>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all records</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all records</param>
+        /// <param name="shippingStatusId">Order shipping status identifier; null to load all records</param>
+        /// <param name="orderBy">1 - order by order total, 2 - order by number of orders</param>
+        /// <returns>Report</returns>
+        public abstract IDataReader GetBestCustomersReport(DateTime? startTime,
+            DateTime? endTime, int? orderStatusId, int? paymentStatusId, 
+            int? shippingStatusId, int orderBy);
+
+        /// <summary>
         /// Deletes a customer attribute
         /// </summary>
         /// <param name="customerAttributeId">Customer attribute identifier</param>

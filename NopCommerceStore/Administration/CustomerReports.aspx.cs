@@ -13,42 +13,30 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Web;
+using System.Web.Security;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Linq;
+using System.Web.UI.WebControls.WebParts;
+using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
-using NopSolutions.NopCommerce.BusinessLogic.Directory;
-using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
-using NopSolutions.NopCommerce.BusinessLogic.Shipping;
-using NopSolutions.NopCommerce.BusinessLogic.Products;
-using System.ComponentModel;
+using NopSolutions.NopCommerce.BusinessLogic.Security;
+using NopSolutions.NopCommerce.Common.Utils;
 
-namespace NopSolutions.NopCommerce.Web.Administration.Modules
+namespace NopSolutions.NopCommerce.Web.Administration
 {
-    public partial class CustomerStatisticsControl : BaseNopAdministrationUserControl
+    public partial class Administration_CustomerReports : BaseNopAdministrationPage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected override bool ValidatePageSecurity()
         {
-            int days = Convert.ToInt32(ddlDays.SelectedValue.ToString());
-
-            lblCustomers.Text = CustomerManager.GetRegisteredCustomersReport(days).ToString();
-            lnkViewCustomers.NavigateUrl = "~/Administration/Customers.aspx?ShowDays=" + days;
-        }
-
-        [DefaultValue(false)]
-        public bool DisplayTitle
-        {
-            get
-            {
-                object obj2 = this.ViewState["DisplayTitle"];
-                return ((obj2 != null) && ((bool)obj2));
-            }
-            set
-            {
-                this.ViewState["DisplayTitle"] = value;
-            }
+            return ACLManager.IsActionAllowed("ManageCustomers");
         }
     }
 }

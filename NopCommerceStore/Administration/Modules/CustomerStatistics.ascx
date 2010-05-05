@@ -1,8 +1,11 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.CustomerStatisticsControl"
     CodeBehind="CustomerStatistics.ascx.cs" EnableViewState="false" %>
+<%if (this.DisplayTitle)
+  { %>
 <div class="statisticsTitle">
     <%=GetLocaleResourceString("Admin.CustomerStatistics.RegisteredCustomers")%>
 </div>
+<%} %>
 <table cellpadding="0" cellspacing="0" class="tablestyle" width="100%" style="border-collapse: collapse;">
     <thead>
         <tr class="headerstyle">

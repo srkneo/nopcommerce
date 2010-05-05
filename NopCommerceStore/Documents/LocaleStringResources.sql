@@ -950,6 +950,126 @@ set @resources='
   <LocaleResource Name="Admin.GiftCardInfo.NotifyRecipientButton">
     <Value>Notify Recipient</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.CustomerReportsTitle">
+    <Value>Customer Statistics</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.CustomerReportsDescription">
+    <Value>Customer Statistics</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomersHome.CustomerReports.TitleDescription">
+    <Value>Customer Statistics</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomersHome.CustomerReports.Title">
+    <Value>Customer Statistics</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomersHome.CustomerReports.Description">
+    <Value>View number of new customers and your best customers.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.Title">
+    <Value>Customer Statistics</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.Title">
+    <Value>Top 20 customer by order total</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.Title">
+    <Value>Top 20 customers by number of orders</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.StartDate">
+    <Value>Start date:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.StartDate.Tooltip">
+    <Value>The start date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.EndDate">
+    <Value>End date:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.EndDate.Tooltip">
+    <Value>The end date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.OrderStatus">
+    <Value>Order status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.OrderStatus.Tooltip">
+    <Value>Search by a specific order status e.g. Complete.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.PaymentStatus">
+    <Value>Payment status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.PaymentStatus.Tooltip">
+    <Value>Search by a specific payment status e.g. Paid.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.ShippingStatus">
+    <Value>Shipping status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.ShippingStatus.Tooltip">
+    <Value>Search by a specific shipping status e.g. Not yet shipped.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.SearchButton">
+    <Value>View report</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.SearchButton.Tooltip">
+    <Value>View report based on the criteria below</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.CustomerColumn">
+    <Value>Customer</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.OrderTotalColumn">
+    <Value>Order total</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByOrderTotal.NumberOfOrdersColumn">
+    <Value>Number of orders</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Common.CustomerGuest">
+    <Value>Guest</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.StartDate">
+    <Value>Start date:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.StartDate.Tooltip">
+    <Value>The start date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.EndDate">
+    <Value>End date:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.EndDate.Tooltip">
+    <Value>The end date for the search.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.OrderStatus">
+    <Value>Order status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.OrderStatus.Tooltip">
+    <Value>Search by a specific order status e.g. Complete.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.PaymentStatus">
+    <Value>Payment status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.PaymentStatus.Tooltip">
+    <Value>Search by a specific payment status e.g. Paid.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.ShippingStatus">
+    <Value>Shipping status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.ShippingStatus.Tooltip">
+    <Value>Search by a specific shipping status e.g. Not yet shipped.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.SearchButton">
+    <Value>View report</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.SearchButton.Tooltip">
+    <Value>View report based on the criteria below</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.CustomerColumn">
+    <Value>Customer</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.OrderTotalColumn">
+    <Value>Order total</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByNumberOfOrder.NumberOfOrdersColumn">
+    <Value>Number of orders</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.RegisteredCustomers.Title">
+    <Value>Registered customers</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.Media.ShowAdminProductImages">
     <Value>Show product images in admin area:</Value>
   </LocaleResource>

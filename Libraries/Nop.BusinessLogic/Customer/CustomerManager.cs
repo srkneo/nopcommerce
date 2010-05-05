@@ -26,8 +26,10 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
+using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates;
+using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common;
@@ -1769,6 +1771,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             byte[] data = new byte[size];
             provider.GetBytes(data);
             return Convert.ToBase64String(data);
+        }
+
+        /// <summary>
+        /// Get best customers
+        /// </summary>
+        /// <param name="startTime">Order start time; null to load all</param>
+        /// <param name="endTime">Order end time; null to load all</param>
+        /// <param name="os">Order status; null to load all records</param>
+        /// <param name="ps">Order payment status; null to load all records</param>
+        /// <param name="ss">Order shippment status; null to load all records</param>
+        /// <param name="orderBy">1 - order by order total, 2 - order by number of orders</param>
+        /// <returns>Report</returns>
+        public static IDataReader GetBestCustomersReport(DateTime? startTime,
+            DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps, 
+            ShippingStatusEnum? ss, int orderBy)
+        {
+            int? orderStatusId = null;
+            if (os.HasValue)
+                orderStatusId = (int)os.Value;
+
+            int? paymentStatusId = null;
+            if (ps.HasValue)
+                paymentStatusId = (int)ps.Value;
+
+            int? shippingStatusId = null;
+            if (ss.HasValue)
+                shippingStatusId = (int)ss.Value;
+
+            return DBProviderManager<DBCustomerProvider>.Provider.GetBestCustomersReport(startTime,
+                endTime, orderStatusId, paymentStatusId, 
+                shippingStatusId, orderBy);
         }
 
         /// <summary>
