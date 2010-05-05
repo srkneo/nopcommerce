@@ -1805,6 +1805,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         }
 
         /// <summary>
+        /// Get customer report by language
+        /// </summary>
+        /// <returns>Report</returns>
+        public static IDataReader GetCustomerReportByLanguage()
+        {
+            return DBProviderManager<DBCustomerProvider>.Provider.GetCustomerReportByLanguage();
+        }
+
+        /// <summary>
+        /// Get customer report by attribute key
+        /// </summary>
+        /// <param name="customerAttributeKey">Customer attribute key</param>
+        /// <returns>Report</returns>
+        public static IDataReader GetCustomerReportByAttributeKey(string customerAttributeKey)
+        {
+            if (String.IsNullOrEmpty(customerAttributeKey))
+                throw new ArgumentNullException("customerAttributeKey");
+
+            return DBProviderManager<DBCustomerProvider>.Provider.GetCustomerReportByAttributeKey(customerAttributeKey);
+        }
+
+        /// <summary>
         /// Deletes a customer attribute
         /// </summary>
         /// <param name="customerAttributeId">Customer attribute identifier</param>

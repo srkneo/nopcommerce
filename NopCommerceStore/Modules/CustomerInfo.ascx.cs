@@ -106,7 +106,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
             txtEmail.Text = customer.Email;
 
-            if (customer.Gender.ToLower() == "m")
+            if (String.IsNullOrEmpty(customer.Gender) || 
+                customer.Gender.ToLower() == "m")
                 rbGenderM.Checked = true;
             else
                 rbGenderF.Checked = true;

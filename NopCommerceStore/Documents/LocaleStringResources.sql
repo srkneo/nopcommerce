@@ -1097,6 +1097,51 @@ set @resources='
   <LocaleResource Name="Admin.ManufacturerProducts.Image">
     <Value>Image</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByLanguage.Title">
+    <Value>Language Distribution</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByLanguage.Tooltip">
+    <Value>Language distribution allows you to determine the general language your customers use on your shop.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByLanguage.LanguageColumn">
+    <Value>Language</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByLanguage.CustomerCountColumn">
+    <Value>Count</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Common.Unknown">
+    <Value>Unknown</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByGender.Title">
+    <Value>Gender Distribution</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByGender.Tooltip">
+    <Value>Gender distribution allows you to determine the percentage of men and women among your customers.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByGender.GenderColumn">
+    <Value>Gender</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByGender.CustomerCountColumn">
+    <Value>Count</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByGender.Male">
+    <Value>Male</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByGender.Female">
+    <Value>Female</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByCountry.Title">
+    <Value>Country Distribution</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByCountry.Tooltip">
+    <Value>Country distribution allows you to determine in which part of the world your customers are.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByCountry.CountryColumn">
+    <Value>Country</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CustomerReports.ByCountry.CustomerCountColumn">
+    <Value>Count</Value>
+  </LocaleResource>
 </Language>
 '
 

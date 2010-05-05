@@ -200,4 +200,73 @@
             <nopCommerce:CustomerStatistics runat="server" ID="ctrlCustomerStatistics" DisplayTitle="false" />
         </ContentTemplate>
     </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlByLanguage" HeaderText="<% $NopResources:Admin.CustomerReports.ByLanguage.Title %>">
+        <ContentTemplate>
+             <%=GetLocaleResourceString("Admin.CustomerReports.ByLanguage.Tooltip")%>
+             <br />
+             <br />
+             <asp:GridView ID="gvByLanguage" runat="server" AutoGenerateColumns="False" Width="100%">
+                <Columns>
+                    <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerReports.ByLanguage.LanguageColumn %>"
+                        ItemStyle-Width="75%">
+                        <ItemTemplate>
+                            <%#GetLanguageInfo(Convert.ToInt32(Eval("LanguageId")))%>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerReports.ByLanguage.CustomerCountColumn %>"
+                        ItemStyle-Width="25%">
+                        <ItemTemplate>
+                            <%#Eval("CustomerCount")%>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlByGender" HeaderText="<% $NopResources:Admin.CustomerReports.ByGender.Title %>">
+        <ContentTemplate>
+             <%=GetLocaleResourceString("Admin.CustomerReports.ByGender.Tooltip")%>
+             <br />
+             <br />
+             <asp:GridView ID="gvByGender" runat="server" AutoGenerateColumns="False" Width="100%">
+                <Columns>
+                    <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerReports.ByGender.GenderColumn %>"
+                        ItemStyle-Width="75%">
+                        <ItemTemplate>
+                            <%#GetGenderInfo(Eval("AttributeKey").ToString())%>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerReports.ByGender.CustomerCountColumn %>"
+                        ItemStyle-Width="25%">
+                        <ItemTemplate>
+                            <%#Eval("CustomerCount")%>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlByCountry" HeaderText="<% $NopResources:Admin.CustomerReports.ByCountry.Title %>">
+        <ContentTemplate>
+             <%=GetLocaleResourceString("Admin.CustomerReports.ByCountry.Tooltip")%>
+             <br />
+             <br />
+             <asp:GridView ID="gvByCountry" runat="server" AutoGenerateColumns="False" Width="100%">
+                <Columns>
+                    <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerReports.ByCountry.CountryColumn %>"
+                        ItemStyle-Width="75%">
+                        <ItemTemplate>
+                            <%#GetCountryInfo(Eval("AttributeKey").ToString())%>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerReports.ByCountry.CustomerCountColumn %>"
+                        ItemStyle-Width="25%">
+                        <ItemTemplate>
+                            <%#Eval("CustomerCount")%>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
 </ajaxToolkit:TabContainer>

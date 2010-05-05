@@ -56,7 +56,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 if (CustomerManager.FormFieldGenderEnabled)
                 {
-                    if (customer.Gender.ToLower() == "m")
+                    if (String.IsNullOrEmpty(customer.Gender) ||
+                        customer.Gender.ToLower() == "m")
                         rbGenderM.Checked = true;
                     else
                         rbGenderF.Checked = true;

@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -41,6 +42,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!Page.IsPostBack)
             {
                 FillDropDowns();
+                BindGridByLanguage();
+                BindGridByGender();
+                BindGridByCountry();
             }
         }
 
@@ -113,7 +117,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
             PaymentStatusCollection paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
             ShippingStatusCollection shippingStatuses = ShippingStatusManager.GetAllShippingStatuses();
-            
+
             //by order total
             this.ddlOrderStatusByOrderTotal.Items.Clear();
             ListItem itemOrderStatusByOrderTotal = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
@@ -184,6 +188,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.gvByNumberOfOrder.DataBind();
         }
 
+        protected void BindGridByLanguage()
+        {
+            this.gvByLanguage.DataSource = CustomerManager.GetCustomerReportByLanguage();
+            this.gvByLanguage.DataBind();
+        }
+
+        protected void BindGridByGender()
+        {
+            this.gvByGender.DataSource = CustomerManager.GetCustomerReportByAttributeKey("Gender");
+            this.gvByGender.DataBind();
+        }
+
+        protected void BindGridByCountry()
+        {
+            this.gvByCountry.DataSource = CustomerManager.GetCustomerReportByAttributeKey("CountryId");
+            this.gvByCountry.DataBind();
+        }
+
         protected string GetCustomerInfo(int customerId)
         {
             string customerInfo = string.Empty;
@@ -200,6 +222,69 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
             }
             return customerInfo;
+        }
+
+        protected string GetLanguageInfo(int languageId)
+        {
+            string languageInfo = string.Empty;
+            var language = LanguageManager.GetLanguageById(languageId);
+            if (language != null)
+            {
+                languageInfo = language.Name;
+            }
+            else
+            {
+                languageInfo = GetLocaleResourceString("Admin.Common.Unknown");
+            }
+            return Server.HtmlEncode(languageInfo);
+        }
+
+        protected string GetGenderInfo(string attributeKey)
+        {
+            string genderInfo = string.Empty;
+            switch (attributeKey.ToLowerInvariant())
+            {
+                case "m":
+                    genderInfo = GetLocaleResourceString("Admin.CustomerReports.ByGender.Male");
+                    break;
+                case "f":
+                    genderInfo = GetLocaleResourceString("Admin.CustomerReports.ByGender.Female");
+                    break;
+                default:
+                    genderInfo = GetLocaleResourceString("Admin.Common.Unknown");
+                    break;
+            }
+            return Server.HtmlEncode(genderInfo);
+        }
+
+        protected string GetCountryInfo(string attributeKey)
+        {
+            string countryInfo = string.Empty;
+            if (String.IsNullOrEmpty(attributeKey))
+            {
+                countryInfo = GetLocaleResourceString("Admin.Common.Unknown");
+            }
+            else
+            {
+                int countryId = 0;
+                if (int.TryParse(attributeKey, out countryId))
+                {
+                    var country = CountryManager.GetCountryById(countryId);
+                    if (country != null)
+                    {
+                        countryInfo = country.Name;
+                    }
+                    else
+                    {
+                        countryInfo = GetLocaleResourceString("Admin.Common.Unknown");
+                    }
+                }
+                else
+                {
+                    countryInfo = GetLocaleResourceString("Admin.Common.Unknown");
+                }
+            }
+            return Server.HtmlEncode(countryInfo);
         }
 
         protected void btnSearchByOrderTotal_Click(object sender, EventArgs e)

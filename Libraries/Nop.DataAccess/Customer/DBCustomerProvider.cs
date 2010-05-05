@@ -269,6 +269,19 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             int? shippingStatusId, int orderBy);
 
         /// <summary>
+        /// Get customer report by language
+        /// </summary>
+        /// <returns>Report</returns>
+        public abstract IDataReader GetCustomerReportByLanguage();
+
+        /// <summary>
+        /// Get customer report by attribute key
+        /// </summary>
+        /// <param name="customerAttributeKey">Customer attribute key</param>
+        /// <returns>Report</returns>
+        public abstract IDataReader GetCustomerReportByAttributeKey(string customerAttributeKey);
+
+        /// <summary>
         /// Deletes a customer attribute
         /// </summary>
         /// <param name="customerAttributeId">Customer attribute identifier</param>

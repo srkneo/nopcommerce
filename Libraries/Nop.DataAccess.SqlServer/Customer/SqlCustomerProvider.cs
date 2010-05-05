@@ -723,6 +723,31 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         }
 
         /// <summary>
+        /// Get customer report by language
+        /// </summary>
+        /// <returns>Report</returns>
+        public override IDataReader GetCustomerReportByLanguage()
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerReportByLanguage");
+            return db.ExecuteReader(dbCommand);
+        }
+
+        /// <summary>
+        /// Get customer report by attribute key
+        /// </summary>
+        /// <param name="customerAttributeKey">Customer attribute key</param>
+        /// <returns>Report</returns>
+        public override IDataReader GetCustomerReportByAttributeKey(string customerAttributeKey)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerReportByAttributeKey");
+            db.AddInParameter(dbCommand, "CustomerAttributeKey", DbType.String, customerAttributeKey);
+            return db.ExecuteReader(dbCommand);
+        }
+
+
+        /// <summary>
         /// Deletes a customer attribute
         /// </summary>
         /// <param name="customerAttributeId">Customer attribute identifier</param>

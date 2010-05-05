@@ -6649,3 +6649,79 @@ BEGIN
 
 END
 GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerReportByLanguage]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerReportByLanguage]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerReportByLanguage]
+AS
+BEGIN
+
+	SELECT c.LanguageId, COUNT(c.LanguageId) as CustomerCount
+	FROM [Nop_Customer] c
+	WHERE
+		c.Deleted = 0
+	GROUP BY c.LanguageId
+	ORDER BY CustomerCount desc
+
+END
+GO
+
+
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[NOP_getcustomerattributevalue]') AND xtype in (N'FN', N'IF', N'TF'))
+DROP FUNCTION [dbo].[NOP_getcustomerattributevalue]
+GO
+CREATE FUNCTION [dbo].[NOP_getcustomerattributevalue]
+(
+    @CustomerID int, 
+    @AttributeKey nvarchar(100)
+)
+RETURNS nvarchar(1000)
+AS
+BEGIN
+	
+	DECLARE @AttributeValue nvarchar(1000)
+	SET @AttributeValue = N''
+
+	IF (EXISTS (SELECT ca.[Value] FROM [Nop_CustomerAttribute] ca 
+				WHERE ca.CustomerID = @CustomerID AND
+					  ca.[Key] = @AttributeKey))
+	BEGIN
+		SELECT @AttributeValue = ca.[Value] FROM [Nop_CustomerAttribute] ca 
+				WHERE ca.CustomerID = @CustomerID AND
+					  ca.[Key] = @AttributeKey	
+	END
+	  
+	return @AttributeValue  
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerReportByAttributeKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerReportByAttributeKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerReportByAttributeKey]
+(
+	@CustomerAttributeKey nvarchar(100)
+)
+AS
+BEGIN
+
+	SELECT dbo.[NOP_getcustomerattributevalue] (c.CustomerId, @CustomerAttributeKey) as AttributeKey, 
+		   Count(c.CustomerId) as CustomerCount
+FROM [Nop_Customer] c
+WHERE
+	c.Deleted = 0
+GROUP BY dbo.[NOP_getcustomerattributevalue] (c.CustomerId, @CustomerAttributeKey)
+ORDER BY CustomerCount desc
+
+END
+GO
+
