@@ -314,7 +314,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     break;
                 }
             }
-            gvOrderProductVariants.Columns[2].Visible = hasDownloadableItems;
+            gvOrderProductVariants.Columns[1].Visible = hasDownloadableItems;
 
             this.gvOrderProductVariants.DataSource = orderProductVariants;
             this.gvOrderProductVariants.DataBind();

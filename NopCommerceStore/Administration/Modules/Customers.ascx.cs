@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 SetDefaultValues();
                 phUsername.Visible = CustomerManager.UsernamesEnabled;
-                gvCustomers.Columns[3].Visible = CustomerManager.UsernamesEnabled;
+                gvCustomers.Columns[2].Visible = CustomerManager.UsernamesEnabled;
             }
         }
 
