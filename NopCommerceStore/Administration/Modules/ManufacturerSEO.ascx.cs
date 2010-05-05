@@ -68,11 +68,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected override void OnPreRender(EventArgs e)
         {
-            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
-            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
-
-            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
-            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
+            BindJQuery();
+            BindJQueryIdTabs();
 
             base.OnPreRender(e);
         }

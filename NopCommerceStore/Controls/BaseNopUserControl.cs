@@ -26,6 +26,7 @@ using System.Xml.Linq;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.Web
 {
@@ -34,6 +35,12 @@ namespace NopSolutions.NopCommerce.Web
         public BaseNopUserControl()
         {
 
+        }
+
+        protected virtual void BindJQuery()
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
         }
 
         protected string GetLocaleResourceString(string ResourceName)

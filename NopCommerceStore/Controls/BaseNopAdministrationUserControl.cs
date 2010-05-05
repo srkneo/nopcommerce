@@ -30,6 +30,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.Web
 {
@@ -38,6 +39,18 @@ namespace NopSolutions.NopCommerce.Web
         public BaseNopAdministrationUserControl()
         {
 
+        }
+
+        protected virtual void BindJQuery()
+        {
+            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+        }
+
+        protected virtual void BindJQueryIdTabs()
+        {
+            string jqueryTabs = CommonHelper.GetStoreLocation() + "Scripts/jquery.idTabs.min.js";
+            Page.ClientScript.RegisterClientScriptInclude(jqueryTabs, jqueryTabs);
         }
 
         protected void SelectTab(TabContainer tabContainer, string tabId)

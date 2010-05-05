@@ -12,10 +12,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #region Handlers
         protected override void OnPreRender(EventArgs e)
         {
-            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
-            string supreFishMenu = CommonHelper.GetStoreLocation() + "Scripts/jquery.superfishmenu.js";
-            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
-            Page.ClientScript.RegisterClientScriptInclude(supreFishMenu, supreFishMenu);
+            BindJQuery();
+
+            string superFishMenu = CommonHelper.GetStoreLocation() + "Scripts/jquery.superfishmenu.js";
+            Page.ClientScript.RegisterClientScriptInclude(superFishMenu, superFishMenu);
             Page.ClientScript.RegisterClientScriptBlock(GetType(), String.Format("{0}_sfmenu", ClientID), String.Format("$(document).ready(function(){{$('#{0}').superfish({{autoArrows:false,speed:'fast',delay:200}});}});", ClientID), true); 
         }
 

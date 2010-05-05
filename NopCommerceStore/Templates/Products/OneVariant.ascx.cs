@@ -180,8 +180,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
                 ProductsTabs.ActiveTab = pnlProductReviews;
             }
 
-            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
-            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+            BindJQuery();
 
             string slimBox = CommonHelper.GetStoreLocation() + "Scripts/slimbox2.js";
             Page.ClientScript.RegisterClientScriptInclude(slimBox, slimBox);

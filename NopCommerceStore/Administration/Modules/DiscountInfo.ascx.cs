@@ -268,8 +268,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected override void OnPreRender(EventArgs e)
         {
-            string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
-            Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+            BindJQuery();
 
             this.cbUsePercentage.Attributes.Add("onclick", "toggleUsePercentage();");
             this.cbRequiresCouponCode.Attributes.Add("onclick", "toggleRequiresCouponCode();");
