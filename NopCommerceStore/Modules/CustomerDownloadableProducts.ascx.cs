@@ -131,6 +131,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 result = string.Format("<a class=\"link\" href=\"{0}\" >{1}</a>", DownloadManager.GetDownloadUrl(orderProductVariant), GetLocaleResourceString("Account.DownloadableProducts.Download"));
             }
+            else
+            {
+                result = GetLocaleResourceString("Account.DownloadableProducts.ProductsGrid.Download.na");
+            }
             return result;
         }
 

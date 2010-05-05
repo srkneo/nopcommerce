@@ -935,6 +935,12 @@ set @resources='
   <LocaleResource Name="Admin.Products.Delete">
     <Value>Delete</Value>
   </LocaleResource>
+  <LocaleResource Name="Account.DownloadableProducts.ProductsGrid.Download.na">
+    <Value>n/a</Value>
+  </LocaleResource>
+  <LocaleResource Name="Order.ProductsGrid.Download.na">
+    <Value>n/a</Value>
+  </LocaleResource>
 </Language>
 '
 

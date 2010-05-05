@@ -48,6 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #endregion
 
         #region Utilities
+
         protected void BindData()
         {
             this.lnkPrint.NavigateUrl = Page.ResolveUrl("~/PrintOrderDetails.aspx?OrderID=" + this.OrderId).ToLowerInvariant();
@@ -227,13 +228,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
             bool hasDownloadableItems = false;
             foreach (var orderProductVariant in orderProductVariants)
             {
-                if (OrderManager.IsDownloadAllowed(orderProductVariant))
+                var productVariant = orderProductVariant.ProductVariant;
+                if (productVariant != null && productVariant.IsDownload)
                 {
                     hasDownloadableItems = true;
                     break;
                 }
             }
-            gvOrderProductVariants.Columns[2].Visible = hasDownloadableItems && !this.IsInvoice;
+            gvOrderProductVariants.Columns[1].Visible = hasDownloadableItems && !this.IsInvoice;
             gvOrderProductVariants.DataSource = orderProductVariants;
             gvOrderProductVariants.DataBind();
 
@@ -252,6 +254,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 pnlOrderNotes.Visible = false;
             }
         }
+
         #endregion
 
         #region Handlers
@@ -350,6 +353,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (OrderManager.IsDownloadAllowed(orderProductVariant))
             {
                 result = string.Format("<a class=\"link\" href=\"{0}\" >{1}</a>", DownloadManager.GetDownloadUrl(orderProductVariant), GetLocaleResourceString("Order.Download"));
+            }
+            else
+            {
+                result = GetLocaleResourceString("Order.ProductsGrid.Download.na");
             }
             return result;
         }
