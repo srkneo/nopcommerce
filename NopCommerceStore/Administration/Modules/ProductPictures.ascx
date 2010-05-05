@@ -3,6 +3,25 @@
 <%@ Register TagPrefix="nopCommerce" TagName="NumericTextBox" Src="NumericTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
+
+<script type="text/javascript">
+    function showUploadPanels() {
+        if ($('#upl20').is(':hidden')) {
+            $('#upl20').show();
+            $('#upl21').show();
+            $('#upl22').show();
+        }
+        else if ($('#upl30').is(':hidden')) {
+            $('#upl30').show();
+            $('#upl31').show();
+            $('#upl32').show();
+        }
+        else {
+            $('#<%=btnMoreUploads.ClientID %>').attr("disabled", "disabled");
+        }
+    }
+</script>
+
 <asp:Panel runat="server" ID="pnlData">
     <asp:GridView ID="gvwImages" runat="server" AutoGenerateColumns="false" DataKeyNames="ProductPictureId"
         OnRowDeleting="gvwImages_RowDeleting" OnRowDataBound="gvwImages_RowDataBound"
@@ -48,22 +67,80 @@
     <table class="adminContent">
         <tr>
             <td class="adminTitle">
-                <nopCommerce:ToolTipLabel runat="server" ID="lblSelectPicture" Text="<% $NopResources:Admin.ProductPictures.SelectPicture %>"
+                <nopCommerce:ToolTipLabel runat="server" ID="lblSelectPicture1" Text="<% $NopResources:Admin.ProductPictures.SelectPicture %>"
                     ToolTip="<% $NopResources:Admin.ProductPictures.SelectPicture.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
             </td>
             <td class="adminData">
-                <asp:FileUpload class="text" ID="fuProductPicture" CssClass="adminInput" runat="server"
+                <asp:FileUpload class="text" ID="fuProductPicture1" CssClass="adminInput" runat="server"
                     ToolTip="<% $NopResources:Admin.ProductPictures.FileUpload %>" />
             </td>
         </tr>
         <tr>
             <td class="adminTitle">
-                <nopCommerce:ToolTipLabel runat="server" ID="lblProductDisplayOrder" Text="<% $NopResources:Admin.ProductPictures.New.DisplayOrder %>"
+                <nopCommerce:ToolTipLabel runat="server" ID="lblProductDisplayOrder1" Text="<% $NopResources:Admin.ProductPictures.New.DisplayOrder %>"
                     ToolTip="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.Tooltip %>"
                     ToolTipImage="~/Administration/Common/ico-help.gif" />
             </td>
             <td class="adminData">
-                <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtProductPictureDisplayOrder"
+                <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtProductPictureDisplayOrder1"
+                    Value="1" RequiredErrorMessage="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.RequiredErrorMessage %>"
+                    RangeErrorMessage="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.RangeErrorMessage %>"
+                    MinimumValue="-99999" MaximumValue="99999" ValidationGroup="UploadNewProductPicture">
+                </nopCommerce:NumericTextBox>
+            </td>
+        </tr>
+        <tr id="upl20" style="display: none;">
+            <td colspan="2">
+                <br />
+            </td>
+        </tr>
+        <tr id="upl21" style="display: none;">
+            <td class="adminTitle">
+                <nopCommerce:ToolTipLabel runat="server" ID="lblSelectPicture2" Text="<% $NopResources:Admin.ProductPictures.SelectPicture %>"
+                    ToolTip="<% $NopResources:Admin.ProductPictures.SelectPicture.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+            </td>
+            <td class="adminData">
+                <asp:FileUpload class="text" ID="fuProductPicture2" CssClass="adminInput" runat="server"
+                    ToolTip="<% $NopResources:Admin.ProductPictures.FileUpload %>" />
+            </td>
+        </tr>
+        <tr id="upl22" style="display: none;">
+            <td class="adminTitle">
+                <nopCommerce:ToolTipLabel runat="server" ID="lblProductDisplayOrder2" Text="<% $NopResources:Admin.ProductPictures.New.DisplayOrder %>"
+                    ToolTip="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.Tooltip %>"
+                    ToolTipImage="~/Administration/Common/ico-help.gif" />
+            </td>
+            <td class="adminData">
+                <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtProductPictureDisplayOrder2"
+                    Value="1" RequiredErrorMessage="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.RequiredErrorMessage %>"
+                    RangeErrorMessage="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.RangeErrorMessage %>"
+                    MinimumValue="-99999" MaximumValue="99999" ValidationGroup="UploadNewProductPicture">
+                </nopCommerce:NumericTextBox>
+            </td>
+        </tr>
+        <tr id="upl30" style="display: none;">
+            <td colspan="2">
+                <br />
+            </td>
+        </tr>
+        <tr id="upl31" style="display: none;">
+            <td class="adminTitle">
+                <nopCommerce:ToolTipLabel runat="server" ID="lblSelectPicture3" Text="<% $NopResources:Admin.ProductPictures.SelectPicture %>"
+                    ToolTip="<% $NopResources:Admin.ProductPictures.SelectPicture.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+            </td>
+            <td class="adminData">
+                <asp:FileUpload class="text" ID="fuProductPicture3" CssClass="adminInput" runat="server"
+                    ToolTip="<% $NopResources:Admin.ProductPictures.FileUpload %>" />
+            </td>
+        </tr>
+        <tr id="upl32" style="display: none;">
+            <td class="adminTitle">
+                <nopCommerce:ToolTipLabel runat="server" ID="lblProductDisplayOrder3" Text="<% $NopResources:Admin.ProductPictures.New.DisplayOrder %>"
+                    ToolTip="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.Tooltip %>"
+                    ToolTipImage="~/Administration/Common/ico-help.gif" />
+            </td>
+            <td class="adminData">
+                <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtProductPictureDisplayOrder3"
                     Value="1" RequiredErrorMessage="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.RequiredErrorMessage %>"
                     RangeErrorMessage="<% $NopResources:Admin.ProductPictures.New.DisplayOrder.RangeErrorMessage %>"
                     MinimumValue="-99999" MaximumValue="99999" ValidationGroup="UploadNewProductPicture">
@@ -72,6 +149,7 @@
         </tr>
         <tr>
             <td colspan="2" align="left">
+                <asp:Button runat="server" ID="btnMoreUploads" CssClass="adminButton" Text="+" />
                 <asp:Button runat="server" ID="btnUploadProductPicture" CssClass="adminButton" Text="<% $NopResources:Admin.ProductPictures.UploadButton.Text %>"
                     ValidationGroup="UploadNewProductPicture" OnClick="btnUploadProductPicture_Click"
                     ToolTip="<% $NopResources:Admin.ProductPictures.UploadButton.Tooltip %>" />

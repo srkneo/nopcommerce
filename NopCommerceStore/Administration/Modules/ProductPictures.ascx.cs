@@ -78,20 +78,32 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             try
             {
                 Product product = ProductManager.GetProductById(this.ProductId);
-                if (product != null)
+                if(product != null)
                 {
-                    Picture picture = null;
-                    HttpPostedFile productPictureFile = fuProductPicture.PostedFile;
-                    if ((productPictureFile != null) && (!String.IsNullOrEmpty(productPictureFile.FileName)))
+                    if(fuProductPicture1.HasFile)
                     {
-                        byte[] productPictureBinary = PictureManager.GetPictureBits(productPictureFile.InputStream, productPictureFile.ContentLength);
-                        picture = PictureManager.InsertPicture(productPictureBinary, productPictureFile.ContentType, true);
+                        Picture picture = PictureManager.InsertPicture(fuProductPicture1.FileBytes, fuProductPicture1.PostedFile.ContentType, true);
+                        if(picture != null)
+                        {
+                            ProductPicture productPicture = ProductManager.InsertProductPicture(product.ProductId, picture.PictureId, txtProductPictureDisplayOrder1.Value);
+                        }
                     }
-                    if (picture != null)
+                    if(fuProductPicture2.HasFile)
                     {
-                        ProductPicture productPicture = ProductManager.InsertProductPicture(product.ProductId, picture.PictureId, txtProductPictureDisplayOrder.Value);
+                        Picture picture = PictureManager.InsertPicture(fuProductPicture2.FileBytes, fuProductPicture2.PostedFile.ContentType, true);
+                        if(picture != null)
+                        {
+                            ProductPicture productPicture = ProductManager.InsertProductPicture(product.ProductId, picture.PictureId, txtProductPictureDisplayOrder2.Value);
+                        }
                     }
-
+                    if(fuProductPicture3.HasFile)
+                    {
+                        Picture picture = PictureManager.InsertPicture(fuProductPicture3.FileBytes, fuProductPicture3.PostedFile.ContentType, true);
+                        if(picture != null)
+                        {
+                            ProductPicture productPicture = ProductManager.InsertProductPicture(product.ProductId, picture.PictureId, txtProductPictureDisplayOrder3.Value);
+                        }
+                    }
                     BindData();
                 }
             }
@@ -147,6 +159,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 ProductManager.DeleteProductPicture(productPicture.ProductPictureId);
                 BindData();
             }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            BindJQuery();
+
+            this.btnMoreUploads.Attributes["onclick"] = "showUploadPanels(); return false;";
         }
 
         public int ProductId
