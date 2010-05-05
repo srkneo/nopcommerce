@@ -51,6 +51,16 @@
             </asp:DropDownList>
         </td>
     </tr>
+    <tr>
+        <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblBillingCountryTitle" Text="<% $NopResources:Admin.SalesReport.BillingCountry %>"
+                ToolTip="<% $NopResources:Admin.SalesReport.BillingCountry.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <asp:DropDownList ID="ddlBillingCountry" runat="server">
+            </asp:DropDownList>
+        </td>
+    </tr>
 </table>
 <p>
 </p>

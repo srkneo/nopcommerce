@@ -396,11 +396,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// </summary>
         /// <param name="startTime">Order start time; null to load all</param>
         /// <param name="endTime">Order end time; null to load all</param>
-        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
-        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all records</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all records</param>
+        /// <param name="billingCountryId">Billing country identifier; null to load all records</param>
         /// <returns>Result</returns>
         public override IDataReader OrderProductVariantReport(DateTime? startTime,
-            DateTime? endTime, int? orderStatusId, int? paymentStatusId)
+            DateTime? endTime, int? orderStatusId, int? paymentStatusId,
+            int? billingCountryId)
         {
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantReport");
@@ -420,6 +422,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
                 db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, paymentStatusId.Value);
             else
                 db.AddInParameter(dbCommand, "PaymentStatusID", DbType.Int32, null);
+            if (billingCountryId.HasValue)
+                db.AddInParameter(dbCommand, "BillingCountryId", DbType.Int32, billingCountryId.Value);
+            else
+                db.AddInParameter(dbCommand, "BillingCountryId", DbType.Int32, null); 
             return db.ExecuteReader(dbCommand);
         }
 

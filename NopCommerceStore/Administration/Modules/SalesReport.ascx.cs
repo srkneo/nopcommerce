@@ -30,6 +30,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -45,6 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void FillDropDowns()
         {
+            //order statuses
             this.ddlOrderStatus.Items.Clear();
             ListItem itemOrderStatus = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlOrderStatus.Items.Add(itemOrderStatus);
@@ -55,6 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.ddlOrderStatus.Items.Add(item2);
             }
 
+            //payment statuses
             this.ddlPaymentStatus.Items.Clear();
             ListItem itemPaymentStatus = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlPaymentStatus.Items.Add(itemPaymentStatus);
@@ -64,17 +67,28 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 ListItem item2 = new ListItem(PaymentStatusManager.GetPaymentStatusName(paymentStatus.PaymentStatusId), paymentStatus.PaymentStatusId.ToString());
                 this.ddlPaymentStatus.Items.Add(item2);
             }
+
+            //countries
+            ddlBillingCountry.Items.Clear();
+            ListItem itemBillingCountry = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
+            this.ddlBillingCountry.Items.Add(itemBillingCountry);
+            var countries = CountryManager.GetAllCountriesForBilling();
+            foreach (var country in countries)
+            {
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
+                ddlBillingCountry.Items.Add(ddlCountryItem2);
+            }
         }
 
         protected void BindGrid()
         {
             DateTime? startDate = ctrlStartDatePicker.SelectedDate;
             DateTime? endDate = ctrlEndDatePicker.SelectedDate;
-            if(startDate.HasValue)
+            if (startDate.HasValue)
             {
                 startDate = DateTimeHelper.ConvertToUtcTime(startDate.Value, DateTimeHelper.CurrentTimeZone);
             }
-            if(endDate.HasValue)
+            if (endDate.HasValue)
             {
                 endDate = DateTimeHelper.ConvertToUtcTime(endDate.Value, DateTimeHelper.CurrentTimeZone).AddDays(1);
             }
@@ -89,7 +103,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (paymentStatusId > 0)
                 paymentStatus = (PaymentStatusEnum)Enum.ToObject(typeof(PaymentStatusEnum), paymentStatusId);
 
-            gvOrders.DataSource = OrderManager.OrderProductVariantReport(startDate, endDate, orderStatus, paymentStatus);
+            int billingCountryID = int.Parse(ddlBillingCountry.SelectedItem.Value);
+            gvOrders.DataSource = OrderManager.OrderProductVariantReport(startDate, 
+                endDate, orderStatus, paymentStatus, billingCountryID);
             gvOrders.DataBind();
         }
 

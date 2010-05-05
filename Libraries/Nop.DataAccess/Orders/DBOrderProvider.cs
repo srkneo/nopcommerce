@@ -638,11 +638,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// </summary>
         /// <param name="startTime">Order start time; null to load all</param>
         /// <param name="endTime">Order end time; null to load all</param>
-        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
-        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
+        /// <param name="orderStatusId">Order status identifier; null to load all records</param>
+        /// <param name="paymentStatusId">Order payment status identifier; null to load all records</param>
+        /// <param name="billingCountryId">Billing country identifier; null to load all records</param>
         /// <returns>Result</returns>
         public abstract IDataReader OrderProductVariantReport(DateTime? startTime,
-            DateTime? endTime, int? orderStatusId, int? paymentStatusId);
+            DateTime? endTime, int? orderStatusId, int? paymentStatusId,
+            int? billingCountryId);
 
         /// <summary>
         /// Get the bests sellers report

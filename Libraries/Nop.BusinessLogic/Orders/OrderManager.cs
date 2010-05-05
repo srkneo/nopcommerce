@@ -1846,11 +1846,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="startTime">Order start time; null to load all</param>
         /// <param name="endTime">Order end time; null to load all</param>
-        /// <param name="os">Order status; null to load all orders</param>
-        /// <param name="ps">Order payment status; null to load all orders</param>
+        /// <param name="os">Order status; null to load all records</param>
+        /// <param name="ps">Order payment status; null to load all records</param>
+        /// <param name="billingCountryId">Billing country identifier; null to load all records</param>
         /// <returns>Result</returns>
-        public static IDataReader OrderProductVariantReport(DateTime? startTime, 
-            DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps)
+        public static IDataReader OrderProductVariantReport(DateTime? startTime,
+            DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps,
+            int? billingCountryId)
         {
             int? orderStatusId = null;
             if (os.HasValue)
@@ -1861,7 +1863,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 paymentStatusId = (int)ps.Value;
 
             return DBProviderManager<DBOrderProvider>.Provider.OrderProductVariantReport(startTime,
-                endTime, orderStatusId, paymentStatusId);
+                endTime, orderStatusId, paymentStatusId, billingCountryId);
         }
 
         /// <summary>

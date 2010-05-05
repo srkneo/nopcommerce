@@ -1142,6 +1142,12 @@ set @resources='
   <LocaleResource Name="Admin.CustomerReports.ByCountry.CustomerCountColumn">
     <Value>Count</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.SalesReport.BillingCountry">
+    <Value>Billing country:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.SalesReport.BillingCountry.Tooltip">
+    <Value>The customer''s billing country.</Value>
+  </LocaleResource>
 </Language>
 '
 
