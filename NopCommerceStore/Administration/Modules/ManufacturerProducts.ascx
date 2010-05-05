@@ -33,6 +33,11 @@
                                     <asp:HiddenField ID="hfProductManufacturerId" runat="server" Value='<%# Eval("ProductManufacturerId") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="<% $NopResources:Admin.ManufacturerProducts.Image %>">
+                                <ItemTemplate>
+                                    <asp:Image runat="server" ID="imgProduct" ImageUrl='<%# Eval("ProductImage") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="<% $NopResources:Admin.ManufacturerProducts.View %>"
                                 HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="13%" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>

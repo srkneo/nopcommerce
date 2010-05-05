@@ -61,6 +61,11 @@
                 <asp:HiddenField ID="hfProductId" runat="server" Value='<%# Eval("ProductId") %>' />
             </ItemTemplate>
         </asp:TemplateField>
+        <asp:TemplateField HeaderText="<% $NopResources:Admin.AddManufacturerProduct.Image %>">
+            <ItemTemplate>
+                <asp:Image runat="server" ID="imgProduct" ImageUrl='<%#GetProductImageUrl((Product)Container.DataItem)%>' />
+            </ItemTemplate>
+        </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.AddManufacturerProduct.PublishedColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>

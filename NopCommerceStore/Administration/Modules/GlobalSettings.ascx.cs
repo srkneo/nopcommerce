@@ -100,6 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbShowCartImages.Checked = SettingManager.GetSettingValueBoolean("Display.ShowProductImagesOnShoppingCart");
             cbShowWishListImages.Checked = SettingManager.GetSettingValueBoolean("Display.ShowProductImagesOnWishList");
             txtShoppingCartThumbSize.Value = SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize");
+            cbShowAdminProductImages.Checked = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
 
             txtAdminEmailAddress.Text = MessageManager.AdminEmailAddress;
             txtAdminEmailDisplayName.Text = MessageManager.AdminEmailDisplayName;
@@ -311,7 +312,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParam("Display.ShowProductImagesOnShoppingCart", cbShowCartImages.Checked.ToString());
                     SettingManager.SetParam("Display.ShowProductImagesOnWishList", cbShowWishListImages.Checked.ToString());
                     SettingManager.SetParam("Media.ShoppingCart.ThumbnailImageSize", txtShoppingCartThumbSize.Value.ToString());
-
+                    SettingManager.SetParam("Display.ShowAdminProductImages", cbShowAdminProductImages.Checked.ToString());
 
                     MessageManager.AdminEmailAddress = txtAdminEmailAddress.Text;
                     MessageManager.AdminEmailDisplayName = txtAdminEmailDisplayName.Text;

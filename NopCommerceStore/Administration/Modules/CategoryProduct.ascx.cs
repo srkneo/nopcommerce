@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Web.Administration.Modules;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
  
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
@@ -45,6 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 ProductCategoryCollection existingProductCategoryCollection = category.ProductCategories;
                 List<ProductCategoryMappingHelperClass> productCategoryMappings = GetProductCategoryMappings(existingProductCategoryCollection);
+                gvProductCategoryMappings.Columns[1].Visible = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
                 gvProductCategoryMappings.DataSource = productCategoryMappings;
                 gvProductCategoryMappings.DataBind();
             }
@@ -109,6 +111,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     ProductCategoryMappingHelperClass pcmhc = new ProductCategoryMappingHelperClass();
                     pcmhc.ProductCategoryId = pc.ProductCategoryId;
                     pcmhc.ProductId = pc.ProductId;
+                    pcmhc.ProductImage = GetProductImageUrl(product);
                     pcmhc.ProductInfo = product.Name;
                     pcmhc.IsMapped = true;
                     pcmhc.IsFeatured = pc.IsFeaturedProduct;
@@ -120,11 +123,25 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return result;
         }
 
+        public string GetProductImageUrl(Product product)
+        {
+            ProductPictureCollection productPictures = product.ProductPictures;
+            if(productPictures.Count > 0)
+            {
+                return PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
+            }
+            else
+            {
+                return PictureManager.GetDefaultPictureUrl(SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
+            }
+        }
+
         [Serializable]
         private class ProductCategoryMappingHelperClass
         {
             public int ProductCategoryId { get; set; }
             public int ProductId { get; set; }
+            public string ProductImage { get; set; }
             public string ProductInfo { get; set; }
             public bool IsMapped { get; set; }
             public bool IsFeatured { get; set; }

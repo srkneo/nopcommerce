@@ -950,6 +950,33 @@ set @resources='
   <LocaleResource Name="Admin.GiftCardInfo.NotifyRecipientButton">
     <Value>Notify Recipient</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Media.ShowAdminProductImages">
+    <Value>Show product images in admin area:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Media.ShowAdminProductImages.Tooltip">
+    <Value>Check if you want to see the product images in admin area.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Products.Image">
+    <Value>Image</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.AddCategoryProduct.Image">
+    <Value>Image</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.AddManufacturerProduct.Image">
+    <Value>Image</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.AddRelatedProduct.Image">
+    <Value>Image</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.CategoryProducts.Image">
+    <Value>Image</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.RelatedProducts.Image">
+    <Value>Image</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ManufacturerProducts.Image">
+    <Value>Image</Value>
+  </LocaleResource>
 </Language>
 '
 

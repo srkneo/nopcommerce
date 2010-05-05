@@ -503,6 +503,16 @@
                     <tr>
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblShowAdminProductImages" Text="<% $NopResources:Admin.GlobalSettings.Media.ShowAdminProductImages %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Media.ShowAdminProductImages.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbShowAdminProductImages" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
                                 ID="lblShoppingCartThumbnailSize" Text="<% $NopResources:Admin.GlobalSettings.Media.CartThumbSize %>"
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.Media.CartThumbSize.Tooltip %>" />
                         </td>

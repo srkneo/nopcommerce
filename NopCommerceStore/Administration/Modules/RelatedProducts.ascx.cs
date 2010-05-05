@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Web.Administration.Modules;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -46,6 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 RelatedProductCollection existingRelatedProductCollection = product.RelatedProducts;
                 List<RelatedProductHelperClass> relatedProducts = GetRelatedProducts(existingRelatedProductCollection);
+                gvRelatedProducts.Columns[1].Visible = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
                 gvRelatedProducts.DataSource = relatedProducts;
                 gvRelatedProducts.DataBind();
             }
@@ -68,6 +70,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     rphc.RelatedProductId = relatedProduct.RelatedProductId;
                     rphc.ProductId2 = product.ProductId;
                     rphc.ProductInfo2 = product.Name;
+                    rphc.ProductImage = GetProductImageUrl(product);
                     rphc.IsMapped = true;
                     rphc.DisplayOrder = relatedProduct.DisplayOrder;
                     result.Add(rphc);
@@ -77,12 +80,26 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return result;
         }
 
+        public string GetProductImageUrl(Product product)
+        {
+            ProductPictureCollection productPictures = product.ProductPictures;
+            if(productPictures.Count > 0)
+            {
+                return PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
+            }
+            else
+            {
+                return PictureManager.GetDefaultPictureUrl(SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
+            }
+        }
+
         [Serializable]
         private class RelatedProductHelperClass
         {
             public int RelatedProductId { get; set; }
             public int ProductId2 { get; set; }
             public string ProductInfo2 { get; set; }
+            public string ProductImage { get; set; }
             public bool IsMapped { get; set; }
             public int DisplayOrder { get; set; }
         }
