@@ -32,9 +32,9 @@
                 RepeatLayout="Table" OnItemDataBound="DlManufacturers_OnItemDataBound" ItemStyle-CssClass="item-box">
                 <ItemTemplate>
                     <div class="manufacturer-item">
-                        <div class="man-title">
+                        <h2 class="man-title">
                             <asp:HyperLink ID="hlManufacturer" runat="server" />
-                        </div>
+                        </h2>
                         <div class="picture">
                             <asp:HyperLink ID="hlImageLink" runat="server" />
                         </div>

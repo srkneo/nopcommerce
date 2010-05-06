@@ -1702,6 +1702,7 @@ textarea
 	margin-top: 5px;
 	text-align: center;
 	font-weight: bold;
+	font-size:12px;
 }
 
 .home-page-product-grid .product-item .picture
@@ -1793,6 +1794,7 @@ textarea
 	margin-top: 5px;
 	text-align: center;
 	font-weight: bold;
+	font-size:12px;
 }
 
 .bestsellers .product-item .picture
@@ -1833,6 +1835,7 @@ textarea
 .product-grid .product-item .product-title
 {
 	font-weight: bold;
+	font-size: 12px;
 	background: url('images/deal_box_hl.gif') no-repeat 0 0;
 	padding-left: 10px;
 }
@@ -1933,6 +1936,7 @@ textarea
 .product-list1 .product-item .product-title
 {
 	font-weight: bold;
+	font-size: 12px;
 	background: url('images/deal_box_hl.gif') no-repeat 0 0;
 	padding-left: 10px;
 }
@@ -2047,6 +2051,7 @@ textarea
 .featured-product-grid .product-item .product-title
 {
 	font-weight: bold;
+	font-size:12px;
 	background: url('images/deal_box_hl.gif') no-repeat 0 0;
 	padding: 0 0 0 10px;
 	text-transform: none;
@@ -4601,6 +4606,7 @@ textarea
 .forumtopic .title .topicname
 {
 	float: left;
+	font-size: 12px;
 }
 
 .forumtopic .title .manage

@@ -30,9 +30,9 @@
             RepeatLayout="Table" OnItemDataBound="dlSubCategories_ItemDataBound" ItemStyle-CssClass="item-box">
             <ItemTemplate>
                 <div class="sub-category-item">
-                    <div class="category-title">
+                    <h2 class="category-title">
                         <asp:HyperLink ID="hlCategory" runat="server" />
-                    </div>
+                    </h2>
                     <div class="picture">
                         <asp:HyperLink ID="hlImageLink" runat="server" />
                     </div>

@@ -1,9 +1,9 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.ProductBox2Control"
     CodeBehind="ProductBox2.ascx.cs" %>
 <div class="product-item">
-    <div class="product-title">
+    <h2 class="product-title">
         <asp:HyperLink ID="hlProduct" runat="server" />
-    </div>
+    </h2>
     <div class="picture">
         <asp:HyperLink ID="hlImageLink" runat="server" />
     </div>

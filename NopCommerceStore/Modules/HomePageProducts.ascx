@@ -10,9 +10,8 @@
         RepeatLayout="Table" OnItemDataBound="dlRelatedProducts_ItemDataBound" ItemStyle-CssClass="item-box">
         <ItemTemplate>
             <div class="product-item">
-                <div class="product-title">
-                    <asp:HyperLink ID="hlProduct" runat="server" />
-                </div>
+                <h2 class="product-title">
+                    <asp:HyperLink ID="hlProduct" runat="server" /></h2>
                 <div class="picture">
                     <asp:HyperLink ID="hlImageLink" runat="server" />
                 </div>

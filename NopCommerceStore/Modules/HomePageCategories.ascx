@@ -5,9 +5,9 @@
         RepeatLayout="Table" OnItemDataBound="dlCategories_ItemDataBound" ItemStyle-CssClass="item-box">
         <ItemTemplate>
             <div class="category-item">
-                <div class="title">
+                <h2 class="title">
                     <asp:HyperLink ID="hlCategory" runat="server" Text='<%#Server.HtmlEncode(Eval("Name").ToString()) %>' />
-                </div>
+                    </h2>
                 <div class="picture">
                     <asp:HyperLink ID="hlImageLink" runat="server" />
                 </div>

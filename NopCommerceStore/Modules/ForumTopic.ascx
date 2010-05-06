@@ -5,7 +5,7 @@
 <div class="forumtopic">
     <nopCommerce:ForumBreadcrumb ID="ctrlForumBreadcrumb" runat="server" />
     <div class="title">
-        <asp:Label ID="lblTopicSubject" runat="server" CssClass="topicname" />
+        <h2 class="topicname"><asp:Label ID="lblTopicSubject" runat="server" /></h2>
         <div class="manage">
             <asp:LinkButton runat="server" ID="btnEdit" Text="<% $NopResources:Forum.EditTopic %>"
                 OnClick="btnEdit_Click" CssClass="edittopiclinkbutton" />
