@@ -35,5 +35,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// Shipped
         /// </summary>
         Shipped = 30,
+        /// <summary>
+        /// Delivered
+        /// </summary>
+        Delivered = 40,
     }
 }

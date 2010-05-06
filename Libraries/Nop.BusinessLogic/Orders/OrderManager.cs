@@ -159,6 +159,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.ShippingMethod = dbItem.ShippingMethod;
             item.ShippingRateComputationMethodId = dbItem.ShippingRateComputationMethodId;
             item.ShippedDate = dbItem.ShippedDate;
+            item.DeliveryDate = dbItem.DeliveryDate;
             item.TrackingNumber = dbItem.TrackingNumber;
             item.Deleted = dbItem.Deleted;
             item.CreatedOn = dbItem.CreatedOn;
@@ -567,6 +568,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.ShippingMethod,
                     order.ShippingRateComputationMethodId, 
                     order.ShippedDate,
+                    order.DeliveryDate,
                     order.TrackingNumber, 
                     order.Deleted,
                     order.CreatedOn);
@@ -637,7 +639,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (order.OrderStatus == OrderStatusEnum.Pending)
             {
-                if (order.PaymentStatus == PaymentStatusEnum.Authorized || order.PaymentStatus == PaymentStatusEnum.Paid)
+                if (order.PaymentStatus == PaymentStatusEnum.Authorized || 
+                    order.PaymentStatus == PaymentStatusEnum.Paid)
                 {
                     order = SetOrderStatus(orderId, OrderStatusEnum.Processing, false);
                 }
@@ -645,17 +648,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (order.OrderStatus == OrderStatusEnum.Pending)
             {
-                if (order.ShippingStatus == ShippingStatusEnum.Shipped)
+                if (order.ShippingStatus == ShippingStatusEnum.Shipped ||
+                    order.ShippingStatus == ShippingStatusEnum.Delivered)
                 {
                     order = SetOrderStatus(orderId, OrderStatusEnum.Processing, false);
                 }
             }
 
-            if (order.OrderStatus != OrderStatusEnum.Cancelled && order.OrderStatus != OrderStatusEnum.Complete)
+            if (order.OrderStatus != OrderStatusEnum.Cancelled && 
+                order.OrderStatus != OrderStatusEnum.Complete)
             {
                 if (order.PaymentStatus == PaymentStatusEnum.Paid)
                 {
-                    if (!CanShip(order))
+                    if (!CanShip(order) && !CanDeliver(order))
                     {
                         order = SetOrderStatus(orderId, OrderStatusEnum.Complete, true);
                     }
@@ -695,7 +700,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                     order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                     order.ShippingCountry, order.ShippingCountryId,
-                    order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                    order.ShippingMethod, order.ShippingRateComputationMethodId,
+                    order.ShippedDate, order.DeliveryDate,
                     order.TrackingNumber, order.Deleted, order.CreatedOn);
             }
 
@@ -777,7 +783,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                     order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                     order.ShippingCountry, order.ShippingCountryId,
-                    order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate, order.TrackingNumber, true,
+                    order.ShippingMethod, order.ShippingRateComputationMethodId,
+                    order.ShippedDate, order.DeliveryDate, order.TrackingNumber, true,
                     order.CreatedOn);
             }
         }
@@ -944,6 +951,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="shippingMethod">The shipping method</param>
         /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
         /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="deliveryDate">The delivery date and time</param>
         /// <param name="trackingNumber">The tracking number of order</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="createdOn">The date and time of order creation</param>
@@ -1028,6 +1036,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string shippingMethod,
             int shippingRateComputationMethodId,
             DateTime? shippedDate,
+            DateTime? deliveryDate,
             string trackingNumber,
             bool deleted,
             DateTime createdOn)
@@ -1110,6 +1119,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 paidDate = DateTimeHelper.ConvertToUtcTime(paidDate.Value);
             if (shippedDate.HasValue)
                 shippedDate = DateTimeHelper.ConvertToUtcTime(shippedDate.Value);
+            if (deliveryDate.HasValue)
+                deliveryDate = DateTimeHelper.ConvertToUtcTime(deliveryDate.Value);
             if (trackingNumber == null)
                 trackingNumber = string.Empty;
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
@@ -1141,9 +1152,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
              shippingPhoneNumber, shippingEmail,
              shippingFaxNumber, shippingCompany, shippingAddress1,
              shippingAddress2, shippingCity, shippingStateProvince, shippingStateProvinceId, 
-             shippingZipPostalCode, shippingCountry, shippingCountryId, 
-             shippingMethod, shippingRateComputationMethodId, shippedDate,
-             trackingNumber, deleted, createdOn);
+             shippingZipPostalCode, shippingCountry, shippingCountryId,
+             shippingMethod, shippingRateComputationMethodId, shippedDate, 
+             deliveryDate, trackingNumber, deleted, createdOn);
 
             var order = DBMapping(dbItem);
             return order;
@@ -1233,6 +1244,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="shippingMethod">The shipping method</param>
         /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
         /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="deliveryDate">The delivery date and time</param>
         /// <param name="trackingNumber">The tracking number of order</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="createdOn">The date and time of order creation</param>
@@ -1318,6 +1330,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string shippingMethod,
             int shippingRateComputationMethodId,
             DateTime? shippedDate,
+            DateTime? deliveryDate,
             string trackingNumber,
             bool deleted,
             DateTime createdOn)
@@ -1326,6 +1339,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 paidDate = DateTimeHelper.ConvertToUtcTime(paidDate.Value);
             if (shippedDate.HasValue)
                 shippedDate = DateTimeHelper.ConvertToUtcTime(shippedDate.Value);
+            if (deliveryDate.HasValue)
+                deliveryDate = DateTimeHelper.ConvertToUtcTime(deliveryDate.Value);
             if (trackingNumber == null)
                 trackingNumber = string.Empty;
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
@@ -1358,7 +1373,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 shippingAddress2, shippingCity, shippingStateProvince, 
                 shippingStateProvinceId, shippingZipPostalCode,
                 shippingCountry, shippingCountryId, shippingMethod, 
-                shippingRateComputationMethodId, shippedDate,
+                shippingRateComputationMethodId, shippedDate, deliveryDate,
                 trackingNumber, deleted, createdOn);
 
             var order = DBMapping(dbItem);
@@ -1404,7 +1419,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                    order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                    order.ShippingCountry, order.ShippingCountryId,
-                   order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                   order.ShippingMethod, order.ShippingRateComputationMethodId,
+                   order.ShippedDate, order.DeliveryDate,
                    trackingNumber, order.Deleted, order.CreatedOn);
             }
         }
@@ -3273,6 +3289,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                              shippingRateComputationMethodId,
                              null,
                              null,
+                             string.Empty,
                              false,
                              DateTime.Now);
 
@@ -3705,7 +3722,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (!CanShip(order))
                 throw new NopException("Can not do shipment for order.");
 
-            var ShippedDate = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            var shippedDate = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
             order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                 order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                 order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
@@ -3735,8 +3752,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                 order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                 order.ShippingCountry, order.ShippingCountryId,
-                order.ShippingMethod, order.ShippingRateComputationMethodId, ShippedDate,
-                order.TrackingNumber, order.Deleted, order.CreatedOn);
+                order.ShippingMethod, order.ShippingRateComputationMethodId, shippedDate,
+                order.DeliveryDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
 
             InsertOrderNote(order.OrderId, string.Format("Order has been shipped"), false, DateTime.Now);
 
@@ -3744,6 +3761,86 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             {
                 int orderShippedCustomerNotificationQueuedEmailId = MessageManager.SendOrderShippedCustomerNotification(order, order.CustomerLanguageId);
                 InsertOrderNote(order.OrderId, string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+            }
+
+            order = CheckOrderStatus(order.OrderId);
+
+            return order;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether order is delivered
+        /// </summary>
+        /// <param name="order">Order</param>
+        /// <returns>A value indicating whether shipping is delivered</returns>
+        public static bool CanDeliver(Order order)
+        {
+            if (order == null)
+                return false;
+
+            if (order.OrderStatus == OrderStatusEnum.Cancelled)
+                return false;
+
+            if (order.ShippingStatus == ShippingStatusEnum.Shipped)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Marks order status as delivered
+        /// </summary>
+        /// <param name="orderId">Order identifier</param>
+        /// <param name="notifyCustomer">True to notify customer</param>
+        /// <returns>Updated order</returns>
+        public static Order Deliver(int orderId, bool notifyCustomer)
+        {
+            var order = GetOrderById(orderId);
+            if (order == null)
+                return order;
+
+            if (!CanDeliver(order))
+                throw new NopException("Can not do delivery for order.");
+
+            var deliveryDate = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
+                order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
+                order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
+                order.OrderTax, order.OrderTotal, order.OrderDiscount,
+                order.OrderSubtotalInclTaxInCustomerCurrency, order.OrderSubtotalExclTaxInCustomerCurrency,
+                order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
+                order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+                order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
+                order.OrderDiscountInCustomerCurrency,
+                order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
+                order.CustomerCurrencyCode, order.OrderWeight,
+                order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
+                order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                order.PaymentMethodId, order.PaymentMethodName,
+                order.AuthorizationTransactionId,
+                order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
+                order.CaptureTransactionId, order.CaptureTransactionResult,
+                order.SubscriptionTransactionId, order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
+                order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
+                order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
+                order.BillingAddress2, order.BillingCity,
+                order.BillingStateProvince, order.BillingStateProvinceId, order.BillingZipPostalCode,
+                order.BillingCountry, order.BillingCountryId, ShippingStatusEnum.Delivered,
+                order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
+                order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
+                order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
+                order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                order.ShippingCountry, order.ShippingCountryId,
+                order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                deliveryDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
+
+            InsertOrderNote(order.OrderId, string.Format("Order has been delivered"), false, DateTime.Now);
+
+            if (notifyCustomer)
+            {
+                int orderDeliveredCustomerNotificationQueuedEmailId = MessageManager.SendOrderDeliveredCustomerNotification(order, order.CustomerLanguageId);
+                InsertOrderNote(order.OrderId, string.Format("\"Delivered\" email (to customer) has been queued. Queued email identifier: {0}.", orderDeliveredCustomerNotificationQueuedEmailId), false, DateTime.Now);
             }
 
             order = CheckOrderStatus(order.OrderId);
@@ -3862,7 +3959,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                    order.ShippingCountry, order.ShippingCountryId,
                    order.ShippingMethod, order.ShippingRateComputationMethodId,
-                   order.ShippedDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
+                   order.ShippedDate, order.DeliveryDate, 
+                   order.TrackingNumber, order.Deleted, order.CreatedOn);
 
             InsertOrderNote(order.OrderId, string.Format("Order has been marked as authorized"), false, DateTime.Now);
 
@@ -3959,7 +4057,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                         order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                         order.ShippingCountry, order.ShippingCountryId,
-                        order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId,
+                        order.ShippedDate, order.DeliveryDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
                     InsertOrderNote(order.OrderId, string.Format("Order has been captured"), false, DateTime.Now);
@@ -4050,7 +4149,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                     order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                     order.ShippingCountry, order.ShippingCountryId,
-                    order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                    order.ShippingMethod, order.ShippingRateComputationMethodId,
+                    order.ShippedDate, order.DeliveryDate,
                     order.TrackingNumber, order.Deleted, order.CreatedOn);
 
             InsertOrderNote(order.OrderId, string.Format("Order has been marked as paid"), false, DateTime.Now);
@@ -4140,7 +4240,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                         order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                         order.ShippingCountry, order.ShippingCountryId,
-                        order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId,
+                        order.ShippedDate, order.DeliveryDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
                     InsertOrderNote(order.OrderId, string.Format("Order has been refunded"), false, DateTime.Now);
@@ -4229,7 +4330,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                    order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                    order.ShippingCountry, order.ShippingCountryId,
-                   order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                   order.ShippingMethod, order.ShippingRateComputationMethodId,
+                   order.ShippedDate, order.DeliveryDate,
                    order.TrackingNumber, order.Deleted, order.CreatedOn);
 
             InsertOrderNote(order.OrderId, string.Format("Order has been marked as refunded"), false, DateTime.Now);
@@ -4319,7 +4421,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                         order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                         order.ShippingCountry, order.ShippingCountryId,
-                        order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId,
+                        order.ShippedDate, order.DeliveryDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
                     InsertOrderNote(order.OrderId, string.Format("Order has been voided"), false, DateTime.Now);
@@ -4409,7 +4512,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
                    order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
                    order.ShippingCountry, order.ShippingCountryId,
-                   order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
+                   order.ShippingMethod, order.ShippingRateComputationMethodId,
+                   order.ShippedDate, order.DeliveryDate,
                    order.TrackingNumber, order.Deleted, order.CreatedOn);
 
             InsertOrderNote(order.OrderId, string.Format("Order has been marked as voided"), false, DateTime.Now);

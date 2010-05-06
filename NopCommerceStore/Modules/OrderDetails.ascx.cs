@@ -86,9 +86,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 this.lblOrderWeight.Text = string.Format("{0} [{1}]", order.OrderWeight, MeasureManager.BaseWeightIn.Name);
 
                 if (order.ShippedDate.HasValue)
-                    this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value).ToString();
+                    this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value).ToString("D");
                 else
                     this.lblShippedDate.Text = GetLocaleResourceString("Order.NotYetShipped");
+
+                if (order.DeliveryDate.HasValue)
+                    this.lblDeliveredOn.Text = DateTimeHelper.ConvertToUserTime(order.DeliveryDate.Value).ToString("D");
+                else
+                    this.lblDeliveredOn.Text = GetLocaleResourceString("Order.Order.NotYetDelivered");
 
                 if (!string.IsNullOrEmpty(order.TrackingNumber))
                 {

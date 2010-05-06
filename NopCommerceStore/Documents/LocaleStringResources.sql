@@ -1148,6 +1148,33 @@ set @resources='
   <LocaleResource Name="Admin.SalesReport.BillingCountry.Tooltip">
     <Value>The customer''s billing country.</Value>
   </LocaleResource>
+  <LocaleResource Name="ShippingStatus.Delivered">
+    <Value>Delivered</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.DeliveryDate">
+    <Value>Delivery date:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.DeliveryDate.Tooltip">
+    <Value>The date this order was delivered.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.SetAsDeliveredButton.Text">
+    <Value>Set as delivered</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippedDate.NotYet">
+    <Value>Not yet</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.DeliveryDate.NotYet">
+    <Value>Not yet</Value>
+  </LocaleResource>
+  <LocaleResource Name="Order.DeliveredOn">
+    <Value>Delivered on</Value>
+  </LocaleResource>
+  <LocaleResource Name="Order.NotYetShipped">
+    <Value>Not shipped yet</Value>
+  </LocaleResource>
+  <LocaleResource Name="Order.Order.NotYetDelivered">
+    <Value>Not delivered yet</Value>
+  </LocaleResource>
 </Language>
 '
 

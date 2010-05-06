@@ -118,6 +118,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             item.ShippingMethod = NopSqlDataHelper.GetString(dataReader, "ShippingMethod");
             item.ShippingRateComputationMethodId = NopSqlDataHelper.GetInt(dataReader, "ShippingRateComputationMethodID");
             item.ShippedDate = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "ShippedDate");
+            item.DeliveryDate = NopSqlDataHelper.GetNullableUtcDateTime(dataReader, "DeliveryDate");
             item.TrackingNumber = NopSqlDataHelper.GetString(dataReader, "TrackingNumber");
             item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
             item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
@@ -642,6 +643,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="shippingMethod">The shipping method</param>
         /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
         /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="deliveryDate">The delivery date and time</param>
         /// <param name="trackingNumber">The tracking number of order</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="createdOn">The date and time of order creation</param>
@@ -726,6 +728,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             string shippingMethod,
             int shippingRateComputationMethodId,
             DateTime? shippedDate,
+            DateTime? deliveryDate,
             string trackingNumber,
             bool deleted,
             DateTime createdOn)
@@ -820,6 +823,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
                 db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, shippedDate.Value);
             else
                 db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, DBNull.Value);
+            if (deliveryDate.HasValue)
+                db.AddInParameter(dbCommand, "DeliveryDate", DbType.DateTime, deliveryDate.Value);
+            else
+                db.AddInParameter(dbCommand, "DeliveryDate", DbType.DateTime, DBNull.Value);
             db.AddInParameter(dbCommand, "TrackingNumber", DbType.String, trackingNumber);
             db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
@@ -915,6 +922,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="shippingMethod">The shipping method</param>
         /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
         /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="deliveryDate">The delivery date and time</param>
         /// <param name="trackingNumber">The tracking number of order</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="createdOn">The date and time of order creation</param>
@@ -1000,6 +1008,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             string shippingMethod,
             int shippingRateComputationMethodId,
             DateTime? shippedDate,
+            DateTime? deliveryDate,
             string trackingNumber,
             bool deleted,
             DateTime createdOn)
@@ -1094,6 +1103,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
                 db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, shippedDate.Value);
             else
                 db.AddInParameter(dbCommand, "ShippedDate", DbType.DateTime, DBNull.Value);
+            if (deliveryDate.HasValue)
+                db.AddInParameter(dbCommand, "DeliveryDate", DbType.DateTime, deliveryDate.Value);
+            else
+                db.AddInParameter(dbCommand, "DeliveryDate", DbType.DateTime, DBNull.Value);
             db.AddInParameter(dbCommand, "TrackingNumber", DbType.String, trackingNumber);
             db.AddInParameter(dbCommand, "Deleted", DbType.Boolean, deleted);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);

@@ -271,12 +271,25 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.lblShippingMethod.Text = Server.HtmlEncode(order.ShippingMethod);
 
                 this.txtTrackingNumber.Text = order.TrackingNumber;
-                
-                this.btnSetAsShipped.Visible = OrderManager.CanShip(order);
 
+                this.btnSetAsShipped.Visible = OrderManager.CanShip(order);
                 if (order.ShippedDate.HasValue)
                 {
                     this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value).ToString();
+                }
+                else
+                {
+                    this.lblShippedDate.Text = GetLocaleResourceString("Admin.OrderDetails.ShippedDate.NotYet");
+                }
+
+                this.btnSetAsDelivered.Visible = OrderManager.CanDeliver(order);
+                if (order.DeliveryDate.HasValue)
+                {
+                    this.lblDeliveryDate.Text = DateTimeHelper.ConvertToUserTime(order.DeliveryDate.Value).ToString();
+                }
+                else
+                {
+                    this.lblDeliveryDate.Text = GetLocaleResourceString("Admin.OrderDetails.DeliveryDate.NotYet");
                 }
 
                 this.lblOrderWeight.Text = string.Format("{0} [{1}]", order.OrderWeight, MeasureManager.BaseWeightIn.Name);
@@ -287,6 +300,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.divShippingMethod.Visible = true;
                 this.divTrackingNumber.Visible = true;
                 this.divShippedDate.Visible = true;
+                this.divDeliveryDate.Visible = true;
             }
             else
             {
@@ -296,6 +310,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.divShippingMethod.Visible = false;
                 this.divTrackingNumber.Visible = false;
                 this.divShippedDate.Visible = false;
+                this.divDeliveryDate.Visible = false;
             }
         }
 
@@ -598,6 +613,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected void btnSetAsDelivered_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OrderManager.Deliver(this.OrderId, true);
+                BindData();
+            }
+            catch (Exception exc)
+            {
+                ProcessException(exc);
+            }
+        }
+        
         protected void CancelOrderButton_Click(object sender, EventArgs e)
         {
             try

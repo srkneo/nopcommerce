@@ -312,6 +312,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             //shipping
             bool dislayShipping = order.ShippingStatus != ShippingStatusEnum.ShippingNotRequired;
+
+            //payment method fee
             bool displayPaymentMethodFee = true;
             if (order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency == decimal.Zero)
             {
@@ -899,6 +901,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             if(localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
                 return 0;
                 //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageId));
+
+            string subject = ReplaceMessageTemplateTokens(order, localizedMessageTemplate.Subject, languageId);
+            string body = ReplaceMessageTemplateTokens(order, localizedMessageTemplate.Body, languageId);
+            string bcc = localizedMessageTemplate.BccEmailAddresses;
+            var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
+            var to = new MailAddress(order.BillingEmail, order.BillingFullName);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            return queuedEmail.QueuedEmailId;
+        }
+
+        /// <summary>
+        /// Sends an order delivered notification to a customer
+        /// </summary>
+        /// <param name="order">Order instance</param>
+        /// <param name="languageId">Message language identifier</param>
+        /// <returns>Queued email identifier</returns>
+        public static int SendOrderDeliveredCustomerNotification(Order order, int languageId)
+        {
+            if (order == null)
+                throw new ArgumentNullException("order");
+
+            string templateName = "OrderDelivered.CustomerNotification";
+            LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(templateName, languageId);
+            if (localizedMessageTemplate == null || !localizedMessageTemplate.IsActive)
+                return 0;
+            //throw new NopException(string.Format("Message template ({0}-{1}) couldn't be loaded", TemplateName, LanguageId));
 
             string subject = ReplaceMessageTemplateTokens(order, localizedMessageTemplate.Subject, languageId);
             string body = ReplaceMessageTemplateTokens(order, localizedMessageTemplate.Body, languageId);

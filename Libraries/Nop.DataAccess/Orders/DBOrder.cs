@@ -443,6 +443,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public DateTime? ShippedDate { get; set; }
 
         /// <summary>
+        /// Gets or sets the delivery date and time
+        /// </summary>
+        public DateTime? DeliveryDate { get; set; }
+
+        /// <summary>
         /// Gets or sets the tracking number of current order
         /// </summary>
         public string TrackingNumber { get; set; }

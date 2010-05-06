@@ -443,6 +443,17 @@
                             OnClick="btnSetAsShipped_Click"></asp:Button>
                     </td>
                 </tr>
+                <tr runat="server" id="divDeliveryDate">
+                    <td class="adminTitle">
+                        <nopCommerce:ToolTipLabel runat="server" ID="lblDeliveryDateTitle" Text="<% $NopResources:Admin.OrderDetails.DeliveryDate %>"
+                            ToolTip="<% $NopResources:Admin.OrderDetails.DeliveryDate.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                    </td>
+                    <td class="adminData">
+                        <asp:Label ID="lblDeliveryDate" runat="server"></asp:Label>
+                        <asp:Button ID="btnSetAsDelivered" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SetAsDeliveredButton.Text %>"
+                            OnClick="btnSetAsDelivered_Click"></asp:Button>
+                    </td>
+                </tr>
             </table>
         </contenttemplate>
     </ajaxToolkit:TabPanel>

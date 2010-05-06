@@ -114,6 +114,8 @@
                             <asp:Label ID="lblTrackingNumber" runat="server"></asp:Label>
                         </td>
                     </tr>
+                    <%if (!this.IsInvoice)
+                      { %>
                     <tr>
                         <td>
                             <b>
@@ -125,6 +127,18 @@
                             <asp:Label ID="lblShippedDate" runat="server"></asp:Label>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <b>
+                                <%=GetLocaleResourceString("Order.DeliveredOn")%></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="lblDeliveredOn" runat="server"></asp:Label>
+                        </td>
+                    </tr>
+                    <%} %>
                     <tr>
                         <td>
                             <b>

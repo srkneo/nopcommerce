@@ -169,6 +169,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="shippingMethod">The shipping method</param>
         /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
         /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="deliveryDate">The delivery date and time</param>
         /// <param name="trackingNumber">The tracking number of order</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="createdOn">The date and time of order creation</param>
@@ -253,6 +254,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             string shippingMethod,
             int shippingRateComputationMethodId,
             DateTime? shippedDate,
+            DateTime? deliveryDate,
             string trackingNumber, 
             bool deleted, 
             DateTime createdOn);
@@ -341,6 +343,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         /// <param name="shippingMethod">The shipping method</param>
         /// <param name="shippingRateComputationMethodId">The shipping rate computation method identifier</param>
         /// <param name="shippedDate">The shipped date and time</param>
+        /// <param name="deliveryDate">The delivery date and time</param>
         /// <param name="trackingNumber">The tracking number of order</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="createdOn">The date and time of order creation</param>
@@ -426,6 +429,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             string shippingMethod,
             int shippingRateComputationMethodId,
             DateTime? shippedDate,
+            DateTime? deliveryDate,
             string trackingNumber,
             bool deleted,
             DateTime createdOn);
