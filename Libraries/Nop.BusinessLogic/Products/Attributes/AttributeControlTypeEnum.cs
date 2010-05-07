@@ -39,5 +39,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// TextBox
         /// </summary>
         TextBox = 4,
+        /// <summary>
+        /// Multiline textbox
+        /// </summary>
+        MultilineTextbox = 10,
     }
 }

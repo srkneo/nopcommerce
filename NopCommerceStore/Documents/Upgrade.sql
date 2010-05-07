@@ -7289,3 +7289,64 @@ BEGIN
 		OrderID = @OrderID
 END
 GO
+
+--textbox attribute settings
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'ProductAttribute.Textbox.Width')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'ProductAttribute.Textbox.Width', N'300', N'')
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'ProductAttribute.MultiTextbox.Width')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'ProductAttribute.MultiTextbox.Width', N'300', N'')
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'ProductAttribute.MultiTextbox.Height')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'ProductAttribute.MultiTextbox.Height', N'150', N'')
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'CheckoutAttribute.Textbox.Width')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'CheckoutAttribute.Textbox.Width', N'300', N'')
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'CheckoutAttribute.MultiTextbox.Width')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'CheckoutAttribute.MultiTextbox.Width', N'300', N'')
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'CheckoutAttribute.MultiTextbox.Height')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'CheckoutAttribute.MultiTextbox.Height', N'150', N'')
+END
+GO

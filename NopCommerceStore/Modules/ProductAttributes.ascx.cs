@@ -26,6 +26,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
@@ -182,7 +183,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             case AttributeControlTypeEnum.TextBox:
                                 {
                                     var txtAttribute = new TextBox();
+                                    txtAttribute.Width = SettingManager.GetSettingValueInteger("ProductAttribute.Textbox.Width", 300);
                                     txtAttribute.ID = controlId;
+                                    divAttribute.Controls.Add(txtAttribute);
+                                }
+                                break;
+                            case AttributeControlTypeEnum.MultilineTextbox:
+                                {
+                                    var txtAttribute = new TextBox();
+                                    txtAttribute.ID = controlId;
+                                    txtAttribute.TextMode = TextBoxMode.MultiLine;
+                                    txtAttribute.Width = SettingManager.GetSettingValueInteger("ProductAttribute.MultiTextbox.Width", 300);
+                                    txtAttribute.Height = SettingManager.GetSettingValueInteger("ProductAttribute.MultiTextbox.Height", 150);
                                     divAttribute.Controls.Add(txtAttribute);
                                 }
                                 break;
@@ -276,6 +288,20 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             }
                             break;
                         case AttributeControlTypeEnum.TextBox:
+                            {
+                                var txtAttribute = phAttributes.FindControl(controlId) as TextBox;
+                                if (txtAttribute != null)
+                                {
+                                    string enteredText = txtAttribute.Text.Trim();
+                                    if (!String.IsNullOrEmpty(enteredText))
+                                    {
+                                        selectedAttributes = ProductAttributeHelper.AddProductAttribute(selectedAttributes,
+                                            attribute, enteredText);
+                                    }
+                                }
+                            }
+                            break;
+                        case AttributeControlTypeEnum.MultilineTextbox:
                             {
                                 var txtAttribute = phAttributes.FindControl(controlId) as TextBox;
                                 if (txtAttribute != null)

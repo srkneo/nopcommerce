@@ -22,6 +22,7 @@ using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
+using NopSolutions.NopCommerce.Common.Utils.Html;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
 {
@@ -493,7 +494,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                         string pvaAttribute = string.Empty;
                         if (!pva.ShouldHaveValues)
                         {
-                            pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.Name, valueStr);
+                            if (pva.AttributeControlType == AttributeControlTypeEnum.MultilineTextbox)
+                            {
+                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.Name, HtmlHelper.FormatText(valueStr, false, true, true, false, false, false));
+                            }
+                            else
+                            {
+                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.Name, valueStr);
+                            }
                         }
                         else
                         {
@@ -521,7 +529,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                                 result.Append(serapator);
                             }
 
-                            if (htmlEncode)
+                            //we don't encode multiline textbox input
+                            if (htmlEncode &&
+                                pva.AttributeControlType != AttributeControlTypeEnum.MultilineTextbox)
                             {
                                 result.Append(HttpUtility.HtmlEncode(pvaAttribute));
                             }

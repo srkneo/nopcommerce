@@ -34,6 +34,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -274,6 +275,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         case AttributeControlTypeEnum.TextBox:
                             {
                                 var txtAttribute = new TextBox();
+                                txtAttribute.Width = SettingManager.GetSettingValueInteger("CheckoutAttribute.Textbox.Width", 300);
                                 txtAttribute.ID = controlId;
 
                                 //set already selected attributes
@@ -287,6 +289,34 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                                         //select new values
                                         var enteredText = CheckoutAttributeHelper.ParseValues(selectedCheckoutAttributes,attribute.CheckoutAttributeId);
+                                        if (enteredText.Count > 0)
+                                        {
+                                            txtAttribute.Text = enteredText[0];
+                                        }
+                                    }
+                                }
+                                divAttribute.Controls.Add(txtAttribute);
+                            }
+                            break;
+                        case AttributeControlTypeEnum.MultilineTextbox:
+                            {
+                                var txtAttribute = new TextBox();
+                                txtAttribute.ID = controlId;
+                                txtAttribute.TextMode = TextBoxMode.MultiLine;
+                                txtAttribute.Width = SettingManager.GetSettingValueInteger("CheckoutAttribute.MultiTextbox.Width", 300);
+                                txtAttribute.Height = SettingManager.GetSettingValueInteger("CheckoutAttribute.MultiTextbox.Height", 150);
+
+                                //set already selected attributes
+                                if (NopContext.Current.User != null)
+                                {
+                                    string selectedCheckoutAttributes = NopContext.Current.User.CheckoutAttributes;
+                                    if (!String.IsNullOrEmpty(selectedCheckoutAttributes))
+                                    {
+                                        //clear default selection
+                                        txtAttribute.Text = string.Empty;
+
+                                        //select new values
+                                        var enteredText = CheckoutAttributeHelper.ParseValues(selectedCheckoutAttributes, attribute.CheckoutAttributeId);
                                         if (enteredText.Count > 0)
                                         {
                                             txtAttribute.Text = enteredText[0];
@@ -382,6 +412,20 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             }
                             break;
                         case AttributeControlTypeEnum.TextBox:
+                            {
+                                var txtAttribute = phAttributes.FindControl(controlId) as TextBox;
+                                if (txtAttribute != null)
+                                {
+                                    string enteredText = txtAttribute.Text.Trim();
+                                    if (!String.IsNullOrEmpty(enteredText))
+                                    {
+                                        selectedAttributes = CheckoutAttributeHelper.AddCheckoutAttribute(selectedAttributes,
+                                            attribute, enteredText);
+                                    }
+                                }
+                            }
+                            break;
+                        case AttributeControlTypeEnum.MultilineTextbox:
                             {
                                 var txtAttribute = phAttributes.FindControl(controlId) as TextBox;
                                 if (txtAttribute != null)

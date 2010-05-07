@@ -123,7 +123,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             get
             {
-                if (this.AttributeControlType == AttributeControlTypeEnum.TextBox)
+                if (this.AttributeControlType == AttributeControlTypeEnum.TextBox ||
+                    this.AttributeControlType == AttributeControlTypeEnum.MultilineTextbox)
                 {
                     return false;
                 }
