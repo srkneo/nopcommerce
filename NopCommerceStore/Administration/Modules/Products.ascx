@@ -79,6 +79,15 @@
 <asp:GridView ID="gvProducts" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvProducts_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
+        <asp:TemplateField ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
+            <HeaderTemplate>
+                <asp:CheckBox ID="cbSelectAll" runat="server" CssClass="cbHeader" />
+            </HeaderTemplate>
+            <ItemTemplate>
+                <asp:CheckBox ID="cbProduct" runat="server" CssClass="cbRowItem" />
+                <asp:HiddenField ID="hfProductId" runat="server" Value='<%# Eval("ProductId") %>' />
+            </ItemTemplate>
+        </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Products.Image %>">
             <ItemTemplate>
                 <asp:Image runat="server" ID="imgProduct" ImageUrl='<%#GetProductImageUrl((Product)Container.DataItem)%>' />
@@ -102,17 +111,6 @@
                 <a href="ProductDetails.aspx?ProductId=<%#Eval("ProductId")%>" title="<%#GetLocaleResourceString("Admin.Products.Edit.Tooltip")%>">
                     <%#GetLocaleResourceString("Admin.Products.Edit")%>
                 </a>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
-            <HeaderTemplate>
-                <%#GetLocaleResourceString("Admin.Products.Delete")%>
-                <br />
-                <asp:CheckBox ID="cbSelectAll" runat="server" CssClass="cbHeader" />
-            </HeaderTemplate>
-            <ItemTemplate>
-                <asp:CheckBox ID="cbProduct" runat="server" CssClass="cbRowItem" />
-                <asp:HiddenField ID="hfProductId" runat="server" Value='<%# Eval("ProductId") %>' />
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>

@@ -28,6 +28,17 @@
             </li>
             <li>
                 <div class="title">
+                    <a href="bulkeditproducts.aspx" title="<%=GetLocaleResourceString("Admin.ProductsHome.BulkEditProducts.TitleDescription")%>">
+                        <%=GetLocaleResourceString("Admin.ProductsHome.BulkEditProducts.Title")%></a>
+                </div>
+                <div class="description">
+                    <p>
+                        <%=GetLocaleResourceString("Admin.ProductsHome.BulkEditProducts.Description")%>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="title">
                     <a href="productreviews.aspx" title="<%=GetLocaleResourceString("Admin.ProductsHome.ProductReviews.TitleDescription")%>">
                         <%=GetLocaleResourceString("Admin.ProductsHome.ProductReviews.Title")%></a>
                 </div>

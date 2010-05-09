@@ -144,7 +144,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="categoryId">Category identifier</param>
         public static void MarkCategoryAsDeleted(int categoryId)
         {
-            var category = GetCategoryById(categoryId);
+            var category = GetCategoryById(categoryId, 0);
             if (category != null)
             {
                 category = UpdateCategory(category.CategoryId, category.Name, 
@@ -162,7 +162,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="categoryId">Category identifier</param>
         public static void RemoveCategoryPicture(int categoryId)
         {
-            var category = GetCategoryById(categoryId);
+            var category = GetCategoryById(categoryId, 0);
             if (category != null)
             {
                 UpdateCategory(category.CategoryId, category.Name, category.Description,
@@ -360,7 +360,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             //validate category hierarchy
-            var parentCategory = GetCategoryById(parentCategoryId);
+            var parentCategory = GetCategoryById(parentCategoryId, 0);
             while (parentCategory != null)
             {
                 if (categoryId == parentCategory.CategoryId)
@@ -368,7 +368,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                     parentCategoryId = 0;
                     break;
                 }
-                parentCategory = GetCategoryById(parentCategory.ParentCategoryId);
+                parentCategory = GetCategoryById(parentCategory.ParentCategoryId, 0);
             }
 
             var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategory(categoryId,

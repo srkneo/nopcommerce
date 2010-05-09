@@ -932,9 +932,6 @@ set @resources='
   <LocaleResource Name="Admin.Products.DeleteButton.Text">
     <Value>Delete selected</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Products.Delete">
-    <Value>Delete</Value>
-  </LocaleResource>
   <LocaleResource Name="Account.DownloadableProducts.ProductsGrid.Download.na">
     <Value>n/a</Value>
   </LocaleResource>
@@ -1174,6 +1171,84 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="Order.Order.NotYetDelivered">
     <Value>Not delivered yet</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.BulkEditProductsTitle">
+    <Value>Bulk Edit Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.BulkEditProductsDescription">
+    <Value>Bulk Edit Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductsHome.BulkEditProducts.TitleDescription">
+    <Value>Bulk Edit Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductsHome.BulkEditProducts.Title">
+    <Value>Bulk Edit Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductsHome.BulkEditProducts.Description">
+    <Value>Want to make changes to multiple products at once? Bulk edit your products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.Title">
+    <Value>Bulk Edit Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.SearchButton.Text">
+    <Value>Search</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.SearchButton.Tooltip">
+    <Value>Search product variants based on the criteria below</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Products.UpdateButton.Text">
+    <Value>Update selected</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.ProductName">
+    <Value>Product name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.ProductName.Tooltip">
+    <Value>A product name.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.Category">
+    <Value>Category:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.Category.Tooltip">
+    <Value>Search by a specific category.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.Manufacturer">
+    <Value>Manufacturer:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.Manufacturer.Tooltip">
+    <Value>Search by a specific manufacturer.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.NameColumn">
+    <Value>Full product variant name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.NoProductsFound">
+    <Value>No product variants found</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.PriceColumn">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.PriceColumn.RequiredErrorMessage">
+    <Value>Price is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.PriceColumn.RangeErrorMessage">
+    <Value>The price must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.OldPriceColumn">
+    <Value>Old price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.OldPriceColumn.RequiredErrorMessage">
+    <Value>Old price is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.OldPriceColumn.RangeErrorMessage">
+    <Value>The old price must be from 0 to 999999</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.PublishedColumn">
+    <Value>Published</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.Description">
+    <Value>Note: you''re editing product variants (not products)</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BulkEditProducts.SuccessfullyUpdated">
+    <Value>All product variants have been successfully updated.</Value>
   </LocaleResource>
 </Language>
 '

@@ -140,7 +140,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <param name="manufacturerId">Manufacturer identifer</param>
         public static void MarkManufacturerAsDeleted(int manufacturerId)
         {
-            var manufacturer = GetManufacturerById(manufacturerId);
+            var manufacturer = GetManufacturerById(manufacturerId, 0);
             if (manufacturer != null)
             {
                 manufacturer = UpdateManufacturer(manufacturer.ManufacturerId, manufacturer.Name, manufacturer.Description,
@@ -158,7 +158,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <param name="manufacturerId">Manufacturer identifier</param>
         public static void RemoveManufacturerPicture(int manufacturerId)
         {
-            var manufacturer = GetManufacturerById(manufacturerId);
+            var manufacturer = GetManufacturerById(manufacturerId, 0);
             if (manufacturer != null)
             {
                 UpdateManufacturer(manufacturer.ManufacturerId, manufacturer.Name, manufacturer.Description,

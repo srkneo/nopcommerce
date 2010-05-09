@@ -1477,7 +1477,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                     }
 
                     // product variant <-> attributes mappings
-                    foreach (var productVariantAttribute in productVariant.ProductVariantAttributes)
+                    foreach (var productVariantAttribute in ProductAttributeManager.GetProductVariantAttributesByProductVariantId(productVariant.ProductVariantId))
                     {
                         var productVariantAttributeCopy = ProductAttributeManager.InsertProductVariantAttribute(productVariantCopy.ProductVariantId, productVariantAttribute.ProductAttributeId, productVariantAttribute.TextPrompt, productVariantAttribute.IsRequired, productVariantAttribute.AttributeControlType, productVariantAttribute.DisplayOrder);
 
@@ -1530,7 +1530,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
         #endregion
 
-        #region Product Variants
+        #region Product variants
 
         /// <summary>
         /// Remove a product variant picture
@@ -1538,7 +1538,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productVariantId">Product variant identifier</param>
         public static void RemoveProductVariantPicture(int productVariantId)
         {
-            var productVariant = GetProductVariantById(productVariantId);
+            var productVariant = GetProductVariantById(productVariantId, 0);
             if (productVariant != null)
             {
                 UpdateProductVariant(productVariant.ProductVariantId, productVariant.ProductId, productVariant.Name,
@@ -1585,7 +1585,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productVariantId">Product variant identifier</param>
         public static void RemoveProductVariantDownload(int productVariantId)
         {
-            var productVariant = GetProductVariantById(productVariantId);
+            var productVariant = GetProductVariantById(productVariantId, 0);
             if (productVariant != null)
             {
                 UpdateProductVariant(productVariant.ProductVariantId, productVariant.ProductId, productVariant.Name,
@@ -1622,7 +1622,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productVariantId">Product variant identifier</param>
         public static void RemoveProductVariantSampleDownload(int productVariantId)
         {
-            var productVariant = GetProductVariantById(productVariantId);
+            var productVariant = GetProductVariantById(productVariantId, 0);
             if (productVariant != null)
             {
                 UpdateProductVariant(productVariant.ProductVariantId, productVariant.ProductId, productVariant.Name,
@@ -1709,6 +1709,38 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantBySKU(sku);
             var productVariant = DBMapping(dbItem);
             return productVariant;
+        }
+        
+        /// <summary>
+        /// Gets all product variants
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Product variants</returns>
+        public static ProductVariantCollection GetAllProductVariants(int categoryId,
+            int manufacturerId, string keywords, 
+            int pageSize, int pageIndex, out int totalRecords)
+        {
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
+
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
+
+            bool showHidden = NopContext.Current.IsAdmin;
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductVariants(categoryId,
+               manufacturerId, keywords, showHidden,
+               pageSize, pageIndex, out totalRecords);
+            var productVariants = DBMapping(dbCollection);
+            return productVariants;
         }
 
         /// <summary>
@@ -2104,7 +2136,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productVariantId">Product variant identifier</param>
         public static void MarkProductVariantAsDeleted(int productVariantId)
         {
-            var productVariant = GetProductVariantById(productVariantId);
+            var productVariant = GetProductVariantById(productVariantId, 0);
             if (productVariant != null)
             {
                 productVariant = UpdateProductVariant(productVariant.ProductVariantId, 
@@ -2146,7 +2178,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void AdjustInventory(int productVariantId, bool decrease,
             int quantity, string attributesXml)
         {
-            var productVariant = GetProductVariantById(productVariantId);
+            var productVariant = GetProductVariantById(productVariantId, 0);
             if (productVariant == null)
                 return;
 

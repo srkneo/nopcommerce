@@ -213,6 +213,21 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant content</returns>
         public abstract DBProductVariantLocalized GetProductVariantLocalizedByProductVariantIdAndLanguageId(int productVariantId, int languageId);
+        
+        /// <summary>
+        /// Gets all product variants
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Product variants</returns>
+        public abstract DBProductVariantCollection GetAllProductVariants(int categoryId,
+            int manufacturerId, string keywords,bool showHidden,
+            int pageSize, int pageIndex, out int totalRecords);
 
         /// <summary>
         /// Inserts a localized product variant

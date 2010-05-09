@@ -392,6 +392,13 @@
     <Compile Include="Administration\CheckoutAttributeDetails.aspx.designer.cs">
       <DependentUpon>CheckoutAttributeDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\BulkEditProducts.aspx.cs">
+      <DependentUpon>BulkEditProducts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\BulkEditProducts.aspx.designer.cs">
+      <DependentUpon>BulkEditProducts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\CustomerReports.aspx.cs">
       <DependentUpon>CustomerReports.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -447,6 +454,13 @@
     </Compile>
     <Compile Include="Administration\Modules\CheckoutAttributeValues.ascx.designer.cs">
       <DependentUpon>CheckoutAttributeValues.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\BulkEditProducts.ascx.cs">
+      <DependentUpon>BulkEditProducts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\BulkEditProducts.ascx.designer.cs">
+      <DependentUpon>BulkEditProducts.ascx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Modules\CustomerReports.ascx.cs">
       <DependentUpon>CustomerReports.ascx</DependentUpon>
@@ -5854,6 +5868,7 @@
     <Content Include="Administration\CheckoutAttributes.aspx" />
     <Content Include="Administration\CheckoutAttributeAdd.aspx" />
     <Content Include="Administration\CheckoutAttributeDetails.aspx" />
+    <Content Include="Administration\BulkEditProducts.aspx" />
     <Content Include="Administration\CustomerReports.aspx" />
     <Content Include="Administration\GiftCardDetails.aspx" />
     <Content Include="Administration\Maintenance.aspx" />
@@ -5862,6 +5877,7 @@
     <Content Include="Administration\Modules\CheckoutAttributeAdd.ascx" />
     <Content Include="Administration\Modules\CheckoutAttributeDetails.ascx" />
     <Content Include="Administration\Modules\CheckoutAttributeValues.ascx" />
+    <Content Include="Administration\Modules\BulkEditProducts.ascx" />
     <Content Include="Administration\Modules\CustomerReports.ascx" />
     <Content Include="Administration\Modules\CustomerWishlist.ascx" />
     <Content Include="Administration\Modules\CustomerRewardPoints.ascx" />

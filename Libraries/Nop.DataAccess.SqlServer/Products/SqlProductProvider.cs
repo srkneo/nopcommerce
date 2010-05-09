@@ -617,6 +617,46 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         }
 
         /// <summary>
+        /// Gets all product variants
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Product variants</returns>
+        public override DBProductVariantCollection GetAllProductVariants(int categoryId,
+            int manufacturerId, string keywords, bool showHidden,
+            int pageSize, int pageIndex, out int totalRecords)
+        {
+            totalRecords = 0;
+            var result = new DBProductVariantCollection();
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariantLoadAll");
+            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
+            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "Keywords", DbType.String, keywords);
+            db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, pageIndex);
+            db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
+
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                while (dataReader.Read())
+                {
+                    var item = GetProductVariantFromReader(dataReader);
+                    result.Add(item);
+                }
+            }
+            totalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
+
+            return result;
+        }
+
+        /// <summary>
         /// Inserts a localized product
         /// </summary>
         /// <param name="productId">Product identifier</param>
