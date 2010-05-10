@@ -41,6 +41,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Button DeleteButton;
         
         /// <summary>
+        /// cbDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbDelete;
+        
+        /// <summary>
         /// OrderTabs control.
         /// </summary>
         /// <remarks>
@@ -707,6 +716,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Button btnCapture;
         
         /// <summary>
+        /// cbCapture control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbCapture;
+        
+        /// <summary>
         /// btnMarkAsPaid control.
         /// </summary>
         /// <remarks>
@@ -714,6 +732,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnMarkAsPaid;
+        
+        /// <summary>
+        /// cbMarkAsPaid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbMarkAsPaid;
         
         /// <summary>
         /// btnRefund control.
@@ -725,6 +752,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Button btnRefund;
         
         /// <summary>
+        /// cbRefund control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbRefund;
+        
+        /// <summary>
         /// btnRefundOffline control.
         /// </summary>
         /// <remarks>
@@ -732,6 +768,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRefundOffline;
+        
+        /// <summary>
+        /// cbRefundOffline control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbRefundOffline;
         
         /// <summary>
         /// btnVoid control.
@@ -743,6 +788,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Button btnVoid;
         
         /// <summary>
+        /// cbVoid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbVoid;
+        
+        /// <summary>
         /// btnVoidOffline control.
         /// </summary>
         /// <remarks>
@@ -750,6 +804,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnVoidOffline;
+        
+        /// <summary>
+        /// cbVoidOffline control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbVoidOffline;
         
         /// <summary>
         /// lblChangePaymentStatusError control.
@@ -1238,6 +1301,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Button btnSetAsShipped;
         
         /// <summary>
+        /// cbSetAsShipped control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbSetAsShipped;
+        
+        /// <summary>
         /// divDeliveryDate control.
         /// </summary>
         /// <remarks>
@@ -1272,6 +1344,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSetAsDelivered;
+        
+        /// <summary>
+        /// cbSetAsDelivered control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbSetAsDelivered;
         
         /// <summary>
         /// pnlOrderProducts control.
@@ -1353,14 +1434,5 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddNewOrderNote;
-        
-        /// <summary>
-        /// cbDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ConfirmationBox cbDelete;
     }
 }

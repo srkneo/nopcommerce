@@ -17,6 +17,9 @@
             OnClick="btnGetInvoicePDF_Click" CausesValidation="false" ToolTip="<% $NopResources:Admin.OrderDetails.InvoicePDF.Tooltip %>" />
         <asp:Button ID="DeleteButton" runat="server" CssClass="adminButtonBlue" Text="<% $NopResources:Admin.OrderDetails.DeleteButton.Text %>"
             OnClick="DeleteButton_Click" CausesValidation="false" ToolTip="<% $NopResources:Admin.OrderDetails.DeleteButton.Tooltip %>" />
+        <nopCommerce:ConfirmationBox runat="server" ID="cbDelete" TargetControlID="DeleteButton"
+            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
     </div>
 </div>
 <ajaxToolkit:TabContainer runat="server" ID="OrderTabs" ActiveTabIndex="0">
@@ -284,17 +287,35 @@
                     <td class="adminData">
                         <asp:Label runat="server" ID="lblPaymentStatus"></asp:Label>&nbsp;
                         <asp:Button ID="btnCapture" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.CaptureButton.Text %>"
-                            OnClick="btnCapture_Click" ToolTip="<% $NopResources:Admin.OrderDetails.CaptureButton.Tooltip %>" />&nbsp;
+                            OnClick="btnCapture_Click" ToolTip="<% $NopResources:Admin.OrderDetails.CaptureButton.Tooltip %>" />
+                        <nopCommerce:ConfirmationBox runat="server" ID="cbCapture" TargetControlID="btnCapture"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
                         <asp:Button ID="btnMarkAsPaid" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.MarkAsPaidButton.Text %>"
                             OnClick="btnMarkAsPaid_Click" ToolTip="<% $NopResources:Admin.OrderDetails.MarkAsPaidButton.Tooltip %>" />
+                        <nopCommerce:ConfirmationBox runat="server" ID="cbMarkAsPaid" TargetControlID="btnMarkAsPaid"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
                         <asp:Button ID="btnRefund" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.RefundButton.Text %>"
-                            OnClick="btnRefund_Click" ToolTip="<% $NopResources:Admin.OrderDetails.RefundButton.Tooltip %>" />&nbsp;
+                            OnClick="btnRefund_Click" ToolTip="<% $NopResources:Admin.OrderDetails.RefundButton.Tooltip %>" />
+                        <nopCommerce:ConfirmationBox runat="server" ID="cbRefund" TargetControlID="btnRefund"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
                         <asp:Button ID="btnRefundOffline" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.RefundOfflineButton.Text %>"
-                            OnClick="btnRefundOffline_Click" ToolTip="<% $NopResources:Admin.OrderDetails.RefundOfflineButton.Tooltip %>" />&nbsp;
+                            OnClick="btnRefundOffline_Click" ToolTip="<% $NopResources:Admin.OrderDetails.RefundOfflineButton.Tooltip %>" />
+                        <nopCommerce:ConfirmationBox runat="server" ID="cbRefundOffline" TargetControlID="btnRefundOffline"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
                         <asp:Button ID="btnVoid" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.VoidButton.Text %>"
-                            OnClick="btnVoid_Click" ToolTip="<% $NopResources:Admin.OrderDetails.VoidButton.Tooltip %>" />&nbsp;
+                            OnClick="btnVoid_Click" ToolTip="<% $NopResources:Admin.OrderDetails.VoidButton.Tooltip %>" />
+                        <nopCommerce:ConfirmationBox runat="server" ID="cbVoid" TargetControlID="btnVoid"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
                         <asp:Button ID="btnVoidOffline" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.VoidOfflineButton.Text %>"
-                            OnClick="btnVoidOffline_Click" ToolTip="<% $NopResources:Admin.OrderDetails.VoidOfflineButton.Tooltip %>" />&nbsp;
+                            OnClick="btnVoidOffline_Click" ToolTip="<% $NopResources:Admin.OrderDetails.VoidOfflineButton.Tooltip %>" />
+                        <nopCommerce:ConfirmationBox runat="server" ID="cbVoidOffline" TargetControlID="btnVoidOffline"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
                         <div style="color: red">
                             <b>
                                 <asp:Label runat="server" ID="lblChangePaymentStatusError" EnableViewState="false"></asp:Label>
@@ -440,7 +461,9 @@
                     <td class="adminData">
                         <asp:Label ID="lblShippedDate" runat="server"></asp:Label>
                         <asp:Button ID="btnSetAsShipped" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SetAsShippedButton.Text %>"
-                            OnClick="btnSetAsShipped_Click"></asp:Button>
+                            OnClick="btnSetAsShipped_Click"></asp:Button><nopCommerce:ConfirmationBox runat="server" ID="cbSetAsShipped" TargetControlID="btnSetAsShipped"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
                     </td>
                 </tr>
                 <tr runat="server" id="divDeliveryDate">
@@ -451,7 +474,9 @@
                     <td class="adminData">
                         <asp:Label ID="lblDeliveryDate" runat="server"></asp:Label>
                         <asp:Button ID="btnSetAsDelivered" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SetAsDeliveredButton.Text %>"
-                            OnClick="btnSetAsDelivered_Click"></asp:Button>
+                            OnClick="btnSetAsDelivered_Click"></asp:Button><nopCommerce:ConfirmationBox runat="server" ID="cbSetAsDelivered" TargetControlID="btnSetAsDelivered"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
                     </td>
                 </tr>
             </table>
@@ -599,6 +624,3 @@
         </contenttemplate>
     </ajaxToolkit:TabPanel>
 </ajaxToolkit:TabContainer>
-<nopCommerce:ConfirmationBox runat="server" ID="cbDelete" TargetControlID="DeleteButton"
-    YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-    ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
