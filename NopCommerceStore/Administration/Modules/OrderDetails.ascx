@@ -2,6 +2,8 @@
     CodeBehind="OrderDetails.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ConfirmationBox" Src="ConfirmationBox.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="EmailTextBox" Src="EmailTextBox.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <div class="section-header">
     <div class="title">
         <img src="Common/ico-sales.png" alt="<%=GetLocaleResourceString("Admin.OrderDetails.Title")%>" />
@@ -22,6 +24,144 @@
             ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        toggleBillingAddress(false);
+        toggleShippingAddress(false);
+    });
+
+        function toggleBillingAddress(editmode) {
+            if (editmode) {
+                $('#<%=lblBillingFirstName.ClientID %>').hide();
+                $('#<%=lblBillingLastName.ClientID %>').hide();
+                $('#<%=txtBillingFirstName.ClientID %>').show();
+                $('#<%=txtBillingLastName.ClientID %>').show();
+                $('#<%=lblBillingEmail.ClientID %>').hide();
+                $('#<%=txtBillingEmail.ClientID %>').show();
+                $('#<%=lblBillingPhoneNumber.ClientID %>').hide();
+                $('#<%=txtBillingPhoneNumber.ClientID %>').show();
+                $('#<%=lblBillingFaxNumber.ClientID %>').hide();
+                $('#<%=txtBillingFaxNumber.ClientID %>').show();
+                $('#<%=lblBillingFaxNumber.ClientID %>').hide();
+                $('#<%=txtBillingFaxNumber.ClientID %>').show();
+                $('#<%=lblBillingCompany.ClientID %>').hide();
+                $('#<%=txtBillingCompany.ClientID %>').show();
+                $('#<%=lblBillingAddress1.ClientID %>').hide();
+                $('#<%=txtBillingAddress1.ClientID %>').show();
+                $('#<%=lblBillingAddress2.ClientID %>').hide();
+                $('#<%=txtBillingAddress2.ClientID %>').show();
+                $('#<%=lblBillingCity.ClientID %>').hide();
+                $('#<%=txtBillingCity.ClientID %>').show();
+                $('#<%=lblBillingStateProvince.ClientID %>').hide();
+                $('#<%=ddlBillingStateProvince.ClientID %>').show();
+                $('#<%=lblBillingZipPostalCode.ClientID %>').hide();
+                $('#<%=txtBillingZipPostalCode.ClientID %>').show();
+                $('#<%=lblBillingCountry.ClientID %>').hide();
+                $('#<%=ddlBillingCountry.ClientID %>').show();
+                $('#<%=btnEditBillingAddress.ClientID %>').hide();
+                $('#<%=btnSaveBillingAddress.ClientID %>').show();
+                $('#<%=btnCancelBillingAddress.ClientID %>').show();
+            }
+            else {
+                $('#<%=lblBillingFirstName.ClientID %>').show();
+                $('#<%=lblBillingLastName.ClientID %>').show();
+                $('#<%=txtBillingFirstName.ClientID %>').hide();
+                $('#<%=txtBillingLastName.ClientID %>').hide();
+                $('#<%=lblBillingEmail.ClientID %>').show();
+                $('#<%=txtBillingEmail.ClientID %>').hide();
+                $('#<%=lblBillingPhoneNumber.ClientID %>').show();
+                $('#<%=txtBillingPhoneNumber.ClientID %>').hide();
+                $('#<%=lblBillingFaxNumber.ClientID %>').show();
+                $('#<%=txtBillingFaxNumber.ClientID %>').hide();
+                $('#<%=lblBillingFaxNumber.ClientID %>').show();
+                $('#<%=txtBillingFaxNumber.ClientID %>').hide();
+                $('#<%=lblBillingCompany.ClientID %>').show();
+                $('#<%=txtBillingCompany.ClientID %>').hide();
+                $('#<%=lblBillingAddress1.ClientID %>').show();
+                $('#<%=txtBillingAddress1.ClientID %>').hide();
+                $('#<%=lblBillingAddress2.ClientID %>').show();
+                $('#<%=txtBillingAddress2.ClientID %>').hide();
+                $('#<%=lblBillingCity.ClientID %>').show();
+                $('#<%=txtBillingCity.ClientID %>').hide();
+                $('#<%=lblBillingStateProvince.ClientID %>').show();
+                $('#<%=ddlBillingStateProvince.ClientID %>').hide();
+                $('#<%=lblBillingZipPostalCode.ClientID %>').show();
+                $('#<%=txtBillingZipPostalCode.ClientID %>').hide();
+                $('#<%=lblBillingCountry.ClientID %>').show();
+                $('#<%=ddlBillingCountry.ClientID %>').hide();
+                $('#<%=btnEditBillingAddress.ClientID %>').show();
+                $('#<%=btnSaveBillingAddress.ClientID %>').hide();
+                $('#<%=btnCancelBillingAddress.ClientID %>').hide();
+            }
+        }
+
+        function toggleShippingAddress(editmode) {
+            if (editmode) {
+                $('#<%=lblShippingFirstName.ClientID %>').hide();
+                $('#<%=lblShippingLastName.ClientID %>').hide();
+                $('#<%=txtShippingFirstName.ClientID %>').show();
+                $('#<%=txtShippingLastName.ClientID %>').show();
+                $('#<%=lblShippingEmail.ClientID %>').hide();
+                $('#<%=txtShippingEmail.ClientID %>').show();
+                $('#<%=lblShippingPhoneNumber.ClientID %>').hide();
+                $('#<%=txtShippingPhoneNumber.ClientID %>').show();
+                $('#<%=lblShippingFaxNumber.ClientID %>').hide();
+                $('#<%=txtShippingFaxNumber.ClientID %>').show();
+                $('#<%=lblShippingFaxNumber.ClientID %>').hide();
+                $('#<%=txtShippingFaxNumber.ClientID %>').show();
+                $('#<%=lblShippingCompany.ClientID %>').hide();
+                $('#<%=txtShippingCompany.ClientID %>').show();
+                $('#<%=lblShippingAddress1.ClientID %>').hide();
+                $('#<%=txtShippingAddress1.ClientID %>').show();
+                $('#<%=lblShippingAddress2.ClientID %>').hide();
+                $('#<%=txtShippingAddress2.ClientID %>').show();
+                $('#<%=lblShippingCity.ClientID %>').hide();
+                $('#<%=txtShippingCity.ClientID %>').show();
+                $('#<%=lblShippingStateProvince.ClientID %>').hide();
+                $('#<%=ddlShippingStateProvince.ClientID %>').show();
+                $('#<%=lblShippingZipPostalCode.ClientID %>').hide();
+                $('#<%=txtShippingZipPostalCode.ClientID %>').show();
+                $('#<%=lblShippingCountry.ClientID %>').hide();
+                $('#<%=ddlShippingCountry.ClientID %>').show();
+                $('#<%=btnEditShippingAddress.ClientID %>').hide();
+                $('#<%=btnSaveShippingAddress.ClientID %>').show();
+                $('#<%=btnCancelShippingAddress.ClientID %>').show();
+            }
+            else {
+                $('#<%=lblShippingFirstName.ClientID %>').show();
+                $('#<%=lblShippingLastName.ClientID %>').show();
+                $('#<%=txtShippingFirstName.ClientID %>').hide();
+                $('#<%=txtShippingLastName.ClientID %>').hide();
+                $('#<%=lblShippingEmail.ClientID %>').show();
+                $('#<%=txtShippingEmail.ClientID %>').hide();
+                $('#<%=lblShippingPhoneNumber.ClientID %>').show();
+                $('#<%=txtShippingPhoneNumber.ClientID %>').hide();
+                $('#<%=lblShippingFaxNumber.ClientID %>').show();
+                $('#<%=txtShippingFaxNumber.ClientID %>').hide();
+                $('#<%=lblShippingFaxNumber.ClientID %>').show();
+                $('#<%=txtShippingFaxNumber.ClientID %>').hide();
+                $('#<%=lblShippingCompany.ClientID %>').show();
+                $('#<%=txtShippingCompany.ClientID %>').hide();
+                $('#<%=lblShippingAddress1.ClientID %>').show();
+                $('#<%=txtShippingAddress1.ClientID %>').hide();
+                $('#<%=lblShippingAddress2.ClientID %>').show();
+                $('#<%=txtShippingAddress2.ClientID %>').hide();
+                $('#<%=lblShippingCity.ClientID %>').show();
+                $('#<%=txtShippingCity.ClientID %>').hide();
+                $('#<%=lblShippingStateProvince.ClientID %>').show();
+                $('#<%=ddlShippingStateProvince.ClientID %>').hide();
+                $('#<%=lblShippingZipPostalCode.ClientID %>').show();
+                $('#<%=txtShippingZipPostalCode.ClientID %>').hide();
+                $('#<%=lblShippingCountry.ClientID %>').show();
+                $('#<%=ddlShippingCountry.ClientID %>').hide();
+                $('#<%=btnEditShippingAddress.ClientID %>').show();
+                $('#<%=btnSaveShippingAddress.ClientID %>').hide();
+                $('#<%=btnCancelShippingAddress.ClientID %>').hide();
+            }
+        }
+
+    </script>
+
 <ajaxToolkit:TabContainer runat="server" ID="OrderTabs" ActiveTabIndex="0">
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderInfo" HeaderText="<% $NopResources:Admin.OrderDetails.OrderInfo %>">
         <ContentTemplate>
@@ -78,12 +218,17 @@
                 <tr>
                     <td class="adminTitle">
                         <nopCommerce:ToolTipLabel runat="server" ID="lblCustomerIPTitle" Text="<% $NopResources:Admin.OrderDetails.CustomerIP %>"
-                            ToolTip="<% $NopResources:Admin.OrderDetails.CustomerIP.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />:
+                            ToolTip="<% $NopResources:Admin.OrderDetails.CustomerIP.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        :
                     </td>
                     <td class="adminData">
                         <asp:Label ID="lblCustomerIP" runat="server" />
-                        <asp:Button runat="server" ID="btnBanByCustomerIP" CssClass="adminButton" CausesValidation="false" Text="<% $NopResources:Admin.OrderDetails.BtnBanByCustomerIP.Text %>" ToolTip="<% $NopResources:Admin.OrderDetails.BtnBanByCustomerIP.Tooltip %>" OnClick="BtnBanByCustomerIP_OnClick" />
-                        <nopCommerce:ConfirmationBox runat="server" ID="cbBanByCustomerIP" TargetControlID="btnBanByCustomerIP" YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>" ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                        <asp:Button runat="server" ID="btnBanByCustomerIP" CssClass="adminButton" CausesValidation="false"
+                            Text="<% $NopResources:Admin.OrderDetails.BtnBanByCustomerIP.Text %>" ToolTip="<% $NopResources:Admin.OrderDetails.BtnBanByCustomerIP.Tooltip %>"
+                            OnClick="BtnBanByCustomerIP_OnClick" />
+                        <nopCommerce:ConfirmationBox runat="server" ID="cbBanByCustomerIP" TargetControlID="btnBanByCustomerIP"
+                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
                     </td>
                 </tr>
                 <tr runat="server" id="divAffiliate">
@@ -113,7 +258,7 @@
                         <asp:Label ID="lblOrderSubtotalExclTax" runat="server"></asp:Label>
                     </td>
                 </tr>
-                <tr runat="server" ID="pnlDiscount">
+                <tr runat="server" id="pnlDiscount">
                     <td class="adminTitle">
                         <nopCommerce:ToolTipLabel runat="server" ID="lblOrderDiscountTitle" Text="<% $NopResources:Admin.OrderDetails.Discount %>"
                             ToolTip="<% $NopResources:Admin.OrderDetails.Discount.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
@@ -126,8 +271,8 @@
                     <ItemTemplate>
                         <tr>
                             <td class="adminTitle">
-                                    <nopCommerce:ToolTipLabel runat="server" ID="lblOrderGiftCardTitle" Text="Gift card info:"
-                                        ToolTip="<% $NopResources:Admin.OrderDetails.GiftCardInfo.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                                <nopCommerce:ToolTipLabel runat="server" ID="lblOrderGiftCardTitle" Text="Gift card info:"
+                                    ToolTip="<% $NopResources:Admin.OrderDetails.GiftCardInfo.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                             </td>
                             <td class="adminData">
                                 <asp:Label ID="lblGiftCardAmount" runat="server"></asp:Label>
@@ -290,27 +435,32 @@
                             OnClick="btnCapture_Click" ToolTip="<% $NopResources:Admin.OrderDetails.CaptureButton.Tooltip %>" />
                         <nopCommerce:ConfirmationBox runat="server" ID="cbCapture" TargetControlID="btnCapture"
                             YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                        &nbsp;
                         <asp:Button ID="btnMarkAsPaid" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.MarkAsPaidButton.Text %>"
                             OnClick="btnMarkAsPaid_Click" ToolTip="<% $NopResources:Admin.OrderDetails.MarkAsPaidButton.Tooltip %>" />
                         <nopCommerce:ConfirmationBox runat="server" ID="cbMarkAsPaid" TargetControlID="btnMarkAsPaid"
                             YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                        &nbsp;
                         <asp:Button ID="btnRefund" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.RefundButton.Text %>"
                             OnClick="btnRefund_Click" ToolTip="<% $NopResources:Admin.OrderDetails.RefundButton.Tooltip %>" />
                         <nopCommerce:ConfirmationBox runat="server" ID="cbRefund" TargetControlID="btnRefund"
                             YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                        &nbsp;
                         <asp:Button ID="btnRefundOffline" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.RefundOfflineButton.Text %>"
                             OnClick="btnRefundOffline_Click" ToolTip="<% $NopResources:Admin.OrderDetails.RefundOfflineButton.Tooltip %>" />
                         <nopCommerce:ConfirmationBox runat="server" ID="cbRefundOffline" TargetControlID="btnRefundOffline"
                             YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                        &nbsp;
                         <asp:Button ID="btnVoid" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.VoidButton.Text %>"
                             OnClick="btnVoid_Click" ToolTip="<% $NopResources:Admin.OrderDetails.VoidButton.Tooltip %>" />
                         <nopCommerce:ConfirmationBox runat="server" ID="cbVoid" TargetControlID="btnVoid"
                             YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />&nbsp;
+                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                        &nbsp;
                         <asp:Button ID="btnVoidOffline" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.VoidOfflineButton.Text %>"
                             OnClick="btnVoidOffline_Click" ToolTip="<% $NopResources:Admin.OrderDetails.VoidOfflineButton.Tooltip %>" />
                         <nopCommerce:ConfirmationBox runat="server" ID="cbVoidOffline" TargetControlID="btnVoidOffline"
@@ -336,7 +486,7 @@
         </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderBillingInfo" HeaderText="<% $NopResources:Admin.OrderDetails.BillingInfo %>">
-        <contenttemplate>
+        <ContentTemplate>
             <table class="adminContent">
                 <tr>
                     <td class="adminTitle">
@@ -344,40 +494,148 @@
                             ToolTip="<% $NopResources:Admin.OrderDetails.BillingAddress.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
-                        <div>
-                            <div style="font-weight: bold">
-                                <asp:Literal ID="lBillingFirstName" runat="server"></asp:Literal>
-                                <asp:Literal ID="lBillingLastName" runat="server"></asp:Literal>
-                            </div>
-                            <div>
-                                <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Email")%>
-                                <asp:Literal ID="lBillingEmail" runat="server"></asp:Literal></div>
-                            <div>
-                                <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Phone")%>
-                                <asp:Literal ID="lBillingPhoneNumber" runat="server"></asp:Literal></div>
-                            <div>
-                                <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Fax")%>
-                                <asp:Literal ID="lBillingFaxNumber" runat="server"></asp:Literal></div>
-                            <asp:Panel ID="pnlBillingCompany" runat="server">
-                                <asp:Literal ID="lBillingCompany" runat="server"></asp:Literal></asp:Panel>
-                            <div>
-                                <asp:Literal ID="lBillingAddress1" runat="server"></asp:Literal></div>
-                            <asp:Panel ID="pnlBillingAddress2" runat="server">
-                                <asp:Literal ID="lBillingAddress2" runat="server"></asp:Literal></asp:Panel>
-                            <div>
-                                <asp:Literal ID="lBillingCity" runat="server"></asp:Literal>,
-                                <asp:Literal ID="lBillingStateProvince" runat="server"></asp:Literal>
-                                <asp:Literal ID="lBillingZipPostalCode" runat="server"></asp:Literal></div>
-                            <asp:Panel ID="pnlBillingCountry" runat="server">
-                                <asp:Literal ID="lBillingCountry" runat="server"></asp:Literal></asp:Panel>
-                        </div>
+                        <table style="border: solid 1px black; padding:5px;">
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.FullName")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingFirstName" runat="server" />
+                                    <asp:Label ID="lblBillingLastName" runat="server" />
+                                    <asp:TextBox ID="txtBillingFirstName" runat="server" CssClass="adminInput"></asp:TextBox>
+                                    <asp:TextBox ID="txtBillingLastName" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Email")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingEmail" runat="server" />
+                                    <asp:TextBox runat="server" ID="txtBillingEmail" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Phone")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingPhoneNumber" runat="server" />
+                                    <asp:TextBox ID="txtBillingPhoneNumber" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Fax")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingFaxNumber" runat="server" />
+                                    <asp:TextBox ID="txtBillingFaxNumber" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Company")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingCompany" runat="server" />
+                                    <asp:TextBox ID="txtBillingCompany" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Address1")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingAddress1" runat="server" />
+                                    <asp:TextBox ID="txtBillingAddress1" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Address2")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingAddress2" runat="server" />
+                                    <asp:TextBox ID="txtBillingAddress2" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.City")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingCity" runat="server" />
+                                    <asp:TextBox ID="txtBillingCity" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.StateProvince")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingStateProvince" runat="server" />
+                                    <asp:UpdatePanel ID="upEditBilling" runat="server" UpdateMode="Conditional">
+                                        <ContentTemplate>
+                                            <asp:DropDownList ID="ddlBillingStateProvince" AutoPostBack="False" runat="server"
+                                                CssClass="adminInput">
+                                            </asp:DropDownList>
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="ddlBillingCountry" EventName="SelectedIndexChanged" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.ZipPostalCode")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingZipPostalCode" runat="server" />
+                                    <asp:TextBox ID="txtBillingZipPostalCode" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.Country")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBillingCountry" runat="server" />
+                                    <asp:DropDownList ID="ddlBillingCountry" AutoPostBack="True" runat="server" CssClass="adminInput"
+                                        OnSelectedIndexChanged="ddlBillingCountry_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Button ID="btnEditBillingAddress" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.EditBillingAddressButton.Text %>">
+                                    </asp:Button>
+                                    <asp:Button ID="btnSaveBillingAddress" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SaveBillingAddressButton.Text %>"
+                                        OnClick="btnSaveBillingAddress_Click"></asp:Button>
+                                </td>
+                                <td>
+                                    <asp:Button ID="btnCancelBillingAddress" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.CancelBillingAddressButton.Text %>">
+                                    </asp:Button>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+            <asp:UpdateProgress ID="up1" runat="server" AssociatedUpdatePanelID="upEditBilling">
+                <ProgressTemplate>
+                    <div class="progress">
+                        <asp:Image ID="imgUpdateProgress" runat="server" ImageUrl="~/images/UpdateProgress.gif"
+                            AlternateText="update" />
+                        <%=GetLocaleResourceString("Admin.Common.Wait...")%>
+                    </div>
+                </ProgressTemplate>
+            </asp:UpdateProgress>
+        </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderShippingInfo" HeaderText="<% $NopResources:Admin.OrderDetails.ShippingInfo %>">
-        <contenttemplate>
+        <ContentTemplate>
             <table class="adminContent">
                 <tr runat="server" id="divShippingNotRequired" visible="false">
                     <td class="adminTitle">
@@ -392,35 +650,144 @@
                             ToolTip="<% $NopResources:Admin.OrderDetails.ShippingAddress.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
-                        <div>
-                            <div style="font-weight: bold">
-                                <asp:Literal ID="lShippingFirstName" runat="server"></asp:Literal>
-                                <asp:Literal ID="lShippingLastName" runat="server"></asp:Literal>
-                            </div>
-                            <div>
-                                <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Email")%>
-                                <asp:Literal ID="lShippingEmail" runat="server"></asp:Literal></div>
-                            <div>
-                                <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Phone")%>
-                                <asp:Literal ID="lShippingPhoneNumber" runat="server"></asp:Literal></div>
-                            <div>
-                                <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Fax")%>
-                                <asp:Literal ID="lShippingFaxNumber" runat="server"></asp:Literal></div>
-                            <asp:Panel ID="pnlShippingCompany" runat="server">
-                                <asp:Literal ID="lShippingCompany" runat="server"></asp:Literal></asp:Panel>
-                            <div>
-                                <asp:Literal ID="lShippingAddress1" runat="server"></asp:Literal></div>
-                            <asp:Panel ID="pnlShippingAddress2" runat="server">
-                                <asp:Literal ID="lShippingAddress2" runat="server"></asp:Literal></asp:Panel>
-                            <div>
-                                <asp:Literal ID="lShippingCity" runat="server"></asp:Literal>,
-                                <asp:Literal ID="lShippingStateProvince" runat="server"></asp:Literal>
-                                <asp:Literal ID="lShippingZipPostalCode" runat="server"></asp:Literal></div>
-                            <asp:Panel ID="pnlShippingCountry" runat="server">
-                                <asp:Literal ID="lShippingCountry" runat="server"></asp:Literal></asp:Panel>
-                            <div style="padding-top:15px;">
-                                <img
-                                    alt="google maps" src="<%=CommonHelper.GetStoreLocation()%>images/GoogleMaps.gif" />   <asp:HyperLink ID="lShippingAddressGoogle" runat="server" Text="<% $NopResources:Admin.OrderDetails.ShippingAddress.Google %>"></asp:HyperLink> </div>
+                        <table style="border: solid 1px black;padding:5px;">
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.FullName")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingFirstName" runat="server" />
+                                    <asp:Label ID="lblShippingLastName" runat="server" />
+                                    <asp:TextBox ID="txtShippingFirstName" runat="server" CssClass="adminInput"></asp:TextBox>
+                                    <asp:TextBox ID="txtShippingLastName" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Email")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingEmail" runat="server" />
+                                    <asp:TextBox runat="server" ID="txtShippingEmail" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Phone")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingPhoneNumber" runat="server" />
+                                    <asp:TextBox ID="txtShippingPhoneNumber" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Fax")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingFaxNumber" runat="server" />
+                                    <asp:TextBox ID="txtShippingFaxNumber" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Company")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingCompany" runat="server" />
+                                    <asp:TextBox ID="txtShippingCompany" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Address1")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingAddress1" runat="server" />
+                                    <asp:TextBox ID="txtShippingAddress1" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Address2")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingAddress2" runat="server" />
+                                    <asp:TextBox ID="txtShippingAddress2" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.City")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingCity" runat="server" />
+                                    <asp:TextBox ID="txtShippingCity" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.StateProvince")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingStateProvince" runat="server" />
+                                    <asp:UpdatePanel ID="upEditShipping" runat="server" UpdateMode="Conditional">
+                                        <ContentTemplate>
+                                            <asp:DropDownList ID="ddlShippingStateProvince" AutoPostBack="False" runat="server"
+                                                CssClass="adminInput">
+                                            </asp:DropDownList>
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="ddlShippingCountry" EventName="SelectedIndexChanged" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.ZipPostalCode")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingZipPostalCode" runat="server" />
+                                    <asp:TextBox ID="txtShippingZipPostalCode" runat="server" CssClass="adminInput"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.Country")%>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblShippingCountry" runat="server" />
+                                    <asp:DropDownList ID="ddlShippingCountry" AutoPostBack="True" runat="server" CssClass="adminInput"
+                                        OnSelectedIndexChanged="ddlShippingCountry_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Button ID="btnEditShippingAddress" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.EditShippingAddressButton.Text %>">
+                                    </asp:Button>
+                                    <asp:Button ID="btnSaveShippingAddress" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SaveShippingAddressButton.Text %>"
+                                        OnClick="btnSaveShippingAddress_Click"></asp:Button>
+                                </td>
+                                <td>
+                                    <asp:Button ID="btnCancelShippingAddress" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.CancelShippingAddressButton.Text %>">
+                                    </asp:Button>
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:UpdateProgress ID="up2" runat="server" AssociatedUpdatePanelID="upEditShipping">
+                            <ProgressTemplate>
+                                <div class="progress">
+                                    <asp:Image ID="imgUpdateProgress" runat="server" ImageUrl="~/images/UpdateProgress.gif"
+                                        AlternateText="update" />
+                                    <%=GetLocaleResourceString("Admin.Common.Wait...")%>
+                                </div>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
+                        <div style="padding-top: 15px;">
+                            <img alt="google maps" src="<%=CommonHelper.GetStoreLocation()%>images/GoogleMaps.gif" />
+                            <asp:HyperLink ID="hlShippingAddressGoogle" runat="server" Text="<% $NopResources:Admin.OrderDetails.ShippingAddress.Google %>"></asp:HyperLink>
                         </div>
                     </td>
                 </tr>

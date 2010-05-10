@@ -1250,6 +1250,84 @@ set @resources='
   <LocaleResource Name="Admin.BulkEditProducts.SuccessfullyUpdated">
     <Value>All product variants have been successfully updated.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.FullName">
+    <Value>Full name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.FirstName">
+    <Value>First name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.LastName">
+    <Value>Last name:></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.Company">
+    <Value>Company:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.Address1">
+    <Value>Address 1:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.Address2">
+    <Value>Address 2:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.City">
+    <Value>City:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.StateProvince">
+    <Value>State / Province:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.ZipPostalCode">
+    <Value>Zip / PostalCode:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.BillingAddress.Country">
+    <Value>Country:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.FullName">
+    <Value>Full name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.FirstName">
+    <Value>First name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.LastName">
+    <Value>Last name:></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.Company">
+    <Value>Company:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.Address1">
+    <Value>Address 1:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.Address2">
+    <Value>Address 2:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.City">
+    <Value>City:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.StateProvince">
+    <Value>State / Province:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.ZipPostalCode">
+    <Value>Zip / PostalCode:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.ShippingAddress.Country">
+    <Value>Country:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditBillingAddressButton.Text">
+    <Value>Edit address</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.CancelBillingAddressButton.Text">
+    <Value>Cancel</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.SaveBillingAddressButton.Text">
+    <Value>Save address</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditShippingAddressButton.Text">
+    <Value>Edit address</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.CancelShippingAddressButton.Text">
+    <Value>Cancel</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.SaveShippingAddressButton.Text">
+    <Value>Save address</Value>
+  </LocaleResource>
 </Language>
 '
 

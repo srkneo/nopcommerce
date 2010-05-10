@@ -860,139 +860,265 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblBillingAddress;
         
         /// <summary>
-        /// lBillingFirstName control.
+        /// lblBillingFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingFirstName;
+        protected global::System.Web.UI.WebControls.Label lblBillingFirstName;
         
         /// <summary>
-        /// lBillingLastName control.
+        /// lblBillingLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingLastName;
+        protected global::System.Web.UI.WebControls.Label lblBillingLastName;
         
         /// <summary>
-        /// lBillingEmail control.
+        /// txtBillingFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingEmail;
+        protected global::System.Web.UI.WebControls.TextBox txtBillingFirstName;
         
         /// <summary>
-        /// lBillingPhoneNumber control.
+        /// txtBillingLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingPhoneNumber;
+        protected global::System.Web.UI.WebControls.TextBox txtBillingLastName;
         
         /// <summary>
-        /// lBillingFaxNumber control.
+        /// lblBillingEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingFaxNumber;
+        protected global::System.Web.UI.WebControls.Label lblBillingEmail;
         
         /// <summary>
-        /// pnlBillingCompany control.
+        /// txtBillingEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlBillingCompany;
+        protected global::System.Web.UI.WebControls.TextBox txtBillingEmail;
         
         /// <summary>
-        /// lBillingCompany control.
+        /// lblBillingPhoneNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingCompany;
+        protected global::System.Web.UI.WebControls.Label lblBillingPhoneNumber;
         
         /// <summary>
-        /// lBillingAddress1 control.
+        /// txtBillingPhoneNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingAddress1;
+        protected global::System.Web.UI.WebControls.TextBox txtBillingPhoneNumber;
         
         /// <summary>
-        /// pnlBillingAddress2 control.
+        /// lblBillingFaxNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlBillingAddress2;
+        protected global::System.Web.UI.WebControls.Label lblBillingFaxNumber;
         
         /// <summary>
-        /// lBillingAddress2 control.
+        /// txtBillingFaxNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingAddress2;
+        protected global::System.Web.UI.WebControls.TextBox txtBillingFaxNumber;
         
         /// <summary>
-        /// lBillingCity control.
+        /// lblBillingCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingCity;
+        protected global::System.Web.UI.WebControls.Label lblBillingCompany;
         
         /// <summary>
-        /// lBillingStateProvince control.
+        /// txtBillingCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingStateProvince;
+        protected global::System.Web.UI.WebControls.TextBox txtBillingCompany;
         
         /// <summary>
-        /// lBillingZipPostalCode control.
+        /// lblBillingAddress1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingZipPostalCode;
+        protected global::System.Web.UI.WebControls.Label lblBillingAddress1;
         
         /// <summary>
-        /// pnlBillingCountry control.
+        /// txtBillingAddress1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlBillingCountry;
+        protected global::System.Web.UI.WebControls.TextBox txtBillingAddress1;
         
         /// <summary>
-        /// lBillingCountry control.
+        /// lblBillingAddress2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lBillingCountry;
+        protected global::System.Web.UI.WebControls.Label lblBillingAddress2;
+        
+        /// <summary>
+        /// txtBillingAddress2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBillingAddress2;
+        
+        /// <summary>
+        /// lblBillingCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBillingCity;
+        
+        /// <summary>
+        /// txtBillingCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBillingCity;
+        
+        /// <summary>
+        /// lblBillingStateProvince control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBillingStateProvince;
+        
+        /// <summary>
+        /// upEditBilling control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upEditBilling;
+        
+        /// <summary>
+        /// ddlBillingStateProvince control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlBillingStateProvince;
+        
+        /// <summary>
+        /// lblBillingZipPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBillingZipPostalCode;
+        
+        /// <summary>
+        /// txtBillingZipPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBillingZipPostalCode;
+        
+        /// <summary>
+        /// lblBillingCountry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBillingCountry;
+        
+        /// <summary>
+        /// ddlBillingCountry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlBillingCountry;
+        
+        /// <summary>
+        /// btnEditBillingAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEditBillingAddress;
+        
+        /// <summary>
+        /// btnSaveBillingAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveBillingAddress;
+        
+        /// <summary>
+        /// btnCancelBillingAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelBillingAddress;
+        
+        /// <summary>
+        /// up1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress up1;
         
         /// <summary>
         /// pnlOrderShippingInfo control.
@@ -1031,148 +1157,274 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblShippingAddress;
         
         /// <summary>
-        /// lShippingFirstName control.
+        /// lblShippingFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingFirstName;
+        protected global::System.Web.UI.WebControls.Label lblShippingFirstName;
         
         /// <summary>
-        /// lShippingLastName control.
+        /// lblShippingLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingLastName;
+        protected global::System.Web.UI.WebControls.Label lblShippingLastName;
         
         /// <summary>
-        /// lShippingEmail control.
+        /// txtShippingFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingEmail;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingFirstName;
         
         /// <summary>
-        /// lShippingPhoneNumber control.
+        /// txtShippingLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingPhoneNumber;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingLastName;
         
         /// <summary>
-        /// lShippingFaxNumber control.
+        /// lblShippingEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingFaxNumber;
+        protected global::System.Web.UI.WebControls.Label lblShippingEmail;
         
         /// <summary>
-        /// pnlShippingCompany control.
+        /// txtShippingEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlShippingCompany;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingEmail;
         
         /// <summary>
-        /// lShippingCompany control.
+        /// lblShippingPhoneNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingCompany;
+        protected global::System.Web.UI.WebControls.Label lblShippingPhoneNumber;
         
         /// <summary>
-        /// lShippingAddress1 control.
+        /// txtShippingPhoneNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingAddress1;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingPhoneNumber;
         
         /// <summary>
-        /// pnlShippingAddress2 control.
+        /// lblShippingFaxNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlShippingAddress2;
+        protected global::System.Web.UI.WebControls.Label lblShippingFaxNumber;
         
         /// <summary>
-        /// lShippingAddress2 control.
+        /// txtShippingFaxNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingAddress2;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingFaxNumber;
         
         /// <summary>
-        /// lShippingCity control.
+        /// lblShippingCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingCity;
+        protected global::System.Web.UI.WebControls.Label lblShippingCompany;
         
         /// <summary>
-        /// lShippingStateProvince control.
+        /// txtShippingCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingStateProvince;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingCompany;
         
         /// <summary>
-        /// lShippingZipPostalCode control.
+        /// lblShippingAddress1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingZipPostalCode;
+        protected global::System.Web.UI.WebControls.Label lblShippingAddress1;
         
         /// <summary>
-        /// pnlShippingCountry control.
+        /// txtShippingAddress1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlShippingCountry;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingAddress1;
         
         /// <summary>
-        /// lShippingCountry control.
+        /// lblShippingAddress2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lShippingCountry;
+        protected global::System.Web.UI.WebControls.Label lblShippingAddress2;
         
         /// <summary>
-        /// lShippingAddressGoogle control.
+        /// txtShippingAddress2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lShippingAddressGoogle;
+        protected global::System.Web.UI.WebControls.TextBox txtShippingAddress2;
+        
+        /// <summary>
+        /// lblShippingCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShippingCity;
+        
+        /// <summary>
+        /// txtShippingCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtShippingCity;
+        
+        /// <summary>
+        /// lblShippingStateProvince control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShippingStateProvince;
+        
+        /// <summary>
+        /// upEditShipping control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upEditShipping;
+        
+        /// <summary>
+        /// ddlShippingStateProvince control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlShippingStateProvince;
+        
+        /// <summary>
+        /// lblShippingZipPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShippingZipPostalCode;
+        
+        /// <summary>
+        /// txtShippingZipPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtShippingZipPostalCode;
+        
+        /// <summary>
+        /// lblShippingCountry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblShippingCountry;
+        
+        /// <summary>
+        /// ddlShippingCountry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlShippingCountry;
+        
+        /// <summary>
+        /// btnEditShippingAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEditShippingAddress;
+        
+        /// <summary>
+        /// btnSaveShippingAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveShippingAddress;
+        
+        /// <summary>
+        /// btnCancelShippingAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelShippingAddress;
+        
+        /// <summary>
+        /// up2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress up2;
+        
+        /// <summary>
+        /// hlShippingAddressGoogle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink hlShippingAddressGoogle;
         
         /// <summary>
         /// divShippingWeight control.

@@ -212,28 +212,32 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (order == null)
                 return;
 
-            this.lBillingFirstName.Text = Server.HtmlEncode(order.BillingFirstName);
-            this.lBillingLastName.Text = Server.HtmlEncode(order.BillingLastName);
-            this.lBillingPhoneNumber.Text = Server.HtmlEncode(order.BillingPhoneNumber);
-            this.lBillingEmail.Text = Server.HtmlEncode(order.BillingEmail);
-            this.lBillingFaxNumber.Text = Server.HtmlEncode(order.BillingFaxNumber);
-            if (!String.IsNullOrEmpty(order.BillingCompany))
-                this.lBillingCompany.Text = Server.HtmlEncode(order.BillingCompany);
-            else
-                this.pnlBillingCompany.Visible = false;
-            this.lBillingAddress1.Text = Server.HtmlEncode(order.BillingAddress1);
-            if (!String.IsNullOrEmpty(order.BillingAddress2))
-                this.lBillingAddress2.Text = Server.HtmlEncode(order.BillingAddress2);
-            else
-                this.pnlBillingAddress2.Visible = false;
-            this.lBillingCity.Text = Server.HtmlEncode(order.BillingCity);
-            if (!String.IsNullOrEmpty(order.BillingCountry))
-                this.lBillingCountry.Text = Server.HtmlEncode(order.BillingCountry);
-            else
-                this.pnlBillingCountry.Visible = false;
-            if (!String.IsNullOrEmpty(order.BillingStateProvince))
-                this.lBillingStateProvince.Text = Server.HtmlEncode(order.BillingStateProvince);
-            this.lBillingZipPostalCode.Text = Server.HtmlEncode(order.BillingZipPostalCode);
+            this.lblBillingFirstName.Text = Server.HtmlEncode(order.BillingFirstName);
+            this.txtBillingFirstName.Text = order.BillingFirstName;
+            this.lblBillingLastName.Text = Server.HtmlEncode(order.BillingLastName);
+            this.txtBillingLastName.Text = order.BillingLastName;
+            this.lblBillingPhoneNumber.Text = Server.HtmlEncode(order.BillingPhoneNumber);
+            this.txtBillingPhoneNumber.Text = order.BillingPhoneNumber;
+            this.lblBillingEmail.Text = Server.HtmlEncode(order.BillingEmail);
+            this.txtBillingEmail.Text = order.BillingEmail;
+            this.lblBillingFaxNumber.Text = Server.HtmlEncode(order.BillingFaxNumber);
+            this.txtBillingFaxNumber.Text = order.BillingFaxNumber;
+            this.lblBillingCompany.Text = Server.HtmlEncode(order.BillingCompany);
+            this.txtBillingCompany.Text = order.BillingCompany;
+            this.lblBillingAddress1.Text = Server.HtmlEncode(order.BillingAddress1);
+            this.txtBillingAddress1.Text = order.BillingAddress1;
+            this.lblBillingAddress2.Text = Server.HtmlEncode(order.BillingAddress2);
+            this.txtBillingAddress2.Text = order.BillingAddress2;
+            this.lblBillingCity.Text = Server.HtmlEncode(order.BillingCity);
+            this.txtBillingCity.Text = order.BillingCity;
+            this.lblBillingCountry.Text = Server.HtmlEncode(order.BillingCountry);
+            this.FillBillingCountryDropDowns(order);
+            CommonHelper.SelectListItem(this.ddlBillingCountry, order.BillingCountryId);
+            this.lblBillingStateProvince.Text = Server.HtmlEncode(order.BillingStateProvince);
+            this.FillBillingStateProvinceDropDowns();
+            CommonHelper.SelectListItem(this.ddlBillingStateProvince, order.BillingStateProvinceId);
+            this.lblBillingZipPostalCode.Text = Server.HtmlEncode(order.BillingZipPostalCode);
+            this.txtBillingZipPostalCode.Text = order.BillingZipPostalCode;
         }
 
         protected void BindShippingInfo(Order order)
@@ -243,30 +247,34 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             if (order.ShippingStatus != ShippingStatusEnum.ShippingNotRequired)
             {
-                this.lShippingFirstName.Text = Server.HtmlEncode(order.ShippingFirstName);
-                this.lShippingLastName.Text = Server.HtmlEncode(order.ShippingLastName);
-                this.lShippingPhoneNumber.Text = Server.HtmlEncode(order.ShippingPhoneNumber);
-                this.lShippingEmail.Text = Server.HtmlEncode(order.ShippingEmail);
-                this.lShippingFaxNumber.Text = Server.HtmlEncode(order.ShippingFaxNumber);
-                if (!String.IsNullOrEmpty(order.ShippingCompany))
-                    this.lShippingCompany.Text = Server.HtmlEncode(order.ShippingCompany);
-                else
-                    this.pnlShippingCompany.Visible = false;
-                this.lShippingAddress1.Text = Server.HtmlEncode(order.ShippingAddress1);
-                if (!String.IsNullOrEmpty(order.ShippingAddress2))
-                    this.lShippingAddress2.Text = Server.HtmlEncode(order.ShippingAddress2);
-                else
-                    this.pnlShippingAddress2.Visible = false;
-                this.lShippingCity.Text = Server.HtmlEncode(order.ShippingCity);
-                if (!String.IsNullOrEmpty(order.ShippingCountry))
-                    this.lShippingCountry.Text = Server.HtmlEncode(order.ShippingCountry);
-                else
-                    this.pnlShippingCountry.Visible = false;
-                if (!String.IsNullOrEmpty(order.ShippingStateProvince))
-                    this.lShippingStateProvince.Text = Server.HtmlEncode(order.ShippingStateProvince);
-                this.lShippingZipPostalCode.Text = Server.HtmlEncode(order.ShippingZipPostalCode);
+                this.lblShippingFirstName.Text = Server.HtmlEncode(order.ShippingFirstName);
+                this.txtShippingFirstName.Text = order.ShippingFirstName;
+                this.lblShippingLastName.Text = Server.HtmlEncode(order.ShippingLastName);
+                this.txtShippingLastName.Text = order.ShippingLastName;
+                this.lblShippingPhoneNumber.Text = Server.HtmlEncode(order.ShippingPhoneNumber);
+                this.txtShippingPhoneNumber.Text = order.ShippingPhoneNumber;
+                this.lblShippingEmail.Text = Server.HtmlEncode(order.ShippingEmail);
+                this.txtShippingEmail.Text = order.ShippingEmail;
+                this.lblShippingFaxNumber.Text = Server.HtmlEncode(order.ShippingFaxNumber);
+                this.txtShippingFaxNumber.Text = order.ShippingFaxNumber;
+                this.lblShippingCompany.Text = Server.HtmlEncode(order.ShippingCompany);
+                this.txtShippingCompany.Text = order.ShippingCompany;
+                this.lblShippingAddress1.Text = Server.HtmlEncode(order.ShippingAddress1);
+                this.txtShippingAddress1.Text = order.ShippingAddress1;
+                this.lblShippingAddress2.Text = Server.HtmlEncode(order.ShippingAddress2);
+                this.txtShippingAddress2.Text = order.ShippingAddress2;
+                this.lblShippingCity.Text = Server.HtmlEncode(order.ShippingCity);
+                this.txtShippingCity.Text = order.ShippingCity;
+                this.lblShippingCountry.Text = Server.HtmlEncode(order.ShippingCountry);
+                this.FillShippingCountryDropDowns(order);
+                CommonHelper.SelectListItem(this.ddlShippingCountry, order.ShippingCountryId);
+                this.lblShippingStateProvince.Text = Server.HtmlEncode(order.ShippingStateProvince);
+                this.FillShippingStateProvinceDropDowns();
+                CommonHelper.SelectListItem(this.ddlShippingStateProvince, order.ShippingStateProvinceId);
+                this.lblShippingZipPostalCode.Text = Server.HtmlEncode(order.ShippingZipPostalCode);
+                this.txtShippingZipPostalCode.Text = order.ShippingZipPostalCode;
 
-                this.lShippingAddressGoogle.NavigateUrl = string.Format("http://maps.google.com/maps?f=q&hl=en&ie=UTF8&oe=UTF8&geocode=&q={0}", Server.UrlEncode(order.ShippingAddress1 + " " + order.ShippingZipPostalCode + " " + order.ShippingCity + " " + order.ShippingCountry));
+                this.hlShippingAddressGoogle.NavigateUrl = string.Format("http://maps.google.com/maps?f=q&hl=en&ie=UTF8&oe=UTF8&geocode=&q={0}", Server.UrlEncode(order.ShippingAddress1 + " " + order.ShippingZipPostalCode + " " + order.ShippingCity + " " + order.ShippingCountry));
 
                 this.lblShippingMethod.Text = Server.HtmlEncode(order.ShippingMethod);
 
@@ -583,7 +591,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!Page.IsPostBack)
             {
                 this.BindData();
+                this.SelectTab(this.OrderTabs, this.TabId);
             }
+        }
+        
+        protected override void OnPreRender(EventArgs e)
+        {
+            BindJQuery();
+            
+            this.btnEditBillingAddress.Attributes.Add("onclick", "toggleBillingAddress(true);return false;");
+            this.btnCancelBillingAddress.Attributes.Add("onclick", "toggleBillingAddress(false);return false;");
+            this.btnEditShippingAddress.Attributes.Add("onclick", "toggleShippingAddress(true);return false;");
+            this.btnCancelShippingAddress.Attributes.Add("onclick", "toggleShippingAddress(false);return false;");
+            
+            base.OnPreRender(e);
         }
 
         protected void rptrGiftCards_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -619,6 +640,156 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 OrderManager.Deliver(this.OrderId, true);
                 BindData();
+            }
+            catch (Exception exc)
+            {
+                ProcessException(exc);
+            }
+        }
+
+        protected void btnSaveBillingAddress_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var order = OrderManager.GetOrderById(this.OrderId);
+                if (order != null)
+                {
+                    string billingFirstName = txtBillingFirstName.Text;
+                    string billingLastName = this.txtBillingLastName.Text;
+                    string billingPhoneNumber = this.txtBillingPhoneNumber.Text;
+                    string billingEmail = this.txtBillingEmail.Text;
+                    string billingFaxNumber = this.txtBillingFaxNumber.Text;
+                    string billingCompany = this.txtBillingCompany.Text;
+                    string billingAddress1 = this.txtBillingAddress1.Text;
+                    string billingAddress2 = this.txtBillingAddress2.Text;
+                    string billingCity = this.txtBillingCity.Text;
+                    int billingCountryId = int.Parse(ddlBillingCountry.SelectedItem.Value);
+                    string billingCountryStr = string.Empty;
+                    var billingCountry = CountryManager.GetCountryById(billingCountryId);
+                    if (billingCountry != null)
+                    {
+                        billingCountryStr = billingCountry.Name;
+                    }
+                    int billingStateProvinceId = int.Parse(ddlBillingStateProvince.SelectedItem.Value);
+                    string billingStateProvinceStr = string.Empty;
+                    var billingStateProvince = StateProvinceManager.GetStateProvinceById(billingStateProvinceId);
+                    if (billingStateProvince != null)
+                    {
+                        billingStateProvinceStr = billingStateProvince.Name;
+                    }
+                    string billingZipPostalCode = this.txtBillingZipPostalCode.Text;
+
+                    order = OrderManager.UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
+                        order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
+                       order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
+                       order.OrderTax, order.OrderTotal, order.OrderDiscount,
+                       order.OrderSubtotalInclTaxInCustomerCurrency, order.OrderSubtotalExclTaxInCustomerCurrency,
+                       order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
+                       order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+                       order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
+                       order.OrderDiscountInCustomerCurrency,
+                       order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
+                       order.CustomerCurrencyCode, order.OrderWeight,
+                       order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                       order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
+                        order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                        order.PaymentMethodId, order.PaymentMethodName, order.AuthorizationTransactionId,
+                        order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
+                        order.CaptureTransactionId, order.CaptureTransactionResult,
+                        order.SubscriptionTransactionId, order.PurchaseOrderNumber,
+                        order.PaymentStatus, order.PaidDate,
+                        billingFirstName, billingLastName, billingPhoneNumber,
+                        billingEmail, billingFaxNumber, billingCompany, billingAddress1,
+                        billingAddress2, billingCity, billingStateProvinceStr,
+                        billingStateProvinceId, billingZipPostalCode, billingCountryStr,
+                        billingCountryId, order.ShippingStatus,
+                        order.ShippingFirstName, order.ShippingLastName, order.ShippingPhoneNumber,
+                        order.ShippingEmail, order.ShippingFaxNumber, order.ShippingCompany,
+                        order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
+                        order.ShippingStateProvince, order.ShippingStateProvinceId, order.ShippingZipPostalCode,
+                        order.ShippingCountry, order.ShippingCountryId,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId,
+                        order.ShippedDate, order.DeliveryDate, order.TrackingNumber, order.Deleted,
+                        order.CreatedOn);
+                }
+
+                string url = string.Format("{0}OrderDetails.aspx?OrderID={1}&TabID={2}", CommonHelper.GetStoreAdminLocation(), this.OrderId, this.GetActiveTabId(this.OrderTabs));
+                Response.Redirect(url);
+            }
+            catch (Exception exc)
+            {
+                ProcessException(exc);
+            }
+        }
+
+        protected void btnSaveShippingAddress_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var order = OrderManager.GetOrderById(this.OrderId);
+                if (order != null)
+                {
+                    string shippingFirstName = txtShippingFirstName.Text;
+                    string shippingLastName = this.txtShippingLastName.Text;
+                    string shippingPhoneNumber = this.txtShippingPhoneNumber.Text;
+                    string shippingEmail = this.txtShippingEmail.Text;
+                    string shippingFaxNumber = this.txtShippingFaxNumber.Text;
+                    string shippingCompany = this.txtShippingCompany.Text;
+                    string shippingAddress1 = this.txtShippingAddress1.Text;
+                    string shippingAddress2 = this.txtShippingAddress2.Text;
+                    string shippingCity = this.txtShippingCity.Text;
+                    int shippingCountryId = int.Parse(ddlShippingCountry.SelectedItem.Value);
+                    string shippingCountryStr = string.Empty;
+                    var shippingCountry = CountryManager.GetCountryById(shippingCountryId);
+                    if (shippingCountry != null)
+                    {
+                        shippingCountryStr = shippingCountry.Name;
+                    }
+                    int shippingStateProvinceId = int.Parse(ddlShippingStateProvince.SelectedItem.Value);
+                    string shippingStateProvinceStr = string.Empty;
+                    var shippingStateProvince = StateProvinceManager.GetStateProvinceById(shippingStateProvinceId);
+                    if (shippingStateProvince != null)
+                    {
+                        shippingStateProvinceStr = shippingStateProvince.Name;
+                    }
+                    string shippingZipPostalCode = this.txtShippingZipPostalCode.Text;
+
+                    order = OrderManager.UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
+                        order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
+                       order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
+                       order.OrderTax, order.OrderTotal, order.OrderDiscount,
+                       order.OrderSubtotalInclTaxInCustomerCurrency, order.OrderSubtotalExclTaxInCustomerCurrency,
+                       order.OrderShippingInclTaxInCustomerCurrency, order.OrderShippingExclTaxInCustomerCurrency,
+                       order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+                       order.OrderTaxInCustomerCurrency, order.OrderTotalInCustomerCurrency,
+                       order.OrderDiscountInCustomerCurrency,
+                       order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
+                       order.CustomerCurrencyCode, order.OrderWeight,
+                       order.AffiliateId, order.OrderStatus, order.AllowStoringCreditCardNumber, order.CardType,
+                       order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
+                        order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                        order.PaymentMethodId, order.PaymentMethodName, order.AuthorizationTransactionId,
+                        order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
+                        order.CaptureTransactionId, order.CaptureTransactionResult,
+                        order.SubscriptionTransactionId, order.PurchaseOrderNumber,
+                        order.PaymentStatus, order.PaidDate,
+                        order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
+                        order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
+                        order.BillingAddress2, order.BillingCity, order.BillingStateProvince,
+                        order.BillingStateProvinceId, order.BillingZipPostalCode, order.BillingCountry,
+                        order.BillingCountryId, order.ShippingStatus,
+                        shippingFirstName, shippingLastName, shippingPhoneNumber,
+                        shippingEmail, shippingFaxNumber, shippingCompany,
+                        shippingAddress1, shippingAddress2, shippingCity,
+                        shippingStateProvinceStr, shippingStateProvinceId, shippingZipPostalCode,
+                        shippingCountryStr, shippingCountryId,
+                        order.ShippingMethod, order.ShippingRateComputationMethodId,
+                        order.ShippedDate, order.DeliveryDate, order.TrackingNumber, order.Deleted,
+                        order.CreatedOn);
+                }
+
+                string url = string.Format("{0}OrderDetails.aspx?OrderID={1}&TabID={2}", CommonHelper.GetStoreAdminLocation(), this.OrderId, this.GetActiveTabId(this.OrderTabs));
+                Response.Redirect(url);
             }
             catch (Exception exc)
             {
@@ -1015,6 +1186,74 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected void FillBillingCountryDropDowns(Order order)
+        {
+            this.ddlBillingCountry.Items.Clear();
+            var countryCollection = CountryManager.GetAllCountriesForBilling();
+            foreach (var country in countryCollection)
+            {
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
+                this.ddlBillingCountry.Items.Add(ddlCountryItem2);
+            }
+        }
+
+        protected void FillBillingStateProvinceDropDowns()
+        {
+            this.ddlBillingStateProvince.Items.Clear();
+            int countryId = int.Parse(this.ddlBillingCountry.SelectedItem.Value);
+
+            var stateProvinces = StateProvinceManager.GetStateProvincesByCountryId(countryId);
+            foreach (StateProvince stateProvince in stateProvinces)
+            {
+                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
+                this.ddlBillingStateProvince.Items.Add(ddlStateProviceItem2);
+            }
+            if (stateProvinces.Count == 0)
+            {
+                ListItem ddlBillingStateProvinceItem = new ListItem(GetLocaleResourceString("Admin.Common.State.Other"), "0");
+                this.ddlBillingStateProvince.Items.Add(ddlBillingStateProvinceItem);
+            }
+        }
+
+        protected void ddlBillingCountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillBillingStateProvinceDropDowns();
+        }
+
+        protected void FillShippingCountryDropDowns(Order order)
+        {
+            this.ddlShippingCountry.Items.Clear();
+            var countryCollection = CountryManager.GetAllCountriesForShipping();
+            foreach (var country in countryCollection)
+            {
+                ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
+                this.ddlShippingCountry.Items.Add(ddlCountryItem2);
+            }
+        }
+
+        protected void FillShippingStateProvinceDropDowns()
+        {
+            this.ddlShippingStateProvince.Items.Clear();
+            int countryId = int.Parse(this.ddlShippingCountry.SelectedItem.Value);
+
+            var stateProvinces = StateProvinceManager.GetStateProvincesByCountryId(countryId);
+            foreach (StateProvince stateProvince in stateProvinces)
+            {
+                ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());
+                this.ddlShippingStateProvince.Items.Add(ddlStateProviceItem2);
+            }
+            if (stateProvinces.Count == 0)
+            {
+                ListItem ddlShippingStateProvinceItem = new ListItem(GetLocaleResourceString("Admin.Common.State.Other"), "0");
+                this.ddlShippingStateProvince.Items.Add(ddlShippingStateProvinceItem);
+            }
+        }
+
+        protected void ddlShippingCountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillShippingStateProvinceDropDowns();
+        }
+
         public string GetProductUrl(int productVariantId)
         {
             string result = string.Empty;
@@ -1181,6 +1420,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             get
             {
                 return CommonHelper.QueryStringInt("OrderId");
+            }
+        }
+
+        protected string TabId
+        {
+            get
+            {
+                return CommonHelper.QueryString("TabId");
             }
         }
     }
