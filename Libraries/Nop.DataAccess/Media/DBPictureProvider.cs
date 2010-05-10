@@ -68,6 +68,16 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         public abstract DBPicture UpdatePicture(int pictureId, byte[] pictureBinary,
             string extension, bool isNew);
 
+        /// <summary>
+        /// Gets a collection of pictures
+        /// </summary>
+        /// <param name="pageIndex">Current page</param>
+        /// <param name="pageSize">Items on each page</param>
+        /// <param name="totalRecords">Output. how many records in results</param>
+        /// <returns>Paged list of pictures</returns>
+        public abstract DBPictureCollection GetPictures(int pageSize,
+            int pageIndex, out int totalRecords);
+
         #endregion
     }
 }

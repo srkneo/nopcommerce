@@ -74,7 +74,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.HTMLEditor.Editor txtFullDescription;
+        protected global::NopSolutions.NopCommerce.Web.Controls.NopHTMLEditor txtFullDescription;
         
         /// <summary>
         /// rptrLanguageDivs control.

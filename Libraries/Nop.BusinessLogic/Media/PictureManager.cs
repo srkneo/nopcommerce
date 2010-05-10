@@ -12,14 +12,15 @@
 // Contributor(s): _______. 
 //------------------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Web;
-using NopSolutions.NopCommerce.DataAccess.Media;
-using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.DataAccess;
+using NopSolutions.NopCommerce.DataAccess.Media;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Media
 {
@@ -191,6 +192,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         {
             var picture = GetPictureById(imageId);
             return GetPictureUrl(picture, targetSize, showDefaultPicture);
+        }
+        
+        /// <summary>
+        /// Gets all picture urls as a string array
+        /// </summary>
+        /// <param name="pictureId">Id of picture</param>
+        /// <returns>Array containing urls for a picture in all sizes avaliable</returns>
+        public static List<String> GetPictureUrls(int pictureId)
+        {
+            string filter = string.Format("*{0}*.*", pictureId.ToString("0000000"));
+
+            List<String> urls = new List<string>();
+
+            string orginalURL = GetPictureUrl(pictureId);
+
+            string[] currentFiles = System.IO.Directory.GetFiles(PictureManager.LocalThumbImagePath, filter);
+
+            foreach (string currentFileName in currentFiles)
+            {
+                string url = CommonHelper.GetStoreLocation() + "images/thumbs/" + Path.GetFileName(currentFileName);
+
+                if (url != orginalURL)
+                    urls.Add(url);
+            }
+            
+            //add original picture to array
+            urls.Add(orginalURL);
+
+            if (urls.Count > 0)
+            {
+                //reverse sort order (this way the biggest picture usally comes first..)
+                urls.Reverse();
+            }
+
+            return urls;
         }
 
         /// <summary>
@@ -482,7 +518,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                 }
             }
         }
+        
+        /// <summary>
+        /// Gets a collection of pictures
+        /// </summary>
+        /// <param name="pageIndex">Current page</param>
+        /// <param name="pageSize">Items on each page</param>
+        /// <param name="totalRecords">Output. how many records in results</param>
+        /// <returns>Paged list of pictures</returns>
+        public static PictureCollection GetPictures(int pageSize, 
+            int pageIndex, out int totalRecords)
+        {
+            if (pageSize <= 0)
+                pageSize = 10;
+            if (pageSize == int.MaxValue)
+                pageSize = int.MaxValue - 1;
 
+            if (pageIndex < 0)
+                pageIndex = 0;
+            if (pageIndex == int.MaxValue)
+                pageIndex = int.MaxValue - 1;
+
+            var dbpics = DBProviderManager<DBPictureProvider>.Provider.GetPictures(pageSize, 
+                pageIndex, out totalRecords);
+            var pics = DBMapping(dbpics);
+            return pics;
+        }
         /// <summary>
         /// Inserts a picture
         /// </summary>

@@ -3,7 +3,10 @@
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="EmailTextBox" Src="EmailTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
-<div runat="server" id="pnlSendCampaign">
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
+    
+    <div runat="server" id="pnlSendCampaign">
     <table class="adminContent">
         <tr>
             <td colspan="2">
@@ -85,7 +88,7 @@
                 ID="lblBody" Text="<% $NopResources:Admin.CampaignInfo.Body %>" ToolTip="<% $NopResources:Admin.CampaignInfo.Body.Tooltip %>" />
         </td>
         <td class="adminData">
-            <HTMLEditor:Editor ID="txtBody" runat="server" Height="350" />
+            <nopCommerce:NopHTMLEditor ID="txtBody" runat="server" Height="350" />
         </td>
     </tr>
     <tr runat="server" id="pnlCreatedOn">

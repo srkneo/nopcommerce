@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <asp:ScriptManager runat="server" ID="sm" CompositeScript-ScriptMode="Release" EnableScriptGlobalization="false"
+    <ajaxToolkit:ToolkitScriptManager runat="server" ID="sm" CompositeScript-ScriptMode="Release" EnableScriptGlobalization="false"
         EnableScriptLocalization="false" ScriptMode="Release" />
     <div class="master-wrapper-page">
         <div class="master-wrapper-content">

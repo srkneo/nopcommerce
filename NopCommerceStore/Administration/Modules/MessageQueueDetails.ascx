@@ -4,6 +4,8 @@
 <%@ Register TagPrefix="nopCommerce" TagName="NumericTextBox" Src="NumericTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ConfirmationBox" Src="ConfirmationBox.ascx" %>
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
 <div class="section-header">
     <div class="title">
         <img src="Common/ico-promotions.png" alt="<%=GetLocaleResourceString("Admin.MessageQueueDetails.Title")%>" />
@@ -104,7 +106,7 @@
                 ToolTip="<% $NopResources:Admin.MessageQueueDetails.Body.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <HTMLEditor:Editor ID="txtBody" runat="server" Height="350" />
+            <nopCommerce:NopHTMLEditor ID="txtBody" runat="server" Height="350" />
         </td>
     </tr>
     <tr>

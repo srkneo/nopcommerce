@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=3.0.30512.20315, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+    <Reference Include="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\AjaxControlToolkit.dll</HintPath>
     </Reference>
@@ -398,6 +398,20 @@
     </Compile>
     <Compile Include="Administration\BulkEditProducts.aspx.designer.cs">
       <DependentUpon>BulkEditProducts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\PictureBrowser.ascx.cs">
+      <DependentUpon>PictureBrowser.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\PictureBrowser.ascx.designer.cs">
+      <DependentUpon>PictureBrowser.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\PictureBrowser.aspx.cs">
+      <DependentUpon>PictureBrowser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\PictureBrowser.aspx.designer.cs">
+      <DependentUpon>PictureBrowser.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\CustomerReports.aspx.cs">
       <DependentUpon>CustomerReports.aspx</DependentUpon>
@@ -3652,6 +3666,10 @@
     <Compile Include="Controls\CheckoutStepEventArgs.cs">
     </Compile>
     <Compile Include="Controls\CheckoutStepChangedEventHandler.cs" />
+    <Compile Include="Controls\NopHTMLEditor.cs">
+    </Compile>
+    <Compile Include="Controls\HTMLEditor.Customizations.cs">
+    </Compile>
     <Compile Include="Controls\PageSslProtectionEnum.cs">
     </Compile>
     <Compile Include="Controls\ForumHelper.cs" />
@@ -5869,6 +5887,8 @@
     <Content Include="Administration\CheckoutAttributeAdd.aspx" />
     <Content Include="Administration\CheckoutAttributeDetails.aspx" />
     <Content Include="Administration\BulkEditProducts.aspx" />
+    <Content Include="Administration\Modules\PictureBrowser.ascx" />
+    <Content Include="Administration\PictureBrowser.aspx" />
     <Content Include="Administration\CustomerReports.aspx" />
     <Content Include="Administration\GiftCardDetails.aspx" />
     <Content Include="Administration\Maintenance.aspx" />
@@ -6287,6 +6307,43 @@
     <Content Include="ChronoPayIPNHandler.aspx" />
     <Content Include="AssistHostedPaymentReturn.aspx" />
     <Content Include="ConditionsInfoPopup.aspx" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_date_a.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_date_n.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_insertIcon_a.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_insertIcon_n.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_insertPicture_a.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_insertPicture_n.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\angel.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\angry.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\beer.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\bomb.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\disappointed.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\Embarrassed.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\flower.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\grin.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\grumpy.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\hot.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\kiss.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\kiss2.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\kissing.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\laugh.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\love.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\music.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\sad.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\shutup.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\sleepy.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\smile.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\stop.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\Surprised.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\tear.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\thinking.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\thumb_up.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\tired.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\tongue.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.icons\wink.gif" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.scripts\InsertDate.js" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.scripts\InsertIcon.js" />
+    <Content Include="editors\HTMLEditor\HTMLEditor.scripts\InsertPicture.js" />
     <Content Include="images\flags\ad.png" />
     <Content Include="images\flags\ae.png" />
     <Content Include="images\flags\af.png" />

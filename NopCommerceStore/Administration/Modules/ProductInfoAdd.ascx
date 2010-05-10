@@ -5,7 +5,9 @@
 <%@ Register TagPrefix="nopCommerce" TagName="DecimalTextBox" Src="DecimalTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="DatePicker" Src="DatePicker.ascx" %>
-
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
+    
 <script type="text/javascript">
     $(document).ready(function() {
         toggleCustomerEntersPrice();
@@ -201,7 +203,7 @@
                         ToolTip="<% $NopResources: Admin.ProductInfo.FullDescription.Tooltip%>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                 </td>
                 <td class="adminData">
-                    <HTMLEditor:Editor ID="txtFullDescription" runat="server" Height="350" />
+                    <nopCommerce:NopHTMLEditor ID="txtFullDescription" runat="server" Height="350" />
                 </td>
             </tr>
         </table>
@@ -240,7 +242,7 @@
                                 ToolTip="<% $NopResources: Admin.ProductInfo.FullDescription.Tooltip%>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                         </td>
                         <td class="adminData">
-                            <HTMLEditor:Editor ID="txtLocalizedFullDescription" runat="server" Height="350" />
+                            <nopCommerce:NopHTMLEditor ID="txtLocalizedFullDescription" runat="server" Height="350" />
                         </td>
                     </tr>
                 </table>
@@ -568,7 +570,7 @@
             :
         </td>
         <td class="adminData">
-            <HTMLEditor:Editor runat="server" ID="txtUserAgreementText" Height="350" />
+            <nopCommerce:NopHTMLEditor runat="server" ID="txtUserAgreementText" Height="350" />
         </td>
     </tr>
     <tr id="pnlHasSampleDownload">

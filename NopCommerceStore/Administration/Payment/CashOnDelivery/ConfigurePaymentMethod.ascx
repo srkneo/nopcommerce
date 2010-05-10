@@ -1,6 +1,9 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Payment.CashOnDelivery.ConfigurePaymentMethod"
     CodeBehind="ConfigurePaymentMethod.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="DecimalTextBox" Src="../../Modules/DecimalTextBox.ascx" %>
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
+    
 <table class="adminContent">
     <tr>
         <td colspan="2">
@@ -9,7 +12,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <HTMLEditor:Editor ID="txtInfo" runat="server" Height="350" />
+            <nopCommerce:NopHTMLEditor ID="txtInfo" runat="server" Height="350" />
         </td>
     </tr>
     <tr>

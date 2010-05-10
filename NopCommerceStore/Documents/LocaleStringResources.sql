@@ -1328,6 +1328,57 @@ set @resources='
   <LocaleResource Name="Admin.OrderDetails.SaveShippingAddressButton.Text">
     <Value>Save address</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.PictureBrowser.Title">
+    <Value>Image browser</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.Pictures">
+    <Value>Pictures</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.PictureID">
+    <Value>Picture ID</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.Picture">
+    <Value>Picture</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.Details">
+    <Value>Details</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.GenerateAnotherSize">
+    <Value>Generate another size</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.GenerateAnotherSize.Tooltip">
+    <Value>Generate another size</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.GenerateAnotherSize.RequiredErrorMessage">
+    <Value>A size is required</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.GenerateAnotherSize.RangeErrorMessage">
+    <Value>Minimum image width is 30, maximum is 2000</Value>
+  </LocaleResource>    
+  <LocaleResource Name="Admin.PictureBrowser.Insert">
+    <Value>Insert</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PictureBrowser.UploadNewPicture">
+    <Value>Upload a new picture</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PictureBrowser.UploadNewPicture.ToolTip">
+    <Value>Upload a new picture</Value>
+  </LocaleResource>  
+  <LocaleResource Name="Admin.PictureBrowser.FileUpload">
+    <Value>Browse for a picture on your harddrive</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PictureBrowser.SaveNewPicture">
+    <Value>Save the new picture</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PictureBrowser.SaveNewPicture.ToolTip">
+    <Value>Save the new picture</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PictureBrowser.PageSize">
+    <Value>Page size</Value>
+  </LocaleResource>      
+  <LocaleResource Name="Admin.PictureBrowser.PageSize.Tooltip">
+    <Value>Page size</Value>
+  </LocaleResource>        
 </Language>
 '
 

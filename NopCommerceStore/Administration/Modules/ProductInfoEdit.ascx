@@ -3,6 +3,9 @@
 <%@ Register TagPrefix="nopCommerce" TagName="NumericTextBox" Src="NumericTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
+
 <%if (this.HasLocalizableContent)
   { %>
 <div id="localizablecontentpanel" class="tabcontainer-usual">
@@ -47,7 +50,7 @@
                         ToolTip="<% $NopResources: Admin.ProductInfo.FullDescription.Tooltip%>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                 </td>
                 <td class="adminData">
-                    <HTMLEditor:Editor ID="txtFullDescription" runat="server" Height="350" />
+                    <nopCommerce:NopHTMLEditor ID="txtFullDescription" runat="server" Height="350" />
                 </td>
             </tr>
         </table>
@@ -86,7 +89,7 @@
                                 ToolTip="<% $NopResources: Admin.ProductInfo.FullDescription.Tooltip%>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                         </td>
                         <td class="adminData">
-                            <HTMLEditor:Editor ID="txtLocalizedFullDescription" runat="server" Height="350" />
+                            <nopCommerce:NopHTMLEditor ID="txtLocalizedFullDescription" runat="server" Height="350" />
                         </td>
                     </tr>
                 </table>

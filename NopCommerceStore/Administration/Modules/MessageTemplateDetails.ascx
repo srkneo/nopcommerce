@@ -3,6 +3,9 @@
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ConfirmationBox" Src="ConfirmationBox.ascx" %>
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
+    
 <div class="section-header">
     <div class="title">
         <img src="Common/ico-content.png" alt="<%=GetLocaleResourceString("Admin.MessageTemplateDetails.Title")%>" />
@@ -80,7 +83,7 @@
                 ToolTip="<% $NopResources:Admin.MessageTemplateDetails.Body.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <HTMLEditor:Editor ID="txtBody" runat="server" Height="350" />
+            <nopCommerce:NopHTMLEditor ID="txtBody" runat="server" Height="350" />
         </td>
     </tr>
     <tr>

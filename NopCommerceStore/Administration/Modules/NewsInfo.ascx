@@ -1,7 +1,9 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.NewsInfoControl" CodeBehind="NewsInfo.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
-
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
+    
 <table class="adminContent">
     <tr>
         <td class="adminTitle">
@@ -39,7 +41,7 @@
                 ToolTip="<% $NopResources:Admin.NewsInfo.Full.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <HTMLEditor:Editor ID="txtFull" runat="server" Height="350" />
+            <nopCommerce:NopHTMLEditor ID="txtFull" runat="server" Height="350" />
         </td>
     </tr>
     <tr>

@@ -164,6 +164,38 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
 
             return item;
         }
+
+        /// <summary>
+        /// Gets a collection of pictures
+        /// </summary>
+        /// <param name="pageIndex">Current page</param>
+        /// <param name="pageSize">Items on each page</param>
+        /// <param name="totalRecords">Output. how many records in results</param>
+        /// <returns>Paged list of pictures</returns>
+        public override DBPictureCollection GetPictures(int pageSize,
+            int pageIndex, out int totalRecords)
+        {
+            totalRecords = 0;
+            var result = new DBPictureCollection();
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_PictureLoadAllPaged");
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, pageIndex);
+            db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
+
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                while (dataReader.Read())
+                {
+                    var item = GetPictureFromReader(dataReader);
+                    result.Add(item);
+                }
+            }
+            totalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
+
+            return result;
+        }
+
         #endregion
     }
 }

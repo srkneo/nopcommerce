@@ -2,7 +2,9 @@
     CodeBehind="BlogPostInfo.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
-
+<%@ Register Assembly="NopCommerceStore" Namespace="NopSolutions.NopCommerce.Web.Controls"
+    TagPrefix="nopCommerce" %>
+    
 <table class="adminContent">
     <tr>
         <td class="adminTitle">
@@ -30,7 +32,7 @@
                 ToolTip="<% $NopResources:Admin.BlogPostInfo.Body.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>
         <td class="adminData">
-            <HTMLEditor:Editor ID="txtBlogPostBody" runat="server" Height="350" />
+            <nopCommerce:NopHTMLEditor ID="txtBlogPostBody" runat="server" Height="350" />
         </td>
     </tr>
     <tr>
