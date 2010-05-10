@@ -581,7 +581,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     && notifyCustomer)
                 {
                     int orderCompletedCustomerNotificationQueuedEmailId = MessageManager.SendOrderCompletedCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageId);
-                    InsertOrderNote(orderId, string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                    if (orderCompletedCustomerNotificationQueuedEmailId > 0)
+                    {
+                        InsertOrderNote(orderId, string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                    }
                 }
 
                 if (order.OrderStatus != OrderStatusEnum.Cancelled &&
@@ -589,7 +592,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     && notifyCustomer)
                 {
                     int orderCancelledCustomerNotificationQueuedEmailId = MessageManager.SendOrderCancelledCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageId);
-                    InsertOrderNote(orderId, string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                    if (orderCancelledCustomerNotificationQueuedEmailId > 0)
+                    {
+                        InsertOrderNote(orderId, string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                    }
                 }
 
                 //reward points
@@ -3472,10 +3478,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         InsertOrderNote(order.OrderId, string.Format("Order placed"), false, DateTime.Now);
 
                         int orderPlacedStoreOwnerNotificationQueuedEmailId = MessageManager.SendOrderPlacedStoreOwnerNotification(order, LocalizationManager.DefaultAdminLanguage.LanguageId);
-                        InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailId), false, DateTime.Now);
+                        if (orderPlacedStoreOwnerNotificationQueuedEmailId > 0)
+                        {
+                            InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailId), false, DateTime.Now);
+                        }
 
                         int orderPlacedCustomerNotificationQueuedEmailId = MessageManager.SendOrderPlacedCustomerNotification(order, order.CustomerLanguageId);
-                        InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                        if (orderPlacedCustomerNotificationQueuedEmailId > 0)
+                        {
+                            InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                        }
 
                         if (SMSManager.IsSMSAlertsEnabled && SMSManager.SendOrderPlacedNotification(order))
                         {
@@ -3760,7 +3772,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (notifyCustomer)
             {
                 int orderShippedCustomerNotificationQueuedEmailId = MessageManager.SendOrderShippedCustomerNotification(order, order.CustomerLanguageId);
-                InsertOrderNote(order.OrderId, string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                if (orderShippedCustomerNotificationQueuedEmailId > 0)
+                {
+                    InsertOrderNote(order.OrderId, string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                }
             }
 
             order = CheckOrderStatus(order.OrderId);
@@ -3840,7 +3855,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (notifyCustomer)
             {
                 int orderDeliveredCustomerNotificationQueuedEmailId = MessageManager.SendOrderDeliveredCustomerNotification(order, order.CustomerLanguageId);
-                InsertOrderNote(order.OrderId, string.Format("\"Delivered\" email (to customer) has been queued. Queued email identifier: {0}.", orderDeliveredCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                if (orderDeliveredCustomerNotificationQueuedEmailId > 0)
+                {
+                    InsertOrderNote(order.OrderId, string.Format("\"Delivered\" email (to customer) has been queued. Queued email identifier: {0}.", orderDeliveredCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                }
             }
 
             order = CheckOrderStatus(order.OrderId);
