@@ -1408,7 +1408,6 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="Forum.Sticky">
     <Value>Sticky</Value>
-  </LocaleResource>
   </LocaleResource>      
   <LocaleResource Name="Admin.CustomerAvatar.Image">
     <Value>Avatar image:</Value>
