@@ -7567,12 +7567,12 @@ CREATE PROCEDURE [dbo].[Nop_CategoryInsert]
 	@PictureID int,
 	@PageSize int,
 	@PriceRanges nvarchar(400),
+	@ShowOnHomePage bit,
 	@Published bit,
 	@Deleted bit,
 	@DisplayOrder int,
 	@CreatedOn datetime,
-	@UpdatedOn datetime,
-	@ShowOnHomePage bit
+	@UpdatedOn datetime
 )
 AS
 BEGIN
@@ -7590,12 +7590,12 @@ BEGIN
 		PictureID,
 		PageSize,
 		PriceRanges,
+		ShowOnHomePage,
 		Published,
 		Deleted,
 		DisplayOrder,
 		CreatedOn,
-		UpdatedOn,
-		ShowOnHomePage
+		UpdatedOn
 	)
 	VALUES
 	(
@@ -7610,12 +7610,12 @@ BEGIN
 		@PictureID,
 		@PageSize,
 		@PriceRanges,
+		@ShowOnHomePage,
 		@Published,
 		@Deleted,
 		@DisplayOrder,
 		@CreatedOn,
-		@UpdatedOn,
-		@ShowOnHomePage
+		@UpdatedOn
 	)
 
 	set @CategoryID=SCOPE_IDENTITY()
@@ -7643,12 +7643,12 @@ CREATE PROCEDURE [dbo].[Nop_CategoryUpdate]
 	@PictureID int,
 	@PageSize int,
 	@PriceRanges nvarchar(400),
+	@ShowOnHomePage bit,
 	@Published bit,
 	@Deleted bit,
 	@DisplayOrder int,
 	@CreatedOn datetime,
-	@UpdatedOn datetime,
-	@ShowOnHomePage bit
+	@UpdatedOn datetime
 )
 AS
 BEGIN
@@ -7665,12 +7665,12 @@ BEGIN
 		PictureID=@PictureID,
 		PageSize=@PageSize,
 		PriceRanges=@PriceRanges,
+		ShowOnHomePage=@ShowOnHomePage,
 		Published=@Published,
 		Deleted=@Deleted,
 		DisplayOrder=@DisplayOrder,
 		CreatedOn=@CreatedOn,
-		UpdatedOn=@UpdatedOn,
-		ShowOnHomePage=@ShowOnHomePage
+		UpdatedOn=@UpdatedOn
 	WHERE
 		CategoryID = @CategoryID
 END
@@ -7702,13 +7702,13 @@ BEGIN
 		c.ParentCategoryID, 
 		c.PictureID, 
 		c.PageSize, 
-		c.PriceRanges, 
+		c.PriceRanges,
+		c.ShowOnHomePage, 
 		c.Published,
 		c.Deleted, 
 		c.DisplayOrder, 
 		c.CreatedOn, 
-		c.UpdatedOn,
-		c.ShowOnHomePage
+		c.UpdatedOn
 	FROM [Nop_Category] c
 		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
 		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
@@ -7747,13 +7747,13 @@ BEGIN
 		c.ParentCategoryID, 
 		c.PictureID, 
 		c.PageSize, 
-		c.PriceRanges, 
+		c.PriceRanges,
+		c.ShowOnHomePage, 
 		c.Published,
 		c.Deleted, 
 		c.DisplayOrder,
 		c.CreatedOn, 
-		c.UpdatedOn,
-		c.ShowOnHomePage
+		c.UpdatedOn
 	FROM [Nop_Category] c
 		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
 		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
@@ -7789,13 +7789,13 @@ BEGIN
 		c.ParentCategoryID, 
 		c.PictureID, 
 		c.PageSize, 
-		c.PriceRanges, 
+		c.PriceRanges,
+		c.ShowOnHomePage, 
 		c.Published,
 		c.Deleted, 
 		c.DisplayOrder, 
 		c.CreatedOn, 
-		c.UpdatedOn,
-		c.ShowOnHomePage
+		c.UpdatedOn
 	FROM [Nop_Category] c
 		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
 		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
@@ -7806,3 +7806,14 @@ BEGIN
 	order by c.DisplayOrder
 END
 GO
+
+-- remove Display.ShowCategoriesOnMainPage setting
+IF EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Display.ShowCategoriesOnMainPage')
+BEGIN
+	DELETE FROM [dbo].[Nop_Setting] WHERE [Name] = N'Display.ShowCategoriesOnMainPage'
+END
+GO
+

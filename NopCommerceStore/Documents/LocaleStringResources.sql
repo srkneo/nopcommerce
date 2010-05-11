@@ -1433,12 +1433,6 @@ set @resources='
   <LocaleResource Name="Admin.CategoryInfo.ShowOnHomePage.Tooltip">
     <Value>Check if you want to show a catgory on home page.</Value>
   </LocaleResource>         
-  <LocaleResource Name="Admin.GlobalSettings.Other.ShowCategoriesOnMainPage">
-    <Value>Show categories on home page:</Value>
-  </LocaleResource>          
-  <LocaleResource Name="Admin.GlobalSettings.Other.ShowCategoriesOnMainPage.Tooltip">
-    <Value>Check if you want to show catgories on home page.</Value>
-  </LocaleResource>           
 </Language>
 '
 

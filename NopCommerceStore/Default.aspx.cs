@@ -48,8 +48,6 @@ namespace NopSolutions.NopCommerce.Web
 
         protected void BindData()
         {
-            ctrlHomePageCategories.Visible = SettingManager.GetSettingValueBoolean("Display.ShowCategoriesOnMainPage");
-            
             ctrlBestSellers.Visible = SettingManager.GetSettingValueBoolean("Display.ShowBestsellersOnMainPage");
 
             if (NewsManager.NewsEnabled && NewsManager.ShowNewsOnMainPage)

@@ -147,7 +147,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbProductReviewsMustBeApproved.Checked = CustomerManager.ProductReviewsMustBeApproved;
             cbAllowAnonymousUsersToReviewProduct.Checked = CustomerManager.AllowAnonymousUsersToReviewProduct;
             cbAllowAnonymousUsersToSetProductRatings.Checked = CustomerManager.AllowAnonymousUsersToSetProductRatings;
-            cbShowCategoriesOnMainPage.Checked = SettingManager.GetSettingValueBoolean("Display.ShowCategoriesOnMainPage");
             cbShowBestsellersOnHomePage.Checked = SettingManager.GetSettingValueBoolean("Display.ShowBestsellersOnMainPage");
             txtShowBestsellersOnHomePageNumber.Value = SettingManager.GetSettingValueInteger("Display.ShowBestsellersOnMainPageNumber");
             cbProductsAlsoPurchased.Checked = ProductManager.ProductsAlsoPurchasedEnabled;
@@ -361,7 +360,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     CustomerManager.ProductReviewsMustBeApproved = cbProductReviewsMustBeApproved.Checked;
                     CustomerManager.AllowAnonymousUsersToReviewProduct = cbAllowAnonymousUsersToReviewProduct.Checked;
                     CustomerManager.AllowAnonymousUsersToSetProductRatings = cbAllowAnonymousUsersToSetProductRatings.Checked;
-                    SettingManager.SetParam("Display.ShowCategoriesOnMainPage", cbShowCategoriesOnMainPage.Checked.ToString());
                     SettingManager.SetParam("Display.ShowBestsellersOnMainPage", cbShowBestsellersOnHomePage.Checked.ToString());
                     SettingManager.SetParam("Display.ShowBestsellersOnMainPageNumber", txtShowBestsellersOnHomePageNumber.Value.ToString());
                     ProductManager.ProductsAlsoPurchasedEnabled = cbProductsAlsoPurchased.Checked;
