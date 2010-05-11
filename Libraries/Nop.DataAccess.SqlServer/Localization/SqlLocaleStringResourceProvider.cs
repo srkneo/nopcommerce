@@ -23,6 +23,7 @@ using System.Text;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using System.Xml;
+using System.Data.SqlClient;
 
 namespace NopSolutions.NopCommerce.DataAccess.Localization
 {
@@ -210,8 +211,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Localization
         /// <param name="xml">The XML package</param>
         public override void InsertAllLocaleStringResourcesFromXml(int languageId, string xml)
         {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString) as SqlDatabase;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_LanguagePackImport");
+            //little hack here
+            dbCommand.CommandTimeout = 600;
             db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
             db.AddInParameter(dbCommand, "XmlPackage", DbType.Xml, xml);
 
