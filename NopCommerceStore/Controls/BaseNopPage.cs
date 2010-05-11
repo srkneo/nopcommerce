@@ -166,7 +166,14 @@ namespace NopSolutions.NopCommerce.Web
                 RenderExecutionTimerValue(writer);
             }
         }
+        
+        protected override void OnPreRender(EventArgs e)
+        {
+            string publicJS = CommonHelper.GetStoreLocation() + "Scripts/public.js";
+            Page.ClientScript.RegisterClientScriptInclude(publicJS, publicJS);
 
+            base.OnPreRender(e);
+        }
         #endregion
 
         #region Utiilities

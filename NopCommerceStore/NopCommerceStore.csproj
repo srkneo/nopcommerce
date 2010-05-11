@@ -6599,6 +6599,7 @@
     <Content Include="Licenses.txt" />
     <Content Include="SagePayFailure.aspx" />
     <Content Include="SagePaySuccess.aspx" />
+    <Content Include="Scripts\public.js" />
     <Content Include="Scripts\jquery.idTabs.min.js" />
     <Content Include="SermepaError.aspx" />
     <Content Include="SermepaReturn.aspx" />

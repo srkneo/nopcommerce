@@ -103,6 +103,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
+        public bool Required
+        {
+            get
+            {
+                return rfvValue.Enabled;
+            }
+            set
+            {
+                rfvValue.Enabled = value;
+            }
+        }
+
         public Unit Width
         {
             get

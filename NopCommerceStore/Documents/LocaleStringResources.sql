@@ -1375,10 +1375,37 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="Admin.PictureBrowser.PageSize">
     <Value>Page size</Value>
-  </LocaleResource>      
+  </LocaleResource>
   <LocaleResource Name="Admin.PictureBrowser.PageSize.Tooltip">
     <Value>Page size</Value>
-  </LocaleResource>        
+  </LocaleResource>
+  <LocaleResource Name="Search.AdvancedSearch">
+    <Value>Advanced search</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.AllCategories">
+    <Value>All</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.AllManufacturers">
+    <Value>All</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.Categories">
+    <Value>Categories:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.Manufacturers">
+    <Value>Manufacturer:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.PriceRange">
+    <Value>Price range:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.From">
+    <Value>From</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.To">
+    <Value>to</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.SearchKeyword">
+    <Value>Search keyword:</Value>
+  </LocaleResource>
 </Language>
 '
 
