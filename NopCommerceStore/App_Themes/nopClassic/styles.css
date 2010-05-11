@@ -3481,6 +3481,7 @@ textarea
 {
 	padding: 10px 10px 10px 10px;
 	background: rgb(247, 245, 232);
+	min-height: 17px;
 }
 
 .product-variant-line .attributes
