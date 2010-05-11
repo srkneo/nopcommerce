@@ -1406,6 +1406,9 @@ set @resources='
   <LocaleResource Name="Search.SearchKeyword">
     <Value>Search keyword:</Value>
   </LocaleResource>
+  <LocaleResource Name="Forum.Sticky">
+    <Value>Sticky</Value>
+  </LocaleResource>
 </Language>
 '
 
