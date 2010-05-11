@@ -36,6 +36,7 @@ using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.Common.Utils;
 using System.Web;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 {
@@ -638,10 +639,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (productVariant.CustomerEntersPrice)
             {
                 if (customerEnteredPrice < productVariant.MinimumCustomerEnteredPrice ||
-                customerEnteredPrice > productVariant.MaximumCustomerEnteredPrice)
+                    customerEnteredPrice > productVariant.MaximumCustomerEnteredPrice)
                 {
+                    int minimumCustomerEnteredPrice = Convert.ToInt32(Math.Ceiling(CurrencyManager.ConvertCurrency(productVariant.MinimumCustomerEnteredPrice, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency)));
+                    int maximumCustomerEnteredPrice = Convert.ToInt32(Math.Truncate(CurrencyManager.ConvertCurrency(productVariant.MaximumCustomerEnteredPrice, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency)));
+                
                     warnings.Add(string.Format(LocalizationManager.GetLocaleResourceString("ShoppingCart.CustomerEnteredPrice.RangeError"),
-                        (int)productVariant.MinimumCustomerEnteredPrice, (int)productVariant.MaximumCustomerEnteredPrice));
+                        minimumCustomerEnteredPrice, maximumCustomerEnteredPrice));
                 }
             }
 

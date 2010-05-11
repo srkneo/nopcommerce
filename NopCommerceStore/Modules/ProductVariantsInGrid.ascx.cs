@@ -28,12 +28,13 @@ using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
-using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -84,6 +85,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 string attributes = ctrlProductAttributes.SelectedAttributes;
                 decimal customerEnteredPrice = txtCustomerEnteredPrice.Value;
+                decimal customerEnteredPriceConverted = CurrencyManager.ConvertCurrency(customerEnteredPrice, NopContext.Current.WorkingCurrency, CurrencyManager.PrimaryStoreCurrency);
                 int quantity = txtQuantity.Value;
 
                 //gift cards
@@ -106,8 +108,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         List<string> addToCartWarnings = ShoppingCartManager.AddToCart(
                             ShoppingCartTypeEnum.ShoppingCart,
                             pv.ProductVariantId, 
-                            attributes, 
-                            customerEnteredPrice,
+                            attributes,
+                            customerEnteredPriceConverted,
                             quantity);
                         if (addToCartWarnings.Count == 0)
                         {
@@ -133,8 +135,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         var addToCartWarnings = ShoppingCartManager.AddToCart(
                             ShoppingCartTypeEnum.Wishlist,
                             pv.ProductVariantId, 
-                            attributes, 
-                            customerEnteredPrice,
+                            attributes,
+                            customerEnteredPriceConverted,
                             quantity);
                         if (addToCartWarnings.Count == 0)
                         {
@@ -237,12 +239,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 //price entered by a customer
                 if (productVariant.CustomerEntersPrice)
                 {
+                    int minimumCustomerEnteredPrice = Convert.ToInt32(Math.Ceiling(CurrencyManager.ConvertCurrency(productVariant.MinimumCustomerEnteredPrice, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency)));
+                    int maximumCustomerEnteredPrice = Convert.ToInt32(Math.Truncate(CurrencyManager.ConvertCurrency(productVariant.MaximumCustomerEnteredPrice, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency)));
                     txtCustomerEnteredPrice.Visible = true;
                     txtCustomerEnteredPrice.ValidationGroup = string.Format("ProductVariant{0}", productVariant.ProductVariantId);
-                    txtCustomerEnteredPrice.Value = (int)productVariant.MinimumCustomerEnteredPrice;
-                    txtCustomerEnteredPrice.MinimumValue = ((int)productVariant.MinimumCustomerEnteredPrice).ToString();
-                    txtCustomerEnteredPrice.MaximumValue = ((int)productVariant.MaximumCustomerEnteredPrice).ToString();
-                    txtCustomerEnteredPrice.RangeErrorMessage = string.Format(GetLocaleResourceString("Products.CustomerEnteredPrice.Range"), (int)productVariant.MinimumCustomerEnteredPrice, (int)productVariant.MaximumCustomerEnteredPrice);
+                    txtCustomerEnteredPrice.Value = minimumCustomerEnteredPrice;
+                    txtCustomerEnteredPrice.MinimumValue = minimumCustomerEnteredPrice.ToString();
+                    txtCustomerEnteredPrice.MaximumValue = maximumCustomerEnteredPrice.ToString();
+                    txtCustomerEnteredPrice.RangeErrorMessage = string.Format(GetLocaleResourceString("Products.CustomerEnteredPrice.Range"), minimumCustomerEnteredPrice, maximumCustomerEnteredPrice);
                 }
                 else
                 {
