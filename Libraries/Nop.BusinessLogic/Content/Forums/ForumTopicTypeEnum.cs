@@ -28,6 +28,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// </summary>
         Normal = 10,
         /// <summary>
+        /// Sticky
+        /// </summary>
+        Sticky = 15,
+        /// <summary>
         /// Announcement
         /// </summary>
         Announcement = 20,

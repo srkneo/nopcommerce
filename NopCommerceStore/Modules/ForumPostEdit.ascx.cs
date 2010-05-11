@@ -67,6 +67,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var ddlPriorityNormalItem = new ListItem(GetLocaleResourceString("Forum.Normal"), ((int)ForumTopicTypeEnum.Normal).ToString());
             ddlPriority.Items.Add(ddlPriorityNormalItem);
 
+            var ddlPriorityStickyItem = new ListItem(GetLocaleResourceString("Forum.Sticky"), ((int)ForumTopicTypeEnum.Sticky).ToString());
+            ddlPriority.Items.Add(ddlPriorityStickyItem);
+
             var ddlPriorityAnnouncementItem = new ListItem(GetLocaleResourceString("Forum.Announcement"), ((int)ForumTopicTypeEnum.Announcement).ToString());
             ddlPriority.Items.Add(ddlPriorityAnnouncementItem);
         }

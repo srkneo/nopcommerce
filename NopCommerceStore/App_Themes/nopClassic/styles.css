@@ -4373,7 +4373,7 @@ textarea
 	background: url('images/ico-forum-post.gif') no-repeat 40% 40%;
 }
 
-.forum table.topics tr.topic .postannoucement
+.forum table.topics tr.topic .postannoucement, .forum table.topics tr.topic .poststicky
 {
 	text-align: left;
 	width: 36px;
@@ -4828,7 +4828,7 @@ textarea
 	background: url('images/ico-forum-post.gif') no-repeat 40% 40%;
 }
 
-.forumsearch table.topics tr.topic .postannoucement
+.forumsearch table.topics tr.topic .postannoucement, .forumsearch table.topics tr.topic .poststicky
 {
 	text-align: left;
 	width: 36px;

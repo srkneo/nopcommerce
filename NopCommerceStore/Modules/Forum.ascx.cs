@@ -157,6 +157,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         case ForumTopicTypeEnum.Normal:
                             pnlTopicImage.CssClass = "post";
                             break;
+                        case ForumTopicTypeEnum.Sticky:
+                            pnlTopicImage.CssClass = "poststicky";
+                            break;
                         case ForumTopicTypeEnum.Announcement:
                             pnlTopicImage.CssClass = "postannoucement";
                             break;
@@ -171,6 +174,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     switch (forumTopic.TopicType)
                     {
+                        case ForumTopicTypeEnum.Sticky:
+                            lblTopicType.Text = string.Format("[{0}]", GetLocaleResourceString("Forum.Sticky"));
+                            break;
                         case ForumTopicTypeEnum.Announcement:
                             lblTopicType.Text = string.Format("[{0}]", GetLocaleResourceString("Forum.Announcement"));
                             break;
