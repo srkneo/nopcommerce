@@ -165,7 +165,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 priceRow.Attributes.Add("class", "productPrice");
                 this.tblCompareProducts.Rows.Add(headerRow);
                 this.tblCompareProducts.Rows.Add(productNameRow);
-                this.tblCompareProducts.Rows.Add(priceRow);
+                if (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
+                    (NopContext.Current.User != null &&
+                    !NopContext.Current.User.IsGuest))
+                {
+                    this.tblCompareProducts.Rows.Add(priceRow);
+                }
 
                 foreach (int specificationAttributeId in specificationAttributeIds)
                 {

@@ -112,7 +112,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     foreach (var pvaValue in pvaValues)
                                     {
                                         string pvaValueName = pvaValue.Name;
-                                        if (!this.HidePrices)
+                                        if (!this.HidePrices &&
+                                            (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
+                                            (NopContext.Current.User != null &&
+                                            !NopContext.Current.User.IsGuest)))
                                         {
                                             decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
                                             decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
@@ -140,7 +143,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     foreach (var pvaValue in pvaValues)
                                     {
                                         string pvaValueName = pvaValue.Name;
-                                        if (!this.HidePrices)
+                                        if (!this.HidePrices &&
+                                            (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
+                                            (NopContext.Current.User != null &&
+                                            !NopContext.Current.User.IsGuest)))
                                         {
                                             decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
                                             decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
@@ -166,7 +172,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     foreach (var pvaValue in pvaValues)
                                     {
                                         string pvaValueName = pvaValue.Name;
-                                        if (!this.HidePrices)
+                                        if (!this.HidePrices &&
+                                            (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
+                                            (NopContext.Current.User != null &&
+                                            !NopContext.Current.User.IsGuest)))
                                         {
                                             decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
                                             decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);

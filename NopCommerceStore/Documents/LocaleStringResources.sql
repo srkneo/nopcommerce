@@ -1423,16 +1423,22 @@ set @resources='
   </LocaleResource>        
   <LocaleResource Name="Admin.CustomerAvatar.UploadAvatarRules">
     <Value>Avatar must be in GIF or JPEG format with the maximum size of 20 KB</Value>
-  </LocaleResource>        
+  </LocaleResource>
   <LocaleResource Name="Admin.CustomerDetails.CustomerAvatar">
     <Value>Customer Avatar</Value>
-  </LocaleResource>         
+  </LocaleResource>
   <LocaleResource Name="Admin.CategoryInfo.ShowOnHomePage">
     <Value>Show on home page:</Value>
-  </LocaleResource>         
+  </LocaleResource>
   <LocaleResource Name="Admin.CategoryInfo.ShowOnHomePage.Tooltip">
     <Value>Check if you want to show a catgory on home page.</Value>
-  </LocaleResource>         
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.General.HidePricesForNonRegistered">
+    <Value>Hide prices for non-registered users:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.General.HidePricesForNonRegistered.Tooltip">
+    <Value>Check to to disable product prices for all non-registered users so that anyone browsing the site cant see prices.</Value>
+  </LocaleResource>
 </Language>
 '
 
