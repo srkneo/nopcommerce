@@ -48,7 +48,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindData()
         {
-            cbShowCategoriesOnMainPage.Checked = SettingManager.GetSettingValueBoolean("Display.ShowCategoriesOnMainPage");
         }
 
         private void BindGrid()
@@ -75,21 +74,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 category = category.ParentCategory;
             }
             return Server.HtmlEncode(result);
-        }
-
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                try
-                {
-                    SettingManager.SetParam("Display.ShowCategoriesOnMainPage", cbShowCategoriesOnMainPage.Checked.ToString());
-                }
-                catch (Exception exc)
-                {
-                    ProcessException(exc);
-                }
-            }
         }
 
         protected void gvCategories_PageIndexChanging(object sender, GridViewPageEventArgs e)

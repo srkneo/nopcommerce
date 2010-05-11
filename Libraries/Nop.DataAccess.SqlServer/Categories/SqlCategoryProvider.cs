@@ -49,6 +49,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             item.PictureId = NopSqlDataHelper.GetInt(dataReader, "PictureID");
             item.PageSize = NopSqlDataHelper.GetInt(dataReader, "PageSize");
             item.PriceRanges = NopSqlDataHelper.GetString(dataReader, "PriceRanges");
+            item.ShowOnHomePage = NopSqlDataHelper.GetBoolean(dataReader, "ShowOnHomePage");
             item.Published = NopSqlDataHelper.GetBoolean(dataReader, "Published");
             item.Deleted = NopSqlDataHelper.GetBoolean(dataReader, "Deleted");
             item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
@@ -149,6 +150,30 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         }
 
         /// <summary>
+        /// Gets all categories displayed on the home page
+        /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Category collection</returns>
+        public override DBCategoryCollection GetAllCategoriesDisplayedOnHomePage(bool showHidden, int languageId)
+        {
+            var result = new DBCategoryCollection();
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CategoryLoadDisplayedOnHomePage");
+            db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
+            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            using(IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                while(dataReader.Read())
+                {
+                    var item = GetCategoryFromReader(dataReader);
+                    result.Add(item);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Gets a category
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
@@ -187,6 +212,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <param name="pictureId">The picture identifier</param>
         /// <param name="pageSize">The page size</param>
         /// <param name="priceRanges">The price ranges</param>
+        /// <param name="showOnHomePage">A value indicating whether the category will be shown on home page</param>
         /// <param name="published">A value indicating whether the entity is published</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="displayOrder">The display order</param>
@@ -196,7 +222,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         public override DBCategory InsertCategory(string name, string description,
             int templateId, string metaKeywords, string metaDescription, string metaTitle,
             string seName, int parentCategoryId, int pictureId,
-            int pageSize, string priceRanges, bool published, bool deleted,
+            int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
             DBCategory item = null;
@@ -219,6 +245,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
+            db.AddInParameter(dbCommand, "ShowOnHomePage", DbType.Boolean, showOnHomePage);
             if (db.ExecuteNonQuery(dbCommand) > 0)
             {
                 int categoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CategoryID"));
@@ -242,6 +269,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <param name="pictureId">The picture identifier</param>
         /// <param name="pageSize">The page size</param>
         /// <param name="priceRanges">The price ranges</param>
+        /// <param name="showOnHomePage">A value indicating whether the category will be shown on home page</param>
         /// <param name="published">A value indicating whether the entity is published</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="displayOrder">The display order</param>
@@ -251,7 +279,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         public override DBCategory UpdateCategory(int categoryId, string name, string description,
             int templateId, string metaKeywords, string metaDescription, string metaTitle,
             string seName, int parentCategoryId, int pictureId,
-            int pageSize, string priceRanges, bool published, bool deleted,
+            int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
             DBCategory item = null;
@@ -274,6 +302,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
             db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
+            db.AddInParameter(dbCommand, "ShowOnHomePage", DbType.Boolean, showOnHomePage);
             if (db.ExecuteNonQuery(dbCommand) > 0)
                 item = GetCategoryById(categoryId, 0);
 

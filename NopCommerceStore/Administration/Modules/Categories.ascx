@@ -6,26 +6,12 @@
         <%=GetLocaleResourceString("Admin.Categories.ManageCategories")%>
     </div>
     <div class="options">
-        <asp:Button runat="server" Text="<% $NopResources:Admin.Categories.SaveButton.Text %>" CssClass="adminButtonBlue" ID="btnSave" ValidationGroup="CategorySettings"
-            OnClick="btnSave_Click" ToolTip="<% $NopResources:Admin.Categories.SaveButton.ToolTip%>" />
         <input type="button" onclick="location.href='CategoryAdd.aspx'" value="<%=GetLocaleResourceString("Admin.Categories.AddNewButton.Text")%>"
             id="btnAddNew" class="adminButtonBlue" title="<%=GetLocaleResourceString("Admin.Categories.AddNewButton.ToolTip")%>" />
         <asp:Button runat="server" Text="<% $NopResources:Admin.Categories.ExportXMLButton.Text %>" CssClass="adminButtonBlue" ID="btnExportXML"
             OnClick="btnExportXML_Click" ValidationGroup="ExportXML" ToolTip="<% $NopResources:Admin.Categories.ExportXMLButton.ToolTip %>" />
     </div>
 </div>
-<table width="100%">
-    <tr>
-        <td class="adminTitle">
-            <%=GetLocaleResourceString("Admin.Categories.ShowOnTheMainPage")%>
-        </td>
-        <td class="adminData">
-            <asp:CheckBox runat="server" ID="cbShowCategoriesOnMainPage" Checked="true" />
-        </td>
-    </tr>
-</table>
-<p>
-</p>
 <table class="adminContent">
     <asp:GridView ID="gvCategories" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvCategories_PageIndexChanging" AllowPaging="true" PageSize="15">

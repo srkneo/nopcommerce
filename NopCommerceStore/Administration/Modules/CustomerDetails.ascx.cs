@@ -40,6 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!Page.IsPostBack)
             {
                 this.SelectTab(this.CustomerTabs, this.TabId);
+                pnlCustomerAvatar.Visible = CustomerManager.AllowCustomersToUploadAvatars;
             }
         }
 

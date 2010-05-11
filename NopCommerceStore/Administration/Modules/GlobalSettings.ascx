@@ -1515,6 +1515,16 @@
                     <tr>
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblShowCategoriesOnMainPage" Text="<% $NopResources:Admin.GlobalSettings.Other.ShowCategoriesOnMainPage %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Other.ShowCategoriesOnMainPage.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbShowCategoriesOnMainPage"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
                                 ID="lblShowBestsellersOnHomePage" Text="<% $NopResources:Admin.GlobalSettings.Other.ShowBestsellersOnHomePage %>"
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.Other.ShowBestsellersOnHomePage.Tooltip %>" />
                         </td>

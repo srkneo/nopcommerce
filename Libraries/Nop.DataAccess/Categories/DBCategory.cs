@@ -94,6 +94,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         public string PriceRanges { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to show the category on home page
+        /// </summary>
+        public bool ShowOnHomePage { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the entity is published
         /// </summary>
         public bool Published { get; set; }

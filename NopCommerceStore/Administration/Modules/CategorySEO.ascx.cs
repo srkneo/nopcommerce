@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 category = CategoryManager.UpdateCategory(category.CategoryId, category.Name, category.Description, category.TemplateId,
                      txtMetaKeywords.Text, txtMetaDescription.Text, txtMetaTitle.Text, txtSEName.Text, category.ParentCategoryId,
-                     category.PictureId, txtPageSize.Value, category.PriceRanges, category.Published, category.Deleted, category.DisplayOrder, category.CreatedOn, DateTime.Now);
+                     category.PictureId, txtPageSize.Value, category.PriceRanges, category.ShowOnHomePage, category.Published, category.Deleted, category.DisplayOrder, category.CreatedOn, DateTime.Now);
             }
 
             SaveLocalizableContent(category);

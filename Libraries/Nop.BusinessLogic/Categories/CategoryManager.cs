@@ -77,6 +77,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             item.PictureId = dbItem.PictureId;
             item.PageSize = dbItem.PageSize;
             item.PriceRanges = dbItem.PriceRanges;
+            item.ShowOnHomePage = dbItem.ShowOnHomePage;
             item.Published = dbItem.Published;
             item.Deleted = dbItem.Deleted;
             item.DisplayOrder = dbItem.DisplayOrder;
@@ -150,7 +151,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 category = UpdateCategory(category.CategoryId, category.Name, 
                     category.Description, category.TemplateId, category.MetaKeywords,
                      category.MetaDescription, category.MetaTitle, category.SEName, category.ParentCategoryId,
-                     category.PictureId, category.PageSize, category.PriceRanges, 
+                     category.PictureId, category.PageSize, category.PriceRanges, category.ShowOnHomePage, 
                      category.Published, true, category.DisplayOrder,
                      category.CreatedOn, category.UpdatedOn);
             }
@@ -169,7 +170,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                     category.TemplateId, category.MetaKeywords,
                     category.MetaDescription, category.MetaTitle, category.SEName,
                     category.ParentCategoryId, 0, category.PageSize, category.PriceRanges,
-                    category.Published, category.Deleted, category.DisplayOrder,
+                    category.ShowOnHomePage, category.Published, category.Deleted, category.DisplayOrder,
                     category.CreatedOn, category.UpdatedOn);
             }
         }
@@ -223,6 +224,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             {
                 NopCache.Max(key, categoryCollection);
             }
+            return categoryCollection;
+        }
+
+        /// <summary>
+        /// Gets all categories displayed on the home page
+        /// </summary>
+        /// <returns>Category collection</returns>
+        public static CategoryCollection GetAllCategoriesDisplayedOnHomePage()
+        {
+            return GetAllCategoriesDisplayedOnHomePage(NopContext.Current.IsAdmin, NopContext.Current.WorkingLanguage.LanguageId);
+        }
+
+        /// <summary>
+        /// Gets all categories displayed on the home page
+        /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Category collection</returns>
+        public static CategoryCollection GetAllCategoriesDisplayedOnHomePage(bool showHidden, int languageId)
+        {
+            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategoriesDisplayedOnHomePage(showHidden, languageId);
+            var categoryCollection = DBMapping(dbCollection);
             return categoryCollection;
         }
 
@@ -298,6 +321,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="pictureId">The picture identifier</param>
         /// <param name="pageSize">The page size</param>
         /// <param name="priceRanges">The price ranges</param>
+        /// <param name="showOnHomePage">A value indicating whether the category will be shown on home page</param>
         /// <param name="published">A value indicating whether the entity is published</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="displayOrder">The display order</param>
@@ -307,7 +331,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         public static Category InsertCategory(string name, string description,
             int templateId, string metaKeywords, string metaDescription, string metaTitle,
             string seName, int parentCategoryId, int pictureId,
-            int pageSize, string priceRanges, bool published, bool deleted,
+            int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
@@ -315,7 +339,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategory(name, 
                 description, templateId, metaKeywords, metaDescription, metaTitle,
-                seName, parentCategoryId, pictureId, pageSize, priceRanges, published, deleted,
+                seName, parentCategoryId, pictureId, pageSize, priceRanges, showOnHomePage, published, deleted,
                 displayOrder, createdOn, updatedOn);
 
             var category = DBMapping(dbItem);
@@ -345,6 +369,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="pageSize">The page size</param>
         /// <param name="priceRanges">The price ranges</param>
         /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="showOnHomePage">A value indicating whether the category will be shown on home page</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="displayOrder">The display order</param>
         /// <param name="createdOn">The date and time of instance creation</param>
@@ -353,7 +378,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         public static Category UpdateCategory(int categoryId, string name, string description,
             int templateId, string metaKeywords, string metaDescription, string metaTitle,
             string seName, int parentCategoryId, int pictureId,
-            int pageSize, string priceRanges, bool published, bool deleted,
+            int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
@@ -373,7 +398,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategory(categoryId,
                 name, description, templateId, metaKeywords, metaDescription, metaTitle,
-                seName, parentCategoryId, pictureId, pageSize, priceRanges, published, deleted,
+                seName, parentCategoryId, pictureId, pageSize, priceRanges, showOnHomePage, published, deleted,
                 displayOrder, createdOn, updatedOn);
 
             var category = DBMapping(dbItem);

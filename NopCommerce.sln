@@ -5,7 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.BusinessLogic", "Librar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{3AB03A71-3059-48C7-87D2-77AC5C7A89E4}"
 	ProjectSection(SolutionItems) = preProject
-		Dependencies\AjaxControlToolkit.dll = Dependencies\AjaxControlToolkit.dll
 		Dependencies\GCheckout.dll = Dependencies\GCheckout.dll
 		Dependencies\Ionic.Zip.dll = Dependencies\Ionic.Zip.dll
 		Dependencies\Microsoft.Practices.EnterpriseLibrary.Common.dll = Dependencies\Microsoft.Practices.EnterpriseLibrary.Common.dll

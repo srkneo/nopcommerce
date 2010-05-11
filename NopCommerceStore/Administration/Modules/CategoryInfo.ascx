@@ -124,6 +124,15 @@
     </tr>
     <tr>
         <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblCategoryShowOnHomePage" Text="<% $NopResources:Admin.CategoryInfo.ShowOnHomePage %>"
+                ToolTip="<% $NopResources:Admin.CategoryInfo.ShowOnHomePage.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <asp:CheckBox ID="cbShowOnHomePage" runat="server" Checked="False"></asp:CheckBox>
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblCategoryPublished" Text="<% $NopResources:Admin.CategoryInfo.Published %>"
                 ToolTip="<% $NopResources:Admin.CategoryInfo.Published.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>

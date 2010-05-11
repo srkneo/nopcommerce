@@ -3,6 +3,7 @@
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerInfo" Src="CustomerInfo.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerBillingAddresses" Src="CustomerBillingAddresses.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerShippingAddresses" Src="CustomerShippingAddresses.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="CustomerAvatar" Src="CustomerAvatar.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerOrders" Src="CustomerOrders.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerRoleMappings" Src="CustomerRoleMappings.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="CustomerRewardPoints" Src="CustomerRewardPoints.ascx" %>
@@ -66,6 +67,11 @@
     <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerWishlist" HeaderText="<% $NopResources:Admin.CustomerDetails.CurrentWishlist %>">
         <ContentTemplate>
             <nopCommerce:CustomerWishlist runat="server" ID="ctrlCurrentWishlist"></nopCommerce:CustomerWishlist>
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerAvatar" HeaderText="<% $NopResources:Admin.CustomerDetails.CustomerAvatar %>">
+        <ContentTemplate>
+            <nopCommerce:CustomerAvatar runat="server" ID="ctrlCustomerAvatar"></nopCommerce:CustomerAvatar>
         </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlCustomerSendEmail" HeaderText="<% $NopResources:Admin.CustomerDetails.CustomerSendEmail %>">

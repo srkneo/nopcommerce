@@ -45,6 +45,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             bool showHidden, int languageId);
 
         /// <summary>
+        /// Gets all categories displayed on the home page
+        /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Category collection</returns>
+        public abstract DBCategoryCollection GetAllCategoriesDisplayedOnHomePage(bool showHidden, int languageId);
+
+        /// <summary>
         /// Gets a category
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
@@ -66,6 +74,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <param name="pictureId">The picture identifier</param>
         /// <param name="pageSize">The page size</param>
         /// <param name="priceRanges">The price ranges</param>
+        /// <param name="showOnHomePage">A value indicating whether the category will be shown on home page</param>
         /// <param name="published">A value indicating whether the entity is published</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="displayOrder">The display order</param>
@@ -74,8 +83,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <returns>Category</returns>
         public abstract DBCategory InsertCategory(string name, string description,
             int templateId, string metaKeywords, string metaDescription, string metaTitle,
-            string seName, int parentCategoryId, int pictureId, 
-            int pageSize, string priceRanges, bool published, bool deleted,
+            string seName, int parentCategoryId, int pictureId,
+            int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>
@@ -93,6 +102,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <param name="pictureId">The picture identifier</param>
         /// <param name="pageSize">The page size</param>
         /// <param name="priceRanges">The price ranges</param>
+        /// <param name="showOnHomePage">A value indicating whether the category will be shown on home page</param>
         /// <param name="published">A value indicating whether the entity is published</param>
         /// <param name="deleted">A value indicating whether the entity has been deleted</param>
         /// <param name="displayOrder">The display order</param>
@@ -102,7 +112,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         public abstract DBCategory UpdateCategory(int categoryId, string name, string description,
             int templateId, string metaKeywords, string metaDescription, string metaTitle,
             string seName, int parentCategoryId, int pictureId,
-            int pageSize, string priceRanges, bool published, bool deleted,
+            int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn);
 
         /// <summary>

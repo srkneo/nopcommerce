@@ -7535,3 +7535,274 @@ BEGIN
 
 END
 GO
+
+-- add ShowOnHomePage field to Nop_Category table
+
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_Category]') and NAME='ShowOnHomePage')
+BEGIN
+	ALTER TABLE [dbo].[Nop_Category] 
+	ADD ShowOnHomePage bit NOT NULL CONSTRAINT [DF_Nop_Category_ShowOnHomePage] DEFAULT ((0))
+END
+GO
+
+-- SP Nop_CategoryInsert
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryInsert]
+(
+	@CategoryID int = NULL output,
+	@Name nvarchar(400),
+	@Description nvarchar(MAX),
+	@TemplateID int,
+	@MetaKeywords nvarchar(400),
+	@MetaDescription nvarchar(4000),
+	@MetaTitle nvarchar(400),
+	@SEName nvarchar(100),
+	@ParentCategoryID int,	
+	@PictureID int,
+	@PageSize int,
+	@PriceRanges nvarchar(400),
+	@Published bit,
+	@Deleted bit,
+	@DisplayOrder int,
+	@CreatedOn datetime,
+	@UpdatedOn datetime,
+	@ShowOnHomePage bit
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_Category]
+	(
+		[Name],
+		[Description],
+		TemplateID,
+		MetaKeywords,
+		MetaDescription,
+		MetaTitle,
+		SEName,
+		ParentCategoryID,
+		PictureID,
+		PageSize,
+		PriceRanges,
+		Published,
+		Deleted,
+		DisplayOrder,
+		CreatedOn,
+		UpdatedOn,
+		ShowOnHomePage
+	)
+	VALUES
+	(
+		@Name,
+		@Description,
+		@TemplateID,
+		@MetaKeywords,
+		@MetaDescription,
+		@MetaTitle,
+		@SEName,
+		@ParentCategoryID,
+		@PictureID,
+		@PageSize,
+		@PriceRanges,
+		@Published,
+		@Deleted,
+		@DisplayOrder,
+		@CreatedOn,
+		@UpdatedOn,
+		@ShowOnHomePage
+	)
+
+	set @CategoryID=SCOPE_IDENTITY()
+END
+GO
+
+-- SP Nop_CategoryUpdate
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryUpdate]
+(
+	@CategoryID int,
+	@Name nvarchar(400),
+	@Description nvarchar(MAX),
+	@TemplateID int,
+	@MetaKeywords nvarchar(400),
+	@MetaDescription nvarchar(4000),
+	@MetaTitle nvarchar(400),
+	@SEName nvarchar(100),
+	@ParentCategoryID int,
+	@PictureID int,
+	@PageSize int,
+	@PriceRanges nvarchar(400),
+	@Published bit,
+	@Deleted bit,
+	@DisplayOrder int,
+	@CreatedOn datetime,
+	@UpdatedOn datetime,
+	@ShowOnHomePage bit
+)
+AS
+BEGIN
+	UPDATE [Nop_Category]
+	SET
+		[Name]=@Name,
+		[Description]=@Description,
+		TemplateID=@TemplateID,
+		MetaKeywords=@MetaKeywords,
+		MetaDescription=@MetaDescription,
+		MetaTitle=@MetaTitle,
+		SEName=@SEName,
+		ParentCategoryID=@ParentCategoryID,
+		PictureID=@PictureID,
+		PageSize=@PageSize,
+		PriceRanges=@PriceRanges,
+		Published=@Published,
+		Deleted=@Deleted,
+		DisplayOrder=@DisplayOrder,
+		CreatedOn=@CreatedOn,
+		UpdatedOn=@UpdatedOn,
+		ShowOnHomePage=@ShowOnHomePage
+	WHERE
+		CategoryID = @CategoryID
+END
+GO
+
+-- SP Nop_CategoryLoadAll
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLoadAll]
+	@ShowHidden bit = 0,
+	@ParentCategoryID int = 0,
+	@LanguageID int
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT 
+		c.CategoryID, 
+		dbo.NOP_getnotnullnotempty(cl.Name,c.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(cl.Description,c.Description) as [Description],
+		c.TemplateID, 
+		dbo.NOP_getnotnullnotempty(cl.MetaKeywords,c.MetaKeywords) as [MetaKeywords],
+		dbo.NOP_getnotnullnotempty(cl.MetaDescription,c.MetaDescription) as [MetaDescription],
+		dbo.NOP_getnotnullnotempty(cl.MetaTitle,c.MetaTitle) as [MetaTitle],
+		dbo.NOP_getnotnullnotempty(cl.SEName,c.SEName) as [SEName],
+		c.ParentCategoryID, 
+		c.PictureID, 
+		c.PageSize, 
+		c.PriceRanges, 
+		c.Published,
+		c.Deleted, 
+		c.DisplayOrder, 
+		c.CreatedOn, 
+		c.UpdatedOn,
+		c.ShowOnHomePage
+	FROM [Nop_Category] c
+		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
+		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
+	WHERE 
+		(c.Published = 1 or @ShowHidden = 1) AND 
+		c.Deleted=0 AND 
+		c.ParentCategoryID=@ParentCategoryID
+	order by c.DisplayOrder
+END
+GO
+
+-- SP Nop_CategoryLoadByPrimaryKey
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadByPrimaryKey]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLoadByPrimaryKey]
+(
+	@CategoryID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		c.CategoryID, 
+		dbo.NOP_getnotnullnotempty(cl.Name,c.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(cl.Description,c.Description) as [Description],
+		c.TemplateID, 
+		dbo.NOP_getnotnullnotempty(cl.MetaKeywords,c.MetaKeywords) as [MetaKeywords],
+		dbo.NOP_getnotnullnotempty(cl.MetaDescription,c.MetaDescription) as [MetaDescription],
+		dbo.NOP_getnotnullnotempty(cl.MetaTitle,c.MetaTitle) as [MetaTitle],
+		dbo.NOP_getnotnullnotempty(cl.SEName,c.SEName) as [SEName],
+		c.ParentCategoryID, 
+		c.PictureID, 
+		c.PageSize, 
+		c.PriceRanges, 
+		c.Published,
+		c.Deleted, 
+		c.DisplayOrder,
+		c.CreatedOn, 
+		c.UpdatedOn,
+		c.ShowOnHomePage
+	FROM [Nop_Category] c
+		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
+		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
+	WHERE 
+		(c.CategoryID = @CategoryID) 
+END
+GO
+
+-- SP Nop_CategoryLoadDisplayedOnHomePage
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadDisplayedOnHomePage]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadDisplayedOnHomePage]
+GO
+CREATE PROCEDURE [dbo].[Nop_CategoryLoadDisplayedOnHomePage]
+(
+	@ShowHidden		bit = 0,
+	@LanguageID		int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT 
+		c.CategoryID, 
+		dbo.NOP_getnotnullnotempty(cl.Name,c.Name) as [Name],
+		dbo.NOP_getnotnullnotempty(cl.Description,c.Description) as [Description],
+		c.TemplateID, 
+		dbo.NOP_getnotnullnotempty(cl.MetaKeywords,c.MetaKeywords) as [MetaKeywords],
+		dbo.NOP_getnotnullnotempty(cl.MetaDescription,c.MetaDescription) as [MetaDescription],
+		dbo.NOP_getnotnullnotempty(cl.MetaTitle,c.MetaTitle) as [MetaTitle],
+		dbo.NOP_getnotnullnotempty(cl.SEName,c.SEName) as [SEName],
+		c.ParentCategoryID, 
+		c.PictureID, 
+		c.PageSize, 
+		c.PriceRanges, 
+		c.Published,
+		c.Deleted, 
+		c.DisplayOrder, 
+		c.CreatedOn, 
+		c.UpdatedOn,
+		c.ShowOnHomePage
+	FROM [Nop_Category] c
+		LEFT OUTER JOIN [Nop_CategoryLocalized] cl 
+		ON c.CategoryID = cl.CategoryID AND cl.LanguageID = @LanguageID	
+	WHERE 
+		(c.Published = 1 or @ShowHidden = 1) AND 
+		c.Deleted=0 AND 
+		c.ShowOnHomePage=1
+	order by c.DisplayOrder
+END
+GO

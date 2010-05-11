@@ -67,6 +67,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     xmlWriter.WriteElementString("PictureId", null, category.PictureId.ToString());
                     xmlWriter.WriteElementString("PageSize", null, category.PageSize.ToString());
                     xmlWriter.WriteElementString("PriceRanges", null, category.PriceRanges);
+                    xmlWriter.WriteElementString("ShowOnHomePage", null, category.ShowOnHomePage.ToString());
                     xmlWriter.WriteElementString("Published", null, category.Published.ToString());
                     xmlWriter.WriteElementString("Deleted", null, category.Deleted.ToString());
                     xmlWriter.WriteElementString("DisplayOrder", null, category.DisplayOrder.ToString());

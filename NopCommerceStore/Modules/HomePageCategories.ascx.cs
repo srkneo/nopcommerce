@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var subCategoryCollection = CategoryManager.GetAllCategories(this.ParentCategoryId);
+            var subCategoryCollection = CategoryManager.GetAllCategoriesDisplayedOnHomePage();
             if (subCategoryCollection.Count > 0)
             {
                 dlCategories.DataSource = subCategoryCollection;
@@ -76,20 +76,6 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     hlCategory.NavigateUrl = categoryURL;
                 }
             }
-        }
-
-
-        [DefaultValue(0)]
-        public int ParentCategoryId
-        {
-            get
-            {
-                if (ViewState["ParentCategoryId"] == null)
-                    return 0;
-                else
-                    return (int)ViewState["ParentCategoryId"];
-            }
-            set { ViewState["ParentCategoryId"] = value; }
         }
     }
 }

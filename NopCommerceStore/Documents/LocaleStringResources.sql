@@ -1409,6 +1409,37 @@ set @resources='
   <LocaleResource Name="Forum.Sticky">
     <Value>Sticky</Value>
   </LocaleResource>
+  </LocaleResource>      
+  <LocaleResource Name="Admin.CustomerAvatar.Image">
+    <Value>Avatar image:</Value>
+  </LocaleResource>        
+  <LocaleResource Name="Admin.CustomerAvatar.Image.Tooltip">
+    <Value>Customer avatar.</Value>
+  </LocaleResource>        
+  <LocaleResource Name="Admin.CustomerAvatar.UploadAvatar">
+    <Value>Upload</Value>
+  </LocaleResource>        
+  <LocaleResource Name="Admin.CustomerAvatar.RemoveAvatar">
+    <Value>Remove</Value>
+  </LocaleResource>        
+  <LocaleResource Name="Admin.CustomerAvatar.UploadAvatarRules">
+    <Value>Avatar must be in GIF or JPEG format with the maximum size of 20 KB</Value>
+  </LocaleResource>        
+  <LocaleResource Name="Admin.CustomerDetails.CustomerAvatar">
+    <Value>Customer Avatar</Value>
+  </LocaleResource>         
+  <LocaleResource Name="Admin.CategoryInfo.ShowOnHomePage">
+    <Value>Show on home page:</Value>
+  </LocaleResource>         
+  <LocaleResource Name="Admin.CategoryInfo.ShowOnHomePage.Tooltip">
+    <Value>Check if you want to show a catgory on home page.</Value>
+  </LocaleResource>         
+  <LocaleResource Name="Admin.GlobalSettings.Other.ShowCategoriesOnMainPage">
+    <Value>Show categories on home page:</Value>
+  </LocaleResource>          
+  <LocaleResource Name="Admin.GlobalSettings.Other.ShowCategoriesOnMainPage.Tooltip">
+    <Value>Check if you want to show catgories on home page.</Value>
+  </LocaleResource>           
 </Language>
 '
 

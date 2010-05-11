@@ -399,6 +399,13 @@
     <Compile Include="Administration\BulkEditProducts.aspx.designer.cs">
       <DependentUpon>BulkEditProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Modules\CustomerAvatar.ascx.cs">
+      <DependentUpon>CustomerAvatar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\CustomerAvatar.ascx.designer.cs">
+      <DependentUpon>CustomerAvatar.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Modules\PictureBrowser.ascx.cs">
       <DependentUpon>PictureBrowser.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5887,6 +5894,7 @@
     <Content Include="Administration\CheckoutAttributeAdd.aspx" />
     <Content Include="Administration\CheckoutAttributeDetails.aspx" />
     <Content Include="Administration\BulkEditProducts.aspx" />
+    <Content Include="Administration\Modules\CustomerAvatar.ascx" />
     <Content Include="Administration\Modules\PictureBrowser.ascx" />
     <Content Include="Administration\PictureBrowser.aspx" />
     <Content Include="Administration\CustomerReports.aspx" />
