@@ -159,6 +159,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.ProductReviewId = dbItem.ProductReviewId;
             item.ProductId = dbItem.ProductId;
             item.CustomerId = dbItem.CustomerId;
+            item.IPAddress = dbItem.IPAddress;
             item.Title = dbItem.Title;
             item.ReviewText = dbItem.ReviewText;
             item.Rating = dbItem.Rating;
@@ -2459,8 +2460,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <param name="notify">A value indicating whether to notify the store owner</param>
         /// <returns>Product review</returns>
-        public static ProductReview InsertProductReview(int productId, 
+        public static ProductReview InsertProductReview(int productId,
             int customerId, string title,
+            string reviewText, int rating, int helpfulYesTotal,
+            int helpfulNoTotal, bool isApproved, DateTime createdOn, bool notify)
+        {
+            string IPAddress = string.Empty;
+            if(HttpContext.Current != null && HttpContext.Current.Request != null)
+            {
+                IPAddress = HttpContext.Current.Request.UserHostAddress;
+            }
+            return InsertProductReview(productId, customerId, IPAddress, title, reviewText, rating, helpfulYesTotal, helpfulNoTotal, isApproved, createdOn, notify);
+        }
+
+        /// <summary>
+        /// Inserts a product review
+        /// </summary>
+        /// <param name="productId">The product identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
+        /// <param name="title">The review title</param>
+        /// <param name="reviewText">The review text</param>
+        /// <param name="rating">The review rating</param>
+        /// <param name="helpfulYesTotal">Review helpful votes total</param>
+        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
+        /// <param name="isApproved">A value indicating whether the product review is approved</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="notify">A value indicating whether to notify the store owner</param>
+        /// <returns>Product review</returns>
+        public static ProductReview InsertProductReview(int productId,
+            int customerId, string ipAddress, string title,
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn, bool notify)
         {
@@ -2471,7 +2500,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductReview(productId, customerId,
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductReview(productId, customerId, ipAddress,
                 title, reviewText, rating, helpfulYesTotal, helpfulNoTotal,
                 isApproved, createdOn);
             var productReview = DBMapping(dbItem);
@@ -2497,6 +2526,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productReviewId">The product review identifier</param>
         /// <param name="productId">The product identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The review title</param>
         /// <param name="reviewText">The review text</param>
         /// <param name="rating">The review rating</param>
@@ -2505,14 +2535,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="isApproved">A value indicating whether the product review is approved</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public static ProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string title,
+        public static ProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string ipAddress, string title,
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductReview(productReviewId,
-                productId, customerId, title, reviewText, rating,
+                productId, customerId, ipAddress, title, reviewText, rating,
                 helpfulYesTotal, helpfulNoTotal, isApproved, createdOn);
             var productReview = DBMapping(dbItem);
             return productReview;

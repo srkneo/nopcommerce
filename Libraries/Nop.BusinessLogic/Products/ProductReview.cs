@@ -51,6 +51,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public int CustomerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the IP address
+        /// </summary>
+        public string IPAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the title
         /// </summary>
         public string Title { get; set; }

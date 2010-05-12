@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (productReview != null)
                 {
                     ProductManager.UpdateProductReview(productReview.ProductReviewId,
-                        productReview.ProductId, productReview.CustomerId, productReview.Title,
+                        productReview.ProductId, productReview.CustomerId, productReview.IPAddress, productReview.Title,
                         productReview.ReviewText, productReview.Rating, productReview.HelpfulYesTotal, productReview.HelpfulNoTotal, !productReview.IsApproved, productReview.CreatedOn);
                 }
                 BindData();

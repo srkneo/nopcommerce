@@ -359,6 +359,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// </summary>
         /// <param name="productId">The product identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The review title</param>
         /// <param name="reviewText">The review text</param>
         /// <param name="rating">The review rating</param>
@@ -367,7 +368,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="isApproved">A value indicating whether the product review is approved</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public abstract DBProductReview InsertProductReview(int productId, int customerId, string title,
+        public abstract DBProductReview InsertProductReview(int productId, int customerId, string ipAddress, string title,
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn);
 
@@ -377,6 +378,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="productReviewId">The product review identifier</param>
         /// <param name="productId">The product identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The review title</param>
         /// <param name="reviewText">The review text</param>
         /// <param name="rating">The review rating</param>
@@ -385,7 +387,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="isApproved">A value indicating whether the product review is approved</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public abstract DBProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string title,
+        public abstract DBProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string ipAddress, string title,
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn);
 

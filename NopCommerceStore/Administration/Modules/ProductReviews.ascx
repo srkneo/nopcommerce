@@ -26,7 +26,9 @@
         <p>
             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
             -
-            <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%></p>
+            <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
+            (<%#Eval("IPAddress").ToString()%>)
+        </p>
         <p>
             <b><a href="ProductDetails.aspx?ProductID=<%#Eval("ProductId")%>" title="<%=GetLocaleResourceString("Admin.ProductReviews.ViewProductDetails")%>">
                 <%#Server.HtmlEncode(((Product)Eval("Product")).Name)%></a></b>

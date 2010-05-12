@@ -49,6 +49,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         public int CustomerId { get; set; }
 
         /// <summary>
+        /// Gets or sets the IP address
+        /// </summary>
+        public string IPAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the comment text
         /// </summary>
         public string CommentText { get; set; }

@@ -119,11 +119,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// </summary>
         /// <param name="blogPostId">The blog post identifier</param>
         /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="commentText">The comment text</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
         public abstract DBBlogComment InsertBlogComment(int blogPostId,
-            int customerId, string commentText, DateTime createdOn);
+            int customerId, string ipAddress, string commentText, DateTime createdOn);
 
         /// <summary>
         /// Updates the blog comment
@@ -131,11 +132,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Blog
         /// <param name="blogCommentId">The blog comment identifier</param>
         /// <param name="blogPostId">The blog post identifier</param>
         /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="commentText">The comment text</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
         public abstract DBBlogComment UpdateBlogComment(int blogCommentId, int blogPostId,
-            int customerId, string commentText, DateTime createdOn);
+            int customerId, string ipAddress, string commentText, DateTime createdOn);
         #endregion
     }
 }

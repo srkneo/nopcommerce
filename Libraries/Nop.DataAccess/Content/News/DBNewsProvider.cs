@@ -117,11 +117,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// </summary>
         /// <param name="newsId">The news identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The title</param>
         /// <param name="comment">The comment</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public abstract DBNewsComment InsertNewsComment(int newsId, int customerId, 
+        public abstract DBNewsComment InsertNewsComment(int newsId, int customerId, string ipAddress, 
             string title, string comment, DateTime createdOn);
 
         /// <summary>
@@ -130,12 +131,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <param name="newsCommentId">The news comment identifier</param>
         /// <param name="newsId">The news identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The title</param>
         /// <param name="comment">The comment</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public abstract DBNewsComment UpdateNewsComment(int newsCommentId, 
-            int newsId, int customerId, string title,
+        public abstract DBNewsComment UpdateNewsComment(int newsCommentId,
+            int newsId, int customerId, string ipAddress, string title,
             string comment, DateTime createdOn);
         #endregion
     }

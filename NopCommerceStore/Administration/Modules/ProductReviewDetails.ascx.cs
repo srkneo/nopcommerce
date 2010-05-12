@@ -39,6 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtTitle.Text = productReview.Title;
                 this.lblProduct.Text = GetProductInfo(productReview.ProductId);
                 this.lblCustomer.Text = GetCustomerInfo(productReview.CustomerId);
+                this.lblIPAddress.Text = productReview.IPAddress;
                 //this.txtReviewText.Value = productReview.ReviewText;
                 this.txtReviewText.Text = productReview.ReviewText;
                 this.productRating.CurrentRating = productReview.Rating;
@@ -93,7 +94,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         string title = txtTitle.Text.Trim();
                         string reviewText = txtReviewText.Text.Trim();
                         productReview = ProductManager.UpdateProductReview(productReview.ProductReviewId, productReview.ProductId,
-                            productReview.CustomerId, title, reviewText,
+                            productReview.CustomerId, productReview.IPAddress, title, reviewText,
                             productReview.Rating, productReview.HelpfulYesTotal, productReview.HelpfulNoTotal,
                             cbIsApproved.Checked, productReview.CreatedOn);
                         Response.Redirect("ProductReviewDetails.aspx?ProductReviewID=" + productReview.ProductReviewId.ToString());

@@ -7817,3 +7817,270 @@ BEGIN
 END
 GO
 
+-- add IPAddress field to Nop_NewsComment table
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_NewsComment]') and NAME='IPAddress')
+BEGIN
+	ALTER TABLE [dbo].[Nop_NewsComment] 
+	ADD IPAddress nvarchar(100) NOT NULL CONSTRAINT [DF_Nop_NewsComment_IPAddress] DEFAULT ((''))
+END
+GO
+
+-- SP Nop_NewsCommentInsert
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_NewsCommentInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_NewsCommentInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_NewsCommentInsert]
+(
+	@NewsCommentID int = NULL output,
+	@NewsID int,
+	@CustomerID int,
+	@IPAddress nvarchar(100),
+	@Title nvarchar(1000),
+	@Comment nvarchar(max),
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_NewsComment]
+	(
+		NewsID,
+		CustomerID,
+		IPAddress,
+		Title,
+		Comment,
+		CreatedOn
+	)
+	VALUES
+	(
+		@NewsID,
+		@CustomerID,
+		@IPAddress,
+		@Title,
+		@Comment,
+		@CreatedOn
+	)
+
+	set @NewsCommentID=SCOPE_IDENTITY()
+END
+GO
+
+-- SP Nop_NewsCommentUpdate
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_NewsCommentUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_NewsCommentUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_NewsCommentUpdate]
+(
+	@NewsCommentID int,
+	@NewsID int,
+	@CustomerID int,
+	@IPAddress nvarchar(100),
+	@Title nvarchar(1000),
+	@Comment nvarchar(max),
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	UPDATE [Nop_NewsComment]
+	SET
+		NewsID=@NewsID,
+		CustomerID=@CustomerID,
+		IPAddress=@IPAddress,
+		Title=@Title,
+		Comment=@Comment,
+		CreatedOn=@CreatedOn
+	WHERE
+		NewsCommentID = @NewsCommentID
+END
+GO
+
+-- add IPAddress field to Nop_BlogComment table
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_BlogComment]') and NAME='IPAddress')
+BEGIN
+	ALTER TABLE [dbo].[Nop_BlogComment] 
+	ADD IPAddress nvarchar(100) NOT NULL CONSTRAINT [DF_Nop_BlogComment_IPAddress] DEFAULT ((''))
+END
+GO
+
+-- SP Nop_BlogCommentInsert
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_BlogCommentInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_BlogCommentInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_BlogCommentInsert]
+(
+	@BlogCommentID int = NULL output,
+	@BlogPostID int,
+	@CustomerID int,
+	@IPAddress nvarchar(100),
+	@CommentText nvarchar(MAX),
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_BlogComment]
+	(
+		BlogPostID,
+		CustomerID,
+		IPAddress,
+		CommentText,
+		CreatedOn
+	)
+	VALUES
+	(
+		@BlogPostID,
+		@CustomerID,
+		@IPAddress,
+		@CommentText,
+		@CreatedOn
+	)
+
+	set @BlogCommentID=SCOPE_IDENTITY()
+END
+GO
+
+-- SP Nop_BlogCommentUpdate
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_BlogCommentUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_BlogCommentUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_BlogCommentUpdate]
+(
+	@BlogCommentID int,
+	@BlogPostID int,
+	@CustomerID int,
+	@IPAddress nvarchar(100),
+	@CommentText nvarchar(MAX),
+	@CreatedOn datetime
+)
+AS
+BEGIN
+
+	UPDATE [Nop_BlogComment]
+	SET
+		BlogPostID=@BlogPostID,
+		CustomerID=@CustomerID,
+		IPAddress=@IPAddress,
+		CommentText=@CommentText,
+		CreatedOn=@CreatedOn
+	WHERE
+		BlogCommentID = @BlogCommentID
+END
+GO
+
+-- add IPAddress field to Nop_ProductReview table
+IF NOT EXISTS (
+		SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_ProductReview]') and NAME='IPAddress')
+BEGIN
+	ALTER TABLE [dbo].[Nop_ProductReview] 
+	ADD IPAddress nvarchar(100) NOT NULL CONSTRAINT [DF_Nop_ProductReview_IPAddress] DEFAULT ((''))
+END
+GO
+
+-- SP Nop_ProductReviewInsert
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductReviewInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductReviewInsert]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductReviewInsert]
+(
+	@ProductReviewID int = NULL output,
+	@ProductID int,
+	@CustomerID int,
+	@IPAddress nvarchar(100),
+	@Title nvarchar(1000),
+	@ReviewText nvarchar(max),
+	@Rating int,
+	@HelpfulYesTotal int,
+	@HelpfulNoTotal int,
+	@IsApproved bit,
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	INSERT
+	INTO [Nop_ProductReview]
+	(
+		ProductID,
+		CustomerID,
+		IPAddress,
+		Title,
+		ReviewText,
+		Rating,
+		HelpfulYesTotal,
+		HelpfulNoTotal,
+		IsApproved,
+		CreatedOn
+	)
+	VALUES
+	(
+		@ProductID,
+		@CustomerID,
+		@IPAddress,
+		@Title,
+		@ReviewText,
+		@Rating,
+		@HelpfulYesTotal,
+		@HelpfulNoTotal,
+		@IsApproved,
+		@CreatedOn
+	)
+
+	set @ProductReviewID=SCOPE_IDENTITY()
+END
+GO
+
+-- SP Nop_ProductReviewUpdate
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductReviewUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductReviewUpdate]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductReviewUpdate]
+(
+	@ProductReviewID int,
+	@ProductID int,
+	@CustomerID int,
+	@IPAddress nvarchar(100),
+	@Title nvarchar(1000),
+	@ReviewText nvarchar(max),
+	@Rating int,
+	@HelpfulYesTotal int,
+	@HelpfulNoTotal int,
+	@IsApproved bit,
+	@CreatedOn datetime
+)
+AS
+BEGIN
+	UPDATE [Nop_ProductReview]
+	SET
+		ProductID=@ProductID,
+		CustomerID=@CustomerID,
+		IPAddress=@IPAddress,
+		Title=@Title,
+		ReviewText=@ReviewText,
+		Rating=@Rating,
+		HelpfulYesTotal=@HelpfulYesTotal,
+		HelpfulNoTotal=@HelpfulNoTotal,
+		IsApproved=@IsApproved,
+		CreatedOn=@CreatedOn
+	WHERE
+		ProductReviewID = @ProductReviewID
+END
+GO

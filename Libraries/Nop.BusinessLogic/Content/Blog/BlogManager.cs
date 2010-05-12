@@ -99,6 +99,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             item.BlogCommentId = dbItem.BlogCommentId;
             item.BlogPostId = dbItem.BlogPostId;
             item.CustomerId = dbItem.CustomerId;
+            item.IPAddress = dbItem.IPAddress;
             item.CommentText = dbItem.CommentText;
             item.CreatedOn = dbItem.CreatedOn;
 
@@ -314,10 +315,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         public static BlogComment InsertBlogComment(int blogPostId,
             int customerId, string commentText, DateTime createdOn, bool notify)
         {
+            string IPAddress = string.Empty;
+            if(HttpContext.Current != null && HttpContext.Current.Request != null)
+            {
+                IPAddress = HttpContext.Current.Request.UserHostAddress;
+            }
+            return InsertBlogComment(blogPostId, customerId, IPAddress, commentText, createdOn, notify);
+        }
+
+        /// <summary>
+        /// Inserts a blog comment
+        /// </summary>
+        /// <param name="blogPostId">The blog post identifier</param>
+        /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="ipAddress">The IP address</param>
+        /// <param name="commentText">The comment text</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="notify">A value indicating whether to notify the store owner</param>
+        /// <returns>Blog comment</returns>
+        public static BlogComment InsertBlogComment(int blogPostId,
+            int customerId, string ipAddress, string commentText, DateTime createdOn, bool notify)
+        {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var dbItem = DBProviderManager<DBBlogProvider>.Provider.InsertBlogComment(blogPostId,
-                customerId, commentText, createdOn);
+                customerId, ipAddress, commentText, createdOn);
             var blogComment = DBMapping(dbItem);
 
             if (notify)
@@ -334,16 +356,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <param name="blogCommentId">The blog comment identifier</param>
         /// <param name="blogPostId">The blog post identifier</param>
         /// <param name="customerId">The customer identifier who commented the blog post</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="commentText">The comment text</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Blog comment</returns>
         public static BlogComment UpdateBlogComment(int blogCommentId, int blogPostId,
-            int customerId, string commentText, DateTime createdOn)
+            int customerId, string ipAddress, string commentText, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogComment(blogCommentId, 
-                blogPostId, customerId, commentText, createdOn);
+            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogComment(blogCommentId,
+                blogPostId, customerId, ipAddress, commentText, createdOn);
             var blogComment = DBMapping(dbItem);
             return blogComment;
         }

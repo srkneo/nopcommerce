@@ -40,6 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.lblCustomer.Text = GetCustomerInfo(blogComment.CustomerId);
                 this.lblBlogPost.Text = GetBlogPostInfo(blogComment.BlogPostId);
                 //this.txtComment.Value = blogComment.CommentText;
+                this.lblIPAddress.Text = blogComment.IPAddress;
                 this.txtComment.Text = blogComment.CommentText;
                 this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogComment.CreatedOn).ToString();
             }
@@ -96,7 +97,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     {
                         string comment = txtComment.Text;
                         blogComment = BlogManager.UpdateBlogComment(blogComment.BlogCommentId, blogComment.BlogPostId,
-                            blogComment.CustomerId, comment, blogComment.CreatedOn);
+                            blogComment.CustomerId, blogComment.IPAddress, comment, blogComment.CreatedOn);
                         Response.Redirect("BlogCommentDetails.aspx?BlogCommentID=" + blogComment.BlogCommentId.ToString());
                     }
                     else

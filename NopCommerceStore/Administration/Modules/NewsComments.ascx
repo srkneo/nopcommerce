@@ -27,6 +27,7 @@
             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
             -
             <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
+            (<%#Eval("IPAddress").ToString()%>)
         </p>
         <p>
             <a href="NewsDetails.aspx?NewsID=<%#Eval("NewsId")%>">

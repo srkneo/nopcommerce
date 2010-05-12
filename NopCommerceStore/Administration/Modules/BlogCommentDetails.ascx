@@ -30,6 +30,15 @@
     </tr>
     <tr>
         <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblIPAddressTitle" Text="<% $NopResources:Admin.BlogCommentDetails.IPAddress %>"
+                ToolTip="<% $NopResources:Admin.BlogCommentDetails.IPAddress.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <asp:Label ID="lblIPAddress" runat="server"></asp:Label>
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
             <nopCommerce:ToolTipLabel runat="server" ID="lblBlogTitle" Text="<% $NopResources:Admin.BlogCommentDetails.BlogTitle %>"
                 ToolTip="<% $NopResources:Admin.BlogCommentDetails.BlogTitle.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
         </td>

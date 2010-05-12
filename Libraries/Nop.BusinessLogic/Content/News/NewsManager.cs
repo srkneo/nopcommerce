@@ -100,6 +100,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             item.NewsCommentId = dbItem.NewsCommentId;
             item.NewsId = dbItem.NewsId;
             item.CustomerId = dbItem.CustomerId;
+            item.IPAddress = dbItem.IPAddress;
             item.Title = dbItem.Title;
             item.Comment = dbItem.Comment;
             item.CreatedOn = dbItem.CreatedOn;
@@ -307,10 +308,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         public static NewsComment InsertNewsComment(int newsId, int customerId,
             string title, string comment, DateTime createdOn, bool notify)
         {
+            string IPAddress = string.Empty;
+            if(HttpContext.Current != null && HttpContext.Current.Request != null)
+            {
+                IPAddress = HttpContext.Current.Request.UserHostAddress;
+            }
+            return InsertNewsComment(newsId, customerId, IPAddress, title, comment, createdOn, notify);
+        }
+
+        /// <summary>
+        /// Inserts a news comment
+        /// </summary>
+        /// <param name="newsId">The news identifier</param>
+        /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
+        /// <param name="title">The title</param>
+        /// <param name="comment">The comment</param>
+        /// <param name="createdOn">The date and time of instance creation</param>
+        /// <param name="notify">A value indicating whether to notify the store owner</param>
+        /// <returns>News comment</returns>
+        public static NewsComment InsertNewsComment(int newsId, int customerId, string ipAddress,
+            string title, string comment, DateTime createdOn, bool notify)
+        {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNewsComment(newsId, 
-                customerId, title, comment, createdOn);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNewsComment(newsId,
+                customerId, ipAddress, title, comment, createdOn);
             var newsComment = DBMapping(dbItem);
             
             if (notify)
@@ -327,18 +350,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <param name="newsCommentId">The news comment identifier</param>
         /// <param name="newsId">The news identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The title</param>
         /// <param name="comment">The comment</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
         public static NewsComment UpdateNewsComment(int newsCommentId,
-            int newsId, int customerId, string title,
+            int newsId, int customerId, string ipAddress, string title,
             string comment, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNewsComment(newsCommentId, 
-                newsId, customerId, title, comment, createdOn);
+            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNewsComment(newsCommentId,
+                newsId, customerId, ipAddress, title, comment, createdOn);
             var newsComment = DBMapping(dbItem);
             return newsComment;
         }

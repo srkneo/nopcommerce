@@ -1439,6 +1439,24 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.General.HidePricesForNonRegistered.Tooltip">
     <Value>Check to to disable product prices for all non-registered users so that anyone browsing the site cant see prices.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.BlogCommentDetails.IPAddress">
+    <Value>IP address:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.BlogCommentDetails.IPAddress.Tooltip">
+    <Value>The IP address.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.NewsCommentDetails.IPAddress">
+    <Value>IP address:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.NewsCommentDetails.IPAddress.Tooltip">
+    <Value>The IP address.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductReviewDetails.IPAddress">
+    <Value>IP address:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductReviewDetails.IPAddress.Tooltip">
+    <Value>The IP address.</Value>
+  </LocaleResource>
 </Language>
 '
 

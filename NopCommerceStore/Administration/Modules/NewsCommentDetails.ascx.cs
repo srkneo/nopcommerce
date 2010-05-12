@@ -40,6 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtTitle.Text = newsComment.Title;
                 this.lblNews.Text = GetNewsInfo(newsComment.NewsId);
                 this.lblCustomer.Text = GetCustomerInfo(newsComment.CustomerId);
+                this.lblIPAddress.Text = newsComment.IPAddress;
                 this.txtComment.Text = newsComment.Comment;
                 this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(newsComment.CreatedOn).ToString();
             }
@@ -97,7 +98,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         string title = txtTitle.Text.Trim();
                         string comment = txtComment.Text.Trim();
                         newsComment = NewsManager.UpdateNewsComment(newsComment.NewsCommentId, newsComment.NewsId,
-                            newsComment.CustomerId, title, comment, newsComment.CreatedOn);
+                            newsComment.CustomerId, newsComment.IPAddress, title, comment, newsComment.CreatedOn);
                         Response.Redirect("NewsCommentDetails.aspx?NewsCommentID=" + newsComment.NewsCommentId.ToString());
                     }
                     else

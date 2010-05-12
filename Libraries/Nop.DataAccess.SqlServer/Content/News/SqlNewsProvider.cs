@@ -54,6 +54,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
             item.NewsCommentId = NopSqlDataHelper.GetInt(dataReader, "NewsCommentID");
             item.NewsId = NopSqlDataHelper.GetInt(dataReader, "NewsID");
             item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.IPAddress = NopSqlDataHelper.GetString(dataReader, "IPAddress");
             item.Title = NopSqlDataHelper.GetString(dataReader, "Title");
             item.Comment = NopSqlDataHelper.GetString(dataReader, "Comment");
             item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
@@ -305,11 +306,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// </summary>
         /// <param name="newsId">The news identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The title</param>
         /// <param name="comment">The comment</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public override DBNewsComment InsertNewsComment(int newsId, int customerId, 
+        public override DBNewsComment InsertNewsComment(int newsId, int customerId, string ipAddress, 
             string title, string comment, DateTime createdOn)
         {
             DBNewsComment item = null;
@@ -318,6 +320,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
             db.AddOutParameter(dbCommand, "NewsCommentID", DbType.Int32, 0);
             db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
             db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "IPAddress", DbType.String, ipAddress);
             db.AddInParameter(dbCommand, "Title", DbType.String, title);
             db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
@@ -335,12 +338,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// <param name="newsCommentId">The news comment identifier</param>
         /// <param name="newsId">The news identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The title</param>
         /// <param name="comment">The comment</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>News comment</returns>
-        public override DBNewsComment UpdateNewsComment(int newsCommentId, 
-            int newsId, int customerId, string title,
+        public override DBNewsComment UpdateNewsComment(int newsCommentId,
+            int newsId, int customerId, string ipAddress, string title,
             string comment, DateTime createdOn)
         {
             DBNewsComment item = null;
@@ -349,6 +353,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
             db.AddInParameter(dbCommand, "NewsCommentID", DbType.Int32, newsCommentId);
             db.AddInParameter(dbCommand, "NewsID", DbType.Int32, newsId);
             db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "IPAddress", DbType.String, ipAddress);
             db.AddInParameter(dbCommand, "Title", DbType.String, title);
             db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
             db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);

@@ -77,6 +77,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             item.ProductReviewId = NopSqlDataHelper.GetInt(dataReader, "ProductReviewID");
             item.ProductId = NopSqlDataHelper.GetInt(dataReader, "ProductID");
             item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
+            item.IPAddress = NopSqlDataHelper.GetString(dataReader, "IPAddress");
             item.Title = NopSqlDataHelper.GetString(dataReader, "Title");
             item.ReviewText = NopSqlDataHelper.GetString(dataReader, "ReviewText");
             item.Rating = NopSqlDataHelper.GetInt(dataReader, "Rating");
@@ -1107,6 +1108,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// </summary>
         /// <param name="productId">The product identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The review title</param>
         /// <param name="reviewText">The review text</param>
         /// <param name="rating">The review rating</param>
@@ -1115,7 +1117,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="isApproved">A value indicating whether the product review is approved</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public override DBProductReview InsertProductReview(int productId, int customerId, string title,
+        public override DBProductReview InsertProductReview(int productId, int customerId, string ipAddress, string title,
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn)
         {
@@ -1125,6 +1127,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             db.AddOutParameter(dbCommand, "ProductReviewID", DbType.Int32, 0);
             db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
             db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "IPAddress", DbType.String, ipAddress);
             db.AddInParameter(dbCommand, "Title", DbType.String, title);
             db.AddInParameter(dbCommand, "ReviewText", DbType.String, reviewText);
             db.AddInParameter(dbCommand, "Rating", DbType.Int32, rating);
@@ -1146,6 +1149,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="productReviewId">The product review identifier</param>
         /// <param name="productId">The product identifier</param>
         /// <param name="customerId">The customer identifier</param>
+        /// <param name="ipAddress">The IP address</param>
         /// <param name="title">The review title</param>
         /// <param name="reviewText">The review text</param>
         /// <param name="rating">The review rating</param>
@@ -1154,7 +1158,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="isApproved">A value indicating whether the product review is approved</param>
         /// <param name="createdOn">The date and time of instance creation</param>
         /// <returns>Product review</returns>
-        public override DBProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string title,
+        public override DBProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string ipAddress, string title,
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn)
         {
@@ -1164,6 +1168,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             db.AddInParameter(dbCommand, "ProductReviewID", DbType.Int32, productReviewId);
             db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
             db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
+            db.AddInParameter(dbCommand, "IPAddress", DbType.String, ipAddress);
             db.AddInParameter(dbCommand, "Title", DbType.String, title);
             db.AddInParameter(dbCommand, "ReviewText", DbType.String, reviewText);
             db.AddInParameter(dbCommand, "Rating", DbType.Int32, rating);
