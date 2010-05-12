@@ -2496,6 +2496,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to allow anonymous users to email a friend.
+        /// </summary>
+        public static bool AllowAnonymousUsersToEmailAFriend
+        {
+            get
+            {
+                return SettingManager.GetSettingValueBoolean("Common.AllowAnonymousUsersToEmailAFriend", false);
+            }
+            set
+            {
+                SettingManager.SetParam("Common.AllowAnonymousUsersToEmailAFriend", value.ToString());
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to allow anonymous users to set product ratings.
         /// </summary>
         public static bool AllowAnonymousUsersToSetProductRatings

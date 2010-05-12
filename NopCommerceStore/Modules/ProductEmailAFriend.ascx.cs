@@ -33,6 +33,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.SEO;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -56,7 +57,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 hlProduct.Text = Server.HtmlEncode(product.Name);
                 lShortDescription.Text = product.ShortDescription;
 
-                if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
+                if(NopContext.Current.User == null && CustomerManager.AllowAnonymousUsersToEmailAFriend)
+                {
+                    CustomerManager.CreateAnonymousUser();
+                }
+
+                if(NopContext.Current.User == null || (NopContext.Current.User.IsGuest && !CustomerManager.AllowAnonymousUsersToEmailAFriend))
                 {
                     lblEmailAFriend.Text = GetLocaleResourceString("Products.OnlyRegisteredUsersCanEmailAFriend");
                     txtFriendsEmail.Enabled = false;
@@ -85,7 +91,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var product = ProductManager.GetProductById(this.ProductId);
                     if (product != null)
                     {
-                        if (NopContext.Current.User == null || NopContext.Current.User.IsGuest)
+                        if(NopContext.Current.User == null && CustomerManager.AllowAnonymousUsersToEmailAFriend)
+                        {
+                            CustomerManager.CreateAnonymousUser();
+                        }
+
+                        if(NopContext.Current.User == null || (NopContext.Current.User.IsGuest && !CustomerManager.AllowAnonymousUsersToEmailAFriend))
                         {
                             lblEmailAFriend.Text = GetLocaleResourceString("Products.OnlyRegisteredUsersCanEmailAFriend");
                             return;

@@ -1452,6 +1452,17 @@
                     </tr>
                     <tr>
                         <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblAllowAnonymousUsersToEmailAFriend"
+                                Text="<% $NopResources:Admin.GlobalSettings.Other.AllowAnonymousUsersToEmailAFriend %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Other.AllowAnonymousUsersToEmailAFriend.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbAllowAnonymousUsersToEmailAFriend"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ID="lblAllowAnonymousUsersToSetProductRatings"
                                 Text="<% $NopResources:Admin.GlobalSettings.Other.AllowAnonymousUsersToSetProductRatings %>"
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.Other.AllowAnonymousUsersToSetProductRatings.Tooltip %>"

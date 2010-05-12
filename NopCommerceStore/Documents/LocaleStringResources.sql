@@ -1457,6 +1457,12 @@ set @resources='
   <LocaleResource Name="Admin.ProductReviewDetails.IPAddress.Tooltip">
     <Value>The IP address.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.AllowAnonymousUsersToEmailAFriend">
+    <Value>Allow anonymous users to email a friend:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.AllowAnonymousUsersToEmailAFriend.Tooltip">
+    <Value>Check if you want to allow anonymous users to email a friend.</Value>
+  </LocaleResource>
 </Language>
 '
 
