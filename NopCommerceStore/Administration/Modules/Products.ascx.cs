@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 this.gvProducts.Visible = true;
                 this.lblNoProductsFound.Visible = false;
-                this.gvProducts.Columns[0].Visible = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
+                this.gvProducts.Columns[1].Visible = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
                 this.gvProducts.DataSource = products;
                 this.gvProducts.DataBind();
             }
