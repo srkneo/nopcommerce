@@ -228,8 +228,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SagePay
 
             if (order.OrderShippingInclTax > 0.0M)
             {
-                // use code 999999 as the delivery code
-                toReturn.AppendFormat(":Delivery:999999:{0:0.00}:{1:0.00}:{2:0.00}:{3:0.00}",
+                toReturn.AppendFormat(":Delivery:1:{0:0.00}:{1:0.00}:{2:0.00}:{3:0.00}",
                     order.OrderShippingExclTax,
                     order.OrderShippingInclTax - order.OrderShippingExclTax,
                     order.OrderShippingInclTax,
