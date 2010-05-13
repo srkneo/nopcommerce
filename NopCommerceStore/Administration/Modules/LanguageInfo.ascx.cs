@@ -149,7 +149,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         HttpPostedFile importResourcesFile = fuImportResources.PostedFile;
                         if ((importResourcesFile != null) && (!String.IsNullOrEmpty(importResourcesFile.FileName)))
                         {
-                            using (StreamReader sr = new StreamReader(importResourcesFile.InputStream))
+                            using (StreamReader sr = new StreamReader(importResourcesFile.InputStream, Encoding.UTF8))
                             {
                                 string content = sr.ReadToEnd();
                                 ImportManager.ImportResources(this.LanguageId, content);
