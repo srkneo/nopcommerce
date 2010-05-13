@@ -52,7 +52,20 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var report = OrderManager.BestSellersReport(720, number, 1);
             if (report.Count > 0)
             {
-                dlCatalog.DataSource = report;
+                List<Product> productList = new List<Product>();
+                foreach(BestSellersReportLine line in report)
+                {
+                    var productVariant = ProductManager.GetProductVariantById(line.ProductVariantId);
+                    if(productVariant != null)
+                    {
+                        var product = productVariant.Product;
+                        if(product != null && !productList.Contains(product))
+                        {
+                            productList.Add(product);
+                        }
+                    }
+                }
+                dlCatalog.DataSource = productList;
                 dlCatalog.DataBind();
             }
             else
@@ -65,35 +78,30 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                var bestSellersReportLine = e.Item.DataItem as BestSellersReportLine;
-                var productVariant = ProductManager.GetProductVariantById(bestSellersReportLine.ProductVariantId);
-                if (productVariant != null)
+                var product = e.Item.DataItem as Product;
+                if(product != null)
                 {
-                    var product = productVariant.Product;
-                    if (product != null)
+                    string productURL = SEOHelper.GetProductUrl(product);
+
+                    var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
+                    if(hlImageLink != null)
                     {
-                        string productURL = SEOHelper.GetProductUrl(product);
+                        var productPictures = product.ProductPictures;
+                        if(productPictures.Count > 0)
+                            hlImageLink.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].Picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125), true);
+                        else
+                            hlImageLink.ImageUrl = PictureManager.GetDefaultPictureUrl(SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125));
 
-                        var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
-                        if (hlImageLink != null)
-                        {
-                            var productPictures = product.ProductPictures;
-                            if (productPictures.Count > 0)
-                                hlImageLink.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].Picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125), true);
-                            else
-                                hlImageLink.ImageUrl = PictureManager.GetDefaultPictureUrl(SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125));
+                        hlImageLink.NavigateUrl = productURL;
+                        hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageLinkTitleFormat"), product.Name);
+                        hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
+                    }
 
-                            hlImageLink.NavigateUrl = productURL;
-                            hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageLinkTitleFormat"), product.Name);
-                            hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
-                        }
-
-                        var hlProduct = e.Item.FindControl("hlProduct") as HyperLink;
-                        if (hlProduct != null)
-                        {
-                            hlProduct.NavigateUrl = productURL;
-                            hlProduct.Text = Server.HtmlEncode(product.Name);
-                        }
+                    var hlProduct = e.Item.FindControl("hlProduct") as HyperLink;
+                    if(hlProduct != null)
+                    {
+                        hlProduct.NavigateUrl = productURL;
+                        hlProduct.Text = Server.HtmlEncode(product.Name);
                     }
                 }
             }
