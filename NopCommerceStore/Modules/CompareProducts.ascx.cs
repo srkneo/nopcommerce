@@ -131,9 +131,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     productImage.Border = 0;
                     //productImage.Align = "center";
                     productImage.Alt = "Product image";
-                    var productPictures = product.ProductPictures;
-                    if (productPictures.Count > 0)
-                        productImage.Src = PictureManager.GetPictureUrl(productPictures[0].Picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125), true);
+                    ProductPicture productPicture = product.TopProductPicture;
+                    if(productPicture != null)
+                        productImage.Src = PictureManager.GetPictureUrl(productPicture.Picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125), true);
                     else
                         productImage.Src = PictureManager.GetDefaultPictureUrl(SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125));
                     productImagePanel.Controls.Add(productImage);

@@ -1004,13 +1004,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets all product picture mappings by product identifier
         /// </summary>
         /// <param name="productId">Product identifier</param>
+        /// <param name="pictureCount">Number of picture to load</param>
         /// <returns>Product picture mapping collection</returns>
-        public override DBProductPictureCollection GetProductPicturesByProductId(int productId)
+        public override DBProductPictureCollection GetProductPicturesByProductId(int productId, int pictureCount)
         {
             var result = new DBProductPictureCollection();
+
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductPictureLoadAllByProductID");
+
             db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "PictureCount", DbType.Int32, pictureCount);
+
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())

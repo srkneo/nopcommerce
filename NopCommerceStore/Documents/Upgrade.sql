@@ -8150,3 +8150,32 @@ BEGIN
 	SET ROWCOUNT 0
 END
 GO
+
+-- SP Nop_NewsLoadAll
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductPictureLoadAllByProductID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductPictureLoadAllByProductID]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductPictureLoadAllByProductID]
+(
+	@ProductID int,
+	@PictureCount int
+)
+AS
+BEGIN
+	IF(@PictureCount > 0) SET ROWCOUNT @PictureCount
+	
+	SELECT
+		*
+	FROM 
+		Nop_ProductPicture
+	WHERE 
+		ProductID = @ProductID
+	ORDER BY 
+		DisplayOrder
+		
+	SET ROWCOUNT 0
+END
+GO

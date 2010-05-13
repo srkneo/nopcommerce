@@ -323,8 +323,9 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// Gets all product picture mappings by product identifier
         /// </summary>
         /// <param name="productId">Product identifier</param>
+        /// <param name="pictureCount">Number of picture to load</param>
         /// <returns>Product picture mapping collection</returns>
-        public abstract DBProductPictureCollection GetProductPicturesByProductId(int productId);
+        public abstract DBProductPictureCollection GetProductPicturesByProductId(int productId, int pictureCount);
 
         /// <summary>
         /// Gets a product review

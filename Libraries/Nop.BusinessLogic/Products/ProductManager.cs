@@ -2357,15 +2357,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return productPicture;
         }
 
-        /// <summary>
+         /// <summary>
         /// Gets all product picture mappings by product identifier
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product picture mapping collection</returns>
         public static ProductPictureCollection GetProductPicturesByProductId(int productId)
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductPicturesByProductId(productId);
+            return GetProductPicturesByProductId(productId, 0);
+        }
+
+        /// <summary>
+        /// Gets all product picture mappings by product identifier
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="pictureCount">Number of picture to load</param>
+        /// <returns>Product picture mapping collection</returns>
+        public static ProductPictureCollection GetProductPicturesByProductId(int productId, int pictureCount)
+        {
+            if(pictureCount < 0)
+            {
+                pictureCount = 0;
+            }
+
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductPicturesByProductId(productId, pictureCount);
+
             var productPictures = DBMapping(dbCollection);
+
             return productPictures;
         }
 
