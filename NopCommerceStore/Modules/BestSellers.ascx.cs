@@ -59,9 +59,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     if(productVariant != null)
                     {
                         var product = productVariant.Product;
-                        if(product != null && !productList.Contains(product))
+                        if(product != null)
                         {
-                            productList.Add(product);
+                            bool contains = false;
+                            foreach(Product p in productList)
+                            {
+                                if(p.ProductId == product.ProductId)
+                                {
+                                    contains = true;
+                                    break;
+                                }
+                            }
+                            if(!contains)
+                            {
+                                productList.Add(product);
+                            }
                         }
                     }
                 }
