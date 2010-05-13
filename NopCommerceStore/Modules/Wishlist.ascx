@@ -62,6 +62,7 @@
                             <a href='<%#GetProductUrl((ShoppingCartItem)Container.DataItem)%>'>
                                 <%#Server.HtmlEncode(GetProductVariantName((ShoppingCartItem)Container.DataItem))%></a>
                             <%#GetAttributeDescription((ShoppingCartItem)Container.DataItem)%>
+                            <%#GetRecurringDescription((ShoppingCartItem)Container.DataItem)%>
                             <asp:Panel runat="server" ID="pnlWarnings" CssClass="warning-box" EnableViewState="false"
                                 Visible="false">
                                 <asp:Label runat="server" ID="lblWarning" CssClass="warning-text" EnableViewState="false"

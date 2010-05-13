@@ -69,8 +69,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 pnlCart.Visible = false;
             }
         }
-
-
+        
         /// <summary>
         /// Validates shopping cart
         /// </summary>
@@ -252,6 +251,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return result;
         }
         
+        public string GetRecurringDescription(ShoppingCartItem shoppingCartItem)
+        {
+            string result = string.Empty;
+            if (shoppingCartItem.ProductVariant.IsRecurring)
+            {
+                result = string.Format(GetLocaleResourceString("Wishlist.RecurringPeriod"), shoppingCartItem.ProductVariant.CycleLength, ((RecurringProductCyclePeriodEnum)shoppingCartItem.ProductVariant.CyclePeriod).ToString());
+                if (!String.IsNullOrEmpty(result))
+                    result = "<br />" + result;
+            }
+            return result;
+        }
+
         public string GetShoppingCartItemUnitPriceString(ShoppingCartItem shoppingCartItem)
         {
             var sb = new StringBuilder();

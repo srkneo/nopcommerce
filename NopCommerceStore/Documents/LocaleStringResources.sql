@@ -1463,6 +1463,15 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.Other.AllowAnonymousUsersToEmailAFriend.Tooltip">
     <Value>Check if you want to allow anonymous users to email a friend.</Value>
   </LocaleResource>
+  <LocaleResource Name="ShoppingCart.RecurringPeriod">
+    <Value>[Auto-ship, Every {0} {1}]</Value>
+  </LocaleResource>
+  <LocaleResource Name="Wishlist.RecurringPeriod">
+    <Value>[Auto-ship, Every {0} {1}]</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.RecurringPeriod">
+    <Value>[Auto-ship, Every {0} {1}]</Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -2773,8 +2773,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 var appliedDiscounts = new DiscountCollection();
 
                 //checkout attributes
-                string checkoutAttributeDescription = CheckoutAttributeHelper.FormatAttributes(customer.CheckoutAttributes, customer, "<br />");
-                string checkoutAttributesXml = customer.CheckoutAttributes;
+                string checkoutAttributeDescription = string.Empty;
+                string checkoutAttributesXml = string.Empty;
+                if (!paymentInfo.IsRecurringPayment)
+                {
+                    checkoutAttributeDescription = CheckoutAttributeHelper.FormatAttributes(customer.CheckoutAttributes, customer, "<br />");
+                    checkoutAttributesXml = customer.CheckoutAttributes;
+                }
+                else
+                {
+                    checkoutAttributeDescription = initialOrder.CheckoutAttributeDescription;
+                    checkoutAttributesXml = initialOrder.CheckoutAttributesXml;
+                }
 
                 //sub total
                 decimal orderSubTotalInclTax = decimal.Zero;

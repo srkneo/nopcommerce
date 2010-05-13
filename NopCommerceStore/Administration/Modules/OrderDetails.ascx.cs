@@ -1281,6 +1281,18 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return result;
         }
 
+        public string GetRecurringDescription(OrderProductVariant opv)
+        {
+            string result = string.Empty;
+            if (opv.ProductVariant.IsRecurring)
+            {
+                result = string.Format(GetLocaleResourceString("Admin.OrderDetails.Products.RecurringPeriod"), opv.ProductVariant.CycleLength, ((RecurringProductCyclePeriodEnum)opv.ProductVariant.CyclePeriod).ToString());
+                if (!String.IsNullOrEmpty(result))
+                    result = "<br />" + result;
+            }
+            return result;
+        }
+
         public string GetDownloadUrl(OrderProductVariant orderProductVariant)
         {
             string result = string.Empty;

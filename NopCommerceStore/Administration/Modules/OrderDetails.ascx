@@ -865,6 +865,7 @@
                                             <em><a href='<%#GetProductUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="<%#GetLocaleResourceString("Admin.OrderDetails.Products.Name.Tooltip")%>">
                                                 <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantId"))))%></a></em>
                                             <%#GetAttributeDescription((OrderProductVariant)Container.DataItem)%>
+                                            <%#GetRecurringDescription((OrderProductVariant)Container.DataItem)%>
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
