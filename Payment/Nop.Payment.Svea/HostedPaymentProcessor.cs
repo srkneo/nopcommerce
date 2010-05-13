@@ -77,18 +77,6 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
                 rowNumber++;
             }
 
-            //gift cards
-            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
-            foreach (var gcuh in gcuhC)
-            {
-                sb.AppendFormat("Row{0}AmountExVAT={1}&", rowNumber, -gcuh.UsedValue);
-                sb.AppendFormat("Row{0}Description=GiftCard-{1}&", rowNumber, gcuh.GiftCard.GiftCardCouponCode);
-                sb.AppendFormat("Row{0}Quantity=1&", rowNumber);
-                sb.AppendFormat("Row{0}VATPercentage={1}&", rowNumber, 0);
-
-                rowNumber++;
-            }
-
             //shipping
             if(order.OrderShippingExclTax != decimal.Zero)
             {
@@ -107,6 +95,29 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
                 sb.AppendFormat("Row{0}Description=Additional&", rowNumber);
                 sb.AppendFormat("Row{0}Quantity=1&", rowNumber);
                 sb.AppendFormat("Row{0}VATPercentage={1}&", rowNumber, (int)(((order.PaymentMethodAdditionalFeeInclTax - order.PaymentMethodAdditionalFeeExclTax) / order.PaymentMethodAdditionalFeeExclTax) * 100));
+
+                rowNumber++;
+            }
+
+            //gift cards
+            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
+            foreach (var gcuh in gcuhC)
+            {
+                sb.AppendFormat("Row{0}AmountExVAT={1}&", rowNumber, -gcuh.UsedValue);
+                sb.AppendFormat("Row{0}Description=GiftCard-{1}&", rowNumber, gcuh.GiftCard.GiftCardCouponCode);
+                sb.AppendFormat("Row{0}Quantity=1&", rowNumber);
+                sb.AppendFormat("Row{0}VATPercentage={1}&", rowNumber, 0);
+
+                rowNumber++;
+            }
+
+            //reward points
+            if (order.RedeemedRewardPoints != null)
+            {
+                sb.AppendFormat("Row{0}AmountExVAT={1}&", rowNumber, -order.RedeemedRewardPoints.UsedAmount);
+                sb.AppendFormat("Row{0}Description={1}-RewardPoints&", rowNumber, -order.RedeemedRewardPoints.Points);
+                sb.AppendFormat("Row{0}Quantity=1&", rowNumber);
+                sb.AppendFormat("Row{0}VATPercentage={1}&", rowNumber, 0);
 
                 rowNumber++;
             }
