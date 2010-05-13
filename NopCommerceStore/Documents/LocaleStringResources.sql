@@ -1478,6 +1478,24 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.Other.UseImagesForLanguageSelection.Tooltip">
     <Value>Check if you want to use images for language selection.</Value>
   </LocaleResource>
+  <LocaleResource Name="PageTitle.NewsArchive">
+    <Value>News Archive.</Value>
+  </LocaleResource>
+  <LocaleResource Name="News.ViewAll">
+    <Value>View All</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.NewsSettings.NewsArchivePageSize">
+    <Value>News archive page size:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.NewsSettings.NewsArchivePageSize.Tooltip">
+    <Value>A number of news displayed on one page.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.NewsSettings.NewsArchivePageSize.RequiredErrorMessage">
+    <Value>News archive page size not specified.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.NewsSettings.NewsArchivePageSize.RangeErrorMessage">
+    <Value>A value must be between 1 - 200.</Value>
+  </LocaleResource>
 </Language>
 '
 

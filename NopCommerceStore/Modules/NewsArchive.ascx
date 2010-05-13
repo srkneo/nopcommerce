@@ -1,5 +1,5 @@
-<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.NewsListControl"
-    CodeBehind="NewsList.ascx.cs" %>
+<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.NewsArchiveControl" CodeBehind="NewsArchive.ascx.cs" %>
+
 <div class="newslist">
     <div class="title">
         <table style="width: 100%;">
@@ -32,9 +32,11 @@
                 </div>
             </ItemTemplate>
         </asp:Repeater>
-        <div class="viewall">
-            <a href="<%=CommonHelper.GetStoreLocation()%>newsarchive.aspx">
-                <%=GetLocaleResourceString("News.ViewAll")%></a>
-        </div>
+    </div>
+    
+    <div class="pager">
+        <nopCommerce:Pager runat="server" ID="newsPager" QueryStringProperty="p" FirstButtonText="<% $NopResources:Pager.First %>"
+            LastButtonText="<% $NopResources:Pager.Last %>" NextButtonText="<% $NopResources:Pager.Next %>"
+            PreviousButtonText="<% $NopResources:Pager.Previous %>" CurrentPageText="Pager.CurrentPage" />
     </div>
 </div>

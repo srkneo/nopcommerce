@@ -8,27 +8,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NopSolutions.NopCommerce.Web.Modules {
+namespace NopSolutions.NopCommerce.Web {
     
     
-    public partial class NewsListControl {
+    public partial class NewsArchivePage {
         
         /// <summary>
-        /// imgRSS control.
+        /// ctrlNewsArchive control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgRSS;
-        
-        /// <summary>
-        /// rptrNews control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptrNews;
+        protected global::System.Web.UI.UserControl ctrlNewsArchive;
     }
 }

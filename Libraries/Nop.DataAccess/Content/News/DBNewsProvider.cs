@@ -50,11 +50,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// Gets news item collection
         /// </summary>
         /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
-        /// <param name="newsCount">News item count. 0 if you want to get all news</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>News item collection</returns>
-        public abstract DBNewsCollection GetNews(int languageId, 
-            int newsCount, bool showHidden);
+        public abstract DBNewsCollection GetAllNews(int languageId, bool showHidden, int pageIndex, int pageSize, out int totalRecords);
         
         /// <summary>
         /// Inserts a news item

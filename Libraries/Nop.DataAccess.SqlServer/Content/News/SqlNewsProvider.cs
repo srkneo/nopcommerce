@@ -135,26 +135,32 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.NewsManagement
         /// Gets news item collection
         /// </summary>
         /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
-        /// <param name="newsCount">News item count. 0 if you want to get all news</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
         /// <returns>News item collection</returns>
-        public override DBNewsCollection GetNews(int languageId, 
-            int newsCount, bool showHidden)
+        public override DBNewsCollection GetAllNews(int languageId, bool showHidden, int pageIndex, int pageSize, out int totalRecords)
         {
             var result = new DBNewsCollection();
             Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_NewsLoadAll");
+
             db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
-            db.AddInParameter(dbCommand, "NewsCount", DbType.Int32, newsCount);
             db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
+            db.AddInParameter(dbCommand, "PageIndex", DbType.Int32, pageIndex);
+            db.AddInParameter(dbCommand, "PageSize", DbType.Int32, pageSize);
+            db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
+
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))
             {
                 while (dataReader.Read())
                 {
-                    var item = GetNewsFromReader(dataReader);
-                    result.Add(item);
+                    result.Add(GetNewsFromReader(dataReader));
                 }
             }
+
+            totalRecords = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TotalRecords"));
 
             return result;
         }

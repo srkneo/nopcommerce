@@ -31,7 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.SEO;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
-    public partial class NewsListControl : BaseNopUserControl
+    public partial class NewsArchiveControl : BaseNopUserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -48,35 +48,34 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
+            int totalRecords = 0;
+            int pageSize = NewsManager.NewsArchivePageSize;
 
-            var newsCollection = NewsManager.GetAllNews(NopContext.Current.WorkingLanguage.LanguageId, NewsCount);
-            if (newsCollection.Count > 0)
+            var newsCollection = NewsManager.GetAllNews(NopContext.Current.WorkingLanguage.LanguageId, CurrentPageIndex, pageSize, out totalRecords);
+            if(newsCollection.Count > 0)
             {
+                newsPager.PageSize = pageSize;
+                newsPager.TotalRecords = totalRecords;
+                newsPager.PageIndex = CurrentPageIndex;
+
                 rptrNews.DataSource = newsCollection;
                 rptrNews.DataBind();
-
             }
             else
-                this.Visible = false;
+            {
+                Visible = false;
+            }
         }
 
-        [DefaultValue(0)]
-        public int NewsCount
+        public int CurrentPageIndex
         {
             get
             {
-                if(ViewState["NewsCount"] == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return (int)ViewState["NewsCount"];
-                }
-            }
-            set 
-            { 
-                ViewState["NewsCount"] = value; 
+                int pageIndex = CommonHelper.QueryStringInt(newsPager.QueryStringProperty);
+                pageIndex--;
+                if(pageIndex < 0)
+                    pageIndex = 0;
+                return pageIndex;
             }
         }
     }

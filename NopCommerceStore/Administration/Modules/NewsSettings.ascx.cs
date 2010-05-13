@@ -52,6 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbNotifyAboutNewNewsComments.Checked = NewsManager.NotifyAboutNewNewsComments;
             cbShowNewsOnMainPage.Checked = NewsManager.ShowNewsOnMainPage;
             txtMainPageNewsCount.Value = NewsManager.MainPageNewsCount;
+            txtNewsArchivePageSize.Value = NewsManager.NewsArchivePageSize;
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -65,6 +66,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     NewsManager.NotifyAboutNewNewsComments = cbNotifyAboutNewNewsComments.Checked;
                     NewsManager.ShowNewsOnMainPage = cbShowNewsOnMainPage.Checked;
                     NewsManager.MainPageNewsCount = txtMainPageNewsCount.Value;
+                    NewsManager.NewsArchivePageSize = txtNewsArchivePageSize.Value;
 
                     Response.Redirect("NewsSettings.aspx");
                 }

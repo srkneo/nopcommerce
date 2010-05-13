@@ -65,4 +65,16 @@
             </nopCommerce:NumericTextBox>
         </td>
     </tr>
+    <tr>
+        <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblNewsArchivePageSize" Text="<% $NopResources:Admin.NewsSettings.NewsArchivePageSize %>"
+                ToolTip="<% $NopResources:Admin.NewsSettings.NewsArchivePageSize.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <nopCommerce:NumericTextBox runat="server" CssClass="adminInput" ID="txtNewsArchivePageSize"
+                RequiredErrorMessage="<% $NopResources:Admin.NewsSettings.NewsArchivePageSize.RequiredErrorMessage %>"
+                MinimumValue="1" MaximumValue="200" Value="10" RangeErrorMessage="<% $NopResources:Admin.NewsSettings.NewsArchivePageSize.RangeErrorMessage %>"
+                ValidationGroup="BlogSettings"></nopCommerce:NumericTextBox>
+        </td>
+    </tr>
 </table>

@@ -11,7 +11,7 @@
 namespace NopSolutions.NopCommerce.Web.Modules {
     
     
-    public partial class NewsListControl {
+    public partial class NewsArchiveControl {
         
         /// <summary>
         /// imgRSS control.
@@ -30,5 +30,14 @@ namespace NopSolutions.NopCommerce.Web.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptrNews;
+        
+        /// <summary>
+        /// newsPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Controls.Pager newsPager;
     }
 }

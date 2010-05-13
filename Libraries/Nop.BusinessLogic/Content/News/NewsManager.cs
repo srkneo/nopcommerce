@@ -151,27 +151,99 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         }
 
         /// <summary>
-        /// Gets news item collection
-        /// </summary>
-        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
-        /// <param name="newsCount">News item count. 0 if you want to get all news</param>
-        /// <returns>News item collection</returns>
-        public static NewsCollection GetNews(int languageId, int newsCount)
-        {
-            bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetNews(languageId, newsCount, showHidden);
-            var collection = DBMapping(dbCollection);
-            return collection;
-        }
-
-        /// <summary>
         /// Gets all news
         /// </summary>
         /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <returns>News item collection</returns>
         public static NewsCollection GetAllNews(int languageId)
         {
-            return GetNews(languageId, 0);
+            bool showHidden = NopContext.Current.IsAdmin;
+            return GetAllNews(languageId, showHidden);
+        }
+
+        /// <summary>
+        /// Gets news item collection
+        /// </summary>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>News item collection</returns>
+        public static NewsCollection GetAllNews(int languageId, bool showHidden)
+        {
+            return GetAllNews(languageId, showHidden, Int32.MaxValue);
+        }
+
+
+        /// <summary>
+        /// Gets news item collection
+        /// </summary>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="count">News count to return</param>
+        /// <returns>News item collection</returns>
+        public static NewsCollection GetAllNews(int languageId, int count)
+        {
+            bool showHidden = NopContext.Current.IsAdmin;
+            return GetAllNews(languageId, showHidden, count);
+        }
+
+        /// <summary>
+        /// Gets news item collection
+        /// </summary>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="count">News count to return</param>
+        /// <returns>News item collection</returns>
+        public static NewsCollection GetAllNews(int languageId, bool showHidden, int count)
+        {
+            int totalRecords = 0;
+
+            return GetAllNews(languageId, showHidden, 0, count, out totalRecords);
+        }
+
+        /// <summary>
+        /// Gets news item collection
+        /// </summary>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>News item collection</returns>
+        public static NewsCollection GetAllNews(int languageId, int pageIndex, int pageSize, out int totalRecords)
+        {
+            bool showHidden = NopContext.Current.IsAdmin;
+            return GetAllNews(languageId, showHidden, pageIndex, pageSize, out totalRecords);
+        }
+
+        /// <summary>
+        /// Gets news item collection
+        /// </summary>
+        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>News item collection</returns>
+        public static NewsCollection GetAllNews(int languageId, bool showHidden, int pageIndex, int pageSize, out int totalRecords)
+        {
+            if(pageSize <= 0)
+            {
+                pageSize = 10;
+            }
+            if(pageSize == Int32.MaxValue)
+            {
+                pageSize = Int32.MaxValue - 1;
+            }
+            if(pageIndex < 0)
+            {
+                pageIndex = 0;
+            }
+            if(pageIndex == Int32.MaxValue)
+            {
+                pageIndex = Int32.MaxValue - 1;
+            }
+
+            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetAllNews(languageId, showHidden, pageIndex, pageSize, out totalRecords);
+         
+            return DBMapping(dbCollection);
         }
 
         /// <summary>
@@ -470,6 +542,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             set
             {
                 SettingManager.SetParam("Display.MainPageNewsCount", value.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the page size for news archive
+        /// </summary>
+        public static int NewsArchivePageSize
+        {
+            get
+            {
+                return SettingManager.GetSettingValueInteger("Display.NewsArchivePageSize", 10);
+            }
+            set
+            {
+                SettingManager.SetParam("Display.NewsArchivePageSize", value.ToString());
             }
         }
         #endregion

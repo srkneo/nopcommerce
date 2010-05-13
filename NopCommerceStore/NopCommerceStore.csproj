@@ -3715,6 +3715,20 @@
     <Compile Include="ConditionsInfoPopup.aspx.designer.cs">
       <DependentUpon>ConditionsInfoPopup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\NewsArchive.ascx.cs">
+      <DependentUpon>NewsArchive.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\NewsArchive.ascx.designer.cs">
+      <DependentUpon>NewsArchive.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="NewsArchive.aspx.cs">
+      <DependentUpon>NewsArchive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewsArchive.aspx.designer.cs">
+      <DependentUpon>NewsArchive.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\CheckoutAttributes.ascx.cs">
       <DependentUpon>CheckoutAttributes.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6315,6 +6329,8 @@
     <Content Include="ChronoPayIPNHandler.aspx" />
     <Content Include="AssistHostedPaymentReturn.aspx" />
     <Content Include="ConditionsInfoPopup.aspx" />
+    <Content Include="Modules\NewsArchive.ascx" />
+    <Content Include="NewsArchive.aspx" />
     <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_date_a.gif" />
     <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_date_n.gif" />
     <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_insertIcon_a.gif" />

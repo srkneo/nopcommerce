@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (NewsManager.NewsEnabled)
             {
-                NewsCollection newsCollection = NewsManager.GetNews(LanguageId, 0);
+                NewsCollection newsCollection = NewsManager.GetAllNews(LanguageId);
                 rptrNews.DataSource = newsCollection;
                 rptrNews.DataBind();
             }
