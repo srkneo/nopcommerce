@@ -135,6 +135,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbUsernamesEnabled.Checked = CustomerManager.UsernamesEnabled;
             CommonHelper.SelectListItem(this.ddlRegistrationMethod, (int)CustomerManager.CustomerRegistrationType);
             cbAllowNavigationOnlyRegisteredCustomers.Checked = CustomerManager.AllowNavigationOnlyRegisteredCustomers;
+            cbUseImagesForLanguageSelection.Checked = SettingManager.GetSettingValueBoolean("Common.UseImagesForLanguageSelection", false);
             cbEnableCompareProducts.Checked = ProductManager.CompareProductsEnabled;
             cbEnableWishlist.Checked = SettingManager.GetSettingValueBoolean("Common.EnableWishlist");
             cbIsReOrderAllowed.Checked = OrderManager.IsReOrderAllowed;
@@ -351,6 +352,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     CustomerManager.CustomerRegistrationType = (CustomerRegistrationTypeEnum)Enum.ToObject(typeof(CustomerRegistrationTypeEnum), int.Parse(this.ddlRegistrationMethod.SelectedItem.Value));
                     CustomerManager.AllowNavigationOnlyRegisteredCustomers = cbAllowNavigationOnlyRegisteredCustomers.Checked;
                     ProductManager.CompareProductsEnabled = cbEnableCompareProducts.Checked;
+                    SettingManager.SetParam("Common.UseImagesForLanguageSelection", cbUseImagesForLanguageSelection.Checked.ToString());
                     SettingManager.SetParam("Common.EnableWishlist", cbEnableWishlist.Checked.ToString());
                     OrderManager.IsReOrderAllowed = cbIsReOrderAllowed.Checked;
                     SettingManager.SetParam("Common.EnableEmailAFirend", cbEnableEmailAFriend.Checked.ToString());

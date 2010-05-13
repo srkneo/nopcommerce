@@ -802,9 +802,27 @@ textarea
 	border: solid 1px #E3E3E3;
 }
 
-.languagelist
+select.languagelist
 {
 	border: solid 1px #E3E3E3;
+}
+
+ul.languagelist
+{
+	display: inline;
+	line-height: 25px;
+}
+
+ul.languagelist li
+{
+	list-style: none;
+	display: inline-block;
+	padding: 0px 5px 0 5px;	
+}
+
+ul.languagelist li .selected
+{
+	border: solid 1px #cccccc !important;
 }
 
 .taxdisplaytypelist

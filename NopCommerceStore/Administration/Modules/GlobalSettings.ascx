@@ -1372,6 +1372,16 @@
                     <tr>
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblUseImagesForLanguageSelection" Text="<% $NopResources:Admin.GlobalSettings.Other.UseImagesForLanguageSelection %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Other.UseImagesForLanguageSelection.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbUseImagesForLanguageSelection" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
                                 ID="lblCompareProducts" Text="<% $NopResources:Admin.GlobalSettings.Other.CompareProducts %>"
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.Other.CompareProducts.Tooltip %>" />
                         </td>

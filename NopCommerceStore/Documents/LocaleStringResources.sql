@@ -1472,6 +1472,12 @@ set @resources='
   <LocaleResource Name="Admin.OrderDetails.Products.RecurringPeriod">
     <Value>[Auto-ship, Every {0} {1}]</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.UseImagesForLanguageSelection">
+    <Value>Use images for language selection:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.UseImagesForLanguageSelection.Tooltip">
+    <Value>Check if you want to use images for language selection.</Value>
+  </LocaleResource>
 </Language>
 '
 

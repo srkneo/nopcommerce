@@ -27,6 +27,8 @@ using System.Xml.Linq;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using System.Collections.Generic;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -35,21 +37,51 @@ namespace NopSolutions.NopCommerce.Web.Modules
         private void BindLanguages()
         {
             var languages = LanguageManager.GetAllLanguages();
-            if (languages.Count > 1)
+            if(languages.Count > 1)
             {
-                this.Visible = true;
-                this.ddlLanguages.Items.Clear();
                 var customerLanguage = NopContext.Current.WorkingLanguage;
-                foreach (var language in languages)
+                Visible = true;
+
+                if(SettingManager.GetSettingValueBoolean("Common.UseImagesForLanguageSelection", false))
                 {
-                    var item = new ListItem(language.Name, language.LanguageId.ToString());
-                    this.ddlLanguages.Items.Add(item);
+                    rptLanguages.Visible = true;
+                    ddlLanguages.Visible = false;
+                    List<RptLanguageItem> itemList = new List<RptLanguageItem>();
+
+                    foreach(var language in languages)
+                    {
+                        RptLanguageItem item = new RptLanguageItem();
+                        item.Class = (language.LanguageId == customerLanguage.LanguageId ? "selected" : String.Empty);
+                        item.ImageUrl = language.IconUrl;
+                        item.LanguageID = language.LanguageId;
+                        itemList.Add(item);
+                    }
+
+                    rptLanguages.DataSource = itemList;
+                    rptLanguages.DataBind();
                 }
-                if (customerLanguage != null)
-                    CommonHelper.SelectListItem(this.ddlLanguages, customerLanguage.LanguageId);
+                else
+                {
+                    rptLanguages.Visible = false;
+                    ddlLanguages.Visible = true;
+
+                    ddlLanguages.Items.Clear();
+
+                    foreach(var language in languages)
+                    {
+                        var item = new ListItem(language.Name, language.LanguageId.ToString());
+                        ddlLanguages.Items.Add(item);
+                    }
+                    if(customerLanguage != null)
+                    {
+                        CommonHelper.SelectListItem(ddlLanguages, customerLanguage.LanguageId);
+                    }
+                }
             }
             else
-                this.Visible = false;
+            {
+                Visible = false;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -68,6 +100,41 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 NopContext.Current.WorkingLanguage = language;
                 CommonHelper.ReloadCurrentPage();
+            }
+        }
+
+        protected void BtnSelectLanguage_OnCommand(object sender, CommandEventArgs e)
+        {
+            if(e.CommandName.Equals("SelectLanguage"))
+            {
+                int languageId = Int32.Parse(e.CommandArgument.ToString());
+                var language = LanguageManager.GetLanguageById(languageId);
+                if(language != null && language.Published)
+                {
+                    NopContext.Current.WorkingLanguage = language;
+                    CommonHelper.ReloadCurrentPage();
+                }
+            }
+        }
+
+        private class RptLanguageItem
+        {
+            public string Class
+            {
+                get;
+                set;
+            }
+
+            public string ImageUrl
+            {
+                get;
+                set;
+            }
+
+            public int LanguageID
+            {
+                get;
+                set;
             }
         }
     }
