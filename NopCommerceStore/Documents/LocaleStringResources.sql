@@ -1433,10 +1433,10 @@ set @resources='
   <LocaleResource Name="Admin.CategoryInfo.ShowOnHomePage.Tooltip">
     <Value>Check if you want to show a catgory on home page.</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.GlobalSettings.General.HidePricesForNonRegistered">
+  <LocaleResource Name="Admin.GlobalSettings.Other.HidePricesForNonRegistered">
     <Value>Hide prices for non-registered users:</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.GlobalSettings.General.HidePricesForNonRegistered.Tooltip">
+  <LocaleResource Name="Admin.GlobalSettings.Other.HidePricesForNonRegistered.Tooltip">
     <Value>Check to to disable product prices for all non-registered users so that anyone browsing the site cant see prices. And "Add to cart"/"Add to wishlist" buttons will be hidden.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.BlogCommentDetails.IPAddress">
@@ -1482,7 +1482,7 @@ set @resources='
     <Value>News Archive.</Value>
   </LocaleResource>
   <LocaleResource Name="News.ViewAll">
-    <Value>View All</Value>
+    <Value>[View News Archive]</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.NewsSettings.NewsArchivePageSize">
     <Value>News archive page size:</Value>

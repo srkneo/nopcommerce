@@ -150,16 +150,6 @@
                     </tr>
                     <tr>
                         <td class="adminTitle">
-                            <nopCommerce:ToolTipLabel runat="server" ID="lblHidePricesForNonRegistered" Text="<% $NopResources:Admin.GlobalSettings.General.HidePricesForNonRegistered %>"
-                                ToolTip="<% $NopResources:Admin.GlobalSettings.General.HidePricesForNonRegistered.Tooltip %>"
-                                ToolTipImage="~/Administration/Common/ico-help.gif" />
-                        </td>
-                        <td class="adminData">
-                            <asp:CheckBox runat="server" ID="cbHidePricesForNonRegistered"></asp:CheckBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ID="lblAnonymousCheckout" Text="<% $NopResources:Admin.GlobalSettings.General.AnonymousCheckout %>"
                                 ToolTip="<% $NopResources:Admin.GlobalSettings.General.AnonymousCheckout.Tooltip %>"
                                 ToolTipImage="~/Administration/Common/ico-help.gif" />
@@ -1362,6 +1352,16 @@
                         </td>
                         <td class="adminData">
                             <asp:CheckBox runat="server" ID="cbAllowNavigationOnlyRegisteredCustomers"></asp:CheckBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblHidePricesForNonRegistered" Text="<% $NopResources:Admin.GlobalSettings.Other.HidePricesForNonRegistered %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Other.HidePricesForNonRegistered.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbHidePricesForNonRegistered"></asp:CheckBox>
                         </td>
                     </tr>
                     <tr class="adminSeparator">

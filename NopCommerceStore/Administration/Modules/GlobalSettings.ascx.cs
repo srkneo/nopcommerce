@@ -61,7 +61,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             txtStoreName.Text = SettingManager.StoreName;
             txtStoreURL.Text = SettingManager.StoreUrl;
             cbStoreClosed.Checked = SettingManager.GetSettingValueBoolean("Common.StoreClosed");
-            cbHidePricesForNonRegistered.Checked = SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered");
             cbAnonymousCheckoutAllowed.Checked = CustomerManager.AnonymousCheckoutAllowed;
             cbUseOnePageCheckout.Checked = SettingManager.GetSettingValueBoolean("Checkout.UseOnePageCheckout");
             cbCheckoutTermsOfService.Checked = SettingManager.GetSettingValueBoolean("Checkout.TermsOfServiceEnabled");
@@ -135,6 +134,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbUsernamesEnabled.Checked = CustomerManager.UsernamesEnabled;
             CommonHelper.SelectListItem(this.ddlRegistrationMethod, (int)CustomerManager.CustomerRegistrationType);
             cbAllowNavigationOnlyRegisteredCustomers.Checked = CustomerManager.AllowNavigationOnlyRegisteredCustomers;
+            cbHidePricesForNonRegistered.Checked = SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered");
             cbUseImagesForLanguageSelection.Checked = SettingManager.GetSettingValueBoolean("Common.UseImagesForLanguageSelection", false);
             cbEnableCompareProducts.Checked = ProductManager.CompareProductsEnabled;
             cbEnableWishlist.Checked = SettingManager.GetSettingValueBoolean("Common.EnableWishlist");
@@ -274,7 +274,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.StoreName = txtStoreName.Text;
                     SettingManager.StoreUrl = txtStoreURL.Text;
                     SettingManager.SetParam("Common.StoreClosed", cbStoreClosed.Checked.ToString());
-                    SettingManager.SetParam("Common.HidePricesForNonRegistered", cbHidePricesForNonRegistered.Checked.ToString());
                     CustomerManager.AnonymousCheckoutAllowed = cbAnonymousCheckoutAllowed.Checked;
                     SettingManager.SetParam("Checkout.UseOnePageCheckout", cbUseOnePageCheckout.Checked.ToString());
                     SettingManager.SetParam("Checkout.TermsOfServiceEnabled", cbCheckoutTermsOfService.Checked.ToString());
@@ -351,6 +350,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     CustomerManager.UsernamesEnabled = cbUsernamesEnabled.Checked;
                     CustomerManager.CustomerRegistrationType = (CustomerRegistrationTypeEnum)Enum.ToObject(typeof(CustomerRegistrationTypeEnum), int.Parse(this.ddlRegistrationMethod.SelectedItem.Value));
                     CustomerManager.AllowNavigationOnlyRegisteredCustomers = cbAllowNavigationOnlyRegisteredCustomers.Checked;
+                    SettingManager.SetParam("Common.HidePricesForNonRegistered", cbHidePricesForNonRegistered.Checked.ToString());
                     ProductManager.CompareProductsEnabled = cbEnableCompareProducts.Checked;
                     SettingManager.SetParam("Common.UseImagesForLanguageSelection", cbUseImagesForLanguageSelection.Checked.ToString());
                     SettingManager.SetParam("Common.EnableWishlist", cbEnableWishlist.Checked.ToString());
