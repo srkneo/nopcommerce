@@ -464,11 +464,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (String.IsNullOrEmpty(address.Address1.Trim()))
                 return false;
 
-            if (address.Address2 == null)
-                return false;
-            if (String.IsNullOrEmpty(address.Address2.Trim()))
-                return false;
-
             if (address.City == null)
                 return false;
             if (String.IsNullOrEmpty(address.City.Trim()))
@@ -525,11 +520,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (address.Address1 == null)
                 return false;
             if (String.IsNullOrEmpty(address.Address1.Trim()))
-                return false;
-
-            if (address.Address2 == null)
-                return false;
-            if (String.IsNullOrEmpty(address.Address2.Trim()))
                 return false;
 
             if (address.City == null)
