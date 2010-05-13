@@ -115,6 +115,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         {
                             lblOldPrice.Visible = false;
                             lblPrice.Visible = false;
+                            btnAddToCart.Visible = false;
                         }
                     }
                     else
@@ -137,6 +138,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     decimal fromPrice = CurrencyManager.ConvertCurrency(fromPriceBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
                                     lblPrice.Text = String.Format(GetLocaleResourceString("Products.PriceRangeFromText"), PriceHelper.FormatPrice(fromPrice));
                                 }
+                            }
+                            else
+                            {
+                                lblOldPrice.Visible = false;
+                                lblPrice.Visible = false;
+                                btnAddToCart.Visible = false;
                             }
                         }
 

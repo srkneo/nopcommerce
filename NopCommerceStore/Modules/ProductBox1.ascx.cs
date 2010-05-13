@@ -120,6 +120,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         {
                             lblOldPrice.Visible = false;
                             lblPrice.Visible = false;
+                            btnAddToCart.Visible = false;
                         }
                     }
                     else
@@ -148,6 +149,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             {
                                 lblOldPrice.Visible = false;
                                 lblPrice.Visible = false;
+                                btnAddToCart.Visible = false;
                             }
                         }
 

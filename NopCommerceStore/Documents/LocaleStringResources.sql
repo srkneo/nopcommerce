@@ -1437,7 +1437,7 @@ set @resources='
     <Value>Hide prices for non-registered users:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.General.HidePricesForNonRegistered.Tooltip">
-    <Value>Check to to disable product prices for all non-registered users so that anyone browsing the site cant see prices.</Value>
+    <Value>Check to to disable product prices for all non-registered users so that anyone browsing the site cant see prices. And "Add to cart"/"Add to wishlist" buttons will be hidden.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.BlogCommentDetails.IPAddress">
     <Value>IP address:</Value>

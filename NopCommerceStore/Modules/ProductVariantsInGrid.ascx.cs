@@ -282,6 +282,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         pnlDownloadSample.Visible = false;
                     }
                 }
+
+                //final check - hide prices for non-registered customers
+                if (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
+                        (NopContext.Current.User != null &&
+                        !NopContext.Current.User.IsGuest))
+                {
+                    //
+                }
+                else
+                {
+                    txtCustomerEnteredPrice.Visible = false;
+                    txtQuantity.Visible = false;
+                    btnAddToCart.Visible = false;
+                    btnAddToWishlist.Visible = false;
+                }
             }
         }
 
