@@ -856,16 +856,17 @@
                     <td class="adminData">
                         <asp:GridView ID="gvOrderProductVariants" runat="server" AutoGenerateColumns="False"
                             Width="100%" OnRowDataBound="gvOrderProductVariants_RowDataBound"
-    OnRowCommand="gvOrderProductVariants_RowCommand">
+    OnRowCommand="gvOrderProductVariants_RowCommand" OnRowEditing="gvOrderProductVariants_RowEditing">
                             <Columns>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Name %>"
-                                    ItemStyle-Width="30%">
+                                    ItemStyle-Width="25%">
                                     <ItemTemplate>
                                         <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
                                             <em><a href='<%#GetProductUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="<%#GetLocaleResourceString("Admin.OrderDetails.Products.Name.Tooltip")%>">
                                                 <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantId"))))%></a></em>
                                             <%#GetAttributeDescription((OrderProductVariant)Container.DataItem)%>
                                             <%#GetRecurringDescription((OrderProductVariant)Container.DataItem)%>
+                                            <asp:HiddenField ID="hfOrderProductVariantId" runat="server" Value='<%# Eval("OrderProductVariantId") %>' />
                                         </div>
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -892,28 +893,189 @@
                                             runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.License.UploadButton %>"
                                             CommandName="UploadLicenseDownload"  />
                                         </asp:Panel>
-                                        <asp:HiddenField ID="hfOrderProductVariantId" runat="server" Value='<%# Eval("OrderProductVariantId") %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Price %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <%#GetProductVariantUnitPrice(Container.DataItem as OrderProductVariant)%>
+                                        <%#GetProductVariantUnitPrice((OrderProductVariant)Container.DataItem)%>
+                                        <div class="clear">
+                                        </div>
+                                        <asp:Panel runat="server" ID="pnlEditPvUnitPrice">
+                                            <table class="order-edit">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <%= string.Format(GetLocaleResourceString("Admin.OrderDetails.Products.Edit.PrimaryStoreCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode)%>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.UnitPriceInclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvUnitPriceInclTax" runat="server" CssClass="adminInput" Width="100px"
+                                                            Text='<%# Eval("UnitPriceInclTax") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.UnitPriceExclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvUnitPriceExclTax" runat="server" CssClass="adminInput" Width="100px"
+                                                            Text='<%# Eval("UnitPriceExclTax") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table class="order-edit">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <%# string.Format(GetLocaleResourceString("Admin.OrderDetails.Products.Edit.CustomerCurrency"), ((Order)Eval("Order")).CustomerCurrencyCode)%>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.UnitPriceInclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvUnitPriceCustCurrencyInclTax" runat="server" CssClass="adminInput"
+                                                            Width="100px" Text='<%# Eval("UnitPriceInclTaxInCustomerCurrency") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.UnitPriceExclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvUnitPriceCustCurrencyExclTax" runat="server" CssClass="adminInput"
+                                                            Width="100px" Text='<%# Eval("UnitPriceExclTaxInCustomerCurrency") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </asp:Panel>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Quantity" HeaderText="<% $NopResources:Admin.OrderDetails.Products.Quantity %>"
+                                <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Quantity %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
-                                </asp:BoundField>
+                                    <ItemTemplate>
+                                        <%#Eval("Quantity").ToString()%>
+                                        <div class="clear">
+                                        </div>
+                                        <asp:Panel runat="server" ID="pnlEditPvQuantity">
+                                            <table class="order-edit">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <asp:TextBox ID="txtPvQuantity" runat="server" CssClass="adminInput"
+                                                            Width="100px" Text='<%# Eval("Quantity") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </asp:Panel>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Discount %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <%#GetOrderProductVariantDiscountAmount(Container.DataItem as OrderProductVariant)%>
+                                        <div class="clear">
+                                        </div>
+                                        <asp:Panel runat="server" ID="pnlEditPvDiscount">
+                                            <table class="order-edit">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <%= string.Format(GetLocaleResourceString("Admin.OrderDetails.Products.Edit.PrimaryStoreCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode)%>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.DiscountInclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvDiscountInclTax" runat="server" CssClass="adminInput" Width="100px"
+                                                            Text='<%# Eval("DiscountAmountInclTax") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.DiscountExclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvDiscountExclTax" runat="server" CssClass="adminInput" Width="100px"
+                                                            Text='<%# Eval("DiscountAmountExclTax") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </asp:Panel>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Total %>"
-                                    HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
+                                    HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <%#GetOrderProductVariantSubTotal(Container.DataItem as OrderProductVariant)%>
+                                        <div class="clear">
+                                        </div>
+                                        <asp:Panel runat="server" ID="pnlEditPvPrice">
+                                            <table class="order-edit">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <%= string.Format(GetLocaleResourceString("Admin.OrderDetails.Products.Edit.PrimaryStoreCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode)%>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.PriceInclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvPriceInclTax" runat="server" CssClass="adminInput" Width="100px"
+                                                            Text='<%# Eval("PriceInclTax") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.PriceExclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvPriceExclTax" runat="server" CssClass="adminInput" Width="100px"
+                                                            Text='<%# Eval("PriceExclTax") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table class="order-edit">
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <%# string.Format(GetLocaleResourceString("Admin.OrderDetails.Products.Edit.CustomerCurrency"), ((Order)Eval("Order")).CustomerCurrencyCode)%>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.PriceInclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvPriceCustCurrencyInclTax" runat="server" CssClass="adminInput"
+                                                            Width="100px" Text='<%# Eval("PriceInclTaxInCustomerCurrency") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <%=GetLocaleResourceString("Admin.OrderDetails.Products.Edit.PriceExclTax")%>
+                                                    </td>
+                                                    <td>
+                                                        <asp:TextBox ID="txtPvPriceCustCurrencyExclTax" runat="server" CssClass="adminInput"
+                                                            Width="100px" Text='<%# Eval("PriceExclTaxInCustomerCurrency") %>'></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </asp:Panel>
+                                        
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Edit %>"
+                                    HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnEditOpv" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.Edit.EditButton.Text %>" />
+                                        <asp:Button ID="btnSaveOpv" CssClass="adminButton" runat="server" CommandName="Edit"
+                                            Text="<% $NopResources:Admin.OrderDetails.Products.Edit.SaveButton.Text %>" />
+                                        <asp:Button ID="btnCancelOpv" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.Edit.Cancelutton.Text %>" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

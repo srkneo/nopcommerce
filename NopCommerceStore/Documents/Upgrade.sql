@@ -8151,7 +8151,26 @@ BEGIN
 END
 GO
 
--- SP Nop_NewsLoadAll
+--order editing
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderProductVariantDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_OrderProductVariantDelete]
+GO
+CREATE PROCEDURE [dbo].[Nop_OrderProductVariantDelete]
+	@OrderProductVariantID int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DELETE FROM Nop_OrderProductVariant
+	WHERE OrderProductVariantID = @OrderProductVariantID
+	
+END
+GO
+
+-- picture loading optimization
 IF EXISTS (
 		SELECT *
 		FROM dbo.sysobjects

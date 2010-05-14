@@ -40,6 +40,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common.Utils;
 using System.IO;
+using System.Text;
 
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
@@ -599,11 +600,71 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             BindJQuery();
             
+            //address editing
             this.btnEditBillingAddress.Attributes.Add("onclick", "toggleBillingAddress(true);return false;");
             this.btnCancelBillingAddress.Attributes.Add("onclick", "toggleBillingAddress(false);return false;");
             this.btnEditShippingAddress.Attributes.Add("onclick", "toggleShippingAddress(true);return false;");
             this.btnCancelShippingAddress.Attributes.Add("onclick", "toggleShippingAddress(false);return false;");
             
+            //product editing
+            foreach (GridViewRow row in gvOrderProductVariants.Rows)
+            {
+                Panel pnlEditPvUnitPrice = row.FindControl("pnlEditPvUnitPrice") as Panel;
+                Panel pnlEditPvQuantity = row.FindControl("pnlEditPvQuantity") as Panel;
+                Panel pnlEditPvDiscount = row.FindControl("pnlEditPvDiscount") as Panel;
+                Panel pnlEditPvPrice = row.FindControl("pnlEditPvPrice") as Panel;
+                Button btnEditOpv = row.FindControl("btnEditOpv") as Button;
+                Button btnSaveOpv = row.FindControl("btnSaveOpv") as Button;
+                Button btnCancelOpv = row.FindControl("btnCancelOpv") as Button;
+                var hfOrderProductVariantId = row.FindControl("hfOrderProductVariantId") as HiddenField;
+                int opvId = int.Parse(hfOrderProductVariantId.Value);
+
+                StringBuilder editButtonJsStart = new StringBuilder();
+                editButtonJsStart.AppendLine("<script type=\"text/javascript\">");
+                editButtonJsStart.AppendLine("$(document).ready(function() {");
+                editButtonJsStart.AppendLine(string.Format("toggleOpvEdit{0}(false);", opvId));
+                editButtonJsStart.AppendLine("});");
+                editButtonJsStart.AppendLine("</script>");
+                Page.ClientScript.RegisterClientScriptBlock(GetType(),
+                     string.Format("readyToggleOpvEditStart{0}", opvId),
+                    editButtonJsStart.ToString());
+
+
+                StringBuilder editButtonJs = new StringBuilder();
+                editButtonJs.AppendLine("<script type=\"text/javascript\">");
+                editButtonJs.AppendLine(string.Format("function toggleOpvEdit{0}(editMode) ", opvId));
+                editButtonJs.AppendLine("{");
+                editButtonJs.AppendLine("if (editMode) {");
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", pnlEditPvUnitPrice.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", pnlEditPvQuantity.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", pnlEditPvDiscount.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", pnlEditPvPrice.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", btnEditOpv.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", btnSaveOpv.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", btnCancelOpv.ClientID));
+                editButtonJs.AppendLine("}");
+                editButtonJs.AppendLine("else {");
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", pnlEditPvUnitPrice.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", pnlEditPvQuantity.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", pnlEditPvDiscount.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", pnlEditPvPrice.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", btnEditOpv.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", btnSaveOpv.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", btnCancelOpv.ClientID));
+                editButtonJs.AppendLine("}");
+                editButtonJs.AppendLine("}");
+                editButtonJs.AppendLine("</script>");
+                Page.ClientScript.RegisterClientScriptBlock(GetType(),
+                    string.Format("readyToggleOpvEdit{0}", opvId),
+                    editButtonJs.ToString());
+
+                btnEditOpv.Attributes.Add("onclick",
+                     string.Format("toggleOpvEdit{0}(true);return false;", opvId));
+                btnCancelOpv.Attributes.Add("onclick",
+                     string.Format("toggleOpvEdit{0}(false);return false;", opvId));
+            
+            }
+
             base.OnPreRender(e);
         }
 
@@ -1114,6 +1175,78 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
                 }
             }
+            else if (e.CommandName == "Edit")
+            {
+                try
+                {
+                    //edit order product variants
+                    int index = Convert.ToInt32(e.CommandArgument);
+                    GridViewRow row = gvOrderProductVariants.Rows[index];
+                    HiddenField hfOrderProductVariantId = row.FindControl("hfOrderProductVariantId") as HiddenField;
+
+                    int orderProductVariantId = int.Parse(hfOrderProductVariantId.Value);
+                    OrderProductVariant orderProductVariant = OrderManager.GetOrderProductVariantById(orderProductVariantId);
+
+                    TextBox txtPvUnitPriceInclTax = row.FindControl("txtPvUnitPriceInclTax") as TextBox;
+                    TextBox txtPvUnitPriceExclTax = row.FindControl("txtPvUnitPriceExclTax") as TextBox;
+                    TextBox txtPvUnitPriceCustCurrencyInclTax = row.FindControl("txtPvUnitPriceCustCurrencyInclTax") as TextBox;
+                    TextBox txtPvUnitPriceCustCurrencyExclTax = row.FindControl("txtPvUnitPriceCustCurrencyExclTax") as TextBox;
+                    TextBox txtPvQuantity = row.FindControl("txtPvQuantity") as TextBox;
+                    TextBox txtPvDiscountInclTax = row.FindControl("txtPvDiscountInclTax") as TextBox;
+                    TextBox txtPvDiscountExclTax = row.FindControl("txtPvDiscountExclTax") as TextBox;
+                    TextBox txtPvPriceInclTax = row.FindControl("txtPvPriceInclTax") as TextBox;
+                    TextBox txtPvPriceExclTax = row.FindControl("txtPvPriceExclTax") as TextBox;
+                    TextBox txtPvPriceCustCurrencyInclTax = row.FindControl("txtPvPriceCustCurrencyInclTax") as TextBox;
+                    TextBox txtPvPriceCustCurrencyExclTax = row.FindControl("txtPvPriceCustCurrencyExclTax") as TextBox;
+
+                    decimal unitPriceInclTax = orderProductVariant.UnitPriceInclTax;
+                    decimal unitPriceExclTax = orderProductVariant.UnitPriceExclTax;
+                    decimal unitPriceInclTaxInCustomerCurrency = orderProductVariant.UnitPriceInclTaxInCustomerCurrency;
+                    decimal unitPriceExclTaxInCustomerCurrency = orderProductVariant.UnitPriceExclTaxInCustomerCurrency;
+                    int quantity = orderProductVariant.Quantity;
+                    decimal discountInclTax = orderProductVariant.DiscountAmountInclTax;
+                    decimal discountExclTax = orderProductVariant.DiscountAmountExclTax;
+                    decimal priceInclTax = orderProductVariant.PriceInclTax;
+                    decimal priceExclTax = orderProductVariant.PriceExclTax;
+                    decimal priceInclTaxInCustomerCurrency = orderProductVariant.PriceInclTaxInCustomerCurrency;
+                    decimal priceExclTaxInCustomerCurrency = orderProductVariant.PriceExclTaxInCustomerCurrency;
+
+                    unitPriceInclTax = decimal.Parse(txtPvUnitPriceInclTax.Text);
+                    unitPriceExclTax = decimal.Parse(txtPvUnitPriceExclTax.Text);
+                    unitPriceInclTaxInCustomerCurrency = decimal.Parse(txtPvUnitPriceCustCurrencyInclTax.Text);
+                    unitPriceExclTaxInCustomerCurrency = decimal.Parse(txtPvUnitPriceCustCurrencyExclTax.Text);
+                    quantity = int.Parse(txtPvQuantity.Text);
+                    discountInclTax = decimal.Parse(txtPvDiscountInclTax.Text);
+                    discountExclTax = decimal.Parse(txtPvDiscountExclTax.Text);
+                    priceInclTax = decimal.Parse(txtPvPriceInclTax.Text);
+                    priceExclTax = decimal.Parse(txtPvPriceExclTax.Text);
+                    priceInclTaxInCustomerCurrency = decimal.Parse(txtPvPriceCustCurrencyInclTax.Text);
+                    priceExclTaxInCustomerCurrency = decimal.Parse(txtPvPriceCustCurrencyExclTax.Text);
+
+                    if (quantity > 0)
+                    {
+                        orderProductVariant = OrderManager.UpdateOrderProductVariant(orderProductVariant.OrderProductVariantId,
+                            orderProductVariant.OrderProductVariantGuid, orderProductVariant.OrderId,
+                            orderProductVariant.ProductVariantId,
+                            unitPriceInclTax, unitPriceExclTax,
+                            priceInclTax, priceExclTax,
+                            unitPriceInclTaxInCustomerCurrency, unitPriceExclTaxInCustomerCurrency,
+                            priceInclTaxInCustomerCurrency, priceExclTaxInCustomerCurrency,
+                            orderProductVariant.AttributeDescription, orderProductVariant.AttributesXml,
+                            quantity, discountInclTax, discountExclTax,
+                            orderProductVariant.DownloadCount, orderProductVariant.IsDownloadActivated,
+                            orderProductVariant.LicenseDownloadId);
+                    }
+                    else
+                    {
+                        OrderManager.DeleteOrderProductVariant(orderProductVariant.OrderProductVariantId);
+                    }
+                }
+                catch (Exception exc)
+                {
+                    ProcessException(exc);
+                }
+            }
 
             BindData();
         }
@@ -1183,9 +1316,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         pnlLicenseDownload.Visible = false;
                     }
                 }
+
+                Button btnSaveOpv = e.Row.FindControl("btnSaveOpv") as Button;
+                if (btnSaveOpv != null)
+                {
+                    btnSaveOpv.CommandArgument = e.Row.RowIndex.ToString();
+                }
             }
         }
 
+        protected void gvOrderProductVariants_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+        }
+        
         protected void FillBillingCountryDropDowns(Order order)
         {
             this.ddlBillingCountry.Items.Clear();

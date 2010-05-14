@@ -1451,6 +1451,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         }
 
         /// <summary>
+        /// Delete an order product variant
+        /// </summary>
+        /// <param name="orderProductVariantId">Order product variant identifier</param>
+        public static void DeleteOrderProductVariant(int orderProductVariantId)
+        {
+            if (orderProductVariantId == 0)
+                return;
+
+            DBProviderManager<DBOrderProvider>.Provider.DeleteOrderProductVariant(orderProductVariantId);
+        }
+
+        /// <summary>
         /// Gets an order product variant
         /// </summary>
         /// <param name="orderProductVariantGuid">Order product variant identifier</param>

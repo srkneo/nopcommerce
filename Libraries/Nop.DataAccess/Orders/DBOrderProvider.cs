@@ -447,6 +447,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         public abstract DBOrderProductVariant GetOrderProductVariantById(int orderProductVariantId);
 
         /// <summary>
+        /// Delete an order product variant
+        /// </summary>
+        /// <param name="orderProductVariantId">Order product variant identifier</param>
+        public abstract void DeleteOrderProductVariant(int orderProductVariantId);
+
+        /// <summary>
         /// Gets an order product variant
         /// </summary>
         /// <param name="orderProductVariantGuid">Order product variant identifier</param>

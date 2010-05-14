@@ -1496,6 +1496,42 @@ set @resources='
   <LocaleResource Name="Admin.NewsSettings.NewsArchivePageSize.RangeErrorMessage">
     <Value>A value must be between 1 - 200.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.PrimaryStoreCurrency">
+    <Value>In primary currency - {0}</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.CustomerCurrency">
+    <Value>In customer currency - {0}</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.UnitPriceInclTax">
+    <Value>Incl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.UnitPriceExclTax">
+    <Value>Excl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.DiscountInclTax">
+    <Value>Incl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.DiscountExclTax">
+    <Value>Excl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.PriceInclTax">
+    <Value>Incl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.PriceExclTax">
+    <Value>Excl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit">
+    <Value>Edit</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.EditButton.Text">
+    <Value>Edit</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.SaveButton.Text">
+    <Value>Save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.Cancelutton.Text">
+    <Value>Cancel</Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -1029,3 +1029,23 @@ ul.sf-menu li li li:hover ul, ul.sf-menu li li li.sfHover ul
 	left: 170px;
 	top: 0;
 }
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+
+	ORDER EDITING
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+table.order-edit
+{
+	width: 100%;
+	border: solid 1px black; 
+	padding: 5px;
+}
+
+table.order-edit td
+{
+	padding: 1px 5px 1px 5px;
+	border: medium none;
+}

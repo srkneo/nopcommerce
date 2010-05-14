@@ -1251,6 +1251,18 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
         }
 
         /// <summary>
+        /// Delete an order product variant
+        /// </summary>
+        /// <param name="orderProductVariantId">Order product variant identifier</param>
+        public override void DeleteOrderProductVariant(int orderProductVariantId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderProductVariantDelete");
+            db.AddInParameter(dbCommand, "OrderProductVariantID", DbType.Int32, orderProductVariantId);
+            db.ExecuteNonQuery(dbCommand);
+        }
+
+        /// <summary>
         /// Gets an order product variant
         /// </summary>
         /// <param name="orderProductVariantGuid">Order product variant identifier</param>
