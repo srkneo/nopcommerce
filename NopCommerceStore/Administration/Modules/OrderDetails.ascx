@@ -855,8 +855,7 @@
                 <tr>
                     <td class="adminData">
                         <asp:GridView ID="gvOrderProductVariants" runat="server" AutoGenerateColumns="False"
-                            Width="100%" OnRowDataBound="gvOrderProductVariants_RowDataBound"
-    OnRowCommand="gvOrderProductVariants_RowCommand" OnRowEditing="gvOrderProductVariants_RowEditing">
+                            Width="100%" OnRowDataBound="gvOrderProductVariants_RowDataBound" OnRowCommand="gvOrderProductVariants_RowCommand">
                             <Columns>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Name %>"
                                     ItemStyle-Width="25%">
@@ -1073,7 +1072,12 @@
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <asp:Button ID="btnEditOpv" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.Edit.EditButton.Text %>" />
-                                        <asp:Button ID="btnSaveOpv" CssClass="adminButton" runat="server" CommandName="Edit"
+                                         <asp:Button ID="btnDeleteOpv" CssClass="adminButton" runat="server" CommandName="DeleteOpv"
+                                             Text="<% $NopResources:Admin.OrderDetails.Products.Edit.DeleteButton.Text %>" />
+                                        <nopCommerce:ConfirmationBox runat="server" ID="cbDeleteOpv" TargetControlID="btnDeleteOpv"
+                                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
+                                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                                        <asp:Button ID="btnSaveOpv" CssClass="adminButton" runat="server" CommandName="EditOpv"
                                             Text="<% $NopResources:Admin.OrderDetails.Products.Edit.SaveButton.Text %>" />
                                         <asp:Button ID="btnCancelOpv" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.Edit.Cancelutton.Text %>" />
                                     </ItemTemplate>

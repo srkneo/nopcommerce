@@ -614,6 +614,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Panel pnlEditPvDiscount = row.FindControl("pnlEditPvDiscount") as Panel;
                 Panel pnlEditPvPrice = row.FindControl("pnlEditPvPrice") as Panel;
                 Button btnEditOpv = row.FindControl("btnEditOpv") as Button;
+                Button btnDeleteOpv = row.FindControl("btnDeleteOpv") as Button;
                 Button btnSaveOpv = row.FindControl("btnSaveOpv") as Button;
                 Button btnCancelOpv = row.FindControl("btnCancelOpv") as Button;
                 var hfOrderProductVariantId = row.FindControl("hfOrderProductVariantId") as HiddenField;
@@ -640,6 +641,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 editButtonJs.AppendLine(string.Format("$('#{0}').show();", pnlEditPvDiscount.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').show();", pnlEditPvPrice.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').hide();", btnEditOpv.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').hide();", btnDeleteOpv.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').show();", btnSaveOpv.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').show();", btnCancelOpv.ClientID));
                 editButtonJs.AppendLine("}");
@@ -649,6 +651,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 editButtonJs.AppendLine(string.Format("$('#{0}').hide();", pnlEditPvDiscount.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').hide();", pnlEditPvPrice.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').show();", btnEditOpv.ClientID));
+                editButtonJs.AppendLine(string.Format("$('#{0}').show();", btnDeleteOpv.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').hide();", btnSaveOpv.ClientID));
                 editButtonJs.AppendLine(string.Format("$('#{0}').hide();", btnCancelOpv.ClientID));
                 editButtonJs.AppendLine("}");
@@ -1175,7 +1178,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
                 }
             }
-            else if (e.CommandName == "Edit")
+            else if (e.CommandName == "EditOpv")
             {
                 try
                 {
@@ -1241,6 +1244,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     {
                         OrderManager.DeleteOrderProductVariant(orderProductVariant.OrderProductVariantId);
                     }
+                }
+                catch (Exception exc)
+                {
+                    ProcessException(exc);
+                }
+            }
+            else if (e.CommandName == "DeleteOpv")
+            {
+                try
+                {
+                    //edit order product variants
+                    int index = Convert.ToInt32(e.CommandArgument);
+                    GridViewRow row = gvOrderProductVariants.Rows[index];
+                    HiddenField hfOrderProductVariantId = row.FindControl("hfOrderProductVariantId") as HiddenField;
+
+                    int orderProductVariantId = int.Parse(hfOrderProductVariantId.Value);
+                    
+                    OrderManager.DeleteOrderProductVariant(orderProductVariantId);
                 }
                 catch (Exception exc)
                 {
@@ -1322,11 +1343,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     btnSaveOpv.CommandArgument = e.Row.RowIndex.ToString();
                 }
+                Button btnDeleteOpv = e.Row.FindControl("btnDeleteOpv") as Button;
+                if (btnDeleteOpv != null)
+                {
+                    btnDeleteOpv.CommandArgument = e.Row.RowIndex.ToString();
+                }
             }
-        }
-
-        protected void gvOrderProductVariants_RowEditing(object sender, GridViewEditEventArgs e)
-        {
         }
         
         protected void FillBillingCountryDropDowns(Order order)

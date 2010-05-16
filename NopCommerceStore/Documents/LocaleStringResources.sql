@@ -1532,6 +1532,9 @@ set @resources='
   <LocaleResource Name="Admin.OrderDetails.Products.Edit.Cancelutton.Text">
     <Value>Cancel</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.Products.Edit.DeleteButton.Text">
+    <Value>Delete</Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -1587,3 +1590,4 @@ DEALLOCATE cur_localeresource
 
 DROP TABLE #LocaleStringResourceTmp
 GO
+
