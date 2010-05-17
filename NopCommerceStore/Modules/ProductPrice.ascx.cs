@@ -34,6 +34,8 @@ using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.Common.Utils;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -112,6 +114,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         {
                             lblPrice.Text = GetLocaleResourceString("Products.FinalPriceWithoutDiscount");
                         }
+
+                        lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, "(?<val>[\\d\\,\\.]*)\\s", "<span class=\"price-val-for-dyn-upd\">${val}</span>");
                     }
                     else
                     {
@@ -123,6 +127,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 this.Visible = false;
             }
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            var productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
+            if(productVariant != null)
+            {
+                decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
+                decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+                if(SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate"))
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "PriceValForDynUpd", String.Format(CultureInfo.InvariantCulture, "var priceValForDynUpd = {0};", (float)finalPriceWithoutDiscount), true);
+                }
+            }
+            base.OnPreRender(e);
         }
 
         public int ProductVariantId

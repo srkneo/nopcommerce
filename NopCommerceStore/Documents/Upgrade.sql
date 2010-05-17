@@ -8198,3 +8198,14 @@ BEGIN
 	SET ROWCOUNT 0
 END
 GO
+
+--dynamic price update
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'ProductAttribute.EnableDynamicPriceUpdate')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'ProductAttribute.EnableDynamicPriceUpdate', N'False', N'')
+END
+GO

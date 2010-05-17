@@ -33,6 +33,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.Common.Utils;
+using System.Globalization;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -52,6 +53,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var productVariantAttributes = productVariant.ProductVariantAttributes;
                 if (productVariantAttributes.Count > 0)
                 {
+                    StringBuilder adjustmentTableScripts = new StringBuilder();
+                    StringBuilder attributeScripts = new StringBuilder();
+
                     this.Visible = true;
                     foreach (var attribute in productVariantAttributes)
                     {
@@ -94,6 +98,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             attributeTitle.Text += "&nbsp;&nbsp;&nbsp;";
                         }
                         divAttribute.Controls.Add(attributeTitle);
+                        phAttributes.Controls.Add(divAttribute);
 
                         string controlId = string.Format("{0}_{1}", attribute.ProductAttribute.ProductAttributeId, attribute.ProductVariantAttributeId);
                         switch (attribute.AttributeControlType)
@@ -102,11 +107,17 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 {
                                     var ddlAttributes = new DropDownList();
                                     ddlAttributes.ID = controlId;
+                                    divAttribute.Controls.Add(ddlAttributes);
+                                    ddlAttributes.Items.Clear();
+
                                     if (!attribute.IsRequired)
                                     {
                                         ddlAttributes.Items.Add(new ListItem("---", "0"));
                                     }
                                     var pvaValues = attribute.ProductVariantAttributeValues;
+
+                                    adjustmentTableScripts.AppendFormat("adjustmentTable['{0}'] = new Array(", ddlAttributes.ClientID);
+                                    attributeScripts.AppendFormat("$('#{0}').change(function(){{adjustPrice();}});\n", ddlAttributes.ClientID);
 
                                     bool preSelectedSet = false;
                                     foreach (var pvaValue in pvaValues)
@@ -119,8 +130,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         {
                                             decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
                                             decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                                            if (priceAdjustmentBase > decimal.Zero)
+                                            if(priceAdjustmentBase > decimal.Zero)
+                                            {
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
+                                            }
+                                            adjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "{0},", (float)priceAdjustment);
                                         }
                                         var pvaValueItem = new ListItem(pvaValueName, pvaValue.ProductVariantAttributeValueId.ToString());
                                         if (!preSelectedSet && pvaValue.IsPreSelected)
@@ -130,15 +144,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         }
                                         ddlAttributes.Items.Add(pvaValueItem);
                                     }
-                                    divAttribute.Controls.Add(ddlAttributes);
+                                    adjustmentTableScripts.Length -= 1;
+                                    adjustmentTableScripts.Append(");\n");
                                 }
                                 break;
                             case AttributeControlTypeEnum.RadioList:
                                 {
                                     var rblAttributes = new RadioButtonList();
                                     rblAttributes.ID = controlId;
-                                    var pvaValues = attribute.ProductVariantAttributeValues;
+                                    divAttribute.Controls.Add(rblAttributes);
+                                    rblAttributes.Items.Clear();
 
+                                    var pvaValues = attribute.ProductVariantAttributeValues;
                                     bool preSelectedSet = false;
                                     foreach (var pvaValue in pvaValues)
                                     {
@@ -150,8 +167,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         {
                                             decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment);
                                             decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
-                                            if (priceAdjustmentBase > decimal.Zero)
+                                            if(priceAdjustmentBase > decimal.Zero)
+                                            {
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
+                                            }
+                                            adjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "adjustmentTable['{0}_{1}'] = {2};\n", rblAttributes.ClientID, rblAttributes.Items.Count, (float)priceAdjustment);
+                                            attributeScripts.AppendFormat("$('#{0}_{1}').click(function(){{adjustPrice();}});\n", rblAttributes.ClientID, rblAttributes.Items.Count);
                                         }
                                         var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueId.ToString());
                                         if (!preSelectedSet && pvaValue.IsPreSelected)
@@ -161,13 +182,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                         }
                                         rblAttributes.Items.Add(pvaValueItem);
                                     }
-                                    divAttribute.Controls.Add(rblAttributes);
                                 }
                                 break;
                             case AttributeControlTypeEnum.Checkboxes:
                                 {
                                     var cblAttributes = new CheckBoxList();
                                     cblAttributes.ID = controlId;
+                                    divAttribute.Controls.Add(cblAttributes);
+                                    cblAttributes.Items.Clear();
+
                                     var pvaValues = attribute.ProductVariantAttributeValues;
                                     foreach (var pvaValue in pvaValues)
                                     {
@@ -181,12 +204,13 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                             decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
                                             if (priceAdjustmentBase > decimal.Zero)
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
+                                            adjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "adjustmentTable['{0}_{1}'] = {2};\n", cblAttributes.ClientID, cblAttributes.Items.Count, (float)priceAdjustment);
+                                            attributeScripts.AppendFormat("$('#{0}_{1}').click(function(){{adjustPrice();}});\n", cblAttributes.ClientID, cblAttributes.Items.Count);
                                         }
                                         var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueId.ToString());
                                         pvaValueItem.Selected = pvaValue.IsPreSelected;
                                         cblAttributes.Items.Add(pvaValueItem);
                                     }
-                                    divAttribute.Controls.Add(cblAttributes);
                                 }
                                 break;
                             case AttributeControlTypeEnum.TextBox:
@@ -210,8 +234,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             default:
                                 break;
                         }
-                        phAttributes.Controls.Add(divAttribute);
+                        
                     }
+                 
+                    lblAdjustmentTableScripts.Text = adjustmentTableScripts.ToString();
+                    lblAttributeScripts.Text = attributeScripts.ToString();
                 }
                 else
                 {
