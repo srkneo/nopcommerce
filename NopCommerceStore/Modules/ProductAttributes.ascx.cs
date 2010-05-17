@@ -116,8 +116,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     }
                                     var pvaValues = attribute.ProductVariantAttributeValues;
 
-                                    adjustmentTableScripts.AppendFormat("adjustmentTable['{0}'] = new Array(", ddlAttributes.ClientID);
-                                    attributeScripts.AppendFormat("$('#{0}').change(function(){{adjustPrice();}});\n", ddlAttributes.ClientID);
+                                    adjustmentTableScripts.AppendFormat("{0}['{1}'] = new Array(", AdjustmentTableName, ddlAttributes.ClientID);
+                                    attributeScripts.AppendFormat("$('#{0}').change(function(){{{1}();}});\n", ddlAttributes.ClientID, AdjustmentFuncName);
 
                                     bool preSelectedSet = false;
                                     foreach (var pvaValue in pvaValues)
@@ -171,8 +171,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                             {
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
                                             }
-                                            adjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "adjustmentTable['{0}_{1}'] = {2};\n", rblAttributes.ClientID, rblAttributes.Items.Count, (float)priceAdjustment);
-                                            attributeScripts.AppendFormat("$('#{0}_{1}').click(function(){{adjustPrice();}});\n", rblAttributes.ClientID, rblAttributes.Items.Count);
+                                            adjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "{0}['{1}_{2}'] = {3};\n", AdjustmentTableName, rblAttributes.ClientID, rblAttributes.Items.Count, (float)priceAdjustment);
+                                            attributeScripts.AppendFormat("$('#{0}_{1}').click(function(){{{2}();}});\n", rblAttributes.ClientID, rblAttributes.Items.Count, AdjustmentFuncName);
                                         }
                                         var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueId.ToString());
                                         if (!preSelectedSet && pvaValue.IsPreSelected)
@@ -204,8 +204,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                             decimal priceAdjustment = CurrencyManager.ConvertCurrency(priceAdjustmentBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
                                             if (priceAdjustmentBase > decimal.Zero)
                                                 pvaValueName += string.Format(" [+{0}]", PriceHelper.FormatPrice(priceAdjustment, false, false));
-                                            adjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "adjustmentTable['{0}_{1}'] = {2};\n", cblAttributes.ClientID, cblAttributes.Items.Count, (float)priceAdjustment);
-                                            attributeScripts.AppendFormat("$('#{0}_{1}').click(function(){{adjustPrice();}});\n", cblAttributes.ClientID, cblAttributes.Items.Count);
+                                            adjustmentTableScripts.AppendFormat(CultureInfo.InvariantCulture, "{0}['{1}_{2}'] = {3};\n", AdjustmentTableName, cblAttributes.ClientID, cblAttributes.Items.Count, (float)priceAdjustment);
+                                            attributeScripts.AppendFormat("$('#{0}_{1}').click(function(){{{2}();}});\n", cblAttributes.ClientID, cblAttributes.Items.Count, AdjustmentFuncName);
                                         }
                                         var pvaValueItem = new ListItem(Server.HtmlEncode(pvaValueName), pvaValue.ProductVariantAttributeValueId.ToString());
                                         pvaValueItem.Selected = pvaValue.IsPreSelected;
@@ -373,6 +373,40 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 ViewState["ProductVariantId"] = value;
             }
         }
+
+        public string AdjustmentTableName
+        {
+            get
+            {
+                return String.Format("adjustmentTable_{0}", ProductVariantId);
+            }
+        }
+
+        public string AdjustmentFuncName
+        {
+            get
+            {
+                return String.Format("adjustPrice_{0}", ProductVariantId);
+            }
+        }
+
+        public string PriceVarName
+        {
+            get
+            {
+                return String.Format("priceValForDynUpd_{0}", ProductVariantId);
+            }
+        }
+
+        public string PriceVarClass
+        {
+            get
+            {
+                return String.Format("price-val-for-dyn-upd-{0}", ProductVariantId);
+            }
+        }
+
+
 
         public bool HidePrices
         {

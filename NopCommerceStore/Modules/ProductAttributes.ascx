@@ -3,30 +3,30 @@
 <% if(SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate")) { %>
 <script type="text/javascript">
     // Adjustment table
-    var adjustmentTable = new Array();
+    var <%=AdjustmentTableName%> = new Array();
     // Adjustment table initialize
     <asp:Literal runat="server" ID="lblAdjustmentTableScripts" />
     // Adjustment function
-    function adjustPrice() {
+    function <%=AdjustmentFuncName%>() {
         var sum = 0;
-        for(var i in adjustmentTable) {
+        for(var i in <%=AdjustmentTableName%>) {
             var ctrl = $('#' + i);
             if((ctrl.is(':radio') && ctrl.is(':checked')) || (ctrl.is(':checkbox') && ctrl.is(':checked'))) {
-                sum += adjustmentTable[i];
+                sum += <%=AdjustmentTableName%>[i];
             }
             else if(ctrl.is('select')) {
                 var idx = $('#' + i + " option").index($('#' + i + " option:selected"));
                 if(idx != -1) {
-                    sum += adjustmentTable[i][idx];
+                    sum += <%=AdjustmentTableName%>[i][idx];
                 }
             }
         }
-        var res = (priceValForDynUpd + sum).toFixed(2);
-        $(".price-val-for-dyn-upd").text(res);
+        var res = (<%=PriceVarName%> + sum).toFixed(2);
+        $(".<%=PriceVarClass%>").text(res);
     }
     // Attributes handlers
     $(document).ready(function() {
-        adjustPrice();
+        <%=AdjustmentFuncName%>();
         <asp:Literal runat="server" ID="lblAttributeScripts" />
     });
 </script>

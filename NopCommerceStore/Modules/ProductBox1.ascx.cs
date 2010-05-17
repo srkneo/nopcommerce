@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 hlProduct.NavigateUrl = productURL;
                 hlProduct.Text = Server.HtmlEncode(product.Name);
 
-                ProductPicture productPicture = product.TopProductPicture;
+                ProductPicture productPicture = product.DefaultProductPicture;
                 if(productPicture != null)
                 {
                     hlImageLink.ImageUrl = PictureManager.GetPictureUrl(productPicture.Picture, this.ProductImageSize, true);

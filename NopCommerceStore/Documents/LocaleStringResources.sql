@@ -1586,6 +1586,12 @@ set @resources='
   <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Total.InCustomerCurrency">
     <Value>Total in currency currency - {0}:</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.EnableDynamicPriceUpdate">
+    <Value>Enable dynamic price update:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.EnableDynamicPriceUpdate.Tooltip">
+    <Value>Check if you want to enable this feature.</Value>
+  </LocaleResource>
 </Language>
 '
 

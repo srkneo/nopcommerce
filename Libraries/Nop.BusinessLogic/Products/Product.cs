@@ -197,12 +197,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the one of top product pictures
         /// </summary>
-        public ProductPicture TopProductPicture
+        public ProductPicture DefaultProductPicture
         {
             get
             {
                 ProductPictureCollection pictureCollection = ProductManager.GetProductPicturesByProductId(ProductId, 1);
-                return (pictureCollection.Count <= 0 ? null : pictureCollection[0]);
+                return (pictureCollection.Count == 0 ? null : pictureCollection[0]);
             }
         }
 

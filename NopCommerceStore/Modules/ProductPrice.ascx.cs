@@ -114,8 +114,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         {
                             lblPrice.Text = GetLocaleResourceString("Products.FinalPriceWithoutDiscount");
                         }
-
-                        lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, "(?<val>[\\d\\,\\.]*)\\s", "<span class=\"price-val-for-dyn-upd\">${val}</span>");
+                        if(SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate"))
+                        {
+                            string replacement = String.Format("<span class=\"price-val-for-dyn-upd-{0}\">${{val}}</span> ${{suffix}}", productVariant.ProductVariantId);
+                            lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, "(?<val>[\\d\\,\\.]*)\\s(?<suffix>\\D*)", replacement);
+                        }
                     }
                     else
                     {
@@ -134,11 +137,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if(productVariant != null)
             {
-                decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
-                decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
                 if(SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate"))
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(GetType(), "PriceValForDynUpd", String.Format(CultureInfo.InvariantCulture, "var priceValForDynUpd = {0};", (float)finalPriceWithoutDiscount), true);
+                    decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
+                    decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+
+                    string key = String.Format("PriceValForDynUpd_{0}", productVariant.ProductVariantId);
+                    string script = String.Format(CultureInfo.InvariantCulture, "var priceValForDynUpd_{0} = {1};", productVariant.ProductVariantId, (float)finalPriceWithoutDiscount);
+
+                    Page.ClientScript.RegisterClientScriptBlock(GetType(), key, script, true);
                 }
             }
             base.OnPreRender(e);

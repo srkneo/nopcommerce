@@ -1364,6 +1364,17 @@
                             <asp:CheckBox runat="server" ID="cbHidePricesForNonRegistered"></asp:CheckBox>
                         </td>
                     </tr>
+                    
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblEnableDynamicPriceUpdate" Text="<% $NopResources:Admin.GlobalSettings.Other.EnableDynamicPriceUpdate %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.Other.EnableDynamicPriceUpdate.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbEnableDynamicPriceUpdate"></asp:CheckBox>
+                        </td>
+                    </tr>
                     <tr class="adminSeparator">
                         <td colspan="2">
                             <hr />

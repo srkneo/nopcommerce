@@ -131,7 +131,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     productImage.Border = 0;
                     //productImage.Align = "center";
                     productImage.Alt = "Product image";
-                    ProductPicture productPicture = product.TopProductPicture;
+                    ProductPicture productPicture = product.DefaultProductPicture;
                     if(productPicture != null)
                         productImage.Src = PictureManager.GetPictureUrl(productPicture.Picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125), true);
                     else

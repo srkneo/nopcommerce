@@ -329,10 +329,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (String.IsNullOrEmpty(pictureUrl))
                 {
                     var product = productVariant.Product;
-                    ProductPicture productPicture = product.TopProductPicture;
+                    ProductPicture productPicture = product.DefaultProductPicture;
                     if(productPicture != null)
                     {
-                        pictureUrl = PictureManager.GetPictureUrl(productPicture.PictureId, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
+                        pictureUrl = PictureManager.GetPictureUrl(productPicture.Picture, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
                     }
                     else
                     {
