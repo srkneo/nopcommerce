@@ -1590,7 +1590,7 @@ set @resources='
     <Value>Enable dynamic price update:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.Other.EnableDynamicPriceUpdate.Tooltip">
-    <Value>Check if you want to enable this feature.</Value>
+    <Value>Check if you want to enable dynamic price update on product details page in case a product has product attributes with price adjustments.</Value>
   </LocaleResource>
 </Language>
 '
