@@ -482,6 +482,303 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::System.Web.UI.WebControls.Label lblOrderTotal;
         
         /// <summary>
+        /// lblOrderSubtotalInPrimaryCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderSubtotalInPrimaryCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderSubtotalInPrimaryCurrencyInclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderSubtotalInPrimaryCurrencyInclTax;
+        
+        /// <summary>
+        /// txtOrderSubtotalInPrimaryCurrencyExclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderSubtotalInPrimaryCurrencyExclTax;
+        
+        /// <summary>
+        /// lblOrderSubtotalInCustomerCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderSubtotalInCustomerCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderSubtotalInCustomerCurrencyInclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderSubtotalInCustomerCurrencyInclTax;
+        
+        /// <summary>
+        /// txtOrderSubtotalInCustomerCurrencyExclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderSubtotalInCustomerCurrencyExclTax;
+        
+        /// <summary>
+        /// lblOrderDiscountInPrimaryCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderDiscountInPrimaryCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderDiscountInPrimaryCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderDiscountInPrimaryCurrency;
+        
+        /// <summary>
+        /// lblOrderDiscountInCustomerCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderDiscountInCustomerCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderDiscountInCustomerCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderDiscountInCustomerCurrency;
+        
+        /// <summary>
+        /// lblOrderShippingInPrimaryCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderShippingInPrimaryCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderShippingInPrimaryCurrencyInclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderShippingInPrimaryCurrencyInclTax;
+        
+        /// <summary>
+        /// txtOrderShippingInPrimaryCurrencyExclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderShippingInPrimaryCurrencyExclTax;
+        
+        /// <summary>
+        /// lblOrderShippingInCustomerCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderShippingInCustomerCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderShippingInCustomerCurrencyInclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderShippingInCustomerCurrencyInclTax;
+        
+        /// <summary>
+        /// txtOrderShippingInCustomerCurrencyExclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderShippingInCustomerCurrencyExclTax;
+        
+        /// <summary>
+        /// lblOrderPaymentMethodAdditionalFeeInPrimaryCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderPaymentMethodAdditionalFeeInPrimaryCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyInclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyInclTax;
+        
+        /// <summary>
+        /// txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyExclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyExclTax;
+        
+        /// <summary>
+        /// lblOrderPaymentMethodAdditionalFeeInCustomerCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderPaymentMethodAdditionalFeeInCustomerCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyInclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyInclTax;
+        
+        /// <summary>
+        /// txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyExclTax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyExclTax;
+        
+        /// <summary>
+        /// lblOrderTaxInPrimaryCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderTaxInPrimaryCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderTaxInPrimaryCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderTaxInPrimaryCurrency;
+        
+        /// <summary>
+        /// lblOrderTaxInCustomerCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderTaxInCustomerCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderTaxInCustomerCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderTaxInCustomerCurrency;
+        
+        /// <summary>
+        /// lblOrderTotalInPrimaryCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderTotalInPrimaryCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderTotalInPrimaryCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderTotalInPrimaryCurrency;
+        
+        /// <summary>
+        /// lblOrderTotalInCustomerCurrencyTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderTotalInCustomerCurrencyTitle;
+        
+        /// <summary>
+        /// txtOrderTotalInCustomerCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOrderTotalInCustomerCurrency;
+        
+        /// <summary>
+        /// btnEditOrderTotals control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEditOrderTotals;
+        
+        /// <summary>
+        /// btnSaveOrderTotals control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveOrderTotals;
+        
+        /// <summary>
+        /// btnCancelOrderTotals control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelOrderTotals;
+        
+        /// <summary>
         /// pnlCartType control.
         /// </summary>
         /// <remarks>

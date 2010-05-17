@@ -24,143 +24,160 @@
             ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
     </div>
 </div>
+
 <script type="text/javascript">
     $(document).ready(function() {
+        toggleOrderTotals(false);
         toggleBillingAddress(false);
         toggleShippingAddress(false);
     });
 
-        function toggleBillingAddress(editmode) {
-            if (editmode) {
-                $('#<%=lblBillingFirstName.ClientID %>').hide();
-                $('#<%=lblBillingLastName.ClientID %>').hide();
-                $('#<%=txtBillingFirstName.ClientID %>').show();
-                $('#<%=txtBillingLastName.ClientID %>').show();
-                $('#<%=lblBillingEmail.ClientID %>').hide();
-                $('#<%=txtBillingEmail.ClientID %>').show();
-                $('#<%=lblBillingPhoneNumber.ClientID %>').hide();
-                $('#<%=txtBillingPhoneNumber.ClientID %>').show();
-                $('#<%=lblBillingFaxNumber.ClientID %>').hide();
-                $('#<%=txtBillingFaxNumber.ClientID %>').show();
-                $('#<%=lblBillingFaxNumber.ClientID %>').hide();
-                $('#<%=txtBillingFaxNumber.ClientID %>').show();
-                $('#<%=lblBillingCompany.ClientID %>').hide();
-                $('#<%=txtBillingCompany.ClientID %>').show();
-                $('#<%=lblBillingAddress1.ClientID %>').hide();
-                $('#<%=txtBillingAddress1.ClientID %>').show();
-                $('#<%=lblBillingAddress2.ClientID %>').hide();
-                $('#<%=txtBillingAddress2.ClientID %>').show();
-                $('#<%=lblBillingCity.ClientID %>').hide();
-                $('#<%=txtBillingCity.ClientID %>').show();
-                $('#<%=lblBillingStateProvince.ClientID %>').hide();
-                $('#<%=ddlBillingStateProvince.ClientID %>').show();
-                $('#<%=lblBillingZipPostalCode.ClientID %>').hide();
-                $('#<%=txtBillingZipPostalCode.ClientID %>').show();
-                $('#<%=lblBillingCountry.ClientID %>').hide();
-                $('#<%=ddlBillingCountry.ClientID %>').show();
-                $('#<%=btnEditBillingAddress.ClientID %>').hide();
-                $('#<%=btnSaveBillingAddress.ClientID %>').show();
-                $('#<%=btnCancelBillingAddress.ClientID %>').show();
-            }
-            else {
-                $('#<%=lblBillingFirstName.ClientID %>').show();
-                $('#<%=lblBillingLastName.ClientID %>').show();
-                $('#<%=txtBillingFirstName.ClientID %>').hide();
-                $('#<%=txtBillingLastName.ClientID %>').hide();
-                $('#<%=lblBillingEmail.ClientID %>').show();
-                $('#<%=txtBillingEmail.ClientID %>').hide();
-                $('#<%=lblBillingPhoneNumber.ClientID %>').show();
-                $('#<%=txtBillingPhoneNumber.ClientID %>').hide();
-                $('#<%=lblBillingFaxNumber.ClientID %>').show();
-                $('#<%=txtBillingFaxNumber.ClientID %>').hide();
-                $('#<%=lblBillingFaxNumber.ClientID %>').show();
-                $('#<%=txtBillingFaxNumber.ClientID %>').hide();
-                $('#<%=lblBillingCompany.ClientID %>').show();
-                $('#<%=txtBillingCompany.ClientID %>').hide();
-                $('#<%=lblBillingAddress1.ClientID %>').show();
-                $('#<%=txtBillingAddress1.ClientID %>').hide();
-                $('#<%=lblBillingAddress2.ClientID %>').show();
-                $('#<%=txtBillingAddress2.ClientID %>').hide();
-                $('#<%=lblBillingCity.ClientID %>').show();
-                $('#<%=txtBillingCity.ClientID %>').hide();
-                $('#<%=lblBillingStateProvince.ClientID %>').show();
-                $('#<%=ddlBillingStateProvince.ClientID %>').hide();
-                $('#<%=lblBillingZipPostalCode.ClientID %>').show();
-                $('#<%=txtBillingZipPostalCode.ClientID %>').hide();
-                $('#<%=lblBillingCountry.ClientID %>').show();
-                $('#<%=ddlBillingCountry.ClientID %>').hide();
-                $('#<%=btnEditBillingAddress.ClientID %>').show();
-                $('#<%=btnSaveBillingAddress.ClientID %>').hide();
-                $('#<%=btnCancelBillingAddress.ClientID %>').hide();
-            }
+    function toggleOrderTotals(editmode) {
+        if (editmode) {
+            $('#trEditOrderTotals').show();
+            $('#<%=btnEditOrderTotals.ClientID %>').hide();
+            $('#<%=btnSaveOrderTotals.ClientID %>').show();
+            $('#<%=btnCancelOrderTotals.ClientID %>').show();
         }
-
-        function toggleShippingAddress(editmode) {
-            if (editmode) {
-                $('#<%=lblShippingFirstName.ClientID %>').hide();
-                $('#<%=lblShippingLastName.ClientID %>').hide();
-                $('#<%=txtShippingFirstName.ClientID %>').show();
-                $('#<%=txtShippingLastName.ClientID %>').show();
-                $('#<%=lblShippingEmail.ClientID %>').hide();
-                $('#<%=txtShippingEmail.ClientID %>').show();
-                $('#<%=lblShippingPhoneNumber.ClientID %>').hide();
-                $('#<%=txtShippingPhoneNumber.ClientID %>').show();
-                $('#<%=lblShippingFaxNumber.ClientID %>').hide();
-                $('#<%=txtShippingFaxNumber.ClientID %>').show();
-                $('#<%=lblShippingFaxNumber.ClientID %>').hide();
-                $('#<%=txtShippingFaxNumber.ClientID %>').show();
-                $('#<%=lblShippingCompany.ClientID %>').hide();
-                $('#<%=txtShippingCompany.ClientID %>').show();
-                $('#<%=lblShippingAddress1.ClientID %>').hide();
-                $('#<%=txtShippingAddress1.ClientID %>').show();
-                $('#<%=lblShippingAddress2.ClientID %>').hide();
-                $('#<%=txtShippingAddress2.ClientID %>').show();
-                $('#<%=lblShippingCity.ClientID %>').hide();
-                $('#<%=txtShippingCity.ClientID %>').show();
-                $('#<%=lblShippingStateProvince.ClientID %>').hide();
-                $('#<%=ddlShippingStateProvince.ClientID %>').show();
-                $('#<%=lblShippingZipPostalCode.ClientID %>').hide();
-                $('#<%=txtShippingZipPostalCode.ClientID %>').show();
-                $('#<%=lblShippingCountry.ClientID %>').hide();
-                $('#<%=ddlShippingCountry.ClientID %>').show();
-                $('#<%=btnEditShippingAddress.ClientID %>').hide();
-                $('#<%=btnSaveShippingAddress.ClientID %>').show();
-                $('#<%=btnCancelShippingAddress.ClientID %>').show();
-            }
-            else {
-                $('#<%=lblShippingFirstName.ClientID %>').show();
-                $('#<%=lblShippingLastName.ClientID %>').show();
-                $('#<%=txtShippingFirstName.ClientID %>').hide();
-                $('#<%=txtShippingLastName.ClientID %>').hide();
-                $('#<%=lblShippingEmail.ClientID %>').show();
-                $('#<%=txtShippingEmail.ClientID %>').hide();
-                $('#<%=lblShippingPhoneNumber.ClientID %>').show();
-                $('#<%=txtShippingPhoneNumber.ClientID %>').hide();
-                $('#<%=lblShippingFaxNumber.ClientID %>').show();
-                $('#<%=txtShippingFaxNumber.ClientID %>').hide();
-                $('#<%=lblShippingFaxNumber.ClientID %>').show();
-                $('#<%=txtShippingFaxNumber.ClientID %>').hide();
-                $('#<%=lblShippingCompany.ClientID %>').show();
-                $('#<%=txtShippingCompany.ClientID %>').hide();
-                $('#<%=lblShippingAddress1.ClientID %>').show();
-                $('#<%=txtShippingAddress1.ClientID %>').hide();
-                $('#<%=lblShippingAddress2.ClientID %>').show();
-                $('#<%=txtShippingAddress2.ClientID %>').hide();
-                $('#<%=lblShippingCity.ClientID %>').show();
-                $('#<%=txtShippingCity.ClientID %>').hide();
-                $('#<%=lblShippingStateProvince.ClientID %>').show();
-                $('#<%=ddlShippingStateProvince.ClientID %>').hide();
-                $('#<%=lblShippingZipPostalCode.ClientID %>').show();
-                $('#<%=txtShippingZipPostalCode.ClientID %>').hide();
-                $('#<%=lblShippingCountry.ClientID %>').show();
-                $('#<%=ddlShippingCountry.ClientID %>').hide();
-                $('#<%=btnEditShippingAddress.ClientID %>').show();
-                $('#<%=btnSaveShippingAddress.ClientID %>').hide();
-                $('#<%=btnCancelShippingAddress.ClientID %>').hide();
-            }
+        else {
+            $('#trEditOrderTotals').hide();
+            $('#<%=btnEditOrderTotals.ClientID %>').show();
+            $('#<%=btnSaveOrderTotals.ClientID %>').hide();
+            $('#<%=btnCancelOrderTotals.ClientID %>').hide();
         }
+    }
 
-    </script>
+    function toggleBillingAddress(editmode) {
+        if (editmode) {
+            $('#<%=lblBillingFirstName.ClientID %>').hide();
+            $('#<%=lblBillingLastName.ClientID %>').hide();
+            $('#<%=txtBillingFirstName.ClientID %>').show();
+            $('#<%=txtBillingLastName.ClientID %>').show();
+            $('#<%=lblBillingEmail.ClientID %>').hide();
+            $('#<%=txtBillingEmail.ClientID %>').show();
+            $('#<%=lblBillingPhoneNumber.ClientID %>').hide();
+            $('#<%=txtBillingPhoneNumber.ClientID %>').show();
+            $('#<%=lblBillingFaxNumber.ClientID %>').hide();
+            $('#<%=txtBillingFaxNumber.ClientID %>').show();
+            $('#<%=lblBillingFaxNumber.ClientID %>').hide();
+            $('#<%=txtBillingFaxNumber.ClientID %>').show();
+            $('#<%=lblBillingCompany.ClientID %>').hide();
+            $('#<%=txtBillingCompany.ClientID %>').show();
+            $('#<%=lblBillingAddress1.ClientID %>').hide();
+            $('#<%=txtBillingAddress1.ClientID %>').show();
+            $('#<%=lblBillingAddress2.ClientID %>').hide();
+            $('#<%=txtBillingAddress2.ClientID %>').show();
+            $('#<%=lblBillingCity.ClientID %>').hide();
+            $('#<%=txtBillingCity.ClientID %>').show();
+            $('#<%=lblBillingStateProvince.ClientID %>').hide();
+            $('#<%=ddlBillingStateProvince.ClientID %>').show();
+            $('#<%=lblBillingZipPostalCode.ClientID %>').hide();
+            $('#<%=txtBillingZipPostalCode.ClientID %>').show();
+            $('#<%=lblBillingCountry.ClientID %>').hide();
+            $('#<%=ddlBillingCountry.ClientID %>').show();
+            $('#<%=btnEditBillingAddress.ClientID %>').hide();
+            $('#<%=btnSaveBillingAddress.ClientID %>').show();
+            $('#<%=btnCancelBillingAddress.ClientID %>').show();
+        }
+        else {
+            $('#<%=lblBillingFirstName.ClientID %>').show();
+            $('#<%=lblBillingLastName.ClientID %>').show();
+            $('#<%=txtBillingFirstName.ClientID %>').hide();
+            $('#<%=txtBillingLastName.ClientID %>').hide();
+            $('#<%=lblBillingEmail.ClientID %>').show();
+            $('#<%=txtBillingEmail.ClientID %>').hide();
+            $('#<%=lblBillingPhoneNumber.ClientID %>').show();
+            $('#<%=txtBillingPhoneNumber.ClientID %>').hide();
+            $('#<%=lblBillingFaxNumber.ClientID %>').show();
+            $('#<%=txtBillingFaxNumber.ClientID %>').hide();
+            $('#<%=lblBillingFaxNumber.ClientID %>').show();
+            $('#<%=txtBillingFaxNumber.ClientID %>').hide();
+            $('#<%=lblBillingCompany.ClientID %>').show();
+            $('#<%=txtBillingCompany.ClientID %>').hide();
+            $('#<%=lblBillingAddress1.ClientID %>').show();
+            $('#<%=txtBillingAddress1.ClientID %>').hide();
+            $('#<%=lblBillingAddress2.ClientID %>').show();
+            $('#<%=txtBillingAddress2.ClientID %>').hide();
+            $('#<%=lblBillingCity.ClientID %>').show();
+            $('#<%=txtBillingCity.ClientID %>').hide();
+            $('#<%=lblBillingStateProvince.ClientID %>').show();
+            $('#<%=ddlBillingStateProvince.ClientID %>').hide();
+            $('#<%=lblBillingZipPostalCode.ClientID %>').show();
+            $('#<%=txtBillingZipPostalCode.ClientID %>').hide();
+            $('#<%=lblBillingCountry.ClientID %>').show();
+            $('#<%=ddlBillingCountry.ClientID %>').hide();
+            $('#<%=btnEditBillingAddress.ClientID %>').show();
+            $('#<%=btnSaveBillingAddress.ClientID %>').hide();
+            $('#<%=btnCancelBillingAddress.ClientID %>').hide();
+        }
+    }
+
+    function toggleShippingAddress(editmode) {
+        if (editmode) {
+            $('#<%=lblShippingFirstName.ClientID %>').hide();
+            $('#<%=lblShippingLastName.ClientID %>').hide();
+            $('#<%=txtShippingFirstName.ClientID %>').show();
+            $('#<%=txtShippingLastName.ClientID %>').show();
+            $('#<%=lblShippingEmail.ClientID %>').hide();
+            $('#<%=txtShippingEmail.ClientID %>').show();
+            $('#<%=lblShippingPhoneNumber.ClientID %>').hide();
+            $('#<%=txtShippingPhoneNumber.ClientID %>').show();
+            $('#<%=lblShippingFaxNumber.ClientID %>').hide();
+            $('#<%=txtShippingFaxNumber.ClientID %>').show();
+            $('#<%=lblShippingFaxNumber.ClientID %>').hide();
+            $('#<%=txtShippingFaxNumber.ClientID %>').show();
+            $('#<%=lblShippingCompany.ClientID %>').hide();
+            $('#<%=txtShippingCompany.ClientID %>').show();
+            $('#<%=lblShippingAddress1.ClientID %>').hide();
+            $('#<%=txtShippingAddress1.ClientID %>').show();
+            $('#<%=lblShippingAddress2.ClientID %>').hide();
+            $('#<%=txtShippingAddress2.ClientID %>').show();
+            $('#<%=lblShippingCity.ClientID %>').hide();
+            $('#<%=txtShippingCity.ClientID %>').show();
+            $('#<%=lblShippingStateProvince.ClientID %>').hide();
+            $('#<%=ddlShippingStateProvince.ClientID %>').show();
+            $('#<%=lblShippingZipPostalCode.ClientID %>').hide();
+            $('#<%=txtShippingZipPostalCode.ClientID %>').show();
+            $('#<%=lblShippingCountry.ClientID %>').hide();
+            $('#<%=ddlShippingCountry.ClientID %>').show();
+            $('#<%=btnEditShippingAddress.ClientID %>').hide();
+            $('#<%=btnSaveShippingAddress.ClientID %>').show();
+            $('#<%=btnCancelShippingAddress.ClientID %>').show();
+        }
+        else {
+            $('#<%=lblShippingFirstName.ClientID %>').show();
+            $('#<%=lblShippingLastName.ClientID %>').show();
+            $('#<%=txtShippingFirstName.ClientID %>').hide();
+            $('#<%=txtShippingLastName.ClientID %>').hide();
+            $('#<%=lblShippingEmail.ClientID %>').show();
+            $('#<%=txtShippingEmail.ClientID %>').hide();
+            $('#<%=lblShippingPhoneNumber.ClientID %>').show();
+            $('#<%=txtShippingPhoneNumber.ClientID %>').hide();
+            $('#<%=lblShippingFaxNumber.ClientID %>').show();
+            $('#<%=txtShippingFaxNumber.ClientID %>').hide();
+            $('#<%=lblShippingFaxNumber.ClientID %>').show();
+            $('#<%=txtShippingFaxNumber.ClientID %>').hide();
+            $('#<%=lblShippingCompany.ClientID %>').show();
+            $('#<%=txtShippingCompany.ClientID %>').hide();
+            $('#<%=lblShippingAddress1.ClientID %>').show();
+            $('#<%=txtShippingAddress1.ClientID %>').hide();
+            $('#<%=lblShippingAddress2.ClientID %>').show();
+            $('#<%=txtShippingAddress2.ClientID %>').hide();
+            $('#<%=lblShippingCity.ClientID %>').show();
+            $('#<%=txtShippingCity.ClientID %>').hide();
+            $('#<%=lblShippingStateProvince.ClientID %>').show();
+            $('#<%=ddlShippingStateProvince.ClientID %>').hide();
+            $('#<%=lblShippingZipPostalCode.ClientID %>').show();
+            $('#<%=txtShippingZipPostalCode.ClientID %>').hide();
+            $('#<%=lblShippingCountry.ClientID %>').show();
+            $('#<%=ddlShippingCountry.ClientID %>').hide();
+            $('#<%=btnEditShippingAddress.ClientID %>').show();
+            $('#<%=btnSaveShippingAddress.ClientID %>').hide();
+            $('#<%=btnCancelShippingAddress.ClientID %>').hide();
+        }
+    }
+
+</script>
 
 <ajaxToolkit:TabContainer runat="server" ID="OrderTabs" ActiveTabIndex="0">
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderInfo" HeaderText="<% $NopResources:Admin.OrderDetails.OrderInfo %>">
@@ -347,6 +364,160 @@
                         <asp:Label ID="lblOrderTotal" runat="server"></asp:Label>
                     </td>
                 </tr>
+                <tr id="trEditOrderTotals">
+                    <td colspan="2">
+                        <table style="border: solid 1px black; padding: 5px;">
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderSubtotalInPrimaryCurrencyTitle"></asp:Label>
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.InclTax")%>
+                                    <asp:TextBox ID="txtOrderSubtotalInPrimaryCurrencyInclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.ExclTax")%>
+                                    <asp:TextBox ID="txtOrderSubtotalInPrimaryCurrencyExclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderSubtotalInCustomerCurrencyTitle"></asp:Label>
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.InclTax")%>
+                                    <asp:TextBox ID="txtOrderSubtotalInCustomerCurrencyInclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.ExclTax")%>
+                                    <asp:TextBox ID="txtOrderSubtotalInCustomerCurrencyExclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderDiscountInPrimaryCurrencyTitle"></asp:Label>
+                                </td>
+                                <td colspan="2">
+                                    <asp:TextBox ID="txtOrderDiscountInPrimaryCurrency" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderDiscountInCustomerCurrencyTitle"></asp:Label>
+                                </td>
+                                <td colspan="2">
+                                    <asp:TextBox ID="txtOrderDiscountInCustomerCurrency" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderShippingInPrimaryCurrencyTitle"></asp:Label>
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.InclTax")%>
+                                    <asp:TextBox ID="txtOrderShippingInPrimaryCurrencyInclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.ExclTax")%>
+                                    <asp:TextBox ID="txtOrderShippingInPrimaryCurrencyExclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderShippingInCustomerCurrencyTitle"></asp:Label>
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.InclTax")%>
+                                    <asp:TextBox ID="txtOrderShippingInCustomerCurrencyInclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.ExclTax")%>
+                                    <asp:TextBox ID="txtOrderShippingInCustomerCurrencyExclTax" runat="server" CssClass="adminInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderPaymentMethodAdditionalFeeInPrimaryCurrencyTitle"></asp:Label>
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.InclTax")%>
+                                    <asp:TextBox ID="txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyInclTax" runat="server"
+                                        CssClass="adminInput" />
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.ExclTax")%>
+                                    <asp:TextBox ID="txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyExclTax" runat="server"
+                                        CssClass="adminInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderPaymentMethodAdditionalFeeInCustomerCurrencyTitle"></asp:Label>
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.InclTax")%>
+                                    <asp:TextBox ID="txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyInclTax" runat="server"
+                                        CssClass="adminInput" />
+                                </td>
+                                <td>
+                                    <%=GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.ExclTax")%>
+                                    <asp:TextBox ID="txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyExclTax" runat="server"
+                                        CssClass="adminInput" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderTaxInPrimaryCurrencyTitle"></asp:Label>
+                                </td>
+                                <td colspan="2">
+                                    <asp:TextBox ID="txtOrderTaxInPrimaryCurrency" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderTaxInCustomerCurrencyTitle"></asp:Label>
+                                </td>
+                                <td colspan="2">
+                                    <asp:TextBox ID="txtOrderTaxInCustomerCurrency" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderTotalInPrimaryCurrencyTitle"></asp:Label>
+                                </td>
+                                <td colspan="2">
+                                    <asp:TextBox ID="txtOrderTotalInPrimaryCurrency" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label runat="server" ID="lblOrderTotalInCustomerCurrencyTitle"></asp:Label>
+                                </td>
+                                <td colspan="2">
+                                    <asp:TextBox ID="txtOrderTotalInCustomerCurrency" runat="server" CssClass="adminInput" />
+                                </td>
+                                <td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="adminTitle">
+                        <asp:Button ID="btnEditOrderTotals" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.EditOrderTotals.Text %>">
+                        </asp:Button>
+                        <asp:Button ID="btnSaveOrderTotals" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SaveOrderTotals.Text %>"
+                            OnClick="btnSaveOrderTotals_Click"></asp:Button>
+                    </td>
+                    <td class="adminData">
+                        <asp:Button ID="btnCancelOrderTotals" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.CancelOrderTotals.Text %>">
+                        </asp:Button>
+                    </td>
+                </tr>
                 <tr class="adminSeparator">
                     <td colspan="2">
                         <hr />
@@ -494,7 +665,7 @@
                             ToolTip="<% $NopResources:Admin.OrderDetails.BillingAddress.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
-                        <table style="border: solid 1px black; padding:5px;">
+                        <table style="border: solid 1px black; padding: 5px;">
                             <tr>
                                 <td>
                                     <%=GetLocaleResourceString("Admin.OrderDetails.BillingAddress.FullName")%>
@@ -650,7 +821,7 @@
                             ToolTip="<% $NopResources:Admin.OrderDetails.ShippingAddress.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                     </td>
                     <td class="adminData">
-                        <table style="border: solid 1px black;padding:5px;">
+                        <table style="border: solid 1px black; padding: 5px;">
                             <tr>
                                 <td>
                                     <%=GetLocaleResourceString("Admin.OrderDetails.ShippingAddress.FullName")%>
@@ -828,9 +999,9 @@
                     <td class="adminData">
                         <asp:Label ID="lblShippedDate" runat="server"></asp:Label>
                         <asp:Button ID="btnSetAsShipped" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SetAsShippedButton.Text %>"
-                            OnClick="btnSetAsShipped_Click"></asp:Button><nopCommerce:ConfirmationBox runat="server" ID="cbSetAsShipped" TargetControlID="btnSetAsShipped"
-                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                            OnClick="btnSetAsShipped_Click"></asp:Button><nopCommerce:ConfirmationBox runat="server"
+                                ID="cbSetAsShipped" TargetControlID="btnSetAsShipped" YesText="<% $NopResources:Admin.Common.Yes %>"
+                                NoText="<% $NopResources:Admin.Common.No %>" ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
                     </td>
                 </tr>
                 <tr runat="server" id="divDeliveryDate">
@@ -841,16 +1012,16 @@
                     <td class="adminData">
                         <asp:Label ID="lblDeliveryDate" runat="server"></asp:Label>
                         <asp:Button ID="btnSetAsDelivered" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.SetAsDeliveredButton.Text %>"
-                            OnClick="btnSetAsDelivered_Click"></asp:Button><nopCommerce:ConfirmationBox runat="server" ID="cbSetAsDelivered" TargetControlID="btnSetAsDelivered"
-                            YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
-                            ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
+                            OnClick="btnSetAsDelivered_Click"></asp:Button><nopCommerce:ConfirmationBox runat="server"
+                                ID="cbSetAsDelivered" TargetControlID="btnSetAsDelivered" YesText="<% $NopResources:Admin.Common.Yes %>"
+                                NoText="<% $NopResources:Admin.Common.No %>" ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderProducts" HeaderText="<% $NopResources:Admin.OrderDetails.Products %>">
-        <contenttemplate>
+        <ContentTemplate>
             <table class="adminContent">
                 <tr>
                     <td class="adminData">
@@ -873,24 +1044,25 @@
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <%#GetDownloadUrl(Container.DataItem as OrderProductVariant)%>
-                                        <asp:Panel id="pnlDownloadActivation" runat="server">
+                                        <asp:Panel ID="pnlDownloadActivation" runat="server">
                                             <hr />
                                             <asp:Button ID="btnActivate" runat="server" CssClass="adminButton" Text="<% $NopResources:Admin.OrderDetails.Products.ActivateDownload %>"
                                                 CausesValidation="false" CommandName="DownloadActivation" />
                                         </asp:Panel>
-                                        <asp:Panel id="pnlLicenseDownload" runat="server">
+                                        <asp:Panel ID="pnlLicenseDownload" runat="server">
                                             <hr />
-                                            <b><%=GetLocaleResourceString("Admin.OrderDetails.Products.License")%></b>
-                                            <br /> 
+                                            <b>
+                                                <%=GetLocaleResourceString("Admin.OrderDetails.Products.License")%></b>
+                                            <br />
                                             <asp:HyperLink ID="hlLicenseDownload" runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.License.Download %>" />
                                             <asp:Button ID="btnRemoveLicenseDownload" CssClass="adminButton" CausesValidation="false"
-                                            runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.License.Remove %>"
-                                            CommandName="RemoveLicenseDownload"  />
+                                                runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.License.Remove %>"
+                                                CommandName="RemoveLicenseDownload" />
                                             <br />
-                                            <asp:FileUpload class="text" ID="fuLicenseDownload" CssClass="adminInput" runat="server"/>
+                                            <asp:FileUpload class="text" ID="fuLicenseDownload" CssClass="adminInput" runat="server" />
                                             <asp:Button ID="btnUploadLicenseDownload" CssClass="adminButton" CausesValidation="false"
-                                            runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.License.UploadButton %>"
-                                            CommandName="UploadLicenseDownload"  />
+                                                runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.License.UploadButton %>"
+                                                CommandName="UploadLicenseDownload" />
                                         </asp:Panel>
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -964,8 +1136,8 @@
                                             <table class="order-edit">
                                                 <tr>
                                                     <td colspan="2">
-                                                        <asp:TextBox ID="txtPvQuantity" runat="server" CssClass="adminInput"
-                                                            Width="100px" Text='<%# Eval("Quantity") %>'></asp:TextBox>
+                                                        <asp:TextBox ID="txtPvQuantity" runat="server" CssClass="adminInput" Width="100px"
+                                                            Text='<%# Eval("Quantity") %>'></asp:TextBox>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -1065,15 +1237,14 @@
                                                 </tr>
                                             </table>
                                         </asp:Panel>
-                                        
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.OrderDetails.Products.Edit %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <asp:Button ID="btnEditOpv" CssClass="adminButton" runat="server" Text="<% $NopResources:Admin.OrderDetails.Products.Edit.EditButton.Text %>" />
-                                         <asp:Button ID="btnDeleteOpv" CssClass="adminButton" runat="server" CommandName="DeleteOpv"
-                                             Text="<% $NopResources:Admin.OrderDetails.Products.Edit.DeleteButton.Text %>" />
+                                        <asp:Button ID="btnDeleteOpv" CssClass="adminButton" runat="server" CommandName="DeleteOpv"
+                                            Text="<% $NopResources:Admin.OrderDetails.Products.Edit.DeleteButton.Text %>" />
                                         <nopCommerce:ConfirmationBox runat="server" ID="cbDeleteOpv" TargetControlID="btnDeleteOpv"
                                             YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
                                             ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />
@@ -1092,10 +1263,10 @@
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </ajaxToolkit:TabPanel>
     <ajaxToolkit:TabPanel runat="server" ID="pnlOrderNotes" HeaderText="<% $NopResources:Admin.OrderDetails.OrderNotes %>">
-        <contenttemplate>
+        <ContentTemplate>
             <table class="adminContent">
                 <tr>
                     <td class="adminData" colspan="2">
@@ -1155,6 +1326,6 @@
                     </td>
                 </tr>
             </table>
-        </contenttemplate>
+        </ContentTemplate>
     </ajaxToolkit:TabPanel>
 </ajaxToolkit:TabContainer>

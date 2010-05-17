@@ -538,7 +538,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 pnlDiscount.Visible = false;
             }
-            
+
             //gift cards
             GiftCardUsageHistoryCollection gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             if (gcuhC.Count > 0)
@@ -551,12 +551,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 rptrGiftCards.Visible = false;
             }
-            
+
             //tax
             this.lblOrderTax.Text = PriceHelper.FormatPrice(order.OrderTax, true, false);
 
             //reward points
-            if (order.RedeemedRewardPoints!=null)
+            if (order.RedeemedRewardPoints != null)
             {
                 pnlRewardPoints.Visible = true;
                 lblRewardPointsTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.RewardPoints"), -order.RedeemedRewardPoints.Points);
@@ -569,6 +569,44 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             //total
             this.lblOrderTotal.Text = PriceHelper.FormatPrice(order.OrderTotal, true, false);
+
+            //edit order
+            this.lblOrderSubtotalInPrimaryCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Subtotal.InPrimaryCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
+            this.txtOrderSubtotalInPrimaryCurrencyInclTax.Text = order.OrderSubtotalInclTax.ToString();
+            this.txtOrderSubtotalInPrimaryCurrencyExclTax.Text = order.OrderSubtotalExclTax.ToString();
+            this.lblOrderSubtotalInCustomerCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Subtotal.InCustomerCurrency"), order.CustomerCurrencyCode);
+            this.txtOrderSubtotalInCustomerCurrencyInclTax.Text = order.OrderSubtotalInclTaxInCustomerCurrency.ToString();
+            this.txtOrderSubtotalInCustomerCurrencyExclTax.Text = order.OrderSubtotalExclTaxInCustomerCurrency.ToString();
+
+            this.lblOrderDiscountInPrimaryCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Discount.InPrimaryCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
+            this.txtOrderDiscountInPrimaryCurrency.Text = order.OrderDiscount.ToString();
+            this.lblOrderDiscountInCustomerCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Discount.InCustomerCurrency"), order.CustomerCurrencyCode);
+            this.txtOrderDiscountInCustomerCurrency.Text = order.OrderDiscountInCustomerCurrency.ToString();
+
+            this.lblOrderShippingInPrimaryCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Shipping.InPrimaryCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
+            this.txtOrderShippingInPrimaryCurrencyInclTax.Text = order.OrderShippingInclTax.ToString();
+            this.txtOrderShippingInPrimaryCurrencyExclTax.Text = order.OrderShippingExclTax.ToString();
+            this.lblOrderShippingInCustomerCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Shipping.InCustomerCurrency"), order.CustomerCurrencyCode);
+            this.txtOrderShippingInCustomerCurrencyInclTax.Text = order.OrderShippingInclTaxInCustomerCurrency.ToString();
+            this.txtOrderShippingInCustomerCurrencyExclTax.Text = order.OrderShippingExclTaxInCustomerCurrency.ToString();
+
+            this.lblOrderPaymentMethodAdditionalFeeInPrimaryCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.PaymentMethodAdditionalFee.InPrimaryCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
+            this.txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyInclTax.Text = order.PaymentMethodAdditionalFeeInclTax.ToString();
+            this.txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyExclTax.Text = order.PaymentMethodAdditionalFeeExclTax.ToString();
+            this.lblOrderPaymentMethodAdditionalFeeInCustomerCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.PaymentMethodAdditionalFee.InCustomerCurrency"), order.CustomerCurrencyCode);
+            this.txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyInclTax.Text = order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency.ToString();
+            this.txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyExclTax.Text = order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency.ToString();
+
+            this.lblOrderTaxInPrimaryCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Tax.InPrimaryCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
+            this.txtOrderTaxInPrimaryCurrency.Text = order.OrderTax.ToString();
+            this.lblOrderTaxInCustomerCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Tax.InCustomerCurrency"), order.CustomerCurrencyCode);
+            this.txtOrderTaxInCustomerCurrency.Text = order.OrderTaxInCustomerCurrency.ToString();
+
+            this.lblOrderTotalInPrimaryCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Total.InPrimaryCurrency"), CurrencyManager.PrimaryStoreCurrency.CurrencyCode);
+            this.txtOrderTotalInPrimaryCurrency.Text = order.OrderTotal.ToString();
+            this.lblOrderTotalInCustomerCurrencyTitle.Text = string.Format(GetLocaleResourceString("Admin.OrderDetails.EditOrderTotals.Total.InCustomerCurrency"), order.CustomerCurrencyCode);
+            this.txtOrderTotalInCustomerCurrency.Text = order.OrderTotalInCustomerCurrency.ToString();
+
         }
 
         private void BindOrderNotes()
@@ -600,6 +638,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             BindJQuery();
             
+            //order totals editing
+            this.btnEditOrderTotals.Attributes.Add("onclick", "toggleOrderTotals(true);return false;");
+            this.btnCancelOrderTotals.Attributes.Add("onclick", "toggleOrderTotals(false);return false;");
+
             //address editing
             this.btnEditBillingAddress.Attributes.Add("onclick", "toggleBillingAddress(true);return false;");
             this.btnCancelBillingAddress.Attributes.Add("onclick", "toggleBillingAddress(false);return false;");
@@ -898,6 +940,99 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 OrderManager.MarkOrderAsDeleted(this.OrderId);
                 Response.Redirect("Orders.aspx");
+            }
+            catch (Exception exc)
+            {
+                ProcessException(exc);
+            }
+        }
+
+        protected void btnSaveOrderTotals_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var order = OrderManager.GetOrderById(this.OrderId);
+                if (order != null)
+                {
+                    decimal orderSubtotalInclTax = order.OrderSubtotalInclTax;
+                    decimal orderSubtotalExclTax = order.OrderSubtotalExclTax;
+                    decimal orderSubtotalInclTaxInCustomerCurrency = order.OrderSubtotalInclTaxInCustomerCurrency;
+                    decimal orderSubtotalExclTaxInCustomerCurrency = order.OrderSubtotalExclTaxInCustomerCurrency;
+                    decimal orderDiscount = order.OrderDiscount;
+                    decimal orderDiscountInCustomerCurrency = order.OrderDiscountInCustomerCurrency;
+                    decimal orderShippingInclTax = order.OrderShippingInclTax;
+                    decimal orderShippingExclTax = order.OrderShippingExclTax;
+                    decimal orderShippingInclTaxInCustomerCurrency = order.OrderShippingInclTaxInCustomerCurrency;
+                    decimal orderShippingExclTaxInCustomerCurrency = order.OrderShippingExclTaxInCustomerCurrency;
+                    decimal paymentMethodAdditionalFeeInclTax = order.PaymentMethodAdditionalFeeInclTax;
+                    decimal paymentMethodAdditionalFeeExclTax = order.PaymentMethodAdditionalFeeExclTax;
+                    decimal paymentMethodAdditionalFeeInclTaxInCustomerCurrency = order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency;
+                    decimal paymentMethodAdditionalFeeExclTaxInCustomerCurrency = order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency;
+                    decimal orderTax = order.OrderTax;
+                    decimal orderTaxInCustomerCurrency = order.OrderTaxInCustomerCurrency;
+                    decimal orderTotal = order.OrderTotal;
+                    decimal orderTotalInCustomerCurrency = order.OrderTotalInCustomerCurrency;
+
+                    orderSubtotalInclTax = decimal.Parse(txtOrderSubtotalInPrimaryCurrencyInclTax.Text);
+                    orderSubtotalExclTax = decimal.Parse(txtOrderSubtotalInPrimaryCurrencyExclTax.Text);
+                    orderSubtotalInclTaxInCustomerCurrency = decimal.Parse(txtOrderSubtotalInCustomerCurrencyInclTax.Text);
+                    orderSubtotalExclTaxInCustomerCurrency = decimal.Parse(txtOrderSubtotalInCustomerCurrencyExclTax.Text);
+                    orderDiscount = decimal.Parse(txtOrderDiscountInPrimaryCurrency.Text);
+                    orderDiscountInCustomerCurrency = decimal.Parse(txtOrderDiscountInCustomerCurrency.Text);
+                    orderShippingInclTax = decimal.Parse(txtOrderShippingInPrimaryCurrencyInclTax.Text);
+                    orderShippingExclTax = decimal.Parse(txtOrderShippingInPrimaryCurrencyExclTax.Text);
+                    orderShippingInclTaxInCustomerCurrency = decimal.Parse(txtOrderShippingInCustomerCurrencyInclTax.Text);
+                    orderShippingExclTaxInCustomerCurrency = decimal.Parse(txtOrderShippingInCustomerCurrencyExclTax.Text);
+                    paymentMethodAdditionalFeeInclTax = decimal.Parse(txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyInclTax.Text);
+                    paymentMethodAdditionalFeeExclTax = decimal.Parse(txtOrderPaymentMethodAdditionalFeeInPrimaryCurrencyExclTax.Text);
+                    paymentMethodAdditionalFeeInclTaxInCustomerCurrency = decimal.Parse(txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyInclTax.Text);
+                    paymentMethodAdditionalFeeExclTaxInCustomerCurrency = decimal.Parse(txtOrderPaymentMethodAdditionalFeeInCustomerCurrencyExclTax.Text);
+                    orderTax = decimal.Parse(txtOrderTaxInPrimaryCurrency.Text);
+                    orderTaxInCustomerCurrency = decimal.Parse(txtOrderTaxInCustomerCurrency.Text);
+                    orderTotal = decimal.Parse(txtOrderTotalInPrimaryCurrency.Text);
+                    orderTotalInCustomerCurrency = decimal.Parse(txtOrderTotalInCustomerCurrency.Text);
+
+                    OrderManager.UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
+                        order.CustomerTaxDisplayType, order.CustomerIP,
+                        orderSubtotalInclTax, orderSubtotalExclTax, 
+                        orderShippingInclTax, orderShippingExclTax, 
+                        paymentMethodAdditionalFeeInclTax, paymentMethodAdditionalFeeExclTax,
+                        orderTax, orderTotal, orderDiscount,
+                        orderSubtotalInclTaxInCustomerCurrency, orderSubtotalExclTaxInCustomerCurrency,
+                        orderShippingInclTaxInCustomerCurrency, orderShippingExclTaxInCustomerCurrency,
+                        paymentMethodAdditionalFeeInclTaxInCustomerCurrency, paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
+                        orderTaxInCustomerCurrency, orderTotalInCustomerCurrency,
+                        orderDiscountInCustomerCurrency, 
+                        order.CheckoutAttributeDescription, order.CheckoutAttributesXml,
+                        order.CustomerCurrencyCode, order.OrderWeight,
+                        order.AffiliateId, order.OrderStatus, 
+                        order.AllowStoringCreditCardNumber, order.CardType,
+                        order.CardName, order.CardNumber, order.MaskedCreditCardNumber,
+                        order.CardCvv2, order.CardExpirationMonth, order.CardExpirationYear,
+                        order.PaymentMethodId, order.PaymentMethodName, 
+                        order.AuthorizationTransactionId, order.AuthorizationTransactionCode, 
+                        order.AuthorizationTransactionResult, order.CaptureTransactionId, 
+                        order.CaptureTransactionResult, order.SubscriptionTransactionId,
+                        order.PurchaseOrderNumber, order.PaymentStatus, order.PaidDate,
+                        order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
+                        order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, 
+                        order.BillingAddress1, order.BillingAddress2, order.BillingCity, 
+                        order.BillingStateProvince, order.BillingStateProvinceId,
+                        order.BillingZipPostalCode, order.BillingCountry,
+                        order.BillingCountryId, order.ShippingStatus,
+                        order.ShippingFirstName, order.ShippingLastName, 
+                        order.ShippingPhoneNumber, order.ShippingEmail, 
+                        order.ShippingFaxNumber, order.ShippingCompany,
+                        order.ShippingAddress1, order.ShippingAddress2, order.ShippingCity,
+                        order.ShippingStateProvince, order.ShippingStateProvinceId,
+                        order.ShippingZipPostalCode, order.ShippingCountry, 
+                        order.ShippingCountryId, order.ShippingMethod, 
+                        order.ShippingRateComputationMethodId, order.ShippedDate,
+                        order.DeliveryDate, order.TrackingNumber, order.Deleted,
+                        order.CreatedOn);
+
+                    BindData();
+                }
             }
             catch (Exception exc)
             {

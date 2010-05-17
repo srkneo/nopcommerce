@@ -1535,6 +1535,57 @@ set @resources='
   <LocaleResource Name="Admin.OrderDetails.Products.Edit.DeleteButton.Text">
     <Value>Delete</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Text">
+    <Value>Edit order totals</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.SaveOrderTotals.Text">
+    <Value>Save order totals</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.CancelOrderTotals.Text">
+    <Value>Cancel</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.InclTax">
+    <Value>incl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.ExclTax">
+    <Value>excl tax:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Subtotal.InPrimaryCurrency">
+    <Value>Subtotal in primary currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Subtotal.InCustomerCurrency">
+    <Value>Subtotal in currency currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Discount.InPrimaryCurrency">
+    <Value>Discount in primary currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Discount.InCustomerCurrency">
+    <Value>Discount in currency currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Shipping.InPrimaryCurrency">
+    <Value>Shipping in primary currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Shipping.InCustomerCurrency">
+    <Value>Shipping in currency currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.PaymentMethodAdditionalFee.InPrimaryCurrency">
+    <Value>Payment method additional fee in primary currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.PaymentMethodAdditionalFee.InCustomerCurrency">
+    <Value>Payment method additional fee in currency currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Tax.InPrimaryCurrency">
+    <Value>Tax in primary currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Tax.InCustomerCurrency">
+    <Value>Tax in currency currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Total.InPrimaryCurrency">
+    <Value>Total in primary currency - {0}:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.OrderDetails.EditOrderTotals.Total.InCustomerCurrency">
+    <Value>Total in currency currency - {0}:</Value>
+  </LocaleResource>
 </Language>
 '
 
