@@ -8209,3 +8209,14 @@ BEGIN
 	VALUES (N'ProductAttribute.EnableDynamicPriceUpdate', N'False', N'')
 END
 GO
+
+--price pattern
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'ProductAttribute.PricePattern')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'ProductAttribute.PricePattern', N'(?<val>(\d+[\s\,\.]?)+)', N'')
+END
+GO

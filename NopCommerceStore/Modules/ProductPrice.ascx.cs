@@ -116,8 +116,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         }
                         if(SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate"))
                         {
-                            string replacement = String.Format("<span class=\"price-val-for-dyn-upd-{0}\">${{val}}</span> ${{suffix}}", productVariant.ProductVariantId);
-                            lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, "(?<val>[\\d\\,\\.]*)\\s(?<suffix>\\D*)", replacement);
+                            string pattern = SettingManager.GetSettingValue("ProductAttribute.PricePattern", "(?<val>(\\d+[\\s\\,\\.]?)+)");
+                            string replacement = String.Format("<span class=\"price-val-for-dyn-upd-{0}\">${{val}}</span> ", productVariant.ProductVariantId);
+
+                            lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, pattern, replacement);
                         }
                     }
                     else
