@@ -1434,10 +1434,10 @@ set @resources='
     <Value>Check if you want to show a catgory on home page.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.Other.HidePricesForNonRegistered">
-    <Value>Hide prices for non-registered users:</Value>
+    <Value>Hide prices for non-registered customers:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.Other.HidePricesForNonRegistered.Tooltip">
-    <Value>Check to to disable product prices for all non-registered users so that anyone browsing the site cant see prices. And "Add to cart"/"Add to wishlist" buttons will be hidden.</Value>
+    <Value>Check to disable product prices for all non-registered customers so that anyone browsing the site cant see prices. And "Add to cart"/"Add to wishlist" buttons will be hidden.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.BlogCommentDetails.IPAddress">
     <Value>IP address:</Value>
@@ -1591,6 +1591,24 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.Other.EnableDynamicPriceUpdate.Tooltip">
     <Value>Check if you want to enable dynamic price update on product details page in case a product has product attributes with price adjustments.</Value>
+  </LocaleResource>
+  <LocaleResource Name="ProductSorting.SortBy">
+    <Value>Sort by</Value>
+  </LocaleResource>
+  <LocaleResource Name="ProductSorting.Position">
+    <Value>Position</Value>
+  </LocaleResource>
+  <LocaleResource Name="ProductSorting.Name">
+    <Value>Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="ProductSorting.Price">
+    <Value>Price</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.AllowProductSorting">
+    <Value>Allow product sorting:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.AllowProductSorting.Tooltip">
+    <Value>Check to enable product sorting option on category/manufacturer details page.</Value>
   </LocaleResource>
 </Language>
 '

@@ -54,6 +54,13 @@
     </asp:Panel>
     <div class="clear">
     </div>
+    <asp:Panel runat="server" ID="pnlSorting" CssClass="product-sorting">
+        <%=GetLocaleResourceString("ProductSorting.SortBy")%>
+        <asp:DropDownList ID="ddlSorting" runat="server" OnSelectedIndexChanged="ddlSorting_SelectedIndexChanged"
+            AutoPostBack="true" />
+    </asp:Panel>
+    <div class="clear">
+    </div>
     <asp:Panel runat="server" ID="pnlFilters" CssClass="product-filters">
         <div class="filter-title">
             <asp:Label runat="server" ID="lblProductFilterTitle">

@@ -2237,6 +2237,11 @@ ul.languagelist li .selected
 	padding: 0px;
 }
 
+.product-sorting
+{
+	margin-left: 5px;
+}
+
 .product-filters
 {
 	width: 600px;

@@ -58,13 +58,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="languageId">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
         public abstract DBProductCollection GetAllProducts(int categoryId, int manufacturerId,
             bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
             string keywords, bool searchDescriptions,
             int pageSize, int pageIndex, List<int> filteredSpecs, 
-            int languageId, bool showHidden, out int totalRecords);
+            int languageId, int orderBy, bool showHidden, out int totalRecords);
 
         /// <summary>
         /// Gets all products displayed on the home page

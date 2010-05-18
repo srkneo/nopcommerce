@@ -24,8 +24,9 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
-using NopSolutions.NopCommerce.BusinessLogic.Localization;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.Common.Utils;
@@ -38,7 +39,30 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
         {
             if (!Page.IsPostBack)
             {
+                FillDropDowns();
                 BindData();
+            }
+        }
+
+        protected void FillDropDowns()
+        {
+            if (SettingManager.GetSettingValueBoolean("Common.AllowProductSorting"))
+            {
+                ddlSorting.Items.Clear();
+
+                var ddlSortPositionItem = new ListItem(GetLocaleResourceString("ProductSorting.Position"), ((int)ProductSortingEnum.Position).ToString());
+                ddlSorting.Items.Add(ddlSortPositionItem);
+
+                var ddlSortNameItem = new ListItem(GetLocaleResourceString("ProductSorting.Name"), ((int)ProductSortingEnum.Name).ToString());
+                ddlSorting.Items.Add(ddlSortNameItem);
+
+                var ddlSortPriceItem = new ListItem(GetLocaleResourceString("ProductSorting.Price"), ((int)ProductSortingEnum.Price).ToString());
+                ddlSorting.Items.Add(ddlSortPriceItem);
+
+            }
+            else
+            {
+                pnlSorting.Visible = false;
             }
         }
 
@@ -48,6 +72,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
             lName.Text = Server.HtmlEncode(manufacturer.Name);
             lDescription.Text = manufacturer.Description;
 
+            //featured products
             var featuredProducts = manufacturer.FeaturedProducts;
             if (featuredProducts.Count > 0)
             {
@@ -59,11 +84,13 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
                 pnlFeaturedProducts.Visible = false;
             }
 
+            //price ranges
             this.ctrlPriceRangeFilter.PriceRanges = manufacturer.PriceRanges;
 
             if (string.IsNullOrEmpty(ctrlPriceRangeFilter.PriceRanges))
                 this.pnlFilters.Visible = false;
 
+            //page size
             int totalRecords = 0;
             int pageSize = 10;
             if (manufacturer.PageSize > 0)
@@ -71,6 +98,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
                 pageSize = manufacturer.PageSize;
             }
 
+            //price ranges
             decimal? minPrice = null;
             decimal? maxPrice = null;
             decimal? minPriceConverted = null;
@@ -89,10 +117,19 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
                     maxPriceConverted = CurrencyManager.ConvertCurrency(maxPrice.Value, NopContext.Current.WorkingCurrency, CurrencyManager.PrimaryStoreCurrency);
                 }
             }
+            
+            //sorting
+            ProductSortingEnum orderBy = ProductSortingEnum.Position;
+            if (SettingManager.GetSettingValueBoolean("Common.AllowProductSorting"))
+            {
+                CommonHelper.SelectListItem(this.ddlSorting, CommonHelper.QueryStringInt("orderby"));
+                orderBy = (ProductSortingEnum)Enum.ToObject(typeof(ProductSortingEnum), int.Parse(ddlSorting.SelectedItem.Value));
+            }
 
             var productCollection = ProductManager.GetAllProducts(0, this.ManufacturerId, 
-                false, minPriceConverted, maxPriceConverted, pageSize,
-                this.CurrentPageIndex, null, out totalRecords);
+                false, minPriceConverted, maxPriceConverted,
+                string.Empty, false, pageSize, this.CurrentPageIndex, 
+                null,orderBy, out totalRecords);
 
             if (productCollection.Count > 0)
             {
@@ -107,6 +144,13 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
             {
                 this.dlProducts.Visible = false;
             }
+        }
+
+        protected void ddlSorting_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string url = CommonHelper.GetThisPageUrl(true);
+            url = CommonHelper.ModifyQueryString(url, "orderby=" + ddlSorting.SelectedItem.Value, null);
+            Response.Redirect(url);
         }
 
         protected override void OnInit(EventArgs e)

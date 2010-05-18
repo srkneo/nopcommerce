@@ -95,8 +95,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             int manufacturerId = int.Parse(this.ddlManufacturer.SelectedItem.Value);
 
             int totalRecords = 0;
-            ProductCollection products = ProductManager.GetAllProducts(categoryId, manufacturerId, null,
-                null, null, productName, false, int.MaxValue, 0, null,languageId, out totalRecords);
+            ProductCollection products = ProductManager.GetAllProducts(categoryId, 
+                manufacturerId, null, null, null, productName, 
+                false, int.MaxValue, 0, null, languageId, 
+                ProductSortingEnum.Position, out totalRecords);
             return products;
         }
 

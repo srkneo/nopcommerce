@@ -59,6 +59,24 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories {
         protected global::System.Web.UI.WebControls.DataList dlFeaturedProducts;
         
         /// <summary>
+        /// pnlSorting control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSorting;
+        
+        /// <summary>
+        /// ddlSorting control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSorting;
+        
+        /// <summary>
         /// pnlFilters control.
         /// </summary>
         /// <remarks>

@@ -333,13 +333,14 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="languageId">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
         public override DBProductCollection GetAllProducts(int categoryId, int manufacturerId,
             bool? featuredProducts, decimal? priceMin, decimal? priceMax,
             string keywords, bool searchDescriptions,
             int pageSize, int pageIndex, List<int> filteredSpecs,
-            int languageId, bool showHidden, out int totalRecords)
+            int languageId, int orderBy, bool showHidden, out int totalRecords)
         {
             totalRecords = 0;
             var result = new DBProductCollection();
@@ -380,6 +381,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             }
             db.AddInParameter(dbCommand, "FilteredSpecs", DbType.String, commaSeparatedSpecIds);
             db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
+            db.AddInParameter(dbCommand, "OrderBy", DbType.Int32, orderBy);
             db.AddOutParameter(dbCommand, "TotalRecords", DbType.Int32, 0);
 
             using (IDataReader dataReader = db.ExecuteReader(dbCommand))

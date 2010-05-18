@@ -554,7 +554,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             out int totalRecords)
         {
             return GetAllProducts(0, 0, null, null, null,
-                string.Empty, false, pageSize, pageIndex, null, out totalRecords);
+                string.Empty, false, pageSize, pageIndex, null,
+                ProductSortingEnum.Position, out totalRecords);
         }
 
         /// <summary>
@@ -571,7 +572,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             bool? featuredProducts, int pageSize, int pageIndex, out int totalRecords)
         {
             return GetAllProducts(categoryId, manufacturerId, featuredProducts, null, null,
-                string.Empty, false, pageSize, pageIndex, null, out totalRecords);
+                string.Empty, false, pageSize, pageIndex, null,
+                ProductSortingEnum.Position, out totalRecords);
         }
 
         /// <summary>
@@ -587,7 +589,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             bool searchDescriptions, int pageSize, int pageIndex, out int totalRecords)
         {
             return GetAllProducts(0, 0, null, null, null,
-                keywords, searchDescriptions, pageSize, pageIndex, null, out totalRecords);
+                keywords, searchDescriptions, pageSize, pageIndex, null,
+                ProductSortingEnum.Position, out totalRecords);
         }
 
         /// <summary>
@@ -608,7 +611,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int pageSize, int pageIndex, List<int> filteredSpecs, out int totalRecords)
         {
             return GetAllProducts(categoryId, manufacturerId, featuredProducts, null, null,
-                keywords, searchDescriptions, pageSize, pageIndex, filteredSpecs, out totalRecords);
+                keywords, searchDescriptions, pageSize, pageIndex,
+                filteredSpecs, ProductSortingEnum.Position, out totalRecords);
         }
 
         /// <summary>
@@ -630,7 +634,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             return GetAllProducts(categoryId, manufacturerId, featuredProducts, 
                 priceMin, priceMax, string.Empty, false, pageSize, pageIndex, 
-                filteredSpecs, out totalRecords);
+                filteredSpecs, ProductSortingEnum.Position, out totalRecords);
         }
 
         /// <summary>
@@ -649,9 +653,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
         public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
-            bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
+            bool? featuredProducts, decimal? priceMin, decimal? priceMax,
             string keywords, bool searchDescriptions, int pageSize, int pageIndex,
             List<int> filteredSpecs, out int totalRecords)
+        {
+            return GetAllProducts(categoryId, manufacturerId,
+                featuredProducts, priceMin, priceMax, keywords, searchDescriptions,
+                pageSize, pageIndex, filteredSpecs,
+                ProductSortingEnum.Position, out totalRecords);
+        }
+
+        /// <summary>
+        /// Gets all products
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
+        /// <param name="priceMin">Minimum price</param>
+        /// <param name="priceMax">Maximum price</param>
+        /// <param name="keywords">Keywords</param>
+        /// <param name="searchDescriptions">A value indicating whether to search in descriptions</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <param name="filteredSpecs">Filtered product specification identifiers</param>
+        /// <param name="orderBy">Order by</param>
+        /// <param name="totalRecords">Total records</param>
+        /// <returns>Product collection</returns>
+        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
+            bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
+            string keywords, bool searchDescriptions, int pageSize, int pageIndex,
+            List<int> filteredSpecs, ProductSortingEnum orderBy, out int totalRecords)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -659,7 +690,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             return GetAllProducts(categoryId, manufacturerId,
                 featuredProducts, priceMin, priceMax, keywords, searchDescriptions,
-                pageSize, pageIndex, filteredSpecs, languageId, out totalRecords);
+                pageSize, pageIndex, filteredSpecs, languageId, 
+                orderBy, out totalRecords);
         }
 
         /// <summary>
@@ -676,12 +708,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pageIndex">Page index</param>
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="languageId">Language identifier</param>
+        /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
         public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
             bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
             string keywords, bool searchDescriptions, int pageSize, 
-            int pageIndex, List<int> filteredSpecs, int languageId, out int totalRecords)
+            int pageIndex, List<int> filteredSpecs, int languageId,
+            ProductSortingEnum orderBy, out int totalRecords)
         {
             if (pageSize <= 0)
                 pageSize = 10;
@@ -695,8 +729,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             bool showHidden = NopContext.Current.IsAdmin;
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(categoryId,
-               manufacturerId, featuredProducts, priceMin, priceMax, keywords, searchDescriptions,
-               pageSize, pageIndex, filteredSpecs, languageId, showHidden, out totalRecords);
+               manufacturerId, featuredProducts, priceMin, priceMax, 
+               keywords, searchDescriptions, pageSize, pageIndex, filteredSpecs, 
+               languageId, (int)orderBy, showHidden, out totalRecords);
             var products = DBMapping(dbCollection);
             return products;
         }

@@ -43,7 +43,30 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
         {
             if (!Page.IsPostBack)
             {
+                FillDropDowns();
                 BindData();
+            }
+        }
+
+        protected void FillDropDowns()
+        {
+            if (SettingManager.GetSettingValueBoolean("Common.AllowProductSorting"))
+            {
+                ddlSorting.Items.Clear();
+
+                var ddlSortPositionItem = new ListItem(GetLocaleResourceString("ProductSorting.Position"), ((int)ProductSortingEnum.Position).ToString());
+                ddlSorting.Items.Add(ddlSortPositionItem);
+
+                var ddlSortNameItem = new ListItem(GetLocaleResourceString("ProductSorting.Name"), ((int)ProductSortingEnum.Name).ToString());
+                ddlSorting.Items.Add(ddlSortNameItem);
+
+                var ddlSortPriceItem = new ListItem(GetLocaleResourceString("ProductSorting.Price"), ((int)ProductSortingEnum.Price).ToString());
+                ddlSorting.Items.Add(ddlSortPriceItem);
+
+            }
+            else
+            {
+                pnlSorting.Visible = false;
             }
         }
 
@@ -51,11 +74,13 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
         {
             var category = CategoryManager.GetCategoryById(this.CategoryId);
 
+            //breadcrumb
             rptrCategoryBreadcrumb.DataSource = CategoryManager.GetBreadCrumb(this.CategoryId);
             rptrCategoryBreadcrumb.DataBind();
 
             lDescription.Text = category.Description;
 
+            //subcategories
             var subCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
             if (subCategoryCollection.Count > 0)
             {
@@ -65,6 +90,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             else
                 dlSubCategories.Visible = false;
 
+            //featured products
             var featuredProducts = category.FeaturedProducts;
             if (featuredProducts.Count > 0)
             {
@@ -76,8 +102,10 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 pnlFeaturedProducts.Visible = false;
             }
 
+            //price ranges
             this.ctrlPriceRangeFilter.PriceRanges = category.PriceRanges;
 
+            //page size
             int totalRecords = 0;
             int pageSize = 10;
             if (category.PageSize > 0)
@@ -85,6 +113,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 pageSize = category.PageSize;
             }
 
+            //price ranges
             decimal? minPrice = null;
             decimal? maxPrice = null;
             decimal? minPriceConverted = null;
@@ -104,10 +133,21 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 }
             }
 
+            //specification filter
             var psoFilterOption = ctrlProductSpecificationFilter.GetAlreadyFilteredSpecOptionIds();
 
+            //sorting
+            ProductSortingEnum orderBy = ProductSortingEnum.Position;
+            if (SettingManager.GetSettingValueBoolean("Common.AllowProductSorting"))
+            {
+                CommonHelper.SelectListItem(this.ddlSorting, CommonHelper.QueryStringInt("orderby"));            
+                orderBy = (ProductSortingEnum)Enum.ToObject(typeof(ProductSortingEnum), int.Parse(ddlSorting.SelectedItem.Value));
+            }
+
             var productCollection = ProductManager.GetAllProducts(this.CategoryId,
-                0, false, minPriceConverted, maxPriceConverted, pageSize, this.CurrentPageIndex, psoFilterOption, out totalRecords);
+                0, false, minPriceConverted, maxPriceConverted,
+                string.Empty, false, pageSize, this.CurrentPageIndex, 
+                psoFilterOption, orderBy, out totalRecords);
 
             if (productCollection.Count > 0)
             {
@@ -124,6 +164,13 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             }
         }
 
+        protected void ddlSorting_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string url = CommonHelper.GetThisPageUrl(true);
+            url = CommonHelper.ModifyQueryString(url, "orderby=" + ddlSorting.SelectedItem.Value, null);
+            Response.Redirect(url);
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -132,8 +179,9 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
 
             ctrlProductSpecificationFilter.ExcludedQueryStringParams = productsPager.QueryStringProperty;
             ctrlProductSpecificationFilter.CategoryId = this.CategoryId;
-            
+
             ctrlProductSpecificationFilter.ReservedQueryStringParams = "CategoryId,";
+            ctrlProductSpecificationFilter.ReservedQueryStringParams += "orderby,";
             ctrlProductSpecificationFilter.ReservedQueryStringParams += ctrlPriceRangeFilter.QueryStringProperty;
             ctrlProductSpecificationFilter.ReservedQueryStringParams += ",";
             ctrlProductSpecificationFilter.ReservedQueryStringParams += productsPager.QueryStringProperty;

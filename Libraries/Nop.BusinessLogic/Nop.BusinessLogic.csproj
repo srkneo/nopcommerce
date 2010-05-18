@@ -151,6 +151,7 @@
     <Compile Include="Products\Attributes\CheckoutAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeHelper.cs" />
+    <Compile Include="Products\ProductSortingEnum.cs" />
     <Compile Include="Products\CustomerRoleProductPriceCollection.cs" />
     <Compile Include="Products\CustomerRoleProductPrice.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeValueLocalized.cs" />
