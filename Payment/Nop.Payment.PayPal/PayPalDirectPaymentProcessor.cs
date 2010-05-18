@@ -226,9 +226,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             details.CreditCard.ExpYearSpecified = true;
             details.CreditCard.ExpYear = paymentInfo.CreditCardExpireYear;
             details.CreditCard.CVV2 = paymentInfo.CreditCardCvv2;
-
             details.CreditCard.CardOwner = new PayerInfoType();
             details.CreditCard.CardOwner.PayerCountry = GetPaypalCountryCodeType(paymentInfo.BillingAddress.Country);
+            details.CreditCard.CreditCardTypeSpecified = true;
 
             details.CreditCard.CardOwner.Address = new AddressType();
             details.CreditCard.CardOwner.Address.CountrySpecified = true;
@@ -451,9 +451,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             details.CreditCard.ExpYearSpecified = true;
             details.CreditCard.ExpYear = paymentInfo.CreditCardExpireYear;
             details.CreditCard.CVV2 = paymentInfo.CreditCardCvv2;
-
             details.CreditCard.CardOwner = new PayerInfoType();
             details.CreditCard.CardOwner.PayerCountry = GetPaypalCountryCodeType(paymentInfo.BillingAddress.Country);
+            details.CreditCard.CreditCardTypeSpecified = true;
 
             details.CreditCard.CardOwner.Address = new AddressType();
             details.CreditCard.CardOwner.Address.CountrySpecified = true;
