@@ -119,7 +119,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             string pattern = SettingManager.GetSettingValue("ProductAttribute.PricePattern", "(?<val>(\\d+[\\s\\,\\.]?)+)");
                             string replacement = String.Format("<span class=\"price-val-for-dyn-upd-{0}\">${{val}}</span> ", productVariant.ProductVariantId);
 
-                            lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, pattern, replacement);
+                            if(finalPriceWithoutDiscountBase != finalPriceWithDiscountBase)
+                            {
+                                lblFinalPriceWithDiscount.Text = Regex.Replace(lblFinalPriceWithDiscount.Text, pattern, replacement);
+                            }
+                            else
+                            {
+                                lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, pattern, replacement);
+                            }
                         }
                     }
                     else
@@ -141,12 +148,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if(productVariant != null)
                 {
-                
                     decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
                     decimal finalPriceWithoutDiscount = CurrencyManager.ConvertCurrency(finalPriceWithoutDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
 
+                    decimal finalPriceWithDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, true));
+                    decimal finalPriceWithDiscount = CurrencyManager.ConvertCurrency(finalPriceWithDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
+
+                    float val = (float)(finalPriceWithoutDiscountBase != finalPriceWithDiscountBase ? finalPriceWithDiscount : finalPriceWithoutDiscount);
                     string key = String.Format("PriceValForDynUpd_{0}", productVariant.ProductVariantId);
-                    string script = String.Format(CultureInfo.InvariantCulture, "var priceValForDynUpd_{0} = {1};", productVariant.ProductVariantId, (float)finalPriceWithoutDiscount);
+                    string script = String.Format(CultureInfo.InvariantCulture, "var priceValForDynUpd_{0} = {1};", productVariant.ProductVariantId, val);
 
                     Page.ClientScript.RegisterClientScriptBlock(GetType(), key, script, true);
                 }
