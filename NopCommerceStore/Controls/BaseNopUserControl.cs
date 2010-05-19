@@ -16,6 +16,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -41,6 +42,22 @@ namespace NopSolutions.NopCommerce.Web
         {
             string jquery = CommonHelper.GetStoreLocation() + "Scripts/jquery-1.4.min.js";
             Page.ClientScript.RegisterClientScriptInclude(jquery, jquery);
+        }
+
+        protected void DisplayAlertMessage(string message)
+        {
+            if (String.IsNullOrEmpty(message))
+                return;
+
+            this.BindJQuery();
+            StringBuilder alertJsStart = new StringBuilder();
+            alertJsStart.AppendLine("<script type=\"text/javascript\">");
+            alertJsStart.AppendLine("$(document).ready(function() {");
+            alertJsStart.AppendLine(string.Format("alert('{0}');", message.Trim()));
+            alertJsStart.AppendLine("});");
+            alertJsStart.AppendLine("</script>");
+            string js = alertJsStart.ToString();
+            Page.ClientScript.RegisterClientScriptBlock(GetType(), "alertScriptKey", js);
         }
 
         protected string GetLocaleResourceString(string ResourceName)

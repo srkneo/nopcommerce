@@ -105,6 +105,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     if (e.CommandName == "AddToCart")
                     {
+                        string sep = "<br />";
                         List<string> addToCartWarnings = ShoppingCartManager.AddToCart(
                             ShoppingCartTypeEnum.ShoppingCart,
                             pv.ProductVariantId, 
@@ -123,15 +124,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 addToCartWarningsSb.Append(Server.HtmlEncode(addToCartWarnings[i]));
                                 if (i != addToCartWarnings.Count - 1)
                                 {
-                                    addToCartWarningsSb.Append("<br />");
+                                    addToCartWarningsSb.Append(sep);
                                 }
                             }
-                            lblError.Text = addToCartWarningsSb.ToString();
+                            string errorFull = addToCartWarningsSb.ToString();
+                            lblError.Text = errorFull;
+                            if (SettingManager.GetSettingValueBoolean("Common.ShowAlertForProductAttributes"))
+                            {
+                                this.DisplayAlertMessage(errorFull.Replace(sep, "\\n"));
+                            }
                         }
                     }
 
                     if (e.CommandName == "AddToWishlist")
                     {
+                        string sep = "<br />";
                         var addToCartWarnings = ShoppingCartManager.AddToCart(
                             ShoppingCartTypeEnum.Wishlist,
                             pv.ProductVariantId, 
@@ -150,10 +157,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 addToCartWarningsSb.Append(Server.HtmlEncode(addToCartWarnings[i]));
                                 if (i != addToCartWarnings.Count - 1)
                                 {
-                                    addToCartWarningsSb.Append("<br />");
+                                    addToCartWarningsSb.Append(sep);
                                 }
+                            } 
+                            string errorFull = addToCartWarningsSb.ToString();
+                            lblError.Text = errorFull;
+                            if (SettingManager.GetSettingValueBoolean("Common.ShowAlertForProductAttributes"))
+                            {
+                                this.DisplayAlertMessage(errorFull.Replace(sep, "\\n"));
                             }
-                            lblError.Text = addToCartWarningsSb.ToString();
                         }
                     }
                 }

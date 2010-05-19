@@ -9001,3 +9001,14 @@ BEGIN
 	DROP TABLE #PageIndex
 END
 GO
+
+	
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Common.ShowAlertForProductAttributes')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'Common.ShowAlertForProductAttributes', N'true', N'')
+END
+GO
