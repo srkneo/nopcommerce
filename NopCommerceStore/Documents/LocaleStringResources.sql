@@ -1610,6 +1610,54 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.Other.AllowProductSorting.Tooltip">
     <Value>Check to enable product sorting option on category/manufacturer details page.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.ProductTags">
+    <Value>Product tags:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductInfo.ProductTags.Tooltip">
+    <Value>Product tags are keywords that this product can also be identified by. Enter a comma separated list of the tags to be associated with this products. The more products associated with a particular tag, the larger it will show on the tag cloud.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.ProductTagsTitle">
+    <Value>Product Tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.ProductTagsDescription">
+    <Value>Manage Product Tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductsHome.ProductTags.TitleDescription">
+    <Value>Manage Product Tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductsHome.ProductTags.Title">
+    <Value>Product Tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductsHome.ProductTags.Description">
+    <Value>Manage Product Tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductTags.Title">
+    <Value>Product Tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductTags.DeleteButton.Text">
+    <Value>Delete selected</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Products.NoProductTags">
+    <Value>No product tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductTags.Name">
+    <Value>Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductTags.Count">
+    <Value>Tagged products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Products.ProductTags">
+    <Value>Product tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="ProductTags.Title">
+    <Value>Products tagged with ''{0}''</Value>
+  </LocaleResource>
+  <LocaleResource Name="PageTitle.ProductTags">
+    <Value>Tagged products</Value>
+  </LocaleResource>
+  <LocaleResource Name="ProductTagsCloud.Title">
+    <Value>Popular tags</Value>
+  </LocaleResource>
 </Language>
 '
 

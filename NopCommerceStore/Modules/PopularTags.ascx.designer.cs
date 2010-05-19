@@ -11,15 +11,15 @@
 namespace NopSolutions.NopCommerce.Web.Modules {
     
     
-    public partial class ProductSpecifications {
+    public partial class PopularTagsControl {
         
         /// <summary>
-        /// rptrProductSpecification control.
+        /// lvTagCloud control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptrProductSpecification;
+        protected global::System.Web.UI.WebControls.ListView lvTagCloud;
     }
 }

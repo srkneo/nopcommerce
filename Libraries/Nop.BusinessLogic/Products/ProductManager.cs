@@ -478,6 +478,34 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
+        private static ProductTagCollection DBMapping(DBProductTagCollection dbCollection)
+        {
+            if (dbCollection == null)
+                return null;
+
+            var collection = new ProductTagCollection();
+            foreach (var dbItem in dbCollection)
+            {
+                var item = DBMapping(dbItem);
+                collection.Add(item);
+            }
+
+            return collection;
+        }
+
+        private static ProductTag DBMapping(DBProductTag dbItem)
+        {
+            if (dbItem == null)
+                return null;
+
+            var item = new ProductTag();
+            item.ProductTagId = dbItem.ProductTagId;
+            item.Name = dbItem.Name;
+            item.ProductCount = dbItem.ProductCount;
+
+            return item;
+        }
+
         #endregion
 
         #region Methods
@@ -553,7 +581,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductCollection GetAllProducts(int pageSize, int pageIndex, 
             out int totalRecords)
         {
-            return GetAllProducts(0, 0, null, null, null,
+            return GetAllProducts(0, 0, 0, null, null, null,
                 string.Empty, false, pageSize, pageIndex, null,
                 ProductSortingEnum.Position, out totalRecords);
         }
@@ -563,15 +591,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="pageSize">Page size</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
-            bool? featuredProducts, int pageSize, int pageIndex, out int totalRecords)
+        public static ProductCollection GetAllProducts(int categoryId, 
+            int manufacturerId, int productTagId, bool? featuredProducts, 
+            int pageSize, int pageIndex, out int totalRecords)
         {
-            return GetAllProducts(categoryId, manufacturerId, featuredProducts, null, null,
+            return GetAllProducts(categoryId, manufacturerId,
+                productTagId, featuredProducts, null, null,
                 string.Empty, false, pageSize, pageIndex, null,
                 ProductSortingEnum.Position, out totalRecords);
         }
@@ -588,7 +619,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductCollection GetAllProducts(string keywords, 
             bool searchDescriptions, int pageSize, int pageIndex, out int totalRecords)
         {
-            return GetAllProducts(0, 0, null, null, null,
+            return GetAllProducts(0, 0, 0, null, null, null,
                 keywords, searchDescriptions, pageSize, pageIndex, null,
                 ProductSortingEnum.Position, out totalRecords);
         }
@@ -598,6 +629,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="keywords">Keywords</param>
         /// <param name="searchDescriptions">A value indicating whether to search in descriptions</param>
@@ -606,11 +638,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
-            bool? featuredProducts, string keywords, bool searchDescriptions,
-            int pageSize, int pageIndex, List<int> filteredSpecs, out int totalRecords)
+        public static ProductCollection GetAllProducts(int categoryId,
+            int manufacturerId, int productTagId, bool? featuredProducts, 
+            string keywords, bool searchDescriptions, int pageSize,
+            int pageIndex, List<int> filteredSpecs, out int totalRecords)
         {
-            return GetAllProducts(categoryId, manufacturerId, featuredProducts, null, null,
+            return GetAllProducts(categoryId, manufacturerId,
+                productTagId, featuredProducts, null, null,
                 keywords, searchDescriptions, pageSize, pageIndex,
                 filteredSpecs, ProductSortingEnum.Position, out totalRecords);
         }
@@ -620,6 +654,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="priceMin">Minimum price</param>
         /// <param name="priceMax">Maximum price</param>
@@ -628,11 +663,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
-            bool? featuredProducts, decimal? priceMin, decimal? priceMax,
-            int pageSize, int pageIndex, List<int> filteredSpecs, out int totalRecords)
+        public static ProductCollection GetAllProducts(int categoryId,
+            int manufacturerId, int productTagId, bool? featuredProducts, 
+            decimal? priceMin, decimal? priceMax, int pageSize, 
+            int pageIndex, List<int> filteredSpecs, out int totalRecords)
         {
-            return GetAllProducts(categoryId, manufacturerId, featuredProducts, 
+            return GetAllProducts(categoryId, manufacturerId,
+                productTagId, featuredProducts, 
                 priceMin, priceMax, string.Empty, false, pageSize, pageIndex, 
                 filteredSpecs, ProductSortingEnum.Position, out totalRecords);
         }
@@ -642,6 +679,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="priceMin">Minimum price</param>
         /// <param name="priceMax">Maximum price</param>
@@ -652,13 +690,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
-            bool? featuredProducts, decimal? priceMin, decimal? priceMax,
-            string keywords, bool searchDescriptions, int pageSize, int pageIndex,
+        public static ProductCollection GetAllProducts(int categoryId,
+            int manufacturerId, int productTagId, bool? featuredProducts,
+            decimal? priceMin, decimal? priceMax, string keywords, 
+            bool searchDescriptions, int pageSize, int pageIndex,
             List<int> filteredSpecs, out int totalRecords)
         {
             return GetAllProducts(categoryId, manufacturerId,
-                featuredProducts, priceMin, priceMax, keywords, searchDescriptions,
+                productTagId, featuredProducts, priceMin, 
+                priceMax, keywords, searchDescriptions,
                 pageSize, pageIndex, filteredSpecs,
                 ProductSortingEnum.Position, out totalRecords);
         }
@@ -668,6 +708,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="priceMin">Minimum price</param>
         /// <param name="priceMax">Maximum price</param>
@@ -679,16 +720,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
-            bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
-            string keywords, bool searchDescriptions, int pageSize, int pageIndex,
+        public static ProductCollection GetAllProducts(int categoryId,
+            int manufacturerId, int productTagId, bool? featuredProducts, 
+            decimal? priceMin, decimal? priceMax, string keywords, 
+            bool searchDescriptions, int pageSize, int pageIndex,
             List<int> filteredSpecs, ProductSortingEnum orderBy, out int totalRecords)
         {
             int languageId = 0;
             if (NopContext.Current != null)
                 languageId = NopContext.Current.WorkingLanguage.LanguageId;
 
-            return GetAllProducts(categoryId, manufacturerId,
+            return GetAllProducts(categoryId, manufacturerId, productTagId,
                 featuredProducts, priceMin, priceMax, keywords, searchDescriptions,
                 pageSize, pageIndex, filteredSpecs, languageId, 
                 orderBy, out totalRecords);
@@ -699,6 +741,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="priceMin">Minimum price</param>
         /// <param name="priceMax">Maximum price</param>
@@ -711,8 +754,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId, int manufacturerId,
-            bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
+        public static ProductCollection GetAllProducts(int categoryId,
+            int manufacturerId, int productTagId, bool? featuredProducts,
+            decimal? priceMin, decimal? priceMax, 
             string keywords, bool searchDescriptions, int pageSize, 
             int pageIndex, List<int> filteredSpecs, int languageId,
             ProductSortingEnum orderBy, out int totalRecords)
@@ -729,7 +773,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             bool showHidden = NopContext.Current.IsAdmin;
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(categoryId,
-               manufacturerId, featuredProducts, priceMin, priceMax, 
+               manufacturerId, productTagId, featuredProducts, priceMin, priceMax, 
                keywords, searchDescriptions, pageSize, pageIndex, filteredSpecs, 
                languageId, (int)orderBy, showHidden, out totalRecords);
             var products = DBMapping(dbCollection);
@@ -3149,6 +3193,115 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
         #endregion
 
+        #region Product tags
+
+        /// <summary>
+        /// Deletes a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        public static void DeleteProductTag(int productTagId)
+        {
+            DBProviderManager<DBProductProvider>.Provider.DeleteProductTag(productTagId);
+        }
+
+        /// <summary>
+        /// Gets a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        /// <returns>Product tag</returns>
+        public static ProductTag GetProductTagById(int productTagId)
+        {
+            if (productTagId == 0)
+                return null;
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductTagById(productTagId);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Gets all product tags
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="name">Product tag name or empty string to load all records</param>
+        /// <returns>Product tag collection</returns>
+        public static ProductTagCollection GetAllProductTags(int productId,
+            string name)
+        {
+            if (name == null)
+                name = string.Empty;
+            name = name.Trim();
+
+            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductTags(productId,
+                name);
+            var collection = DBMapping(dbCollection);
+            return collection;
+        }
+
+        /// <summary>
+        /// Inserts a product tag
+        /// </summary>
+        /// <param name="name">Product tag name</param>
+        /// <param name="productCount">Product count</param>
+        /// <returns>Product tag</returns>
+        public static ProductTag InsertProductTag(string name, int productCount)
+        {
+            if (name == null)
+                name = string.Empty;
+            name = name.Trim();
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductTag(name,
+                productCount);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Updates a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        /// <param name="name">Product tag name</param>
+        /// <param name="productCount">Product count</param>
+        /// <returns>Product tag</returns>
+        public static ProductTag UpdateProductTag(int productTagId,
+            string name, int productCount)
+        {
+            if (name == null)
+                name = string.Empty;
+            name = name.Trim();
+
+            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductTag(productTagId,
+                name, productCount);
+            var item = DBMapping(dbItem);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds a discount tag mapping
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
+        public static void AddProductTagMapping(int productId, int productTagId)
+        {
+            DBProviderManager<DBProductProvider>.Provider.AddProductTagMapping(productId,
+                productTagId);
+        }
+
+        /// <summary>
+        /// Removes a discount tag mapping
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
+        public static void RemoveProductTagMapping(int productId, int productTagId)
+        {
+            DBProviderManager<DBProductProvider>.Provider.RemoveProductTagMapping(productId, productTagId);
+        }
+
+        #endregion
+
+
+        #region Etc
+
         /// <summary>
         /// Formats the text
         /// </summary>
@@ -3177,6 +3330,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             text = HtmlHelper.FormatText(text, false, true, false, false, false, false);
             return text;
         }
+
+        #endregion 
 
         #endregion
 

@@ -126,8 +126,8 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
                 orderBy = (ProductSortingEnum)Enum.ToObject(typeof(ProductSortingEnum), int.Parse(ddlSorting.SelectedItem.Value));
             }
 
-            var productCollection = ProductManager.GetAllProducts(0, this.ManufacturerId, 
-                false, minPriceConverted, maxPriceConverted,
+            var productCollection = ProductManager.GetAllProducts(0, 
+                this.ManufacturerId, 0, false, minPriceConverted, maxPriceConverted,
                 string.Empty, false, pageSize, this.CurrentPageIndex, 
                 null,orderBy, out totalRecords);
 

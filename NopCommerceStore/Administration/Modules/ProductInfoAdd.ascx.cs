@@ -130,6 +130,20 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             base.OnPreRender(e);
         }
 
+        private string[] ParseProductTags(string productTags)
+        {
+            List<string> result = new List<string>();
+            string[] values = productTags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string val1 in values)
+            {
+                if (!String.IsNullOrEmpty(val1.Trim()))
+                {
+                    result.Add(val1);
+                }
+            }
+            return result.ToArray();
+        }
+
         public Product SaveInfo()
         {
             DateTime nowDT = DateTime.Now;
@@ -272,6 +286,29 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                  published, false, 1, nowDT, nowDT);
 
             SaveLocalizableContent(product);
+
+            //product tags
+            var productTags1 = ProductManager.GetAllProductTags(product.ProductId, string.Empty);
+            foreach (var productTag in productTags1)
+            {
+                ProductManager.RemoveProductTagMapping(product.ProductId, productTag.ProductTagId);
+            }
+            string[] productTagNames = ParseProductTags(txtProductTags.Text);
+            foreach (string productTagName in productTagNames)
+            {
+                ProductTag productTag = null;
+                var productTags2 = ProductManager.GetAllProductTags(0,
+                    productTagName);
+                if (productTags2.Count == 0)
+                {
+                    productTag = ProductManager.InsertProductTag(productTagName, 0);
+                }
+                else
+                {
+                    productTag = productTags2[0];
+                }
+                ProductManager.AddProductTagMapping(product.ProductId, productTag.ProductTagId);
+            }
 
             return product;
         }

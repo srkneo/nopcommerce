@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Text;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -72,6 +73,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
                 else
                     hlViewReviews.Visible = false;
+
+                this.txtProductTags.Text = GenerateListOfProductTagss(ProductManager.GetAllProductTags(product.ProductId, string.Empty));
             }
         }
 
@@ -110,7 +113,36 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             base.OnPreRender(e);
         }
-        
+
+        private string GenerateListOfProductTagss(ProductTagCollection productTags)
+        {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < productTags.Count; i++)
+            {
+                ProductTag pt = productTags[i];
+                result.Append(pt.Name.ToString());
+                if (i != productTags.Count - 1)
+                {
+                    result.Append(", ");
+                }
+            }
+            return result.ToString();
+        }
+
+        private string[] ParseProductTags(string productTags)
+        {
+            List<string> result = new List<string>();
+            string[] values = productTags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string val1 in values)
+            {
+                if (!String.IsNullOrEmpty(val1.Trim()))
+                {
+                    result.Add(val1);
+                }
+            }
+            return result.ToArray();
+        }
+
         public Product SaveInfo()
         {
             Product product = ProductManager.GetProductById(this.ProductId, 0);
@@ -123,9 +155,31 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                      cbAllowCustomerRatings.Checked, product.RatingSum, product.TotalRatingVotes, cbPublished.Checked,
                      product.Deleted, product.CreatedOn, DateTime.Now);
 
-            }
+                SaveLocalizableContent(product);
 
-            SaveLocalizableContent(product);
+                //product tags
+                var productTags1 = ProductManager.GetAllProductTags(product.ProductId, string.Empty);
+                foreach (var productTag in productTags1)
+                {
+                    ProductManager.RemoveProductTagMapping(product.ProductId, productTag.ProductTagId);
+                }
+                string[] productTagNames = ParseProductTags(txtProductTags.Text);
+                foreach (string productTagName in productTagNames)
+                {
+                    ProductTag productTag = null;
+                    var productTags2 = ProductManager.GetAllProductTags(0,
+                        productTagName);
+                    if (productTags2.Count == 0)
+                    {
+                        productTag = ProductManager.InsertProductTag(productTagName, 0);
+                    }
+                    else
+                    {
+                        productTag = productTags2[0];
+                    }
+                    ProductManager.AddProductTagMapping(product.ProductId, productTag.ProductTagId);
+                }
+            }
 
             return product;
         }

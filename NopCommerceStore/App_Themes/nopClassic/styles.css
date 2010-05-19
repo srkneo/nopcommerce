@@ -898,7 +898,7 @@ ul.languagelist li .selected
 }
 
 .block-category-navigation, .block-manufacturer-navigation, .block-recently-viewed-products, 
-.block-info, .block-shoppingcart, .block-newsletter, .block-livechat
+.block-info, .block-shoppingcart, .block-newsletter, .block-livechat, .block-popular-tags
 {
 	
 }
@@ -962,6 +962,12 @@ ul.languagelist li .selected
 
 .block-recently-viewed-products a:hover
 {
+}
+
+
+.block-popular-tags li
+{
+    display:inline !important;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -2062,36 +2068,36 @@ ul.languagelist li .selected
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-.category-page .product-pager, .manufacturer-page .product-pager
+.category-page .product-pager, .manufacturer-page .product-pager, .producttag-page .product-pager
 {
 	text-align: center;
 }
 
-.category-page .product-pager a, .manufacturer-page .product-pager a
+.category-page .product-pager a, .manufacturer-page .product-pager a, .producttag-page .product-pager a
 {
 	font-size: 1em;
 	color: #555;
 }
 
-.category-page .product-pager a:link, .manufacturer-page .product-pager a:link
+.category-page .product-pager a:link, .manufacturer-page .product-pager a:link, .producttag-page .product-pager a:link
 {
 	text-align: center;
 }
 
-.category-page .product-pager span, .manufacturer-page .product-pager span
+.category-page .product-pager span, .manufacturer-page .product-pager span, .producttag-page .product-pager span
 {
 	color: #3664A5;
 	font-size: 1.3em;
 	font-weight: bold;
 }
 
-.category-page, .manufacturerlist-page, .manufacturer-page
+.category-page, .manufacturerlist-page, .manufacturer-page, .producttag-page
 {
 	margin-bottom: 15px;
 	padding: 0px;
 }
 
-.category-page .page-title, .manufacturerlist-page .page-title, .manufacturer-page .page-title
+.category-page .page-title, .manufacturerlist-page .page-title, .manufacturer-page .page-title, .producttag-page .page-title
 {
 	border-bottom: 0 none;
 }
@@ -3667,7 +3673,14 @@ ul.languagelist li .selected
 	text-decoration: none;
 }
 
-.productSpecBox
+.productspec-box
+{
+	padding: 5px 5px 5px 5px;
+	clear: both;
+	color: #555;
+}
+
+.producttags-box
 {
 	padding: 5px 5px 5px 5px;
 	clear: both;

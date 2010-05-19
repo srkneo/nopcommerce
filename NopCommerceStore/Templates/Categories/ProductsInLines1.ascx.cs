@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             }
 
             var productCollection = ProductManager.GetAllProducts(this.CategoryId,
-                0, false, minPriceConverted, maxPriceConverted,
+                0, 0, false, minPriceConverted, maxPriceConverted,
                 string.Empty, false, pageSize, this.CurrentPageIndex, 
                 psoFilterOption, orderBy, out totalRecords);
 

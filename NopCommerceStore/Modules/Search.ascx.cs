@@ -119,7 +119,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                     int totalRecords = 0;
                     var products = ProductManager.GetAllProducts(categoryId,
-                        manufacturerId, null,
+                        manufacturerId, 0, null,
                         minPriceConverted, maxPriceConverted,
                         keywords, searchInProductDescriptions,
                         100, 0, new List<int>(), out totalRecords);

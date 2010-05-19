@@ -255,6 +255,15 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             return item;
         }
 
+        private DBProductTag GetProductTagFromReader(IDataReader dataReader)
+        {
+            var item = new DBProductTag();
+            item.ProductTagId = NopSqlDataHelper.GetInt(dataReader, "ProductTagID");
+            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
+            item.ProductCount = NopSqlDataHelper.GetInt(dataReader, "ProductCount");
+            return item;
+        }
+
         #endregion
 
         #region Methods
@@ -323,6 +332,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="priceMin">Minimum price</param>
         /// <param name="priceMax">Maximum price</param>
@@ -336,7 +346,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public override DBProductCollection GetAllProducts(int categoryId, int manufacturerId,
+        public override DBProductCollection GetAllProducts(int categoryId, 
+            int manufacturerId, int productTagId,
             bool? featuredProducts, decimal? priceMin, decimal? priceMax,
             string keywords, bool searchDescriptions,
             int pageSize, int pageIndex, List<int> filteredSpecs,
@@ -348,6 +359,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductLoadAllPaged");
             db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
             db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
+            db.AddInParameter(dbCommand, "ProductTagID", DbType.Int32, productTagId);
             if (featuredProducts.HasValue)
                 db.AddInParameter(dbCommand, "FeaturedProducts", DbType.Boolean, featuredProducts.Value);
             else
@@ -2374,6 +2386,138 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
 
             return item;
         }
+
+        /// <summary>
+        /// Deletes a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        public override void DeleteProductTag(int productTagId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTagDelete");
+            db.AddInParameter(dbCommand, "ProductTagID", DbType.Int32, productTagId);
+            db.ExecuteNonQuery(dbCommand);
+        }
+
+        /// <summary>
+        /// Gets all product tags
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="name">Product tag name or empty string to load all records</param>
+        /// <returns>Product tag collection</returns>
+        public override DBProductTagCollection GetAllProductTags(int productId,
+            string name)
+        {
+            var result = new DBProductTagCollection();
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTagLoadAll");
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                while (dataReader.Read())
+                {
+                    var item = GetProductTagFromReader(dataReader);
+                    result.Add(item);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        /// <returns>Product tag</returns>
+        public override DBProductTag GetProductTagById(int productTagId)
+        {
+            DBProductTag item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTagLoadByPrimaryKey");
+            db.AddInParameter(dbCommand, "ProductTagID", DbType.Int32, productTagId);
+            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
+            {
+                if (dataReader.Read())
+                {
+                    item = GetProductTagFromReader(dataReader);
+                }
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// Inserts a product tag
+        /// </summary>
+        /// <param name="name">Product tag name</param>
+        /// <param name="productCount">Product count</param>
+        /// <returns>Product tag</returns>
+        public override DBProductTag InsertProductTag(string name, int productCount)
+        {
+            DBProductTag result = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTagInsert");
+            db.AddOutParameter(dbCommand, "ProductTagID", DbType.Int32, 0);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "ProductCount", DbType.Int32, productCount);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+            {
+                int productTagId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductTagID"));
+                result = GetProductTagById(productTagId);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Updates a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        /// <param name="name">Product tag name</param>
+        /// <param name="productCount">Product count</param>
+        /// <returns>Product tag</returns>
+        public override DBProductTag UpdateProductTag(int productTagId,
+            string name, int productCount)
+        {
+            DBProductTag item = null;
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTagUpdate");
+            db.AddInParameter(dbCommand, "ProductTagID", DbType.Int32, productTagId);
+            db.AddInParameter(dbCommand, "Name", DbType.String, name);
+            db.AddInParameter(dbCommand, "ProductCount", DbType.Int32, productCount);
+            if (db.ExecuteNonQuery(dbCommand) > 0)
+                item = GetProductTagById(productTagId);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Adds a discount tag mapping
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
+        public override void AddProductTagMapping(int productId, int productTagId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTag_Product_MappingInsert");
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "ProductTagID", DbType.Int32, productTagId);
+            db.ExecuteNonQuery(dbCommand);
+        }
+
+        /// <summary>
+        /// Removes a discount tag mapping
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
+        public override void RemoveProductTagMapping(int productId, int productTagId)
+        {
+            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
+            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTag_Product_MappingDelete");
+            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
+            db.AddInParameter(dbCommand, "ProductTagID", DbType.Int32, productTagId);
+            db.ExecuteNonQuery(dbCommand);
+        }
+
 
         #endregion
     }

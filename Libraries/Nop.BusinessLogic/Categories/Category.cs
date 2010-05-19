@@ -197,7 +197,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             {
                 int totalFeaturedRecords = 0;
                 ProductCollection featuredProducts = ProductManager.GetAllProducts(this.CategoryId,
-                    0, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
+                    0, 0, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
                 return featuredProducts;
             }
         }

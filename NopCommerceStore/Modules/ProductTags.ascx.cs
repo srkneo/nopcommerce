@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Text;
@@ -23,16 +24,14 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-using AjaxControlToolkit;
 using NopSolutions.NopCommerce.BusinessLogic;
-using NopSolutions.NopCommerce.BusinessLogic.Localization;
-using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.Web.Modules;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
+using NopSolutions.NopCommerce.Common.Utils;
 
-namespace NopSolutions.NopCommerce.Web.Templates.Products
+namespace NopSolutions.NopCommerce.Web.Modules
 {
-    public partial class VariantsInGrid : BaseNopUserControl
+    public partial class ProductTagsControl : BaseNopUserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,29 +43,14 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
 
         protected void BindData()
         {
-            Product product = ProductManager.GetProductById(this.ProductId);
-            if (product != null)
+            var productTags = ProductManager.GetAllProductTags(this.ProductId, string.Empty);
+            if (productTags.Count > 0)
             {
-                ctrlProductRating.Visible = product.AllowCustomerRatings;
+                rptrProductTags.DataSource = productTags;
+                rptrProductTags.DataBind();
             }
-        }
-
-        protected void Page_PreRender(object sender, EventArgs e)
-        {
-            pnlProductReviews.Visible = ctrlProductReviews.Visible;
-            pnlProductSpecs.Visible = ctrlProductSpecs.Visible;
-            pnlProductTags.Visible = ctrlProductTags.Visible;
-            ProductsTabs.Visible = pnlProductReviews.Visible ||
-                pnlProductSpecs.Visible ||
-                pnlProductTags.Visible;
-
-            //little hack here
-            if (pnlProductTags.Visible)
-                ProductsTabs.ActiveTab = pnlProductTags;
-            if (pnlProductSpecs.Visible)
-                ProductsTabs.ActiveTab = pnlProductSpecs;
-            if (pnlProductReviews.Visible)
-                ProductsTabs.ActiveTab = pnlProductReviews;
+            else
+                this.Visible = false;
         }
 
         public int ProductId

@@ -399,6 +399,20 @@
     <Compile Include="Administration\BulkEditProducts.aspx.designer.cs">
       <DependentUpon>BulkEditProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\ProductTags.aspx.cs">
+      <DependentUpon>ProductTags.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\ProductTags.aspx.designer.cs">
+      <DependentUpon>ProductTags.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\Modules\ProductTags.ascx.cs">
+      <DependentUpon>ProductTags.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\ProductTags.ascx.designer.cs">
+      <DependentUpon>ProductTags.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Modules\CustomerAvatar.ascx.cs">
       <DependentUpon>CustomerAvatar.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3715,6 +3729,34 @@
     <Compile Include="ConditionsInfoPopup.aspx.designer.cs">
       <DependentUpon>ConditionsInfoPopup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\PopularTags.ascx.cs">
+      <DependentUpon>PopularTags.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\PopularTags.ascx.designer.cs">
+      <DependentUpon>PopularTags.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductTag.aspx.cs">
+      <DependentUpon>ProductTag.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductTag.aspx.designer.cs">
+      <DependentUpon>ProductTag.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ProductsByTag.ascx.cs">
+      <DependentUpon>ProductsByTag.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\ProductsByTag.ascx.designer.cs">
+      <DependentUpon>ProductsByTag.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ProductTags.ascx.cs">
+      <DependentUpon>ProductTags.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\ProductTags.ascx.designer.cs">
+      <DependentUpon>ProductTags.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\NewsArchive.ascx.cs">
       <DependentUpon>NewsArchive.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5908,6 +5950,8 @@
     <Content Include="Administration\CheckoutAttributeAdd.aspx" />
     <Content Include="Administration\CheckoutAttributeDetails.aspx" />
     <Content Include="Administration\BulkEditProducts.aspx" />
+    <Content Include="Administration\ProductTags.aspx" />
+    <Content Include="Administration\Modules\ProductTags.ascx" />
     <Content Include="Administration\Modules\CustomerAvatar.ascx" />
     <Content Include="Administration\Modules\PictureBrowser.ascx" />
     <Content Include="Administration\PictureBrowser.aspx" />
@@ -6329,6 +6373,10 @@
     <Content Include="ChronoPayIPNHandler.aspx" />
     <Content Include="AssistHostedPaymentReturn.aspx" />
     <Content Include="ConditionsInfoPopup.aspx" />
+    <Content Include="Modules\PopularTags.ascx" />
+    <Content Include="ProductTag.aspx" />
+    <Content Include="Modules\ProductsByTag.ascx" />
+    <Content Include="Modules\ProductTags.ascx" />
     <Content Include="Modules\NewsArchive.ascx" />
     <Content Include="NewsArchive.aspx" />
     <Content Include="editors\HTMLEditor\HTMLEditor.customButtons\ed_date_a.gif" />

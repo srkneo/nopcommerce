@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.ProductSpecifications" CodeBehind="ProductSpecifications.ascx.cs" %>
-<div class="productSpecBox">
+<div class="productspec-box">
     <table width="100%">
         <tbody>
             <asp:Repeater ID="rptrProductSpecification" runat="server">

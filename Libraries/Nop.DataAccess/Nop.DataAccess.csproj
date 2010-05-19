@@ -144,6 +144,8 @@
     <Compile Include="Products\Attributes\DBProductAttributeLocalized.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeCombination.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeCombinationCollection.cs" />
+    <Compile Include="Products\DBProductTag.cs" />
+    <Compile Include="Products\DBProductTagCollection.cs" />
     <Compile Include="Products\DBCustomerRoleProductPriceCollection.cs" />
     <Compile Include="Products\DBCustomerRoleProductPrice.cs" />
     <Compile Include="Products\DBProductVariantLocalized.cs" />

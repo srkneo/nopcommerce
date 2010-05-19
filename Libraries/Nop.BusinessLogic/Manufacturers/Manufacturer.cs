@@ -162,7 +162,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             {
                 int totalFeaturedRecords = 0;
                 ProductCollection featuredProducts = ProductManager.GetAllProducts(0,
-                    this.ManufacturerId, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
+                    this.ManufacturerId, 0, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
                 return featuredProducts;
             }
         }

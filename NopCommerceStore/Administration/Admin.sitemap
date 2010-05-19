@@ -13,6 +13,7 @@
         <siteMapNode title="Manage Products" url="~/administration/products.aspx" description="Manage Products" nopResourceTitle="Admin.Sitemap.ProductsTitle" nopResourceDescription="Admin.Sitemap.ProductsDescription" />
         <siteMapNode title="Bulk Edit Products" url="~/administration/bulkeditproducts.aspx" description="Bulk Edit Products" nopResourceTitle="Admin.Sitemap.BulkEditProductsTitle" nopResourceDescription="Admin.Sitemap.BulkEditProductsDescription" />
         <siteMapNode title="Manage Reviews" url="~/administration/productreviews.aspx" description="Manage Product Reviews" nopResourceTitle="Admin.Sitemap.ProductReviewsTitle" nopResourceDescription="Admin.Sitemap.ProductReviewsDescription" />
+        <siteMapNode title="Product Tags" url="~/administration/producttags.aspx" description="Manage Product Tags" nopResourceTitle="Admin.Sitemap.ProductTagsTitle" nopResourceDescription="Admin.Sitemap.ProductTagsDescription" />
         <siteMapNode title="Low Stock Report" url="~/administration/productvariantslowstock.aspx" description="View Low Product Stock Report" nopResourceTitle="Admin.Sitemap.LowStockReportTitle" nopResourceDescription="Admin.Sitemap.LowStockReportDescription" />
       </siteMapNode>
 

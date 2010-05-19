@@ -186,17 +186,18 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
         {
             pnlProductReviews.Visible = ctrlProductReviews.Visible;
             pnlProductSpecs.Visible = ctrlProductSpecs.Visible;
-            ProductsTabs.Visible = pnlProductReviews.Visible || pnlProductSpecs.Visible;
+            pnlProductTags.Visible = ctrlProductTags.Visible;
+            ProductsTabs.Visible = pnlProductReviews.Visible ||
+                pnlProductSpecs.Visible ||
+                pnlProductTags.Visible;
 
             //little hack here
-            if(pnlProductSpecs.Visible)
-            {
+            if (pnlProductTags.Visible)
+                ProductsTabs.ActiveTab = pnlProductTags;
+            if (pnlProductSpecs.Visible)
                 ProductsTabs.ActiveTab = pnlProductSpecs;
-            }
-            if(pnlProductReviews.Visible)
-            {
+            if (pnlProductReviews.Visible)
                 ProductsTabs.ActiveTab = pnlProductReviews;
-            }
 
             BindJQuery();
 

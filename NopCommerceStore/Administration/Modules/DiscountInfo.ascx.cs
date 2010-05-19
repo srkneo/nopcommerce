@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        private string generateListOfRestrictedProductVariants(ProductVariantCollection productVariants)
+        private string GenerateListOfRestrictedProductVariants(ProductVariantCollection productVariants)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < productVariants.Count; i++)
@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             return result.ToString();
         }
 
-        private int[] parseListOfRestrictedProductVariants(string productVariants)
+        private int[] ParseListOfRestrictedProductVariants(string productVariants)
         {
             List<int> result = new List<int>();
             string[] values = productVariants.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 CommonHelper.SelectListItem(this.ddlDiscountType, discount.DiscountTypeId);
                 CommonHelper.SelectListItem(this.ddlDiscountRequirement, discount.DiscountRequirementId);
-                this.txtRestrictedProductVariants.Text = generateListOfRestrictedProductVariants(ProductManager.GetProductVariantsRestrictedByDiscountId(discount.DiscountId));
+                this.txtRestrictedProductVariants.Text = GenerateListOfRestrictedProductVariants(ProductManager.GetProductVariantsRestrictedByDiscountId(discount.DiscountId));
                 CommonHelper.SelectListItem(this.ddlDiscountLimitation, discount.DiscountLimitationId);
                 this.txtName.Text = discount.Name;
                 this.cbUsePercentage.Checked = discount.UsePercentage;
@@ -161,7 +161,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             DiscountRequirementEnum discountRequirement = (DiscountRequirementEnum)int.Parse(this.ddlDiscountRequirement.SelectedItem.Value);
             int[] restrictedProductVariantIds = new int[0];
             if (discountRequirement == DiscountRequirementEnum.HadPurchasedAllOfTheseProductVariants || discountRequirement == DiscountRequirementEnum.HadPurchasedOneOfTheseProductVariants)
-                restrictedProductVariantIds = parseListOfRestrictedProductVariants(txtRestrictedProductVariants.Text);
+                restrictedProductVariantIds = ParseListOfRestrictedProductVariants(txtRestrictedProductVariants.Text);
             DiscountLimitationEnum discountLimitation = (DiscountLimitationEnum)int.Parse(this.ddlDiscountLimitation.SelectedItem.Value);
 
             if(!ctrlStartDatePicker.SelectedDate.HasValue)

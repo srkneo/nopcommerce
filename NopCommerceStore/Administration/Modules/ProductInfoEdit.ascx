@@ -173,4 +173,13 @@
             <asp:CheckBox ID="cbAllowCustomerRatings" runat="server"></asp:CheckBox>
         </td>
     </tr>
+    <tr>
+        <td class="adminTitle">
+            <nopCommerce:ToolTipLabel runat="server" ID="lblProductTags" Text="<% $NopResources:Admin.ProductInfo.ProductTags %>"
+                ToolTip="<% $NopResources:Admin.ProductInfo.ProductTags.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+        </td>
+        <td class="adminData">
+            <asp:TextBox ID="txtProductTags" runat="server" CssClass="adminInput"></asp:TextBox>
+        </td>
+    </tr>
 </table>

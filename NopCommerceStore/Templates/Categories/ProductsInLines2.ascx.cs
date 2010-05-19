@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 pageSize = category.PageSize;
             }
             var productCollection = ProductManager.GetAllProducts(this.CategoryId,
-                0, null, pageSize, this.CurrentPageIndex, out totalRecords);
+                0, 0, null, pageSize, this.CurrentPageIndex, out totalRecords);
             if (productCollection.Count > 0)
             {
                 this.catalogPager.PageSize = pageSize;

@@ -48,6 +48,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
         /// <param name="featuredProducts">A value indicating whether loaded products are marked as featured (relates only to categories and manufacturers). 0 to load featured products only, 1 to load not featured products only, null to load all products</param>
         /// <param name="priceMin">Minimum price</param>
         /// <param name="priceMax">Maximum price</param>
@@ -61,7 +62,8 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public abstract DBProductCollection GetAllProducts(int categoryId, int manufacturerId,
+        public abstract DBProductCollection GetAllProducts(int categoryId,
+            int manufacturerId, int productTagId, 
             bool? featuredProducts, decimal? priceMin, decimal? priceMax, 
             string keywords, bool searchDescriptions,
             int pageSize, int pageIndex, List<int> filteredSpecs, 
@@ -883,6 +885,60 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <returns>A product price by customer role</returns>
         public abstract DBCustomerRoleProductPrice UpdateCustomerRoleProductPrice(int customerRoleProductPriceId,
             int customerRoleId, int productVariantId, decimal price);
+
+        /// <summary>
+        /// Deletes a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        public abstract void DeleteProductTag(int productTagId);
+
+        /// <summary>
+        /// Gets all product tags
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="name">Product tag name or empty string to load all records</param>
+        /// <returns>Product tag collection</returns>
+        public abstract DBProductTagCollection GetAllProductTags(int productId, 
+            string name);
+
+        /// <summary>
+        /// Gets a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        /// <returns>Product tag</returns>
+        public abstract DBProductTag GetProductTagById(int productTagId);
+
+        /// <summary>
+        /// Inserts a product tag
+        /// </summary>
+        /// <param name="name">Product tag name</param>
+        /// <param name="productCount">Product count</param>
+        /// <returns>Product tag</returns>
+        public abstract DBProductTag InsertProductTag(string name, int productCount);
+
+        /// <summary>
+        /// Updates a product tag
+        /// </summary>
+        /// <param name="productTagId">Product tag identifier</param>
+        /// <param name="name">Product tag name</param>
+        /// <param name="productCount">Product count</param>
+        /// <returns>Product tag</returns>
+        public abstract DBProductTag UpdateProductTag(int productTagId,
+            string name, int productCount);
+
+        /// <summary>
+        /// Adds a discount tag mapping
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
+        public abstract void AddProductTagMapping(int productId, int productTagId);
+
+        /// <summary>
+        /// Removes a discount tag mapping
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="productTagId">Product tag identifier</param>
+        public abstract void RemoveProductTagMapping(int productId, int productTagId);
 
         #endregion
     }

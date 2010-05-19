@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="nopCommerce" TagName="InfoBlock" Src="~/Modules/InfoBlock.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="LiveChatBlock" Src="~/Modules/LiveChatBlock.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="RecentlyViewedProducts" Src="~/Modules/RecentlyViewedProductsBox.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="PopularTags" Src="~/Modules/PopularTags.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="NewsLetterSubscriptionBoxControl" Src="~/Modules/NewsLetterSubscriptionBoxControl.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cph1" runat="server">
@@ -20,6 +21,9 @@
             <div class="clear">
             </div>
             <nopCommerce:ManufacturerNavigation ID="ctrlManufacturerNavigation" runat="server" />
+            <div class="clear">
+            </div>
+            <nopCommerce:PopularTags ID="ctrlPopularTags" runat="server" />
             <div class="clear">
             </div>
             <nopCommerce:NewsLetterSubscriptionBoxControl runat="server" />

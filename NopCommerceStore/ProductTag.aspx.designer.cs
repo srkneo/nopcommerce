@@ -8,18 +8,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NopSolutions.NopCommerce.Web.Modules {
+namespace NopSolutions.NopCommerce.Web {
     
     
-    public partial class ProductSpecifications {
+    public partial class ProductTagPage {
         
         /// <summary>
-        /// rptrProductSpecification control.
+        /// ctrlProductsByTag control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptrProductSpecification;
+        protected global::NopSolutions.NopCommerce.Web.Modules.ProductsByTagControl ctrlProductsByTag;
     }
 }
