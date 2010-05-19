@@ -161,6 +161,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             else
             {
                 this.dlProducts.Visible = false;
+                this.pnlSorting.Visible = false;
             }
         }
 

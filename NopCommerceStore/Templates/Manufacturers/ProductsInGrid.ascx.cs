@@ -143,6 +143,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
             else
             {
                 this.dlProducts.Visible = false;
+                this.pnlSorting.Visible = false;
             }
         }
 

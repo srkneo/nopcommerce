@@ -162,6 +162,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             else
             {
                 this.lvCatalog.Visible = false;
+                this.pnlSorting.Visible = false;
             }
         }
 
