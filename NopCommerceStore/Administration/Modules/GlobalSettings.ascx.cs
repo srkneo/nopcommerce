@@ -445,7 +445,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     MailAddress from = new MailAddress(MessageManager.AdminEmailAddress, MessageManager.AdminEmailDisplayName);
                     MailAddress to = new MailAddress(txtSendEmailTo.Text);
-                    MessageManager.SendEmail("Test message", "Test message", from, to);
+                    string subject = SettingManager.StoreName + ". Testing email functionaly.";
+                    string body = "Email works fine.";
+                    MessageManager.SendEmail(subject, body, from, to);
                     lblSendTestEmailResult.Text = GetLocaleResourceString("Admin.GlobalSettings.MailSettings.SendTestEmailSuccess");
                 }
                 catch (Exception exc)
