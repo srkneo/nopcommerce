@@ -1661,6 +1661,9 @@ set @resources='
   <LocaleResource Name="PrivateMessages.YouHaveUnreadPM">
     <Value>You have {0} unread message(s) in your Inbox</Value>
   </LocaleResource>
+  <LocaleResource Name="PaymentMethod.Alipay.HostedPayment.Message">
+    <Value>You will be redirected to Alipay site.</Value>
+  </LocaleResource>
 </Language>
 '
 

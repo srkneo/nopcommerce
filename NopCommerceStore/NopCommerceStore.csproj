@@ -399,6 +399,13 @@
     <Compile Include="Administration\BulkEditProducts.aspx.designer.cs">
       <DependentUpon>BulkEditProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Payment\Alipay\HostedPaymentConfig.ascx.cs">
+      <DependentUpon>HostedPaymentConfig.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Payment\Alipay\HostedPaymentConfig.ascx.designer.cs">
+      <DependentUpon>HostedPaymentConfig.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\ProductTags.aspx.cs">
       <DependentUpon>ProductTags.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3729,6 +3736,20 @@
     <Compile Include="ConditionsInfoPopup.aspx.designer.cs">
       <DependentUpon>ConditionsInfoPopup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Alipay_Notify.aspx.cs">
+      <DependentUpon>Alipay_Notify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alipay_Notify.aspx.designer.cs">
+      <DependentUpon>Alipay_Notify.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Alipay_Return.aspx.cs">
+      <DependentUpon>Alipay_Return.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alipay_Return.aspx.designer.cs">
+      <DependentUpon>Alipay_Return.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\PopularTags.ascx.cs">
       <DependentUpon>PopularTags.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3909,6 +3930,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Templates\Payment\ChronoPay\HostedPayment.ascx.designer.cs">
+      <DependentUpon>HostedPayment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\Payment\Alipay\HostedPayment.ascx.cs">
+      <DependentUpon>HostedPayment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Templates\Payment\Alipay\HostedPayment.ascx.designer.cs">
       <DependentUpon>HostedPayment.ascx</DependentUpon>
     </Compile>
     <Compile Include="Templates\Payment\QuickPay\PaymentModule.ascx.cs">
@@ -5348,6 +5376,10 @@
       <Project>{44697772-09C1-4B28-B3F5-C28B693B06F7}</Project>
       <Name>UrlRewritingNet.UrlRewriter</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Payment\Nop.Payment.Alipay\Nop.Payment.Alipay.csproj">
+      <Project>{7116F638-B9B6-454D-A12D-A81118023DFB}</Project>
+      <Name>Nop.Payment.Alipay</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Payment\Nop.Payment.Amazon\Nop.Payment.Amazon.csproj">
       <Project>{A6680F19-D6F7-4DDC-9C8A-F9700872196B}</Project>
       <Name>Nop.Payment.Amazon</Name>
@@ -5950,6 +5982,7 @@
     <Content Include="Administration\CheckoutAttributeAdd.aspx" />
     <Content Include="Administration\CheckoutAttributeDetails.aspx" />
     <Content Include="Administration\BulkEditProducts.aspx" />
+    <Content Include="Administration\Payment\Alipay\HostedPaymentConfig.ascx" />
     <Content Include="Administration\ProductTags.aspx" />
     <Content Include="Administration\Modules\ProductTags.ascx" />
     <Content Include="Administration\Modules\CustomerAvatar.ascx" />
@@ -6373,6 +6406,8 @@
     <Content Include="ChronoPayIPNHandler.aspx" />
     <Content Include="AssistHostedPaymentReturn.aspx" />
     <Content Include="ConditionsInfoPopup.aspx" />
+    <Content Include="Alipay_Notify.aspx" />
+    <Content Include="Alipay_Return.aspx" />
     <Content Include="Modules\PopularTags.ascx" />
     <Content Include="ProductTag.aspx" />
     <Content Include="Modules\ProductsByTag.ascx" />
@@ -6686,6 +6721,7 @@
     <Content Include="Templates\Payment\Assist\HostedPayment.ascx" />
     <Content Include="Templates\Payment\Beanstream\HostedPayment.ascx" />
     <Content Include="Templates\Payment\ChronoPay\HostedPayment.ascx" />
+    <Content Include="Templates\Payment\Alipay\HostedPayment.ascx" />
     <Content Include="Templates\Payment\QuickPay\PaymentModule.ascx" />
     <Content Include="Templates\Payment\SagePay\PaymentModule.ascx" />
     <Content Include="Templates\Payment\Sermepa\PaymentModule.ascx" />
