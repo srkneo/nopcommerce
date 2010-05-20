@@ -27,7 +27,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Maintenance.RestoreColumn %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <asp:Button ID="RestoreButton" runat="server" CssClass="adminButton" CommandName="Restore"
+                <asp:Button ID="RestoreButton" runat="server" CssClass="adminButton" CommandName="RestoreBackup"
                     Text="<% $NopResources:Admin.Maintenance.RestoreButton.Text %>" CommandArgument='<%#Eval("FullFileName")%>'
                     OnCommand="RestoreButton_OnCommand" CausesValidation="false" ToolTip="<% $NopResources:Admin.Maintenance.RestoreButton.Tooltip %>" />
             </ItemTemplate>
@@ -36,7 +36,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Maintenance.DeleteColumn %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <asp:Button ID="DeleteButton" runat="server" CssClass="adminButton" CommandName="Delete"
+                <asp:Button ID="DeleteButton" runat="server" CssClass="adminButton" CommandName="DeleteBackup"
                     Text="<% $NopResources:Admin.Maintenance.DeleteButton.Text %>" CommandArgument='<%#Eval("FullFileName")%>'
                     OnCommand="DeleteButton_OnCommand" CausesValidation="false" ToolTip="<% $NopResources:Admin.Maintenance.DeleteButton.Tooltip %>" />
             </ItemTemplate>

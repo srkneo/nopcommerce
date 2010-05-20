@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void RestoreButton_OnCommand(object sender, CommandEventArgs e)
         {
-            if (e.CommandName == "Restore")
+            if (e.CommandName == "RestoreBackup")
             {
                 try
                 {
@@ -99,7 +99,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         }
         protected void DeleteButton_OnCommand(object sender, CommandEventArgs e)
         {
-            if (e.CommandName == "Delete")
+            if (e.CommandName == "DeleteBackup")
             {
                 try
                 {
