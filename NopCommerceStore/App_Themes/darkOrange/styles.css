@@ -3523,6 +3523,12 @@ ul.languagelist li .selected
 	margin-bottom: 0.3em;
 }
 
+.product-share-button
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 .product-rating-box
 {
 	margin-top: 20px;

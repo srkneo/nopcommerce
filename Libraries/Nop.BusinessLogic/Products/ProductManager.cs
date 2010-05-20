@@ -3412,6 +3412,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to displays a button from AddThis.com on your product pages
+        /// </summary>
+        public static bool ShowShareButton
+        {
+            get
+            {
+                bool showShareButton = SettingManager.GetSettingValueBoolean("Products.AddThisSharing.Enabled");
+                return showShareButton;
+            }
+            set
+            {
+                SettingManager.SetParam("Products.AddThisSharing.Enabled", value.ToString());
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether "Compare products" feature is enabled
         /// </summary>
         public static bool CompareProductsEnabled

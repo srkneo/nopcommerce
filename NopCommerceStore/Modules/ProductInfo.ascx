@@ -1,5 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Modules.ProductInfoControl"
     CodeBehind="ProductInfo.ascx.cs" %>
+<%@ Register TagPrefix="nopCommerce" TagName="ProductShareButton" Src="~/Modules/ProductShareButton.ascx" %>
 
 <script language="javascript" type="text/javascript">
     function UpdateMainImage(url) {
@@ -39,6 +40,9 @@
                 </td>
             </ItemTemplate>
         </asp:ListView>
+        <div class="clear">
+        </div>
+        <nopCommerce:ProductShareButton ID="ctrlProductShareButton" runat="server" />
     </div>
     <div class="fulldescription">
         <asp:Literal ID="lFullDescription" runat="server" />

@@ -3750,6 +3750,13 @@
     <Compile Include="Alipay_Return.aspx.designer.cs">
       <DependentUpon>Alipay_Return.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ProductShareButton.ascx.cs">
+      <DependentUpon>ProductShareButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modules\ProductShareButton.ascx.designer.cs">
+      <DependentUpon>ProductShareButton.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Modules\PopularTags.ascx.cs">
       <DependentUpon>PopularTags.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6408,6 +6415,7 @@
     <Content Include="ConditionsInfoPopup.aspx" />
     <Content Include="Alipay_Notify.aspx" />
     <Content Include="Alipay_Return.aspx" />
+    <Content Include="Modules\ProductShareButton.ascx" />
     <Content Include="Modules\PopularTags.ascx" />
     <Content Include="ProductTag.aspx" />
     <Content Include="Modules\ProductsByTag.ascx" />

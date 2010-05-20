@@ -1664,6 +1664,12 @@ set @resources='
   <LocaleResource Name="PaymentMethod.Alipay.HostedPayment.Message">
     <Value>You will be redirected to Alipay site.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.ShowShareButton">
+    <Value>Show a share button</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.Other.ShowShareButton.Tooltip">
+    <Value>Displays a button from AddThis.com on your product pages that allows customers to share your product with various bookmarking social services</Value>
+  </LocaleResource>
 </Language>
 '
 

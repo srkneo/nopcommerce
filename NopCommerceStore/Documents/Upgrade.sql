@@ -9035,3 +9035,28 @@ BEGIN
 	VALUES (N'Alipay (beta)', N'Alipay', N'', N'Payment\Alipay\HostedPaymentConfig.ascx', N'~\Templates\Payment\Alipay\HostedPayment.ascx', N'NopSolutions.NopCommerce.Payment.Methods.Alipay.AlipayPaymentProcessor, Nop.Payment.Alipay', N'ALIPAY', 0, 280)
 END
 GO
+
+--social bookmarking
+
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Products.AddThisSharing.Enabled')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'Products.AddThisSharing.Enabled', N'true', N'')
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Products.AddThisSharing.Code')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'Products.AddThisSharing.Code', N'<!-- AddThis Button BEGIN -->
+<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;username=nopsolutions"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=nopsolutions"></script>
+<!-- AddThis Button END -->', N'')
+END
+GO

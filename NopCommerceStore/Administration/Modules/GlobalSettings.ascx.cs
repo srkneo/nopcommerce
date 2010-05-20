@@ -137,6 +137,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             cbHidePricesForNonRegistered.Checked = SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered");
             cbEnableDynamicPriceUpdate.Checked = SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate");
             cbAllowProductSorting.Checked = SettingManager.GetSettingValueBoolean("Common.AllowProductSorting");
+            cbShowShareButton.Checked = ProductManager.ShowShareButton;
             cbUseImagesForLanguageSelection.Checked = SettingManager.GetSettingValueBoolean("Common.UseImagesForLanguageSelection", false);
             cbEnableCompareProducts.Checked = ProductManager.CompareProductsEnabled;
             cbEnableWishlist.Checked = SettingManager.GetSettingValueBoolean("Common.EnableWishlist");
@@ -355,8 +356,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParam("Common.HidePricesForNonRegistered", cbHidePricesForNonRegistered.Checked.ToString());
                     SettingManager.SetParam("ProductAttribute.EnableDynamicPriceUpdate", cbEnableDynamicPriceUpdate.Checked.ToString());
                     SettingManager.SetParam("Common.AllowProductSorting", cbAllowProductSorting.Checked.ToString());
-                    ProductManager.CompareProductsEnabled = cbEnableCompareProducts.Checked;
+                    ProductManager.ShowShareButton = cbShowShareButton.Checked;
                     SettingManager.SetParam("Common.UseImagesForLanguageSelection", cbUseImagesForLanguageSelection.Checked.ToString());
+                    ProductManager.CompareProductsEnabled = cbEnableCompareProducts.Checked;
                     SettingManager.SetParam("Common.EnableWishlist", cbEnableWishlist.Checked.ToString());
                     OrderManager.IsReOrderAllowed = cbIsReOrderAllowed.Checked;
                     SettingManager.SetParam("Common.EnableEmailAFirend", cbEnableEmailAFriend.Checked.ToString());

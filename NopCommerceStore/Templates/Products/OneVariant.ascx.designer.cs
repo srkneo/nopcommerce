@@ -176,6 +176,15 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products {
         protected global::NopSolutions.NopCommerce.Web.Modules.ProductAddToCompareList ctrlProductAddToCompareList;
         
         /// <summary>
+        /// ctrlProductShareButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NopSolutions.NopCommerce.Web.Modules.ProductShareButtonControl ctrlProductShareButton;
+        
+        /// <summary>
         /// lblError control.
         /// </summary>
         /// <remarks>
