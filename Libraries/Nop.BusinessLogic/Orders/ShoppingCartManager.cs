@@ -495,10 +495,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal subTotalWithDiscount = decimal.Zero;
             if (includingTax)
             {
+                if (subTotalInclTaxWithoutDiscount < discountAmount)
+                    discountAmount = subTotalInclTaxWithoutDiscount;
+
                 subTotalWithDiscount = subTotalInclTaxWithoutDiscount - discountAmount;
             }
             else
             {
+                if (subTotalExclTaxWithoutDiscount < discountAmount)
+                    discountAmount = subTotalExclTaxWithoutDiscount;
+
                 subTotalWithDiscount = subTotalExclTaxWithoutDiscount - discountAmount;
             }
 
