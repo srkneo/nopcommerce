@@ -24,9 +24,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
     public enum DiscountTypeEnum : int
     {
         /// <summary>
-        /// Assigned to whole order
+        /// Assigned to order subtotal 
         /// </summary>
-        AssignedToWholeOrder = 1,
+        AssignedToOrderSubTotal = 1,
         /// <summary>
         /// Assigned to product variants (SKUs)
         /// </summary>

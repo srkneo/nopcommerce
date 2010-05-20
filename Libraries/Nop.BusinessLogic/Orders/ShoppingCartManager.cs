@@ -561,12 +561,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (customer != null)
                 customerCouponCode = customer.LastAppliedCouponCode;
 
-            var allDiscounts = DiscountManager.GetAllDiscounts(DiscountTypeEnum.AssignedToWholeOrder);
+            var allDiscounts = DiscountManager.GetAllDiscounts(DiscountTypeEnum.AssignedToOrderSubTotal);
             var allowedDiscounts = new DiscountCollection();
             foreach (var _discount in allDiscounts)
             {
                 if (_discount.IsActive(customerCouponCode) &&
-                    _discount.DiscountType == DiscountTypeEnum.AssignedToWholeOrder &&
+                    _discount.DiscountType == DiscountTypeEnum.AssignedToOrderSubTotal &&
                     !allowedDiscounts.ContainsDiscount(_discount.Name))
                 {
                     //discount requirements
