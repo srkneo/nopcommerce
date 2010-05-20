@@ -83,5 +83,13 @@ namespace NopSolutions.NopCommerce.Web
             Response.Flush();
             Response.End();
         }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

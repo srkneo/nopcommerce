@@ -159,7 +159,6 @@ namespace NopSolutions.NopCommerce.Web
             return true;
         }
 
-
         /// <summary>
         /// Parse the XML Returned and save all the values to be displayed to user
         /// </summary>
@@ -232,8 +231,7 @@ namespace NopSolutions.NopCommerce.Web
                 }
             }
         }
-
-
+        
         /// <summary>
         /// Format the string needed to post to the Generate page
         /// </summary>
@@ -246,6 +244,14 @@ namespace NopSolutions.NopCommerce.Web
                 return "&" + fieldName + "=" + value;
             else
                 return "";
+        }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
         }
     }
 }

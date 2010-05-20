@@ -113,6 +113,8 @@ namespace NopSolutions.NopCommerce.Web
                                                         qpstatmsg, chstat, chstatmsg, merchant, merchantemail, transaction,
                                                         cardtype, cardnumber, md5secret)
                                                         );
+                if (String.IsNullOrEmpty(serverMD5check))
+                    throw new Exception("serverMD5check could not be empty");
 
                 if (responseMD5check != serverMD5check)
                     throw new NopException("MD5 Check doesn't match. This may just be an error in the setting or it COULD be a hacker trying to fake a completed order");
@@ -147,6 +149,14 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     OrderManager.MarkOrderAsPaid(order.OrderId);
                 }
+            }
+        }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
             }
         }
     }

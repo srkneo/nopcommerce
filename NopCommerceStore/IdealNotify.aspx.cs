@@ -17,7 +17,6 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class IdealNotify : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             //comment this line to process return
@@ -61,6 +60,13 @@ namespace NopSolutions.NopCommerce.Web
                 LogManager.InsertLog(LogTypeEnum.OrderError, "iDeal payment error" + exc.Message, exc);
             }
         }
-        #endregion
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

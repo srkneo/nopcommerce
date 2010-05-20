@@ -19,7 +19,6 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class Alipay_ReturnPage : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             CommonHelper.SetResponseNoCache(Response);
@@ -27,6 +26,13 @@ namespace NopSolutions.NopCommerce.Web
             //we use Alipay_Notify.aspx
             Response.Redirect(CommonHelper.GetStoreLocation());
         }
-        #endregion    
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        } 
     }
 }

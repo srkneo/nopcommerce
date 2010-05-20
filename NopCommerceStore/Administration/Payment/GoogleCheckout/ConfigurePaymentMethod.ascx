@@ -10,7 +10,7 @@
                 <li><b>Discounts are not supported for Google Checkout now (beta-version).</b> </li>
                 <li><b>Checkout attributes are not supported for Google Checkout now (beta-version).</b> </li>
                 <li><b>Reward points are not supported for Google Checkout now (beta-version).</b> </li>
-                <li><b>Shipping rate computation method should NOT be set to reat time methods like
+                <li><b>Shipping rate computation method should NOT be set to real time methods like
                     USP, USPS.</b> </li>
             </ul>
             <br />

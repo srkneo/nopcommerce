@@ -45,5 +45,13 @@ namespace NopSolutions.NopCommerce.Web
             //use TwoCheckoutINSHandler.aspx
             Response.Redirect(CommonHelper.GetStoreLocation());
         }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

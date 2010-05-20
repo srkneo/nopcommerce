@@ -159,5 +159,13 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect("~/default.aspx");
             }
         }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

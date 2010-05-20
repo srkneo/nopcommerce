@@ -38,6 +38,13 @@ namespace NopSolutions.NopCommerce.Web
 
             Response.Redirect(CommonHelper.GetStoreLocation());
         }
-
+        
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

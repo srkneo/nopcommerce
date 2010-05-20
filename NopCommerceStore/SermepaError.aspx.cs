@@ -17,13 +17,19 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class SermepaErrorPage : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             CommonHelper.SetResponseNoCache(Response);
 
             Response.Redirect(CommonHelper.GetStoreLocation());
         }
-        #endregion
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

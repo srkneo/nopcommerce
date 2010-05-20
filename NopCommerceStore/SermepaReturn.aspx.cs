@@ -19,7 +19,6 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class SermepaReturnPage : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             CommonHelper.SetResponseNoCache(Response);
@@ -96,6 +95,13 @@ namespace NopSolutions.NopCommerce.Web
 
             }
         }
-        #endregion
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

@@ -14,7 +14,6 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class MonerisHostedPaymentReturn : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             //comment this line to process return
@@ -72,6 +71,13 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect("~/checkoutcompleted.aspx");
             }
         }
-        #endregion
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

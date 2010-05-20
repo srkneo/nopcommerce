@@ -17,7 +17,6 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class QuickPayCancelPage : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             CommonHelper.SetResponseNoCache(Response);
@@ -28,6 +27,13 @@ namespace NopSolutions.NopCommerce.Web
                CommonHelper.SetMetaHttpEquiv(this.Master.Page, "refresh", "5;URL=/default.aspx");
             }
         }
-        #endregion
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

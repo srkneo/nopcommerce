@@ -226,5 +226,13 @@ namespace NopSolutions.NopCommerce.Web
                 }
             }
         }
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

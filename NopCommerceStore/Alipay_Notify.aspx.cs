@@ -19,7 +19,6 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class Alipay_NotifyPage : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             CommonHelper.SetResponseNoCache(Response);
@@ -100,6 +99,13 @@ namespace NopSolutions.NopCommerce.Web
                 LogManager.InsertLog(LogTypeEnum.OrderError, logStr, logStr);
             }
         }
-        #endregion    
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        } 
     }
 }

@@ -9032,6 +9032,6 @@ IF NOT EXISTS (
 		WHERE [ClassName] = N'NopSolutions.NopCommerce.Payment.Methods.Alipay.AlipayPaymentProcessor, Nop.Payment.Alipay')
 BEGIN
 	INSERT [dbo].[Nop_PaymentMethod] ([Name], [VisibleName], [Description], [ConfigureTemplatePath], [UserTemplatePath], [ClassName], [SystemKeyword], [IsActive], [DisplayOrder]) 
-	VALUES (N'Alipay', N'Alipay', N'', N'Payment\Alipay\HostedPaymentConfig.ascx', N'~\Templates\Payment\Alipay\HostedPayment.ascx', N'NopSolutions.NopCommerce.Payment.Methods.Alipay.AlipayPaymentProcessor, Nop.Payment.Alipay', N'ALIPAY', 0, 280)
+	VALUES (N'Alipay (beta)', N'Alipay', N'', N'Payment\Alipay\HostedPaymentConfig.ascx', N'~\Templates\Payment\Alipay\HostedPayment.ascx', N'NopSolutions.NopCommerce.Payment.Methods.Alipay.AlipayPaymentProcessor, Nop.Payment.Alipay', N'ALIPAY', 0, 280)
 END
 GO

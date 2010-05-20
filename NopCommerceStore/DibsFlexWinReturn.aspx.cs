@@ -16,7 +16,6 @@ namespace NopSolutions.NopCommerce.Web
 {
     public partial class DibsFlexWinReturn : BaseNopPage
     {
-        #region Handlers
         protected void Page_Load(object sender, EventArgs e)
         {
             if(NopContext.Current.User == null)
@@ -58,6 +57,13 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect("~/checkoutcompleted.aspx");
             }
         }
-        #endregion
+
+        public override bool AllowGuestNavigation
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
