@@ -61,7 +61,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     string[] alreadyFilteredSpecsQueryStringParams = getAlreadyFilteredSpecsQueryStringParams();
                     foreach (string qsp in alreadyFilteredSpecsQueryStringParams)
                     {
-                        url = CommonHelper.RemoveQueryString(url, qsp);
+                        //little hack here because we get encoded query strong params from CommonHelper.GetThisPageUrl();
+                        string qsp2 = HttpUtility.UrlPathEncode(qsp);
+                        string qsp3 = HttpUtility.UrlEncodeUnicode(qsp);
+                        url = CommonHelper.RemoveQueryString(url, qsp2);
+                        url = CommonHelper.RemoveQueryString(url, qsp3);
                     }
                     url = excludeQueryStringParams(url);
                     hlRemoveFilter.NavigateUrl = url;
