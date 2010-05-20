@@ -86,8 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 languageId = NopContext.Current.WorkingLanguage.LanguageId;
             return GetProducts(languageId);
         }
-
-
+        
         protected ProductCollection GetProducts(int languageId)
         {
             string productName = txtProductName.Text;
