@@ -1050,6 +1050,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether customer is notified about new private messages
+        /// </summary>
+        public bool NotifiedAboutNewPrivateMessages
+        {
+            get
+            {
+                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                CustomerAttribute attr = customerAttributes.FindAttribute("NotifiedAboutNewPrivateMessages", this.CustomerId);
+                if (attr != null)
+                {
+                    bool _result = false;
+                    bool.TryParse(attr.Value, out _result);
+                    return _result;
+                }
+                else
+                    return false;
+            }
+            set
+            {
+                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                CustomerAttribute attr = customerAttributes.FindAttribute("NotifiedAboutNewPrivateMessages", this.CustomerId);
+                if (attr != null)
+                    attr = CustomerManager.UpdateCustomerAttribute(attr.CustomerAttributeId, attr.CustomerId, "NotifiedAboutNewPrivateMessages", value.ToString());
+                else
+                    attr = CustomerManager.InsertCustomerAttribute(this.CustomerId, "NotifiedAboutNewPrivateMessages", value.ToString());
+
+                ResetCachedValues();
+            }
+        }
+
         #endregion
     }
 }

@@ -1658,6 +1658,9 @@ set @resources='
   <LocaleResource Name="ProductTagsCloud.Title">
     <Value>Popular tags</Value>
   </LocaleResource>
+  <LocaleResource Name="PrivateMessages.YouHaveUnreadPM">
+    <Value>You have {0} unread message(s) in your Inbox</Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -1713,4 +1716,5 @@ DEALLOCATE cur_localeresource
 
 DROP TABLE #LocaleStringResourceTmp
 GO
+
 

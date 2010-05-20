@@ -24,8 +24,9 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-using NopSolutions.NopCommerce.BusinessLogic.Content.Forums;
 using NopSolutions.NopCommerce.BusinessLogic;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Content.Forums;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -33,13 +34,23 @@ namespace NopSolutions.NopCommerce.Web.Modules
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            Literal lUnreadPrivateMessages = topLoginView.FindControl("lUnreadPrivateMessages") as Literal;
+            if (lUnreadPrivateMessages != null)
+            {
+                lUnreadPrivateMessages.Text = GetUnreadPrivateMessages();
+            }
+            base.OnPreRender(e);
         }
 
         protected string GetUnreadPrivateMessages()
         {
             string result = string.Empty;
-            if (NopContext.Current.User != null && !NopContext.Current.User.IsGuest)
+            if (ForumManager.AllowPrivateMessages &&
+                NopContext.Current.User != null && !NopContext.Current.User.IsGuest)
             {
                 int totalRecords = 0;
                 var privateMessages = ForumManager.GetAllPrivateMessages(0,
@@ -48,6 +59,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (totalRecords > 0)
                 {
                     result = string.Format(GetLocaleResourceString("PrivateMessages.TotalUnread"), totalRecords);
+
+                    //notifications here
+                    if (SettingManager.GetSettingValueBoolean("Common.ShowAlertForPM") &&
+                        !NopContext.Current.User.NotifiedAboutNewPrivateMessages)
+                    {
+                        this.DisplayAlertMessage(string.Format(GetLocaleResourceString("PrivateMessages.YouHaveUnreadPM", totalRecords)));
+                        NopContext.Current.User.NotifiedAboutNewPrivateMessages = true;
+                    }
                 }
             }
             return result;

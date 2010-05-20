@@ -1095,10 +1095,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                     text = text.Substring(0, ForumManager.PMTextMaxLength);
             }
 
+            Customer customerTo = CustomerManager.GetCustomerById(toUserId);
+            if (customerTo == null)
+                throw new NopException("Recipient could not be loaded");
+
             var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertPrivateMessage(fromUserId,
                 toUserId, subject, text, isRead, isDeletedByAuthor, isDeletedByRecipient, createdOn);
 
             var privateMessage = DBMapping(dbItem);
+            
+            //notofications
+            customerTo.NotifiedAboutNewPrivateMessages = false;
 
             return privateMessage;
         }

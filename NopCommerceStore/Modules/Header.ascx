@@ -28,7 +28,7 @@
                            { %>
                         <li><a href="<%=Page.ResolveUrl("~/privatemessages.aspx")%>" class="ico-inbox">
                             <%=GetLocaleResourceString("PrivateMessages.Inbox")%></a>
-                            <%=GetUnreadPrivateMessages()%>
+                            <asp:Literal runat="server" ID="lUnreadPrivateMessages" />
                         </li>
                         <%} %>
                     </LoggedInTemplate>
