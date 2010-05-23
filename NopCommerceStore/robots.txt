@@ -5,6 +5,8 @@ Disallow: /install/
 Disallow: /account.aspx
 Disallow: /accountactivation.aspx
 Disallow: /addressedit.aspx
+Disallow: /alipay_notify.aspx
+Disallow: /alipay_return.aspx
 Disallow: /amazonsimplepayreturn.aspx
 Disallow: /assisthostedpaymentreturn.aspx
 Disallow: /beanstreamhostedpaymentreturn.aspx
