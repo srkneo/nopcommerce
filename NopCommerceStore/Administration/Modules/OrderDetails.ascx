@@ -284,19 +284,6 @@
                         <asp:Label ID="lblOrderDiscount" runat="server"></asp:Label>
                     </td>
                 </tr>
-                <asp:Repeater runat="server" ID="rptrGiftCards" OnItemDataBound="rptrGiftCards_ItemDataBound">
-                    <ItemTemplate>
-                        <tr>
-                            <td class="adminTitle">
-                                <nopCommerce:ToolTipLabel runat="server" ID="lblOrderGiftCardTitle" Text="Gift card info:"
-                                    ToolTip="<% $NopResources:Admin.OrderDetails.GiftCardInfo.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
-                            </td>
-                            <td class="adminData">
-                                <asp:Label ID="lblGiftCardAmount" runat="server"></asp:Label>
-                            </td>
-                        </tr>
-                    </ItemTemplate>
-                </asp:Repeater>
                 <tr runat="server" id="pnlOrderShippingInclTax">
                     <td class="adminTitle">
                         <nopCommerce:ToolTipLabel runat="server" ID="lblOrderShippingInclTaxTitle" Text="<% $NopResources:Admin.OrderDetails.ShippingInclTax %>"
@@ -346,6 +333,19 @@
                         <asp:Label ID="lblOrderTax" runat="server"></asp:Label>
                     </td>
                 </tr>
+                <asp:Repeater runat="server" ID="rptrGiftCards" OnItemDataBound="rptrGiftCards_ItemDataBound">
+                    <ItemTemplate>
+                        <tr>
+                            <td class="adminTitle">
+                                <nopCommerce:ToolTipLabel runat="server" ID="lblOrderGiftCardTitle" Text="Gift card info:"
+                                    ToolTip="<% $NopResources:Admin.OrderDetails.GiftCardInfo.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                            </td>
+                            <td class="adminData">
+                                <asp:Label ID="lblGiftCardAmount" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                    </ItemTemplate>
+                </asp:Repeater>
                 <tr runat="server" id="pnlRewardPoints">
                     <td class="adminTitle">
                         <nopCommerce:ToolTipLabel runat="server" ID="lblRewardPointsTitle" Text="<% $NopResources:Admin.OrderDetails.RewardPoints %>"

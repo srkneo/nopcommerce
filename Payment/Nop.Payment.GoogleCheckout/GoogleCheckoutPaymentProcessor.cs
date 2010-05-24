@@ -457,22 +457,24 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 }
             }
 
-            //discounts and gift cards
+            //discounts
             decimal subTotalDiscountBase = decimal.Zero;
             Discount appliedDiscount = null;
-            List<AppliedGiftCard> appliedGiftCards = null;
+            //List<AppliedGiftCard> appliedGiftCards = null;
             decimal subtotalBaseWithoutPromo = decimal.Zero;
             decimal subtotalBaseWithPromo = decimal.Zero;
             string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(cart,
                 NopContext.Current.User, out subTotalDiscountBase,
-                out appliedDiscount, out appliedGiftCards,
+                out appliedDiscount, 
                 out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
             if (subTotalDiscountBase > decimal.Zero)
-                req.AddItem("Discount", string.Empty, string.Empty, (decimal)(-1.0) * subTotalDiscountBase, 1);
-            foreach (AppliedGiftCard agc in appliedGiftCards)
             {
-                req.AddItem(string.Format("Gift Card - {0}", agc.GiftCard.GiftCardCouponCode), string.Empty, string.Empty, (decimal)(-1.0) * agc.AmountCanBeUsed, 1);
+                req.AddItem("Discount", string.Empty, string.Empty, (decimal)(-1.0) * subTotalDiscountBase, 1);
             }
+            //foreach (AppliedGiftCard agc in appliedGiftCards)
+            //{
+            //    req.AddItem(string.Format("Gift Card - {0}", agc.GiftCard.GiftCardCouponCode), string.Empty, string.Empty, (decimal)(-1.0) * agc.AmountCanBeUsed, 1);
+            //}
 
             bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
             if (shoppingCartRequiresShipping)

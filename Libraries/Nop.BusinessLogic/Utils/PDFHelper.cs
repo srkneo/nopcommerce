@@ -397,16 +397,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 p7.Format.Alignment = ParagraphAlignment.Right;
             }
 
-            //gift cards
-            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
-            foreach(var giftCardUsageHistory in gcuhC)
-            {
-                string gcTitle = string.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.GiftCardInfo", languageId), giftCardUsageHistory.GiftCard.GiftCardCouponCode);
-                string gcAmountStr = PriceHelper.FormatPrice(-giftCardUsageHistory.UsedValueInCustomerCurrency, true, order.CustomerCurrencyCode, false);
-                Paragraph p8 = sec.AddParagraph(String.Format("{0} {1}", gcTitle, gcAmountStr));
-                p8.Format.Alignment = ParagraphAlignment.Right;
-            }
-
             //shipping
             if(order.ShippingStatus != ShippingStatusEnum.ShippingNotRequired)
             {
@@ -480,6 +470,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             {
                 var p11 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Tax", languageId), taxStr));
                 p11.Format.Alignment = ParagraphAlignment.Right;
+            }
+
+            //gift cards
+            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
+            foreach (var giftCardUsageHistory in gcuhC)
+            {
+                string gcTitle = string.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.GiftCardInfo", languageId), giftCardUsageHistory.GiftCard.GiftCardCouponCode);
+                string gcAmountStr = PriceHelper.FormatPrice(-giftCardUsageHistory.UsedValueInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                Paragraph p8 = sec.AddParagraph(String.Format("{0} {1}", gcTitle, gcAmountStr));
+                p8.Format.Alignment = ParagraphAlignment.Right;
             }
 
             //reward points

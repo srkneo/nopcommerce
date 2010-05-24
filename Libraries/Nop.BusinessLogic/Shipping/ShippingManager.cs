@@ -55,13 +55,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             decimal subTotalDiscountBase = decimal.Zero;
             Discount appliedDiscount = null;
-            List<AppliedGiftCard> appliedGiftCards = null;
             decimal subtotalBaseWithoutPromo = decimal.Zero;
             decimal subtotalBaseWithPromo = decimal.Zero;
             string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(cart,
                 customer, out subTotalDiscountBase,
-                out appliedDiscount, out appliedGiftCards,
-                out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
+                out appliedDiscount, out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
             if (SettingManager.GetSettingValueBoolean("Shipping.FreeShippingOverX.Enabled"))
             {
                 decimal freeShippingOverX = SettingManager.GetSettingValueDecimalNative("Shipping.FreeShippingOverX.Value");

@@ -41,15 +41,6 @@ namespace NopSolutions.NopCommerce.Web.Modules {
         protected global::System.Web.UI.WebControls.Label lblSubTotalDiscountAmount;
         
         /// <summary>
-        /// rptrGiftCards control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptrGiftCards;
-        
-        /// <summary>
         /// lblShippingAmount control.
         /// </summary>
         /// <remarks>
@@ -93,6 +84,15 @@ namespace NopSolutions.NopCommerce.Web.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTaxAmount;
+        
+        /// <summary>
+        /// rptrGiftCards control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptrGiftCards;
         
         /// <summary>
         /// phRewardPoints control.

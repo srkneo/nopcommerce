@@ -61,13 +61,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 //subtotal
                 decimal subTotalDiscountBase = decimal.Zero;
                 Discount appliedDiscount = null;
-                List<AppliedGiftCard> appliedGiftCards = null;
                 //don't include checkout attributes on shopping cart page
                 decimal subtotalBaseWithoutPromo = decimal.Zero;
                 decimal subtotalBaseWithPromo = decimal.Zero;
                 string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(cart,
                     NopContext.Current.User, out subTotalDiscountBase,
-                    out appliedDiscount, out appliedGiftCards,
+                    out appliedDiscount, 
                     out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
                 if (String.IsNullOrEmpty(SubTotalError))
                 {
@@ -85,18 +84,6 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     else
                     {
                         phSubTotalDiscount.Visible = false;
-                    }
-
-                    //gift cards
-                    if (appliedGiftCards != null && appliedGiftCards.Count > 0)
-                    {
-                        rptrGiftCards.Visible = true;
-                        rptrGiftCards.DataSource = appliedGiftCards;
-                        rptrGiftCards.DataBind();
-                    }
-                    else
-                    {
-                        rptrGiftCards.Visible = false;
                     }
                 }
                 else
@@ -177,13 +164,15 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 phTaxTotal.Visible = displayTax;
 
                 //total
+                List<AppliedGiftCard> appliedGiftCards = null;
                 int redeemedRewardPoints = 0;
                 decimal redeemedRewardPointsAmount = decimal.Zero;
                 bool useRewardPoints = false;
                 if (NopContext.Current.User != null)
                     useRewardPoints = NopContext.Current.User.UseRewardPointsDuringCheckout;
                 decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(cart,
-                    paymentMethodId, NopContext.Current.User, useRewardPoints,
+                    paymentMethodId, NopContext.Current.User,
+                    out appliedGiftCards, useRewardPoints,
                     out redeemedRewardPoints, out redeemedRewardPointsAmount);
                 if (shoppingCartTotalBase.HasValue)
                 {
@@ -195,6 +184,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     lblTotalAmount.Text = GetLocaleResourceString("ShoppingCart.CalculatedDuringCheckout");
                     lblTotalAmount.CssClass = string.Empty;
+                }
+
+                //gift cards
+                if (appliedGiftCards != null && appliedGiftCards.Count > 0)
+                {
+                    rptrGiftCards.Visible = true;
+                    rptrGiftCards.DataSource = appliedGiftCards;
+                    rptrGiftCards.DataBind();
+                }
+                else
+                {
+                    rptrGiftCards.Visible = false;
                 }
 
                 //reward points
@@ -231,7 +232,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 lblGiftCardAmount.Text = PriceHelper.FormatPrice(-amountCanBeUsed, true, false);
 
                 var lGiftCardRemaining = e.Item.FindControl("lGiftCardRemaining") as Literal;
-                decimal remainingAmountBase = GiftCardHelper.GetGiftCardRemainingAmount(appliedGiftCard.GiftCard) - amountCanBeUsed;
+                decimal remainingAmountBase = GiftCardHelper.GetGiftCardRemainingAmount(appliedGiftCard.GiftCard) - appliedGiftCard.AmountCanBeUsed;
                 decimal remainingAmount = CurrencyManager.ConvertCurrency(remainingAmountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
                 lGiftCardRemaining.Text = string.Format(GetLocaleResourceString("ShoppingCart.Totals.GiftCardInfo.Remaining"), PriceHelper.FormatPrice(remainingAmount, true, false));
 

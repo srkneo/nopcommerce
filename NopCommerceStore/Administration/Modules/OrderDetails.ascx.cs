@@ -539,6 +539,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pnlDiscount.Visible = false;
             }
 
+            //tax
+            this.lblOrderTax.Text = PriceHelper.FormatPrice(order.OrderTax, true, false);
+            
             //gift cards
             GiftCardUsageHistoryCollection gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             if (gcuhC.Count > 0)
@@ -551,9 +554,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 rptrGiftCards.Visible = false;
             }
-
-            //tax
-            this.lblOrderTax.Text = PriceHelper.FormatPrice(order.OrderTax, true, false);
 
             //reward points
             if (order.RedeemedRewardPoints != null)

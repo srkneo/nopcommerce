@@ -93,13 +93,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             decimal subTotalDiscountBase = decimal.Zero;
             Discount appliedDiscount = null;
-            List<AppliedGiftCard> appliedGiftCards = null;
             decimal subtotalBaseWithoutPromo = decimal.Zero;
             decimal subtotalBaseWithPromo = decimal.Zero;
             string SubTotalError = ShoppingCartManager.GetShoppingCartSubTotal(shoppingCart,
                 NopContext.Current.User, out subTotalDiscountBase,
-                out appliedDiscount, out appliedGiftCards,
-                out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
+                out appliedDiscount, out subtotalBaseWithoutPromo, out subtotalBaseWithPromo);
 
             if (String.IsNullOrEmpty(SubTotalError))
             {

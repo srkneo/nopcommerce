@@ -177,20 +177,6 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 phDiscount.Visible = false;
             }
 
-            //gift cards
-            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
-            if (gcuhC.Count > 0)
-            {
-                rptrGiftCards.Visible = true;
-                rptrGiftCards.DataSource = gcuhC;
-                rptrGiftCards.DataBind();
-            }
-            else
-            {
-                rptrGiftCards.Visible = false;
-            }
-
-
             //tax
             bool displayTax = true;
             if (TaxManager.HideTaxInOrderSummary && order.CustomerTaxDisplayType == TaxDisplayTypeEnum.IncludingTax)
@@ -210,6 +196,19 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
             }
             phTaxTotal.Visible = displayTax;
+            
+            //gift cards
+            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
+            if (gcuhC.Count > 0)
+            {
+                rptrGiftCards.Visible = true;
+                rptrGiftCards.DataSource = gcuhC;
+                rptrGiftCards.DataBind();
+            }
+            else
+            {
+                rptrGiftCards.Visible = false;
+            }
 
             //reward points           
             if (order.RedeemedRewardPoints!=null)

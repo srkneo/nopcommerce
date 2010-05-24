@@ -26,32 +26,7 @@
                         </span>
                     </td>
                 </tr>
-            </asp:PlaceHolder>
-            <asp:Repeater runat="server" ID="rptrGiftCards" OnItemDataBound="rptrGiftCards_ItemDataBound"
-                Visible="false" OnItemCommand="rptrGiftCards_ItemCommand" >
-                <ItemTemplate>
-                    <tr>
-                        <td class="cart_total_left">
-                            <strong>
-                                <asp:Literal runat="server" ID="lGiftCard"></asp:Literal><asp:LinkButton runat="server"
-                                    ID="btnRemoveGC" Text="" CommandName="remove" CommandArgument='<%# Eval("GiftCardId")%>'
-                                    CssClass="removegiftcardbutton" />:</strong>
-                        </td>
-                        <td class="cart_total_right">
-                            <span style="white-space: nowrap;">
-                                <asp:Label ID="lblGiftCardAmount" runat="server" CssClass="productPrice" />
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cart_total_left_below">
-                            <asp:Literal runat="server" ID="lGiftCardRemaining"></asp:Literal>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </ItemTemplate>
-            </asp:Repeater>
+            </asp:PlaceHolder>            
             <tr>
                 <td class="cart_total_left">
                     <strong>
@@ -89,6 +64,31 @@
                     </td>
                 </tr>
             </asp:PlaceHolder>
+            <asp:Repeater runat="server" ID="rptrGiftCards" OnItemDataBound="rptrGiftCards_ItemDataBound"
+                Visible="false" OnItemCommand="rptrGiftCards_ItemCommand" >
+                <ItemTemplate>
+                    <tr>
+                        <td class="cart_total_left">
+                            <strong>
+                                <asp:Literal runat="server" ID="lGiftCard"></asp:Literal><asp:LinkButton runat="server"
+                                    ID="btnRemoveGC" Text="" CommandName="remove" CommandArgument='<%# Eval("GiftCardId")%>'
+                                    CssClass="removegiftcardbutton" />:</strong>
+                        </td>
+                        <td class="cart_total_right">
+                            <span style="white-space: nowrap;">
+                                <asp:Label ID="lblGiftCardAmount" runat="server" CssClass="productPrice" />
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="cart_total_left_below">
+                            <asp:Literal runat="server" ID="lGiftCardRemaining"></asp:Literal>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </ItemTemplate>
+            </asp:Repeater>
             <asp:PlaceHolder runat="server" ID="phRewardPoints">
                 <tr>
                     <td class="cart_total_left">

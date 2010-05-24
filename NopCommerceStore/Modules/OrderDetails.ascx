@@ -241,21 +241,6 @@
                                             </td>
                                         </tr>
                                     </asp:PlaceHolder>
-                                    <asp:Repeater runat="server" ID="rptrGiftCards" OnItemDataBound="rptrGiftCards_ItemDataBound">
-                                        <ItemTemplate>
-                                            <tr>
-                                                <td width="100%" align="right">
-                                                    <b>
-                                                        <asp:Literal runat="server" ID="lGiftCard"></asp:Literal>:</b>
-                                                </td>
-                                                <td align="right">
-                                                    <span style="white-space: nowrap;">
-                                                        <asp:Label ID="lblGiftCardAmount" runat="server"></asp:Label>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
                                     <tr runat="server" id="pnlShippingTotal">
                                         <td width="100%" align="right">
                                             <b>
@@ -293,6 +278,21 @@
                                             </td>
                                         </tr>
                                     </asp:PlaceHolder>
+                                    <asp:Repeater runat="server" ID="rptrGiftCards" OnItemDataBound="rptrGiftCards_ItemDataBound">
+                                        <ItemTemplate>
+                                            <tr>
+                                                <td width="100%" align="right">
+                                                    <b>
+                                                        <asp:Literal runat="server" ID="lGiftCard"></asp:Literal>:</b>
+                                                </td>
+                                                <td align="right">
+                                                    <span style="white-space: nowrap;">
+                                                        <asp:Label ID="lblGiftCardAmount" runat="server"></asp:Label>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
                                     <asp:PlaceHolder runat="server" ID="phRewardPoints">
                                         <tr>
                                             <td width="100%" align="right">

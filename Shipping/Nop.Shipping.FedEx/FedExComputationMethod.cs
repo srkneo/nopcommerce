@@ -79,13 +79,11 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
 
             decimal discountAmount = decimal.Zero;
             Discount appliedDiscount = null;
-            List<AppliedGiftCard> appliedGiftCards = null;
             decimal subtotalWithoutPromo = decimal.Zero;
             decimal subtotalWithPromo = decimal.Zero;
             ShoppingCartManager.GetShoppingCartSubTotal(ShipmentPackage.Items,
                 ShipmentPackage.Customer, out discountAmount, 
-                out appliedDiscount, out appliedGiftCards,
-                out subtotalWithoutPromo, out subtotalWithPromo);
+                out appliedDiscount, out subtotalWithoutPromo, out subtotalWithPromo);
             SetShipmentDetails(request, ShipmentPackage, subtotalWithPromo);
             SetOrigin(request);
             SetDestination(request, ShipmentPackage);

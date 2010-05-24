@@ -2805,23 +2805,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 decimal orderSubtotalInclTaxInCustomerCurrency = decimal.Zero;
                 decimal orderSubtotalExclTaxInCustomerCurrency = decimal.Zero;
                 decimal orderSubtotalDiscountInCustomerCurrency = decimal.Zero;
-                List<AppliedGiftCard> appliedGiftCards = null;
                 if (!paymentInfo.IsRecurringPayment)
                 {
                     Discount subTotalAppliedDiscountInclTax = null;
                     decimal subtotalBaseWithPromoInclTax = decimal.Zero;
                     string subTotalError1 = ShoppingCartManager.GetShoppingCartSubTotal(cart, customer,
                         out orderSubTotalDiscountAmount, out subTotalAppliedDiscountInclTax,
-                        out appliedGiftCards, true,
-                        out orderSubTotalInclTax, out subtotalBaseWithPromoInclTax);
+                        true, out orderSubTotalInclTax, out subtotalBaseWithPromoInclTax);
                     
 
                     Discount subTotalAppliedDiscountExclTax = null;
                     decimal subtotalBaseWithPromoExclTax = decimal.Zero;
                     string subTotalError2 = ShoppingCartManager.GetShoppingCartSubTotal(cart, customer,
                         out orderSubTotalDiscountAmount, out subTotalAppliedDiscountExclTax,
-                        out appliedGiftCards, false,
-                        out orderSubTotalExclTax, out subtotalBaseWithPromoExclTax);
+                        false, out orderSubTotalExclTax, out subtotalBaseWithPromoExclTax);
                     
                     if (!String.IsNullOrEmpty(subTotalError1) || !String.IsNullOrEmpty(subTotalError2))
                         throw new NopException("Sub total couldn't be calculated");
@@ -2957,9 +2954,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 }
 
 
-                //order total, reward points
+                //order total, gift cards, reward points
                 decimal? orderTotal = null;
                 decimal orderTotalInCustomerCurrency = decimal.Zero;
+                List<AppliedGiftCard> appliedGiftCards = null;
                 int redeemedRewardPoints = 0;
                 decimal redeemedRewardPointsAmount = decimal.Zero;
                 if (!paymentInfo.IsRecurringPayment)
@@ -2967,7 +2965,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     bool useRewardPoints = customer.UseRewardPointsDuringCheckout;
 
                     orderTotal = ShoppingCartManager.GetShoppingCartTotal(cart,
-                        paymentInfo.PaymentMethodId, customer, useRewardPoints,
+                        paymentInfo.PaymentMethodId, customer,
+                        out appliedGiftCards, useRewardPoints,
                         out redeemedRewardPoints, out redeemedRewardPointsAmount);
                     if (!orderTotal.HasValue)
                         throw new NopException("Order total couldn't be calculated");
