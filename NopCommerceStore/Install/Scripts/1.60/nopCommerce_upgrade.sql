@@ -944,7 +944,7 @@ set @resources='
     <Value>Is recipient notified:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GiftCardInfo.IsRecipientNotified.Tooltip">
-    <Value>Is recipient has been notified.</Value>
+    <Value>Is recipient notified.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GiftCardInfo.NotifyRecipientButton">
     <Value>Notify Recipient</Value>
@@ -1433,7 +1433,7 @@ set @resources='
     <Value>Show on home page:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.CategoryInfo.ShowOnHomePage.Tooltip">
-    <Value>Check if you want to show a catgory on home page.</Value>
+    <Value>Check if you want to show a category on home page.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.Other.HidePricesForNonRegistered">
     <Value>Hide prices for non-registered customers:</Value>
