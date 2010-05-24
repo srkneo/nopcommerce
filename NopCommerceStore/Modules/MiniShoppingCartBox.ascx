@@ -2,7 +2,7 @@
     Inherits="NopSolutions.NopCommerce.Web.Modules.MiniShoppingCartBoxControl" %>
 <div class="block block-shoppingcart">
     <div class="title">
-        <asp:Label runat="server" Text="<% $NopResources:MiniShoppingCartBox.Information %>" />
+        <%=GetLocaleResourceString("MiniShoppingCartBox.Information")%>
     </div>
     <div class="clear">
     </div>
