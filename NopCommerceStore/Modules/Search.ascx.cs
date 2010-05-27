@@ -57,7 +57,6 @@ namespace NopSolutions.NopCommerce.Web.Modules
             try
             {
                 string keywords = txtSearchTerm.Text.Trim();
-                bool searchInProductDescriptions = cbSearchInProductDescriptions.Checked;
 
                 if (!String.IsNullOrEmpty(keywords))
                 {
@@ -70,6 +69,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     int manufacturerId = 0;
                     decimal? minPriceConverted = null;
                     decimal? maxPriceConverted = null;
+                    bool searchInProductDescriptions = false;
                     if (advSearch)
                     {
                         //categories
@@ -115,6 +115,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         {
                             txtPriceTo.Text = string.Empty;
                         }
+
+                        //search in descriptions
+                        searchInProductDescriptions = cbSearchInProductDescriptions.Checked;
                     }
 
                     int totalRecords = 0;

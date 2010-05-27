@@ -1730,6 +1730,9 @@ GO
 
 
 
+ALTER TABLE [dbo].[Nop_NewsLetterSubscription] 
+ALTER COLUMN [Email] [nvarchar](255) COLLATE database_default NOT NULL
+GO
 
 --replace ntext and image database types with nvarchar(MAX) and varbinary(MAX)
 ALTER TABLE [dbo].[Nop_Setting] ALTER COLUMN [Description] [nvarchar](MAX) NOT NULL
