@@ -45,6 +45,7 @@ using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Messages;
+using System.Text.RegularExpressions;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 {
@@ -1524,8 +1525,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             }
             tokens.Add("Order.OrderURLForCustomer", string.Format("{0}orderdetails.aspx?orderid={1}", SettingManager.StoreUrl, order.OrderId));
 
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1554,9 +1557,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                 template = ReplaceMessageTemplateTokens(customer, template);
             }
 
-            foreach (string token in tokens.Keys)
+            foreach(string token in tokens.Keys)
             {
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
             }
 
             return template;
@@ -1586,9 +1589,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string accountActivationUrl = string.Empty;
             accountActivationUrl = string.Format("{0}accountactivation.aspx?act={1}&email={2}", SettingManager.StoreUrl, customer.AccountActivationToken, customer.Email);
             tokens.Add("Customer.AccountActivationURL", accountActivationUrl);
-            
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1617,11 +1622,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("Product.ShortDescription", product.ShortDescription);
             tokens.Add("Product.ProductURLForCustomer", SEOHelper.GetProductUrl(product));
 
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
-            foreach (string token in additinalKeys.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), additinalKeys[token]);
+            foreach(string token in additinalKeys.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), additinalKeys[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1652,8 +1661,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("Forums.ForumURL", SEOHelper.GetForumUrl(forum));
             tokens.Add("Forums.ForumName", HttpUtility.HtmlEncode(forum.Name));
 
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1677,8 +1688,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("ProductVariant.FullProductName", HttpUtility.HtmlEncode(productVariant.FullProductName));
             tokens.Add("ProductVariant.StockQuantity", productVariant.StockQuantity.ToString());
 
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1699,8 +1712,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             tokens.Add("NewsComment.NewsTitle", HttpUtility.HtmlEncode(newsComment.News.Title));
 
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1721,8 +1736,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             tokens.Add("BlogComment.BlogPostTitle", HttpUtility.HtmlEncode(blogComment.BlogPost.BlogPostTitle));
 
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1742,9 +1759,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("Store.Email", AdminEmailAddress);
 
             tokens.Add("ProductReview.ProductName", HttpUtility.HtmlEncode(productReview.Product.Name));
-            
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
@@ -1770,8 +1789,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("GiftCard.CouponCode", HttpUtility.HtmlEncode(giftCard.GiftCardCouponCode));
             tokens.Add("GiftCard.Message", MessageManager.FormatContactUsFormText(giftCard.Message));
 
-            foreach (string token in tokens.Keys)
-                template = template.Replace(string.Format(@"%{0}%", token), tokens[token]);
+            foreach(string token in tokens.Keys)
+            {
+                template = Regex.Replace(template, String.Format(@"%{0}%", token), tokens[token], RegexOptions.IgnoreCase);
+            }
 
             return template;
         }
