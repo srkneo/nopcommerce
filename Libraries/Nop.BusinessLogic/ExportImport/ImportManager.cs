@@ -139,7 +139,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                                 customer = CustomerManager.AddCustomerForced(customerGuid, email, username,
                                     passwordHash, saltKey, affiliateId, billingAddressId, shippingAddressId, lastPaymentMethodId,
                                     lastAppliedCouponCode, string.Empty,
-                                    string.Empty, languageId, currencyId, 
+                                    string.Empty, languageId, currencyId,
                                     (TaxDisplayTypeEnum)taxDisplayTypeId, isTaxExempt,
                                     isAdmin, isGuest, isForumModerator, totalForumPosts, signature,
                                     adminComment, active, deleted, registrationDate, timeZoneId, avatarId);
@@ -156,18 +156,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             }
                         }
                     }
-                    customer.Gender = gender;
+
+                    if (CustomerManager.FormFieldGenderEnabled)
+                        customer.Gender = gender;
                     customer.FirstName = firstName;
                     customer.LastName = lastName;
-                    customer.Company = company;
-                    customer.StreetAddress = streetAddress;
-                    customer.StreetAddress2 = streetAddress2;
-                    customer.ZipPostalCode = zipPostalCode;
-                    customer.City = city;
-                    customer.PhoneNumber = phoneNumber;
-                    customer.FaxNumber = faxNumber;
-                    customer.CountryId = countryId;
-                    customer.StateProvinceId = stateProvinceId;
+                    if (CustomerManager.FormFieldCompanyEnabled)
+                        customer.Company = company;
+                    if (CustomerManager.FormFieldStreetAddressEnabled)
+                        customer.StreetAddress = streetAddress;
+                    if (CustomerManager.FormFieldStreetAddress2Enabled)
+                        customer.StreetAddress2 = streetAddress2;
+                    if (CustomerManager.FormFieldPostCodeEnabled)
+                        customer.ZipPostalCode = zipPostalCode;
+                    if (CustomerManager.FormFieldCityEnabled)
+                        customer.City = city;
+                    if (CustomerManager.FormFieldPhoneEnabled)
+                        customer.PhoneNumber = phoneNumber;
+                    if (CustomerManager.FormFieldFaxEnabled)
+                        customer.FaxNumber = faxNumber;
+                    if (CustomerManager.FormFieldCountryEnabled)
+                        customer.CountryId = countryId;
+                    if (CustomerManager.FormFieldStateEnabled)
+                        customer.StateProvinceId = stateProvinceId;
                     customer.ReceiveNewsletter = receiveNewsletter;
                 }
             }

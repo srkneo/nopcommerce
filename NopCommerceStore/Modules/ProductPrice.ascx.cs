@@ -54,22 +54,21 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
-
-                if (productVariant.CustomerEntersPrice)
-                {
-                    phOldPrice.Visible = false;
-                    lblPrice.Visible = false;
-                    lblPriceValue.Visible = false;
-                    phDiscount.Visible = false;
-
-                    lblCustomerEnterPrise.Visible = true;
-                    lblCustomerEnterPrise.Text = GetLocaleResourceString("Products.EnterProductPrice");
-                }
-                else
-                {
-                    if (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
+                if (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
                         (NopContext.Current.User != null &&
                         !NopContext.Current.User.IsGuest))
+                {
+                    if (productVariant.CustomerEntersPrice)
+                    {
+                        phOldPrice.Visible = false;
+                        lblPrice.Visible = false;
+                        lblPriceValue.Visible = false;
+                        phDiscount.Visible = false;
+
+                        lblCustomerEnterPrice.Visible = true;
+                        lblCustomerEnterPrice.Text = GetLocaleResourceString("Products.EnterProductPrice");
+                    }
+                    else
                     {
                         decimal oldPriceBase = TaxManager.GetPrice(productVariant, productVariant.OldPrice);
                         decimal finalPriceWithoutDiscountBase = TaxManager.GetPrice(productVariant, PriceHelper.GetFinalPrice(productVariant, false));
@@ -114,12 +113,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         {
                             lblPrice.Text = GetLocaleResourceString("Products.FinalPriceWithoutDiscount");
                         }
-                        if(SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate"))
+                        if (SettingManager.GetSettingValueBoolean("ProductAttribute.EnableDynamicPriceUpdate"))
                         {
                             string pattern = SettingManager.GetSettingValue("ProductAttribute.PricePattern", "(?<val>(\\d+[\\s\\,\\.]?)+)");
                             string replacement = String.Format("<span class=\"price-val-for-dyn-upd-{0}\">${{val}}</span> ", productVariant.ProductVariantId);
 
-                            if(finalPriceWithoutDiscountBase != finalPriceWithDiscountBase)
+                            if (finalPriceWithoutDiscountBase != finalPriceWithDiscountBase)
                             {
                                 lblFinalPriceWithDiscount.Text = Regex.Replace(lblFinalPriceWithDiscount.Text, pattern, replacement);
                             }
@@ -128,11 +127,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 lblPriceValue.Text = Regex.Replace(lblPriceValue.Text, pattern, replacement);
                             }
                         }
+
                     }
-                    else
-                    {
-                        this.Visible = false;
-                    }
+                }
+                else
+                {
+                    this.Visible = false;
                 }
             }
             else
