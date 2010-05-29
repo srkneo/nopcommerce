@@ -10802,14 +10802,3 @@ UPDATE [dbo].[Nop_Setting]
 SET [Value]='1.60'
 WHERE [Name]='Common.CurrentVersion'
 GO
-
--- MessageTemplates.CaseInvariantReplacement setting
-IF NOT EXISTS (
-		SELECT 1
-		FROM [dbo].[Nop_Setting]
-		WHERE [Name] = N'MessageTemplates.CaseInvariantReplacement')
-BEGIN
-	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
-	VALUES (N'MessageTemplates.CaseInvariantReplacement', N'False', N'')
-END
-GO

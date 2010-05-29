@@ -181,7 +181,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
         private static string Replace(string original, string pattern, string replacement)
         {
-            if(CaseInvariantReplacement)
+            if (SettingManager.GetSettingValueBoolean("MessageTemplates.CaseInvariantReplacement"))
             {
                 int count, position0, position1;
                 count = position0 = position1 = 0;
@@ -1962,21 +1962,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             set
             {
                 SettingManager.SetParam("Email.AdminEmailEnableSsl", value.ToString());
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the token replacement should be case-insensitive
-        /// </summary>
-        public static bool CaseInvariantReplacement
-        {
-            get
-            {
-                return SettingManager.GetSettingValueBoolean("MessageTemplates.CaseInvariantReplacement", false);
-            }
-            set
-            {
-                SettingManager.SetParam("MessageTemplates.CaseInvariantReplacement", value.ToString());
             }
         }
 
