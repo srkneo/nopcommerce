@@ -168,6 +168,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             txtLiveChatBtnCode.Text = SettingManager.GetSettingValue("LiveChat.BtnCode");
             txtLiveChatMonCode.Text = SettingManager.GetSettingValue("LiveChat.MonCode");
 
+            cbGoogleAdsenseEnabled.Checked = SettingManager.GetSettingValueBoolean("GoogleAdsense.Enabled", false);
+            txtGoogleAdsenseCode.Text = SettingManager.GetSettingValue("GoogleAdsense.Code");
+
             txtAllowedIPList.Text = SettingManager.GetSettingValue("Security.AdminAreaAllowedIP");
 
             if(File.Exists(PDFHelper.LogoFilePath))
@@ -251,6 +254,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.cbShowBestsellersOnHomePage.Attributes.Add("onclick", "toggleShowBestsellersOnHomePage();");
             this.cbIsSMSAlertsEnabled.Attributes.Add("onclick", "toggleSMSAlerts();");
             this.cbLiveChatEnabled.Attributes.Add("onclick", "toggleLiveChat();");
+            this.cbGoogleAdsenseEnabled.Attributes.Add("onclick", "toggleGoogleAdsense();");
 
             base.OnPreRender(e);
         }
@@ -386,6 +390,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     SettingManager.SetParam("LiveChat.Enabled", cbLiveChatEnabled.Checked.ToString());
                     SettingManager.SetParam("LiveChat.BtnCode", txtLiveChatBtnCode.Text);
                     SettingManager.SetParam("LiveChat.MonCode", txtLiveChatMonCode.Text);
+
+                    SettingManager.SetParam("GoogleAdsense.Enabled", cbGoogleAdsenseEnabled.Checked.ToString());
+                    SettingManager.SetParam("GoogleAdsense.Code", txtGoogleAdsenseCode.Text);
 
                     if(uplPdfLogo.HasFile)
                     {

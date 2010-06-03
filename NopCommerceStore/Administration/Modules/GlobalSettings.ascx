@@ -27,6 +27,7 @@
             toggleShowBestsellersOnHomePage();
             toggleSMSAlerts();
             toggleLiveChat();
+            toggleGoogleAdsense();
         });
 
         function toggleCustomersAllowedToUploadAvatars() {
@@ -46,6 +47,15 @@
             else {
                 $('#pnlLiveChatBtnCode').hide();
                 $('#pnlLiveChatMonCode').hide();
+            }
+        }
+
+        function toggleGoogleAdsense() {
+            if (getE('<%=cbGoogleAdsenseEnabled.ClientID %>').checked) {
+                $('#pnlGoogleAdsenseCode').show();
+            }
+            else {
+                $('#pnlGoogleAdsenseCode').hide();
             }
         }
 
@@ -845,6 +855,38 @@
                         </td>
                         <td class="adminData">
                             <asp:TextBox runat="server" ID="txtLiveChatMonCode" TextMode="MultiLine" Rows="5"
+                                CssClass="adminInput" />
+                        </td>
+                    </tr>
+                </table>
+            </ContentTemplate>
+        </ajaxToolkit:TabPanel>
+        <ajaxToolkit:TabPanel runat="server" ID="pnlGoogleAdsense" HeaderText="<% $NopResources:Admin.GlobalSettings.GoogleAdsense.Title %>">
+            <ContentTemplate>
+                <table class="adminContent">
+                    <tr>
+                        <td class="adminTitle" colspan="2">
+                            Please find our step by step set up guide detailed below:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblGoogleAdsenseEnabled" Text="<% $NopResources:Admin.GlobalSettings.GoogleAdsense.Enabled %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.GoogleAdsense.Enabled.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:CheckBox runat="server" ID="cbGoogleAdsenseEnabled" Checked="false" TextAlign="Left" />
+                        </td>
+                    </tr>
+                    <tr id="pnlGoogleAdsenseCode">
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
+                                ID="lblGoogleAdsenseCode" Text="<% $NopResources:Admin.GlobalSettings.GoogleAdsense.Code %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.GoogleAdsense.Code.Tooltip %>" />
+                        </td>
+                        <td class="adminData">
+                            <asp:TextBox runat="server" ID="txtGoogleAdsenseCode" TextMode="MultiLine" Rows="5"
                                 CssClass="adminInput" />
                         </td>
                     </tr>

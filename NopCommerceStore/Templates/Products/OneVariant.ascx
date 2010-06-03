@@ -32,7 +32,7 @@
         </script>
 
         <div class="picture">
-            <a href="<%= DefaultPictureUrl %>" rel="lightbox-p" title="<%= lProductName.Text%>">
+            <a runat="server" id="lnkMainLightbox">
                 <asp:Image ID="defaultImage" runat="server" />
             </a>
             <asp:ListView ID="lvProductPictures" runat="server" GroupItemCount="3">

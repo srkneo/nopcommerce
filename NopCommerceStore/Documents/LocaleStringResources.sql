@@ -2,8 +2,20 @@
 declare @resources xml
 set @resources='
 <Language LanguageID="7">
-  <LocaleResource Name="">
-    <Value></Value>
+  <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Title">
+    <Value>Google Adsense</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Enabled">
+    <Value>Enabled:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Enabled.Tooltip">
+    <Value>Check if you want to enable Google Adsense.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Code">
+    <Value>Google adsense code:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Code.Tooltip">
+    <Value>Place your google adsense code here.</Value>
   </LocaleResource>
 </Language>
 '

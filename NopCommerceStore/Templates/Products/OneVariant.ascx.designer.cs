@@ -32,6 +32,15 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products {
         protected global::NopSolutions.NopCommerce.Web.Modules.ProductCategoryBreadcrumb ctrlProductCategoryBreadcrumb;
         
         /// <summary>
+        /// lnkMainLightbox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkMainLightbox;
+        
+        /// <summary>
         /// defaultImage control.
         /// </summary>
         /// <remarks>
