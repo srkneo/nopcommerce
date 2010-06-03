@@ -865,11 +865,6 @@
             <ContentTemplate>
                 <table class="adminContent">
                     <tr>
-                        <td class="adminTitle" colspan="2">
-                            Please find our step by step set up guide detailed below:
-                        </td>
-                    </tr>
-                    <tr>
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
                                 ID="lblGoogleAdsenseEnabled" Text="<% $NopResources:Admin.GlobalSettings.GoogleAdsense.Enabled %>"
