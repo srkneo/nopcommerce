@@ -38,7 +38,7 @@ Sys.Application.notifyScriptLoaded();
 
 function PictureBrowserOpener()
 {
-  var picturebrowser = window.open('/administration/PictureBrowser.aspx', 
+  var picturebrowser = window.open('PictureBrowser.aspx', 
       'PictureBrowser', 
       'width=800, \
        height=600, \

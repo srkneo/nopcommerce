@@ -194,11 +194,6 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
                 {
                     shippingOption.Rate += AustraliaPostSettings.AdditionalHandlingCharge;
                 }
-
-                if(String.IsNullOrEmpty(error))
-                {
-                    error = "Shipping options could not be loaded";
-                }
             }
             catch(Exception ex)
             {
