@@ -322,8 +322,6 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.CanadaPost
                 error = e.Message;
             }
 
-            if (String.IsNullOrEmpty(error))
-                error = "Shipping options could not be loaded";
             return shippingOptions;
         }
 

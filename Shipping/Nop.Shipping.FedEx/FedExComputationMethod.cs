@@ -394,8 +394,6 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
                 error = e.Message;
             }
 
-            if (String.IsNullOrEmpty(error))
-                error = "Shipping options could not be loaded";
             return shippingOptions;
         }
 

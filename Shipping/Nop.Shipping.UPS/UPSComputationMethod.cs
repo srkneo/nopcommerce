@@ -462,8 +462,6 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.UPS
                 shippingOption.Rate += additionalHandlingCharge;
             }
 
-            if (String.IsNullOrEmpty(error))
-                error = "Shipping options could not be loaded";
             return shippingOptions;
         }
 
