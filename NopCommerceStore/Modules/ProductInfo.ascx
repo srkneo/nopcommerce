@@ -11,7 +11,9 @@
 
 <div class="product-details-info">
     <div class="picture">
-        <asp:Image ID="defaultImage" runat="server" />
+        <a href="<%= DefaultPictureUrl %>" rel="lightbox-p" title="<%= lProductName.Text%>">
+            <asp:Image ID="defaultImage" runat="server" />
+        </a>
     </div>
     <div class="overview">
         <h3 class="productname">

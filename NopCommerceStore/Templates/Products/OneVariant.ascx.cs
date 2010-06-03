@@ -228,6 +228,27 @@ namespace NopSolutions.NopCommerce.Web.Templates.Products
             }
         }
 
+        public string DefaultPictureUrl
+        {
+            get
+            {
+                var product = ProductManager.GetProductById(this.ProductId);
+                if(product == null)
+                {
+                    return String.Empty;
+                }
+                ProductPicture pic = product.DefaultProductPicture;
+                if(pic == null)
+                {
+                    return PictureManager.GetDefaultPictureUrl(SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
+                }
+                else
+                {
+                    return PictureManager.GetPictureUrl(pic.PictureId);
+                }
+            }
+        }
+
         protected void OnCommand(object source, CommandEventArgs e)
         {
             var pv = ProductVariant;
