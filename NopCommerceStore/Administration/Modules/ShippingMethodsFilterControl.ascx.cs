@@ -4,6 +4,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
+using System.Text;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -73,6 +74,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         Literal lc = new Literal();
                         lc.Text = "<b>" + _columnName + "</b>";
                         container.Controls.Add(lc);
+                        if(_shippingMethodId != 0)
+                        {
+                            CheckBox cbSelectAll = new CheckBox();
+                            cbSelectAll.CssClass = String.Format("cbSelectAll_{0}", _shippingMethodId);
+                            container.Controls.Add(cbSelectAll);
+                        }
                         break;
 
                     case DataControlRowType.DataRow:
@@ -86,6 +93,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                             case "Checkbox":
                                 ctrl = new CheckBox();
                                 ctrl.ID = String.Format("cbRestrict_{0}", _shippingMethodId);
+                                ctrl.CssClass = String.Format("cbRestrict_{0}", _shippingMethodId);
                                 HiddenField hfCountryId = new HiddenField();
                                 hfCountryId.ID = String.Format("hfCountryId_{0}", _shippingMethodId);
                                 hfCountryId.DataBinding += new EventHandler(hfCountryId_DataBinding);
@@ -134,14 +142,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             tfAction.HeaderTemplate = new NopGridViewCustomTemplate(DataControlRowType.Header, GetLocaleResourceString("Admin.ShippingMethodsFilterControl.Grid.CountryName"), "String");
             gvShippingMethodCountryMap.Columns.Add(tfAction);
 
-            ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
-            foreach(ShippingMethod shippingMethod in shippingMethodCollection)
+            StringBuilder scriptBuilder = new StringBuilder();
+            scriptBuilder.Append("$(document).ready(function() {");
+            foreach(ShippingMethod shippingMethod in ShippingMethodManager.GetAllShippingMethods())
             {
                 TemplateField tf = new TemplateField();
                 tf.ItemTemplate = new NopGridViewCustomTemplate(DataControlRowType.DataRow, "Restrict", "Checkbox", shippingMethod.ShippingMethodId);
-                tf.HeaderTemplate = new NopGridViewCustomTemplate(DataControlRowType.Header, shippingMethod.Name, "String");
+                tf.HeaderTemplate = new NopGridViewCustomTemplate(DataControlRowType.Header, shippingMethod.Name, "String", shippingMethod.ShippingMethodId);
                 gvShippingMethodCountryMap.Columns.Add(tf);
+
+                scriptBuilder.AppendFormat("$('.cbSelectAll_{0} input').bind('click', function() {{ $('.cbRestrict_{0} input').each(function() {{ this.checked = $('.cbSelectAll_{0} input')[0].checked; }}) }});", shippingMethod.ShippingMethodId);
+                scriptBuilder.AppendFormat("$('.cbRestrict_{0} input').bind('click', function() {{ if (this.checked == false) $('.cbSelectAll_{0} input')[0].checked = false; }});", shippingMethod.ShippingMethodId);
             }
+            scriptBuilder.Append("});");
+
+            string script = scriptBuilder.ToString();
+            Page.ClientScript.RegisterClientScriptBlock(GetType(), script.GetHashCode().ToString(), script, true);
         }
 
         protected void BindGrid()
@@ -180,6 +196,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected override void OnInit(EventArgs e)
         {
+            BindJQuery();
             BuildColumnsDynamically();
             base.OnInit(e);
         }
