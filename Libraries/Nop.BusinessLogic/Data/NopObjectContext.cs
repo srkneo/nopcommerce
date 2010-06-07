@@ -28,13 +28,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
     {
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the Address class
+        /// Creates a new instance of the NopObjectContext class
         /// </summary>
         public NopObjectContext()
-            : base("name=NopEntities", "NopEntities")
+            : this("name=NopEntities")
+        {
+
+        }
+        
+        /// <summary>
+        /// Creates a new instance of the NopObjectContext class
+        /// </summary>
+        /// <param name="connectionString">Connection String</param>
+        public NopObjectContext(string connectionString)
+            : base(connectionString, "NopEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
-
         }
         #endregion
 

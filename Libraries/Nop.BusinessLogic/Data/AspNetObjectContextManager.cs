@@ -37,9 +37,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         {
             get
             {
+                string connectionString = ObjectContextHelper.GetEntityConnectionString();
                 if (HttpContext.Current == null)
                 {
-                    return new T();
+                    T context = Activator.CreateInstance(typeof(T), new object[] { connectionString }) as T;
+                    return context;
                 }
 
                 string ocKey = "nopocm_" + HttpContext.Current.GetHashCode().ToString("x");
@@ -48,7 +50,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
                 {
                     if (!HttpContext.Current.Items.Contains(ocKey))
                     {
-                        HttpContext.Current.Items.Add(ocKey, new T());
+                        T context = Activator.CreateInstance(typeof(T), new object[] { connectionString }) as T;
+                        HttpContext.Current.Items.Add(ocKey, context);
                         Debug.WriteLine("AspNetObjectContextManager: Created new ObjectContext");
                     }
                 }

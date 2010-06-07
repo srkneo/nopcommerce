@@ -14,8 +14,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Data
@@ -26,6 +28,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
     public class ObjectContextHelper
     {
         private static ObjectContextManager<NopObjectContext> _objectContextManager;
+        private static string _connectionString;
 
         /// <summary>
         /// Returns the current ObjectContextManager instance. Encapsulated the 
@@ -56,8 +59,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         /// </summary>
         private static void InstantiateObjectContextManager()
         {
-            //created ASP.NET now
+            //create ASP.NET now
             ObjectContextManager = new AspNetObjectContextManager<NopObjectContext>();
+        }
+
+        /// <summary>
+        /// Gets a connection string
+        /// </summary>
+        /// <returns>Connection string</returns>
+        public static string GetEntityConnectionString()
+        {
+            if (_connectionString == null)
+            {
+                var ecsbuilder = new EntityConnectionStringBuilder();
+                ecsbuilder.Provider = "System.Data.SqlClient";
+                ecsbuilder.ProviderConnectionString = NopConfig.ConnectionString;
+                ecsbuilder.Metadata = @"res://*/Data.NopModel.csdl|res://*/Data.NopModel.ssdl|res://*/Data.NopModel.msl";
+                _connectionString = ecsbuilder.ToString();
+            }
+            return _connectionString;
         }
     }
 }
