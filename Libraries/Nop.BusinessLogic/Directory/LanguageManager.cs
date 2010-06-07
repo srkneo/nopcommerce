@@ -47,13 +47,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="languageId">Language identifier</param>
         public static void DeleteLanguage(int languageId)
         {
-            using (NopObjectContext context = new NopObjectContext())
-            {
-                var language = GetLanguageById(languageId);
-                context.Languages.Attach(language);
-                context.DeleteObject(language);
-                context.SaveChanges();
-            }
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var language = GetLanguageById(languageId);
+            context.DeleteObject(language);
+            context.SaveChanges();
 
             if (LanguageManager.CacheEnabled)
             {
@@ -85,20 +82,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return (ICollection<Language>)obj2;
             }
 
-            using (NopObjectContext context = new NopObjectContext())
-            {
-                var query = from l in context.Languages
-                            orderby l.DisplayOrder
-                            where showHidden || l.Published
-                            select l;
-                var languages = query.ToList();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from l in context.Languages
+                        orderby l.DisplayOrder
+                        where showHidden || l.Published
+                        select l;
+            var languages = query.ToList();
 
-                if (LanguageManager.CacheEnabled)
-                {
-                    NopCache.Max(key, languages);
-                }
-                return languages;
+            if (LanguageManager.CacheEnabled)
+            {
+                NopCache.Max(key, languages);
             }
+            return languages;
         }
 
         /// <summary>
@@ -117,20 +112,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             {
                 return (Language)obj2;
             }
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from l in context.Languages
+                        where l.LanguageId == languageId
+                        select l;
+            var language = query.SingleOrDefault();
 
-            using (NopObjectContext context = new NopObjectContext())
+            if (LanguageManager.CacheEnabled)
             {
-                var query = from l in context.Languages
-                            where l.LanguageId == languageId
-                            select l;
-                var language = query.SingleOrDefault();
-
-                if (LanguageManager.CacheEnabled)
-                {
-                    NopCache.Max(key, language);
-                }
-                return language;
+                NopCache.Max(key, language);
             }
+            return language;
         }
 
         /// <summary>
@@ -145,23 +138,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static Language InsertLanguage(string name, string languageCulture,
             string flagImageFileName, bool published, int displayOrder)
         {
-            using (NopObjectContext context = new NopObjectContext())
-            {
-                var language = new Language();
-                language.Name = name;
-                language.LanguageCulture = languageCulture;
-                language.FlagImageFileName = flagImageFileName;
-                language.Published = published;
-                language.DisplayOrder = displayOrder;
-                context.Languages.AddObject(language);
-                context.SaveChanges();
+            var language = new Language();
+            language.Name = name;
+            language.LanguageCulture = languageCulture;
+            language.FlagImageFileName = flagImageFileName;
+            language.Published = published;
+            language.DisplayOrder = displayOrder;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Languages.AddObject(language);
+            context.SaveChanges();
 
-                if (LanguageManager.CacheEnabled)
-                {
-                    NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
-                }
-                return language;
+            if (LanguageManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
             }
+            return language;
         }
 
         /// <summary>
@@ -178,23 +170,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string name, string languageCulture,
             string flagImageFileName, bool published, int displayOrder)
         {
-            using (NopObjectContext context = new NopObjectContext())
-            {
-                var language = GetLanguageById(languageId);
-                context.Languages.Attach(language);
-                language.Name = name;
-                language.LanguageCulture = languageCulture;
-                language.FlagImageFileName = flagImageFileName;
-                language.Published = published;
-                language.DisplayOrder = displayOrder;
-                context.SaveChanges();
+            var language = GetLanguageById(languageId);
+            language.Name = name;
+            language.LanguageCulture = languageCulture;
+            language.FlagImageFileName = flagImageFileName;
+            language.Published = published;
+            language.DisplayOrder = displayOrder;
 
-                if (LanguageManager.CacheEnabled)
-                {
-                    NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
-                }
-                return language;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.SaveChanges();
+
+            if (LanguageManager.CacheEnabled)
+            {
+                NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
             }
+            return language;
         }
         #endregion
 

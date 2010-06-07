@@ -139,6 +139,14 @@
     <Compile Include="Customer\CustomerRegistrationTypeEnum.cs" />
     <Compile Include="Customer\DeleteExpiredCustomerSessionsTask.cs" />
     <Compile Include="Caching\ClearCacheTask.cs" />
+    <Compile Include="Data\AspNetObjectContextManager.cs" />
+    <Compile Include="Data\AspNetObjectContextDisposalModule.cs" />
+    <Compile Include="Data\UnitOfWorkScope.cs" />
+    <Compile Include="Data\ObjectContextHelper.cs" />
+    <Compile Include="Data\StaticObjectContextManager.cs" />
+    <Compile Include="Data\ScopedObjectContextManager.cs" />
+    <Compile Include="Data\ObjectContextScope.cs" />
+    <Compile Include="Data\ObjectContextManager.cs" />
     <Compile Include="Data\NopObjectContext.cs" />
     <Compile Include="ExportImport\ExcelHelper.cs" />
     <Compile Include="ExportImport\ExcelHelperReadTableMode.cs" />
