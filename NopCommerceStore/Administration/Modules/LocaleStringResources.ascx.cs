@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlLanguage.Items.Clear();
             ListItem ddlLanguageItem = new ListItem(GetLocaleResourceString("Admin.LocaleStringResources.SelectLanguage"), "0");
             this.ddlLanguage.Items.Add(ddlLanguageItem);
-            LanguageCollection languageCollection = LanguageManager.GetAllLanguages();
+            var languageCollection = LanguageManager.GetAllLanguages();
             foreach (Language language in languageCollection)
             {
                 ListItem ddlLanguageItem2 = new ListItem(language.Name, language.LanguageId.ToString());

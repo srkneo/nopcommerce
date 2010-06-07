@@ -14,12 +14,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
+using System.Data.Objects;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Directory;
 
@@ -36,39 +40,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         private const string LANGUAGES_PATTERN_KEY = "Nop.language.";
         #endregion
 
-        #region Utilities
-        private static LanguageCollection DBMapping(DBLanguageCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new LanguageCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Language DBMapping(DBLanguage dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Language();
-            item.LanguageId = dbItem.LanguageId;
-            item.Name = dbItem.Name;
-            item.LanguageCulture = dbItem.LanguageCulture;
-            item.FlagImageFileName = dbItem.FlagImageFileName;
-            item.Published = dbItem.Published;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Deletes a language
@@ -76,8 +47,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="languageId">Language identifier</param>
         public static void DeleteLanguage(int languageId)
         {
-            var language = GetLanguageById(languageId);
-            DBProviderManager<DBLanguageProvider>.Provider.DeleteLanguage(languageId);
+            using (NopObjectContext context = new NopObjectContext())
+            {
+                var language = GetLanguageById(languageId);
+                context.Languages.Attach(language);
+                context.DeleteObject(language);
+                context.SaveChanges();
+            }
+
             if (LanguageManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
@@ -88,10 +65,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all languages
         /// </summary>
         /// <returns>Language collection</returns>
-        public static LanguageCollection GetAllLanguages()
+        public static ICollection<Language> GetAllLanguages()
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            return GetAllLanguages(showHidden);
+            return (ICollection<Language>)GetAllLanguages(showHidden);
         }
 
         /// <summary>
@@ -99,23 +76,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Language collection</returns>
-        public static LanguageCollection GetAllLanguages(bool showHidden)
+        public static ICollection<Language> GetAllLanguages(bool showHidden)
         {
             string key = string.Format(LANGUAGES_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (LanguageManager.CacheEnabled && (obj2 != null))
             {
-                return (LanguageCollection)obj2;
+                return (ICollection<Language>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBLanguageProvider>.Provider.GetAllLanguages(showHidden);
-            var languageCollection = DBMapping(dbCollection);
-
-            if (LanguageManager.CacheEnabled)
+            using (NopObjectContext context = new NopObjectContext())
             {
-                NopCache.Max(key, languageCollection);
+                var query = from l in context.Languages
+                            orderby l.DisplayOrder
+                            where showHidden || l.Published
+                            select l;
+                var languages = query.ToList();
+
+                if (LanguageManager.CacheEnabled)
+                {
+                    NopCache.Max(key, languages);
+                }
+                return languages;
             }
-            return languageCollection;
         }
 
         /// <summary>
@@ -135,14 +118,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return (Language)obj2;
             }
 
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.GetLanguageById(languageId);
-            var language = DBMapping(dbItem);
-
-            if (LanguageManager.CacheEnabled)
+            using (NopObjectContext context = new NopObjectContext())
             {
-                NopCache.Max(key, language);
+                var query = from l in context.Languages
+                            where l.LanguageId == languageId
+                            select l;
+                var language = query.SingleOrDefault();
+
+                if (LanguageManager.CacheEnabled)
+                {
+                    NopCache.Max(key, language);
+                }
+                return language;
             }
-            return language;
         }
 
         /// <summary>
@@ -157,15 +145,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static Language InsertLanguage(string name, string languageCulture,
             string flagImageFileName, bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.InsertLanguage(name,
-                languageCulture, flagImageFileName, published, displayOrder);
-            var language = DBMapping(dbItem);
-
-            if (LanguageManager.CacheEnabled)
+            using (NopObjectContext context = new NopObjectContext())
             {
-                NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
+                var language = new Language();
+                language.Name = name;
+                language.LanguageCulture = languageCulture;
+                language.FlagImageFileName = flagImageFileName;
+                language.Published = published;
+                language.DisplayOrder = displayOrder;
+                context.Languages.AddObject(language);
+                context.SaveChanges();
+
+                if (LanguageManager.CacheEnabled)
+                {
+                    NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
+                }
+                return language;
             }
-            return language;
         }
 
         /// <summary>
@@ -182,15 +178,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string name, string languageCulture,
             string flagImageFileName, bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBLanguageProvider>.Provider.UpdateLanguage(languageId,
-                name, languageCulture, flagImageFileName, published, displayOrder);
-            var language = DBMapping(dbItem);
-            if (LanguageManager.CacheEnabled)
+            using (NopObjectContext context = new NopObjectContext())
             {
-                NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
-            }
+                var language = GetLanguageById(languageId);
+                context.Languages.Attach(language);
+                language.Name = name;
+                language.LanguageCulture = languageCulture;
+                language.FlagImageFileName = flagImageFileName;
+                language.Published = published;
+                language.DisplayOrder = displayOrder;
+                context.SaveChanges();
 
-            return language;
+                if (LanguageManager.CacheEnabled)
+                {
+                    NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
+                }
+                return language;
+            }
         }
         #endregion
 

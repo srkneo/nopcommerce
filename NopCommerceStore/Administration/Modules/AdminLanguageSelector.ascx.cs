@@ -26,7 +26,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindLanguages()
         {
-            LanguageCollection languages = LanguageManager.GetAllLanguages(false);
+            var languages = LanguageManager.GetAllLanguages(false);
             if (languages.Count > 1)
             {
                 this.Visible = true;

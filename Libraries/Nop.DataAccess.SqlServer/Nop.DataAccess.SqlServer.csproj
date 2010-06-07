@@ -111,7 +111,6 @@
     <Compile Include="Customer\SqlCustomerProvider.cs" />
     <Compile Include="Directory\SqlCountryProvider.cs" />
     <Compile Include="Directory\SqlCurrencyProvider.cs" />
-    <Compile Include="Directory\SqlLanguageProvider.cs" />
     <Compile Include="Directory\SqlStateProvinceProvider.cs" />
     <Compile Include="Localization\SqlLocaleStringResourceProvider.cs" />
     <Compile Include="Maintenance\SqlMaintenanceProvider.cs" />

@@ -13,6 +13,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -139,7 +140,7 @@ namespace NopSolutions.NopCommerce.Web
             return LocalizationManager.GetLocaleResourceString(resourceName, language.LanguageId);
         }
 
-        protected virtual LanguageCollection GetLocalizableLanguagesSupported()
+        protected virtual ICollection<Language> GetLocalizableLanguagesSupported()
         {
             return LanguageManager.GetAllLanguages(true);
         }

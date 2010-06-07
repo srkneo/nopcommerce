@@ -69,7 +69,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             //languages
-            LanguageCollection publishedLanguages = LanguageManager.GetAllLanguages(false);
+            var publishedLanguages = LanguageManager.GetAllLanguages(false);
             foreach (MessageTemplate messageTemplate in MessageManager.GetAllMessageTemplates())
             {
                 foreach (Language language in publishedLanguages)

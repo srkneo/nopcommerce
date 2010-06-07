@@ -210,7 +210,6 @@
     <Compile Include="Customer\DBCustomerProvider.cs" />
     <Compile Include="Promo\Discounts\DBDiscountProvider.cs" />
     <Compile Include="Media\DBDownloadProvider.cs" />
-    <Compile Include="Directory\DBLanguageProvider.cs" />
     <Compile Include="Localization\DBLocaleStringResourceProvider.cs" />
     <Compile Include="Audit\DBLogProvider.cs" />
     <Compile Include="Manufacturers\DBManufacturerProvider.cs" />
@@ -243,8 +242,6 @@
     <Compile Include="Directory\DBCountryCollection.cs" />
     <Compile Include="Directory\DBCurrency.cs" />
     <Compile Include="Directory\DBCurrencyCollection.cs" />
-    <Compile Include="Directory\DBLanguage.cs" />
-    <Compile Include="Directory\DBLanguageCollection.cs" />
     <Compile Include="Directory\DBStateProvince.cs" />
     <Compile Include="Directory\DBStateProvinceCollection.cs" />
     <Compile Include="Localization\DBLocaleStringResource.cs" />

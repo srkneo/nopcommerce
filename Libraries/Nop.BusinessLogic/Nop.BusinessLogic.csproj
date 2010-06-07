@@ -35,7 +35,8 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -138,11 +139,6 @@
     <Compile Include="Customer\CustomerRegistrationTypeEnum.cs" />
     <Compile Include="Customer\DeleteExpiredCustomerSessionsTask.cs" />
     <Compile Include="Caching\ClearCacheTask.cs" />
-    <Compile Include="Data\NopModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NopModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Data\NopObjectContext.cs" />
     <Compile Include="ExportImport\ExcelHelper.cs" />
     <Compile Include="ExportImport\ExcelHelperReadTableMode.cs" />
@@ -381,7 +377,6 @@
     <Compile Include="Promo\Discounts\Discount.cs" />
     <Compile Include="Promo\Discounts\DiscountCollection.cs" />
     <Compile Include="Directory\Language.cs" />
-    <Compile Include="Directory\LanguageCollection.cs" />
     <Compile Include="Audit\Log.cs" />
     <Compile Include="Audit\LogCollection.cs" />
     <Compile Include="Manufacturers\Manufacturer.cs" />
@@ -502,10 +497,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <EntityDeploy Include="Data\NopModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>NopModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <EntityDeploy Include="Data\NopModel.edmx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
