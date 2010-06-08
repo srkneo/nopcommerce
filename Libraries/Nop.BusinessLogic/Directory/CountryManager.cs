@@ -136,7 +136,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                         where (showHidden || c.Published) && c.AllowsBilling
                         select c;
             var countryCollection = query.ToList();
-
+            
             if (CountryManager.CacheEnabled)
             {
                 NopCache.Max(key, countryCollection);

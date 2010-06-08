@@ -40,7 +40,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
                 lock (_lockObject)
                 {
                     if (_objectContext == null)
-                        _objectContext = new T();
+                    {
+                        string connectionString = ObjectContextHelper.GetEntityConnectionString();
+                        _objectContext = Activator.CreateInstance(typeof(T), new object[] { connectionString }) as T;
+                    }
                 }
 
                 return _objectContext;

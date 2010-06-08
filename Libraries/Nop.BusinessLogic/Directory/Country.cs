@@ -101,6 +101,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the state/provinces
+        /// </summary>
+        public virtual ICollection<StateProvince> NpStateProvinces { get; set; }
+
+        #endregion
     }
 
 }

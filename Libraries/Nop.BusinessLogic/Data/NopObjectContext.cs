@@ -26,6 +26,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
     /// </summary>
     public partial class NopObjectContext : ObjectContext
     {
+        private readonly Dictionary<Type, object> _entitySets;
+
         #region Ctor
         /// <summary>
         /// Creates a new instance of the NopObjectContext class
@@ -35,7 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         {
 
         }
-        
+
         /// <summary>
         /// Creates a new instance of the NopObjectContext class
         /// </summary>
@@ -43,11 +45,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         public NopObjectContext(string connectionString)
             : base(connectionString, "NopEntities")
         {
+            _entitySets = new Dictionary<Type, object>();
             this.ContextOptions.LazyLoadingEnabled = true;
         }
         #endregion
 
         #region Properties
+
+        public ObjectSet<T> EntitySet<T>()
+            where T : BaseEntity
+        {
+            var t = typeof(T);
+            object match;
+
+            if (!_entitySets.TryGetValue(t, out match))
+            {
+                match = CreateObjectSet<T>();
+                _entitySets.Add(t, match);
+            }
+
+            return (ObjectSet<T>)match;
+        }
 
         public ObjectSet<Country> Countries
         {
@@ -88,7 +106,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<StateProvince> _stateProvinces;
 
-        #endregion 
+        #endregion
     }
 
 }

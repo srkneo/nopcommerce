@@ -76,6 +76,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the country
+        /// </summary>
+        public virtual Country NpCountry { get; set; }
+
+        #endregion
     }
 
 }

@@ -102,6 +102,7 @@
           <Property Type="Int32" Name="NumericIsoCode" Nullable="false" />
           <Property Type="Boolean" Name="Published" Nullable="false" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="NpStateProvinces" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" FromRole="Nop_Country" ToRole="Nop_StateProvince" />
         </EntityType>
         <EntityType Name="StateProvince">
           <Key>
@@ -112,6 +113,7 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Abbreviation" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <NavigationProperty Name="NpCountry" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" FromRole="Nop_StateProvince" ToRole="Nop_Country" />
         </EntityType>
         <Association Name="FK_Nop_StateProvince_Nop_Country">
           <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Role="Nop_Country" Multiplicity="1" />
@@ -188,11 +190,11 @@
     <Diagrams>
       <Diagram Name="NopModel" ZoomLevel="86">
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9210009765625" IsExpanded="true" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="3.375" PointY="1" Height="2.5783902994791665" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="5.625" PointY="1.375" Height="1.7566536458333331" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="3.375" PointY="1" Height="2.7427376302083326" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="5.625" PointY="1.375" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
-          <ConnectorPoint PointX="4.875" PointY="2.2533268229166667" />
-          <ConnectorPoint PointX="5.625" PointY="2.2533268229166667" />
+          <ConnectorPoint PointX="4.875" PointY="2.33550048828125" />
+          <ConnectorPoint PointX="5.625" PointY="2.33550048828125" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>
