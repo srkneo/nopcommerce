@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlCountry.Items.Clear();
-            ICollection<Country> countryCollection = CountryManager.GetAllCountriesForRegistration();
+            List<Country> countryCollection = CountryManager.GetAllCountriesForRegistration();
             foreach (Country country in countryCollection)
             {
                 ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());

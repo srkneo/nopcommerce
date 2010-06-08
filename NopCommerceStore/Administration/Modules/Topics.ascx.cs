@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            TopicCollection topics = TopicManager.GetAllTopics();
+            var topics = TopicManager.GetAllTopics();
             gvTopics.DataSource = topics;
             gvTopics.DataBind();
         }

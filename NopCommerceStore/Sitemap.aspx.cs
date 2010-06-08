@@ -119,7 +119,7 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        private void WriteTopics(StringBuilder sb, TopicCollection topicCollection)
+        private void WriteTopics(StringBuilder sb, List<Topic> topicCollection)
         {
             foreach(Topic topic in topicCollection)
             {

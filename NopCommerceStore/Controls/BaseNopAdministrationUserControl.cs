@@ -140,7 +140,7 @@ namespace NopSolutions.NopCommerce.Web
             return LocalizationManager.GetLocaleResourceString(resourceName, language.LanguageId);
         }
 
-        protected virtual ICollection<Language> GetLocalizableLanguagesSupported()
+        protected virtual List<Language> GetLocalizableLanguagesSupported()
         {
             return LanguageManager.GetAllLanguages(true);
         }

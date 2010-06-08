@@ -107,7 +107,6 @@
     <Compile Include="Content\Forums\SqlForumProvider.cs" />
     <Compile Include="Content\News\SqlNewsProvider.cs" />
     <Compile Include="Content\Polls\SqlPollProvider.cs" />
-    <Compile Include="Content\Topics\SqlTopicProvider.cs" />
     <Compile Include="Customer\SqlCustomerProvider.cs" />
     <Compile Include="Directory\SqlCurrencyProvider.cs" />
     <Compile Include="Localization\SqlLocaleStringResourceProvider.cs" />

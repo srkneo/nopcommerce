@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets the state/provinces
         /// </summary>
-        public ICollection<StateProvince> StateProvinces
+        public List<StateProvince> StateProvinces
         {
             get
             {
@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets the state/provinces
         /// </summary>
-        public virtual ICollection<StateProvince> NpStateProvinces { get; set; }
+        public virtual List<StateProvince> NpStateProvinces { get; set; }
 
         #endregion
     }

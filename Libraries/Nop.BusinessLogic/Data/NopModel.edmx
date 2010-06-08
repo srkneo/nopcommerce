@@ -9,9 +9,19 @@
           <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_StateProvince" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_StateProvince" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Nop_StateProvince_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_StateProvince_Nop_Country">
             <End Role="Nop_Country" EntitySet="Nop_Country" />
             <End Role="Nop_StateProvince" EntitySet="Nop_StateProvince" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TopicLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TopicLocalized_Nop_Language">
+            <End Role="Nop_Language" EntitySet="Nop_Language" />
+            <End Role="Nop_TopicLocalized" EntitySet="Nop_TopicLocalized" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TopicLocalized_Nop_Topic" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TopicLocalized_Nop_Topic">
+            <End Role="Nop_Topic" EntitySet="Nop_Topic" />
+            <End Role="Nop_TopicLocalized" EntitySet="Nop_TopicLocalized" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Nop_Country">
@@ -50,6 +60,28 @@
           <Property Name="Abbreviation" Type="nvarchar" Nullable="false" MaxLength="30" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_Topic">
+          <Key>
+            <PropertyRef Name="TopicID" />
+          </Key>
+          <Property Name="TopicID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Nop_TopicLocalized">
+          <Key>
+            <PropertyRef Name="TopicLocalizedID" />
+          </Key>
+          <Property Name="TopicLocalizedID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TopicID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="MetaTitle" Type="nvarchar" Nullable="false" MaxLength="400" />
+          <Property Name="MetaKeywords" Type="nvarchar" Nullable="false" MaxLength="400" />
+          <Property Name="MetaDescription" Type="nvarchar" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Nop_StateProvince_Nop_Country">
           <End Role="Nop_Country" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -61,6 +93,34 @@
             </Principal>
             <Dependent Role="Nop_StateProvince">
               <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_TopicLocalized_Nop_Language">
+          <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_TopicLocalized" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_TopicLocalized">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_TopicLocalized_Nop_Topic">
+          <End Role="Nop_Topic" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_TopicLocalized" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Topic">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Nop_TopicLocalized">
+              <PropertyRef Name="TopicID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -76,6 +136,16 @@
             <End Role="Nop_Country" EntitySet="Countries" />
             <End Role="Nop_StateProvince" EntitySet="StateProvinces" />
           </AssociationSet>
+          <EntitySet Name="Topics" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" />
+          <EntitySet Name="LocalizedTopic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" />
+          <AssociationSet Name="FK_Nop_TopicLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Nop_TopicLocalized" EntitySet="LocalizedTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TopicLocalized_Nop_Topic" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic">
+            <End Role="Nop_Topic" EntitySet="Topics" />
+            <End Role="Nop_TopicLocalized" EntitySet="LocalizedTopic" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -87,6 +157,7 @@
           <Property Name="FlagImageFileName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Published" Type="Boolean" Nullable="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NpLocalizedTopics" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" FromRole="Language" ToRole="Nop_TopicLocalized" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -124,6 +195,55 @@
             </Principal>
             <Dependent Role="Nop_StateProvince">
               <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Type="Int32" Name="TopicId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NpLocalizedTopics" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" FromRole="Nop_Topic" ToRole="Nop_TopicLocalized" />
+        </EntityType>
+        <EntityType Name="LocalizedTopic">
+          <Key>
+            <PropertyRef Name="TopicLocalizedId" />
+          </Key>
+          <Property Type="Int32" Name="TopicLocalizedId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="TopicId" Nullable="false" />
+          <Property Type="Int32" Name="LanguageId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+          <Property Type="String" Name="MetaTitle" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaKeywords" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NpLanguage" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" FromRole="Nop_TopicLocalized" ToRole="Language" />
+          <NavigationProperty Name="NpTopic" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" FromRole="Nop_TopicLocalized" ToRole="Nop_Topic" />
+        </EntityType>
+        <Association Name="FK_Nop_TopicLocalized_Nop_Language">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Role="Language" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Role="Nop_TopicLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_TopicLocalized">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_TopicLocalized_Nop_Topic">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Role="Nop_Topic" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Role="Nop_TopicLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Topic">
+              <PropertyRef Name="TopicId" />
+            </Principal>
+            <Dependent Role="Nop_TopicLocalized">
+              <PropertyRef Name="TopicId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -168,6 +288,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Topics">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Topic">
+              <MappingFragment StoreEntitySet="Nop_Topic">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocalizedTopic">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic">
+              <MappingFragment StoreEntitySet="Nop_TopicLocalized">
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageID" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicID" />
+                <ScalarProperty Name="TopicLocalizedId" ColumnName="TopicLocalizedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -189,12 +333,25 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="NopModel" ZoomLevel="86">
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9210009765625" IsExpanded="true" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="3.375" PointY="1" Height="2.7427376302083326" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="5.625" PointY="1.375" Height="1.9210009765624996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="0.75" PointY="1.375" Height="2.0853483072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="2.75" PointY="5" Height="2.7427376302083317" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="5" PointY="5.375" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
-          <ConnectorPoint PointX="4.875" PointY="2.33550048828125" />
-          <ConnectorPoint PointX="5.625" PointY="2.33550048828125" />
+          <ConnectorPoint PointX="4.25" PointY="6.33550048828125" />
+          <ConnectorPoint PointX="5" PointY="6.33550048828125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="0.75" PointY="5.75" Height="1.4279589843749996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="3" PointY="1" Height="2.9070849609374996" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
+          <ConnectorPoint PointX="2.25" PointY="2.4176741536458337" />
+          <ConnectorPoint PointX="3" PointY="2.4176741536458337" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
+          <ConnectorPoint PointX="2.25" PointY="6.4639794921875" />
+          <ConnectorPoint PointX="2.5" PointY="6.4639794921875" />
+          <ConnectorPoint PointX="2.5" PointY="4.75" />
+          <ConnectorPoint PointX="3.75" PointY="4.75" />
+          <ConnectorPoint PointX="3.75" PointY="3.9070849609374996" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

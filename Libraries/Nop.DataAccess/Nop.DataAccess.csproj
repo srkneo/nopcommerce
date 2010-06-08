@@ -119,11 +119,6 @@
     <Compile Include="Content\Polls\DBPollAnswer.cs" />
     <Compile Include="Content\Polls\DBPollAnswerCollection.cs" />
     <Compile Include="Content\Polls\DBPollCollection.cs" />
-    <Compile Include="Content\Topics\DBLocalizedTopic.cs" />
-    <Compile Include="Content\Topics\DBLocalizedTopicCollection.cs" />
-    <Compile Include="Content\Topics\DBTopic.cs" />
-    <Compile Include="Content\Topics\DBTopicCollection.cs" />
-    <Compile Include="Content\Topics\DBTopicProvider.cs" />
     <Compile Include="Customer\DBAddress.cs" />
     <Compile Include="Customer\DBAddressCollection.cs" />
     <Compile Include="Customer\DBCustomer.cs" />

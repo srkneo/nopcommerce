@@ -209,10 +209,8 @@
     <Compile Include="Products\Specs\SpecificationAttributeOptionFilterCollection.cs" />
     <Compile Include="Profile\CustomerNameFormatEnum.cs" />
     <Compile Include="Content\Topics\LocalizedTopic.cs" />
-    <Compile Include="Content\Topics\LocalizedTopicCollection.cs" />
     <Compile Include="Content\Topics\TopicManager.cs" />
     <Compile Include="Content\Topics\Topic.cs" />
-    <Compile Include="Content\Topics\TopicCollection.cs" />
     <Compile Include="Media\PictureTypeEnum.cs" />
     <Compile Include="Products\TierPriceCollection.cs" />
     <Compile Include="Products\TierPrice.cs" />

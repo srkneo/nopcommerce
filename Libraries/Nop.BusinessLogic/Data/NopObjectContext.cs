@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 
@@ -105,6 +106,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<StateProvince> _stateProvinces;
+
+        public ObjectSet<Topic> Topics
+        {
+            get
+            {
+                if ((_topics == null))
+                {
+                    _topics = CreateObjectSet<Topic>();
+                }
+                return _topics;
+            }
+        }
+        private ObjectSet<Topic> _topics;
+
+        public ObjectSet<LocalizedTopic> LocalizedTopics
+        {
+            get
+            {
+                if ((_localizedTopics == null))
+                {
+                    _localizedTopics = CreateObjectSet<LocalizedTopic>();
+                }
+                return _localizedTopics;
+            }
+        }
+        private ObjectSet<LocalizedTopic> _localizedTopics;
 
         #endregion
     }

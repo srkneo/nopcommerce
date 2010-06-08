@@ -14,11 +14,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Web;
+using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.Common.Utils;
-using System.IO;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Directory
@@ -96,6 +97,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return url;
             }
         }
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized topic
+        /// </summary>
+        public virtual List<LocalizedTopic> NpLocalizedTopics { get; set; }
+
         #endregion
     }
 }

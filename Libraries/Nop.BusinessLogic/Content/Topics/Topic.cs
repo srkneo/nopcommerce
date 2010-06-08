@@ -44,6 +44,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// </summary>
         public string Name { get; set; }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized topic
+        /// </summary>
+        public virtual List<LocalizedTopic> NpLocalizedTopics { get; set; }
+
+        #endregion
     }
 
 }

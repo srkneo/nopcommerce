@@ -18,25 +18,18 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Web;
-using NopSolutions.NopCommerce.BusinessLogic.Audit;
-using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
-using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
-using NopSolutions.NopCommerce.BusinessLogic.Orders;
-using NopSolutions.NopCommerce.BusinessLogic.Payment;
-using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.SEO;
-using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Content.Topics;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
 {
@@ -45,72 +38,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
     /// </summary>
     public partial class TopicManager
     {
-        #region Utilities
-
-        private static TopicCollection DBMapping(DBTopicCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new TopicCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Topic DBMapping(DBTopic dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Topic();
-            item.TopicId = dbItem.TopicId;
-            item.Name = dbItem.Name;
-
-            return item;
-        }
-
-        private static LocalizedTopicCollection DBMapping(DBLocalizedTopicCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new LocalizedTopicCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static LocalizedTopic DBMapping(DBLocalizedTopic dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new LocalizedTopic();
-            item.TopicLocalizedId = dbItem.TopicLocalizedId;
-            item.TopicId = dbItem.TopicId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Title = dbItem.Title;
-            item.Body = dbItem.Body;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-            item.MetaDescription = dbItem.MetaDescription;
-            item.MetaKeywords = dbItem.MetaKeywords;
-            item.MetaTitle = dbItem.MetaTitle;
-
-            return item;
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -119,7 +46,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <param name="topicId">Topic identifier</param>
         public static void DeleteTopic(int topicId)
         {
-            DBProviderManager<DBTopicProvider>.Provider.DeleteTopic(topicId);
+            var topic = GetTopicById(topicId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Topics.Attach(topic);
+            context.DeleteObject(topic);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -129,8 +61,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <returns>Topic</returns>
         public static Topic InsertTopic(string name)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.InsertTopic(name);
-            var topic = DBMapping(dbItem);
+            var topic = new Topic();
+            topic.Name = name;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Topics.AddObject(topic);
+            context.SaveChanges();
+
             return topic;
         }
 
@@ -142,8 +79,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <returns>Topic</returns>
         public static Topic UpdateTopic(int topicId, string name)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.UpdateTopic(topicId, name);
-            var topic = DBMapping(dbItem);
+            var topic = GetTopicById(topicId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Topics.Attach(topic);
+
+            topic.Name = name;
+            context.SaveChanges();
+
             return topic;
         }
 
@@ -157,20 +100,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             if (topicId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetTopicById(topicId);
-            var Topic = DBMapping(dbItem);
-            return Topic;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from t in context.Topics
+                        where t.TopicId == topicId
+                        select t;
+            var topic = query.SingleOrDefault();
+
+            return topic;
         }
 
         /// <summary>
         /// Gets all topics
         /// </summary>
         /// <returns>topic collection</returns>
-        public static TopicCollection GetAllTopics()
+        public static List<Topic> GetAllTopics()
         {
-            var dbCollection = DBProviderManager<DBTopicProvider>.Provider.GetAllTopics();
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from t in context.Topics
+                        orderby t.Name
+                        select t;
+            var topics = query.ToList();
+
+            return topics;
         }
 
         /// <summary>
@@ -182,9 +133,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         {
             if (localizedTopicId == 0)
                 return null;
-
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopicById(localizedTopicId);
-            var localizedTopic = DBMapping(dbItem);
+           
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tl in context.LocalizedTopics
+                        where tl.TopicLocalizedId == localizedTopicId
+                        select tl;
+            var localizedTopic = query.SingleOrDefault();
             return localizedTopic;
         }
 
@@ -196,21 +150,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <returns>Localized topic</returns>
         public static LocalizedTopic GetLocalizedTopic(int topicId, int languageId)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopic(topicId, languageId);
-            var localizedTopic = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tl in context.LocalizedTopics
+                        where tl.TopicId == topicId &&
+                        tl.LanguageId == languageId 
+                        select tl;
+            var localizedTopic = query.FirstOrDefault();
+
             return localizedTopic;
         }
         
         /// <summary>
         /// Gets a localized topic by name and language identifier
         /// </summary>
-        /// <param name="name">topic name</param>
+        /// <param name="topicName">Topic name</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Localized topic</returns>
-        public static LocalizedTopic GetLocalizedTopic(string name, int languageId)
+        public static LocalizedTopic GetLocalizedTopic(string topicName, int languageId)
         {
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.GetLocalizedTopic(name, languageId);
-            var localizedTopic = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tl in context.LocalizedTopics
+                        join t in context.Topics on tl.TopicId equals t.TopicId
+                        where tl.LanguageId == languageId &&
+                        t.Name == topicName 
+                        select tl;
+            var localizedTopic = query.FirstOrDefault();
+
             return localizedTopic;
         }
 
@@ -220,7 +185,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <param name="localizedTopicId">topic identifier</param>
         public static void DeleteLocalizedTopic(int localizedTopicId)
         {
-            DBProviderManager<DBTopicProvider>.Provider.DeleteLocalizedTopic(localizedTopicId);
+            var localizedTopic = GetLocalizedTopicById(localizedTopicId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.LocalizedTopics.Attach(localizedTopic);
+            context.DeleteObject(localizedTopic);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -228,10 +198,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// </summary>
         /// <param name="topicName">topic name</param>
         /// <returns>Localized topic collection</returns>
-        public static LocalizedTopicCollection GetAllLocalizedTopics(string topicName)
+        public static List<LocalizedTopic> GetAllLocalizedTopics(string topicName)
         {
-            var dbCollection = DBProviderManager<DBTopicProvider>.Provider.GetAllLocalizedTopics(topicName);
-            var localizedTopics = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tl in context.LocalizedTopics
+                        join t in context.Topics on tl.TopicId equals t.TopicId
+                        where t.Name == topicName
+                        orderby tl.LanguageId
+                        select tl;
+            var localizedTopics = query.ToList();
             return localizedTopics;
         }
 
@@ -256,10 +231,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.InsertLocalizedTopic(topicId,
-                languageId, title, body, createdOn, updatedOn, metaKeywords, 
-                metaDescription, metaTitle);
-            var localizedTopic = DBMapping(dbItem);
+            var localizedTopic = new LocalizedTopic();
+            localizedTopic.TopicId = topicId;
+            localizedTopic.LanguageId = languageId;
+            localizedTopic.Title = title;
+            localizedTopic.Body = body;
+            localizedTopic.CreatedOn = createdOn;
+            localizedTopic.UpdatedOn = updatedOn;
+            localizedTopic.MetaKeywords = metaKeywords;
+            localizedTopic.MetaDescription = metaDescription;
+            localizedTopic.MetaTitle = metaTitle;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.LocalizedTopics.AddObject(localizedTopic);
+            context.SaveChanges();
+
             return localizedTopic;
         }
 
@@ -282,13 +268,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             DateTime createdOn, DateTime updatedOn,
             string metaKeywords, string metaDescription, string metaTitle)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
+            var localizedTopic = GetLocalizedTopicById(topicLocalizedId);
 
-            var dbItem = DBProviderManager<DBTopicProvider>.Provider.UpdateLocalizedTopic(topicLocalizedId,
-                topicId, languageId, title, body, createdOn, updatedOn, 
-                metaKeywords, metaDescription, metaTitle);
-            var localizedTopic = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.LocalizedTopics.Attach(localizedTopic);
+
+            localizedTopic.TopicId = topicId;
+            localizedTopic.LanguageId = languageId;
+            localizedTopic.Title = title;
+            localizedTopic.Body = body;
+            localizedTopic.CreatedOn = createdOn;
+            localizedTopic.UpdatedOn = updatedOn;
+            localizedTopic.MetaKeywords = metaKeywords;
+            localizedTopic.MetaDescription = metaDescription;
+            localizedTopic.MetaTitle = metaTitle;
+            context.SaveChanges();
+
             return localizedTopic;
         }
 

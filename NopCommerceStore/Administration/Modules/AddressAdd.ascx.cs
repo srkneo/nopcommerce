@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void FillCountryDropDowns()
         {
             this.ddlCountry.Items.Clear();
-            ICollection<Country> countryCollection = null;
+            List<Country> countryCollection = null;
             if (IsBillingAddress)
                 countryCollection = CountryManager.GetAllCountriesForBilling();
             else

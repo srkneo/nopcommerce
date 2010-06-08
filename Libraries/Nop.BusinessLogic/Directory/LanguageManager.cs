@@ -48,7 +48,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static void DeleteLanguage(int languageId)
         {
             var language = GetLanguageById(languageId);
+
             var context = ObjectContextHelper.CurrentObjectContext;
+            context.Languages.Attach(language);
             context.DeleteObject(language);
             context.SaveChanges();
 
@@ -62,10 +64,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all languages
         /// </summary>
         /// <returns>Language collection</returns>
-        public static ICollection<Language> GetAllLanguages()
+        public static List<Language> GetAllLanguages()
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            return (ICollection<Language>)GetAllLanguages(showHidden);
+            return (List<Language>)GetAllLanguages(showHidden);
         }
 
         /// <summary>
@@ -73,13 +75,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Language collection</returns>
-        public static ICollection<Language> GetAllLanguages(bool showHidden)
+        public static List<Language> GetAllLanguages(bool showHidden)
         {
             string key = string.Format(LANGUAGES_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (LanguageManager.CacheEnabled && (obj2 != null))
             {
-                return (ICollection<Language>)obj2;
+                return (List<Language>)obj2;
             }
 
             var context = ObjectContextHelper.CurrentObjectContext;
@@ -171,13 +173,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string flagImageFileName, bool published, int displayOrder)
         {
             var language = GetLanguageById(languageId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Languages.Attach(language);
+
             language.Name = name;
             language.LanguageCulture = languageCulture;
             language.FlagImageFileName = flagImageFileName;
             language.Published = published;
             language.DisplayOrder = displayOrder;
-
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SaveChanges();
 
             if (LanguageManager.CacheEnabled)

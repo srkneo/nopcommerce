@@ -45,10 +45,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="stateProvinceId">The state/province identifier</param>
         public static void DeleteStateProvince(int stateProvinceId)
         {
-            var context = ObjectContextHelper.CurrentObjectContext;
             var stateProvince = GetStateProvinceById(stateProvinceId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.StateProvinces.Attach(stateProvince);
             context.DeleteObject(stateProvince);
             context.SaveChanges();
+
             if (StateProvinceManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
@@ -105,13 +108,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// </summary>
         /// <param name="countryId">Country identifier</param>
         /// <returns>State/province collection</returns>
-        public static ICollection<StateProvince> GetStateProvincesByCountryId(int countryId)
+        public static List<StateProvince> GetStateProvincesByCountryId(int countryId)
         {
             string key = string.Format(STATEPROVINCES_ALL_KEY, countryId);
             object obj2 = NopCache.Get(key);
             if (StateProvinceManager.CacheEnabled && (obj2 != null))
             {
-                return (ICollection<StateProvince>)obj2;
+                return (List<StateProvince>)obj2;
             }
 
             var context = ObjectContextHelper.CurrentObjectContext;
@@ -171,12 +174,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             int countryId, string name, string abbreviation, int displayOrder)
         {
             var stateProvince = GetStateProvinceById(stateProvinceId);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.StateProvinces.Attach(stateProvince);
+
             stateProvince.CountryId = countryId;
             stateProvince.Name = name;
             stateProvince.Abbreviation = abbreviation;
             stateProvince.DisplayOrder = displayOrder;
-
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SaveChanges();
 
             if (StateProvinceManager.CacheEnabled)

@@ -50,7 +50,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static void DeleteCountry(int countryId)
         {
             var country = GetCountryById(countryId);
+
             var context = ObjectContextHelper.CurrentObjectContext;
+            context.Countries.Attach(country);
             context.DeleteObject(country);
             context.SaveChanges();
 
@@ -64,14 +66,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries
         /// </summary>
         /// <returns>Country collection</returns>
-        public static ICollection<Country> GetAllCountries()
+        public static List<Country> GetAllCountries()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (ICollection<Country>)obj2;
+                return (List<Country>)obj2;
             }
 
             var context = ObjectContextHelper.CurrentObjectContext;
@@ -92,14 +94,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries that allow registration
         /// </summary>
         /// <returns>Country collection</returns>
-        public static ICollection<Country> GetAllCountriesForRegistration()
+        public static List<Country> GetAllCountriesForRegistration()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_REGISTRATION_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (ICollection<Country>)obj2;
+                return (List<Country>)obj2;
             }
 
             var context = ObjectContextHelper.CurrentObjectContext;
@@ -120,14 +122,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries that allow billing
         /// </summary>
         /// <returns>Country collection</returns>
-        public static ICollection<Country> GetAllCountriesForBilling()
+        public static List<Country> GetAllCountriesForBilling()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_BILLING_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (ICollection<Country>)obj2;
+                return (List<Country>)obj2;
             }
 
             var context = ObjectContextHelper.CurrentObjectContext;
@@ -148,7 +150,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries that allow shipping
         /// </summary>
         /// <returns>Country collection</returns>
-        public static ICollection<Country> GetAllCountriesForShipping()
+        public static List<Country> GetAllCountriesForShipping()
         {
 
             bool showHidden = NopContext.Current.IsAdmin;
@@ -156,7 +158,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (ICollection<Country>)obj2;
+                return (List<Country>)obj2;
             }
 
             var context = ObjectContextHelper.CurrentObjectContext;
@@ -294,6 +296,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             bool published, int displayOrder)
         {
             var country = GetCountryById(countryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Countries.Attach(country);
+
             country.Name = name;
             country.AllowsRegistration = allowsRegistration;
             country.AllowsBilling = allowsBilling;
@@ -303,8 +309,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             country.NumericIsoCode = numericIsoCode;
             country.Published = published;
             country.DisplayOrder = displayOrder;
-
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SaveChanges();
             
             if (CountryManager.CacheEnabled)

@@ -38,6 +38,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Xml;
+using System.Collections;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
 {
