@@ -162,7 +162,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            CountryCollection countryCollection = CountryManager.GetAllCountries();
+            var countryCollection = CountryManager.GetAllCountries();
             ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
 
             if(countryCollection.Count == 0)

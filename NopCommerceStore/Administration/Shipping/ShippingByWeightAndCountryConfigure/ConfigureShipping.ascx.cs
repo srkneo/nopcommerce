@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
             }
 
             ddlCountry.Items.Clear();
-            CountryCollection countryCollection = CountryManager.GetAllCountries();
+            var countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
                 ListItem item = new ListItem(country.Name, country.CountryId.ToString());
@@ -140,7 +140,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
 
                 DropDownList ddlCountry = e.Row.FindControl("ddlCountry") as DropDownList;
                 ddlCountry.Items.Clear();
-                CountryCollection countryCollection = CountryManager.GetAllCountries();
+                var countryCollection = CountryManager.GetAllCountries();
                 foreach (Country country in countryCollection)
                 {
                     ListItem item = new ListItem(country.Name, country.CountryId.ToString());

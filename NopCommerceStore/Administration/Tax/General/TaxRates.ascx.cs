@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
         protected void FillCountryDropDowns()
         {
             this.ddlCountry.Items.Clear();
-            CountryCollection countryCollection = CountryManager.GetAllCountries();
+            var countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
                 ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
             this.ddlStateProvince.Items.Clear();
             int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
+            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             ListItem ddlStateProvinceItem = new ListItem("*", "0");
             this.ddlStateProvince.Items.Add(ddlStateProvinceItem);
             foreach (StateProvince stateProvince in stateProvinceCollection)

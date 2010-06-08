@@ -47,8 +47,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="languageId">Language identifier</param>
         public static void DeleteLanguage(int languageId)
         {
-            var context = ObjectContextHelper.CurrentObjectContext;
             var language = GetLanguageById(languageId);
+            var context = ObjectContextHelper.CurrentObjectContext;
             context.DeleteObject(language);
             context.SaveChanges();
 
@@ -112,7 +112,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             {
                 return (Language)obj2;
             }
-            
+
             var context = ObjectContextHelper.CurrentObjectContext;
             var query = from l in context.Languages
                         where l.LanguageId == languageId
@@ -144,7 +144,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             language.FlagImageFileName = flagImageFileName;
             language.Published = published;
             language.DisplayOrder = displayOrder;
-            
+
             var context = ObjectContextHelper.CurrentObjectContext;
             context.Languages.AddObject(language);
             context.SaveChanges();

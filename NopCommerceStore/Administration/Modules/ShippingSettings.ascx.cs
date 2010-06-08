@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlShippingOriginCountry.Items.Clear();
             ListItem selectCountryItem = new ListItem(GetLocaleResourceString("Admin.ShippingSettings.OriginCountry.SelectCountry"), "0");
             this.ddlShippingOriginCountry.Items.Add(selectCountryItem);
-            CountryCollection countryCollection = CountryManager.GetAllCountries();
+            var countryCollection = CountryManager.GetAllCountries();
             foreach (Country country in countryCollection)
             {
                 ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlShippingOriginStateProvince.Items.Clear();
             int countryId = int.Parse(this.ddlShippingOriginCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
+            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
                 ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());

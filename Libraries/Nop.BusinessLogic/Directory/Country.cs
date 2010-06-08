@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets the state/provinces
         /// </summary>
-        public StateProvinceCollection StateProvinces
+        public ICollection<StateProvince> StateProvinces
         {
             get
             {

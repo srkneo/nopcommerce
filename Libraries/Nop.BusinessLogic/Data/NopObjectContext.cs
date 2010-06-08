@@ -49,6 +49,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
 
         #region Properties
 
+        public ObjectSet<Country> Countries
+        {
+            get
+            {
+                if ((_countries == null))
+                {
+                    _countries = CreateObjectSet<Country>();
+                }
+                return _countries;
+            }
+        }
+        private ObjectSet<Country> _countries;
+
         public ObjectSet<Language> Languages
         {
             get
@@ -61,6 +74,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Language> _languages;
+
+        public ObjectSet<StateProvince> StateProvinces
+        {
+            get
+            {
+                if ((_stateProvinces == null))
+                {
+                    _stateProvinces = CreateObjectSet<StateProvince>();
+                }
+                return _stateProvinces;
+            }
+        }
+        private ObjectSet<StateProvince> _stateProvinces;
 
         #endregion 
     }

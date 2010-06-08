@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Directory;
 
@@ -39,44 +41,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         private const string COUNTRIES_BY_ID_KEY = "Nop.country.id-{0}";
         private const string COUNTRIES_PATTERN_KEY = "Nop.country.";
         #endregion
-
-        #region Utilities
-        private static CountryCollection DBMapping(DBCountryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CountryCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Country DBMapping(DBCountry dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Country();
-            item.CountryId = dbItem.CountryId;
-            item.Name = dbItem.Name;
-            item.AllowsRegistration = dbItem.AllowsRegistration;
-            item.AllowsBilling = dbItem.AllowsBilling;
-            item.AllowsShipping = dbItem.AllowsShipping;
-            item.TwoLetterIsoCode = dbItem.TwoLetterIsoCode;
-            item.ThreeLetterIsoCode = dbItem.ThreeLetterIsoCode;
-            item.NumericIsoCode = dbItem.NumericIsoCode;
-            item.Published = dbItem.Published;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-        #endregion
-
+        
         #region Methods
         /// <summary>
         /// Deletes a country
@@ -84,7 +49,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="countryId">Country identifier</param>
         public static void DeleteCountry(int countryId)
         {
-            DBProviderManager<DBCountryProvider>.Provider.DeleteCountry(countryId);
+            var country = GetCountryById(countryId);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.DeleteObject(country);
+            context.SaveChanges();
+
             if (CountryManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
@@ -95,18 +64,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries
         /// </summary>
         /// <returns>Country collection</returns>
-        public static CountryCollection GetAllCountries()
+        public static ICollection<Country> GetAllCountries()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (CountryCollection)obj2;
+                return (ICollection<Country>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCountryProvider>.Provider.GetAllCountries(showHidden);
-            var countryCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Countries
+                        orderby c.DisplayOrder, c.Name
+                        where showHidden || c.Published
+                        select c;
+            var countryCollection = query.ToList();
 
             if (CountryManager.CacheEnabled)
             {
@@ -119,18 +92,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries that allow registration
         /// </summary>
         /// <returns>Country collection</returns>
-        public static CountryCollection GetAllCountriesForRegistration()
+        public static ICollection<Country> GetAllCountriesForRegistration()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_REGISTRATION_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (CountryCollection)obj2;
+                return (ICollection<Country>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCountryProvider>.Provider.GetAllCountriesForRegistration(showHidden);
-            var countryCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Countries
+                        orderby c.DisplayOrder, c.Name
+                        where (showHidden || c.Published) && c.AllowsRegistration
+                        select c;
+            var countryCollection = query.ToList();
 
             if (CountryManager.CacheEnabled)
             {
@@ -143,18 +120,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries that allow billing
         /// </summary>
         /// <returns>Country collection</returns>
-        public static CountryCollection GetAllCountriesForBilling()
+        public static ICollection<Country> GetAllCountriesForBilling()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_BILLING_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (CountryCollection)obj2;
+                return (ICollection<Country>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCountryProvider>.Provider.GetAllCountriesForBilling(showHidden);
-            var countryCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Countries
+                        orderby c.DisplayOrder, c.Name
+                        where (showHidden || c.Published) && c.AllowsBilling
+                        select c;
+            var countryCollection = query.ToList();
 
             if (CountryManager.CacheEnabled)
             {
@@ -167,19 +148,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all countries that allow shipping
         /// </summary>
         /// <returns>Country collection</returns>
-        public static CountryCollection GetAllCountriesForShipping()
+        public static ICollection<Country> GetAllCountriesForShipping()
         {
+
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_SHIPPING_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
-                return (CountryCollection)obj2;
+                return (ICollection<Country>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCountryProvider>.Provider.GetAllCountriesForShipping(showHidden);
-            var countryCollection = DBMapping(dbCollection);
-
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Countries
+                        orderby c.DisplayOrder, c.Name
+                        where (showHidden || c.Published) && c.AllowsShipping
+                        select c;
+            var countryCollection = query.ToList();
+            
             if (CountryManager.CacheEnabled)
             {
                 NopCache.Max(key, countryCollection);
@@ -204,8 +190,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return (Country)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryById(countryId);
-            var country = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Countries
+                        where c.CountryId == countryId
+                        select c;
+            var country = query.SingleOrDefault();
 
             if (CountryManager.CacheEnabled)
             {
@@ -221,8 +210,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <returns>Country</returns>
         public static Country GetCountryByTwoLetterIsoCode(string twoLetterIsoCode)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryByTwoLetterIsoCode(twoLetterIsoCode);
-            var country = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Countries
+                        where c.TwoLetterIsoCode == twoLetterIsoCode
+                        select c;
+            var country = query.FirstOrDefault();
+
             return country;
         }
 
@@ -233,8 +226,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <returns>Country</returns>
         public static Country GetCountryByThreeLetterIsoCode(string threeLetterIsoCode)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.GetCountryByThreeLetterIsoCode(threeLetterIsoCode);
-            var country = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Countries
+                        where c.ThreeLetterIsoCode == threeLetterIsoCode
+                        select c;
+            var country = query.FirstOrDefault();
             return country;
         }
 
@@ -256,11 +252,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
             bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.InsertCountry(name,
-                allowsRegistration, allowsBilling, allowsShipping,
-                twoLetterIsoCode, threeLetterIsoCode, numericIsoCode, published,
-                displayOrder);
-            var country = DBMapping(dbItem);
+            var country = new Country();
+            country.Name = name;
+            country.AllowsRegistration = allowsRegistration;
+            country.AllowsBilling = allowsBilling;
+            country.AllowsShipping = allowsShipping;
+            country.TwoLetterIsoCode = twoLetterIsoCode;
+            country.ThreeLetterIsoCode = threeLetterIsoCode;
+            country.NumericIsoCode = numericIsoCode;
+            country.Published = published;
+            country.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Countries.AddObject(country);
+            context.SaveChanges();
 
             if (CountryManager.CacheEnabled)
             {
@@ -288,12 +293,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
             bool published, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCountryProvider>.Provider.UpdateCountry(countryId,
-                name, allowsRegistration, allowsBilling, allowsShipping,
-                twoLetterIsoCode, threeLetterIsoCode, numericIsoCode,
-                published, displayOrder);
-            var country = DBMapping(dbItem);
+            var country = GetCountryById(countryId);
+            country.Name = name;
+            country.AllowsRegistration = allowsRegistration;
+            country.AllowsBilling = allowsBilling;
+            country.AllowsShipping = allowsShipping;
+            country.TwoLetterIsoCode = twoLetterIsoCode;
+            country.ThreeLetterIsoCode = threeLetterIsoCode;
+            country.NumericIsoCode = numericIsoCode;
+            country.Published = published;
+            country.DisplayOrder = displayOrder;
 
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.SaveChanges();
+            
             if (CountryManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);

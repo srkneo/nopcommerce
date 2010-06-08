@@ -371,7 +371,6 @@
     <Compile Include="Templates\CategoryTemplateCollection.cs" />
     <Compile Include="Directory\Country.cs" />
     <Compile Include="Localization\LocaleStringResourceDictionary.cs" />
-    <Compile Include="Directory\CountryCollection.cs" />
     <Compile Include="Payment\CreditCardType.cs" />
     <Compile Include="Payment\CreditCardTypeCollection.cs" />
     <Compile Include="Directory\Currency.cs" />
@@ -418,7 +417,6 @@
     <Compile Include="Orders\ShoppingCartItem.cs" />
     <Compile Include="Orders\ShoppingCart.cs" />
     <Compile Include="Directory\StateProvince.cs" />
-    <Compile Include="Directory\StateProvinceCollection.cs" />
     <Compile Include="Tax\TaxRate.cs" />
     <Compile Include="Tax\TaxRateCollection.cs" />
     <Compile Include="Tax\TaxCategory.cs" />

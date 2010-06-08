@@ -155,7 +155,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillCountryDropDowns()
         {
             ddlCountry.Items.Clear();
-            CountryCollection countryCollection = CountryManager.GetAllCountriesForRegistration();
+            var countryCollection = CountryManager.GetAllCountriesForRegistration();
             foreach (Country country in countryCollection)
             {
                 ListItem ddlCountryItem2 = new ListItem(country.Name, country.CountryId.ToString());
@@ -170,7 +170,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (ddlCountry.SelectedItem != null)
                 countryId = int.Parse(ddlCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
+            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
                 ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());

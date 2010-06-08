@@ -18,6 +18,7 @@ using System.Web.UI.WebControls;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.Common.Utils;
+using System.Collections.Generic;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -60,7 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void FillCountryDropDowns(Address address)
         {
             this.ddlCountry.Items.Clear();
-            CountryCollection countryCollection = null;
+            ICollection<Country> countryCollection = null;
             if (address.IsBillingAddress)
                 countryCollection = CountryManager.GetAllCountriesForBilling();
             else
@@ -77,7 +78,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlStateProvince.Items.Clear();
             int countryId = int.Parse(this.ddlCountry.SelectedItem.Value);
 
-            StateProvinceCollection stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
+            var stateProvinceCollection = StateProvinceManager.GetStateProvincesByCountryId(countryId);
             foreach (StateProvince stateProvince in stateProvinceCollection)
             {
                 ListItem ddlStateProviceItem2 = new ListItem(stateProvince.Name, stateProvince.StateProvinceId.ToString());

@@ -23,6 +23,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using System.Collections.Generic;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -38,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            CountryCollection countryCollection = CountryManager.GetAllCountries();
+            ICollection<Country> countryCollection = CountryManager.GetAllCountries();
             gvCountries.DataSource = countryCollection;
             gvCountries.DataBind();
         }

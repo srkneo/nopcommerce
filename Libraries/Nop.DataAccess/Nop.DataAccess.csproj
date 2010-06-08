@@ -204,7 +204,6 @@
     <Compile Include="Security\DBBannedIpNetwork.cs" />
     <Compile Include="Security\DBBannedIpNetworkCollection.cs" />
     <Compile Include="Security\DBBlacklistProvider.cs" />
-    <Compile Include="Directory\DBCountryProvider.cs" />
     <Compile Include="Payment\DBCreditCardTypeProvider.cs" />
     <Compile Include="Directory\DBCurrencyProvider.cs" />
     <Compile Include="Customer\DBCustomerProvider.cs" />
@@ -233,17 +232,12 @@
     <Compile Include="Shipping\DBShippingStatusProvider.cs" />
     <Compile Include="Orders\DBShoppingCartProvider.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeProvider.cs" />
-    <Compile Include="Directory\DBStateProvinceProvider.cs" />
     <Compile Include="Tax\DBTaxRateProvider.cs" />
     <Compile Include="Tax\DBTaxCategoryProvider.cs" />
     <Compile Include="Tax\DBTaxProviderProvider.cs" />
     <Compile Include="Warehouses\DBWarehouseProvider.cs" />
-    <Compile Include="Directory\DBCountry.cs" />
-    <Compile Include="Directory\DBCountryCollection.cs" />
     <Compile Include="Directory\DBCurrency.cs" />
     <Compile Include="Directory\DBCurrencyCollection.cs" />
-    <Compile Include="Directory\DBStateProvince.cs" />
-    <Compile Include="Directory\DBStateProvinceCollection.cs" />
     <Compile Include="Localization\DBLocaleStringResource.cs" />
     <Compile Include="Localization\DBLocaleStringResourceCollection.cs" />
     <Compile Include="Manufacturers\DBManufacturer.cs" />

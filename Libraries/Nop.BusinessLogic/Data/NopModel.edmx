@@ -4,10 +4,31 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NopSolutions.NopCommerce.BusinessLogic.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="NopSolutions.NopCommerce.BusinessLogic.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="NopSolutionsNopCommerceBusinessLogicDataStoreContainer">
-          <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_StateProvince" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_StateProvince" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Nop_StateProvince_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_StateProvince_Nop_Country">
+            <End Role="Nop_Country" EntitySet="Nop_Country" />
+            <End Role="Nop_StateProvince" EntitySet="Nop_StateProvince" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Nop_Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="AllowsRegistration" Type="bit" Nullable="false" />
+          <Property Name="AllowsBilling" Type="bit" Nullable="false" />
+          <Property Name="AllowsShipping" Type="bit" Nullable="false" />
+          <Property Name="TwoLetterISOCode" Type="nvarchar" Nullable="false" MaxLength="2" />
+          <Property Name="ThreeLetterISOCode" Type="nvarchar" Nullable="false" MaxLength="3" />
+          <Property Name="NumericISOCode" Type="int" Nullable="false" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_Language">
           <Key>
             <PropertyRef Name="LanguageId" />
@@ -19,13 +40,42 @@
           <Property Name="Published" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <EntityType Name="Nop_StateProvince">
+          <Key>
+            <PropertyRef Name="StateProvinceID" />
+          </Key>
+          <Property Name="StateProvinceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CountryID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Abbreviation" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Nop_StateProvince_Nop_Country">
+          <End Role="Nop_Country" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_StateProvince" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_StateProvince" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Nop_StateProvince">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NopSolutions.NopCommerce.BusinessLogic.Data" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="NopEntities">
-          <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" />
+          <EntitySet Name="Languages" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" />
+          <EntitySet Name="Countries" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" />
+          <EntitySet Name="StateProvinces" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" />
+          <AssociationSet Name="FK_Nop_StateProvince_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country">
+            <End Role="Nop_Country" EntitySet="Countries" />
+            <End Role="Nop_StateProvince" EntitySet="StateProvinces" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -38,13 +88,50 @@
           <Property Name="Published" Type="Boolean" Nullable="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Type="Int32" Name="CountryId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="AllowsRegistration" Nullable="false" />
+          <Property Type="Boolean" Name="AllowsBilling" Nullable="false" />
+          <Property Type="Boolean" Name="AllowsShipping" Nullable="false" />
+          <Property Type="String" Name="TwoLetterIsoCode" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ThreeLetterIsoCode" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="NumericIsoCode" Nullable="false" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StateProvince">
+          <Key>
+            <PropertyRef Name="StateProvinceId" />
+          </Key>
+          <Property Type="Int32" Name="StateProvinceId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="CountryId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Abbreviation" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Nop_StateProvince_Nop_Country">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Role="Nop_Country" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Role="Nop_StateProvince" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Nop_StateProvince">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NopSolutionsNopCommerceBusinessLogicDataStoreContainer" CdmEntityContainer="NopEntities">
-          <EntitySetMapping Name="Nop_Language"><EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Language"><MappingFragment StoreEntitySet="Nop_Language">
+          <EntitySetMapping Name="Languages"><EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Language"><MappingFragment StoreEntitySet="Nop_Language">
             <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="LanguageCulture" ColumnName="LanguageCulture" />
@@ -52,6 +139,33 @@
             <ScalarProperty Name="Published" ColumnName="Published" />
             <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Country">
+              <MappingFragment StoreEntitySet="Nop_Country">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="NumericIsoCode" ColumnName="NumericISOCode" />
+                <ScalarProperty Name="ThreeLetterIsoCode" ColumnName="ThreeLetterISOCode" />
+                <ScalarProperty Name="TwoLetterIsoCode" ColumnName="TwoLetterISOCode" />
+                <ScalarProperty Name="AllowsShipping" ColumnName="AllowsShipping" />
+                <ScalarProperty Name="AllowsBilling" ColumnName="AllowsBilling" />
+                <ScalarProperty Name="AllowsRegistration" ColumnName="AllowsRegistration" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StateProvinces">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince">
+              <MappingFragment StoreEntitySet="Nop_StateProvince">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryID" />
+                <ScalarProperty Name="StateProvinceId" ColumnName="StateProvinceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -66,15 +180,21 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NopModel">
+      <Diagram Name="NopModel" ZoomLevel="86">
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9210009765625" IsExpanded="true" />
-      </Diagram>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="3.375" PointY="1" Height="2.5783902994791665" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="5.625" PointY="1.375" Height="1.7566536458333331" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
+          <ConnectorPoint PointX="4.875" PointY="2.2533268229166667" />
+          <ConnectorPoint PointX="5.625" PointY="2.2533268229166667" />
+        </AssociationConnector>
+        </Diagram>
     </Diagrams>
   </Designer>
 </edmx:Edmx>

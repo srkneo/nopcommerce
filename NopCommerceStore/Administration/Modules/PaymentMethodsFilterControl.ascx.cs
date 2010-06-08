@@ -181,7 +181,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            CountryCollection countryCollection = CountryManager.GetAllCountries();
+            var countryCollection = CountryManager.GetAllCountries();
             PaymentMethodCollection paymentMethodCollection = PaymentMethodManager.GetAllPaymentMethods(null, false);
 
             if(countryCollection.Count == 0)
