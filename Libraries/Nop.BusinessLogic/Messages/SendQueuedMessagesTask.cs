@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                 this._maxTries = int.Parse(attribute1.Value);
             }
 
-            QueuedEmailCollection queuedEmails = MessageManager.GetAllQueuedEmails(10000, true, _maxTries);
+            var queuedEmails = MessageManager.GetAllQueuedEmails(10000, true, _maxTries);
             foreach (QueuedEmail queuedEmail in queuedEmails)
             {
                 List<string> bcc = new List<string>();

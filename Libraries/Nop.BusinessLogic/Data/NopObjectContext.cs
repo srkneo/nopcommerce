@@ -18,6 +18,7 @@ using System.Data.Objects;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.BusinessLogic.Messages;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Data
@@ -94,6 +95,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<Language> _languages;
 
+        public ObjectSet<LocalizedTopic> LocalizedTopics
+        {
+            get
+            {
+                if ((_localizedTopics == null))
+                {
+                    _localizedTopics = CreateObjectSet<LocalizedTopic>();
+                }
+                return _localizedTopics;
+            }
+        }
+        private ObjectSet<LocalizedTopic> _localizedTopics;
+
+        public ObjectSet<QueuedEmail> QueuedEmails
+        {
+            get
+            {
+                if ((_queuedEmails == null))
+                {
+                    _queuedEmails = CreateObjectSet<QueuedEmail>();
+                }
+                return _queuedEmails;
+            }
+        }
+        private ObjectSet<QueuedEmail> _queuedEmails;
+
         public ObjectSet<StateProvince> StateProvinces
         {
             get
@@ -119,19 +146,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Topic> _topics;
-
-        public ObjectSet<LocalizedTopic> LocalizedTopics
-        {
-            get
-            {
-                if ((_localizedTopics == null))
-                {
-                    _localizedTopics = CreateObjectSet<LocalizedTopic>();
-                }
-                return _localizedTopics;
-            }
-        }
-        private ObjectSet<LocalizedTopic> _localizedTopics;
 
         #endregion
     }

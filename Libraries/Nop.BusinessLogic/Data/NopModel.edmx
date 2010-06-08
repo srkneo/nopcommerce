@@ -8,6 +8,7 @@
         <EntityContainer Name="NopSolutionsNopCommerceBusinessLogicDataStoreContainer">
           <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_StateProvince" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_StateProvince" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
@@ -49,6 +50,24 @@
           <Property Name="FlagImageFileName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Published" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_QueuedEmail">
+          <Key>
+            <PropertyRef Name="QueuedEmailID" />
+          </Key>
+          <Property Name="QueuedEmailID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="From" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="FromName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="To" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="ToName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="Cc" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="Bcc" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="Subject" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="SendTries" Type="int" Nullable="false" />
+          <Property Name="SentOn" Type="datetime" />
         </EntityType>
         <EntityType Name="Nop_StateProvince">
           <Key>
@@ -146,6 +165,7 @@
             <End Role="Nop_Topic" EntitySet="Topics" />
             <End Role="Nop_TopicLocalized" EntitySet="LocalizedTopic" />
           </AssociationSet>
+          <EntitySet Name="QueuedEmails" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QueuedEmail" />
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -247,6 +267,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="QueuedEmail">
+          <Key>
+            <PropertyRef Name="QueuedEmailId" />
+          </Key>
+          <Property Type="Int32" Name="QueuedEmailId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="Priority" Nullable="false" />
+          <Property Type="String" Name="From" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FromName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="To" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ToName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CC" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bcc" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="Int32" Name="SendTries" Nullable="false" />
+          <Property Type="DateTime" Name="SentOn" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -312,6 +350,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="QueuedEmails">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.QueuedEmail">
+              <MappingFragment StoreEntitySet="Nop_QueuedEmail">
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
+                <ScalarProperty Name="SendTries" ColumnName="SendTries" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Bcc" ColumnName="Bcc" />
+                <ScalarProperty Name="CC" ColumnName="Cc" />
+                <ScalarProperty Name="ToName" ColumnName="ToName" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="FromName" ColumnName="FromName" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="QueuedEmailId" ColumnName="QueuedEmailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -353,6 +410,7 @@
           <ConnectorPoint PointX="3.75" PointY="4.75" />
           <ConnectorPoint PointX="3.75" PointY="3.9070849609374996" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QueuedEmail" Width="2.625" PointX="5.375" PointY="0.75" Height="3.0714322916666665" />
         </Diagram>
     </Diagrams>
   </Designer>

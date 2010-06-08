@@ -22,7 +22,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
     /// <summary>
     /// Represents an queued email collection
     /// </summary>
-    public partial class QueuedEmailCollection : BaseEntityCollection<QueuedEmail>
-    {
-    }
+    //public partial class QueuedEmailCollection : BaseEntityCollection<QueuedEmail>
+    //{
+    //}
 }

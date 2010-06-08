@@ -173,8 +173,6 @@
     <Compile Include="Products\DBPricelistCollection.cs" />
     <Compile Include="Products\DBProductVariantPricelist.cs" />
     <Compile Include="Products\DBProductVariantPricelistCollection.cs" />
-    <Compile Include="Messages\DBQueuedEmail.cs" />
-    <Compile Include="Messages\DBQueuedEmailCollection.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOptionLocalized.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeLocalized.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOption.cs" />

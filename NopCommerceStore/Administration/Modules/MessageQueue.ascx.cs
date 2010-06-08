@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             bool loadNotSentItemsOnly = cbLoadNotSentItemsOnly.Checked;
             int maxSendTries = txtMaxSendTries.Value;
 
-            QueuedEmailCollection queuedEmails = MessageManager.GetAllQueuedEmails(fromEmail, toEmail,
+            var queuedEmails = MessageManager.GetAllQueuedEmails(fromEmail, toEmail,
                 startDate, endDate, 0, loadNotSentItemsOnly, maxSendTries);
             if (queuedEmails.Count > 0)
             {

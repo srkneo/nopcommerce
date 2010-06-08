@@ -18,9 +18,11 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
@@ -29,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Content.Blog;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Forums;
 using NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
@@ -45,7 +48,6 @@ using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Messages;
-using System.Text.RegularExpressions;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 {
@@ -112,44 +114,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             item.Subject = dbItem.Subject;
             item.Body = dbItem.Body;
             item.IsActive = dbItem.IsActive;
-
-            return item;
-        }
-
-        private static QueuedEmailCollection DBMapping(DBQueuedEmailCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new QueuedEmailCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static QueuedEmail DBMapping(DBQueuedEmail dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new QueuedEmail();
-            item.QueuedEmailId = dbItem.QueuedEmailId;
-            item.Priority = dbItem.Priority;
-            item.From = dbItem.From;
-            item.FromName = dbItem.FromName;
-            item.To = dbItem.To;
-            item.ToName = dbItem.ToName;
-            item.CC = dbItem.CC;
-            item.Bcc = dbItem.Bcc;
-            item.Subject = dbItem.Subject;
-            item.Body = dbItem.Body;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.SendTries = dbItem.SendTries;
-            item.SentOn = dbItem.SentOn;
 
             return item;
         }
@@ -558,8 +522,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             if (queuedEmailId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.GetQueuedEmailById(queuedEmailId);
-            var queuedEmail = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from qe in context.QueuedEmails
+                        where qe.QueuedEmailId == queuedEmailId
+                        select qe;
+            var queuedEmail = query.SingleOrDefault();
             return queuedEmail;
         }
 
@@ -569,7 +536,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <param name="queuedEmailId">Email item identifier</param>
         public static void DeleteQueuedEmail(int queuedEmailId)
         {
-            DBProviderManager<DBMessageProvider>.Provider.DeleteQueuedEmail(queuedEmailId);
+            var queuedEmail = GetQueuedEmailById(queuedEmailId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.QueuedEmails.Attach(queuedEmail);
+            context.DeleteObject(queuedEmail);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -579,7 +551,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <param name="loadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
         /// <param name="maxSendTries">Maximum send tries</param>
         /// <returns>Email item collection</returns>
-        public static QueuedEmailCollection GetAllQueuedEmails(int queuedEmailCount, 
+        public static List<QueuedEmail> GetAllQueuedEmails(int queuedEmailCount, 
             bool loadNotSentItemsOnly, int maxSendTries)
         {
             return GetAllQueuedEmails(string.Empty, string.Empty, null, null, 
@@ -597,7 +569,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <param name="loadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
         /// <param name="maxSendTries">Maximum send tries</param>
         /// <returns>Email item collection</returns>
-        public static QueuedEmailCollection GetAllQueuedEmails(string fromEmail,
+        public static List<QueuedEmail> GetAllQueuedEmails(string fromEmail,
             string toEmail, DateTime? startTime, DateTime? endTime,
             int queuedEmailCount, bool loadNotSentItemsOnly, int maxSendTries)
         {
@@ -609,10 +581,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                 toEmail = string.Empty;
             toEmail = toEmail.Trim();
 
-            var dbCollection = DBProviderManager<DBMessageProvider>.Provider.GetAllQueuedEmails(fromEmail,
-                toEmail, startTime, endTime, queuedEmailCount, 
-                loadNotSentItemsOnly, maxSendTries);
-            var queuedEmails = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = (IQueryable<QueuedEmail>)context.QueuedEmails;
+            if (!String.IsNullOrEmpty(fromEmail))
+                query = query.Where(qe => qe.From.Contains(fromEmail));
+            if (!String.IsNullOrEmpty(toEmail))
+                query = query.Where(qe => qe.To.Contains(toEmail));
+            if (startTime.HasValue)
+                query = query.Where(qe => startTime.Value <= qe.CreatedOn);
+            if (endTime.HasValue)
+                query = query.Where(qe => endTime.Value >= qe.CreatedOn);
+            if (loadNotSentItemsOnly)
+                query = query.Where(qe => !qe.SentOn.HasValue);
+            query = query.Where(qe => qe.SendTries < maxSendTries);
+            if (queuedEmailCount > 0)
+                query = query.Take(queuedEmailCount);
+            query = query.OrderByDescending(qe => qe.Priority).ThenBy(qe => qe.CreatedOn);
+
+            var queuedEmails = query.ToList();
+            
             return queuedEmails;
         }
 
@@ -666,9 +653,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             if (sentOn.HasValue)
                 sentOn = DateTimeHelper.ConvertToUtcTime(sentOn.Value);
 
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.InsertQueuedEmail(priority, from,
-                fromName, to, toName, cc, bcc, subject, body, createdOn, sendTries, sentOn);
-            var queuedEmail = DBMapping(dbItem);
+            var queuedEmail = new QueuedEmail();
+            queuedEmail.Priority = priority;
+            queuedEmail.From = from;
+            queuedEmail.FromName = fromName;
+            queuedEmail.To = to;
+            queuedEmail.ToName = toName;
+            queuedEmail.CC = cc;
+            queuedEmail.Bcc = bcc;
+            queuedEmail.Subject = subject;
+            queuedEmail.Body = body;
+            queuedEmail.CreatedOn = createdOn;
+            queuedEmail.SendTries = sendTries;
+            queuedEmail.SentOn = sentOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.QueuedEmails.AddObject(queuedEmail);
+            context.SaveChanges();
+
             return queuedEmail;
         }
 
@@ -698,10 +700,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             if (sentOn.HasValue)
                 sentOn = DateTimeHelper.ConvertToUtcTime(sentOn.Value);
 
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.UpdateQueuedEmail(queuedEmailId, 
-                priority, from, fromName, to, toName, cc, bcc, subject, body, 
-                createdOn, sendTries, sentOn);
-            var queuedEmail = DBMapping(dbItem);
+            var queuedEmail = GetQueuedEmailById(queuedEmailId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.QueuedEmails.Attach(queuedEmail);
+
+            queuedEmail.Priority = priority;
+            queuedEmail.From = from;
+            queuedEmail.FromName = fromName;
+            queuedEmail.To = to;
+            queuedEmail.ToName = toName;
+            queuedEmail.CC = cc;
+            queuedEmail.Bcc = bcc;
+            queuedEmail.Subject = subject;
+            queuedEmail.Body = body;
+            queuedEmail.CreatedOn = createdOn;
+            queuedEmail.SendTries = sendTries;
+            queuedEmail.SentOn = sentOn;
+            context.SaveChanges();
+
             return queuedEmail;
         }
 
