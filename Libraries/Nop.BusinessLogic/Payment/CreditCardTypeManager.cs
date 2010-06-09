@@ -17,11 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Payment;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 {
@@ -34,38 +34,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         private const string CREDITCARDS_ALL_KEY = "Nop.creditcard.all";
         private const string CREDITCARDS_BY_ID_KEY = "Nop.creditcard.id-{0}";
         private const string CREDITCARDS_PATTERN_KEY = "Nop.creditcard.";
-        #endregion
-
-        #region Utilities
-        private static CreditCardTypeCollection DBMapping(DBCreditCardTypeCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CreditCardTypeCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static CreditCardType DBMapping(DBCreditCardType dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CreditCardType();
-            item.CreditCardTypeId = dbItem.CreditCardTypeId;
-            item.Name = dbItem.Name;
-            item.SystemKeyword = dbItem.SystemKeyword;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.Deleted = dbItem.Deleted;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -86,8 +54,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return (CreditCardType)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.GetCreditCardTypeById(creditCardTypeId);
-            var creditCardType = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cct in context.CreditCardTypes
+                        where cct.CreditCardTypeId == creditCardTypeId
+                        select cct;
+            var creditCardType = query.SingleOrDefault();
 
             if (CreditCardTypeManager.CacheEnabled)
             {
@@ -105,7 +76,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             var creditCardType = GetCreditCardTypeById(creditCardTypeId);
             if (creditCardType != null)
             {
-                UpdateCreditCardType(creditCardType.CreditCardTypeId, creditCardType.Name, creditCardType.SystemKeyword, creditCardType.DisplayOrder, true);
+                UpdateCreditCardType(creditCardType.CreditCardTypeId, 
+                    creditCardType.Name, creditCardType.SystemKeyword, 
+                    creditCardType.DisplayOrder, true);
             }
             if (CreditCardTypeManager.CacheEnabled)
             {
@@ -117,17 +90,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// Gets all credit card types
         /// </summary>
         /// <returns>Credit card type collection</returns>
-        public static CreditCardTypeCollection GetAllCreditCardTypes()
+        public static List<CreditCardType> GetAllCreditCardTypes()
         {
             string key = string.Format(CREDITCARDS_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (CreditCardTypeManager.CacheEnabled && (obj2 != null))
             {
-                return (CreditCardTypeCollection)obj2;
+                return (List<CreditCardType>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCreditCardTypeProvider>.Provider.GetAllCreditCardTypes();
-            var creditCardTypeCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cct in context.CreditCardTypes
+                        orderby cct.DisplayOrder
+                        where !cct.Deleted
+                        select cct;
+            var creditCardTypeCollection = query.ToList();
 
             if (CreditCardTypeManager.CacheEnabled)
             {
@@ -147,9 +124,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         public static CreditCardType InsertCreditCardType(string name,
             string systemKeyword, int displayOrder, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.InsertCreditCardType(name,
-                systemKeyword, displayOrder, deleted);
-            var creditCardType = DBMapping(dbItem);
+            var creditCardType = new CreditCardType();
+            creditCardType.Name = name;
+            creditCardType.SystemKeyword = systemKeyword;
+            creditCardType.DisplayOrder = displayOrder;
+            creditCardType.Deleted = deleted;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CreditCardTypes.AddObject(creditCardType);
+            context.SaveChanges();
+
             if (CreditCardTypeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);
@@ -169,9 +153,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         public static CreditCardType UpdateCreditCardType(int creditCardTypeId,
             string name, string systemKeyword, int displayOrder, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCreditCardTypeProvider>.Provider.UpdateCreditCardType(creditCardTypeId,
-                name, systemKeyword, displayOrder, deleted);
-            var creditCardType = DBMapping(dbItem);
+            var creditCardType = GetCreditCardTypeById(creditCardTypeId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CreditCardTypes.Attach(creditCardType);
+
+            creditCardType.Name = name;
+            creditCardType.SystemKeyword = systemKeyword;
+            creditCardType.DisplayOrder = displayOrder;
+            creditCardType.Deleted = deleted;
+            context.SaveChanges();
+
             if (CreditCardTypeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);

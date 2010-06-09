@@ -13,11 +13,12 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Templates;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Templates
 {
@@ -38,101 +39,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         private const string PRODUCTTEMPLATES_PATTERN_KEY = "Nop.producttemplate.";
         #endregion
 
-        #region Utilities
-        private static CategoryTemplateCollection DBMapping(DBCategoryTemplateCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CategoryTemplateCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static CategoryTemplate DBMapping(DBCategoryTemplate dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CategoryTemplate();
-            item.CategoryTemplateId = dbItem.CategoryTemplateId;
-            item.Name = dbItem.Name;
-            item.TemplatePath = dbItem.TemplatePath;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-        
-        private static ManufacturerTemplateCollection DBMapping(DBManufacturerTemplateCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ManufacturerTemplateCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ManufacturerTemplate DBMapping(DBManufacturerTemplate dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ManufacturerTemplate();
-            item.ManufacturerTemplateId = dbItem.ManufacturerTemplateId;
-            item.Name = dbItem.Name;
-            item.TemplatePath = dbItem.TemplatePath;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-        
-        private static ProductTemplateCollection DBMapping(DBProductTemplateCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductTemplateCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductTemplate DBMapping(DBProductTemplate dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductTemplate();
-            item.ProductTemplateId = dbItem.ProductTemplateId;
-            item.Name = dbItem.Name;
-            item.TemplatePath = dbItem.TemplatePath;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Deletes a category template
@@ -140,8 +46,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <param name="categoryTemplateId">Category template identifier</param>
         public static void DeleteCategoryTemplate(int categoryTemplateId)
         {
-            DBProviderManager<DBTemplateProvider>.Provider.DeleteCategoryTemplate(categoryTemplateId);
+            var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
 
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CategoryTemplates.Attach(categoryTemplate);
+            context.DeleteObject(categoryTemplate);
+            context.SaveChanges();
+            
             if (TemplateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CATEGORYTEMPLATES_PATTERN_KEY);
@@ -152,17 +63,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// Gets all category templates
         /// </summary>
         /// <returns>Category template collection</returns>
-        public static CategoryTemplateCollection GetAllCategoryTemplates()
+        public static List<CategoryTemplate> GetAllCategoryTemplates()
         {
             string key = string.Format(CATEGORYTEMPLATES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (TemplateManager.CacheEnabled && (obj2 != null))
             {
-                return (CategoryTemplateCollection)obj2;
+                return (List<CategoryTemplate>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBTemplateProvider>.Provider.GetAllCategoryTemplates();
-            var categoryTemplates = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ct in context.CategoryTemplates
+                        orderby ct.DisplayOrder, ct.Name
+                        select ct;
+            var categoryTemplates = query.ToList();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -188,8 +102,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
                 return (CategoryTemplate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetCategoryTemplateById(categoryTemplateId);
-            var categoryTemplate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ct in context.CategoryTemplates
+                        where ct.CategoryTemplateId == categoryTemplateId
+                        select ct;
+            var categoryTemplate = query.SingleOrDefault();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -213,9 +130,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertCategoryTemplate(name, 
-                templatePath, displayOrder, createdOn, updatedOn);
-            var categoryTemplate = DBMapping(dbItem);
+            var categoryTemplate = new CategoryTemplate();
+            categoryTemplate.Name = name;
+            categoryTemplate.TemplatePath = templatePath;
+            categoryTemplate.DisplayOrder = displayOrder;
+            categoryTemplate.CreatedOn = createdOn;
+            categoryTemplate.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CategoryTemplates.AddObject(categoryTemplate);
+            context.SaveChanges();
+
             if (TemplateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CATEGORYTEMPLATES_PATTERN_KEY);
@@ -241,9 +166,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateCategoryTemplate(categoryTemplateId, 
-                name, templatePath, displayOrder, createdOn, updatedOn);
-            var categoryTemplate = DBMapping(dbItem);
+            var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CategoryTemplates.Attach(categoryTemplate);
+
+            categoryTemplate.Name = name;
+            categoryTemplate.TemplatePath = templatePath;
+            categoryTemplate.DisplayOrder = displayOrder;
+            categoryTemplate.CreatedOn = createdOn;
+            categoryTemplate.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
             if (TemplateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CATEGORYTEMPLATES_PATTERN_KEY);
@@ -258,7 +192,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <param name="manufacturerTemplateId">Manufacturer template identifier</param>
         public static void DeleteManufacturerTemplate(int manufacturerTemplateId)
         {
-            DBProviderManager<DBTemplateProvider>.Provider.DeleteManufacturerTemplate(manufacturerTemplateId);
+            var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ManufacturerTemplates.Attach(manufacturerTemplate);
+            context.DeleteObject(manufacturerTemplate);
+            context.SaveChanges();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -270,17 +209,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// Gets all manufacturer templates
         /// </summary>
         /// <returns>Manufacturer template collection</returns>
-        public static ManufacturerTemplateCollection GetAllManufacturerTemplates()
+        public static List<ManufacturerTemplate> GetAllManufacturerTemplates()
         {
             string key = string.Format(MANUFACTURERTEMPLATES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (TemplateManager.CacheEnabled && (obj2 != null))
             {
-                return (ManufacturerTemplateCollection)obj2;
+                return (List<ManufacturerTemplate>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBTemplateProvider>.Provider.GetAllManufacturerTemplates();
-            var manufacturerTemplates = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from mt in context.ManufacturerTemplates
+                        orderby mt.DisplayOrder, mt.Name
+                        select mt;
+            var manufacturerTemplates = query.ToList();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -306,8 +248,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
                 return (ManufacturerTemplate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetManufacturerTemplateById(manufacturerTemplateId);
-            var manufacturerTemplate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from mt in context.ManufacturerTemplates
+                        where mt.ManufacturerTemplateId == manufacturerTemplateId
+                        select mt;
+            var manufacturerTemplate = query.SingleOrDefault();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -331,9 +276,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertManufacturerTemplate(name,
-                templatePath, displayOrder, createdOn, updatedOn);
-            var manufacturerTemplate = DBMapping(dbItem);
+            var manufacturerTemplate = new ManufacturerTemplate();
+            manufacturerTemplate.Name = name;
+            manufacturerTemplate.TemplatePath = templatePath;
+            manufacturerTemplate.DisplayOrder = displayOrder;
+            manufacturerTemplate.CreatedOn = createdOn;
+            manufacturerTemplate.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ManufacturerTemplates.AddObject(manufacturerTemplate);
+            context.SaveChanges();
+
             if (TemplateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(MANUFACTURERTEMPLATES_PATTERN_KEY);
@@ -358,9 +311,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateManufacturerTemplate(manufacturerTemplateId,
-                name, templatePath, displayOrder, createdOn, updatedOn);
-            var manufacturerTemplate = DBMapping(dbItem);
+            var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ManufacturerTemplates.Attach(manufacturerTemplate);
+
+            manufacturerTemplate.Name = name;
+            manufacturerTemplate.TemplatePath = templatePath;
+            manufacturerTemplate.DisplayOrder = displayOrder;
+            manufacturerTemplate.CreatedOn = createdOn;
+            manufacturerTemplate.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
+
             if (TemplateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(MANUFACTURERTEMPLATES_PATTERN_KEY);
@@ -374,7 +337,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// <param name="productTemplateId">Product template identifier</param>
         public static void DeleteProductTemplate(int productTemplateId)
         {
-            DBProviderManager<DBTemplateProvider>.Provider.DeleteProductTemplate(productTemplateId);
+            var productTemplate = GetProductTemplateById(productTemplateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductTemplates.Attach(productTemplate);
+            context.DeleteObject(productTemplate);
+            context.SaveChanges();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -386,17 +354,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         /// Gets all product templates
         /// </summary>
         /// <returns>Product template collection</returns>
-        public static ProductTemplateCollection GetAllProductTemplates()
+        public static List<ProductTemplate> GetAllProductTemplates()
         {
             string key = string.Format(PRODUCTTEMPLATES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (TemplateManager.CacheEnabled && (obj2 != null))
             {
-                return (ProductTemplateCollection)obj2;
+                return (List<ProductTemplate>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBTemplateProvider>.Provider.GetAllProductTemplates();
-            var productTemplates = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pt in context.ProductTemplates
+                        orderby pt.DisplayOrder, pt.Name
+                        select pt;
+            var productTemplates = query.ToList();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -422,8 +393,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
                 return (ProductTemplate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.GetProductTemplateById(productTemplateId);
-            var productTemplate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pt in context.ProductTemplates
+                        where pt.ProductTemplateId == productTemplateId
+                        select pt;
+            var productTemplate = query.SingleOrDefault();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -447,9 +421,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.InsertProductTemplate(name, templatePath,
-                displayOrder, createdOn, updatedOn);
-            var productTemplate = DBMapping(dbItem);
+            var productTemplate = new ProductTemplate();
+            productTemplate.Name = name;
+            productTemplate.TemplatePath = templatePath;
+            productTemplate.DisplayOrder = displayOrder;
+            productTemplate.CreatedOn = createdOn;
+            productTemplate.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductTemplates.AddObject(productTemplate);
+            context.SaveChanges();
 
             if (TemplateManager.CacheEnabled)
             {
@@ -476,9 +457,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTemplateProvider>.Provider.UpdateProductTemplate(productTemplateId,
-                name, templatePath, displayOrder, createdOn, updatedOn);
-            var productTemplate = DBMapping(dbItem);
+            var productTemplate = GetProductTemplateById(productTemplateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductTemplates.Attach(productTemplate);
+
+            productTemplate.Name = name;
+            productTemplate.TemplatePath = templatePath;
+            productTemplate.DisplayOrder = displayOrder;
+            productTemplate.CreatedOn = createdOn;
+            productTemplate.UpdatedOn = updatedOn;
+            context.SaveChanges();
 
             if (TemplateManager.CacheEnabled)
             {

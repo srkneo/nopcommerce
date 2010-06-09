@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            WarehouseCollection warehouseCollection = WarehouseManager.GetAllWarehouses();
+            var warehouseCollection = WarehouseManager.GetAllWarehouses();
             gvWarehouses.DataSource = warehouseCollection;
             gvWarehouses.DataBind();
         }

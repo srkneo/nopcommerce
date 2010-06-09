@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            AffiliateCollection affiliateCollection = AffiliateManager.GetAllAffiliates();
+            var affiliateCollection = AffiliateManager.GetAllAffiliates();
             gvAffiliates.DataSource = affiliateCollection;
             gvAffiliates.DataBind();
         }

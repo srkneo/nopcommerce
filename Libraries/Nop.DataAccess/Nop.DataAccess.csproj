@@ -179,7 +179,6 @@
     <Compile Include="Products\Specs\DBSpecificationAttributeOptionCollection.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOptionFilter.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOptionFilterCollection.cs" />
-    <Compile Include="Promo\Affiliates\DBAffiliateProvider.cs" />
     <Compile Include="Content\Blog\DBBlogProvider.cs" />
     <Compile Include="Promo\Campaigns\DBCampaignProvider.cs" />
     <Compile Include="Categories\DBCategoryProvider.cs" />
@@ -190,9 +189,6 @@
     <Compile Include="Security\DBACL.cs" />
     <Compile Include="Security\DBACLCollection.cs" />
     <Compile Include="Security\DBACLProvider.cs" />
-    <Compile Include="Security\DBCustomerAction.cs" />
-    <Compile Include="Security\DBCustomerActionCollection.cs" />
-    <Compile Include="Payment\DBCreditCardTypeProvider.cs" />
     <Compile Include="Directory\DBCurrencyProvider.cs" />
     <Compile Include="Customer\DBCustomerProvider.cs" />
     <Compile Include="Promo\Discounts\DBDiscountProvider.cs" />
@@ -200,7 +196,6 @@
     <Compile Include="Localization\DBLocaleStringResourceProvider.cs" />
     <Compile Include="Audit\DBLogProvider.cs" />
     <Compile Include="Manufacturers\DBManufacturerProvider.cs" />
-    <Compile Include="Templates\DBTemplateProvider.cs" />
     <Compile Include="Messages\DBMessageProvider.cs" />
     <Compile Include="Content\News\DBNewsProvider.cs" />
     <Compile Include="Payment\DBPaymentMethodProvider.cs" />
@@ -222,7 +217,6 @@
     <Compile Include="Tax\DBTaxRateProvider.cs" />
     <Compile Include="Tax\DBTaxCategoryProvider.cs" />
     <Compile Include="Tax\DBTaxProviderProvider.cs" />
-    <Compile Include="Warehouses\DBWarehouseProvider.cs" />
     <Compile Include="Directory\DBCurrency.cs" />
     <Compile Include="Directory\DBCurrencyCollection.cs" />
     <Compile Include="Localization\DBLocaleStringResource.cs" />
@@ -245,8 +239,6 @@
     <Compile Include="Orders\DBOrderStatusCollection.cs" />
     <Compile Include="Orders\DBShoppingCart.cs" />
     <Compile Include="Orders\DBShoppingCartItem.cs" />
-    <Compile Include="Payment\DBCreditCardType.cs" />
-    <Compile Include="Payment\DBCreditCardTypeCollection.cs" />
     <Compile Include="Payment\DBPaymentMethod.cs" />
     <Compile Include="Payment\DBPaymentMethodCollection.cs" />
     <Compile Include="Payment\DBPaymentStatus.cs" />
@@ -273,8 +265,6 @@
     <Compile Include="Products\Specs\DBProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttribute.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeCollection.cs" />
-    <Compile Include="Promo\Affiliates\DBAffiliate.cs" />
-    <Compile Include="Promo\Affiliates\DBAffiliateCollection.cs" />
     <Compile Include="Promo\Campaigns\DBCampaign.cs" />
     <Compile Include="Promo\Campaigns\DBCampaignCollection.cs" />
     <Compile Include="Promo\Discounts\DBDiscount.cs" />
@@ -302,14 +292,6 @@
     <Compile Include="Tax\DBTaxCategoryCollection.cs" />
     <Compile Include="Tax\DBTaxProvider.cs" />
     <Compile Include="Tax\DBTaxProviderCollection.cs" />
-    <Compile Include="Templates\DBCategoryTemplate.cs" />
-    <Compile Include="Templates\DBCategoryTemplateCollection.cs" />
-    <Compile Include="Templates\DBManufacturerTemplate.cs" />
-    <Compile Include="Templates\DBManufacturerTemplateCollection.cs" />
-    <Compile Include="Templates\DBProductTemplate.cs" />
-    <Compile Include="Templates\DBProductTemplateCollection.cs" />
-    <Compile Include="Warehouses\DBWarehouse.cs" />
-    <Compile Include="Warehouses\DBWarehouseCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

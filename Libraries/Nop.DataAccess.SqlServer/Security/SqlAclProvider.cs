@@ -34,16 +34,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         #endregion
 
         #region Utilities
-        private DBCustomerAction GetCustomerActionFromReader(IDataReader dataReader)
-        {
-            var item = new DBCustomerAction();
-            item.CustomerActionId = NopSqlDataHelper.GetInt(dataReader, "CustomerActionID");
-            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            item.SystemKeyword = NopSqlDataHelper.GetString(dataReader, "SystemKeyword");
-            item.Comment = NopSqlDataHelper.GetString(dataReader, "Comment");
-            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            return item;
-        }
 
         private DBACL GetAclFromReader(IDataReader dataReader)
         {
@@ -54,6 +44,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
             item.Allow = NopSqlDataHelper.GetBoolean(dataReader, "Allow");
             return item;
         }
+
         #endregion
 
         #region Methods
@@ -91,116 +82,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
                 }
             }
         }
-
-        /// <summary>
-        /// Deletes a customer action
-        /// </summary>
-        /// <param name="customerActionId">Customer action identifier</param>
-        public override void DeleteCustomerAction(int customerActionId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerActionDelete");
-            db.AddInParameter(dbCommand, "CustomerActionID", DbType.Int32, customerActionId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a customer action by identifier
-        /// </summary>
-        /// <param name="customerActionId">Customer action identifier</param>
-        /// <returns>Customer action</returns>
-        public override DBCustomerAction GetCustomerActionById(int customerActionId)
-        {
-            DBCustomerAction item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerActionLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CustomerActionID", DbType.Int32, customerActionId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetCustomerActionFromReader(dataReader);
-                }
-            }
-            return item;
-        }
         
-        /// <summary>
-        /// Gets all customer actions
-        /// </summary>
-        /// <returns>Customer action collection</returns>
-        public override DBCustomerActionCollection GetAllCustomerActions()
-        {
-            var result = new DBCustomerActionCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerActionLoadAll");            
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetCustomerActionFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Inserts a customer action
-        /// </summary>
-        /// <param name="name">The name</param>
-        /// <param name="systemKeyword">The system keyword</param>
-        /// <param name="comment">The comment</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>A customer action</returns>
-        public override DBCustomerAction InsertCustomerAction(string name,
-            string systemKeyword, string comment, string displayOrder)
-        {
-            DBCustomerAction item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerActionInsert");
-            db.AddOutParameter(dbCommand, "CustomerActionID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
-            db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int customerActionId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerActionID"));
-                item = GetCustomerActionById(customerActionId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the customer action
-        /// </summary>
-        /// <param name="customerActionId">The customer action identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="systemKeyword">The system keyword</param>
-        /// <param name="comment">The comment</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>A customer action</returns>
-        public override DBCustomerAction UpdateCustomerAction(int customerActionId,
-            string name, string systemKeyword, string comment, string displayOrder)
-        {
-            DBCustomerAction item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerActionUpdate");
-            db.AddInParameter(dbCommand, "CustomerActionID", DbType.Int32, customerActionId);
-            db.AddInParameter(dbCommand, "Name", DbType.String, name);
-            db.AddInParameter(dbCommand, "SystemKeyword", DbType.String, systemKeyword);
-            db.AddInParameter(dbCommand, "Comment", DbType.String, comment);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCustomerActionById(customerActionId);
-
-            return item;
-        }
-
-
-
         /// <summary>
         /// Deletes an ACL
         /// </summary>

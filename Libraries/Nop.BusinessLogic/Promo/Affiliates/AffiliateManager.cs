@@ -17,10 +17,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Promo.Affiliates;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
 {
@@ -29,48 +29,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
     /// </summary>
     public partial class AffiliateManager
     {
-        #region Utilities
-        private static AffiliateCollection DBMapping(DBAffiliateCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new AffiliateCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Affiliate DBMapping(DBAffiliate dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Affiliate();
-            item.AffiliateId = dbItem.AffiliateId;
-            item.FirstName = dbItem.FirstName;
-            item.LastName = dbItem.LastName;
-            item.MiddleName = dbItem.MiddleName;
-            item.PhoneNumber = dbItem.PhoneNumber;
-            item.Email = dbItem.Email;
-            item.FaxNumber = dbItem.FaxNumber;
-            item.Company = dbItem.Company;
-            item.Address1 = dbItem.Address1;
-            item.Address2 = dbItem.Address2;
-            item.City = dbItem.City;
-            item.StateProvince = dbItem.StateProvince;
-            item.ZipPostalCode = dbItem.ZipPostalCode;
-            item.CountryId = dbItem.CountryId;
-            item.Deleted = dbItem.Deleted;
-            item.Active = dbItem.Active;
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Gets an affiliate by affiliate identifier
@@ -82,8 +40,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             if (affiliateId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.GetAffiliateById(affiliateId);
-            var affiliate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from a in context.Affiliates
+                        where a.AffiliateId == affiliateId
+                        select a;
+            var affiliate = query.SingleOrDefault();
+
             return affiliate;
         }
 
@@ -106,10 +68,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
         /// Gets all affiliates
         /// </summary>
         /// <returns>Affiliate collection</returns>
-        public static AffiliateCollection GetAllAffiliates()
+        public static List<Affiliate> GetAllAffiliates()
         {
-            var dbCollection = DBProviderManager<DBAffiliateProvider>.Provider.GetAllAffiliates();
-            var affiliates = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from a in context.Affiliates
+                        orderby a.LastName
+                        where !a.Deleted
+                        select a;
+            var affiliates = query.ToList();
+
             return affiliates;
         }
 
@@ -138,10 +105,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             string address2, string city, string stateProvince, string zipPostalCode,
             int countryId, bool deleted, bool active)
         {
-            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.InsertAffiliate(firstName, 
-                lastName, middleName, phoneNumber, email, faxNumber, company, address1,
-                address2, city, stateProvince, zipPostalCode, countryId, deleted, active);
-            var affiliate = DBMapping(dbItem);
+            var affiliate = new Affiliate();
+            affiliate.FirstName = firstName;
+            affiliate.LastName = lastName;
+            affiliate.MiddleName = middleName;
+            affiliate.PhoneNumber = phoneNumber;
+            affiliate.Email = email;
+            affiliate.FaxNumber = faxNumber;
+            affiliate.Company = company;
+            affiliate.Address1 = address1;
+            affiliate.Address2 = address2;
+            affiliate.City = city;
+            affiliate.StateProvince = stateProvince;
+            affiliate.ZipPostalCode = zipPostalCode;
+            affiliate.CountryId = countryId;
+            affiliate.Deleted = deleted;
+            affiliate.Active = active;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Affiliates.AddObject(affiliate);
+            context.SaveChanges();
             return affiliate;
         }
 
@@ -171,11 +154,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             string address2, string city, string stateProvince, string zipPostalCode,
             int countryId, bool deleted, bool active)
         {
-            var dbItem = DBProviderManager<DBAffiliateProvider>.Provider.UpdateAffiliate(affiliateId, 
-                firstName, lastName, middleName, phoneNumber, email, faxNumber, company,
-                address1, address2, city, stateProvince, zipPostalCode, 
-                countryId, deleted, active);
-            var affiliate = DBMapping(dbItem);
+            var affiliate = GetAffiliateById(affiliateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Affiliates.Attach(affiliate);
+
+            affiliate.FirstName = firstName;
+            affiliate.LastName = lastName;
+            affiliate.MiddleName = middleName;
+            affiliate.PhoneNumber = phoneNumber;
+            affiliate.Email = email;
+            affiliate.FaxNumber = faxNumber;
+            affiliate.Company = company;
+            affiliate.Address1 = address1;
+            affiliate.Address2 = address2;
+            affiliate.City = city;
+            affiliate.StateProvince = stateProvince;
+            affiliate.ZipPostalCode = zipPostalCode;
+            affiliate.CountryId = countryId;
+            affiliate.Deleted = deleted;
+            affiliate.Active = active;
+            context.SaveChanges();
             return affiliate;
         }
         #endregion

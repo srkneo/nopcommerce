@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Payment.Manual
         private void BindData()
         {
             this.ddlCreditCardType.Items.Clear();
-            CreditCardTypeCollection creditCardTypeCollection = CreditCardTypeManager.GetAllCreditCardTypes();
+            var creditCardTypeCollection = CreditCardTypeManager.GetAllCreditCardTypes();
             foreach (CreditCardType creditCardType in creditCardTypeCollection)
             {
                 ListItem ddlCreditCardTypeItem2 = new ListItem(creditCardType.Name, creditCardType.CreditCardTypeId.ToString());

@@ -161,13 +161,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            CustomerActionCollection actions = ACLManager.GetAllCustomerActions();
+            var actions = ACLManager.GetAllCustomerActions();
             if (actions.Count == 0)
             {
                 lblMessage.Text = GetLocaleResourceString("Admin.ACL.NoActionDefined");
                 return;
             }
-            CustomerRoleCollection roles = CustomerManager.GetAllCustomerRoles();
+            var roles = CustomerManager.GetAllCustomerRoles();
             if (roles.Count == 0)
             {
                 lblMessage.Text = GetLocaleResourceString("Admin.ACL.NoRolesDefined");

@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlTemplate.Items.Clear();
-            CategoryTemplateCollection categoryTemplates = TemplateManager.GetAllCategoryTemplates();
+            var categoryTemplates = TemplateManager.GetAllCategoryTemplates();
             foreach (CategoryTemplate categoryTemplate in categoryTemplates)
             {
                 ListItem item2 = new ListItem(categoryTemplate.Name, categoryTemplate.CategoryTemplateId.ToString());

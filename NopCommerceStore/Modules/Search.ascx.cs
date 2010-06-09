@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 }
                             }
                         }
-                        catch (Exception exc)
+                        catch
                         {
                             txtPriceFrom.Text = string.Empty;
                         }
@@ -111,7 +111,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 }
                             }
                         }
-                        catch (Exception exc)
+                        catch
                         {
                             txtPriceTo.Text = string.Empty;
                         }

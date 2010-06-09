@@ -144,8 +144,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlAffiliate.Items.Clear();
             ListItem ddlAffiliateItem = new ListItem(GetLocaleResourceString("Admin.CustomerInfo.Affiliate.None"), "0");
             this.ddlAffiliate.Items.Add(ddlAffiliateItem);
-            AffiliateCollection affiliateCollection = AffiliateManager.GetAllAffiliates();
-            foreach (Affiliate affiliate in affiliateCollection)
+            var affiliateCollection = AffiliateManager.GetAllAffiliates();
+            foreach (var affiliate in affiliateCollection)
             {
                 ListItem ddlAffiliateItem2 = new ListItem(affiliate.LastName + " (ID=" + affiliate.AffiliateId.ToString() + ")", affiliate.AffiliateId.ToString());
                 this.ddlAffiliate.Items.Add(ddlAffiliateItem2);

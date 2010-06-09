@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -28,6 +29,7 @@ using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Security;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Security
@@ -74,36 +76,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             return item;
         }
 
-        private static CustomerActionCollection DBMapping(DBCustomerActionCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CustomerActionCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static CustomerAction DBMapping(DBCustomerAction dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CustomerAction();
-            item.CustomerActionId = dbItem.CustomerActionId;
-            item.Name = dbItem.Name;
-            item.SystemKeyword = dbItem.SystemKeyword;
-            item.Comment = dbItem.Comment;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-        
         #endregion
 
         #region Methods
@@ -115,7 +87,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="customerActionId">Customer action identifier</param>
         public static void DeleteCustomerAction(int customerActionId)
         {
-            DBProviderManager<DBACLProvider>.Provider.DeleteCustomerAction(customerActionId);
+            var customerAction = GetCustomerActionById(customerActionId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerActions.Attach(customerAction);
+            context.DeleteObject(customerAction);
+            context.SaveChanges();
+
             if (ACLManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
@@ -139,8 +117,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
                 return (CustomerAction)obj2;
             }
 
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.GetCustomerActionById(customerActionId);
-            var customerAction = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ca in context.CustomerActions
+                        where ca.CustomerActionId == customerActionId
+                        select ca;
+            var customerAction = query.SingleOrDefault();
 
             if (ACLManager.CacheEnabled)
             {
@@ -153,17 +134,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// Gets all customer actions
         /// </summary>
         /// <returns>Customer action collection</returns>
-        public static CustomerActionCollection GetAllCustomerActions()
+        public static List<CustomerAction> GetAllCustomerActions()
         {
             string key = string.Format(CUSTOMERACTIONS_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (ACLManager.CacheEnabled && (obj2 != null))
             {
-                return (CustomerActionCollection)obj2;
+                return (List<CustomerAction>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBACLProvider>.Provider.GetAllCustomerActions();
-            var customerActions = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ca in context.CustomerActions
+                        orderby ca.DisplayOrder, ca.Name
+                        select ca;
+            var customerActions = query.ToList();
+
             if (ACLManager.CacheEnabled)
             {
                 NopCache.Max(key, customerActions);
@@ -180,11 +165,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="displayOrder">The display order</param>
         /// <returns>A customer action</returns>
         public static CustomerAction InsertCustomerAction(string name,
-            string systemKeyword, string comment, string displayOrder)
+            string systemKeyword, string comment, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.InsertCustomerAction(name,
-                systemKeyword, comment, displayOrder);
-            var customerAction = DBMapping(dbItem);
+            var customerAction = new CustomerAction();
+            customerAction.Name = name;
+            customerAction.SystemKeyword = systemKeyword;
+            customerAction.Comment = comment;
+            customerAction.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerActions.AddObject(customerAction);
+            context.SaveChanges();
 
             if (ACLManager.CacheEnabled)
             {
@@ -204,11 +195,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="displayOrder">The display order</param>
         /// <returns>A customer action</returns>
         public static CustomerAction UpdateCustomerAction(int customerActionId,
-            string name, string systemKeyword, string comment, string displayOrder)
+            string name, string systemKeyword, string comment, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.UpdateCustomerAction(customerActionId,
-                name, systemKeyword, comment, displayOrder);
-            var customerAction = DBMapping(dbItem);
+            var customerAction = GetCustomerActionById(customerActionId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerActions.Attach(customerAction);
+
+            customerAction.Name = name;
+            customerAction.SystemKeyword = systemKeyword;
+            customerAction.Comment = comment;
+            customerAction.DisplayOrder = displayOrder;
+            context.SaveChanges();
+
 
             if (ACLManager.CacheEnabled)
             {

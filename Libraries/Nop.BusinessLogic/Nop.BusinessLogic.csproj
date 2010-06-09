@@ -258,7 +258,6 @@
     <Compile Include="Security\ACL.cs" />
     <Compile Include="Security\ACLCollection.cs" />
     <Compile Include="Security\CustomerAction.cs" />
-    <Compile Include="Security\CustomerActionCollection.cs" />
     <Compile Include="Security\ACLManager.cs" />
     <Compile Include="Security\IpBlacklistManager.cs" />
     <Compile Include="Security\BannedIpNetwork.cs" />
@@ -354,16 +353,13 @@
     <Compile Include="Localization\LocaleStringResource.cs" />
     <Compile Include="Customer\AddressCollection.cs" />
     <Compile Include="Promo\Affiliates\Affiliate.cs" />
-    <Compile Include="Promo\Affiliates\AffiliateCollection.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Categories\Category.cs" />
     <Compile Include="Categories\CategoryCollection.cs" />
     <Compile Include="Templates\CategoryTemplate.cs" />
-    <Compile Include="Templates\CategoryTemplateCollection.cs" />
     <Compile Include="Directory\Country.cs" />
     <Compile Include="Localization\LocaleStringResourceDictionary.cs" />
     <Compile Include="Payment\CreditCardType.cs" />
-    <Compile Include="Payment\CreditCardTypeCollection.cs" />
     <Compile Include="Directory\Currency.cs" />
     <Compile Include="Directory\CurrencyCollection.cs" />
     <Compile Include="Customer\Customer.cs" />
@@ -380,7 +376,6 @@
     <Compile Include="Manufacturers\Manufacturer.cs" />
     <Compile Include="Manufacturers\ManufacturerCollection.cs" />
     <Compile Include="Templates\ManufacturerTemplate.cs" />
-    <Compile Include="Templates\ManufacturerTemplateCollection.cs" />
     <Compile Include="Content\News\News.cs" />
     <Compile Include="Content\News\NewsCollection.cs" />
     <Compile Include="Content\News\NewsComment.cs" />
@@ -394,7 +389,6 @@
     <Compile Include="Products\Product.cs" />
     <Compile Include="Products\ProductCollection.cs" />
     <Compile Include="Templates\ProductTemplate.cs" />
-    <Compile Include="Templates\ProductTemplateCollection.cs" />
     <Compile Include="Products\ProductType.cs" />
     <Compile Include="Products\ProductTypeCollection.cs" />
     <Compile Include="Products\ProductVariant.cs" />
@@ -417,7 +411,6 @@
     <Compile Include="Utils\Html\EditorTypeEnum.cs" />
     <Compile Include="Utils\KeepAliveTask.cs" />
     <Compile Include="Warehouses\Warehouse.cs" />
-    <Compile Include="Warehouses\WarehouseCollection.cs" />
     <Compile Include="Audit\LogTypeEnum.cs" />
     <Compile Include="Promo\Affiliates\AffiliateManager.cs" />
     <Compile Include="Categories\CategoryManager.cs" />

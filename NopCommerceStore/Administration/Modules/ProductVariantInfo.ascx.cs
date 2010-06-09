@@ -225,7 +225,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlWarehouse.Items.Clear();
             ListItem itemWarehouse = new ListItem("---", "0");
             this.ddlWarehouse.Items.Add(itemWarehouse);
-            WarehouseCollection warehouseCollection = WarehouseManager.GetAllWarehouses();
+            var warehouseCollection = WarehouseManager.GetAllWarehouses();
             foreach (Warehouse warehouse in warehouseCollection)
             {
                 ListItem item2 = new ListItem(warehouse.Name, warehouse.WarehouseId.ToString());

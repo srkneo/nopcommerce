@@ -17,11 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Warehouses;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
 {
@@ -30,47 +30,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
     /// </summary>
     public partial class WarehouseManager
     {
-        #region Utilities
-        private static WarehouseCollection DBMapping(DBWarehouseCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new WarehouseCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Warehouse DBMapping(DBWarehouse dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Warehouse();
-            item.WarehouseId = dbItem.WarehouseId;
-            item.Name = dbItem.Name;
-            item.PhoneNumber = dbItem.PhoneNumber;
-            item.Email = dbItem.Email;
-            item.FaxNumber = dbItem.FaxNumber;
-            item.Address1 = dbItem.Address1;
-            item.Address2 = dbItem.Address2;
-            item.City = dbItem.City;
-            item.StateProvince = dbItem.StateProvince;
-            item.ZipPostalCode = dbItem.ZipPostalCode;
-            item.CountryId = dbItem.CountryId;
-            item.Deleted = dbItem.Deleted;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Marks a warehouse as deleted
@@ -91,10 +50,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
         /// Gets all warehouses
         /// </summary>
         /// <returns>Warehouse collection</returns>
-        public static WarehouseCollection GetAllWarehouses()
+        public static List<Warehouse> GetAllWarehouses()
         {
-            var dbCollection = DBProviderManager<DBWarehouseProvider>.Provider.GetAllWarehouses();
-            var warehouses = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from w in context.Warehouses
+                        orderby w.Name
+                        where !w.Deleted
+                        select w;
+            var warehouses = query.ToList();
+
             return warehouses;
         }
 
@@ -108,8 +72,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             if (warehouseId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.GetWarehouseById(warehouseId);
-            var warehouse = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from w in context.Warehouses
+                        where w.WarehouseId == warehouseId
+                        select w;
+            var warehouse = query.SingleOrDefault();
             return warehouse;
         }
 
@@ -138,10 +105,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.InsertWarehouse(name, 
-                phoneNumber, email, faxNumber, address1, address2, city, stateProvince,
-                zipPostalCode, countryId, deleted, createdOn, updatedOn);
-            var warehouse = DBMapping(dbItem);
+            var warehouse = new Warehouse();
+            warehouse.Name = name;
+            warehouse.PhoneNumber = phoneNumber;
+            warehouse.Email = email;
+            warehouse.FaxNumber = faxNumber;
+            warehouse.Address1 = address1;
+            warehouse.Address2 = address2;
+            warehouse.City = city;
+            warehouse.StateProvince = stateProvince;
+            warehouse.ZipPostalCode = zipPostalCode;
+            warehouse.CountryId = countryId;
+            warehouse.Deleted = deleted;
+            warehouse.CreatedOn = createdOn;
+            warehouse.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Warehouses.AddObject(warehouse);
+            context.SaveChanges();
+
             return warehouse;
         }
 
@@ -172,10 +154,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBWarehouseProvider>.Provider.UpdateWarehouse(warehouseId, 
-                name, phoneNumber, email, faxNumber, address1, address2, city, stateProvince,
-                zipPostalCode, countryId, deleted, createdOn, updatedOn);
-            var warehouse = DBMapping(dbItem);
+            var warehouse = GetWarehouseById(warehouseId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Warehouses.Attach(warehouse);
+
+            warehouse.Name = name;
+            warehouse.PhoneNumber = phoneNumber;
+            warehouse.Email = email;
+            warehouse.FaxNumber = faxNumber;
+            warehouse.Address1 = address1;
+            warehouse.Address2 = address2;
+            warehouse.City = city;
+            warehouse.StateProvince = stateProvince;
+            warehouse.ZipPostalCode = zipPostalCode;
+            warehouse.CountryId = countryId;
+            warehouse.Deleted = deleted;
+            warehouse.CreatedOn = createdOn;
+            warehouse.UpdatedOn = updatedOn;
+            context.SaveChanges();
             return warehouse;
         }
         #endregion

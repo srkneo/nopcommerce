@@ -33,51 +33,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
     public abstract partial class DBACLProvider : BaseDBProvider
     {
         #region Methods
-
-        /// <summary>
-        /// Deletes a customer action
-        /// </summary>
-        /// <param name="customerActionId">Customer action identifier</param>
-        public abstract void DeleteCustomerAction(int customerActionId);
-
-        /// <summary>
-        /// Gets a customer action by identifier
-        /// </summary>
-        /// <param name="customerActionId">Customer action identifier</param>
-        /// <returns>Customer action</returns>
-        public abstract DBCustomerAction GetCustomerActionById(int customerActionId);
-
-        /// <summary>
-        /// Gets all customer actions
-        /// </summary>
-        /// <returns>Customer action collection</returns>
-        public abstract DBCustomerActionCollection GetAllCustomerActions();
-
-        /// <summary>
-        /// Inserts a customer action
-        /// </summary>
-        /// <param name="name">The name</param>
-        /// <param name="systemKeyword">The system keyword</param>
-        /// <param name="comment">The comment</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>A customer action</returns>
-        public abstract DBCustomerAction InsertCustomerAction(string name,
-            string systemKeyword, string comment, string displayOrder);
-
-        /// <summary>
-        /// Updates the customer action
-        /// </summary>
-        /// <param name="customerActionId">The customer action identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="systemKeyword">The system keyword</param>
-        /// <param name="comment">The comment</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>A customer action</returns>
-        public abstract DBCustomerAction UpdateCustomerAction(int customerActionId, 
-            string name, string systemKeyword, string comment, string displayOrder);
         
-
-
         /// <summary>
         /// Deletes an ACL
         /// </summary>

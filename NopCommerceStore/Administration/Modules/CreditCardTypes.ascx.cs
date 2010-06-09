@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            CreditCardTypeCollection creditCardTypeCollection = CreditCardTypeManager.GetAllCreditCardTypes();
+            var creditCardTypeCollection = CreditCardTypeManager.GetAllCreditCardTypes();
             gvCreditCardTypes.DataSource = creditCardTypeCollection;
             gvCreditCardTypes.DataBind();
         }

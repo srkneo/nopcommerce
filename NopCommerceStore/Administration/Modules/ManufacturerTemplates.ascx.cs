@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            ManufacturerTemplateCollection manufacturerTemplateCollection = TemplateManager.GetAllManufacturerTemplates();
+            var manufacturerTemplateCollection = TemplateManager.GetAllManufacturerTemplates();
             gvManufacturerTemplates.DataSource = manufacturerTemplateCollection;
             gvManufacturerTemplates.DataBind();
         }
