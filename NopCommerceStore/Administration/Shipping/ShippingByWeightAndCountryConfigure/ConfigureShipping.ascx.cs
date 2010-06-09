@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
         private void FillDropDowns()
         {
             ddlShippingMethod.Items.Clear();
-            ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
+            var shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
             foreach (ShippingMethod shippingMethod in shippingMethodCollection)
             {
                 ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());
@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
 
         private void BindData()
         {
-            ShippingByWeightAndCountryCollection shippingByWeightAndCountryCollection = ShippingByWeightAndCountryManager.GetAll();
+            var shippingByWeightAndCountryCollection = ShippingByWeightAndCountryManager.GetAll();
             gvShippingByWeightAndCountry.DataSource = shippingByWeightAndCountryCollection;
             gvShippingByWeightAndCountry.DataBind();
         }
@@ -128,7 +128,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByWeightA
 
                 DropDownList ddlShippingMethod = e.Row.FindControl("ddlShippingMethod") as DropDownList;
                 ddlShippingMethod.Items.Clear();
-                ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
+                var shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
                 foreach (ShippingMethod shippingMethod in shippingMethodCollection)
                 {
                     ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());

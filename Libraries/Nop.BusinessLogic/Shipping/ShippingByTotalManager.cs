@@ -17,8 +17,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Shipping;
 
@@ -29,40 +31,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
     /// </summary>
     public partial class ShippingByTotalManager
     {
-        #region Utilities
-        private static ShippingByTotalCollection DBMapping(DBShippingByTotalCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ShippingByTotalCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ShippingByTotal DBMapping(DBShippingByTotal dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ShippingByTotal();
-            item.ShippingByTotalId = dbItem.ShippingByTotalId;
-            item.ShippingMethodId = dbItem.ShippingMethodId;
-            item.From = dbItem.From;
-            item.To = dbItem.To;
-            item.UsePercentage = dbItem.UsePercentage;
-            item.ShippingChargePercentage = dbItem.ShippingChargePercentage;
-            item.ShippingChargeAmount = dbItem.ShippingChargeAmount;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Get a ShippingByTotal
@@ -74,8 +42,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             if (shippingByTotalId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBShippingByTotalProvider>.Provider.GetById(shippingByTotalId);
-            var shippingByTotal = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from st in context.ShippingByTotal
+                        where st.ShippingByTotalId == shippingByTotalId
+                        select st;
+            var shippingByTotal = query.SingleOrDefault();
             return shippingByTotal;
         }
 
@@ -85,17 +56,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="shippingByTotalId">ShippingByTotal identifier</param>
         public static void DeleteShippingByTotal(int shippingByTotalId)
         {
-            DBProviderManager<DBShippingByTotalProvider>.Provider.DeleteShippingByTotal(shippingByTotalId);
+            var shippingByTotal = GetById(shippingByTotalId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingByTotal.Attach(shippingByTotal);
+            context.DeleteObject(shippingByTotal);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets all ShippingByTotals
         /// </summary>
         /// <returns>ShippingByTotal collection</returns>
-        public static ShippingByTotalCollection GetAll()
+        public static List<ShippingByTotal> GetAll()
         {
-            var dbCollection = DBProviderManager<DBShippingByTotalProvider>.Provider.GetAll();
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from st in context.ShippingByTotal
+                        orderby st.ShippingMethodId, st.From
+                        select st;
+            var collection = query.ToList();
             return collection;
         }
 
@@ -113,9 +92,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             decimal from, decimal to, bool usePercentage,
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByTotalProvider>.Provider.InsertShippingByTotal(shippingMethodId,
-                from, to, usePercentage, shippingChargePercentage, shippingChargeAmount);
-            var shippingByTotal = DBMapping(dbItem);
+            var shippingByTotal = new ShippingByTotal();
+            shippingByTotal.ShippingMethodId = shippingMethodId;
+            shippingByTotal.From = from;
+            shippingByTotal.To = to;
+            shippingByTotal.UsePercentage = usePercentage;
+            shippingByTotal.ShippingChargePercentage = shippingChargePercentage;
+            shippingByTotal.ShippingChargeAmount = shippingChargeAmount;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingByTotal.AddObject(shippingByTotal);
+            context.SaveChanges();
+
             return shippingByTotal;
         }
 
@@ -134,10 +122,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             int shippingMethodId, decimal from, decimal to, bool usePercentage,
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByTotalProvider>.Provider.UpdateShippingByTotal(shippingByTotalId,
-                shippingMethodId, from, to, usePercentage,
-                shippingChargePercentage, shippingChargeAmount);
-            var shippingByTotal = DBMapping(dbItem);
+            var shippingByTotal = GetById(shippingByTotalId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingByTotal.Attach(shippingByTotal);
+
+            shippingByTotal.ShippingMethodId = shippingMethodId;
+            shippingByTotal.From = from;
+            shippingByTotal.To = to;
+            shippingByTotal.UsePercentage = usePercentage;
+            shippingByTotal.ShippingChargePercentage = shippingChargePercentage;
+            shippingByTotal.ShippingChargeAmount = shippingChargeAmount;
+            context.SaveChanges();
+
             return shippingByTotal;
         }
 
@@ -146,10 +143,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// </summary>
         /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <returns>ShippingByTotal collection</returns>
-        public static ShippingByTotalCollection GetAllByShippingMethodId(int shippingMethodId)
+        public static List<ShippingByTotal> GetAllByShippingMethodId(int shippingMethodId)
         {
-            var dbCollection = DBProviderManager<DBShippingByTotalProvider>.Provider.GetAllByShippingMethodId(shippingMethodId);
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from st in context.ShippingByTotal
+                        where st.ShippingMethodId == shippingMethodId
+                        orderby st.From
+                        select st;
+            var collection = query.ToList();
             return collection;
         }
         #endregion

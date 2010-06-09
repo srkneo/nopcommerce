@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Language language = LanguageManager.GetLanguageById(int.Parse(this.ddlLanguage.SelectedItem.Value));
             if (language != null)
             {
-                LocaleStringResourceDictionary resourceDictionary = language.LocaleStringResources;
+                var resourceDictionary = language.LocaleStringResources;
                 List<LocaleStringResource> resources = new List<LocaleStringResource>();
                 foreach (KeyValuePair<string, LocaleStringResource> kvp in resourceDictionary)
                 {

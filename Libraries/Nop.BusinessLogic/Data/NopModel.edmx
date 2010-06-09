@@ -20,6 +20,7 @@
           <EntitySet Name="Nop_DiscountType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Download" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Download" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_LocaleStringResource" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LocaleStringResource" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LogType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LogType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LowStockActivity" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LowStockActivity" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ManufacturerTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ManufacturerTemplate" store:Type="Tables" Schema="dbo" />
@@ -30,8 +31,14 @@
           <EntitySet Name="Nop_OrderStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_OrderStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_PaymentMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentMethod" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_PaymentStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentStatus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Picture" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Picture" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ProductTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Setting" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Setting" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShippingByTotal" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByTotal" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShippingByWeight" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByWeight" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShippingByWeightAndCountry" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByWeightAndCountry" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShippingMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingMethod" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShippingRateComputationMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingRateComputationMethod" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShippingStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShoppingCartType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartType" store:Type="Tables" Schema="dbo" />
@@ -41,6 +48,10 @@
           <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Warehouse" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Warehouse" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Nop_LocaleStringResource_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_LocaleStringResource_Nop_Language">
+            <End Role="Nop_Language" EntitySet="Nop_Language" />
+            <End Role="Nop_LocaleStringResource" EntitySet="Nop_LocaleStringResource" />
+          </AssociationSet>
           <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_MessageTemplateLocalized_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
             <End Role="Nop_MessageTemplateLocalized" EntitySet="Nop_MessageTemplateLocalized" />
@@ -48,6 +59,22 @@
           <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate">
             <End Role="Nop_MessageTemplate" EntitySet="Nop_MessageTemplate" />
             <End Role="Nop_MessageTemplateLocalized" EntitySet="Nop_MessageTemplateLocalized" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingByTotal_Nop_ShippingMethod">
+            <End Role="Nop_ShippingMethod" EntitySet="Nop_ShippingMethod" />
+            <End Role="Nop_ShippingByTotal" EntitySet="Nop_ShippingByTotal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShippingByWeight_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingByWeight_Nop_ShippingMethod">
+            <End Role="Nop_ShippingMethod" EntitySet="Nop_ShippingMethod" />
+            <End Role="Nop_ShippingByWeight" EntitySet="Nop_ShippingByWeight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShippingByWeightAndCountry_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingByWeightAndCountry_Nop_Country">
+            <End Role="Nop_Country" EntitySet="Nop_Country" />
+            <End Role="Nop_ShippingByWeightAndCountry" EntitySet="Nop_ShippingByWeightAndCountry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod">
+            <End Role="Nop_ShippingMethod" EntitySet="Nop_ShippingMethod" />
+            <End Role="Nop_ShippingByWeightAndCountry" EntitySet="Nop_ShippingByWeightAndCountry" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_StateProvince_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_StateProvince_Nop_Country">
             <End Role="Nop_Country" EntitySet="Nop_Country" />
@@ -221,6 +248,15 @@
           <Property Name="Published" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_LocaleStringResource">
+          <Key>
+            <PropertyRef Name="LocaleStringResourceID" />
+          </Key>
+          <Property Name="LocaleStringResourceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="ResourceName" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="ResourceValue" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_LogType">
           <Key>
             <PropertyRef Name="LogTypeID" />
@@ -314,6 +350,15 @@
           <Property Name="PaymentStatusID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Nop_Picture">
+          <Key>
+            <PropertyRef Name="PictureID" />
+          </Key>
+          <Property Name="PictureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PictureBinary" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Extension" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="IsNew" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_ProductTemplate">
           <Key>
             <PropertyRef Name="ProductTemplateId" />
@@ -342,6 +387,61 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="SendTries" Type="int" Nullable="false" />
           <Property Name="SentOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Nop_Setting">
+          <Key>
+            <PropertyRef Name="SettingID" />
+          </Key>
+          <Property Name="SettingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Value" Type="nvarchar" Nullable="false" MaxLength="2000" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_ShippingByTotal">
+          <Key>
+            <PropertyRef Name="ShippingByTotalID" />
+          </Key>
+          <Property Name="ShippingByTotalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShippingMethodID" Type="int" Nullable="false" />
+          <Property Name="From" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="To" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="UsePercentage" Type="bit" Nullable="false" />
+          <Property Name="ShippingChargePercentage" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="ShippingChargeAmount" Type="decimal" Nullable="false" Scale="2" />
+        </EntityType>
+        <EntityType Name="Nop_ShippingByWeight">
+          <Key>
+            <PropertyRef Name="ShippingByWeightID" />
+          </Key>
+          <Property Name="ShippingByWeightID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShippingMethodID" Type="int" Nullable="false" />
+          <Property Name="From" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="To" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="UsePercentage" Type="bit" Nullable="false" />
+          <Property Name="ShippingChargePercentage" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="ShippingChargeAmount" Type="decimal" Nullable="false" Scale="2" />
+        </EntityType>
+        <EntityType Name="Nop_ShippingByWeightAndCountry">
+          <Key>
+            <PropertyRef Name="ShippingByWeightAndCountryID" />
+          </Key>
+          <Property Name="ShippingByWeightAndCountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShippingMethodID" Type="int" Nullable="false" />
+          <Property Name="CountryID" Type="int" Nullable="false" />
+          <Property Name="From" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="To" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="UsePercentage" Type="bit" Nullable="false" />
+          <Property Name="ShippingChargePercentage" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="ShippingChargeAmount" Type="decimal" Nullable="false" Scale="2" />
+        </EntityType>
+        <EntityType Name="Nop_ShippingMethod">
+          <Key>
+            <PropertyRef Name="ShippingMethodID" />
+          </Key>
+          <Property Name="ShippingMethodID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="2000" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_ShippingRateComputationMethod">
           <Key>
@@ -441,6 +541,20 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Nop_LocaleStringResource_Nop_Language">
+          <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_LocaleStringResource" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LocaleStringResource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_LocaleStringResource">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_MessageTemplateLocalized_Nop_Language">
           <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -466,6 +580,62 @@
             </Principal>
             <Dependent Role="Nop_MessageTemplateLocalized">
               <PropertyRef Name="MessageTemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod">
+          <End Role="Nop_ShippingMethod" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingMethod" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ShippingByTotal" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByTotal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ShippingMethod">
+              <PropertyRef Name="ShippingMethodID" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByTotal">
+              <PropertyRef Name="ShippingMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShippingByWeight_Nop_ShippingMethod">
+          <End Role="Nop_ShippingMethod" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingMethod" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ShippingByWeight" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByWeight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ShippingMethod">
+              <PropertyRef Name="ShippingMethodID" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByWeight">
+              <PropertyRef Name="ShippingMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShippingByWeightAndCountry_Nop_Country">
+          <End Role="Nop_Country" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ShippingByWeightAndCountry" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByWeightAndCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByWeightAndCountry">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod">
+          <End Role="Nop_ShippingMethod" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingMethod" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ShippingByWeightAndCountry" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByWeightAndCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ShippingMethod">
+              <PropertyRef Name="ShippingMethodID" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByWeightAndCountry">
+              <PropertyRef Name="ShippingMethodID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -571,6 +741,33 @@
           <EntitySet Name="ShoppingCartTypes" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" />
           <EntitySet Name="TaxCategories" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" />
           <EntitySet Name="TaxProviders" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider" />
+          <EntitySet Name="LocaleStringResources" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource" />
+          <EntitySet Name="Settings" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Setting" />
+          <AssociationSet Name="FK_Nop_LocaleStringResource_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_LocaleStringResource_Nop_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Nop_LocaleStringResource" EntitySet="LocaleStringResources" />
+          </AssociationSet>
+          <EntitySet Name="Pictures" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Picture" />
+          <EntitySet Name="ShippingByTotal" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByTotal" />
+          <EntitySet Name="ShippingByWeight" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeight" />
+          <EntitySet Name="ShippingByWeightAndCountry" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeightAndCountry" />
+          <EntitySet Name="ShippingMethods" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingMethod" />
+          <AssociationSet Name="FK_Nop_ShippingByWeightAndCountry_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeightAndCountry_Nop_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Nop_ShippingByWeightAndCountry" EntitySet="ShippingByWeightAndCountry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByTotal_Nop_ShippingMethod">
+            <End Role="Nop_ShippingMethod" EntitySet="ShippingMethods" />
+            <End Role="Nop_ShippingByTotal" EntitySet="ShippingByTotal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShippingByWeight_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeight_Nop_ShippingMethod">
+            <End Role="Nop_ShippingMethod" EntitySet="ShippingMethods" />
+            <End Role="Nop_ShippingByWeight" EntitySet="ShippingByWeight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod">
+            <End Role="Nop_ShippingMethod" EntitySet="ShippingMethods" />
+            <End Role="Nop_ShippingByWeightAndCountry" EntitySet="ShippingByWeightAndCountry" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -1020,6 +1217,139 @@
           <Property Type="String" Name="ClassName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
         </EntityType>
+        <EntityType Name="LocaleStringResource">
+          <Key>
+            <PropertyRef Name="LocaleStringResourceId" />
+          </Key>
+          <Property Type="Int32" Name="LocaleStringResourceId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="LanguageId" Nullable="false" />
+          <Property Type="String" Name="ResourceName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ResourceValue" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Type="Int32" Name="SettingId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Nop_LocaleStringResource_Nop_Language">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Role="Language" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource" Role="Nop_LocaleStringResource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_LocaleStringResource">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="PictureId" />
+          </Key>
+          <Property Type="Int32" Name="PictureId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Binary" Name="PictureBinary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="Extension" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsNew" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShippingByTotal">
+          <Key>
+            <PropertyRef Name="ShippingByTotalId" />
+          </Key>
+          <Property Type="Int32" Name="ShippingByTotalId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ShippingMethodId" Nullable="false" />
+          <Property Type="Decimal" Name="From" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="To" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="UsePercentage" Nullable="false" />
+          <Property Type="Decimal" Name="ShippingChargePercentage" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ShippingChargeAmount" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ShippingByWeight">
+          <Key>
+            <PropertyRef Name="ShippingByWeightId" />
+          </Key>
+          <Property Type="Int32" Name="ShippingByWeightId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ShippingMethodId" Nullable="false" />
+          <Property Type="Decimal" Name="From" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="To" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="UsePercentage" Nullable="false" />
+          <Property Type="Decimal" Name="ShippingChargePercentage" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ShippingChargeAmount" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ShippingByWeightAndCountry">
+          <Key>
+            <PropertyRef Name="ShippingByWeightAndCountryId" />
+          </Key>
+          <Property Type="Int32" Name="ShippingByWeightAndCountryId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ShippingMethodId" Nullable="false" />
+          <Property Type="Int32" Name="CountryId" Nullable="false" />
+          <Property Type="Decimal" Name="From" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="To" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="UsePercentage" Nullable="false" />
+          <Property Type="Decimal" Name="ShippingChargePercentage" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ShippingChargeAmount" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ShippingMethod">
+          <Key>
+            <PropertyRef Name="ShippingMethodId" />
+          </Key>
+          <Property Type="Int32" Name="ShippingMethodId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          </EntityType>
+        <Association Name="FK_Nop_ShippingByWeightAndCountry_Nop_Country">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Role="Country" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeightAndCountry" Role="Nop_ShippingByWeightAndCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByWeightAndCountry">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingMethod" Role="Nop_ShippingMethod" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByTotal" Role="Nop_ShippingByTotal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ShippingMethod">
+              <PropertyRef Name="ShippingMethodId" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByTotal">
+              <PropertyRef Name="ShippingMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShippingByWeight_Nop_ShippingMethod">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingMethod" Role="Nop_ShippingMethod" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeight" Role="Nop_ShippingByWeight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ShippingMethod">
+              <PropertyRef Name="ShippingMethodId" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByWeight">
+              <PropertyRef Name="ShippingMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingMethod" Role="Nop_ShippingMethod" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeightAndCountry" Role="Nop_ShippingByWeightAndCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ShippingMethod">
+              <PropertyRef Name="ShippingMethodId" />
+            </Principal>
+            <Dependent Role="Nop_ShippingByWeightAndCountry">
+              <PropertyRef Name="ShippingMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1436,6 +1766,86 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LocaleStringResources">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource">
+              <MappingFragment StoreEntitySet="Nop_LocaleStringResource">
+                <ScalarProperty Name="ResourceValue" ColumnName="ResourceValue" />
+                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageID" />
+                <ScalarProperty Name="LocaleStringResourceId" ColumnName="LocaleStringResourceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Setting">
+              <MappingFragment StoreEntitySet="Nop_Setting">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SettingId" ColumnName="SettingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pictures">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Picture">
+              <MappingFragment StoreEntitySet="Nop_Picture">
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="PictureBinary" ColumnName="PictureBinary" />
+                <ScalarProperty Name="PictureId" ColumnName="PictureID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingByTotal">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByTotal">
+              <MappingFragment StoreEntitySet="Nop_ShippingByTotal">
+                <ScalarProperty Name="ShippingChargeAmount" ColumnName="ShippingChargeAmount" />
+                <ScalarProperty Name="ShippingChargePercentage" ColumnName="ShippingChargePercentage" />
+                <ScalarProperty Name="UsePercentage" ColumnName="UsePercentage" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodID" />
+                <ScalarProperty Name="ShippingByTotalId" ColumnName="ShippingByTotalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingByWeight">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeight">
+              <MappingFragment StoreEntitySet="Nop_ShippingByWeight">
+                <ScalarProperty Name="ShippingChargeAmount" ColumnName="ShippingChargeAmount" />
+                <ScalarProperty Name="ShippingChargePercentage" ColumnName="ShippingChargePercentage" />
+                <ScalarProperty Name="UsePercentage" ColumnName="UsePercentage" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodID" />
+                <ScalarProperty Name="ShippingByWeightId" ColumnName="ShippingByWeightID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingByWeightAndCountry">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeightAndCountry">
+              <MappingFragment StoreEntitySet="Nop_ShippingByWeightAndCountry">
+                <ScalarProperty Name="ShippingChargeAmount" ColumnName="ShippingChargeAmount" />
+                <ScalarProperty Name="ShippingChargePercentage" ColumnName="ShippingChargePercentage" />
+                <ScalarProperty Name="UsePercentage" ColumnName="UsePercentage" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryID" />
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodID" />
+                <ScalarProperty Name="ShippingByWeightAndCountryId" ColumnName="ShippingByWeightAndCountryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingMethods">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingMethod">
+              <MappingFragment StoreEntitySet="Nop_ShippingMethod">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1457,19 +1867,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="NopModel" ZoomLevel="86">
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="9.5" PointY="9.125" Height="2.085348307291667" IsExpanded="true" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="5.5" PointY="20.5" Height="2.7427376302083317" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="7.875" PointY="20.5" Height="1.9210009765624996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="9.5" PointY="9.125" Height="2.0853483072916656" IsExpanded="true" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="6.125" PointY="20.5" Height="2.7427376302083353" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="8.25" PointY="20.5" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
-          <ConnectorPoint PointX="7" PointY="21.460500488281248" />
-          <ConnectorPoint PointX="7.875" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="7.625" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="8.25" PointY="21.460500488281248" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="0.75" PointY="0.5" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="3.25" PointY="0.5" Height="2.9070849609374996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="9.96875" PointY="9.125" />
-          <ConnectorPoint PointX="9.96875" PointY="1.09375" />
-          <ConnectorPoint PointX="4.75" PointY="1.09375" />
+          <ConnectorPoint PointX="9.67968625" PointY="9.125" />
+          <ConnectorPoint PointX="9.67968625" PointY="2.9059456380208335" />
+          <ConnectorPoint PointX="4.75" PointY="2.9059456380208335" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
           <ConnectorPoint PointX="2.25" PointY="1.2139794921874998" />
@@ -1481,10 +1891,10 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.5" PointY="3.75" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
-          <ConnectorPoint PointX="10.4843775" PointY="9.125" />
-          <ConnectorPoint PointX="10.4843775" PointY="4.832021484375" />
-          <ConnectorPoint PointX="10.052083333333334" PointY="4.8320214843749989" />
-          <ConnectorPoint PointX="9.8854166666666661" PointY="4.832021484375" />
+          <ConnectorPoint PointX="10.371095624999999" PointY="9.125" />
+          <ConnectorPoint PointX="10.371095624999999" PointY="4.832021484375" />
+          <ConnectorPoint PointX="9.7630195833333335" PointY="4.8320214843749989" />
+          <ConnectorPoint PointX="9.5963529166666657" PointY="4.832021484375" />
           <ConnectorPoint PointX="5.75" PointY="4.832021484375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
@@ -1516,6 +1926,35 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" Width="2.125" PointX="16.375" PointY="17.875" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" Width="2" PointX="30.125" PointY="19.125" Height="1.7566536458333246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider" Width="2.125" PointX="27.75" PointY="19.125" Height="1.9210009765625102" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource" Width="2.5" PointX="3.25" PointY="7.125" Height="1.5923063151041657" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Setting" Width="1.625" PointX="7.875" PointY="26" Height="1.5923063151041674" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_LocaleStringResource_Nop_Language" >
+          <ConnectorPoint PointX="9.5" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="4.5" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="4.5" PointY="8.7173063151041656" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Picture" Width="1.5" PointX="0.5" PointY="5.5" Height="1.5923063151041665" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByTotal" Width="2" PointX="0.625" PointY="15" Height="2.0853483072916674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeight" Width="2" PointX="0.5" PointY="20.625" Height="2.0853483072916674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByWeightAndCountry" Width="2.75" PointX="3" PointY="20.625" Height="2.2496956380208353" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingMethod" Width="2" PointX="0.5" PointY="17.75" Height="1.5923063151041674" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeightAndCountry_Nop_Country" >
+          <ConnectorPoint PointX="6.125" PointY="21.749847819010419" />
+          <ConnectorPoint PointX="5.75" PointY="21.749847819010419" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByTotal_Nop_ShippingMethod" >
+          <ConnectorPoint PointX="1.5625" PointY="17.75" />
+          <ConnectorPoint PointX="1.5625" PointY="17.085348307291667" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeight_Nop_ShippingMethod" >
+          <ConnectorPoint PointX="1.5" PointY="19.342306315104167" />
+          <ConnectorPoint PointX="1.5" PointY="20.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod" >
+          <ConnectorPoint PointX="2.5" PointY="18.546153157552084" />
+          <ConnectorPoint PointX="3.5781227500000004" PointY="18.546153157552084" />
+          <ConnectorPoint PointX="3.5781227500000004" PointY="20.625" />
+        </AssociationConnector>
         </Diagram>
     </Diagrams>
   </Designer>

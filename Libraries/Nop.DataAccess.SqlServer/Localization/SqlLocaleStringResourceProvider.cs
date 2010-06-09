@@ -35,19 +35,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Localization
         #region Fields
         private string _sqlConnectionString;
         #endregion
-
-        #region Utilities
-        private DBLocaleStringResource GetLocaleStringResourceFromReader(IDataReader dataReader)
-        {
-            var item = new DBLocaleStringResource();
-            item.LocaleStringResourceId = NopSqlDataHelper.GetInt(dataReader, "LocaleStringResourceID");
-            item.LanguageId = NopSqlDataHelper.GetInt(dataReader, "LanguageID");
-            item.ResourceName = NopSqlDataHelper.GetString(dataReader, "ResourceName");
-            item.ResourceValue = NopSqlDataHelper.GetString(dataReader, "ResourceValue");
-            return item;
-        }
-        #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -82,111 +70,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Localization
                     throw new ProviderException(string.Format("Provider unrecognized attribute. {0}", new object[] { key }));
                 }
             }
-        }
-
-        /// <summary>
-        /// Deletes a locale string resource
-        /// </summary>
-        /// <param name="localeStringResourceId">Locale string resource identifier</param>
-        public override void DeleteLocaleStringResource(int localeStringResourceId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_LocaleStringResourceDelete");
-            db.AddInParameter(dbCommand, "LocaleStringResourceID", DbType.Int32, localeStringResourceId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a locale string resource
-        /// </summary>
-        /// <param name="localeStringResourceId">Locale string resource identifier</param>
-        /// <returns>Locale string resource</returns>
-        public override DBLocaleStringResource GetLocaleStringResourceById(int localeStringResourceId)
-        {
-            DBLocaleStringResource item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_LocaleStringResourceLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "LocaleStringResourceID", DbType.Int32, localeStringResourceId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetLocaleStringResourceFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Gets all locale string resources by language identifier
-        /// </summary>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Locale string resource collection</returns>
-        public override DBLocaleStringResourceCollection GetAllResourcesByLanguageId(int languageId)
-        {
-            var result = new DBLocaleStringResourceCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_LocaleStringResourceLoadAllByLanguageID");
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetLocaleStringResourceFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Inserts a locale string resource
-        /// </summary>
-        /// <param name="languageId">The language identifier</param>
-        /// <param name="resourceName">The resource name</param>
-        /// <param name="resourceValue">The resource value</param>
-        /// <returns>Locale string resource</returns>
-        public override DBLocaleStringResource InsertLocaleStringResource(int languageId,
-            string resourceName, string resourceValue)
-        {
-            DBLocaleStringResource item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_LocaleStringResourceInsert");
-            db.AddOutParameter(dbCommand, "LocaleStringResourceID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
-            db.AddInParameter(dbCommand, "ResourceName", DbType.String, resourceName);
-            db.AddInParameter(dbCommand, "ResourceValue", DbType.String, resourceValue);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int localeStringResourceId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@LocaleStringResourceID"));
-                item = GetLocaleStringResourceById(localeStringResourceId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the locale string resource
-        /// </summary>
-        /// <param name="localeStringResourceId">The locale string resource identifier</param>
-        /// <param name="languageId">The language identifier</param>
-        /// <param name="resourceName">The resource name</param>
-        /// <param name="resourceValue">The resource value</param>
-        /// <returns>Locale string resource</returns>
-        public override DBLocaleStringResource UpdateLocaleStringResource(int localeStringResourceId,
-            int languageId, string resourceName, string resourceValue)
-        {
-            DBLocaleStringResource item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_LocaleStringResourceUpdate");
-            db.AddInParameter(dbCommand, "LocaleStringResourceID", DbType.Int32, localeStringResourceId);
-            db.AddInParameter(dbCommand, "LanguageID", DbType.Int32, languageId);
-            db.AddInParameter(dbCommand, "ResourceName", DbType.String, resourceName);
-            db.AddInParameter(dbCommand, "ResourceValue", DbType.String, resourceValue);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetLocaleStringResourceById(localeStringResourceId);
-
-            return item;
         }
 
         /// <summary>

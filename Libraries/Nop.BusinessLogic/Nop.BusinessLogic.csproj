@@ -135,7 +135,6 @@
     <Compile Include="Content\Forums\ForumTopic.cs" />
     <Compile Include="Content\Forums\ForumTopicCollection.cs" />
     <Compile Include="Content\Forums\Forum.cs" />
-    <Compile Include="BaseEntityDictionary.cs" />
     <Compile Include="Customer\CustomerRegistrationTypeEnum.cs" />
     <Compile Include="Customer\DeleteExpiredCustomerSessionsTask.cs" />
     <Compile Include="Caching\ClearCacheTask.cs" />
@@ -300,21 +299,17 @@
     <Compile Include="Products\Attributes\ProductVariantAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeCollection.cs" />
     <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
-    <Compile Include="Shipping\ShippingByWeightAndCountryCollection.cs" />
     <Compile Include="Products\Specs\ProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
     <Compile Include="Customer\CustomerRoleCollection.cs" />
     <Compile Include="Audit\SearchLogCollection.cs" />
     <Compile Include="Content\Polls\PollAnswerCollection.cs" />
     <Compile Include="Content\Polls\PollCollection.cs" />
-    <Compile Include="Shipping\ShippingByWeightCollection.cs" />
-    <Compile Include="Shipping\ShippingByTotalCollection.cs" />
     <Compile Include="Products\ProductReviewCollection.cs" />
     <Compile Include="Products\RelatedProductCollection.cs" />
     <Compile Include="Manufacturers\ProductManufacturerCollection.cs" />
     <Compile Include="Categories\ProductCategoryCollection.cs" />
     <Compile Include="Products\ProductPictureCollection.cs" />
-    <Compile Include="Media\PictureCollection.cs" />
     <Compile Include="Promo\Discounts\DiscountTypeEnum.cs" />
     <Compile Include="Products\LowStockActivityEnum.cs" />
     <Compile Include="Orders\ShoppingCartTypeEnum.cs" />
@@ -349,7 +344,6 @@
     <Compile Include="Categories\CategoryCollection.cs" />
     <Compile Include="Templates\CategoryTemplate.cs" />
     <Compile Include="Directory\Country.cs" />
-    <Compile Include="Localization\LocaleStringResourceDictionary.cs" />
     <Compile Include="Payment\CreditCardType.cs" />
     <Compile Include="Directory\Currency.cs" />
     <Compile Include="Customer\Customer.cs" />
@@ -383,9 +377,7 @@
     <Compile Include="Products\ProductVariant.cs" />
     <Compile Include="Products\ProductVariantCollection.cs" />
     <Compile Include="Configuration\Settings\Setting.cs" />
-    <Compile Include="Configuration\Settings\SettingCollection.cs" />
     <Compile Include="Shipping\ShippingMethod.cs" />
-    <Compile Include="Shipping\ShippingMethodCollection.cs" />
     <Compile Include="Shipping\ShippingRateComputationMethod.cs" />
     <Compile Include="Orders\ShoppingCartItem.cs" />
     <Compile Include="Orders\ShoppingCart.cs" />

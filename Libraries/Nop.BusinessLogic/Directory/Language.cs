@@ -74,7 +74,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets the locale string dictionary
         /// </summary>
-        public LocaleStringResourceDictionary LocaleStringResources
+        public Dictionary<string, LocaleStringResource> LocaleStringResources
         {
             get
             {

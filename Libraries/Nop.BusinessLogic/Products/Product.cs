@@ -201,7 +201,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                ProductPictureCollection pictureCollection = ProductManager.GetProductPicturesByProductId(ProductId, 1);
+                var pictureCollection = ProductManager.GetProductPicturesByProductId(ProductId, 1);
                 return (pictureCollection.Count == 0 ? null : pictureCollection[0]);
             }
         }

@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
+            var shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
             gvShippingMethods.DataSource = shippingMethodCollection;
             gvShippingMethods.DataBind();
         }

@@ -16,8 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
@@ -267,6 +269,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<Language> _languages;
 
+        public ObjectSet<LocaleStringResource> LocaleStringResources
+        {
+            get
+            {
+                if ((_localeStringResources == null))
+                {
+                    _localeStringResources = CreateObjectSet<LocaleStringResource>();
+                }
+                return _localeStringResources;
+            }
+        }
+        private ObjectSet<LocaleStringResource> _localeStringResources;
+
         public ObjectSet<LocalizedMessageTemplate> LocalizedMessageTemplates
         {
             get
@@ -384,6 +399,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<PaymentStatus> _paymentStatuses;
 
+        public ObjectSet<Picture> Pictures
+        {
+            get
+            {
+                if ((_pictures== null))
+                {
+                    _pictures = CreateObjectSet<Picture>();
+                }
+                return _pictures;
+            }
+        }
+        private ObjectSet<Picture> _pictures;
+
         public ObjectSet<ProductTemplate> ProductTemplates
         {
             get
@@ -409,6 +437,71 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<QueuedEmail> _queuedEmails;
+
+        public ObjectSet<Setting> Settings
+        {
+            get
+            {
+                if ((_settings == null))
+                {
+                    _settings = CreateObjectSet<Setting>();
+                }
+                return _settings;
+            }
+        }
+        private ObjectSet<Setting> _settings;
+
+        public ObjectSet<ShippingByTotal> ShippingByTotal
+        {
+            get
+            {
+                if ((_shippingByTotal == null))
+                {
+                    _shippingByTotal = CreateObjectSet<ShippingByTotal>();
+                }
+                return _shippingByTotal;
+            }
+        }
+        private ObjectSet<ShippingByTotal> _shippingByTotal;
+
+        public ObjectSet<ShippingByWeight> ShippingByWeight
+        {
+            get
+            {
+                if ((_shippingByWeight == null))
+                {
+                    _shippingByWeight = CreateObjectSet<ShippingByWeight>();
+                }
+                return _shippingByWeight;
+            }
+        }
+        private ObjectSet<ShippingByWeight> _shippingByWeight;
+
+        public ObjectSet<ShippingByWeightAndCountry> ShippingByWeightAndCountry
+        {
+            get
+            {
+                if ((_shippingByWeightAndCountry == null))
+                {
+                    _shippingByWeightAndCountry = CreateObjectSet<ShippingByWeightAndCountry>();
+                }
+                return _shippingByWeightAndCountry;
+            }
+        }
+        private ObjectSet<ShippingByWeightAndCountry> _shippingByWeightAndCountry;
+
+        public ObjectSet<ShippingMethod> ShippingMethods
+        {
+            get
+            {
+                if ((_shippingMethods == null))
+                {
+                    _shippingMethods = CreateObjectSet<ShippingMethod>();
+                }
+                return _shippingMethods;
+            }
+        }
+        private ObjectSet<ShippingMethod> _shippingMethods;
 
         public ObjectSet<ShippingRateComputationMethod> ShippingRateComputationMethods
         {
@@ -503,5 +596,4 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
 
         #endregion
     }
-
 }

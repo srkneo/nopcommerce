@@ -82,41 +82,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         }
 
         /// <summary>
-        /// Deletes a shipping method
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        public override void DeleteShippingMethod(int shippingMethodId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethodDelete");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a shipping method
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <returns>Shipping method</returns>
-        public override DBShippingMethod GetShippingMethodById(int shippingMethodId)
-        {
-            DBShippingMethod item = null;
-            if (shippingMethodId == 0)
-                return item;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethodLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetShippingMethodFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
         /// Gets all shipping methods
         /// </summary>
         /// <param name="filterByCountryId">The country indentifier</param>
@@ -139,55 +104,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
                 }
             }
             return result;
-        }
-
-        /// <summary>
-        /// Inserts a shipping method
-        /// </summary>
-        /// <param name="name">The name</param>
-        /// <param name="description">The description</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Shipping method</returns>
-        public override DBShippingMethod InsertShippingMethod(string name,
-            string description, int displayOrder)
-        {
-            DBShippingMethod item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethodInsert");
-            db.AddOutParameter(dbCommand, "ShippingMethodID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "Name", DbType.String, name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, description);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int shippingMethodId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ShippingMethodID"));
-                item = GetShippingMethodById(shippingMethodId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the shipping method
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="description">The description</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Shipping method</returns>
-        public override DBShippingMethod UpdateShippingMethod(int shippingMethodId,
-            string name, string description, int displayOrder)
-        {
-            DBShippingMethod item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethodUpdate");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
-            db.AddInParameter(dbCommand, "Name", DbType.String, name);
-            db.AddInParameter(dbCommand, "Description", DbType.String, description);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetShippingMethodById(shippingMethodId);
-
-            return item;
         }
 
         /// <summary>

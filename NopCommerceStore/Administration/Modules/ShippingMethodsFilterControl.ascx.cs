@@ -163,7 +163,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void BindGrid()
         {
             var countryCollection = CountryManager.GetAllCountries();
-            ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
+            var shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
 
             if(countryCollection.Count == 0)
             {
@@ -215,7 +215,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
+                    var shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
                     foreach(GridViewRow row in gvShippingMethodCountryMap.Rows)
                     {
                         foreach(ShippingMethod shippingMethod in shippingMethodCollection)

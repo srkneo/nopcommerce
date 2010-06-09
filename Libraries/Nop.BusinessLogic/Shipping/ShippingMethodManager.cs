@@ -17,12 +17,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 {
@@ -37,12 +39,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         #endregion
 
         #region Utilities
-        private static ShippingMethodCollection DBMapping(DBShippingMethodCollection dbCollection)
+        private static List<ShippingMethod> DBMapping(DBShippingMethodCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ShippingMethodCollection();
+            var collection = new List<ShippingMethod>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -74,7 +76,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="shippingMethodId">The shipping method identifier</param>
         public static void DeleteShippingMethod(int shippingMethodId)
         {
-            DBProviderManager<DBShippingMethodProvider>.Provider.DeleteShippingMethod(shippingMethodId);
+            var shippingMethod = GetShippingMethodById(shippingMethodId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingMethods.Attach(shippingMethod);
+            context.DeleteObject(shippingMethod);
+            context.SaveChanges();
+
             if (ShippingMethodManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(SHIPPINGMETHODS_PATTERN_KEY);
@@ -98,8 +106,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return (ShippingMethod)obj2;
             }
 
-            var dbItem = DBProviderManager<DBShippingMethodProvider>.Provider.GetShippingMethodById(shippingMethodId);
-            var shippingMethod = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from sm in context.ShippingMethods
+                        where sm.ShippingMethodId == shippingMethodId
+                        select sm;
+            var shippingMethod = query.SingleOrDefault();
 
             if (ShippingMethodManager.CacheEnabled)
             {
@@ -112,7 +123,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// Gets all shipping methods
         /// </summary>
         /// <returns>Shipping method collection</returns>
-        public static ShippingMethodCollection GetAllShippingMethods()
+        public static List<ShippingMethod> GetAllShippingMethods()
         {
             return GetAllShippingMethods(null);
         }
@@ -122,7 +133,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// </summary>
         /// <param name="filterByCountryId">The country indentifier</param>
         /// <returns>Shipping method collection</returns>
-        public static ShippingMethodCollection GetAllShippingMethods(int? filterByCountryId)
+        public static List<ShippingMethod> GetAllShippingMethods(int? filterByCountryId)
         {
             var dbCollection = DBProviderManager<DBShippingMethodProvider>.Provider.GetAllShippingMethods(filterByCountryId);
             var shippingMethods = DBMapping(dbCollection);
@@ -139,9 +150,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static ShippingMethod InsertShippingMethod(string name,
             string description, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBShippingMethodProvider>.Provider.InsertShippingMethod(name, 
-                description, displayOrder);
-            var shippingMethod = DBMapping(dbItem);
+            var shippingMethod = new ShippingMethod();
+            shippingMethod.Name = name;
+            shippingMethod.Description = description;
+            shippingMethod.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingMethods.AddObject(shippingMethod);
+            context.SaveChanges();
 
             if (ShippingMethodManager.CacheEnabled)
             {
@@ -161,9 +177,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static ShippingMethod UpdateShippingMethod(int shippingMethodId,
             string name, string description, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBShippingMethodProvider>.Provider.UpdateShippingMethod(shippingMethodId, 
-                name, description, displayOrder);
-            var shippingMethod = DBMapping(dbItem);
+            var shippingMethod = GetShippingMethodById(shippingMethodId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingMethods.Attach(shippingMethod);
+
+            shippingMethod.Name = name;
+            shippingMethod.Description = description;
+            shippingMethod.DisplayOrder = displayOrder;
+            context.SaveChanges();
 
             if (ShippingMethodManager.CacheEnabled)
             {

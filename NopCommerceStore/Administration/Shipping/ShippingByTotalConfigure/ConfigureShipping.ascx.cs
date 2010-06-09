@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByTotalCo
         private void FillDropDowns()
         {
             ddlShippingMethod.Items.Clear();
-            ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
+            var shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
             foreach (ShippingMethod shippingMethod in shippingMethodCollection)
             {
                 ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());
@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByTotalCo
 
         private void BindData()
         {
-            ShippingByTotalCollection shippingByTotalCollection = ShippingByTotalManager.GetAll();
+            var shippingByTotalCollection = ShippingByTotalManager.GetAll();
             gvShippingByTotals.DataSource = shippingByTotalCollection;
             gvShippingByTotals.DataBind();
         }
@@ -108,7 +108,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Shipping.ShippingByTotalCo
 
                 DropDownList ddlShippingMethod = e.Row.FindControl("ddlShippingMethod") as DropDownList;
                 ddlShippingMethod.Items.Clear();
-                ShippingMethodCollection shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
+                var shippingMethodCollection = ShippingMethodManager.GetAllShippingMethods();
                 foreach (ShippingMethod shippingMethod in shippingMethodCollection)
                 {
                     ListItem item = new ListItem(shippingMethod.Name, shippingMethod.ShippingMethodId.ToString());

@@ -18,10 +18,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
 {
@@ -32,37 +32,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
     {
         #region Constants
         private const string SETTINGS_ALL_KEY = "Nop.setting.all";
-        #endregion
-
-        #region Utilities
-        private static SettingDictionary DBMapping(DBSettingCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var dictionary = new SettingDictionary();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                dictionary.Add(item.Name.ToLowerInvariant(), item);
-            }
-
-            return dictionary;
-        }
-
-        private static Setting DBMapping(DBSetting dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Setting();
-            item.SettingId = dbItem.SettingId;
-            item.Name = dbItem.Name;
-            item.Value = dbItem.Value;
-            item.Description = dbItem.Description;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -76,8 +45,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
             if (settingId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBSettingProvider>.Provider.GetSettingById(settingId);
-            var setting = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from s in context.Settings
+                        where s.SettingId == settingId
+                        select s;
+            var setting = query.SingleOrDefault();
             return setting;
         }
 
@@ -87,7 +59,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <param name="settingId">Setting identifer</param>
         public static void DeleteSetting(int settingId)
         {
-            DBProviderManager<DBSettingProvider>.Provider.DeleteSetting(settingId);
+            var setting = GetSettingById(settingId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Settings.Attach(setting);
+            context.DeleteObject(setting);
+            context.SaveChanges();
 
             if (SettingManager.CacheEnabled)
             {
@@ -99,17 +76,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// Gets all settings
         /// </summary>
         /// <returns>Setting collection</returns>
-        public static SettingDictionary GetAllSettings()
+        public static Dictionary<string, Setting> GetAllSettings()
         {
             string key = SETTINGS_ALL_KEY;
             object obj2 = NopCache.Get(key);
             if (SettingManager.CacheEnabled && (obj2 != null))
             {
-                return (SettingDictionary)obj2;
+                return (Dictionary<string, Setting>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBSettingProvider>.Provider.GetAllSettings();
-            var settings = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from s in context.Settings
+                        orderby s.Name
+                        select s;
+            var settings = query.ToDictionary(s => s.Name.ToLowerInvariant());
 
             if (SettingManager.CacheEnabled)
             {
@@ -187,8 +167,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <returns>Setting</returns>
         public static Setting AddSetting(string name, string value, string description)
         {
-            var dbItem = DBProviderManager<DBSettingProvider>.Provider.AddSetting(name, value, description);
-            var setting = DBMapping(dbItem);
+            var setting = new Setting();
+            setting.Name = name;
+            setting.Value = value;
+            setting.Description = description;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Settings.AddObject(setting);
+            context.SaveChanges();
 
             if (SettingManager.CacheEnabled)
             {
@@ -208,8 +194,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <returns>Setting</returns>
         public static Setting UpdateSetting(int settingId, string name, string value, string description)
         {
-            var dbItem = DBProviderManager<DBSettingProvider>.Provider.UpdateSetting(settingId, name, value, description);
-            var setting = DBMapping(dbItem);
+            var setting = GetSettingById(settingId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Settings.Attach(setting);
+
+            setting.Name = name;
+            setting.Value = value;
+            setting.Description = description;
+            context.SaveChanges();
+            
             if (SettingManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(SETTINGS_ALL_KEY);

@@ -38,13 +38,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductById(this.ProductId);
+            var product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
                 pnlData.Visible = true;
                 pnlMessage.Visible = false;
 
-                ProductPictureCollection productPictures = product.ProductPictures;
+                var productPictures = product.ProductPictures;
                 if (productPictures.Count > 0)
                 {
                     gvwImages.Visible = true;
@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Product product = ProductManager.GetProductById(this.ProductId);
+                var product = ProductManager.GetProductById(this.ProductId);
                 if(product != null)
                 {
                     if(fuProductPicture1.HasFile)

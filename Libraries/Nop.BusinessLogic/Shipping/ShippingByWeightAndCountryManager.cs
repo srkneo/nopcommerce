@@ -17,11 +17,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Shipping;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 {
@@ -30,41 +32,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
     /// </summary>
     public partial class ShippingByWeightAndCountryManager
     {
-        #region Utilities
-        private static ShippingByWeightAndCountryCollection DBMapping(DBShippingByWeightAndCountryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ShippingByWeightAndCountryCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ShippingByWeightAndCountry DBMapping(DBShippingByWeightAndCountry dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ShippingByWeightAndCountry();
-            item.ShippingByWeightAndCountryId = dbItem.ShippingByWeightAndCountryId;
-            item.ShippingMethodId = dbItem.ShippingMethodId;
-            item.CountryId = dbItem.CountryId;
-            item.From = dbItem.From;
-            item.To = dbItem.To;
-            item.UsePercentage = dbItem.UsePercentage;
-            item.ShippingChargePercentage = dbItem.ShippingChargePercentage;
-            item.ShippingChargeAmount = dbItem.ShippingChargeAmount;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Gets a ShippingByWeightAndCountry
@@ -76,8 +43,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             if (shippingByWeightAndCountryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.GetById(shippingByWeightAndCountryId);
-            var shippingByWeightAndCountry = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from swc in context.ShippingByWeightAndCountry
+                        where swc.ShippingByWeightAndCountryId == shippingByWeightAndCountryId
+                        select swc;
+            var shippingByWeightAndCountry = query.SingleOrDefault();
             return shippingByWeightAndCountry;
         }
 
@@ -87,17 +57,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="shippingByWeightAndCountryId">ShippingByWeightAndCountry identifier</param>
         public static void DeleteShippingByWeightAndCountry(int shippingByWeightAndCountryId)
         {
-            DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.DeleteShippingByWeightAndCountry(shippingByWeightAndCountryId);
+            var shippingByWeightAndCountry = GetById(shippingByWeightAndCountryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingByWeightAndCountry.Attach(shippingByWeightAndCountry);
+            context.DeleteObject(shippingByWeightAndCountry);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets all ShippingByWeightAndCountrys
         /// </summary>
         /// <returns>ShippingByWeightAndCountry collection</returns>
-        public static ShippingByWeightAndCountryCollection GetAll()
+        public static List<ShippingByWeightAndCountry> GetAll()
         {
-            var dbCollection = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.GetAll();
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from swc in context.ShippingByWeightAndCountry
+                        orderby swc.CountryId, swc.ShippingMethodId, swc.From
+                        select swc;
+            var collection = query.ToList();
             return collection;
         }
 
@@ -116,10 +94,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             int countryId, decimal from, decimal to, bool usePercentage,
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.InsertShippingByWeightAndCountry(shippingMethodId,
-                countryId, from, to, usePercentage,
-                shippingChargePercentage, shippingChargeAmount);
-            var shippingByWeightAndCountry = DBMapping(dbItem);
+            var shippingByWeightAndCountry = new ShippingByWeightAndCountry();
+            shippingByWeightAndCountry.ShippingMethodId = shippingMethodId;
+            shippingByWeightAndCountry.CountryId = countryId;
+            shippingByWeightAndCountry.From = from;
+            shippingByWeightAndCountry.To = to;
+            shippingByWeightAndCountry.UsePercentage = usePercentage;
+            shippingByWeightAndCountry.ShippingChargePercentage = shippingChargePercentage;
+            shippingByWeightAndCountry.ShippingChargeAmount = shippingChargeAmount;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingByWeightAndCountry.AddObject(shippingByWeightAndCountry);
+            context.SaveChanges();
+
             return shippingByWeightAndCountry;
         }
 
@@ -139,10 +126,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             int shippingMethodId, int countryId, decimal from, decimal to, bool usePercentage,
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var dbItem = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.UpdateShippingByWeightAndCountry(shippingByWeightAndCountryId,
-                shippingMethodId, countryId, from, to, usePercentage,
-                shippingChargePercentage, shippingChargeAmount);
-            var shippingByWeightAndCountry = DBMapping(dbItem);
+            var shippingByWeightAndCountry = GetById(shippingByWeightAndCountryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingByWeightAndCountry.Attach(shippingByWeightAndCountry);
+
+            shippingByWeightAndCountry.ShippingMethodId = shippingMethodId;
+            shippingByWeightAndCountry.CountryId = countryId;
+            shippingByWeightAndCountry.From = from;
+            shippingByWeightAndCountry.To = to;
+            shippingByWeightAndCountry.UsePercentage = usePercentage;
+            shippingByWeightAndCountry.ShippingChargePercentage = shippingChargePercentage;
+            shippingByWeightAndCountry.ShippingChargeAmount = shippingChargeAmount;
+            context.SaveChanges();
+
             return shippingByWeightAndCountry;
         }
 
@@ -152,11 +149,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="shippingMethodId">The shipping method identifier</param>
         /// <param name="countryId">The country identifier</param>
         /// <returns>ShippingByWeightAndCountry collection</returns>
-        public static ShippingByWeightAndCountryCollection GetAllByShippingMethodIdAndCountryId(int shippingMethodId, 
+        public static List<ShippingByWeightAndCountry> GetAllByShippingMethodIdAndCountryId(int shippingMethodId, 
             int countryId)
         {
-            var dbCollection = DBProviderManager<DBShippingByWeightAndCountryProvider>.Provider.GetAllByShippingMethodIdAndCountryId(shippingMethodId, countryId);
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from swc in context.ShippingByWeightAndCountry
+                        where swc.ShippingMethodId == shippingMethodId && swc.CountryId == countryId
+                        orderby swc.From
+                        select swc;
+            var collection = query.ToList();
             return collection;
         }
         #endregion

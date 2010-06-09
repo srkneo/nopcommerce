@@ -35,45 +35,11 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         #region Methods
 
         /// <summary>
-        /// Deletes a shipping method
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        public abstract void DeleteShippingMethod(int shippingMethodId);
-
-        /// <summary>
-        /// Gets a shipping method
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <returns>Shipping method</returns>
-        public abstract DBShippingMethod GetShippingMethodById(int shippingMethodId);
-
-        /// <summary>
         /// Gets all shipping methods
         /// </summary>
         /// <param name="filterByCountryId">The country indentifier</param>
         /// <returns>Shipping method collection</returns>
         public abstract DBShippingMethodCollection GetAllShippingMethods(int? filterByCountryId);
-
-        /// <summary>
-        /// Inserts a shipping method
-        /// </summary>
-        /// <param name="name">The name</param>
-        /// <param name="description">The description</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Shipping method</returns>
-        public abstract DBShippingMethod InsertShippingMethod(string name,
-            string description, int displayOrder);
-
-        /// <summary>
-        /// Updates the shipping method
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="description">The description</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Shipping method</returns>
-        public abstract DBShippingMethod UpdateShippingMethod(int shippingMethodId, 
-            string name, string description, int displayOrder);
 
         /// <summary>
         /// Inserts shipping method country mapping

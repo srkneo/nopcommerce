@@ -35,40 +35,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Media
         #region Methods
 
         /// <summary>
-        /// Gets a picture
-        /// </summary>
-        /// <param name="pictureId">Picture identifier</param>
-        /// <returns>Picture</returns>
-        public abstract DBPicture GetPictureById(int pictureId);
-
-        /// <summary>
-        /// Deletes a picture
-        /// </summary>
-        /// <param name="pictureId">Picture identifier</param>
-        public abstract void DeletePicture(int pictureId);
-
-        /// <summary>
-        /// Inserts a picture
-        /// </summary>
-        /// <param name="pictureBinary">The picture binary</param>
-        /// <param name="extension">The picture extension</param>
-        /// <param name="isNew">A value indicating whether the picture is new</param>
-        /// <returns>Picture</returns>
-        public abstract DBPicture InsertPicture(byte[] pictureBinary, 
-            string extension, bool isNew);
-
-        /// <summary>
-        /// Updates the picture
-        /// </summary>
-        /// <param name="pictureId">The picture identifier</param>
-        /// <param name="pictureBinary">The picture binary</param>
-        /// <param name="extension">The picture extension</param>
-        /// <param name="isNew">A value indicating whether the picture is new</param>
-        /// <returns>Picture</returns>
-        public abstract DBPicture UpdatePicture(int pictureId, byte[] pictureBinary,
-            string extension, bool isNew);
-
-        /// <summary>
         /// Gets a collection of pictures
         /// </summary>
         /// <param name="pageIndex">Current page</param>

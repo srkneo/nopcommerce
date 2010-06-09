@@ -102,7 +102,6 @@
     <Compile Include="Audit\SqlLogProvider.cs" />
     <Compile Include="Audit\SqlSearchLogProvider.cs" />
     <Compile Include="Categories\SqlCategoryProvider.cs" />
-    <Compile Include="Configuration\Settings\SqlSettingProvider.cs" />
     <Compile Include="Content\Blog\SqlBlogProvider.cs" />
     <Compile Include="Content\Forums\SqlForumProvider.cs" />
     <Compile Include="Content\News\SqlNewsProvider.cs" />
@@ -124,9 +123,6 @@
     <Compile Include="Promo\Discounts\SqlDiscountProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\SqlAclProvider.cs" />
-    <Compile Include="Shipping\SqlShippingByTotalProvider.cs" />
-    <Compile Include="Shipping\SqlShippingByWeightAndCountryProvider.cs" />
-    <Compile Include="Shipping\SqlShippingByWeightProvider.cs" />
     <Compile Include="Shipping\SqlShippingMethodProvider.cs" />
     <Compile Include="Tax\SqlTaxRateProvider.cs" />
   </ItemGroup>

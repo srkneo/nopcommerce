@@ -16,8 +16,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Media;
@@ -41,12 +43,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         #endregion
 
         #region Utilities
-        private static PictureCollection DBMapping(DBPictureCollection dbCollection)
+        private static List<Picture> DBMapping(DBPictureCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new PictureCollection();
+            var collection = new List<Picture>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -456,12 +458,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             if (pictureId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBPictureProvider>.Provider.GetPictureById(pictureId);
-            if(!StoreInDB && dbItem != null)
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from p in context.Pictures
+                        where p.PictureId == pictureId
+                        select p;
+            var picture = query.SingleOrDefault();
+
+            if(!StoreInDB && picture != null)
             {
-                dbItem.PictureBinary = LoadPictureFromFile(pictureId, dbItem.Extension);
+                picture.PictureBinary = LoadPictureFromFile(pictureId, picture.Extension);
             }
-            var picture = DBMapping(dbItem);
             return picture;
         }
 
@@ -476,7 +482,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             foreach (string currentFileName in currentFiles)
                 File.Delete(Path.Combine(PictureManager.LocalThumbImagePath, currentFileName));
 
-            DBProviderManager<DBPictureProvider>.Provider.DeletePicture(pictureId);
+            var picture = GetPictureById(pictureId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Pictures.Attach(picture);
+            context.DeleteObject(picture);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -526,7 +537,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         /// <param name="pageSize">Items on each page</param>
         /// <param name="totalRecords">Output. how many records in results</param>
         /// <returns>Paged list of pictures</returns>
-        public static PictureCollection GetPictures(int pageSize, 
+        public static List<Picture> GetPictures(int pageSize, 
             int pageIndex, out int totalRecords)
         {
             if (pageSize <= 0)
@@ -544,6 +555,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             var pics = DBMapping(dbpics);
             return pics;
         }
+
         /// <summary>
         /// Inserts a picture
         /// </summary>
@@ -554,13 +566,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         public static Picture InsertPicture(byte[] pictureBinary, string extension, bool isNew)
         {
             pictureBinary = ValidatePicture(pictureBinary);
-            var dbItem = DBProviderManager<DBPictureProvider>.Provider.InsertPicture((StoreInDB ? pictureBinary : new byte[0]), extension, isNew);
-            if(!StoreInDB && dbItem != null)
+                        
+            var picture = new Picture();
+            picture.PictureBinary = (StoreInDB ? pictureBinary : new byte[0]);
+            picture.Extension = extension;
+            picture.IsNew = isNew;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Pictures.AddObject(picture);
+            context.SaveChanges();
+
+            if(!StoreInDB && picture != null)
             {
-                SavePictureInFile(dbItem.PictureId, pictureBinary, extension);
-                dbItem.PictureBinary = pictureBinary;
+                SavePictureInFile(picture.PictureId, pictureBinary, extension);
+                picture.PictureBinary = pictureBinary;
             }
-            var picture = DBMapping(dbItem);
             return picture;
         }
 
@@ -576,14 +596,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             string extension, bool isNew)
         {
             ValidatePicture(pictureBinary);
-            var dbItem = DBProviderManager<DBPictureProvider>.Provider.UpdatePicture(pictureId,
-                (StoreInDB ? pictureBinary : new byte[0]), extension, isNew);
-            if(!StoreInDB && dbItem != null)
+                        
+            var picture = GetPictureById(pictureId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Pictures.Attach(picture);
+
+            picture.PictureBinary = (StoreInDB ? pictureBinary : new byte[0]);
+            picture.Extension = extension;
+            picture.IsNew = isNew;
+            context.SaveChanges();
+
+            if(!StoreInDB && picture != null)
             {
-                SavePictureInFile(dbItem.PictureId, pictureBinary, extension);
-                dbItem.PictureBinary = pictureBinary;
+                SavePictureInFile(picture.PictureId, pictureBinary, extension);
+                picture.PictureBinary = pictureBinary;
             }
-            var picture = DBMapping(dbItem);
             return picture;
         }
 
