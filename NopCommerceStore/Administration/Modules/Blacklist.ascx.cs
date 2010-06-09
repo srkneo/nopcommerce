@@ -34,11 +34,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindGrid()
         {
-            BannedIpAddressCollection ipAddressCollection = IpBlacklistManager.GetBannedIpAddressAll();
+            var ipAddressCollection = IpBlacklistManager.GetBannedIpAddressAll();
             gvBannedIpAddress.DataSource = ipAddressCollection;
             gvBannedIpAddress.DataBind();
 
-            BannedIpNetworkCollection ipNetworkCollection = IpBlacklistManager.GetBannedIpNetworkAll();
+            var ipNetworkCollection = IpBlacklistManager.GetBannedIpNetworkAll();
             gvBannedIpNetwork.DataSource = ipNetworkCollection;
             gvBannedIpNetwork.DataBind();
         }

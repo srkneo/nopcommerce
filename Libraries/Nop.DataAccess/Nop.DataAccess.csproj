@@ -192,11 +192,6 @@
     <Compile Include="Security\DBACLProvider.cs" />
     <Compile Include="Security\DBCustomerAction.cs" />
     <Compile Include="Security\DBCustomerActionCollection.cs" />
-    <Compile Include="Security\DBBannedIpAddress.cs" />
-    <Compile Include="Security\DBBannedIpAddressCollection.cs" />
-    <Compile Include="Security\DBBannedIpNetwork.cs" />
-    <Compile Include="Security\DBBannedIpNetworkCollection.cs" />
-    <Compile Include="Security\DBBlacklistProvider.cs" />
     <Compile Include="Payment\DBCreditCardTypeProvider.cs" />
     <Compile Include="Directory\DBCurrencyProvider.cs" />
     <Compile Include="Customer\DBCustomerProvider.cs" />

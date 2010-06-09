@@ -15,13 +15,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Security;
-using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.DataAccess;
+using NopSolutions.NopCommerce.DataAccess.Security;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Security
 {
@@ -38,63 +40,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         #endregion
 
         #region Utilities
-        private static BannedIpAddress DBMapping(DBBannedIpAddress dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var ipAddress = new BannedIpAddress();
-            ipAddress.BannedIpAddressId = dbItem.BannedIpAddressId;
-            ipAddress.Address = dbItem.Address;
-            ipAddress.Comment = dbItem.Comment;
-            ipAddress.CreatedOn = dbItem.CreatedOn;
-            ipAddress.UpdatedOn = dbItem.UpdatedOn;
-            return ipAddress;
-        }
-
-        private static BannedIpAddressCollection DBMapping(DBBannedIpAddressCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var ipCollection = new BannedIpAddressCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                ipCollection.Add(item);
-            }
-            return ipCollection;
-        }
-
-        private static BannedIpNetwork DBMapping(DBBannedIpNetwork dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var ipNetwork = new BannedIpNetwork();
-            ipNetwork.BannedIpNetworkId = dbItem.BannedIpNetworkId;
-            ipNetwork.StartAddress = dbItem.StartAddress;
-            ipNetwork.EndAddress = dbItem.EndAddress;
-            ipNetwork.IpException = dbItem.IpException;
-            ipNetwork.Comment = dbItem.Comment;
-            ipNetwork.CreatedOn = dbItem.CreatedOn;
-            ipNetwork.UpdatedOn = dbItem.UpdatedOn;
-            return ipNetwork;
-        }
-
-        private static BannedIpNetworkCollection DBMapping(DBBannedIpNetworkCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var ipCollection = new BannedIpNetworkCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                ipCollection.Add(item);
-            }
-            return ipCollection;
-        }
 
         /// <summary>
         /// This encodes the string representation of an IP address to a uint, but
@@ -119,6 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Gets an IP address by its identifier
         /// </summary>
@@ -129,26 +75,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             if (ipAddressId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBBlacklistProvider>.Provider.GetIpAddressById(ipAddressId);
-            var ipAddress = DBMapping(dbItem);
-            return ipAddress;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ba in context.BannedIpAddresses
+                        where ba.BannedIpAddressId == ipAddressId
+                        select ba;
+            var bannedIpAddress = query.SingleOrDefault();
+
+            return bannedIpAddress;
         }
 
         /// <summary>
         /// Gets all IP addresses
         /// </summary>
         /// <returns>An IP address collection</returns>
-        public static BannedIpAddressCollection GetBannedIpAddressAll()
+        public static List<BannedIpAddress> GetBannedIpAddressAll()
         {
             string key = BLACKLIST_ALLIP_KEY;
             object obj2 = NopCache.Get(key);
             if (CacheEnabled && (obj2 != null))
             {
-                return (BannedIpAddressCollection)obj2;
+                return (List<BannedIpAddress>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBBlacklistProvider>.Provider.GetIpAddressAll();
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ba in context.BannedIpAddresses
+                        orderby ba.BannedIpAddressId
+                        select ba;
+            var collection = query.ToList();
 
             if (IpBlacklistManager.CacheEnabled)
             {
@@ -165,15 +118,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="createdOn">When the record was inserted</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns>IP Address</returns>
-        public static BannedIpAddress InsertBannedIpAddress(string address, string comment, DateTime createdOn, DateTime updatedOn)
+        public static BannedIpAddress InsertBannedIpAddress(string address, string comment,
+            DateTime createdOn, DateTime updatedOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             address = address.Trim();
 
-            var dbItem = DBProviderManager<DBBlacklistProvider>.Provider.InsertBannedIpAddress(address, comment, createdOn, updatedOn);
-            var ipAddress = DBMapping(dbItem);
+            var ipAddress = new BannedIpAddress();
+            ipAddress.Address = address;
+            ipAddress.Comment = comment;
+            ipAddress.CreatedOn = createdOn;
+            ipAddress.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BannedIpAddresses.AddObject(ipAddress);
+            context.SaveChanges();
 
             if (IpBlacklistManager.CacheEnabled)
             {
@@ -191,15 +152,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="createdOn">When the record was inserted</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns>IP address</returns>
-        public static BannedIpAddress UpdateBannedIpAddress(int ipAddressId, string address, string comment, DateTime createdOn, DateTime updatedOn)
+        public static BannedIpAddress UpdateBannedIpAddress(int ipAddressId, string address, 
+            string comment, DateTime createdOn, DateTime updatedOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             address = address.Trim();
 
-            var dbItem = DBProviderManager<DBBlacklistProvider>.Provider.UpdateBannedIpAddress(ipAddressId, address, comment, createdOn, updatedOn);
-            var ipAddress = DBMapping(dbItem);
+            var ipAddress = GetBannedIpAddressById(ipAddressId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BannedIpAddresses.Attach(ipAddress);
+
+            ipAddress.Address = address;
+            ipAddress.Comment = comment;
+            ipAddress.CreatedOn = createdOn;
+            ipAddress.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
             if (IpBlacklistManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
@@ -213,7 +184,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="ipAddressId">IP address unique identifier</param>
         public static void DeleteBannedIpAddress(int ipAddressId)
         {
-            DBProviderManager<DBBlacklistProvider>.Provider.DeleteBannedIpAddress(ipAddressId);
+            var ipAddress = GetBannedIpAddressById(ipAddressId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BannedIpAddresses.Attach(ipAddress);
+            context.DeleteObject(ipAddress);
+            context.SaveChanges();
+
             if (IpBlacklistManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
@@ -230,8 +207,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             if (bannedIpNetworkId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBBlacklistProvider>.Provider.GetIpNetworkById(bannedIpNetworkId);
-            var ipNetwork = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from bn in context.BannedIpNetworks
+                        where bn.BannedIpNetworkId == bannedIpNetworkId
+                        select bn;
+            var ipNetwork = query.SingleOrDefault();
+
             return ipNetwork;
         }
 
@@ -239,18 +220,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// Gets all IP networks
         /// </summary>
         /// <returns>IP network collection</returns>
-        public static BannedIpNetworkCollection GetBannedIpNetworkAll()
+        public static List<BannedIpNetwork> GetBannedIpNetworkAll()
         {
             string key = BLACKLIST_ALLNETWORK_KEY;
             object obj2 = NopCache.Get(key);
             if (IpBlacklistManager.CacheEnabled && (obj2 != null))
             {
-                return (BannedIpNetworkCollection)obj2;
+                return (List<BannedIpNetwork>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBBlacklistProvider>.Provider.GetIpNetworkAll();
-            var collection = DBMapping(dbCollection);
-
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from bn in context.BannedIpNetworks
+                        orderby bn.BannedIpNetworkId
+                        select bn;
+            var collection = query.ToList();
+            
             if (IpBlacklistManager.CacheEnabled)
             {
                 NopCache.Max(key, collection);
@@ -268,7 +252,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="createdOn">When the record was inserted</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns></returns>
-        public static BannedIpNetwork InsertBannedIpNetwork(string startAddress, string endAddress, string comment, string ipException, DateTime createdOn, DateTime updatedOn)
+        public static BannedIpNetwork InsertBannedIpNetwork(string startAddress, 
+            string endAddress, string comment, string ipException, DateTime createdOn, 
+            DateTime updatedOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
@@ -276,8 +262,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             startAddress = startAddress.Trim();
             endAddress = endAddress.Trim();
 
-            var dbItem = DBProviderManager<DBBlacklistProvider>.Provider.InsertBannedIpNetwork(startAddress, endAddress, comment, ipException, createdOn, updatedOn);
-            var ipNetwork = DBMapping(dbItem);
+            var ipNetwork = new BannedIpNetwork();
+            ipNetwork.StartAddress = startAddress;
+            ipNetwork.EndAddress = endAddress;
+            ipNetwork.Comment = comment;
+            ipNetwork.IpException = ipException;
+            ipNetwork.CreatedOn = createdOn;
+            ipNetwork.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BannedIpNetworks.AddObject(ipNetwork);
+            context.SaveChanges();
 
             if (IpBlacklistManager.CacheEnabled)
             {
@@ -289,7 +284,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <summary>
         /// Updates an IP network
         /// </summary>
-        /// <param name="bannedIpNetwork">IP network unique identifier</param>
+        /// <param name="bannedIpNetworkId">IP network unique identifier</param>
         /// <param name="startAddress">First IP address in the range</param>
         /// <param name="endAddress">Last IP address in the range</param>
         /// <param name="comment">Reason why the IP network was banned</param>
@@ -297,7 +292,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="createdOn">When the record was created</param>
         /// <param name="updatedOn">When the record was last updated</param>
         /// <returns></returns>
-        public static BannedIpNetwork UpdateBannedIpNetwork(int bannedIpNetwork, string startAddress, string endAddress, string comment, string ipException, DateTime createdOn, DateTime updatedOn)
+        public static BannedIpNetwork UpdateBannedIpNetwork(int bannedIpNetworkId, 
+            string startAddress, string endAddress, string comment, string ipException,
+            DateTime createdOn, DateTime updatedOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
@@ -305,8 +302,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             startAddress = startAddress.Trim();
             endAddress = endAddress.Trim();
 
-            var dbItem = DBProviderManager<DBBlacklistProvider>.Provider.UpdateBannedIpNetwork(bannedIpNetwork, startAddress, endAddress, comment, ipException, createdOn, updatedOn);
-            var ipNetwork = DBMapping(dbItem);
+            var ipNetwork = GetBannedIpNetworkById(bannedIpNetworkId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BannedIpNetworks.Attach(ipNetwork);
+
+            ipNetwork.StartAddress = startAddress;
+            ipNetwork.EndAddress = endAddress;
+            ipNetwork.Comment = comment;
+            ipNetwork.IpException = ipException;
+            ipNetwork.CreatedOn = createdOn;
+            ipNetwork.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
             if (IpBlacklistManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
@@ -320,7 +328,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="bannedIpNetwork">IP network unique identifier</param>
         public static void DeleteBannedIpNetwork(int bannedIpNetwork)
         {
-            DBProviderManager<DBBlacklistProvider>.Provider.DeleteBannedIpNetwork(bannedIpNetwork);
+            var ipNetwork = GetBannedIpNetworkById(bannedIpNetwork);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BannedIpNetworks.Attach(ipNetwork);
+            context.DeleteObject(ipNetwork);
+            context.SaveChanges();
+
             if (IpBlacklistManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
@@ -510,6 +524,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             return ip;
         }
+
         #endregion
 
         #region Properties

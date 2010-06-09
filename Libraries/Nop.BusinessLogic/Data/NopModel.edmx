@@ -6,6 +6,8 @@
     <edmx:StorageModels>
     <Schema Namespace="NopSolutions.NopCommerce.BusinessLogic.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="NopSolutionsNopCommerceBusinessLogicDataStoreContainer">
+          <EntitySet Name="Nop_BannedIpAddress" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpAddress" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_BannedIpNetwork" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpNetwork" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
@@ -25,6 +27,28 @@
             <End Role="Nop_TopicLocalized" EntitySet="Nop_TopicLocalized" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Nop_BannedIpAddress">
+          <Key>
+            <PropertyRef Name="BannedIpAddressID" />
+          </Key>
+          <Property Name="BannedIpAddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_BannedIpNetwork">
+          <Key>
+            <PropertyRef Name="BannedIpNetworkID" />
+          </Key>
+          <Property Name="BannedIpNetworkID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StartAddress" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="EndAddress" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+          <Property Name="IpException" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_Country">
           <Key>
             <PropertyRef Name="CountryID" />
@@ -166,6 +190,8 @@
             <End Role="Nop_TopicLocalized" EntitySet="LocalizedTopic" />
           </AssociationSet>
           <EntitySet Name="QueuedEmails" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QueuedEmail" />
+          <EntitySet Name="BannedIpAddresses" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpAddress" />
+          <EntitySet Name="BannedIpNetworks" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpNetwork" />
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -285,6 +311,28 @@
           <Property Type="Int32" Name="SendTries" Nullable="false" />
           <Property Type="DateTime" Name="SentOn" />
         </EntityType>
+        <EntityType Name="BannedIpAddress">
+          <Key>
+            <PropertyRef Name="BannedIpAddressId" />
+          </Key>
+          <Property Type="Int32" Name="BannedIpAddressId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BannedIpNetwork">
+          <Key>
+            <PropertyRef Name="BannedIpNetworkId" />
+          </Key>
+          <Property Type="Int32" Name="BannedIpNetworkId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="StartAddress" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="EndAddress" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IpException" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -369,6 +417,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BannedIpAddresses">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpAddress">
+              <MappingFragment StoreEntitySet="Nop_BannedIpAddress">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BannedIpAddressId" ColumnName="BannedIpAddressID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BannedIpNetworks">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpNetwork">
+              <MappingFragment StoreEntitySet="Nop_BannedIpNetwork">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IpException" ColumnName="IpException" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="EndAddress" ColumnName="EndAddress" />
+                <ScalarProperty Name="StartAddress" ColumnName="StartAddress" />
+                <ScalarProperty Name="BannedIpNetworkId" ColumnName="BannedIpNetworkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -411,6 +483,8 @@
           <ConnectorPoint PointX="3.75" PointY="3.9070849609374996" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QueuedEmail" Width="2.625" PointX="5.375" PointY="0.75" Height="3.0714322916666665" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpAddress" Width="2.125" PointX="7.375" PointY="4.75" Height="1.7566536458333317" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpNetwork" Width="2.25" PointX="7.375" PointY="7.75" Height="2.0853483072916674" />
         </Diagram>
     </Diagrams>
   </Designer>

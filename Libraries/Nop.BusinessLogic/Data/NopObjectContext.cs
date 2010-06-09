@@ -19,6 +19,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
+using NopSolutions.NopCommerce.BusinessLogic.Security;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Data
@@ -28,7 +29,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
     /// </summary>
     public partial class NopObjectContext : ObjectContext
     {
+        #region Fields
+
         private readonly Dictionary<Type, object> _entitySets;
+
+        #endregion
 
         #region Ctor
         /// <summary>
@@ -68,6 +73,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
 
             return (ObjectSet<T>)match;
         }
+
+        public ObjectSet<BannedIpAddress> BannedIpAddresses
+        {
+            get
+            {
+                if ((_bannedIpAddresses == null))
+                {
+                    _bannedIpAddresses = CreateObjectSet<BannedIpAddress>();
+                }
+                return _bannedIpAddresses;
+            }
+        }
+        private ObjectSet<BannedIpAddress> _bannedIpAddresses;
+
+        public ObjectSet<BannedIpNetwork> BannedIpNetworks
+        {
+            get
+            {
+                if ((_bannedIpNetworks == null))
+                {
+                    _bannedIpNetworks = CreateObjectSet<BannedIpNetwork>();
+                }
+                return _bannedIpNetworks;
+            }
+        }
+        private ObjectSet<BannedIpNetwork> _bannedIpNetworks;
 
         public ObjectSet<Country> Countries
         {
