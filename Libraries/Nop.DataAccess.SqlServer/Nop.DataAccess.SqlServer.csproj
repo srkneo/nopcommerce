@@ -112,7 +112,6 @@
     <Compile Include="Localization\SqlLocaleStringResourceProvider.cs" />
     <Compile Include="Maintenance\SqlMaintenanceProvider.cs" />
     <Compile Include="Manufacturers\SqlManufacturerProvider.cs" />
-    <Compile Include="Measures\SqlMeasureProvider.cs" />
     <Compile Include="Media\SqlDownloadProvider.cs" />
     <Compile Include="Media\SqlPictureProvider.cs" />
     <Compile Include="Messages\SqlMessageProvider.cs" />

@@ -35,14 +35,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindDimensions()
         {
-            MeasureDimensionCollection dimensions = MeasureManager.GetAllMeasureDimensions();
+            var dimensions = MeasureManager.GetAllMeasureDimensions();
             gvDimensions.DataSource = dimensions;
             gvDimensions.DataBind();
         }
 
         private void BindWeights()
         {
-            MeasureWeightCollection weights = MeasureManager.GetAllMeasureWeights();
+            var weights = MeasureManager.GetAllMeasureWeights();
             gvWeights.DataSource = weights;
             gvWeights.DataBind();
         }

@@ -52,7 +52,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            MessageTemplateCollection messageTemplateCollection = MessageManager.GetAllMessageTemplates();
+            var messageTemplateCollection = MessageManager.GetAllMessageTemplates();
             gvMessageTemplates.DataSource = messageTemplateCollection;
             gvMessageTemplates.DataBind();
         }

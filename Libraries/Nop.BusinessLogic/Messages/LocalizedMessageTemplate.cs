@@ -77,6 +77,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         #endregion
 
         #region Custom Properties
+
         /// <summary>
         /// Gets the language
         /// </summary>
@@ -98,6 +99,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                 return MessageManager.GetMessageTemplateById(this.MessageTemplateId);
             }
         }
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the message template
+        /// </summary>
+        public virtual MessageTemplate NpMessageTemplate { get; set; }
+
+        /// <summary>
+        /// Gets the language
+        /// </summary>
+        public Language NpLanguage { get; set; }
         #endregion
     }
 

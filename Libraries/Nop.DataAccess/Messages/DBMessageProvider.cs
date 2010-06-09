@@ -33,77 +33,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Messages
     public abstract partial class DBMessageProvider : BaseDBProvider
     {
         #region Methods
-
-        /// <summary>
-        /// Gets a message template by template identifier
-        /// </summary>
-        /// <param name="messageTemplateId">Message template identifier</param>
-        /// <returns>Message template</returns>
-        public abstract DBMessageTemplate GetMessageTemplateById(int messageTemplateId);
-
-        /// <summary>
-        /// Gets all message templates
-        /// </summary>
-        /// <returns>Message template collection</returns>
-        public abstract DBMessageTemplateCollection GetAllMessageTemplates();
-
-        /// <summary>
-        /// Gets a localized message template by identifier
-        /// </summary>
-        /// <param name="localizedMessageTemplateId">Localized message template identifier</param>
-        /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate GetLocalizedMessageTemplateById(int localizedMessageTemplateId);
-
-        /// <summary>
-        /// Gets a localized message template by name and language identifier
-        /// </summary>
-        /// <param name="name">Message template name</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate GetLocalizedMessageTemplate(string name, 
-            int languageId);
-
-        /// <summary>
-        /// Deletes a localized message template
-        /// </summary>
-        /// <param name="localizedMessageTemplateId">Message template identifier</param>
-        public abstract void DeleteLocalizedMessageTemplate(int localizedMessageTemplateId);
-
-        /// <summary>
-        /// Gets all localized message templates
-        /// </summary>
-        /// <param name="messageTemplateName">Message template name</param>
-        /// <returns>Localized message template collection</returns>
-        public abstract DBLocalizedMessageTemplateCollection GetAllLocalizedMessageTemplates(string messageTemplateName);
-
-        /// <summary>
-        /// Inserts a localized message template
-        /// </summary>
-        /// <param name="messageTemplateId">The message template identifier</param>
-        /// <param name="languageId">The language identifier</param>
-        /// <param name="bccEmailAddresses">The BCC Email addresses</param>
-        /// <param name="subject">The subject</param>
-        /// <param name="body">The body</param>
-        /// <param name="isActive">A value indicating whether the message template is active</param>
-        /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate InsertLocalizedMessageTemplate(int messageTemplateId,
-            int languageId, string bccEmailAddresses, string subject, string body, bool isActive);
-
-        /// <summary>
-        /// Updates the localized message template
-        /// </summary>
-        /// <param name="messageTemplateLocalizedId">The localized message template identifier</param>
-        /// <param name="messageTemplateId">The message template identifier</param>
-        /// <param name="languageId">The language identifier</param>
-        /// <param name="bccEmailAddresses">The BCC Email addresses</param>
-        /// <param name="subject">The subject</param>
-        /// <param name="body">The body</param>
-        /// <param name="isActive">A value indicating whether the message template is active</param>
-        /// <returns>Localized message template</returns>
-        public abstract DBLocalizedMessageTemplate UpdateLocalizedMessageTemplate(int messageTemplateLocalizedId,
-            int messageTemplateId, int languageId, string bccEmailAddresses, 
-            string subject, string body, bool isActive);
-
+        
         /// <summary>
         /// Inserts the new newsletter subscription
         /// </summary>

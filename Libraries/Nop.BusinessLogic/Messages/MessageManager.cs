@@ -58,66 +58,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
     {
         #region Utilities
 
-        private static MessageTemplateCollection DBMapping(DBMessageTemplateCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new MessageTemplateCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static MessageTemplate DBMapping(DBMessageTemplate dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new MessageTemplate();
-            item.MessageTemplateId = dbItem.MessageTemplateId;
-            item.Name = dbItem.Name;
-
-            return item;
-        }
-
-        private static LocalizedMessageTemplateCollection DBMapping(DBLocalizedMessageTemplateCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new LocalizedMessageTemplateCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static LocalizedMessageTemplate DBMapping(DBLocalizedMessageTemplate dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new LocalizedMessageTemplate();
-            item.MessageTemplateLocalizedId = dbItem.MessageTemplateLocalizedId;
-            item.MessageTemplateId = dbItem.MessageTemplateId;
-            item.LanguageId = dbItem.LanguageId;
-            item.BccEmailAddresses = dbItem.BccEmailAddresses;
-            item.Name = dbItem.Name;
-            item.Subject = dbItem.Subject;
-            item.Body = dbItem.Body;
-            item.IsActive = dbItem.IsActive;
-
-            return item;
-        }
-
         private static NewsLetterSubscription DBMapping(DBNewsLetterSubscription dbItem)
         {
             if(dbItem == null)
@@ -397,6 +337,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         #region Methods
 
         #region Repository methods
+
         /// <summary>
         /// Gets a message template by template identifier
         /// </summary>
@@ -407,8 +348,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             if (messageTemplateId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.GetMessageTemplateById(messageTemplateId);
-            var messageTemplate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from mt in context.MessageTemplates
+                        where mt.MessageTemplateId == messageTemplateId
+                        select mt;
+            var messageTemplate = query.SingleOrDefault();
+
             return messageTemplate;
         }
 
@@ -416,10 +361,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// Gets all message templates
         /// </summary>
         /// <returns>Message template collection</returns>
-        public static MessageTemplateCollection GetAllMessageTemplates()
+        public static List<MessageTemplate> GetAllMessageTemplates()
         {
-            var dbCollection = DBProviderManager<DBMessageProvider>.Provider.GetAllMessageTemplates();
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from mt in context.MessageTemplates
+                        orderby mt.Name
+                        select mt;
+            var collection = query.ToList();
+
             return collection;
         }
 
@@ -433,8 +382,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             if (localizedMessageTemplateId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.GetLocalizedMessageTemplateById(localizedMessageTemplateId);
-            var localizedMessageTemplate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from lmt in context.LocalizedMessageTemplates
+                        where lmt.MessageTemplateLocalizedId == localizedMessageTemplateId
+                        select lmt;
+            var localizedMessageTemplate = query.SingleOrDefault(); 
+            
             return localizedMessageTemplate;
         }
 
@@ -446,9 +399,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <returns>Localized message template</returns>
         public static LocalizedMessageTemplate GetLocalizedMessageTemplate(string name, int languageId)
         {
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.GetLocalizedMessageTemplate(name, languageId);
-            var localizedMessageTemplate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from lmt in context.LocalizedMessageTemplates
+                        join mt in context.MessageTemplates on lmt.MessageTemplateId equals mt.MessageTemplateId
+                        where lmt.LanguageId == languageId &&
+                        mt.Name == name
+                        select lmt;
+            var localizedMessageTemplate = query.FirstOrDefault();
+
             return localizedMessageTemplate;
+
         }
 
         /// <summary>
@@ -457,18 +417,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <param name="localizedMessageTemplateId">Message template identifier</param>
         public static void DeleteLocalizedMessageTemplate(int localizedMessageTemplateId)
         {
-            DBProviderManager<DBMessageProvider>.Provider.DeleteLocalizedMessageTemplate(localizedMessageTemplateId);
+            var localizedMessageTemplate = GetLocalizedMessageTemplateById(localizedMessageTemplateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.LocalizedMessageTemplates.Attach(localizedMessageTemplate);
+            context.DeleteObject(localizedMessageTemplate);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets all localized message templates
         /// </summary>
-        /// <param name="messageTemplatesName">Message template name</param>
+        /// <param name="messageTemplateName">Message template name</param>
         /// <returns>Localized message template collection</returns>
-        public static LocalizedMessageTemplateCollection GetAllLocalizedMessageTemplates(string messageTemplatesName)
+        public static List<LocalizedMessageTemplate> GetAllLocalizedMessageTemplates(string messageTemplateName)
         {
-            var dbCollection = DBProviderManager<DBMessageProvider>.Provider.GetAllLocalizedMessageTemplates(messageTemplatesName);
-            var localizedMessageTemplates = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from lmt in context.LocalizedMessageTemplates
+                        join mt in context.MessageTemplates on lmt.MessageTemplateId equals mt.MessageTemplateId
+                        where mt.Name == messageTemplateName
+                        orderby lmt.LanguageId
+                        select lmt;
+            var localizedMessageTemplates = query.ToList();
             return localizedMessageTemplates;
         }
 
@@ -485,9 +455,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         public static LocalizedMessageTemplate InsertLocalizedMessageTemplate(int messageTemplateId,
             int languageId, string bccEmailAddresses, string subject, string body, bool isActive)
         {
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.InsertLocalizedMessageTemplate(messageTemplateId,
-                languageId, bccEmailAddresses, subject, body, isActive);
-            var localizedMessageTemplate = DBMapping(dbItem);
+            var localizedMessageTemplate = new LocalizedMessageTemplate();
+            localizedMessageTemplate.MessageTemplateId = messageTemplateId;
+            localizedMessageTemplate.LanguageId = languageId;
+            localizedMessageTemplate.BccEmailAddresses = bccEmailAddresses;
+            localizedMessageTemplate.Subject = subject;
+            localizedMessageTemplate.Body = body;
+            localizedMessageTemplate.IsActive = isActive;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.LocalizedMessageTemplates.AddObject(localizedMessageTemplate);
+            context.SaveChanges();
+
             return localizedMessageTemplate;
         }
 
@@ -506,9 +485,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             int messageTemplateId, int languageId, string bccEmailAddresses,
             string subject, string body, bool isActive)
         {
-            var dbItem = DBProviderManager<DBMessageProvider>.Provider.UpdateLocalizedMessageTemplate(messageTemplateLocalizedId,
-                messageTemplateId, languageId, bccEmailAddresses, subject, body, isActive);
-            var localizedMessageTemplate = DBMapping(dbItem);
+            var localizedMessageTemplate = GetLocalizedMessageTemplateById(messageTemplateLocalizedId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.LocalizedMessageTemplates.Attach(localizedMessageTemplate);
+
+            localizedMessageTemplate.MessageTemplateId = messageTemplateId;
+            localizedMessageTemplate.LanguageId = languageId;
+            localizedMessageTemplate.BccEmailAddresses = bccEmailAddresses;
+            localizedMessageTemplate.Subject = subject;
+            localizedMessageTemplate.Body = body;
+            localizedMessageTemplate.IsActive = isActive;
+            context.SaveChanges();
+            
             return localizedMessageTemplate;
         }
 

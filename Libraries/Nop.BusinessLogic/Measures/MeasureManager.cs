@@ -17,12 +17,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Measures;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Measures
 {
@@ -39,69 +40,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         private const string MEASUREDIMENSIONS_PATTERN_KEY = "Nop.measuredimension.";
         private const string MEASUREWEIGHTS_PATTERN_KEY = "Nop.measureweight.";
         #endregion
-
-        #region Utilities
-        private static MeasureDimensionCollection DBMapping(DBMeasureDimensionCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new MeasureDimensionCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static MeasureDimension DBMapping(DBMeasureDimension dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new MeasureDimension();
-            item.MeasureDimensionId = dbItem.MeasureDimensionId;
-            item.Name = dbItem.Name;
-            item.SystemKeyword = dbItem.SystemKeyword;
-            item.Ratio = dbItem.Ratio;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        private static MeasureWeightCollection DBMapping(DBMeasureWeightCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new MeasureWeightCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static MeasureWeight DBMapping(DBMeasureWeight dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new MeasureWeight();
-            item.MeasureWeightId = dbItem.MeasureWeightId;
-            item.Name = dbItem.Name;
-            item.SystemKeyword = dbItem.SystemKeyword;
-            item.Ratio = dbItem.Ratio;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-        #endregion
-
+        
         #region Methods
 
         #region Dimensions
@@ -111,7 +50,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <param name="measureDimensionId">Measure dimension identifier</param>
         public static void DeleteMeasureDimension(int measureDimensionId)
         {
-            DBProviderManager<DBMeasureProvider>.Provider.DeleteMeasureDimension(measureDimensionId);
+            var measureDimension = GetMeasureDimensionById(measureDimensionId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.MeasureDimensions.Attach(measureDimension);
+            context.DeleteObject(measureDimension);
+            context.SaveChanges();
             if (MeasureManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(MEASUREDIMENSIONS_PATTERN_KEY);
@@ -135,8 +79,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
                 return (MeasureDimension)obj2;
             }
 
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.GetMeasureDimensionById(measureDimensionId);
-            var measureDimension = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from md in context.MeasureDimensions
+                        where md.MeasureDimensionId == measureDimensionId
+                        select md;
+            var measureDimension = query.SingleOrDefault();
 
             if (MeasureManager.CacheEnabled)
             {
@@ -166,17 +113,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// Gets all measure dimensions
         /// </summary>
         /// <returns>Measure dimension collection</returns>
-        public static MeasureDimensionCollection GetAllMeasureDimensions()
+        public static List<MeasureDimension> GetAllMeasureDimensions()
         {
             string key = MEASUREDIMENSIONS_ALL_KEY;
             object obj2 = NopCache.Get(key);
             if (MeasureManager.CacheEnabled && (obj2 != null))
             {
-                return (MeasureDimensionCollection)obj2;
+                return (List<MeasureDimension>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBMeasureProvider>.Provider.GetAllMeasureDimensions();
-            var measureDimensionCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from md in context.MeasureDimensions
+                        orderby md.DisplayOrder
+                        select md;
+            var measureDimensionCollection = query.ToList();
 
             if (MeasureManager.CacheEnabled)
             {
@@ -196,9 +146,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureDimension InsertMeasureDimension(string name,
             string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.InsertMeasureDimension(name,
-                systemKeyword, ratio, displayOrder);
-            var measure = DBMapping(dbItem);
+            var measure = new MeasureDimension();
+            measure.Name = name;
+            measure.SystemKeyword = systemKeyword;
+            measure.Ratio = ratio;
+            measure.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.MeasureDimensions.AddObject(measure);
+            context.SaveChanges();
 
             if (MeasureManager.CacheEnabled)
             {
@@ -219,9 +175,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureDimension UpdateMeasureDimension(int measureDimensionId,
             string name, string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.UpdateMeasureDimension(measureDimensionId,
-                name, systemKeyword, ratio, displayOrder);
-            var measure = DBMapping(dbItem);
+            var measure = GetMeasureDimensionById(measureDimensionId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.MeasureDimensions.Attach(measure);
+
+            measure.Name = name;
+            measure.SystemKeyword = systemKeyword;
+            measure.Ratio = ratio;
+            measure.DisplayOrder = displayOrder;
+            context.SaveChanges();
             
             if (MeasureManager.CacheEnabled)
             {
@@ -302,7 +265,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <param name="measureWeightId">Measure weight identifier</param>
         public static void DeleteMeasureWeight(int measureWeightId)
         {
-            DBProviderManager<DBMeasureProvider>.Provider.DeleteMeasureWeight(measureWeightId);
+            var measureWeight = GetMeasureWeightById(measureWeightId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.MeasureWeights.Attach(measureWeight);
+            context.DeleteObject(measureWeight);
+            context.SaveChanges();
             if (MeasureManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(MEASUREWEIGHTS_PATTERN_KEY);
@@ -326,8 +294,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
                 return (MeasureWeight)obj2;
             }
 
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.GetMeasureWeightById(measureWeightId);
-            var measureWeight = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from mw in context.MeasureWeights
+                        where mw.MeasureWeightId == measureWeightId
+                        select mw;
+            var measureWeight = query.SingleOrDefault();
 
             if (MeasureManager.CacheEnabled)
             {
@@ -357,17 +328,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// Gets all measure weights
         /// </summary>
         /// <returns>Measure weight collection</returns>
-        public static MeasureWeightCollection GetAllMeasureWeights()
+        public static List<MeasureWeight> GetAllMeasureWeights()
         {
             string key = MEASUREWEIGHTS_ALL_KEY;
             object obj2 = NopCache.Get(key);
             if (MeasureManager.CacheEnabled && (obj2 != null))
             {
-                return (MeasureWeightCollection)obj2;
+                return (List<MeasureWeight>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBMeasureProvider>.Provider.GetAllMeasureWeights();
-            var measureWeightCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from mw in context.MeasureWeights
+                        orderby mw.DisplayOrder
+                        select mw;
+            var measureWeightCollection = query.ToList();
 
             if (MeasureManager.CacheEnabled)
             {
@@ -387,9 +361,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureWeight InsertMeasureWeight(string name,
             string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.InsertMeasureWeight(name,
-                systemKeyword, ratio, displayOrder);
-            var weight = DBMapping(dbItem);
+
+            var weight = new MeasureWeight();
+            weight.Name = name;
+            weight.SystemKeyword = systemKeyword;
+            weight.Ratio = ratio;
+            weight.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.MeasureWeights.AddObject(weight);
+            context.SaveChanges();
 
             if (MeasureManager.CacheEnabled)
             {
@@ -410,9 +391,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureWeight UpdateMeasureWeight(int measureWeightId, string name,
             string systemKeyword, decimal ratio, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBMeasureProvider>.Provider.UpdateMeasureWeight(measureWeightId,
-                name, systemKeyword, ratio, displayOrder);
-            var weight = DBMapping(dbItem);
+            var weight = GetMeasureWeightById(measureWeightId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.MeasureWeights.Attach(weight);
+
+            weight.Name = name;
+            weight.SystemKeyword = systemKeyword;
+            weight.Ratio = ratio;
+            weight.DisplayOrder = displayOrder;
+            context.SaveChanges();
 
             if (MeasureManager.CacheEnabled)
             {

@@ -18,6 +18,7 @@ using System.Data.Objects;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Security;
 
@@ -126,6 +127,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<Language> _languages;
 
+        public ObjectSet<LocalizedMessageTemplate> LocalizedMessageTemplates
+        {
+            get
+            {
+                if ((_localizedMessageTemplates == null))
+                {
+                    _localizedMessageTemplates = CreateObjectSet<LocalizedMessageTemplate>();
+                }
+                return _localizedMessageTemplates;
+            }
+        }
+        private ObjectSet<LocalizedMessageTemplate> _localizedMessageTemplates;
+
         public ObjectSet<LocalizedTopic> LocalizedTopics
         {
             get
@@ -138,6 +152,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<LocalizedTopic> _localizedTopics;
+
+        public ObjectSet<MeasureDimension> MeasureDimensions
+        {
+            get
+            {
+                if ((_measureDimensions == null))
+                {
+                    _measureDimensions = CreateObjectSet<MeasureDimension>();
+                }
+                return _measureDimensions;
+            }
+        }
+        private ObjectSet<MeasureDimension> _measureDimensions;
+
+        public ObjectSet<MeasureWeight> MeasureWeights
+        {
+            get
+            {
+                if ((_measureWeights == null))
+                {
+                    _measureWeights = CreateObjectSet<MeasureWeight>();
+                }
+                return _measureWeights;
+            }
+        }
+        private ObjectSet<MeasureWeight> _measureWeights;
+
+        public ObjectSet<MessageTemplate> MessageTemplates
+        {
+            get
+            {
+                if ((_messageTemplates == null))
+                {
+                    _messageTemplates = CreateObjectSet<MessageTemplate>();
+                }
+                return _messageTemplates;
+            }
+        }
+        private ObjectSet<MessageTemplate> _messageTemplates;
 
         public ObjectSet<QueuedEmail> QueuedEmails
         {

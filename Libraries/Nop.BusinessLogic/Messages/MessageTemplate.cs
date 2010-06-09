@@ -44,6 +44,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// </summary>
         public string Name { get; set; }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized message template
+        /// </summary>
+        public virtual List<LocalizedMessageTemplate> NpMessageTemplateLocalized { get; set; }
+
+        #endregion
     }
 
 }

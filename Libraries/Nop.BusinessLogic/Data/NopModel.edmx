@@ -10,10 +10,22 @@
           <EntitySet Name="Nop_BannedIpNetwork" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpNetwork" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_MeasureDimension" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MeasureDimension" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_MeasureWeight" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MeasureWeight" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_MessageTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_MessageTemplateLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplateLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_StateProvince" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_StateProvince" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_MessageTemplateLocalized_Nop_Language">
+            <End Role="Nop_Language" EntitySet="Nop_Language" />
+            <End Role="Nop_MessageTemplateLocalized" EntitySet="Nop_MessageTemplateLocalized" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate">
+            <End Role="Nop_MessageTemplate" EntitySet="Nop_MessageTemplate" />
+            <End Role="Nop_MessageTemplateLocalized" EntitySet="Nop_MessageTemplateLocalized" />
+          </AssociationSet>
           <AssociationSet Name="FK_Nop_StateProvince_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_StateProvince_Nop_Country">
             <End Role="Nop_Country" EntitySet="Nop_Country" />
             <End Role="Nop_StateProvince" EntitySet="Nop_StateProvince" />
@@ -75,6 +87,45 @@
           <Property Name="Published" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_MeasureDimension">
+          <Key>
+            <PropertyRef Name="MeasureDimensionID" />
+          </Key>
+          <Property Name="MeasureDimensionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Ratio" Type="decimal" Nullable="false" Scale="4" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_MeasureWeight">
+          <Key>
+            <PropertyRef Name="MeasureWeightID" />
+          </Key>
+          <Property Name="MeasureWeightID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Ratio" Type="decimal" Nullable="false" Scale="4" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_MessageTemplate">
+          <Key>
+            <PropertyRef Name="MessageTemplateID" />
+          </Key>
+          <Property Name="MessageTemplateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Nop_MessageTemplateLocalized">
+          <Key>
+            <PropertyRef Name="MessageTemplateLocalizedID" />
+          </Key>
+          <Property Name="MessageTemplateLocalizedID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MessageTemplateID" Type="int" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="BCCEmailAddresses" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Subject" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_QueuedEmail">
           <Key>
             <PropertyRef Name="QueuedEmailID" />
@@ -125,6 +176,34 @@
           <Property Name="MetaKeywords" Type="nvarchar" Nullable="false" MaxLength="400" />
           <Property Name="MetaDescription" Type="nvarchar" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Nop_MessageTemplateLocalized_Nop_Language">
+          <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_MessageTemplateLocalized" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplateLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_MessageTemplateLocalized">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate">
+          <End Role="Nop_MessageTemplate" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_MessageTemplateLocalized" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplateLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_MessageTemplate">
+              <PropertyRef Name="MessageTemplateID" />
+            </Principal>
+            <Dependent Role="Nop_MessageTemplateLocalized">
+              <PropertyRef Name="MessageTemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_StateProvince_Nop_Country">
           <End Role="Nop_Country" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -192,6 +271,18 @@
           <EntitySet Name="QueuedEmails" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QueuedEmail" />
           <EntitySet Name="BannedIpAddresses" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpAddress" />
           <EntitySet Name="BannedIpNetworks" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpNetwork" />
+          <EntitySet Name="MessageTemplates" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" />
+          <EntitySet Name="LocalizedMessageTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" />
+          <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Nop_MessageTemplateLocalized" EntitySet="LocalizedMessageTemplate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate">
+            <End Role="Nop_MessageTemplate" EntitySet="MessageTemplates" />
+            <End Role="Nop_MessageTemplateLocalized" EntitySet="LocalizedMessageTemplate" />
+          </AssociationSet>
+          <EntitySet Name="MeasureDimensions" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MeasureDimension" />
+          <EntitySet Name="MeasureWeights" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MeasureWeight" />
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -333,6 +424,72 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
         </EntityType>
+        <EntityType Name="MessageTemplate">
+          <Key>
+            <PropertyRef Name="MessageTemplateId" />
+          </Key>
+          <Property Type="Int32" Name="MessageTemplateId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NpMessageTemplateLocalized" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" FromRole="Nop_MessageTemplate" ToRole="Nop_MessageTemplateLocalized" />
+        </EntityType>
+        <EntityType Name="LocalizedMessageTemplate">
+          <Key>
+            <PropertyRef Name="MessageTemplateLocalizedId" />
+          </Key>
+          <Property Type="Int32" Name="MessageTemplateLocalizedId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="MessageTemplateId" Nullable="false" />
+          <Property Type="Int32" Name="LanguageId" Nullable="false" />
+          <Property Type="String" Name="BccEmailAddresses" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <NavigationProperty Name="NpLanguage" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" FromRole="Nop_MessageTemplateLocalized" ToRole="Language" />
+          <NavigationProperty Name="NpMessageTemplate" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" FromRole="Nop_MessageTemplateLocalized" ToRole="Nop_MessageTemplate" />
+        </EntityType>
+        <Association Name="FK_Nop_MessageTemplateLocalized_Nop_Language">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Role="Language" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Role="Nop_MessageTemplateLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_MessageTemplateLocalized">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Role="Nop_MessageTemplate" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Role="Nop_MessageTemplateLocalized" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_MessageTemplate">
+              <PropertyRef Name="MessageTemplateId" />
+            </Principal>
+            <Dependent Role="Nop_MessageTemplateLocalized">
+              <PropertyRef Name="MessageTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MeasureDimension">
+          <Key>
+            <PropertyRef Name="MeasureDimensionId" />
+          </Key>
+          <Property Type="Int32" Name="MeasureDimensionId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SystemKeyword" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Ratio" Nullable="false" Precision="18" Scale="4" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MeasureWeight">
+          <Key>
+            <PropertyRef Name="MeasureWeightId" />
+          </Key>
+          <Property Type="Int32" Name="MeasureWeightId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SystemKeyword" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Ratio" Nullable="false" Precision="18" Scale="4" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -441,6 +598,49 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MessageTemplates">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate">
+              <MappingFragment StoreEntitySet="Nop_MessageTemplate">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MessageTemplateId" ColumnName="MessageTemplateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocalizedMessageTemplate">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate">
+              <MappingFragment StoreEntitySet="Nop_MessageTemplateLocalized">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="BccEmailAddresses" ColumnName="BCCEmailAddresses" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageID" />
+                <ScalarProperty Name="MessageTemplateId" ColumnName="MessageTemplateID" />
+                <ScalarProperty Name="MessageTemplateLocalizedId" ColumnName="MessageTemplateLocalizedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeasureDimensions">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.MeasureDimension">
+              <MappingFragment StoreEntitySet="Nop_MeasureDimension">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Ratio" ColumnName="Ratio" />
+                <ScalarProperty Name="SystemKeyword" ColumnName="SystemKeyword" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MeasureDimensionId" ColumnName="MeasureDimensionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeasureWeights">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.MeasureWeight">
+              <MappingFragment StoreEntitySet="Nop_MeasureWeight">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Ratio" ColumnName="Ratio" />
+                <ScalarProperty Name="SystemKeyword" ColumnName="SystemKeyword" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MeasureWeightId" ColumnName="MeasureWeightID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -462,7 +662,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="NopModel" ZoomLevel="86">
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="0.75" PointY="1.375" Height="2.0853483072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="0.75" PointY="1.375" Height="2.085348307291667" IsExpanded="true" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="2.75" PointY="5" Height="2.7427376302083317" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="5" PointY="5.375" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
@@ -485,6 +685,21 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QueuedEmail" Width="2.625" PointX="5.375" PointY="0.75" Height="3.0714322916666665" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpAddress" Width="2.125" PointX="7.375" PointY="4.75" Height="1.7566536458333317" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpNetwork" Width="2.25" PointX="7.375" PointY="7.75" Height="2.0853483072916674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.75" PointY="12" Height="1.4279589843749996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="0.625" PointY="8.125" Height="2.4140429687499996" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
+          <ConnectorPoint PointX="0.75" PointY="3.4603483072916674" />
+          <ConnectorPoint PointX="0.375" PointY="3.8353483072916674" />
+          <ConnectorPoint PointX="0.25" PointY="3.8353483072916674" />
+          <ConnectorPoint PointX="0.25" PointY="7.75" />
+          <ConnectorPoint PointX="0.625" PointY="8.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
+          <ConnectorPoint PointX="1.875" PointY="12" />
+          <ConnectorPoint PointX="1.875" PointY="10.53904296875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MeasureDimension" Width="2.125" PointX="5.125" PointY="9.5" Height="1.7566536458333353" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MeasureWeight" Width="2.25" PointX="5" PointY="11.625" Height="1.7566536458333317" />
         </Diagram>
     </Diagrams>
   </Designer>

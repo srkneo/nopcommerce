@@ -223,7 +223,6 @@
     <Compile Include="Products\ProductVariantPricelist.cs" />
     <Compile Include="Products\ProductVariantPricelistCollection.cs" />
     <Compile Include="Messages\LocalizedMessageTemplate.cs" />
-    <Compile Include="Messages\LocalizedMessageTemplateCollection.cs" />
     <Compile Include="Messages\QueuedEmail.cs" />
     <Compile Include="Messages\SendQueuedMessagesTask.cs" />
     <Compile Include="Content\Blog\BlogPost.cs" />
@@ -310,8 +309,6 @@
     <Compile Include="Products\Attributes\ProductVariantAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeCollection.cs" />
     <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
-    <Compile Include="Measures\MeasureWeightCollection.cs" />
-    <Compile Include="Measures\MeasureDimensionCollection.cs" />
     <Compile Include="Shipping\ShippingByWeightAndCountryCollection.cs" />
     <Compile Include="Products\Specs\ProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
@@ -323,7 +320,6 @@
     <Compile Include="Shipping\ShippingByTotalCollection.cs" />
     <Compile Include="Products\ProductReviewCollection.cs" />
     <Compile Include="Media\DownloadCollection.cs" />
-    <Compile Include="Messages\MessageTemplateCollection.cs" />
     <Compile Include="Products\RelatedProductCollection.cs" />
     <Compile Include="Manufacturers\ProductManufacturerCollection.cs" />
     <Compile Include="Categories\ProductCategoryCollection.cs" />
