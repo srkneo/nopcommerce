@@ -46,8 +46,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindGrid()
         {
-            ShippingRateComputationMethodCollection shippingRateComputationMethodCollection = ShippingRateComputationMethodManager.GetAllShippingRateComputationMethods();
-            gvShippingRateComputationMethods.DataSource = shippingRateComputationMethodCollection;
+            var shippingRateComputationMethods = ShippingRateComputationMethodManager.GetAllShippingRateComputationMethods();
+            gvShippingRateComputationMethods.DataSource = shippingRateComputationMethods;
             gvShippingRateComputationMethods.DataBind();
         }
     }

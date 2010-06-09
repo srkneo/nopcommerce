@@ -18,15 +18,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Directory;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 {
@@ -39,43 +39,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         private const string CURRENCIES_ALL_KEY = "Nop.currency.all-{0}";
         private const string CURRENCIES_BY_ID_KEY = "Nop.currency.id-{0}";
         private const string CURRENCIES_PATTERN_KEY = "Nop.currency.";
-        #endregion
-
-        #region Utilities
-        private static CurrencyCollection DBMapping(DBCurrencyCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            CurrencyCollection collection = new CurrencyCollection();
-            foreach (DBCurrency dbItem in dbCollection)
-            {
-                Currency item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Currency DBMapping(DBCurrency dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            Currency item = new Currency();
-            item.CurrencyId = dbItem.CurrencyId;
-            item.Name = dbItem.Name;
-            item.CurrencyCode = dbItem.CurrencyCode;
-            item.Rate = dbItem.Rate;
-            item.DisplayLocale = dbItem.DisplayLocale;
-            item.CustomFormatting = dbItem.CustomFormatting;
-            item.Published = dbItem.Published;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -120,7 +83,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="currencyId">Currency identifier</param>
         public static void DeleteCurrency(int currencyId)
         {
-            DBProviderManager<DBCurrencyProvider>.Provider.DeleteCurrency(currencyId);
+            var currency = GetCurrencyById(currencyId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Currencies.Attach(currency);
+            context.DeleteObject(currency);
+            context.SaveChanges();
+
             if (CurrencyManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
@@ -144,8 +113,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return (Currency)obj2;
             }
 
-            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.GetCurrencyById(currencyId);
-            Currency currency = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Currencies
+                        where c.CurrencyId == currencyId
+                        select c;
+            var currency = query.SingleOrDefault();
 
             if (CurrencyManager.CacheEnabled)
             {
@@ -163,7 +135,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             if (String.IsNullOrEmpty(currencyCode))
                 return null;
-            CurrencyCollection currencies = GetAllCurrencies();
+            var currencies = GetAllCurrencies();
             foreach (Currency currency in currencies)
             {
                 if (currency.CurrencyCode.ToLowerInvariant() == currencyCode.ToLowerInvariant())
@@ -178,18 +150,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets all currencies
         /// </summary>
         /// <returns>Currency collection</returns>
-        public static CurrencyCollection GetAllCurrencies()
+        public static List<Currency> GetAllCurrencies()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(CURRENCIES_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CurrencyManager.CacheEnabled && (obj2 != null))
             {
-                return (CurrencyCollection)obj2;
+                return (List<Currency>)obj2;
             }
 
-            DBCurrencyCollection dbCollection = DBProviderManager<DBCurrencyProvider>.Provider.GetAllCurrencies(showHidden);
-            CurrencyCollection currencyCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Currencies
+                        orderby c.DisplayOrder
+                        where showHidden || c.Published
+                        select c;
+            var currencyCollection = query.ToList();
 
             if (CurrencyManager.CacheEnabled)
             {
@@ -228,10 +204,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.InsertCurrency(name,
-                currencyCode, rate, displayLocale, customFormatting,
-                published, displayOrder, createdOn, updatedOn);
-            Currency currency = DBMapping(dbItem);
+            var currency = new Currency();
+            currency.Name = name;
+            currency.CurrencyCode = currencyCode;
+            currency.Rate = rate;
+            currency.DisplayLocale = displayLocale;
+            currency.CustomFormatting = customFormatting;
+            currency.Published = published;
+            currency.DisplayOrder = displayOrder;
+            currency.CreatedOn = createdOn;
+            currency.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Currencies.AddObject(currency);
+            context.SaveChanges();
 
             if (CurrencyManager.CacheEnabled)
             {
@@ -271,10 +257,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            DBCurrency dbItem = DBProviderManager<DBCurrencyProvider>.Provider.UpdateCurrency(currencyId, 
-                name, currencyCode, rate, displayLocale, customFormatting, 
-                published, displayOrder, createdOn, updatedOn);
-            Currency currency = DBMapping(dbItem);
+            var currency = GetCurrencyById(currencyId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Currencies.Attach(currency);
+
+            currency.Name = name;
+            currency.CurrencyCode = currencyCode;
+            currency.Rate = rate;
+            currency.DisplayLocale = displayLocale;
+            currency.CustomFormatting = customFormatting;
+            currency.Published = published;
+            currency.DisplayOrder = displayOrder;
+            currency.CreatedOn = createdOn;
+            currency.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
 
             if (CurrencyManager.CacheEnabled)
             {

@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlDiscountType.Items.Clear();
-            DiscountTypeCollection discountTypes = DiscountManager.GetAllDiscountTypes();
+            var discountTypes = DiscountManager.GetAllDiscountTypes();
             foreach (DiscountType discountType in discountTypes)
             {
                 ListItem item2 = new ListItem(discountType.Name, discountType.DiscountTypeId.ToString());
@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             this.ddlDiscountRequirement.Items.Clear();
-            DiscountRequirementCollection discountRequirements = DiscountManager.GetAllDiscountRequirements();
+            var discountRequirements = DiscountManager.GetAllDiscountRequirements();
             foreach (DiscountRequirement discountRequirement in discountRequirements)
             {
                 ListItem item2 = new ListItem(discountRequirement.Name, discountRequirement.DiscountRequirementId.ToString());
@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             this.ddlDiscountLimitation.Items.Clear();
-            DiscountLimitationCollection discountLimitations = DiscountManager.GetAllDiscountLimitations();
+            var discountLimitations = DiscountManager.GetAllDiscountLimitations();
             foreach (DiscountLimitation discountLimitation in discountLimitations)
             {
                 ListItem item2 = new ListItem(discountLimitation.Name, discountLimitation.DiscountLimitationId.ToString());

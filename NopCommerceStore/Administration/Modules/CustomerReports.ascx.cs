@@ -114,9 +114,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void FillDropDowns()
         {
-            OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
-            PaymentStatusCollection paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
-            ShippingStatusCollection shippingStatuses = ShippingStatusManager.GetAllShippingStatuses();
+            var orderStatuses = OrderManager.GetAllOrderStatuses();
+            var paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
+            var shippingStatuses = ShippingStatusManager.GetAllShippingStatuses();
 
             //by order total
             this.ddlOrderStatusByOrderTotal.Items.Clear();

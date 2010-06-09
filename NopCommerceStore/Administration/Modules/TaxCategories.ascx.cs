@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            TaxCategoryCollection taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
+            var taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
             gvTaxCategories.DataSource = taxCategoryCollection;
             gvTaxCategories.DataBind();
         }

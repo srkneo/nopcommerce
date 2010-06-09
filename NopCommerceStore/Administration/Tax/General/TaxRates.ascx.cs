@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
         protected void FillTaxCategoryDropDown()
         {
             this.ddlTaxCategory.Items.Clear();
-            TaxCategoryCollection taxCategories = TaxCategoryManager.GetAllTaxCategories();
+            var taxCategories = TaxCategoryManager.GetAllTaxCategories();
             foreach (TaxCategory taxCategory in taxCategories)
             {
                 ListItem ddlTaxCategoryItem2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryId.ToString());

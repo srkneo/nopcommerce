@@ -17,12 +17,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Shipping;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 {
@@ -35,35 +35,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         private const string SHIPPINGTATUSES_ALL_KEY = "Nop.shippingstatus.all";
         private const string SHIPPINGTATUSES_BY_ID_KEY = "Nop.shippingstatus.id-{0}";
         private const string SHIPPINGTATUSES_PATTERN_KEY = "Nop.shippingstatus.";
-        #endregion
-
-        #region Utilities
-        private static ShippingStatusCollection DBMapping(DBShippingStatusCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ShippingStatusCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ShippingStatus DBMapping(DBShippingStatus dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ShippingStatus();
-            item.ShippingStatusId = dbItem.ShippingStatusId;
-            item.Name = dbItem.Name;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -112,8 +83,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return (ShippingStatus)obj2;
             }
 
-            var dbItem = DBProviderManager<DBShippingStatusProvider>.Provider.GetShippingStatusById(shippingStatusId);
-            var shippingStatus = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ss in context.ShippingStatuses
+                        where ss.ShippingStatusId == shippingStatusId
+                        select ss;
+            var shippingStatus = query.SingleOrDefault();
 
             if (ShippingStatusManager.CacheEnabled)
             {
@@ -126,23 +100,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// Gets all shipping statuses
         /// </summary>
         /// <returns>Shipping status collection</returns>
-        public static ShippingStatusCollection GetAllShippingStatuses()
+        public static List<ShippingStatus> GetAllShippingStatuses()
         {
             string key = string.Format(SHIPPINGTATUSES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (ShippingStatusManager.CacheEnabled && (obj2 != null))
             {
-                return (ShippingStatusCollection)obj2;
+                return (List<ShippingStatus>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBShippingStatusProvider>.Provider.GetAllShippingStatuses();
-            var shippingStatusCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ss in context.ShippingStatuses
+                        orderby ss.ShippingStatusId
+                        select ss;
+            var shippingStatuses = query.ToList();
             
             if (ShippingStatusManager.CacheEnabled)
             {
-                NopCache.Max(key, shippingStatusCollection);
+                NopCache.Max(key, shippingStatuses);
             }
-            return shippingStatusCollection;
+            return shippingStatuses;
         }
 
         #endregion

@@ -17,12 +17,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
@@ -238,33 +240,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             item.DownloadCount = dbItem.DownloadCount;
             item.IsDownloadActivated = dbItem.IsDownloadActivated;
             item.LicenseDownloadId = dbItem.LicenseDownloadId;
-
-            return item;
-        }
-
-        private static OrderStatusCollection DBMapping(DBOrderStatusCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new OrderStatusCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static OrderStatus DBMapping(DBOrderStatus dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new OrderStatus();
-            item.OrderStatusId = dbItem.OrderStatusId;
-            item.Name = dbItem.Name;
 
             return item;
         }
@@ -1838,8 +1813,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return (OrderStatus)obj2;
             }
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderStatusById(orderStatusId);
-            var orderStatus = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from os in context.OrderStatuses
+                        where os.OrderStatusId == orderStatusId
+                        select os;
+            var orderStatus = query.SingleOrDefault();
 
             if (OrderManager.CacheEnabled)
             {
@@ -1852,23 +1830,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Gets all order statuses
         /// </summary>
         /// <returns>Order status collection</returns>
-        public static OrderStatusCollection GetAllOrderStatuses()
+        public static List<OrderStatus> GetAllOrderStatuses()
         {
             string key = string.Format(ORDERSTATUSES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (OrderManager.CacheEnabled && (obj2 != null))
             {
-                return (OrderStatusCollection)obj2;
+                return (List<OrderStatus>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllOrderStatuses();
-            var orderStatusCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from os in context.OrderStatuses
+                        orderby os.OrderStatusId
+                        select os;
+            var orderStatuses = query.ToList();
 
             if (OrderManager.CacheEnabled)
             {
-                NopCache.Max(key, orderStatusCollection);
+                NopCache.Max(key, orderStatuses);
             }
-            return orderStatusCollection;
+            return orderStatuses;
         }
 
         #endregion

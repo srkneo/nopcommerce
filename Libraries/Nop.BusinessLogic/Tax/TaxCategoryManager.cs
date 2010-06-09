@@ -17,12 +17,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Tax;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 {
@@ -36,39 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         private const string TAXCATEGORIES_BY_ID_KEY = "Nop.taxcategory.id-{0}";
         private const string TAXCATEGORIES_PATTERN_KEY = "Nop.taxcategory.";
         #endregion
-
-        #region Utilities
-        private static TaxCategoryCollection DBMapping(DBTaxCategoryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new TaxCategoryCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static TaxCategory DBMapping(DBTaxCategory dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new TaxCategory();
-            item.TaxCategoryId = dbItem.TaxCategoryId;
-            item.Name = dbItem.Name;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-        #endregion
-
+        
         #region Methods
         /// <summary>
         /// Deletes a tax category
@@ -76,7 +46,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <param name="taxCategoryId">The tax category identifier</param>
         public static void DeleteTaxCategory(int taxCategoryId)
         {
-            DBProviderManager<DBTaxCategoryProvider>.Provider.DeleteTaxCategory(taxCategoryId);
+            var taxCategory = GetTaxCategoryById(taxCategoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxCategories.Attach(taxCategory);
+            context.DeleteObject(taxCategory);
+            context.SaveChanges();
+
             if (TaxCategoryManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXCATEGORIES_PATTERN_KEY);
@@ -87,23 +63,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// Gets all tax categories
         /// </summary>
         /// <returns>Tax category collection</returns>
-        public static TaxCategoryCollection GetAllTaxCategories()
+        public static List<TaxCategory> GetAllTaxCategories()
         {
             string key = string.Format(TAXCATEGORIES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (TaxCategoryManager.CacheEnabled && (obj2 != null))
             {
-                return (TaxCategoryCollection)obj2;
+                return (List<TaxCategory>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBTaxCategoryProvider>.Provider.GetAllTaxCategories();
-            var taxCategoryCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tc in context.TaxCategories
+                        orderby tc.DisplayOrder
+                        select tc;
+            var taxCategories = query.ToList();
 
             if (TaxCategoryManager.CacheEnabled)
             {
-                NopCache.Max(key, taxCategoryCollection);
+                NopCache.Max(key, taxCategories);
             }
-            return taxCategoryCollection;
+            return taxCategories;
         }
 
         /// <summary>
@@ -123,8 +102,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return (TaxCategory)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.GetTaxCategoryById(taxCategoryId);
-            var taxCategory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tc in context.TaxCategories
+                        where tc.TaxCategoryId == taxCategoryId
+                        select tc;
+            var taxCategory = query.SingleOrDefault();
 
             if (TaxCategoryManager.CacheEnabled)
             {
@@ -147,9 +129,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.InsertTaxCategory(name,
-                 displayOrder, createdOn, updatedOn);
-            var taxCategory = DBMapping(dbItem);
+            var taxCategory = new TaxCategory();
+            taxCategory.Name = name;
+            taxCategory.DisplayOrder = displayOrder;
+            taxCategory.CreatedOn = createdOn;
+            taxCategory.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxCategories.AddObject(taxCategory);
+            context.SaveChanges();
 
             if (TaxCategoryManager.CacheEnabled)
             {
@@ -173,10 +161,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBTaxCategoryProvider>.Provider.UpdateTaxCategory(taxCategoryId, name,
-                displayOrder, createdOn, updatedOn);
-            var taxCategory = DBMapping(dbItem);
+            var taxCategory = GetTaxCategoryById(taxCategoryId);
 
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxCategories.Attach(taxCategory);
+
+            taxCategory.Name = name;
+            taxCategory.DisplayOrder = displayOrder;
+            taxCategory.CreatedOn = createdOn;
+            taxCategory.UpdatedOn = updatedOn;
+            context.SaveChanges();
+            
             if (TaxCategoryManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXCATEGORIES_PATTERN_KEY);

@@ -14,6 +14,8 @@
 
 using System;
 using System.IO;
+using System.Linq;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
@@ -29,41 +31,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
     /// </summary>
     public partial class DownloadManager
     {
-        #region Utilities
-        private static DownloadCollection DBMapping(DBDownloadCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new DownloadCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Download DBMapping(DBDownload dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Download();
-            item.DownloadId = dbItem.DownloadId;
-            item.UseDownloadUrl = dbItem.UseDownloadUrl;
-            item.DownloadUrl = dbItem.DownloadUrl;
-            item.DownloadBinary = dbItem.DownloadBinary;
-            item.ContentType = dbItem.ContentType;
-            item.Filename = dbItem.Filename;
-            item.Extension = dbItem.Extension;
-            item.IsNew = dbItem.IsNew;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Gets a download url for an admin area
@@ -144,9 +111,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         {
             if (downloadId == 0)
                 return null;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from d in context.Downloads
+                        where d.DownloadId == downloadId
+                        select d;
+            var download = query.SingleOrDefault();
 
-            var dbItem = DBProviderManager<DBDownloadProvider>.Provider.GetDownloadById(downloadId);
-            var download = DBMapping(dbItem);
             return download;
         }
 
@@ -156,7 +127,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         /// <param name="downloadId">Download identifier</param>
         public static void DeleteDownload(int downloadId)
         {
-            DBProviderManager<DBDownloadProvider>.Provider.DeleteDownload(downloadId);
+            var download = GetDownloadById(downloadId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Downloads.Attach(download);
+            context.DeleteObject(download);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -183,9 +159,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             if (extension == null)
                 extension = string.Empty;
 
-            var dbItem = DBProviderManager<DBDownloadProvider>.Provider.InsertDownload(useDownloadUrl,
-                downloadUrl, downloadBinary, contentType, filename, extension, isNew);
-            var download = DBMapping(dbItem);
+            var download = new Download();
+            download.UseDownloadUrl = useDownloadUrl;
+            download.DownloadUrl = downloadUrl;
+            download.DownloadBinary = downloadBinary;
+            download.ContentType = contentType;
+            download.Filename = filename;
+            download.Extension = extension;
+            download.IsNew = isNew;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Downloads.AddObject(download);
+            context.SaveChanges();
+
             return download;
         }
 
@@ -215,10 +201,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             if (extension == null)
                 extension = string.Empty;
 
-            var dbItem = DBProviderManager<DBDownloadProvider>.Provider.UpdateDownload(downloadId,
-                useDownloadUrl, downloadUrl, downloadBinary, contentType, 
-                filename, extension, isNew);
-            var download = DBMapping(dbItem);
+            var download = GetDownloadById(downloadId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Downloads.Attach(download);
+
+            download.UseDownloadUrl = useDownloadUrl;
+            download.DownloadUrl = downloadUrl;
+            download.DownloadBinary = downloadBinary;
+            download.ContentType = contentType;
+            download.Filename = filename;
+            download.Extension = extension;
+            download.IsNew = isNew;
+            context.SaveChanges();
+
             return download;
         }
 

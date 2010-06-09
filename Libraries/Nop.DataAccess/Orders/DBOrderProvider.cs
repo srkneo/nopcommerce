@@ -613,24 +613,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             string note, bool displayToCustomer, DateTime createdOn);
 
         #endregion
-
-        #region Order statuses
-
-        /// <summary>
-        /// Gets an order status by Id
-        /// </summary>
-        /// <param name="orderStatusId">Order status identifier</param>
-        /// <returns>Order status</returns>
-        public abstract DBOrderStatus GetOrderStatusById(int orderStatusId);
-
-        /// <summary>
-        /// Gets all order statuses
-        /// </summary>
-        /// <returns>Order status collection</returns>
-        public abstract DBOrderStatusCollection GetAllOrderStatuses();
-
-        #endregion
-
+        
         #region Reports
 
         /// <summary>

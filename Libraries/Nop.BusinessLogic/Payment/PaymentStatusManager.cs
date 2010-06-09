@@ -17,12 +17,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Payment;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 {
@@ -36,36 +36,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         private const string PAYMENTSTATUSES_BY_ID_KEY = "Nop.paymentstatus.id-{0}";
         private const string PAYMENTSTATUSES_PATTERN_KEY = "Nop.paymentstatus.";
         #endregion
-
-        #region Utilities
-        private static PaymentStatusCollection DBMapping(DBPaymentStatusCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new PaymentStatusCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static PaymentStatus DBMapping(DBPaymentStatus dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new PaymentStatus();
-            item.PaymentStatusId = dbItem.PaymentStatusId;
-            item.Name = dbItem.Name;
-
-            return item;
-        }
-        #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -112,8 +83,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return (PaymentStatus)obj2;
             }
 
-            var dbItem = DBProviderManager<DBPaymentStatusProvider>.Provider.GetPaymentStatusById(paymentStatusId);
-            var paymentStatus = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ps in context.PaymentStatuses
+                        where ps.PaymentStatusId == paymentStatusId
+                        select ps;
+            var paymentStatus = query.SingleOrDefault();
 
             if (PaymentStatusManager.CacheEnabled)
             {
@@ -126,23 +100,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// Gets all payment statuses
         /// </summary>
         /// <returns>Payment status collection</returns>
-        public static PaymentStatusCollection GetAllPaymentStatuses()
+        public static List<PaymentStatus> GetAllPaymentStatuses()
         {
             string key = string.Format(PAYMENTSTATUSES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (PaymentStatusManager.CacheEnabled && (obj2 != null))
             {
-                return (PaymentStatusCollection)obj2;
+                return (List<PaymentStatus>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBPaymentStatusProvider>.Provider.GetAllPaymentStatuses();
-            var paymentStatusCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ps in context.PaymentStatuses
+                        orderby ps.PaymentStatusId
+                        select ps;
+            var paymentStatuses = query.ToList();
 
             if (PaymentStatusManager.CacheEnabled)
             {
-                NopCache.Max(key, paymentStatusCollection);
+                NopCache.Max(key, paymentStatuses);
             }
-            return paymentStatusCollection;
+            return paymentStatuses;
         }
         
         #endregion

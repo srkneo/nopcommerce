@@ -216,14 +216,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlRewardPointsAwardedOrderStatus.Items.Clear();
-            OrderStatusCollection orderStatuses1 = OrderManager.GetAllOrderStatuses();
+            var orderStatuses1 = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses1)
             {
                 ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
                 this.ddlRewardPointsAwardedOrderStatus.Items.Add(item2);
             }
             this.ddlRewardPointsCanceledOrderStatus.Items.Clear();
-            OrderStatusCollection orderStatuses2 = OrderManager.GetAllOrderStatuses();
+            var orderStatuses2 = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses2)
             {
                 ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
@@ -231,7 +231,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             this.ddlDefaultStoreTimeZone.Items.Clear();
-            ReadOnlyCollection<TimeZoneInfo> timeZones = DateTimeHelper.GetSystemTimeZones();
+            var timeZones = DateTimeHelper.GetSystemTimeZones();
             foreach (TimeZoneInfo timeZone in timeZones)
             {
                 string timeZoneName = timeZone.DisplayName;

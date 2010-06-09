@@ -62,8 +62,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             CommonHelper.FillDropDownWithEnum(this.ddlTaxDisplayType, typeof(TaxDisplayTypeEnum));
             CommonHelper.FillDropDownWithEnum(this.ddlTaxBasedOn, typeof(TaxBasedOnEnum));
-            
-            TaxCategoryCollection taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
+
+            var taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
 
             this.ddlShippingTaxClass.Items.Clear();
             ListItem itemShippingTaxCategory = new ListItem("---", "0");

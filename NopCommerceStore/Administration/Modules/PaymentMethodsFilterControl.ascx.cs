@@ -182,7 +182,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void BindGrid()
         {
             var countryCollection = CountryManager.GetAllCountries();
-            PaymentMethodCollection paymentMethodCollection = PaymentMethodManager.GetAllPaymentMethods(null, false);
+            var paymentMethodCollection = PaymentMethodManager.GetAllPaymentMethods(null, false);
 
             if(countryCollection.Count == 0)
             {
@@ -234,7 +234,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    PaymentMethodCollection paymentMethodCollection = PaymentMethodManager.GetAllPaymentMethods(null, false);
+                    var paymentMethodCollection = PaymentMethodManager.GetAllPaymentMethods(null, false);
                     foreach(GridViewRow row in gvPaymentMethodCountryMap.Rows)
                     {
                         foreach(PaymentMethod paymentMethod in paymentMethodCollection)

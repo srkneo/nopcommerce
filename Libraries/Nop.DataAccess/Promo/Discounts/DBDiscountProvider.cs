@@ -155,29 +155,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         public abstract void RemoveDiscountRestriction(int productVariantId, int discountId);
 
         #endregion
-
-        #region Etc
-
-        /// <summary>
-        /// Gets all discount requirements
-        /// </summary>
-        /// <returns>Discount requirement collection</returns>
-        public abstract DBDiscountRequirementCollection GetAllDiscountRequirements();
-
-        /// <summary>
-        /// Gets all discount types
-        /// </summary>
-        /// <returns>Discount type collection</returns>
-        public abstract DBDiscountTypeCollection GetAllDiscountTypes();
-
-        /// <summary>
-        /// Gets all discount limitations
-        /// </summary>
-        /// <returns>Discount limitation collection</returns>
-        public abstract DBDiscountLimitationCollection GetAllDiscountLimitations();
-
-        #endregion
-
+        
         #region Discount History
 
         /// <summary>

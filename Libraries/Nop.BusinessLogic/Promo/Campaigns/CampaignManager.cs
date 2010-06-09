@@ -17,15 +17,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Promo.Campaigns;
  
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
@@ -35,38 +35,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
     /// </summary>
     public partial class CampaignManager
     {
-        #region Utilities
-        private static CampaignCollection DBMapping(DBCampaignCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CampaignCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Campaign DBMapping(DBCampaign dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Campaign();
-            item.CampaignId = dbItem.CampaignId;
-            item.Name = dbItem.Name;
-            item.Subject = dbItem.Subject;
-            item.Body = dbItem.Body;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Gets a campaign by campaign identifier
@@ -78,8 +46,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
             if (campaignId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.GetCampaignById(campaignId);
-            var campaign = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Campaigns
+                        where c.CampaignId == campaignId
+                        select c;
+            var campaign = query.SingleOrDefault();
+
             return campaign;
         }
 
@@ -89,17 +61,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <param name="campaignId">Campaign identifier</param>
         public static void DeleteCampaign(int campaignId)
         {
-            DBProviderManager<DBCampaignProvider>.Provider.DeleteCampaign(campaignId);
+            var campaign = GetCampaignById(campaignId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Campaigns.Attach(campaign);
+            context.DeleteObject(campaign);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets all campaigns
         /// </summary>
         /// <returns>Campaign collection</returns>
-        public static CampaignCollection GetAllCampaigns()
+        public static List<Campaign> GetAllCampaigns()
         {
-            var dbCollection = DBProviderManager<DBCampaignProvider>.Provider.GetAllCampaigns();
-            var campaigns = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Campaigns
+                        orderby c.CreatedOn
+                        select c;
+            var campaigns = query.ToList();
+
             return campaigns;
         }
 
@@ -116,9 +97,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.InsertCampaign(name, 
-                subject, body, createdOn);
-            var campaign = DBMapping(dbItem);
+            var campaign = new Campaign();
+            campaign.Name = name;
+            campaign.Subject = subject;
+            campaign.Body = body;
+            campaign.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Campaigns.AddObject(campaign);
+            context.SaveChanges();
+
             return campaign;
         }
 
@@ -136,9 +124,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBCampaignProvider>.Provider.UpdateCampaign(campaignId, 
-                name, subject, body, createdOn);
-            var campaign = DBMapping(dbItem);
+            var campaign = GetCampaignById(campaignId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Campaigns.Attach(campaign);
+
+            campaign.Name = name;
+            campaign.Subject = subject;
+            campaign.Body = body;
+            campaign.CreatedOn = createdOn;
+            context.SaveChanges();
+
             return campaign;
         }
 

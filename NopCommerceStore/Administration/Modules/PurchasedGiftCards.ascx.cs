@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlOrderStatus.Items.Clear();
             ListItem itemOrderStatus = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlOrderStatus.Items.Add(itemOrderStatus);
-            OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
+            var orderStatuses = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses)
             {
                 ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());

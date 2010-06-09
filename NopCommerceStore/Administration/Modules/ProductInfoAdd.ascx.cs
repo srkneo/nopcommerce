@@ -78,7 +78,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlTaxCategory.Items.Clear();
             ListItem itemTaxCategory = new ListItem("---", "0");
             this.ddlTaxCategory.Items.Add(itemTaxCategory);
-            TaxCategoryCollection taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
+            var taxCategoryCollection = TaxCategoryManager.GetAllTaxCategories();
             foreach (TaxCategory taxCategory in taxCategoryCollection)
             {
                 ListItem item2 = new ListItem(taxCategory.Name, taxCategory.TaxCategoryId.ToString());

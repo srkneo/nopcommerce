@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.DataAccess;
@@ -82,87 +84,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             item.RequiresCouponCode = dbItem.RequiresCouponCode;
             item.CouponCode = dbItem.CouponCode;
             item.Deleted = dbItem.Deleted;
-
-            return item;
-        }
-
-        private static DiscountRequirementCollection DBMapping(DBDiscountRequirementCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new DiscountRequirementCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static DiscountRequirement DBMapping(DBDiscountRequirement dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new DiscountRequirement();
-            item.DiscountRequirementId = dbItem.DiscountRequirementId;
-            item.Name = dbItem.Name;
-
-            return item;
-        }
-
-        private static DiscountTypeCollection DBMapping(DBDiscountTypeCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new DiscountTypeCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static DiscountType DBMapping(DBDiscountType dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new DiscountType();
-            item.DiscountTypeId = dbItem.DiscountTypeId;
-            item.Name = dbItem.Name;
-
-            return item;
-        }
-
-        private static DiscountLimitationCollection DBMapping(DBDiscountLimitationCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new DiscountLimitationCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static DiscountLimitation DBMapping(DBDiscountLimitation dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new DiscountLimitation();
-            item.DiscountLimitationId = dbItem.DiscountLimitationId;
-            item.Name = dbItem.Name;
 
             return item;
         }
@@ -532,17 +453,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// Gets all discount requirements
         /// </summary>
         /// <returns>Discount requirement collection</returns>
-        public static DiscountRequirementCollection GetAllDiscountRequirements()
+        public static List<DiscountRequirement> GetAllDiscountRequirements()
         {
             string key = string.Format(DISCOUNTREQUIREMENT_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
-                return (DiscountRequirementCollection)obj2;
+                return (List<DiscountRequirement>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscountRequirements();
-            var discountRequirements = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from dr in context.DiscountRequirements
+                        orderby dr.DiscountRequirementId
+                        select dr;
+            var discountRequirements = query.ToList();
 
             if (DiscountManager.CacheEnabled)
             {
@@ -555,40 +479,46 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// Gets all discount types
         /// </summary>
         /// <returns>Discount type collection</returns>
-        public static DiscountTypeCollection GetAllDiscountTypes()
+        public static List<DiscountType> GetAllDiscountTypes()
         {
             string key = string.Format(DISCOUNTTYPES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
-                return (DiscountTypeCollection)obj2;
+                return (List<DiscountType>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscountTypes();
-            var discountTypeCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from dt in context.DiscountTypes
+                        orderby dt.DiscountTypeId
+                        select dt;
+            var discountTypes = query.ToList();
 
             if (DiscountManager.CacheEnabled)
             {
-                NopCache.Max(key, discountTypeCollection);
+                NopCache.Max(key, discountTypes);
             }
-            return discountTypeCollection;
+            return discountTypes;
         }
         
         /// <summary>
         /// Gets all discount limitations
         /// </summary>
         /// <returns>Discount limitation collection</returns>
-        public static DiscountLimitationCollection GetAllDiscountLimitations()
+        public static List<DiscountLimitation> GetAllDiscountLimitations()
         {
             string key = string.Format(DISCOUNTLIMITATION_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
-                return (DiscountLimitationCollection)obj2;
+                return (List<DiscountLimitation>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscountLimitations();
-            var discountLimitations = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from dl in context.DiscountLimitations
+                        orderby dl.DiscountLimitationId
+                        select dl;
+            var discountLimitations = query.ToList();
 
             if (DiscountManager.CacheEnabled)
             {

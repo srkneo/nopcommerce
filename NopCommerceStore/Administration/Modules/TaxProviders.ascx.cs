@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindGrid()
         {
-            TaxProviderCollection taxProviders = TaxProviderManager.GetAllTaxProviders();
+            var taxProviders = TaxProviderManager.GetAllTaxProviders();
             gvTaxProviders.DataSource = taxProviders;
             gvTaxProviders.DataBind();
         }

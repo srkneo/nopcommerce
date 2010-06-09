@@ -162,14 +162,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
             return item;
         }
 
-        private DBOrderStatus GetOrderStatusFromReader(IDataReader dataReader)
-        {
-            var item = new DBOrderStatus();
-            item.OrderStatusId = NopSqlDataHelper.GetInt(dataReader, "OrderStatusID");
-            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return item;
-        }
-
         private DBOrderAverageReportLine GetOrderAverageReportLineFromReader(IDataReader dataReader)
         {
             var item = new DBOrderAverageReportLine();
@@ -1491,50 +1483,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
                 item = GetOrderProductVariantById(orderProductVariantId);
 
             return item;
-        }
-
-        /// <summary>
-        /// Gets an order status by Id
-        /// </summary>
-        /// <param name="orderStatusId">Order status identifier</param>
-        /// <returns>Order status</returns>
-        public override DBOrderStatus GetOrderStatusById(int orderStatusId)
-        {
-            DBOrderStatus item = null;
-            if (orderStatusId == 0)
-                return item;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderStatusLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "OrderStatusID", DbType.Int32, orderStatusId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetOrderStatusFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Gets all order statuses
-        /// </summary>
-        /// <returns>Order status collection</returns>
-        public override DBOrderStatusCollection GetAllOrderStatuses()
-        {
-            var result = new DBOrderStatusCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_OrderStatusLoadAll");
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetOrderStatusFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
         }
 
         /// <summary>

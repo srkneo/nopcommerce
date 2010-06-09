@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Tax;
 
@@ -35,40 +37,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         private const string TAXPROVIDERS_BY_ID_KEY = "Nop.taxprovider.id-{0}";
         private const string TAXPROVIDERS_PATTERN_KEY = "Nop.taxprovider.";
         #endregion
-
-        #region Utilities
-        private static TaxProviderCollection DBMapping(DBTaxProviderCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new TaxProviderCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static TaxProvider DBMapping(DBTaxProvider dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new TaxProvider();
-            item.TaxProviderId = dbItem.TaxProviderId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-            item.ConfigureTemplatePath = dbItem.ConfigureTemplatePath;
-            item.ClassName = dbItem.ClassName;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-        #endregion
-
+        
         #region Methods
         /// <summary>
         /// Deletes a tax provider
@@ -76,7 +45,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <param name="taxProviderId">Tax provider identifier</param>
         public static void DeleteTaxProvider(int taxProviderId)
         {
-            DBProviderManager<DBTaxProviderProvider>.Provider.DeleteTaxProvider(taxProviderId);
+            var taxProvider = GetTaxProviderById(taxProviderId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxProviders.Attach(taxProvider);
+            context.DeleteObject(taxProvider);
+            context.SaveChanges();
             if (TaxProviderManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXPROVIDERS_PATTERN_KEY);
@@ -100,8 +74,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return (TaxProvider)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.GetTaxProviderById(taxProviderId);
-            var taxProvider = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tp in context.TaxProviders
+                        where tp.TaxProviderId == taxProviderId
+                        select tp;
+            var taxProvider = query.SingleOrDefault();
 
             if (TaxProviderManager.CacheEnabled)
             {
@@ -114,23 +91,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// Gets all tax providers
         /// </summary>
         /// <returns>Shipping rate computation method collection</returns>
-        public static TaxProviderCollection GetAllTaxProviders()
+        public static List<TaxProvider> GetAllTaxProviders()
         {
             string key = string.Format(TAXPROVIDERS_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (TaxProviderManager.CacheEnabled && (obj2 != null))
             {
-                return (TaxProviderCollection)obj2;
+                return (List<TaxProvider>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBTaxProviderProvider>.Provider.GetAllTaxProviders();
-            var taxProviderCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tp in context.TaxProviders
+                        orderby tp.DisplayOrder
+                        select tp;
+            var taxProviders = query.ToList();
 
             if (TaxProviderManager.CacheEnabled)
             {
-                NopCache.Max(key, taxProviderCollection);
+                NopCache.Max(key, taxProviders);
             }
-            return taxProviderCollection;
+            return taxProviders;
         }
 
         /// <summary>
@@ -145,9 +125,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static TaxProvider InsertTaxProvider(string name, string description,
            string configureTemplatePath, string className, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.InsertTaxProvider(name, 
-                description, configureTemplatePath, className, displayOrder);
-            var taxProvider = DBMapping(dbItem);
+            var taxProvider = new TaxProvider();
+            taxProvider.Name = name;
+            taxProvider.Description = description;
+            taxProvider.ConfigureTemplatePath = configureTemplatePath;
+            taxProvider.ClassName = className;
+            taxProvider.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxProviders.AddObject(taxProvider);
+            context.SaveChanges();
 
             if (TaxProviderManager.CacheEnabled)
             {
@@ -170,10 +157,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             string name, string description, string configureTemplatePath,
             string className, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBTaxProviderProvider>.Provider.UpdateTaxProvider(taxProviderId, name, 
-                description, configureTemplatePath, className, displayOrder);
-            var taxProvider = DBMapping(dbItem);
+            var taxProvider = GetTaxProviderById(taxProviderId);
 
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxProviders.Attach(taxProvider);
+
+            taxProvider.Name = name;
+            taxProvider.Description = description;
+            taxProvider.ConfigureTemplatePath = configureTemplatePath;
+            taxProvider.ClassName = className;
+            taxProvider.DisplayOrder = displayOrder;
+            context.SaveChanges();
+            
             if (TaxProviderManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXPROVIDERS_PATTERN_KEY);

@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlOrderStatus.Items.Clear();
             ListItem itemOrderStatus = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlOrderStatus.Items.Add(itemOrderStatus);
-            OrderStatusCollection orderStatuses = OrderManager.GetAllOrderStatuses();
+            var orderStatuses = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses)
             {
                 ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlPaymentStatus.Items.Clear();
             ListItem itemPaymentStatus = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlPaymentStatus.Items.Add(itemPaymentStatus);
-            PaymentStatusCollection paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
+            var paymentStatuses = PaymentStatusManager.GetAllPaymentStatuses();
             foreach (PaymentStatus paymentStatus in paymentStatuses)
             {
                 ListItem item2 = new ListItem(PaymentStatusManager.GetPaymentStatusName(paymentStatus.PaymentStatusId), paymentStatus.PaymentStatusId.ToString());

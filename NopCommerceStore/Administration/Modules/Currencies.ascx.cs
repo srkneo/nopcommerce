@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindCurrencyGrid()
         {
-            CurrencyCollection currencyCollection = CurrencyManager.GetAllCurrencies();
+            var currencyCollection = CurrencyManager.GetAllCurrencies();
             gvCurrencies.DataSource = currencyCollection;
             gvCurrencies.DataBind();
         }
@@ -109,7 +109,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 DecimalTextBox txtRate = row.FindControl("txtRate") as DecimalTextBox;
 
                 Currency currency = null;
-                CurrencyCollection currencies = CurrencyManager.GetAllCurrencies();
+                var currencies = CurrencyManager.GetAllCurrencies();
                 foreach (Currency currency2 in currencies)
                     if (currency2.CurrencyCode.ToLower() == lblCurrencyCode.Text.ToLower())
                         currency = currency2;

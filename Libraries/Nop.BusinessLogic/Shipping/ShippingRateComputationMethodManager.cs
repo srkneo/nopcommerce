@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Shipping;
 
@@ -36,42 +38,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         private const string SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY = "Nop.shippingratecomputationmethod.";
         #endregion
 
-        #region Utilities
-
-        private static ShippingRateComputationMethodCollection DBMapping(DBShippingRateComputationMethodCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ShippingRateComputationMethodCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ShippingRateComputationMethod DBMapping(DBShippingRateComputationMethod dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ShippingRateComputationMethod();
-            item.ShippingRateComputationMethodId = dbItem.ShippingRateComputationMethodId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-            item.ConfigureTemplatePath = dbItem.ConfigureTemplatePath;
-            item.ClassName = dbItem.ClassName;
-            item.IsActive = dbItem.IsActive;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -80,7 +46,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="shippingRateComputationMethodId">Shipping rate computation method identifier</param>
         public static void DeleteShippingRateComputationMethod(int shippingRateComputationMethodId)
         {
-            DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.DeleteShippingRateComputationMethod(shippingRateComputationMethodId);
+            var shippingRateComputationMethod = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingRateComputationMethods.Attach(shippingRateComputationMethod);
+            context.DeleteObject(shippingRateComputationMethod);
+            context.SaveChanges();
+
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
@@ -104,8 +76,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return (ShippingRateComputationMethod)obj2;
             }
 
-            var dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.GetShippingRateComputationMethodById(shippingRateComputationMethodId);
-            var shippingRateComputationMethod = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from s in context.ShippingRateComputationMethods
+                        where s.ShippingRateComputationMethodId == shippingRateComputationMethodId
+                        select s;
+            var shippingRateComputationMethod = query.SingleOrDefault();
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
@@ -118,7 +93,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// Gets all shipping rate computation methods
         /// </summary>
         /// <returns>Shipping rate computation method collection</returns>
-        public static ShippingRateComputationMethodCollection GetAllShippingRateComputationMethods()
+        public static List<ShippingRateComputationMethod> GetAllShippingRateComputationMethods()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllShippingRateComputationMethods(showHidden);
@@ -129,17 +104,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Shipping rate computation method collection</returns>
-        public static ShippingRateComputationMethodCollection GetAllShippingRateComputationMethods(bool showHidden)
+        public static List<ShippingRateComputationMethod> GetAllShippingRateComputationMethods(bool showHidden)
         {
             string key = string.Format(SHIPPINGRATECOMPUTATIONMETHODS_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (ShippingRateComputationMethodManager.CacheEnabled && (obj2 != null))
             {
-                return (ShippingRateComputationMethodCollection)obj2;
+                return (List<ShippingRateComputationMethod>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.GetAllShippingRateComputationMethods(showHidden);
-            var shippingRateComputationMethods = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from s in context.ShippingRateComputationMethods
+                        orderby s.DisplayOrder
+                        where showHidden || s.IsActive
+                        select s;
+            var shippingRateComputationMethods = query.ToList();
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
@@ -162,9 +141,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             string description, string configureTemplatePath, string className,
             bool isActive, int displayOrder)
         {
-            DBShippingRateComputationMethod dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.InsertShippingRateComputationMethod(name,
-                description, configureTemplatePath, className, isActive, displayOrder);
-            ShippingRateComputationMethod shippingRateComputationMethod = DBMapping(dbItem);
+            var shippingRateComputationMethod = new ShippingRateComputationMethod();
+            shippingRateComputationMethod.Name = name;
+            shippingRateComputationMethod.Description = description;
+            shippingRateComputationMethod.ConfigureTemplatePath = configureTemplatePath;
+            shippingRateComputationMethod.ClassName = className;
+            shippingRateComputationMethod.IsActive = isActive;
+            shippingRateComputationMethod.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingRateComputationMethods.AddObject(shippingRateComputationMethod);
+            context.SaveChanges();
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
@@ -188,10 +175,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             string name, string description, string configureTemplatePath, string className,
             bool isActive, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBShippingRateComputationMethodProvider>.Provider.UpdateShippingRateComputationMethod(shippingRateComputationMethodId,
-                name, description, configureTemplatePath, className,
-                isActive, displayOrder);
-            var shippingRateComputationMethod = DBMapping(dbItem);
+
+            var shippingRateComputationMethod = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShippingRateComputationMethods.Attach(shippingRateComputationMethod);
+
+            shippingRateComputationMethod.Name = name;
+            shippingRateComputationMethod.Description = description;
+            shippingRateComputationMethod.ConfigureTemplatePath = configureTemplatePath;
+            shippingRateComputationMethod.ClassName = className;
+            shippingRateComputationMethod.IsActive = isActive;
+            shippingRateComputationMethod.DisplayOrder = displayOrder;
+            context.SaveChanges();
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {

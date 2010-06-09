@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Text;
@@ -150,7 +151,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             bool hasButtonMethods = false;
-            var boundPaymentMethods = new PaymentMethodCollection();
+            var boundPaymentMethods = new List<PaymentMethod>();
             var paymentMethods = PaymentMethodManager.GetAllPaymentMethods(filterByCountryId);
             foreach (var pm in paymentMethods)
             {

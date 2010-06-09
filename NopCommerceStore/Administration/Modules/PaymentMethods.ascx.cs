@@ -53,8 +53,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            PaymentMethodCollection paymentMethodCollection = PaymentMethodManager.GetAllPaymentMethods();
-            gvPaymentMethods.DataSource = paymentMethodCollection;
+            var paymentMethods = PaymentMethodManager.GetAllPaymentMethods();
+            gvPaymentMethods.DataSource = paymentMethods;
             gvPaymentMethods.DataBind();
         }
     }

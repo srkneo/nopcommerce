@@ -19,12 +19,18 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
+using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates;
+using NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns;
+using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Security;
-using NopSolutions.NopCommerce.BusinessLogic.Warehouses;
+using NopSolutions.NopCommerce.BusinessLogic.Shipping;
+using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
+using NopSolutions.NopCommerce.BusinessLogic.Warehouses;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Data
@@ -118,6 +124,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<BannedIpNetwork> _bannedIpNetworks;
 
+        public ObjectSet<Campaign> Campaigns
+        {
+            get
+            {
+                if ((_campaigns == null))
+                {
+                    _campaigns = CreateObjectSet<Campaign>();
+                }
+                return _campaigns;
+            }
+        }
+        private ObjectSet<Campaign> _campaigns;
+        
         public ObjectSet<CategoryTemplate> CategoryTemplates
         {
             get
@@ -157,6 +176,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<CreditCardType> _creditCardTypes;
 
+        public ObjectSet<Currency> Currencies
+        {
+            get
+            {
+                if ((_currencies == null))
+                {
+                    _currencies = CreateObjectSet<Currency>();
+                }
+                return _currencies;
+            }
+        }
+        private ObjectSet<Currency> _currencies;
+
         public ObjectSet<CustomerAction> CustomerActions
         {
             get
@@ -169,6 +201,58 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<CustomerAction> _customerActions;
+
+        public ObjectSet<DiscountLimitation> DiscountLimitations
+        {
+            get
+            {
+                if ((_discountLimitations == null))
+                {
+                    _discountLimitations = CreateObjectSet<DiscountLimitation>();
+                }
+                return _discountLimitations;
+            }
+        }
+        private ObjectSet<DiscountLimitation> _discountLimitations;
+
+        public ObjectSet<DiscountRequirement> DiscountRequirements
+        {
+            get
+            {
+                if ((_discountRequirements == null))
+                {
+                    _discountRequirements = CreateObjectSet<DiscountRequirement>();
+                }
+                return _discountRequirements;
+            }
+        }
+        private ObjectSet<DiscountRequirement> _discountRequirements;
+
+        public ObjectSet<DiscountType> DiscountTypes
+        {
+            get
+            {
+                if ((_discountTypes == null))
+                {
+                    _discountTypes = CreateObjectSet<DiscountType>();
+                }
+                return _discountTypes;
+            }
+        }
+        private ObjectSet<DiscountType> _discountTypes;
+
+        public ObjectSet<Download> Downloads
+        {
+            get
+            {
+                if ((_downloads == null))
+                {
+                    _downloads = CreateObjectSet<Download>();
+                }
+                return _downloads;
+            }
+        }
+        private ObjectSet<Download> _downloads;
 
         public ObjectSet<Language> Languages
         {
@@ -261,6 +345,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<MessageTemplate> _messageTemplates;
 
+        public ObjectSet<OrderStatus> OrderStatuses
+        {
+            get
+            {
+                if ((_orderStatuses == null))
+                {
+                    _orderStatuses = CreateObjectSet<OrderStatus>();
+                }
+                return _orderStatuses;
+            }
+        }
+        private ObjectSet<OrderStatus> _orderStatuses;
+
+        public ObjectSet<PaymentMethod> PaymentMethods
+        {
+            get
+            {
+                if ((_paymentMethods == null))
+                {
+                    _paymentMethods = CreateObjectSet<PaymentMethod>();
+                }
+                return _paymentMethods;
+            }
+        }
+        private ObjectSet<PaymentMethod> _paymentMethods;
+
+        public ObjectSet<PaymentStatus> PaymentStatuses
+        {
+            get
+            {
+                if ((_paymentStatuses == null))
+                {
+                    _paymentStatuses = CreateObjectSet<PaymentStatus>();
+                }
+                return _paymentStatuses;
+            }
+        }
+        private ObjectSet<PaymentStatus> _paymentStatuses;
+
         public ObjectSet<ProductTemplate> ProductTemplates
         {
             get
@@ -287,6 +410,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<QueuedEmail> _queuedEmails;
 
+        public ObjectSet<ShippingRateComputationMethod> ShippingRateComputationMethods
+        {
+            get
+            {
+                if ((_shippingRateComputationMethods == null))
+                {
+                    _shippingRateComputationMethods = CreateObjectSet<ShippingRateComputationMethod>();
+                }
+                return _shippingRateComputationMethods;
+            }
+        }
+        private ObjectSet<ShippingRateComputationMethod> _shippingRateComputationMethods;
+
+        public ObjectSet<ShippingStatus> ShippingStatuses
+        {
+            get
+            {
+                if ((_shippingStatuses == null))
+                {
+                    _shippingStatuses = CreateObjectSet<ShippingStatus>();
+                }
+                return _shippingStatuses;
+            }
+        }
+        private ObjectSet<ShippingStatus> _shippingStatuses;
+
         public ObjectSet<StateProvince> StateProvinces
         {
             get
@@ -312,6 +461,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Topic> _topics;
+
+        public ObjectSet<TaxCategory> TaxCategories
+        {
+            get
+            {
+                if ((_taxCategories == null))
+                {
+                    _taxCategories = CreateObjectSet<TaxCategory>();
+                }
+                return _taxCategories;
+            }
+        }
+        private ObjectSet<TaxCategory> _taxCategories;
+
+        public ObjectSet<TaxProvider> TaxProviders
+        {
+            get
+            {
+                if ((_taxProviders == null))
+                {
+                    _taxProviders = CreateObjectSet<TaxProvider>();
+                }
+                return _taxProviders;
+            }
+        }
+        private ObjectSet<TaxProvider> _taxProviders;
 
         public ObjectSet<Warehouse> Warehouses
         {

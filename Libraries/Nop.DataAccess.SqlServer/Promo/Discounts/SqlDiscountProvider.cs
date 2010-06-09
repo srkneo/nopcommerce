@@ -52,30 +52,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
             return item;
         }
 
-        private DBDiscountRequirement GetDiscountRequirementFromReader(IDataReader dataReader)
-        {
-            var item = new DBDiscountRequirement();
-            item.DiscountRequirementId = NopSqlDataHelper.GetInt(dataReader, "DiscountRequirementID");
-            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return item;
-        }
-
-        private DBDiscountType GetDiscountTypeFromReader(IDataReader dataReader)
-        {
-            var item = new DBDiscountType();
-            item.DiscountTypeId = NopSqlDataHelper.GetInt(dataReader, "DiscountTypeID");
-            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return item;
-        }
-
-        private DBDiscountLimitation GetDiscountLimitationFromReader(IDataReader dataReader)
-        {
-            var item = new DBDiscountLimitation();
-            item.DiscountLimitationId = NopSqlDataHelper.GetInt(dataReader, "DiscountLimitationID");
-            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            return item;
-        }
-
         private DBDiscountUsageHistory GetDiscountUsageHistoryFromReader(IDataReader dataReader)
         {
             var item = new DBDiscountUsageHistory();
@@ -397,69 +373,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
             db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
             db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
             db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets all discount requirements
-        /// </summary>
-        /// <returns>Discount requirement collection</returns>
-        public override DBDiscountRequirementCollection GetAllDiscountRequirements()
-        {
-            var result = new DBDiscountRequirementCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountRequirementLoadAll");
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetDiscountRequirementFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets all discount types
-        /// </summary>
-        /// <returns>Discount type collection</returns>
-        public override DBDiscountTypeCollection GetAllDiscountTypes()
-        {
-            var result = new DBDiscountTypeCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountTypeLoadAll");
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetDiscountTypeFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets all discount limitations
-        /// </summary>
-        /// <returns>Discount limitation collection</returns>
-        public override DBDiscountLimitationCollection GetAllDiscountLimitations()
-        {
-            var result = new DBDiscountLimitationCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountLimitationLoadAll");
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetDiscountLimitationFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
         }
 
         /// <summary>

@@ -9,20 +9,35 @@
           <EntitySet Name="Nop_Affiliate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Affiliate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_BannedIpAddress" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpAddress" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_BannedIpNetwork" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpNetwork" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Campaign" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Campaign" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CategoryTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CategoryTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CreditCardType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CreditCardType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Currency" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Currency" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerAction" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_DiscountLimitation" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountLimitation" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_DiscountRequirement" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRequirement" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_DiscountType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Download" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Download" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_LogType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LogType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LowStockActivity" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LowStockActivity" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ManufacturerTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ManufacturerTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_MeasureDimension" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MeasureDimension" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_MeasureWeight" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MeasureWeight" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_MessageTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_MessageTemplateLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplateLocalized" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_OrderStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_OrderStatus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_PaymentMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentMethod" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_PaymentStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ProductTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShippingRateComputationMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingRateComputationMethod" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShippingStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingStatus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShoppingCartType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_StateProvince" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_StateProvince" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_TaxCategory" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxCategory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_TaxProvider" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxProvider" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Warehouse" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Warehouse" store:Type="Tables" Schema="dbo" />
@@ -90,6 +105,16 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_Campaign">
+          <Key>
+            <PropertyRef Name="CampaignID" />
+          </Key>
+          <Property Name="CampaignID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Subject" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_CategoryTemplate">
           <Key>
             <PropertyRef Name="CategoryTemplateId" />
@@ -126,6 +151,21 @@
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_Currency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CurrencyCode" Type="nvarchar" Nullable="false" MaxLength="5" />
+          <Property Name="DisplayLocale" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rate" Type="decimal" Nullable="false" Scale="4" />
+          <Property Name="CustomFormatting" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_CustomerAction">
           <Key>
             <PropertyRef Name="CustomerActionID" />
@@ -135,6 +175,40 @@
           <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="1000" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_DiscountLimitation">
+          <Key>
+            <PropertyRef Name="DiscountLimitationID" />
+          </Key>
+          <Property Name="DiscountLimitationID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Nop_DiscountRequirement">
+          <Key>
+            <PropertyRef Name="DiscountRequirementID" />
+          </Key>
+          <Property Name="DiscountRequirementID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Nop_DiscountType">
+          <Key>
+            <PropertyRef Name="DiscountTypeID" />
+          </Key>
+          <Property Name="DiscountTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Nop_Download">
+          <Key>
+            <PropertyRef Name="DownloadID" />
+          </Key>
+          <Property Name="DownloadID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UseDownloadURL" Type="bit" Nullable="false" />
+          <Property Name="DownloadURL" Type="nvarchar" Nullable="false" MaxLength="400" />
+          <Property Name="DownloadBinary" Type="varbinary(max)" />
+          <Property Name="ContentType" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Filename" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Extension" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="IsNew" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_Language">
           <Key>
@@ -146,6 +220,13 @@
           <Property Name="FlagImageFileName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Published" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_LogType">
+          <Key>
+            <PropertyRef Name="LogTypeID" />
+          </Key>
+          <Property Name="LogTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Nop_LowStockActivity">
           <Key>
@@ -204,6 +285,35 @@
           <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_OrderStatus">
+          <Key>
+            <PropertyRef Name="OrderStatusID" />
+          </Key>
+          <Property Name="OrderStatusID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Nop_PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodID" />
+          </Key>
+          <Property Name="PaymentMethodID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="VisibleName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" />
+          <Property Name="ConfigureTemplatePath" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="UserTemplatePath" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="ClassName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_PaymentStatus">
+          <Key>
+            <PropertyRef Name="PaymentStatusID" />
+          </Key>
+          <Property Name="PaymentStatusID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Nop_ProductTemplate">
           <Key>
             <PropertyRef Name="ProductTemplateId" />
@@ -233,6 +343,32 @@
           <Property Name="SendTries" Type="int" Nullable="false" />
           <Property Name="SentOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="Nop_ShippingRateComputationMethod">
+          <Key>
+            <PropertyRef Name="ShippingRateComputationMethodID" />
+          </Key>
+          <Property Name="ShippingRateComputationMethodID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" />
+          <Property Name="ConfigureTemplatePath" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="ClassName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_ShippingStatus">
+          <Key>
+            <PropertyRef Name="ShippingStatusID" />
+          </Key>
+          <Property Name="ShippingStatusID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Nop_ShoppingCartType">
+          <Key>
+            <PropertyRef Name="ShoppingCartTypeID" />
+          </Key>
+          <Property Name="ShoppingCartTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Nop_StateProvince">
           <Key>
             <PropertyRef Name="StateProvinceID" />
@@ -241,6 +377,27 @@
           <Property Name="CountryID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Abbreviation" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_TaxCategory">
+          <Key>
+            <PropertyRef Name="TaxCategoryID" />
+          </Key>
+          <Property Name="TaxCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_TaxProvider">
+          <Key>
+            <PropertyRef Name="TaxProviderID" />
+          </Key>
+          <Property Name="TaxProviderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" />
+          <Property Name="ConfigureTemplatePath" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="ClassName" Type="nvarchar" Nullable="false" MaxLength="500" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_Topic">
@@ -399,6 +556,21 @@
           <EntitySet Name="ManufacturerTemplates" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ManufacturerTemplate" />
           <EntitySet Name="ProductTemplates" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductTemplate" />
           <EntitySet Name="Warehouses" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Warehouse" />
+          <EntitySet Name="Campaigns" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Campaign" />
+          <EntitySet Name="Currencies" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Currency" />
+          <EntitySet Name="DiscountLimitations" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountLimitation" />
+          <EntitySet Name="DiscountRequirements" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountRequirement" />
+          <EntitySet Name="DiscountTypes" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountType" />
+          <EntitySet Name="Downloads" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Download" />
+          <EntitySet Name="LogTypes" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LogType" />
+          <EntitySet Name="OrderStatuses" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.OrderStatus" />
+          <EntitySet Name="PaymentMethods" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod" />
+          <EntitySet Name="PaymentStatuses" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentStatus" />
+          <EntitySet Name="ShippingRateComputationMethods" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingRateComputationMethod" />
+          <EntitySet Name="ShippingStatuses" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingStatus" />
+          <EntitySet Name="ShoppingCartTypes" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" />
+          <EntitySet Name="TaxCategories" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" />
+          <EntitySet Name="TaxProviders" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider" />
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -706,6 +878,148 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
         </EntityType>
+        <EntityType Name="Campaign">
+          <Key>
+            <PropertyRef Name="CampaignId" />
+          </Key>
+          <Property Type="Int32" Name="CampaignId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="CurrencyId" />
+          </Key>
+          <Property Type="Int32" Name="CurrencyId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CurrencyCode" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DisplayLocale" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Rate" Nullable="false" Precision="18" Scale="4" />
+          <Property Type="String" Name="CustomFormatting" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DiscountLimitation">
+          <Key>
+            <PropertyRef Name="DiscountLimitationId" />
+          </Key>
+          <Property Type="Int32" Name="DiscountLimitationId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DiscountRequirement">
+          <Key>
+            <PropertyRef Name="DiscountRequirementId" />
+          </Key>
+          <Property Type="Int32" Name="DiscountRequirementId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DiscountType">
+          <Key>
+            <PropertyRef Name="DiscountTypeId" />
+          </Key>
+          <Property Type="Int32" Name="DiscountTypeId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Download">
+          <Key>
+            <PropertyRef Name="DownloadId" />
+          </Key>
+          <Property Type="Int32" Name="DownloadId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Boolean" Name="UseDownloadUrl" Nullable="false" />
+          <Property Type="String" Name="DownloadUrl" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="DownloadBinary" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="ContentType" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Filename" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Extension" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsNew" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogType">
+          <Key>
+            <PropertyRef Name="LogTypeId" />
+          </Key>
+          <Property Type="Int32" Name="LogTypeId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="OrderStatusId" />
+          </Key>
+          <Property Type="Int32" Name="OrderStatusId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodId" />
+          </Key>
+          <Property Type="Int32" Name="PaymentMethodId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="VisibleName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ConfigureTemplatePath" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UserTemplatePath" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SystemKeyword" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentStatus">
+          <Key>
+            <PropertyRef Name="PaymentStatusId" />
+          </Key>
+          <Property Type="Int32" Name="PaymentStatusId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ShippingRateComputationMethod">
+          <Key>
+            <PropertyRef Name="ShippingRateComputationMethodId" />
+          </Key>
+          <Property Type="Int32" Name="ShippingRateComputationMethodId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ConfigureTemplatePath" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShippingStatus">
+          <Key>
+            <PropertyRef Name="ShippingStatusId" />
+          </Key>
+          <Property Type="Int32" Name="ShippingStatusId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ShoppingCartType">
+          <Key>
+            <PropertyRef Name="ShoppingCartTypeId" />
+          </Key>
+          <Property Type="Int32" Name="ShoppingCartTypeId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TaxCategory">
+          <Key>
+            <PropertyRef Name="TaxCategoryId" />
+          </Key>
+          <Property Type="Int32" Name="TaxCategoryId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxProvider">
+          <Key>
+            <PropertyRef Name="TaxProviderId" />
+          </Key>
+          <Property Type="Int32" Name="TaxProviderId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ConfigureTemplatePath" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ClassName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -965,6 +1279,163 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Campaigns">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Campaign">
+              <MappingFragment StoreEntitySet="Nop_Campaign">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CampaignId" ColumnName="CampaignID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Currency">
+              <MappingFragment StoreEntitySet="Nop_Currency">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="CustomFormatting" ColumnName="CustomFormatting" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="DisplayLocale" ColumnName="DisplayLocale" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CurrencyId" ColumnName="CurrencyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscountLimitations">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountLimitation">
+              <MappingFragment StoreEntitySet="Nop_DiscountLimitation">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DiscountLimitationId" ColumnName="DiscountLimitationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscountRequirements">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountRequirement">
+              <MappingFragment StoreEntitySet="Nop_DiscountRequirement">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DiscountRequirementId" ColumnName="DiscountRequirementID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscountTypes">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountType">
+              <MappingFragment StoreEntitySet="Nop_DiscountType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DiscountTypeId" ColumnName="DiscountTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Downloads">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Download">
+              <MappingFragment StoreEntitySet="Nop_Download">
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="DownloadBinary" ColumnName="DownloadBinary" />
+                <ScalarProperty Name="DownloadUrl" ColumnName="DownloadURL" />
+                <ScalarProperty Name="UseDownloadUrl" ColumnName="UseDownloadURL" />
+                <ScalarProperty Name="DownloadId" ColumnName="DownloadID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogTypes">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.LogType">
+              <MappingFragment StoreEntitySet="Nop_LogType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LogTypeId" ColumnName="LogTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatuses">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.OrderStatus">
+              <MappingFragment StoreEntitySet="Nop_OrderStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrderStatusId" ColumnName="OrderStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethods">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod">
+              <MappingFragment StoreEntitySet="Nop_PaymentMethod">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SystemKeyword" ColumnName="SystemKeyword" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="UserTemplatePath" ColumnName="UserTemplatePath" />
+                <ScalarProperty Name="ConfigureTemplatePath" ColumnName="ConfigureTemplatePath" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="VisibleName" ColumnName="VisibleName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentStatuses">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentStatus">
+              <MappingFragment StoreEntitySet="Nop_PaymentStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PaymentStatusId" ColumnName="PaymentStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingRateComputationMethods">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingRateComputationMethod">
+              <MappingFragment StoreEntitySet="Nop_ShippingRateComputationMethod">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ConfigureTemplatePath" ColumnName="ConfigureTemplatePath" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShippingRateComputationMethodId" ColumnName="ShippingRateComputationMethodID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingStatuses">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingStatus">
+              <MappingFragment StoreEntitySet="Nop_ShippingStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShippingStatusId" ColumnName="ShippingStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCartTypes">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType">
+              <MappingFragment StoreEntitySet="Nop_ShoppingCartType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShoppingCartTypeId" ColumnName="ShoppingCartTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxCategories">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory">
+              <MappingFragment StoreEntitySet="Nop_TaxCategory">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxCategoryId" ColumnName="TaxCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxProviders">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider">
+              <MappingFragment StoreEntitySet="Nop_TaxProvider">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ConfigureTemplatePath" ColumnName="ConfigureTemplatePath" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TaxProviderId" ColumnName="TaxProviderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -996,9 +1467,9 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="0.75" PointY="0.5" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="3.25" PointY="0.5" Height="2.9070849609374996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="10.25" PointY="9.125" />
-          <ConnectorPoint PointX="10.25" PointY="1.9535424804687498" />
-          <ConnectorPoint PointX="4.75" PointY="1.9535424804687498" />
+          <ConnectorPoint PointX="9.96875" PointY="9.125" />
+          <ConnectorPoint PointX="9.96875" PointY="1.09375" />
+          <ConnectorPoint PointX="4.75" PointY="1.09375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
           <ConnectorPoint PointX="2.25" PointY="1.2139794921874998" />
@@ -1010,8 +1481,10 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.5" PointY="3.75" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
-          <ConnectorPoint PointX="9.8437475" PointY="9.125" />
-          <ConnectorPoint PointX="9.8437475" PointY="4.832021484375" />
+          <ConnectorPoint PointX="10.4843775" PointY="9.125" />
+          <ConnectorPoint PointX="10.4843775" PointY="4.832021484375" />
+          <ConnectorPoint PointX="10.052083333333334" PointY="4.8320214843749989" />
+          <ConnectorPoint PointX="9.8854166666666661" PointY="4.832021484375" />
           <ConnectorPoint PointX="5.75" PointY="4.832021484375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
@@ -1028,6 +1501,21 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ManufacturerTemplate" Width="2.375" PointX="5.625" PointY="31.625" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductTemplate" Width="2.125" PointX="3.25" PointY="31.625" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Warehouse" Width="1.75" PointX="5.25" PointY="25.625" Height="3.2357796223958388" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Campaign" Width="1.5" PointX="18.5" PointY="25" Height="1.7566536458333388" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Currency" Width="1.5" PointX="14.625" PointY="16.625" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountLimitation" Width="2.125" PointX="18.5" PointY="15.25" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountRequirement" Width="2.25" PointX="20.75" PointY="15.25" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountType" Width="1.875" PointX="16.375" PointY="15.25" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Download" Width="1.5" PointX="18.625" PointY="19.125" Height="2.2496956380208246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LogType" Width="1.5" PointX="21.125" PointY="25.125" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.OrderStatus" Width="1.75" PointX="20.5" PointY="19.125" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod" Width="1.875" PointX="18.5" PointY="22" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentStatus" Width="2.125" PointX="22.75" PointY="19.125" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingRateComputationMethod" Width="3" PointX="20.875" PointY="22.125" Height="2.0853483072916674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingStatus" Width="2.125" PointX="25.25" PointY="19.125" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" Width="2.125" PointX="16.375" PointY="17.875" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" Width="2" PointX="30.125" PointY="19.125" Height="1.7566536458333246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider" Width="2.125" PointX="27.75" PointY="19.125" Height="1.9210009765625102" />
         </Diagram>
     </Diagrams>
   </Designer>
