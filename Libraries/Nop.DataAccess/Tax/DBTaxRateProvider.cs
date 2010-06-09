@@ -35,49 +35,10 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         #region Methods
 
         /// <summary>
-        /// Deletes a tax rate
-        /// </summary>
-        /// <param name="taxRateId">Tax rate identifier</param>
-        public abstract void DeleteTaxRate(int taxRateId);
-
-        /// <summary>
-        /// Gets a tax rate
-        /// </summary>
-        /// <param name="taxRateId">Tax rate identifier</param>
-        /// <returns>Tax rate</returns>
-        public abstract DBTaxRate GetTaxRateById(int taxRateId);
-
-        /// <summary>
         /// Gets all tax rates
         /// </summary>
         /// <returns>Tax rate collection</returns>
         public abstract DBTaxRateCollection GetAllTaxRates();
-
-        /// <summary>
-        /// Inserts a tax rate
-        /// </summary>
-        /// <param name="taxCategoryId">The tax category identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        /// <param name="stateProvinceId">The state/province identifier</param>
-        /// <param name="zip">The zip</param>
-        /// <param name="percentage">The percentage</param>
-        /// <returns>Tax rate</returns>
-        public abstract DBTaxRate InsertTaxRate(int taxCategoryId, int countryId,
-            int stateProvinceId, string zip, decimal percentage);
-
-        /// <summary>
-        /// Updates the tax rate
-        /// </summary>
-        /// <param name="taxRateId">The tax rate identifier</param>
-        /// <param name="taxCategoryId">The tax category identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        /// <param name="stateProvinceId">The state/province identifier</param>
-        /// <param name="zip">The zip</param>
-        /// <param name="percentage">The percentage</param>
-        /// <returns>Tax rate</returns>
-        public abstract DBTaxRate UpdateTaxRate(int taxRateId, 
-            int taxCategoryId, int countryId, int stateProvinceId, 
-            string zip, decimal percentage);
 
         #endregion
     }

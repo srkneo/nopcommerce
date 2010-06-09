@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -52,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected CustomerCollection GetCustomers()
+        protected List<Customer> GetCustomers()
         {
             DateTime? startDate = ctrlStartDatePicker.SelectedDate;
             DateTime? endDate = ctrlEndDatePicker.SelectedDate;
@@ -69,14 +70,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             string username = txtUsername.Text.Trim();
             bool dontLoadGuestCustomers = cbDontLoadGuestCustomers.Checked;
             int totalRecords = 0;
-            CustomerCollection customers = CustomerManager.GetAllCustomers(startDate,
+            var customers = CustomerManager.GetAllCustomers(startDate,
                 endDate, email, username, dontLoadGuestCustomers, int.MaxValue, 0, out totalRecords);
             return customers;
         }
 
         protected void BindGrid()
         {
-            CustomerCollection customers = GetCustomers();
+            var customers = GetCustomers();
             gvCustomers.DataSource = customers;
             gvCustomers.DataBind();
         }
@@ -127,7 +128,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = string.Format("customers_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
 
-                    CustomerCollection customers = GetCustomers();
+                    var customers = GetCustomers();
                     string xml = ExportManager.ExportCustomersToXml(customers);
                     CommonHelper.WriteResponseXml(xml, fileName);
                 }
@@ -146,7 +147,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = string.Format("customers_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
-                    CustomerCollection customers = GetCustomers();
+                    var customers = GetCustomers();
 
                     ExportManager.ExportCustomersToXls(filePath, customers);
                     CommonHelper.WriteResponseXls(filePath, fileName);

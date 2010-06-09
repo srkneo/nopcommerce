@@ -17,11 +17,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
-using NopSolutions.NopCommerce.DataAccess.Tax;
-using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.DataAccess;
+using NopSolutions.NopCommerce.DataAccess.Tax;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 {
@@ -37,12 +39,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         #endregion
 
         #region Utilities
-        private static TaxRateCollection DBMapping(DBTaxRateCollection dbCollection)
+        private static List<TaxRate> DBMapping(DBTaxRateCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new TaxRateCollection();
+            var collection = new List<TaxRate>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -76,7 +78,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <param name="taxRateId">Tax rate identifier</param>
         public static void DeleteTaxRate(int taxRateId)
         {
-            DBProviderManager<DBTaxRateProvider>.Provider.DeleteTaxRate(taxRateId);
+            var taxRate = GetTaxRateById(taxRateId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxRates.Attach(taxRate);
+            context.DeleteObject(taxRate);
+            context.SaveChanges();
+            
             if (TaxRateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
@@ -100,8 +108,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return (TaxRate)obj2;
             }
 
-            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.GetTaxRateById(taxRateId);
-            var taxRate = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tr in context.TaxRates
+                        where tr.TaxRateId == taxRateId
+                        select tr;
+            var taxRate = query.SingleOrDefault();
 
             if (TaxRateManager.CacheEnabled)
             {
@@ -114,13 +125,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// Gets all tax rates
         /// </summary>
         /// <returns>Tax rate collection</returns>
-        public static TaxRateCollection GetAllTaxRates()
+        public static List<TaxRate> GetAllTaxRates()
         {
             string key = TAXRATE_ALL_KEY;
             object obj2 = NopCache.Get(key);
             if (TaxRateManager.CacheEnabled && (obj2 != null))
             {
-                return (TaxRateCollection)obj2;
+                return (List<TaxRate>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBTaxRateProvider>.Provider.GetAllTaxRates();
@@ -142,7 +153,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         /// <param name="stateProvinceId">The state/province identifier</param>
         /// <param name="zip">The zip</param>
         /// <returns>Tax rate collection</returns>
-        public static TaxRateCollection GetAllTaxRates(int taxCategoryId, int countryId,
+        public static List<TaxRate> GetAllTaxRates(int taxCategoryId, int countryId,
             int stateProvinceId, string zip)
         {
             if (zip == null)
@@ -153,7 +164,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var existingRates = GetAllTaxRates().FindTaxRates(countryId, taxCategoryId);
 
             //filter by state/province
-            var matchedByStateProvince = new TaxRateCollection();
+            var matchedByStateProvince = new List<TaxRate>();
             foreach (var taxRate in existingRates)
             {
                 if (stateProvinceId == taxRate.StateProvinceId)
@@ -169,7 +180,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             }
 
             //filter by zip
-            var matchedByZip = new TaxRateCollection();
+            var matchedByZip = new List<TaxRate>();
             foreach (var taxRate in matchedByStateProvince)
             {
                 if (zip.ToLower() == taxRate.Zip.ToLower())
@@ -204,9 +215,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             if (!String.IsNullOrEmpty(zip))
                 zip = zip.Trim();
 
-            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.InsertTaxRate(taxCategoryId, countryId, stateProvinceId, zip, percentage);
-            var taxRate = DBMapping(dbItem);
+            var taxRate = new TaxRate();
+            taxRate.TaxCategoryId = taxCategoryId;
+            taxRate.CountryId = countryId;
+            taxRate.StateProvinceId = stateProvinceId;
+            taxRate.Zip = zip;
+            taxRate.Percentage = percentage;
 
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxRates.AddObject(taxRate);
+            context.SaveChanges();
+            
             if (TaxRateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
@@ -234,10 +253,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             if (!String.IsNullOrEmpty(zip))
                 zip = zip.Trim();
 
-            var dbItem = DBProviderManager<DBTaxRateProvider>.Provider.UpdateTaxRate(taxRateId, 
-                taxCategoryId, countryId, stateProvinceId, zip, percentage);
-            var taxRate = DBMapping(dbItem);
+            var taxRate = GetTaxRateById(taxRateId);
 
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TaxRates.Attach(taxRate);
+
+            taxRate.TaxCategoryId = taxCategoryId;
+            taxRate.CountryId = countryId;
+            taxRate.StateProvinceId = stateProvinceId;
+            taxRate.Zip = zip;
+            taxRate.Percentage = percentage;
+            context.SaveChanges();
+            
             if (TaxRateManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(TAXRATE_PATTERN_KEY);

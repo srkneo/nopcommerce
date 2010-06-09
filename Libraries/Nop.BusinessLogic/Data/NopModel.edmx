@@ -14,6 +14,7 @@
           <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CreditCardType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CreditCardType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Currency" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Currency" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Customer" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerAction" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountLimitation" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountLimitation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountRequirement" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRequirement" store:Type="Tables" Schema="dbo" />
@@ -45,6 +46,7 @@
           <EntitySet Name="Nop_StateProvince" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_StateProvince" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TaxCategory" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxCategory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TaxProvider" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxProvider" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_TaxRate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxRate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Warehouse" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Warehouse" store:Type="Tables" Schema="dbo" />
@@ -79,6 +81,14 @@
           <AssociationSet Name="FK_Nop_StateProvince_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_StateProvince_Nop_Country">
             <End Role="Nop_Country" EntitySet="Nop_Country" />
             <End Role="Nop_StateProvince" EntitySet="Nop_StateProvince" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TaxRate_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TaxRate_Nop_Country">
+            <End Role="Nop_Country" EntitySet="Nop_Country" />
+            <End Role="Nop_TaxRate" EntitySet="Nop_TaxRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TaxRate_Nop_TaxCategory" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TaxRate_Nop_TaxCategory">
+            <End Role="Nop_TaxCategory" EntitySet="Nop_TaxCategory" />
+            <End Role="Nop_TaxRate" EntitySet="Nop_TaxRate" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_TopicLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TopicLocalized_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
@@ -192,6 +202,39 @@
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="PasswordHash" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="SaltKey" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="AffiliateID" Type="int" Nullable="false" />
+          <Property Name="BillingAddressID" Type="int" Nullable="false" />
+          <Property Name="ShippingAddressID" Type="int" Nullable="false" />
+          <Property Name="LastPaymentMethodID" Type="int" Nullable="false" />
+          <Property Name="LastAppliedCouponCode" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="GiftCardCouponCodes" Type="xml" Nullable="false" />
+          <Property Name="CheckoutAttributes" Type="xml" Nullable="false" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="CurrencyID" Type="int" Nullable="false" />
+          <Property Name="TaxDisplayTypeID" Type="int" Nullable="false" />
+          <Property Name="IsTaxExempt" Type="bit" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="IsGuest" Type="bit" Nullable="false" />
+          <Property Name="IsForumModerator" Type="bit" Nullable="false" />
+          <Property Name="TotalForumPosts" Type="int" Nullable="false" />
+          <Property Name="Signature" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="AdminComment" Type="nvarchar" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="TimeZoneID" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="AvatarID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_CustomerAction">
           <Key>
@@ -500,6 +543,17 @@
           <Property Name="ClassName" Type="nvarchar" Nullable="false" MaxLength="500" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_TaxRate">
+          <Key>
+            <PropertyRef Name="TaxRateID" />
+          </Key>
+          <Property Name="TaxRateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TaxCategoryID" Type="int" Nullable="false" />
+          <Property Name="CountryID" Type="int" Nullable="false" />
+          <Property Name="StateProvinceID" Type="int" Nullable="false" />
+          <Property Name="Zip" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Percentage" Type="decimal" Nullable="false" Scale="4" />
+        </EntityType>
         <EntityType Name="Nop_Topic">
           <Key>
             <PropertyRef Name="TopicID" />
@@ -653,6 +707,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Nop_TaxRate_Nop_Country">
+          <End Role="Nop_Country" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_TaxRate" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Nop_TaxRate">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_TaxRate_Nop_TaxCategory">
+          <End Role="Nop_TaxCategory" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_TaxRate" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_TaxCategory">
+              <PropertyRef Name="TaxCategoryID" />
+            </Principal>
+            <Dependent Role="Nop_TaxRate">
+              <PropertyRef Name="TaxCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_TopicLocalized_Nop_Language">
           <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -767,6 +849,16 @@
           <AssociationSet Name="FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod">
             <End Role="Nop_ShippingMethod" EntitySet="ShippingMethods" />
             <End Role="Nop_ShippingByWeightAndCountry" EntitySet="ShippingByWeightAndCountry" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" />
+          <EntitySet Name="TaxRates" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate" />
+          <AssociationSet Name="FK_Nop_TaxRate_Nop_Country" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Nop_TaxRate" EntitySet="TaxRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TaxRate_Nop_TaxCategory" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_TaxCategory">
+            <End Role="TaxCategory" EntitySet="TaxCategories" />
+            <End Role="Nop_TaxRate" EntitySet="TaxRates" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
@@ -1350,6 +1442,74 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Type="Int32" Name="CustomerId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Guid" Name="CustomerGuid" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordHash" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SaltKey" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="AffiliateId" Nullable="false" />
+          <Property Type="Int32" Name="BillingAddressId" Nullable="false" />
+          <Property Type="Int32" Name="ShippingAddressId" Nullable="false" />
+          <Property Type="Int32" Name="LastPaymentMethodId" Nullable="false" />
+          <Property Type="String" Name="LastAppliedCouponCode" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GiftCardCouponCodes" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CheckoutAttributes" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="LanguageId" Nullable="false" />
+          <Property Type="Int32" Name="CurrencyId" Nullable="false" />
+          <Property Type="Int32" Name="TaxDisplayTypeId" Nullable="false" />
+          <Property Type="Boolean" Name="IsTaxExempt" Nullable="false" />
+          <Property Type="Boolean" Name="IsAdmin" Nullable="false" />
+          <Property Type="Boolean" Name="IsGuest" Nullable="false" />
+          <Property Type="Boolean" Name="IsForumModerator" Nullable="false" />
+          <Property Type="Int32" Name="TotalForumPosts" Nullable="false" />
+          <Property Type="String" Name="Signature" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AdminComment" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
+          <Property Type="Boolean" Name="Deleted" Nullable="false" />
+          <Property Type="DateTime" Name="RegistrationDate" Nullable="false" />
+          <Property Type="String" Name="TimeZoneId" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="AvatarId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxRate">
+          <Key>
+            <PropertyRef Name="TaxRateId" />
+          </Key>
+          <Property Type="Int32" Name="TaxRateId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="TaxCategoryId" Nullable="false" />
+          <Property Type="Int32" Name="CountryId" Nullable="false" />
+          <Property Type="Int32" Name="StateProvinceId" Nullable="false" />
+          <Property Type="String" Name="Zip" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Percentage" Nullable="false" Precision="18" Scale="4" />
+        </EntityType>
+        <Association Name="FK_Nop_TaxRate_Nop_Country">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Role="Country" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate" Role="Nop_TaxRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Nop_TaxRate">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_TaxRate_Nop_TaxCategory">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" Role="TaxCategory" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate" Role="Nop_TaxRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxCategory">
+              <PropertyRef Name="TaxCategoryId" />
+            </Principal>
+            <Dependent Role="Nop_TaxRate">
+              <PropertyRef Name="TaxCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1846,6 +2006,52 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Customer">
+              <MappingFragment StoreEntitySet="Nop_Customer">
+                <ScalarProperty Name="AvatarId" ColumnName="AvatarID" />
+                <ScalarProperty Name="TimeZoneId" ColumnName="TimeZoneID" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="AdminComment" ColumnName="AdminComment" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="TotalForumPosts" ColumnName="TotalForumPosts" />
+                <ScalarProperty Name="IsForumModerator" ColumnName="IsForumModerator" />
+                <ScalarProperty Name="IsGuest" ColumnName="IsGuest" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="IsTaxExempt" ColumnName="IsTaxExempt" />
+                <ScalarProperty Name="TaxDisplayTypeId" ColumnName="TaxDisplayTypeID" />
+                <ScalarProperty Name="CurrencyId" ColumnName="CurrencyID" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageID" />
+                <ScalarProperty Name="CheckoutAttributes" ColumnName="CheckoutAttributes" />
+                <ScalarProperty Name="GiftCardCouponCodes" ColumnName="GiftCardCouponCodes" />
+                <ScalarProperty Name="LastAppliedCouponCode" ColumnName="LastAppliedCouponCode" />
+                <ScalarProperty Name="LastPaymentMethodId" ColumnName="LastPaymentMethodID" />
+                <ScalarProperty Name="ShippingAddressId" ColumnName="ShippingAddressID" />
+                <ScalarProperty Name="BillingAddressId" ColumnName="BillingAddressID" />
+                <ScalarProperty Name="AffiliateId" ColumnName="AffiliateID" />
+                <ScalarProperty Name="SaltKey" ColumnName="SaltKey" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CustomerGuid" ColumnName="CustomerGUID" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxRates">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate">
+              <MappingFragment StoreEntitySet="Nop_TaxRate">
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="StateProvinceId" ColumnName="StateProvinceID" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryID" />
+                <ScalarProperty Name="TaxCategoryId" ColumnName="TaxCategoryID" />
+                <ScalarProperty Name="TaxRateId" ColumnName="TaxRateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1872,14 +2078,16 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="8.25" PointY="20.5" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
           <ConnectorPoint PointX="7.625" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="21.460500488281248" />
           <ConnectorPoint PointX="8.25" PointY="21.460500488281248" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="0.75" PointY="0.5" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="3.25" PointY="0.5" Height="2.9070849609374996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="9.67968625" PointY="9.125" />
-          <ConnectorPoint PointX="9.67968625" PointY="2.9059456380208335" />
-          <ConnectorPoint PointX="4.75" PointY="2.9059456380208335" />
+          <ConnectorPoint PointX="10.25" PointY="9.125" />
+          <ConnectorPoint PointX="10.25" PointY="1.9535424804687498" />
+          <ConnectorPoint PointX="4.75" PointY="1.9535424804687498" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
           <ConnectorPoint PointX="2.25" PointY="1.2139794921874998" />
@@ -1891,10 +2099,8 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.5" PointY="3.75" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
-          <ConnectorPoint PointX="10.371095624999999" PointY="9.125" />
-          <ConnectorPoint PointX="10.371095624999999" PointY="4.832021484375" />
-          <ConnectorPoint PointX="9.7630195833333335" PointY="4.8320214843749989" />
-          <ConnectorPoint PointX="9.5963529166666657" PointY="4.832021484375" />
+          <ConnectorPoint PointX="9.8437475" PointY="9.125" />
+          <ConnectorPoint PointX="9.8437475" PointY="4.832021484375" />
           <ConnectorPoint PointX="5.75" PointY="4.832021484375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
@@ -1916,22 +2122,26 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountLimitation" Width="2.125" PointX="18.5" PointY="15.25" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountRequirement" Width="2.25" PointX="20.75" PointY="15.25" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountType" Width="1.875" PointX="16.375" PointY="15.25" Height="1.2636116536458246" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Download" Width="1.5" PointX="18.625" PointY="19.125" Height="2.2496956380208246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Download" Width="1.5" PointX="19.25" PointY="18.125" Height="2.2496956380208246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LogType" Width="1.5" PointX="21.125" PointY="25.125" Height="1.2636116536458246" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.OrderStatus" Width="1.75" PointX="20.5" PointY="19.125" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.OrderStatus" Width="1.75" PointX="20.875" PointY="19.125" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod" Width="1.875" PointX="18.5" PointY="22" Height="2.5783902994791674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentStatus" Width="2.125" PointX="22.75" PointY="19.125" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingRateComputationMethod" Width="3" PointX="20.875" PointY="22.125" Height="2.0853483072916674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingStatus" Width="2.125" PointX="25.25" PointY="19.125" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" Width="2.125" PointX="16.375" PointY="17.875" Height="1.2636116536458246" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" Width="2" PointX="30.125" PointY="19.125" Height="1.7566536458333246" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider" Width="2.125" PointX="27.75" PointY="19.125" Height="1.9210009765625102" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" Width="2" PointX="29.75" PointY="19.25" Height="1.7566536458333353" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider" Width="2.125" PointX="29.75" PointY="21.375" Height="1.9210009765625102" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource" Width="2.5" PointX="3.25" PointY="7.125" Height="1.5923063151041657" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Setting" Width="1.625" PointX="7.875" PointY="26" Height="1.5923063151041674" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_LocaleStringResource_Nop_Language" >
-          <ConnectorPoint PointX="9.5" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="4.5" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="4.5" PointY="8.7173063151041656" />
+          <ConnectorPoint PointX="10.6562525" PointY="9.125" />
+          <ConnectorPoint PointX="10.6562525" PointY="7.65625" />
+          <ConnectorPoint PointX="10.333333333333334" PointY="7.6562499999999991" />
+          <ConnectorPoint PointX="10.166666666666666" PointY="7.65625" />
+          <ConnectorPoint PointX="9.9270808333333331" PointY="7.6562499999999991" />
+          <ConnectorPoint PointX="9.7604141666666653" PointY="7.65625" />
+          <ConnectorPoint PointX="5.75" PointY="7.65625" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Picture" Width="1.5" PointX="0.5" PointY="5.5" Height="1.5923063151041665" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByTotal" Width="2" PointX="0.625" PointY="15" Height="2.0853483072916674" />
@@ -1954,6 +2164,21 @@
           <ConnectorPoint PointX="2.5" PointY="18.546153157552084" />
           <ConnectorPoint PointX="3.5781227500000004" PointY="18.546153157552084" />
           <ConnectorPoint PointX="3.5781227500000004" PointY="20.625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Width="2" PointX="11.75" PointY="1.875" Height="5.5366422526041674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate" Width="1.5" PointX="27.625" PointY="19.125" Height="1.9210009765625031" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_Country" >
+          <ConnectorPoint PointX="7.625" PointY="22.382871059244792" />
+          <ConnectorPoint PointX="8" PointY="22.382871059244792" />
+          <ConnectorPoint PointX="8" PointY="20.25" />
+          <ConnectorPoint PointX="18.25" PointY="20.25" />
+          <ConnectorPoint PointX="18.25" PointY="21.75" />
+          <ConnectorPoint PointX="28.375" PointY="21.75" />
+          <ConnectorPoint PointX="28.375" PointY="21.046000976562503" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_TaxCategory" >
+          <ConnectorPoint PointX="29.75" PointY="20.128326822916669" />
+          <ConnectorPoint PointX="29.125" PointY="20.128326822916669" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

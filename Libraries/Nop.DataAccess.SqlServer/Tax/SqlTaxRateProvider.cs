@@ -84,41 +84,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
         }
 
         /// <summary>
-        /// Deletes a tax rate
-        /// </summary>
-        /// <param name="taxRateId">Tax rate identifier</param>
-        public override void DeleteTaxRate(int taxRateId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxRateDelete");
-            db.AddInParameter(dbCommand, "TaxRateID", DbType.Int32, taxRateId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a tax rate
-        /// </summary>
-        /// <param name="taxRateId">Tax rate identifier</param>
-        /// <returns>Tax rate</returns>
-        public override DBTaxRate GetTaxRateById(int taxRateId)
-        {
-            DBTaxRate item = null;
-            if (taxRateId == 0)
-                return item;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxRateLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "TaxRateID", DbType.Int32, taxRateId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetTaxRateFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
         /// Gets all tax rates
         /// </summary>
         /// <returns>Tax rate collection</returns>
@@ -138,63 +103,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Tax
             return result;
         }
 
-        /// <summary>
-        /// Inserts a tax rate
-        /// </summary>
-        /// <param name="taxCategoryId">The tax category identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        /// <param name="stateProvinceId">The state/province identifier</param>
-        /// <param name="zip">The zip</param>
-        /// <param name="percentage">The percentage</param>
-        /// <returns>Tax rate</returns>
-        public override DBTaxRate InsertTaxRate(int taxCategoryId, int countryId,
-            int stateProvinceId, string zip, decimal percentage)
-        {
-            DBTaxRate item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxRateInsert");
-            db.AddOutParameter(dbCommand, "TaxRateID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, taxCategoryId);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
-            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, stateProvinceId);
-            db.AddInParameter(dbCommand, "Zip", DbType.String, zip);
-            db.AddInParameter(dbCommand, "Percentage", DbType.Decimal, percentage);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int taxRateId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@TaxRateID"));
-                item = GetTaxRateById(taxRateId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the tax rate
-        /// </summary>
-        /// <param name="taxRateId">The tax rate identifier</param>
-        /// <param name="taxCategoryId">The tax category identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        /// <param name="stateProvinceId">The state/province identifier</param>
-        /// <param name="zip">The zip</param>
-        /// <param name="percentage">The percentage</param>
-        /// <returns>Tax rate</returns>
-        public override DBTaxRate UpdateTaxRate(int taxRateId,
-            int taxCategoryId, int countryId, int stateProvinceId,
-            string zip, decimal percentage)
-        {
-            DBTaxRate item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_TaxRateUpdate");
-            db.AddInParameter(dbCommand, "TaxRateID", DbType.Int32, taxRateId);
-            db.AddInParameter(dbCommand, "TaxCategoryID", DbType.Int32, taxCategoryId);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
-            db.AddInParameter(dbCommand, "StateProvinceID", DbType.Int32, stateProvinceId);
-            db.AddInParameter(dbCommand, "Zip", DbType.String, zip);
-            db.AddInParameter(dbCommand, "Percentage", DbType.Decimal, percentage);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetTaxRateById(taxRateId);
-
-            return item;
-        }
         #endregion
     }
 }

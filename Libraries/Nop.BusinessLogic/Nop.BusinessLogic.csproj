@@ -268,6 +268,7 @@
     <Compile Include="Tasks\TaskManager.cs" />
     <Compile Include="Tasks\TaskThread.cs" />
     <Compile Include="Tax\CalculateTaxRequest.cs" />
+    <Compile Include="Tax\Extensions.cs" />
     <Compile Include="Tax\TaxBasedOnEnum.cs" />
     <Compile Include="Tax\TaxDisplayTypeEnum.cs" />
     <Compile Include="Tax\TaxProvider.cs" />
@@ -349,7 +350,6 @@
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\CustomerAttribute.cs" />
     <Compile Include="Customer\CustomerAttributeCollection.cs" />
-    <Compile Include="Customer\CustomerCollection.cs" />
     <Compile Include="Customer\CustomerSession.cs" />
     <Compile Include="Customer\CustomerSessionCollection.cs" />
     <Compile Include="Promo\Discounts\Discount.cs" />
@@ -383,7 +383,6 @@
     <Compile Include="Orders\ShoppingCart.cs" />
     <Compile Include="Directory\StateProvince.cs" />
     <Compile Include="Tax\TaxRate.cs" />
-    <Compile Include="Tax\TaxRateCollection.cs" />
     <Compile Include="Tax\TaxCategory.cs" />
     <Compile Include="Utils\SiteHelper.cs" />
     <Compile Include="Utils\PDFHelper.cs" />

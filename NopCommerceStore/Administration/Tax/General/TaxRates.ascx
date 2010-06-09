@@ -34,8 +34,12 @@
                                 </asp:HiddenField>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="Percentage" HeaderText="Percentage" HeaderStyle-HorizontalAlign="Center"
-                            ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center"></asp:BoundField>
+                        <asp:TemplateField HeaderText="Percentage" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center"
+                            ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <%#Eval("Percentage")%>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:ButtonField ButtonType="Link" Text="Edit" HeaderText="Edit" HeaderStyle-HorizontalAlign="Center"
                             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center" CausesValidation="false"
                             CommandName="Edit" />

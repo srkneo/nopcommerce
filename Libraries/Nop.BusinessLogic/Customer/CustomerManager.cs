@@ -17,12 +17,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Security;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
@@ -96,12 +98,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             return item;
         }
 
-        private static CustomerCollection DBMapping(DBCustomerCollection dbCollection)
+        private static List<Customer> DBMapping(DBCustomerCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new CustomerCollection();
+            var collection = new List<Customer>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -957,7 +959,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// Gets all customers
         /// </summary>
         /// <returns>Customer collection</returns>
-        public static CustomerCollection GetAllCustomers()
+        public static List<Customer> GetAllCustomers()
         {
             int totalRecords = 0;
             return GetAllCustomers(null, null, null, string.Empty, false, 
@@ -976,7 +978,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Customer collection</returns>
-        public static CustomerCollection GetAllCustomers(DateTime? registrationFrom,
+        public static List<Customer> GetAllCustomers(DateTime? registrationFrom,
             DateTime? registrationTo, string email, string username, 
             bool dontLoadGuestCustomers, int pageSize, int pageIndex, out int totalRecords)
         {
@@ -1008,10 +1010,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Customer collection</returns>
-        public static CustomerCollection GetAffiliatedCustomers(int affiliateId)
+        public static List<Customer> GetAffiliatedCustomers(int affiliateId)
         {
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAffiliatedCustomers(affiliateId);
-            var customers = DBMapping(dbCollection);
+            if (affiliateId == 0)
+                return new List<Customer>();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Customers
+                        orderby c.RegistrationDate descending
+                        where c.AffiliateId == affiliateId && !c.Deleted
+                        select c;
+            var customers = query.ToList();
             return customers;
         }
 
@@ -1020,7 +1029,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         /// <param name="customerRoleId">Customer role identifier</param>
         /// <returns>Customer collection</returns>
-        public static CustomerCollection GetCustomersByCustomerRoleId(int customerRoleId)
+        public static List<Customer> GetCustomersByCustomerRoleId(int customerRoleId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomersByCustomerRoleId(customerRoleId, showHidden);
@@ -1062,8 +1071,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (string.IsNullOrEmpty(email))
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByEmail(email);
-            var customer = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Customers
+                        orderby c.CustomerId
+                        where c.Email == email
+                        select c;
+            var customer = query.FirstOrDefault();
             return customer;
         }
 
@@ -1077,8 +1090,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (string.IsNullOrEmpty(username))
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByUsername(username);
-            var customer = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Customers
+                        orderby c.CustomerId
+                        where c.Username == username
+                        select c;
+            var customer = query.FirstOrDefault();
             return customer;
         }
 
@@ -1092,8 +1109,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (customerId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerById(customerId);
-            var customer = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Customers
+                        where c.CustomerId == customerId
+                        select c;
+            var customer = query.SingleOrDefault();
             return customer;
         }
 
@@ -1106,8 +1126,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             if (customerGuid == Guid.Empty)
                 return null;
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerByGuid(customerGuid);
-            var customer = DBMapping(dbItem);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Customers
+                        where c.CustomerGuid == customerGuid
+                        orderby c.CustomerId
+                        select c;
+            var customer = query.FirstOrDefault();
             return customer;
         }
 
@@ -1387,15 +1412,39 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
             registrationDate = DateTimeHelper.ConvertToUtcTime(registrationDate);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.AddCustomer(customerGuid,
-                email, username, passwordHash, saltKey, affiliateId, billingAddressId,
-                shippingAddressId, lastPaymentMethodId, lastAppliedCouponCode, 
-                giftCardCouponCodes, checkoutAttributes, languageId, 
-                currencyId, (int)taxDisplayType, isTaxExempt, isAdmin, 
-                isGuest, isForumModerator, totalForumPosts, signature, 
-                adminComment, active,  deleted, registrationDate, timeZoneId, avatarId);
-            var customer = DBMapping(dbItem);
-            
+            var customer = new Customer();
+            customer.CustomerGuid = customerGuid;
+            customer.Email = email;
+            customer.Username = username;
+            customer.PasswordHash = passwordHash;
+            customer.SaltKey = saltKey;
+            customer.AffiliateId = affiliateId;
+            customer.BillingAddressId = billingAddressId;
+            customer.ShippingAddressId = shippingAddressId;
+            customer.LastPaymentMethodId = lastPaymentMethodId;
+            customer.LastAppliedCouponCode = lastAppliedCouponCode;
+            customer.GiftCardCouponCodes = giftCardCouponCodes;
+            customer.CheckoutAttributes = checkoutAttributes;
+            customer.LanguageId = languageId;
+            customer.CurrencyId = currencyId;
+            customer.TaxDisplayTypeId = (int)taxDisplayType;
+            customer.IsTaxExempt = isTaxExempt;
+            customer.IsAdmin = isAdmin;
+            customer.IsGuest = isGuest;
+            customer.IsForumModerator = isForumModerator;
+            customer.TotalForumPosts = totalForumPosts;
+            customer.Signature = signature;
+            customer.AdminComment = adminComment;
+            customer.Active = active;
+            customer.Deleted = deleted;
+            customer.RegistrationDate = registrationDate;
+            customer.TimeZoneId = timeZoneId;
+            customer.AvatarId = avatarId;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Customers.AddObject(customer);
+            context.SaveChanges();
+                        
             //reward points
             if (!isGuest &&
                 OrderManager.RewardPointsEnabled &&
@@ -1474,16 +1523,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
             var subscriptionOld = customer.NewsLetterSubscription;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomer(customerId, 
-                customerGuid, email, username, passwordHash, 
-                saltKey, affiliateId, billingAddressId,
-                shippingAddressId, lastPaymentMethodId,
-                lastAppliedCouponCode, giftCardCouponCodes, 
-                checkoutAttributes, languageId, currencyId, (int)taxDisplayType, 
-                isTaxExempt, isAdmin, isGuest, isForumModerator,
-                totalForumPosts, signature, adminComment, active, 
-                deleted, registrationDate, timeZoneId, avatarId);
-            customer = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Customers.Attach(customer);
+            customer.CustomerGuid = customerGuid;
+            customer.Email = email;
+            customer.Username = username;
+            customer.PasswordHash = passwordHash;
+            customer.SaltKey = saltKey;
+            customer.AffiliateId = affiliateId;
+            customer.BillingAddressId = billingAddressId;
+            customer.ShippingAddressId = shippingAddressId;
+            customer.LastPaymentMethodId = lastPaymentMethodId;
+            customer.LastAppliedCouponCode = lastAppliedCouponCode;
+            customer.GiftCardCouponCodes = giftCardCouponCodes;
+            customer.CheckoutAttributes = checkoutAttributes;
+            customer.LanguageId = languageId;
+            customer.CurrencyId = currencyId;
+            customer.TaxDisplayTypeId = (int)taxDisplayType;
+            customer.IsTaxExempt = isTaxExempt;
+            customer.IsAdmin = isAdmin;
+            customer.IsGuest = isGuest;
+            customer.IsForumModerator = isForumModerator;
+            customer.TotalForumPosts = totalForumPosts;
+            customer.Signature = signature;
+            customer.AdminComment = adminComment;
+            customer.Active = active;
+            customer.Deleted = deleted;
+            customer.RegistrationDate = registrationDate;
+            customer.TimeZoneId = timeZoneId;
+            customer.AvatarId = avatarId;
+            context.SaveChanges();
 
             if (subscriptionOld != null && !email.ToLower().Equals(subscriptionOld.Email.ToLower()))
             {
@@ -1491,7 +1560,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     email, subscriptionOld.IsActive);
             }
 
-            return DBMapping(dbItem);
+            return customer;
         }
 
         /// <summary>

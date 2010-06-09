@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Tax.GeneralTaxConfigure
 
         protected void BindGrid()
         {
-            TaxRateCollection taxRates = TaxRateManager.GetAllTaxRates();
+            var taxRates = TaxRateManager.GetAllTaxRates();
             gvTaxRates.DataSource = taxRates;
             gvTaxRates.DataBind();
             if (taxRates.Count > 10)

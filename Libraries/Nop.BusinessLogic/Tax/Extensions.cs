@@ -14,15 +14,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
-namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
+namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 {
-    /// <summary>
-    /// Represents a customer collection
-    /// </summary>
-    public partial class CustomerCollection : BaseEntityCollection<Customer>
+    public static class Extensions
     {
+        public static List<TaxRate> FindTaxRates(this List<TaxRate> source,
+            int countryId, int taxCategoryId)
+        {
+            var result = new List<TaxRate>();
+            foreach (TaxRate taxRate in source)
+            {
+                if (taxRate.CountryId == countryId && taxRate.TaxCategoryId == taxCategoryId)
+                    result.Add(taxRate);
+            }
+            return result;
+        }
     }
 }

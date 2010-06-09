@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets the customers of the role
         /// </summary>
-        public CustomerCollection Customers
+        public List<Customer> Customers
         {
             get
             {

@@ -18,6 +18,7 @@ using System.Data.Objects;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
@@ -190,6 +191,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Currency> _currencies;
+        
+        public ObjectSet<Customer> Customers
+        {
+            get
+            {
+                if ((_customers == null))
+                {
+                    _customers = CreateObjectSet<Customer>();
+                }
+                return _customers;
+            }
+        }
+        private ObjectSet<Customer> _customers;
 
         public ObjectSet<CustomerAction> CustomerActions
         {
@@ -542,19 +556,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<StateProvince> _stateProvinces;
 
-        public ObjectSet<Topic> Topics
-        {
-            get
-            {
-                if ((_topics == null))
-                {
-                    _topics = CreateObjectSet<Topic>();
-                }
-                return _topics;
-            }
-        }
-        private ObjectSet<Topic> _topics;
-
         public ObjectSet<TaxCategory> TaxCategories
         {
             get
@@ -580,6 +581,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<TaxProvider> _taxProviders;
+
+        public ObjectSet<TaxRate> TaxRates
+        {
+            get
+            {
+                if ((_taxRates == null))
+                {
+                    _taxRates = CreateObjectSet<TaxRate>();
+                }
+                return _taxRates;
+            }
+        }
+        private ObjectSet<TaxRate> _taxRates;
+
+        public ObjectSet<Topic> Topics
+        {
+            get
+            {
+                if ((_topics == null))
+                {
+                    _topics = CreateObjectSet<Topic>();
+                }
+                return _topics;
+            }
+        }
+        private ObjectSet<Topic> _topics;
 
         public ObjectSet<Warehouse> Warehouses
         {

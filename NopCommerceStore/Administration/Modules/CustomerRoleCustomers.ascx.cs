@@ -36,7 +36,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CustomerRole customerRole = CustomerManager.GetCustomerRoleById(this.CustomerRoleId);
             if (customerRole != null)
             {
-                CustomerCollection customers = customerRole.Customers;
+                var customers = customerRole.Customers;
                 gvCustomers.DataSource = customers;
                 gvCustomers.DataBind();
             }
