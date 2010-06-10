@@ -23,11 +23,19 @@
           <EntitySet Name="Nop_Customer" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Customer_CustomerRole_Mapping" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer_CustomerRole_Mapping" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerAction" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_CustomerAttribute" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAttribute" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerRole" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_CustomerSession" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerSession" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountLimitation" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountLimitation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountRequirement" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRequirement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Download" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Download" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Forums_Forum" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Forum" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Forums_Group" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Group" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Forums_Post" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Post" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Forums_PrivateMessage" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_PrivateMessage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Forums_Subscription" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Subscription" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Forums_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LocaleStringResource" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LocaleStringResource" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LogType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LogType" store:Type="Tables" Schema="dbo" />
@@ -37,12 +45,15 @@
           <EntitySet Name="Nop_MeasureWeight" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MeasureWeight" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_MessageTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_MessageTemplateLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_MessageTemplateLocalized" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_News" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_News" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_NewsComment" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_NewsComment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_OrderStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_OrderStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_PaymentMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentMethod" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_PaymentStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Picture" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Picture" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ProductTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_SearchLog" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_SearchLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Setting" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Setting" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShippingByTotal" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByTotal" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShippingByWeight" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByWeight" store:Type="Tables" Schema="dbo" />
@@ -98,6 +109,22 @@
             <End Role="Nop_CustomerRole" EntitySet="Nop_CustomerRole" />
             <End Role="Nop_Customer_CustomerRole_Mapping" EntitySet="Nop_Customer_CustomerRole_Mapping" />
           </AssociationSet>
+          <AssociationSet Name="FK_Nop_CustomerAttribute_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_CustomerAttribute_Nop_Customer">
+            <End Role="Nop_Customer" EntitySet="Nop_Customer" />
+            <End Role="Nop_CustomerAttribute" EntitySet="Nop_CustomerAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Forums_Forum_Nop_Forums_Group" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Forums_Forum_Nop_Forums_Group">
+            <End Role="Nop_Forums_Group" EntitySet="Nop_Forums_Group" />
+            <End Role="Nop_Forums_Forum" EntitySet="Nop_Forums_Forum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Forums_Post_Nop_Forums_Topic" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Forums_Post_Nop_Forums_Topic">
+            <End Role="Nop_Forums_Topic" EntitySet="Nop_Forums_Topic" />
+            <End Role="Nop_Forums_Post" EntitySet="Nop_Forums_Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Forums_Topic_Nop_Forums_Forum" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Forums_Topic_Nop_Forums_Forum">
+            <End Role="Nop_Forums_Forum" EntitySet="Nop_Forums_Forum" />
+            <End Role="Nop_Forums_Topic" EntitySet="Nop_Forums_Topic" />
+          </AssociationSet>
           <AssociationSet Name="FK_Nop_LocaleStringResource_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_LocaleStringResource_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
             <End Role="Nop_LocaleStringResource" EntitySet="Nop_LocaleStringResource" />
@@ -109,6 +136,14 @@
           <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate">
             <End Role="Nop_MessageTemplate" EntitySet="Nop_MessageTemplate" />
             <End Role="Nop_MessageTemplateLocalized" EntitySet="Nop_MessageTemplateLocalized" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_News_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_News_Nop_Language">
+            <End Role="Nop_Language" EntitySet="Nop_Language" />
+            <End Role="Nop_News" EntitySet="Nop_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_NewsComment_Nop_News" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_NewsComment_Nop_News">
+            <End Role="Nop_News" EntitySet="Nop_News" />
+            <End Role="Nop_NewsComment" EntitySet="Nop_NewsComment" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingByTotal_Nop_ShippingMethod">
             <End Role="Nop_ShippingMethod" EntitySet="Nop_ShippingMethod" />
@@ -375,6 +410,15 @@
           <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="1000" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_CustomerAttribute">
+          <Key>
+            <PropertyRef Name="CustomerAttributeId" />
+          </Key>
+          <Property Name="CustomerAttributeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Value" Type="nvarchar" Nullable="false" MaxLength="1000" />
+        </EntityType>
         <EntityType Name="Nop_CustomerRole">
           <Key>
             <PropertyRef Name="CustomerRoleID" />
@@ -385,6 +429,15 @@
           <Property Name="TaxExempt" Type="bit" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_CustomerSession">
+          <Key>
+            <PropertyRef Name="CustomerSessionGUID" />
+          </Key>
+          <Property Name="CustomerSessionGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="LastAccessed" Type="datetime" Nullable="false" />
+          <Property Name="IsExpired" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_DiscountLimitation">
           <Key>
@@ -419,6 +472,89 @@
           <Property Name="Filename" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Extension" Type="nvarchar" Nullable="false" MaxLength="20" />
           <Property Name="IsNew" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Forums_Forum">
+          <Key>
+            <PropertyRef Name="ForumID" />
+          </Key>
+          <Property Name="ForumID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ForumGroupID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="NumTopics" Type="int" Nullable="false" />
+          <Property Name="NumPosts" Type="int" Nullable="false" />
+          <Property Name="LastTopicID" Type="int" Nullable="false" />
+          <Property Name="LastPostID" Type="int" Nullable="false" />
+          <Property Name="LastPostUserID" Type="int" Nullable="false" />
+          <Property Name="LastPostTime" Type="datetime" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Forums_Group">
+          <Key>
+            <PropertyRef Name="ForumGroupID" />
+          </Key>
+          <Property Name="ForumGroupID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Forums_Post">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TopicID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Forums_PrivateMessage">
+          <Key>
+            <PropertyRef Name="PrivateMessageID" />
+          </Key>
+          <Property Name="PrivateMessageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FromUserID" Type="int" Nullable="false" />
+          <Property Name="ToUserID" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" Nullable="false" MaxLength="450" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
+          <Property Name="IsDeletedByAuthor" Type="bit" Nullable="false" />
+          <Property Name="IsDeletedByRecipient" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Forums_Subscription">
+          <Key>
+            <PropertyRef Name="SubscriptionID" />
+          </Key>
+          <Property Name="SubscriptionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SubscriptionGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ForumID" Type="int" Nullable="false" />
+          <Property Name="TopicID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Forums_Topic">
+          <Key>
+            <PropertyRef Name="TopicID" />
+          </Key>
+          <Property Name="TopicID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ForumID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="TopicTypeID" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" Nullable="false" MaxLength="450" />
+          <Property Name="NumPosts" Type="int" Nullable="false" />
+          <Property Name="Views" Type="int" Nullable="false" />
+          <Property Name="LastPostID" Type="int" Nullable="false" />
+          <Property Name="LastPostUserID" Type="int" Nullable="false" />
+          <Property Name="LastPostTime" Type="datetime" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_Language">
           <Key>
@@ -504,6 +640,31 @@
           <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_News">
+          <Key>
+            <PropertyRef Name="NewsID" />
+          </Key>
+          <Property Name="NewsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Short" Type="nvarchar" Nullable="false" />
+          <Property Name="Full" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+          <Property Name="AllowComments" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_NewsComment">
+          <Key>
+            <PropertyRef Name="NewsCommentID" />
+          </Key>
+          <Property Name="NewsCommentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NewsID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_OrderStatus">
           <Key>
             <PropertyRef Name="OrderStatusID" />
@@ -570,6 +731,15 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="SendTries" Type="int" Nullable="false" />
           <Property Name="SentOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Nop_SearchLog">
+          <Key>
+            <PropertyRef Name="SearchLogID" />
+          </Key>
+          <Property Name="SearchLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SearchTerm" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_Setting">
           <Key>
@@ -875,6 +1045,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Nop_CustomerAttribute_Nop_Customer">
+          <End Role="Nop_Customer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_CustomerAttribute" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Nop_CustomerAttribute">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Forums_Forum_Nop_Forums_Group">
+          <End Role="Nop_Forums_Group" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Group" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Forums_Forum" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Forums_Group">
+              <PropertyRef Name="ForumGroupID" />
+            </Principal>
+            <Dependent Role="Nop_Forums_Forum">
+              <PropertyRef Name="ForumGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Forums_Post_Nop_Forums_Topic">
+          <End Role="Nop_Forums_Topic" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Topic" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Forums_Post" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Forums_Topic">
+              <PropertyRef Name="TopicID" />
+            </Principal>
+            <Dependent Role="Nop_Forums_Post">
+              <PropertyRef Name="TopicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Forums_Topic_Nop_Forums_Forum">
+          <End Role="Nop_Forums_Forum" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Forum" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Forums_Topic" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Forums_Forum">
+              <PropertyRef Name="ForumID" />
+            </Principal>
+            <Dependent Role="Nop_Forums_Topic">
+              <PropertyRef Name="ForumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_LocaleStringResource_Nop_Language">
           <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -914,6 +1140,34 @@
             </Principal>
             <Dependent Role="Nop_MessageTemplateLocalized">
               <PropertyRef Name="MessageTemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_News_Nop_Language">
+          <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_News" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_News">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_NewsComment_Nop_News">
+          <End Role="Nop_News" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_NewsComment" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_NewsComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_News">
+              <PropertyRef Name="NewsID" />
+            </Principal>
+            <Dependent Role="Nop_NewsComment">
+              <PropertyRef Name="NewsID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1043,6 +1297,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Nop_Forums_ForumDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ForumID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Nop_Forums_PostDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PostID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Nop_Forums_PostInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TopicID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Text" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="IPAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreatedOn" Type="datetime" Mode="In" />
+          <Parameter Name="UpdatedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="Nop_Forums_PostUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PostID" Type="int" Mode="In" />
+          <Parameter Name="TopicID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="Text" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="IPAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreatedOn" Type="datetime" Mode="In" />
+          <Parameter Name="UpdatedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="Nop_Forums_TopicDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TopicID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Nop_Forums_TopicInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ForumID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="TopicTypeID" Type="int" Mode="In" />
+          <Parameter Name="Subject" Type="nvarchar" Mode="In" />
+          <Parameter Name="NumPosts" Type="int" Mode="In" />
+          <Parameter Name="Views" Type="int" Mode="In" />
+          <Parameter Name="LastPostID" Type="int" Mode="In" />
+          <Parameter Name="LastPostUserID" Type="int" Mode="In" />
+          <Parameter Name="LastPostTime" Type="datetime" Mode="In" />
+          <Parameter Name="CreatedOn" Type="datetime" Mode="In" />
+          <Parameter Name="UpdatedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="Nop_Forums_TopicUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TopicID" Type="int" Mode="In" />
+          <Parameter Name="ForumID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="TopicTypeID" Type="int" Mode="In" />
+          <Parameter Name="Subject" Type="nvarchar" Mode="In" />
+          <Parameter Name="NumPosts" Type="int" Mode="In" />
+          <Parameter Name="Views" Type="int" Mode="In" />
+          <Parameter Name="LastPostID" Type="int" Mode="In" />
+          <Parameter Name="LastPostUserID" Type="int" Mode="In" />
+          <Parameter Name="LastPostTime" Type="datetime" Mode="In" />
+          <Parameter Name="CreatedOn" Type="datetime" Mode="In" />
+          <Parameter Name="UpdatedOn" Type="datetime" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -1182,6 +1489,41 @@
           <AssociationSet Name="FK_Nop_BlogPost_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Language">
             <End Role="Language" EntitySet="Languages" />
             <End Role="Nop_BlogPost" EntitySet="BlogPosts" />
+          </AssociationSet>
+          <EntitySet Name="CustomerAttributes" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAttribute" />
+          <EntitySet Name="CustomerSessions" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerSession" />
+          <EntitySet Name="Forums" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Forum" />
+          <EntitySet Name="ForumGroups" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumGroup" />
+          <EntitySet Name="ForumPosts" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumPost" />
+          <EntitySet Name="PrivateMessages" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PrivateMessage" />
+          <EntitySet Name="ForumSubscriptions" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumSubscription" />
+          <EntitySet Name="ForumTopics" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumTopic" />
+          <EntitySet Name="News" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.News" />
+          <EntitySet Name="NewsComments" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.NewsComment" />
+          <EntitySet Name="SearchLog" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.SearchLog" />
+          <AssociationSet Name="FK_Nop_CustomerAttribute_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerAttribute_Nop_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Nop_CustomerAttribute" EntitySet="CustomerAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Forums_Forum_Nop_Forums_Group" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Forums_Forum_Nop_Forums_Group">
+            <End Role="Nop_Forums_Group" EntitySet="ForumGroups" />
+            <End Role="Nop_Forums_Forum" EntitySet="Forums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Forums_Topic_Nop_Forums_Forum" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Forums_Topic_Nop_Forums_Forum">
+            <End Role="Nop_Forums_Forum" EntitySet="Forums" />
+            <End Role="Nop_Forums_Topic" EntitySet="ForumTopics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Forums_Post_Nop_Forums_Topic" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Forums_Post_Nop_Forums_Topic">
+            <End Role="Nop_Forums_Topic" EntitySet="ForumTopics" />
+            <End Role="Nop_Forums_Post" EntitySet="ForumPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_News_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_News_Nop_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Nop_News" EntitySet="News" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_NewsComment_Nop_News" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_NewsComment_Nop_News">
+            <End Role="Nop_News" EntitySet="News" />
+            <End Role="Nop_NewsComment" EntitySet="NewsComments" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
@@ -2022,6 +2364,213 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CustomerAttribute">
+          <Key>
+            <PropertyRef Name="CustomerAttributeId" />
+          </Key>
+          <Property Type="Int32" Name="CustomerAttributeId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="Key" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CustomerSession">
+          <Key>
+            <PropertyRef Name="CustomerSessionGuid" />
+          </Key>
+          <Property Type="Guid" Name="CustomerSessionGuid" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="DateTime" Name="LastAccessed" Nullable="false" />
+          <Property Type="Boolean" Name="IsExpired" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="ForumId" />
+          </Key>
+          <Property Type="Int32" Name="ForumId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ForumGroupId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="NumTopics" Nullable="false" />
+          <Property Type="Int32" Name="NumPosts" Nullable="false" />
+          <Property Type="Int32" Name="LastTopicId" Nullable="false" />
+          <Property Type="Int32" Name="LastPostId" Nullable="false" />
+          <Property Type="Int32" Name="LastPostUserId" Nullable="false" />
+          <Property Type="DateTime" Name="LastPostTime" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForumGroup">
+          <Key>
+            <PropertyRef Name="ForumGroupId" />
+          </Key>
+          <Property Type="Int32" Name="ForumGroupId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForumPost">
+          <Key>
+            <PropertyRef Name="ForumPostId" />
+          </Key>
+          <Property Type="Int32" Name="ForumPostId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="TopicId" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IPAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrivateMessage">
+          <Key>
+            <PropertyRef Name="PrivateMessageId" />
+          </Key>
+          <Property Type="Int32" Name="PrivateMessageId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="FromUserId" Nullable="false" />
+          <Property Type="Int32" Name="ToUserId" Nullable="false" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsRead" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeletedByAuthor" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeletedByRecipient" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForumSubscription">
+          <Key>
+            <PropertyRef Name="ForumSubscriptionId" />
+          </Key>
+          <Property Type="Int32" Name="ForumSubscriptionId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Guid" Name="SubscriptionGuid" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="ForumId" Nullable="false" />
+          <Property Type="Int32" Name="TopicId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForumTopic">
+          <Key>
+            <PropertyRef Name="ForumTopicId" />
+          </Key>
+          <Property Type="Int32" Name="ForumTopicId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ForumId" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="TopicTypeId" Nullable="false" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="NumPosts" Nullable="false" />
+          <Property Type="Int32" Name="Views" Nullable="false" />
+          <Property Type="Int32" Name="LastPostId" Nullable="false" />
+          <Property Type="Int32" Name="LastPostUserId" Nullable="false" />
+          <Property Type="DateTime" Name="LastPostTime" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="NewsId" />
+          </Key>
+          <Property Type="Int32" Name="NewsId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="LanguageId" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Short" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Full" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <Property Type="Boolean" Name="AllowComments" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NewsComment">
+          <Key>
+            <PropertyRef Name="NewsCommentId" />
+          </Key>
+          <Property Type="Int32" Name="NewsCommentId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="NewsId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="IPAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SearchLog">
+          <Key>
+            <PropertyRef Name="SearchLogId" />
+          </Key>
+          <Property Type="Int32" Name="SearchLogId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="SearchTerm" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Nop_CustomerAttribute_Nop_Customer">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAttribute" Role="Nop_CustomerAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Nop_CustomerAttribute">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Forums_Forum_Nop_Forums_Group">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ForumGroup" Role="Nop_Forums_Group" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Forum" Role="Nop_Forums_Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Forums_Group">
+              <PropertyRef Name="ForumGroupId" />
+            </Principal>
+            <Dependent Role="Nop_Forums_Forum">
+              <PropertyRef Name="ForumGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Forums_Topic_Nop_Forums_Forum">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Forum" Role="Nop_Forums_Forum" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ForumTopic" Role="Nop_Forums_Topic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Forums_Forum">
+              <PropertyRef Name="ForumId" />
+            </Principal>
+            <Dependent Role="Nop_Forums_Topic">
+              <PropertyRef Name="ForumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Forums_Post_Nop_Forums_Topic">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ForumTopic" Role="Nop_Forums_Topic" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ForumPost" Role="Nop_Forums_Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Forums_Topic">
+              <PropertyRef Name="ForumTopicId" />
+            </Principal>
+            <Dependent Role="Nop_Forums_Post">
+              <PropertyRef Name="TopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_News_Nop_Language">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Role="Language" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.News" Role="Nop_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_News">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_NewsComment_Nop_News">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.News" Role="Nop_News" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.NewsComment" Role="Nop_NewsComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_News">
+              <PropertyRef Name="NewsId" />
+            </Principal>
+            <Dependent Role="Nop_NewsComment">
+              <PropertyRef Name="NewsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2663,6 +3212,212 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CustomerAttributes">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAttribute">
+              <MappingFragment StoreEntitySet="Nop_CustomerAttribute">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerAttributeId" ColumnName="CustomerAttributeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerSessions">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerSession">
+              <MappingFragment StoreEntitySet="Nop_CustomerSession">
+                <ScalarProperty Name="IsExpired" ColumnName="IsExpired" />
+                <ScalarProperty Name="LastAccessed" ColumnName="LastAccessed" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerSessionGuid" ColumnName="CustomerSessionGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Forums">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Forum">
+              <MappingFragment StoreEntitySet="Nop_Forums_Forum">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="LastPostTime" ColumnName="LastPostTime" />
+                <ScalarProperty Name="LastPostUserId" ColumnName="LastPostUserID" />
+                <ScalarProperty Name="LastPostId" ColumnName="LastPostID" />
+                <ScalarProperty Name="LastTopicId" ColumnName="LastTopicID" />
+                <ScalarProperty Name="NumPosts" ColumnName="NumPosts" />
+                <ScalarProperty Name="NumTopics" ColumnName="NumTopics" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ForumGroupId" ColumnName="ForumGroupID" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumGroups">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ForumGroup">
+              <MappingFragment StoreEntitySet="Nop_Forums_Group">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ForumGroupId" ColumnName="ForumGroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumPosts">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ForumPost">
+              <MappingFragment StoreEntitySet="Nop_Forums_Post">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="UserId" ColumnName="UserID" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicID" />
+                <ScalarProperty Name="ForumPostId" ColumnName="PostID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ForumPost">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_PostInsert">
+                  <ScalarProperty Name="UserId" ParameterName="UserID" />
+                  <ScalarProperty Name="TopicId" ParameterName="TopicID" />
+                  <ScalarProperty Name="UpdatedOn" ParameterName="UpdatedOn" />
+                  <ScalarProperty Name="CreatedOn" ParameterName="CreatedOn" />
+                  <ScalarProperty Name="IPAddress" ParameterName="IPAddress" />
+                  <ScalarProperty Name="Text" ParameterName="Text" />
+                  <ResultBinding Name="ForumPostId" ColumnName="PostID" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_PostUpdate">
+                  <ScalarProperty Name="UserId" ParameterName="UserID" Version="Current" />
+                  <ScalarProperty Name="TopicId" ParameterName="TopicID" Version="Current" />
+                  <ScalarProperty Name="ForumPostId" ParameterName="PostID" Version="Current" />
+                  <ScalarProperty Name="UpdatedOn" ParameterName="UpdatedOn" Version="Current" />
+                  <ScalarProperty Name="CreatedOn" ParameterName="CreatedOn" Version="Current" />
+                  <ScalarProperty Name="IPAddress" ParameterName="IPAddress" Version="Current" />
+                  <ScalarProperty Name="Text" ParameterName="Text" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_PostDelete" >
+                  <ScalarProperty Name="ForumPostId" ParameterName="PostID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrivateMessages">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.PrivateMessage">
+              <MappingFragment StoreEntitySet="Nop_Forums_PrivateMessage">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeletedByRecipient" ColumnName="IsDeletedByRecipient" />
+                <ScalarProperty Name="IsDeletedByAuthor" ColumnName="IsDeletedByAuthor" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="ToUserId" ColumnName="ToUserID" />
+                <ScalarProperty Name="FromUserId" ColumnName="FromUserID" />
+                <ScalarProperty Name="PrivateMessageId" ColumnName="PrivateMessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumSubscriptions">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ForumSubscription">
+              <MappingFragment StoreEntitySet="Nop_Forums_Subscription">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicID" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumID" />
+                <ScalarProperty Name="UserId" ColumnName="UserID" />
+                <ScalarProperty Name="SubscriptionGuid" ColumnName="SubscriptionGUID" />
+                <ScalarProperty Name="ForumSubscriptionId" ColumnName="SubscriptionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumTopics">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ForumTopic">
+              <MappingFragment StoreEntitySet="Nop_Forums_Topic">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="LastPostTime" ColumnName="LastPostTime" />
+                <ScalarProperty Name="LastPostUserId" ColumnName="LastPostUserID" />
+                <ScalarProperty Name="LastPostId" ColumnName="LastPostID" />
+                <ScalarProperty Name="Views" ColumnName="Views" />
+                <ScalarProperty Name="NumPosts" ColumnName="NumPosts" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="TopicTypeId" ColumnName="TopicTypeID" />
+                <ScalarProperty Name="UserId" ColumnName="UserID" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumID" />
+                <ScalarProperty Name="ForumTopicId" ColumnName="TopicID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ForumTopic">
+              <ModificationFunctionMapping>
+                <UpdateFunction FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_TopicUpdate">
+                  <ScalarProperty Name="LastPostUserId" ParameterName="LastPostUserID" Version="Current" />
+                  <ScalarProperty Name="LastPostId" ParameterName="LastPostID" Version="Current" />
+                  <ScalarProperty Name="TopicTypeId" ParameterName="TopicTypeID" Version="Current" />
+                  <ScalarProperty Name="UserId" ParameterName="UserID" Version="Current" />
+                  <ScalarProperty Name="ForumId" ParameterName="ForumID" Version="Current" />
+                  <ScalarProperty Name="ForumTopicId" ParameterName="TopicID" Version="Current" />
+                  <ScalarProperty Name="UpdatedOn" ParameterName="UpdatedOn" Version="Current" />
+                  <ScalarProperty Name="CreatedOn" ParameterName="CreatedOn" Version="Current" />
+                  <ScalarProperty Name="LastPostTime" ParameterName="LastPostTime" Version="Current" />
+                  <ScalarProperty Name="Views" ParameterName="Views" Version="Current" />
+                  <ScalarProperty Name="NumPosts" ParameterName="NumPosts" Version="Current" />
+                  <ScalarProperty Name="Subject" ParameterName="Subject" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_TopicDelete" >
+                  <ScalarProperty Name="ForumTopicId" ParameterName="TopicID" />
+                </DeleteFunction>
+                <InsertFunction FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_TopicInsert">
+                  <ScalarProperty Name="LastPostUserId" ParameterName="LastPostUserID" />
+                  <ScalarProperty Name="LastPostId" ParameterName="LastPostID" />
+                  <ScalarProperty Name="TopicTypeId" ParameterName="TopicTypeID" />
+                  <ScalarProperty Name="UserId" ParameterName="UserID" />
+                  <ScalarProperty Name="ForumId" ParameterName="ForumID" />
+                  <ScalarProperty Name="UpdatedOn" ParameterName="UpdatedOn" />
+                  <ScalarProperty Name="CreatedOn" ParameterName="CreatedOn" />
+                  <ScalarProperty Name="LastPostTime" ParameterName="LastPostTime" />
+                  <ScalarProperty Name="Views" ParameterName="Views" />
+                  <ScalarProperty Name="NumPosts" ParameterName="NumPosts" />
+                  <ScalarProperty Name="Subject" ParameterName="Subject" />
+                  <ResultBinding Name="ForumTopicId" ColumnName="TopicID" />
+                </InsertFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.News">
+              <MappingFragment StoreEntitySet="Nop_News">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="AllowComments" ColumnName="AllowComments" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="Full" ColumnName="Full" />
+                <ScalarProperty Name="Short" ColumnName="Short" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageID" />
+                <ScalarProperty Name="NewsId" ColumnName="NewsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewsComments">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.NewsComment">
+              <MappingFragment StoreEntitySet="Nop_NewsComment">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="NewsId" ColumnName="NewsID" />
+                <ScalarProperty Name="NewsCommentId" ColumnName="NewsCommentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SearchLog">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.SearchLog">
+              <MappingFragment StoreEntitySet="Nop_SearchLog">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="SearchTerm" ColumnName="SearchTerm" />
+                <ScalarProperty Name="SearchLogId" ColumnName="SearchLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2689,16 +3444,14 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="8.25" PointY="20.5" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
           <ConnectorPoint PointX="7.625" PointY="21.460500488281248" />
-          <ConnectorPoint PointX="7.916666666666667" PointY="21.460500488281248" />
-          <ConnectorPoint PointX="8.0833333333333339" PointY="21.460500488281248" />
           <ConnectorPoint PointX="8.25" PointY="21.460500488281248" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="0.75" PointY="0.5" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="3.25" PointY="0.5" Height="2.9070849609374996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="10.42187375" PointY="9.125" />
-          <ConnectorPoint PointX="10.42187375" PointY="1.9535424804687498" />
-          <ConnectorPoint PointX="4.75" PointY="1.9535424804687498" />
+          <ConnectorPoint PointX="10.25" PointY="9.125" />
+          <ConnectorPoint PointX="10.25" PointY="2.7809456380208335" />
+          <ConnectorPoint PointX="4.75" PointY="2.7809456380208335" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
           <ConnectorPoint PointX="2.25" PointY="1.2139794921874998" />
@@ -2710,8 +3463,8 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.5" PointY="3.75" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
-          <ConnectorPoint PointX="9.929684375" PointY="9.125" />
-          <ConnectorPoint PointX="9.929684375" PointY="4.832021484375" />
+          <ConnectorPoint PointX="9.8437475" PointY="9.125" />
+          <ConnectorPoint PointX="9.8437475" PointY="4.832021484375" />
           <ConnectorPoint PointX="5.75" PointY="4.832021484375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
@@ -2768,22 +3521,22 @@
           <ConnectorPoint PointX="1.5" PointY="20.625" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShippingByWeightAndCountry_Nop_ShippingMethod" >
-          <ConnectorPoint PointX="2.5" PointY="18.546153157552084" />
-          <ConnectorPoint PointX="3.5781227500000004" PointY="18.546153157552084" />
-          <ConnectorPoint PointX="3.5781227500000004" PointY="20.625" />
+          <ConnectorPoint PointX="2.5" PointY="18.679098307291667" />
+          <ConnectorPoint PointX="3.96875" PointY="18.679098307291667" />
+          <ConnectorPoint PointX="3.96875" PointY="20.625" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Width="2" PointX="15.5" PointY="3.125" Height="5.7009895833333335" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate" Width="1.5" PointX="27.625" PointY="19.125" Height="1.9210009765625031" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_Country" >
           <ConnectorPoint PointX="7.625" PointY="21.871368815104169" />
-          <ConnectorPoint PointX="8" PointY="21.871368815104169" />
-          <ConnectorPoint PointX="8" PointY="20.25" />
-          <ConnectorPoint PointX="10.125" PointY="20.25" />
-          <ConnectorPoint PointX="10.125" PointY="22.506653645833339" />
-          <ConnectorPoint PointX="18.25" PointY="22.506653645833339" />
-          <ConnectorPoint PointX="18.25" PointY="21.75" />
-          <ConnectorPoint PointX="28.375" PointY="21.75" />
-          <ConnectorPoint PointX="28.375" PointY="21.046000976562503" />
+          <ConnectorPoint PointX="8.234375" PointY="21.871368815104169" />
+          <ConnectorPoint PointX="8.234375" PointY="20.359375" />
+          <ConnectorPoint PointX="13.416666666666666" PointY="20.359375" />
+          <ConnectorPoint PointX="13.583333333333334" PointY="20.359375" />
+          <ConnectorPoint PointX="19.234375" PointY="20.359375" />
+          <ConnectorPoint PointX="19.234375" PointY="18.109375" />
+          <ConnectorPoint PointX="28.375" PointY="18.109375" />
+          <ConnectorPoint PointX="28.375" PointY="19.125" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_TaxCategory" >
           <ConnectorPoint PointX="29.75" PointY="20.128326822916669" />
@@ -2811,18 +3564,18 @@
           <ConnectorPoint PointX="11.3125" PointY="19.671000976562503" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer" >
-          <ConnectorPoint PointX="16.25" PointY="8.8259895833333335" />
-          <ConnectorPoint PointX="16.25" PointY="19.475403645833332" />
-          <ConnectorPoint PointX="13.583333333333334" PointY="19.475403645833332" />
-          <ConnectorPoint PointX="13.416666666666666" PointY="19.475403645833332" />
-          <ConnectorPoint PointX="12.25" PointY="19.475403645833332" />
+          <ConnectorPoint PointX="15.5" PointY="5.9754947916666667" />
+          <ConnectorPoint PointX="13.583333333333334" PointY="5.9754947916666659" />
+          <ConnectorPoint PointX="13.416666666666666" PointY="5.9754947916666667" />
+          <ConnectorPoint PointX="11.5625" PointY="5.9754947916666667" />
+          <ConnectorPoint PointX="11.5625" PointY="17.75" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Address" Width="1.5" PointX="30.125" PointY="0.625" Height="3.8931689453124827" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogComment" Width="1.5" PointX="32.25" PointY="5.125" Height="1.9210009765624996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost" Width="1.5" PointX="30.125" PointY="5.125" Height="2.0853483072916665" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Address_Nop_Customer1" >
-          <ConnectorPoint PointX="17.5" PointY="3.8215844726562413" />
-          <ConnectorPoint PointX="30.125" PointY="3.8215844726562413" />
+          <ConnectorPoint PointX="17.5" PointY="3.8215844726562409" />
+          <ConnectorPoint PointX="30.125" PointY="3.8215844726562409" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogComment_Nop_BlogPost" >
           <ConnectorPoint PointX="31.625" PointY="6.08550048828125" />
@@ -2833,13 +3586,58 @@
           <ConnectorPoint PointX="30.125" PointY="6.1676741536458337" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Language" >
-          <ConnectorPoint PointX="11" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="13.416666666666666" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="13.583333333333334" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="16.166666666666668" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="16.333333333333332" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="30.875" PointY="10.167674153645834" />
-          <ConnectorPoint PointX="30.875" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="11" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="11.479166666666666" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="11.645833333333334" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="13.416666666666666" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="13.583333333333334" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="16.791666666666668" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="16.958333333333332" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="30.65625" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="30.65625" PointY="7.2103483072916665" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAttribute" Width="2.125" PointX="16.25" PointY="13.125" Height="1.5923063151041657" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerSession" Width="2" PointX="5" PointY="0.5" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Forum" Width="1.5" PointX="26.625" PointY="23.875" Height="3.0714322916666674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumGroup" Width="1.5" PointX="24.125" PointY="23.875" Height="1.9210009765625031" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumPost" Width="1.5" PointX="24.375" PointY="28.625" Height="2.0853483072916674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PrivateMessage" Width="2.375" PointX="21.875" PointY="28.5" Height="2.4140429687499818" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumSubscription" Width="2.375" PointX="24" PointY="26.375" Height="1.9210009765624818" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumTopic" Width="1.5" PointX="26.625" PointY="27.875" Height="2.9070849609375031" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.News" Width="1.5" PointX="31.25" PointY="7.625" Height="2.2496956380208335" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.NewsComment" Width="1.5" PointX="33.625" PointY="7.625" Height="2.0853483072916656" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.SearchLog" Width="1.5" PointX="7.875" PointY="27.75" Height="1.5923063151041674" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerAttribute_Nop_Customer" >
+          <ConnectorPoint PointX="16.875" PointY="8.8259895833333335" />
+          <ConnectorPoint PointX="16.875" PointY="13.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Forums_Forum_Nop_Forums_Group" >
+          <ConnectorPoint PointX="25.625" PointY="24.835500488281252" />
+          <ConnectorPoint PointX="26.625" PointY="24.835500488281252" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Forums_Topic_Nop_Forums_Forum" >
+          <ConnectorPoint PointX="27.375" PointY="26.946432291666667" />
+          <ConnectorPoint PointX="27.375" PointY="27.875" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Forums_Post_Nop_Forums_Topic" >
+          <ConnectorPoint PointX="26.625" PointY="29.667674153645834" />
+          <ConnectorPoint PointX="25.875" PointY="29.667674153645834" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_News_Nop_Language" >
+          <ConnectorPoint PointX="11" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="11.479166666666666" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="11.645833333333334" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="13.416666666666666" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="13.583333333333334" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="16.791666666666668" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="16.958333333333332" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="30.572916666666668" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="30.739583333333332" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="31.25" PointY="9.4998478190104159" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_NewsComment_Nop_News" >
+          <ConnectorPoint PointX="32.75" PointY="8.6676741536458337" />
+          <ConnectorPoint PointX="33.625" PointY="8.6676741536458337" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

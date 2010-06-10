@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <summary>
         /// Gets the forums
         /// </summary>
-        public ForumCollection Forums
+        public List<Forum> Forums
         {
             get
             {

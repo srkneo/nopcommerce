@@ -79,47 +79,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         public abstract IDataReader GetCustomerReportByAttributeKey(string customerAttributeKey);
 
         /// <summary>
-        /// Deletes a customer attribute
-        /// </summary>
-        /// <param name="customerAttributeId">Customer attribute identifier</param>
-        public abstract void DeleteCustomerAttribute(int customerAttributeId);
-
-        /// <summary>
-        /// Gets a customer attribute
-        /// </summary>
-        /// <param name="customerAttributeId">Customer attribute identifier</param>
-        /// <returns>A customer attribute</returns>
-        public abstract DBCustomerAttribute GetCustomerAttributeById(int customerAttributeId);
-
-        /// <summary>
-        /// Gets a collection of customer attributes by customer identifier
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <returns>Customer attributes</returns>
-        public abstract DBCustomerAttributeCollection GetCustomerAttributesByCustomerId(int customerId);
-
-        /// <summary>
-        /// Inserts a customer attribute
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="key">An attribute key</param>
-        /// <param name="value">An attribute value</param>
-        /// <returns>A customer attribute</returns>
-        public abstract DBCustomerAttribute InsertCustomerAttribute(int customerId,
-            string key, string value);
-
-        /// <summary>
-        /// Updates the customer attribute
-        /// </summary>
-        /// <param name="customerAttributeId">Customer attribute identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="key">An attribute key</param>
-        /// <param name="value">An attribute value</param>
-        /// <returns>A customer attribute</returns>
-        public abstract DBCustomerAttribute UpdateCustomerAttribute(int customerAttributeId,
-            int customerId, string key, string value);
-
-        /// <summary>
         /// Adds a customer to role
         /// </summary>
         /// <param name="customerId">Customer identifier</param>
@@ -156,58 +115,10 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         public abstract DBCustomerRoleCollection GetCustomerRolesByDiscountId(int discountId, bool showHidden);
 
         /// <summary>
-        /// Gets a customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        /// <returns>Customer session</returns>
-        public abstract DBCustomerSession GetCustomerSessionByGuid(Guid customerSessionGuid);
-
-        /// <summary>
-        /// Gets a customer session by customer identifier
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <returns>Customer session</returns>
-        public abstract DBCustomerSession GetCustomerSessionByCustomerId(int customerId);
-
-        /// <summary>
-        /// Deletes a customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        public abstract void DeleteCustomerSession(Guid customerSessionGuid);
-
-        /// <summary>
         /// Deletes all expired customer sessions
         /// </summary>
         /// <param name="olderThan">Older than date and time</param>
         public abstract void DeleteExpiredCustomerSessions(DateTime olderThan);
-
-        /// <summary>
-        /// Gets all customer sessions
-        /// </summary>
-        /// <returns>Customer session collection</returns>
-        public abstract DBCustomerSessionCollection GetAllCustomerSessions();
-
-        /// <summary>
-        /// Inserts a customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="lastAccessed">The last accessed date and time</param>
-        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
-        /// <returns>Customer session</returns>
-        public abstract DBCustomerSession InsertCustomerSession(Guid customerSessionGuid, 
-            int customerId, DateTime lastAccessed, bool isExpired);
-
-        /// <summary>
-        /// Updates the customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="lastAccessed">The last accessed date and time</param>
-        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
-        /// <returns>Customer session</returns>
-        public abstract DBCustomerSession UpdateCustomerSession(Guid customerSessionGuid, 
-            int customerId, DateTime lastAccessed, bool isExpired);
 
         /// <summary>
         /// Gets a report of customers registered from "dateTime" until today

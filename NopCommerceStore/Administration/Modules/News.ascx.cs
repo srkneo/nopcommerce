@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindData()
         {
-            NewsCollection newsCollection = NewsManager.GetAllNews(0);
+            var newsCollection = NewsManager.GetAllNews(0);
             gvNews.DataSource = newsCollection;
             gvNews.DataBind();
         }

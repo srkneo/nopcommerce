@@ -17,8 +17,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Audit;
@@ -30,37 +32,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
     /// </summary>
     public partial class SearchLogManager
     {
-        #region Utilities
-        private static SearchLogCollection DBMapping(DBSearchLogCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new SearchLogCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static SearchLog DBMapping(DBSearchLog dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new SearchLog();
-            item.SearchLogId = dbItem.SearchLogId;
-            item.SearchTerm = dbItem.SearchTerm;
-            item.CustomerId = dbItem.CustomerId;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -81,11 +52,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// Gets all search log items
         /// </summary>
         /// <returns>Search log collection</returns>
-        public static SearchLogCollection GetAllSearchLogs()
+        public static List<SearchLog> GetAllSearchLogs()
         {
-            var dbCollection = DBProviderManager<DBSearchLogProvider>.Provider.GetAllSearchLogs();
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from s in context.SearchLog
+                        orderby s.CreatedOn descending
+                        select s;
+            var searchLog = query.ToList();
+
+            return searchLog;
         }
 
         /// <summary>
@@ -98,9 +73,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             if (searchLogId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBSearchLogProvider>.Provider.GetSearchLogById(searchLogId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from s in context.SearchLog
+                        where s.SearchLogId == searchLogId
+                        select s;
+            var searchLog = query.SingleOrDefault();
+            return searchLog;
         }
 
         /// <summary>
@@ -115,10 +93,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBSearchLogProvider>.Provider.InsertSearchLog(searchTerm,
-                customerId, createdOn);
-            var item = DBMapping(dbItem);
-            return item;
+            var searchLog = new SearchLog();
+            searchLog.SearchTerm = searchTerm;
+            searchLog.CustomerId = customerId;
+            searchLog.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.SearchLog.AddObject(searchLog);
+            context.SaveChanges();
+            return searchLog;
         }
         /// <summary>
         /// Clear search log

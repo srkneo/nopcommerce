@@ -17,11 +17,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
@@ -43,12 +45,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         #endregion
 
         #region Utilities
-        private static NewsCollection DBMapping(DBNewsCollection dbCollection)
+        private static List<News> DBMapping(DBNewsCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new NewsCollection();
+            var collection = new List<News>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -76,37 +78,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             return item;
         }
 
-        private static NewsCommentCollection DBMapping(DBNewsCommentCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new NewsCommentCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static NewsComment DBMapping(DBNewsComment dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new NewsComment();
-            item.NewsCommentId = dbItem.NewsCommentId;
-            item.NewsId = dbItem.NewsId;
-            item.CustomerId = dbItem.CustomerId;
-            item.IPAddress = dbItem.IPAddress;
-            item.Title = dbItem.Title;
-            item.Comment = dbItem.Comment;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -127,8 +98,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
                 return (News)obj2;
             }
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.GetNewsById(newsId);
-            var news = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from n in context.News
+                        where n.NewsId == newsId
+                        select n;
+            var news = query.SingleOrDefault();
 
             if (NewsManager.CacheEnabled)
             {
@@ -143,7 +117,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <param name="newsId">The news identifier</param>
         public static void DeleteNews(int newsId)
         {
-            DBProviderManager<DBNewsProvider>.Provider.DeleteNews(newsId);
+            var news = GetNewsById(newsId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.News.Attach(news);
+            context.DeleteObject(news);
+            context.SaveChanges();
+
             if (NewsManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(NEWS_PATTERN_KEY);
@@ -155,7 +135,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// </summary>
         /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetAllNews(int languageId)
+        public static List<News> GetAllNews(int languageId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllNews(languageId, showHidden);
@@ -167,19 +147,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetAllNews(int languageId, bool showHidden)
+        public static List<News> GetAllNews(int languageId, bool showHidden)
         {
             return GetAllNews(languageId, showHidden, Int32.MaxValue);
         }
-
-
+        
         /// <summary>
         /// Gets news item collection
         /// </summary>
         /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <param name="count">News count to return</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetAllNews(int languageId, int count)
+        public static List<News> GetAllNews(int languageId, int count)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllNews(languageId, showHidden, count);
@@ -192,7 +171,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="count">News count to return</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetAllNews(int languageId, bool showHidden, int count)
+        public static List<News> GetAllNews(int languageId, bool showHidden, int count)
         {
             int totalRecords = 0;
 
@@ -207,7 +186,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetAllNews(int languageId, int pageIndex, int pageSize, out int totalRecords)
+        public static List<News> GetAllNews(int languageId, int pageIndex, int pageSize,
+            out int totalRecords)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllNews(languageId, showHidden, pageIndex, pageSize, out totalRecords);
@@ -222,7 +202,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>News item collection</returns>
-        public static NewsCollection GetAllNews(int languageId, bool showHidden, int pageIndex, int pageSize, out int totalRecords)
+        public static List<News> GetAllNews(int languageId, bool showHidden, 
+            int pageIndex, int pageSize, out int totalRecords)
         {
             if(pageSize <= 0)
             {
@@ -262,9 +243,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNews(languageId, 
-                title, shortText, fullText, published, allowComments, createdOn);
-            var news = DBMapping(dbItem);
+            var news = new News();
+            news.LanguageId =languageId;
+            news.Title =title;
+            news.Short =shortText;
+            news.Full =fullText;
+            news.Published =published;
+            news.AllowComments =allowComments;
+            news.CreatedOn =createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.News.AddObject(news);
+            context.SaveChanges();
 
             if (NewsManager.CacheEnabled)
             {
@@ -292,9 +282,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNews(newsId, 
-                languageId, title, shortText, fullText, published, allowComments, createdOn);
-            var news = DBMapping(dbItem);
+            var news = GetNewsById(newsId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.News.Attach(news);
+
+            news.LanguageId = languageId;
+            news.Title = title;
+            news.Short = shortText;
+            news.Full = fullText;
+            news.Published = published;
+            news.AllowComments = allowComments;
+            news.CreatedOn = createdOn;
+            context.SaveChanges();
 
             if (NewsManager.CacheEnabled)
             {
@@ -314,8 +314,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             if (newsCommentId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.GetNewsCommentById(newsCommentId);
-            var newsComment = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from nc in context.NewsComments
+                        where nc.NewsCommentId == newsCommentId
+                        select nc;
+            var newsComment = query.SingleOrDefault();
             return newsComment;
         }
 
@@ -324,11 +327,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// </summary>
         /// <param name="newsId">The news identifier</param>
         /// <returns>News comment collection</returns>
-        public static NewsCommentCollection GetNewsCommentsByNewsId(int newsId)
+        public static List<NewsComment> GetNewsCommentsByNewsId(int newsId)
         {
-            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetNewsCommentsByNewsId(newsId);
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from nc in context.NewsComments
+                        orderby nc.CreatedOn
+                        where nc.NewsId == newsId
+                        select nc;
+            var newsComments = query.ToList();
+            return newsComments;
         }
 
         /// <summary>
@@ -337,18 +344,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <param name="newsCommentId">The news comment identifier</param>
         public static void DeleteNewsComment(int newsCommentId)
         {
-            DBProviderManager<DBNewsProvider>.Provider.DeleteNewsComment(newsCommentId);
+            var newsComment = GetNewsCommentById(newsCommentId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.NewsComments.Attach(newsComment);
+            context.DeleteObject(newsComment);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets all news comments
         /// </summary>
         /// <returns>News comment collection</returns>
-        public static NewsCommentCollection GetAllNewsComments()
+        public static List<NewsComment> GetAllNewsComments()
         {
-            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetAllNewsComments();
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from nc in context.NewsComments
+                        orderby nc.CreatedOn
+                        select nc;
+            var newsComments = query.ToList();
+            return newsComments;
         }
 
         /// <summary>
@@ -404,10 +419,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.InsertNewsComment(newsId,
-                customerId, ipAddress, title, comment, createdOn);
-            var newsComment = DBMapping(dbItem);
+            var newsComment = new NewsComment();
+            newsComment.NewsId = newsId;
+            newsComment.CustomerId = customerId;
+            newsComment.IPAddress = ipAddress;
+            newsComment.Title = title;
+            newsComment.Comment = comment;
+            newsComment.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.NewsComments.AddObject(newsComment);
+            context.SaveChanges();
             
+            //notifications
             if (notify)
             {
                 MessageManager.SendNewsCommentNotificationMessage(newsComment, LocalizationManager.DefaultAdminLanguage.LanguageId);
@@ -433,9 +457,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBNewsProvider>.Provider.UpdateNewsComment(newsCommentId,
-                newsId, customerId, ipAddress, title, comment, createdOn);
-            var newsComment = DBMapping(dbItem);
+            var newsComment = GetNewsCommentById(newsCommentId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.NewsComments.Attach(newsComment);
+
+            newsComment.NewsId = newsId;
+            newsComment.CustomerId = customerId;
+            newsComment.IPAddress = ipAddress;
+            newsComment.Title = title;
+            newsComment.Comment = comment;
+            newsComment.CreatedOn = createdOn;
+            context.SaveChanges();
             return newsComment;
         }
 

@@ -121,18 +121,12 @@
     <Compile Include="Audit\Extensions.cs" />
     <Compile Include="Categories\CategoryLocalized.cs" />
     <Compile Include="Content\Forums\ForumSubscription.cs" />
-    <Compile Include="Content\Forums\ForumSubscriptionCollection.cs" />
     <Compile Include="Content\Forums\ForumTopicTypeEnum.cs" />
     <Compile Include="Content\Forums\PrivateMessage.cs" />
-    <Compile Include="Content\Forums\PrivateMessageCollection.cs" />
     <Compile Include="Content\Forums\ForumManager.cs" />
-    <Compile Include="Content\Forums\ForumCollection.cs" />
     <Compile Include="Content\Forums\ForumGroup.cs" />
-    <Compile Include="Content\Forums\ForumGroupCollection.cs" />
     <Compile Include="Content\Forums\ForumPost.cs" />
-    <Compile Include="Content\Forums\ForumPostCollection.cs" />
     <Compile Include="Content\Forums\ForumTopic.cs" />
-    <Compile Include="Content\Forums\ForumTopicCollection.cs" />
     <Compile Include="Content\Forums\Forum.cs" />
     <Compile Include="Customer\CustomerRegistrationTypeEnum.cs" />
     <Compile Include="Customer\DeleteExpiredCustomerSessionsTask.cs" />
@@ -299,7 +293,6 @@
     <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
     <Compile Include="Products\Specs\ProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
-    <Compile Include="Audit\SearchLogCollection.cs" />
     <Compile Include="Content\Polls\PollAnswerCollection.cs" />
     <Compile Include="Content\Polls\PollCollection.cs" />
     <Compile Include="Products\ProductReviewCollection.cs" />
@@ -344,9 +337,7 @@
     <Compile Include="Directory\Currency.cs" />
     <Compile Include="Customer\Customer.cs" />
     <Compile Include="Customer\CustomerAttribute.cs" />
-    <Compile Include="Customer\CustomerAttributeCollection.cs" />
     <Compile Include="Customer\CustomerSession.cs" />
-    <Compile Include="Customer\CustomerSessionCollection.cs" />
     <Compile Include="Promo\Discounts\Discount.cs" />
     <Compile Include="Promo\Discounts\DiscountCollection.cs" />
     <Compile Include="Directory\Language.cs" />
@@ -356,9 +347,7 @@
     <Compile Include="Manufacturers\ManufacturerCollection.cs" />
     <Compile Include="Templates\ManufacturerTemplate.cs" />
     <Compile Include="Content\News\News.cs" />
-    <Compile Include="Content\News\NewsCollection.cs" />
     <Compile Include="Content\News\NewsComment.cs" />
-    <Compile Include="Content\News\NewsCommentCollection.cs" />
     <Compile Include="Orders\Order.cs" />
     <Compile Include="Orders\OrderCollection.cs" />
     <Compile Include="Orders\OrderProductVariant.cs" />

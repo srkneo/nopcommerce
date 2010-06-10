@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
     public partial class Customer : BaseEntity
     {
         #region Fields
-        private CustomerAttributeCollection _customerAttributesCache = null;
+        private List<CustomerAttribute> _customerAttributesCache = null;
         private List<CustomerRole> _customerRolesCache = null;
         private Address _billingAddressCache = null;
         private Address _shippingAddressCache = null;
@@ -227,7 +227,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets the customer attributes
         /// </summary>
-        public CustomerAttributeCollection CustomerAttributes
+        public List<CustomerAttribute> CustomerAttributes
         {
             get
             {
@@ -446,7 +446,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute genderAttr = customerAttributes.FindAttribute("Gender", this.CustomerId);
                 if (genderAttr != null)
                     return genderAttr.Value;
@@ -455,7 +455,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute genderAttr = customerAttributes.FindAttribute("Gender", this.CustomerId);
                 if (genderAttr != null)
                     genderAttr = CustomerManager.UpdateCustomerAttribute(genderAttr.CustomerAttributeId, genderAttr.CustomerId, "Gender", value);
@@ -473,7 +473,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute firstNameAttr = customerAttributes.FindAttribute("FirstName", this.CustomerId);
                 if (firstNameAttr != null)
                     return firstNameAttr.Value;
@@ -486,7 +486,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute firstNameAttr = customerAttributes.FindAttribute("FirstName", this.CustomerId);
                 if (firstNameAttr != null)
                     firstNameAttr = CustomerManager.UpdateCustomerAttribute(firstNameAttr.CustomerAttributeId, firstNameAttr.CustomerId, "FirstName", value);
@@ -504,7 +504,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute lastNameAttr = customerAttributes.FindAttribute("LastName", this.CustomerId);
                 if (lastNameAttr != null)
                     return lastNameAttr.Value;
@@ -517,7 +517,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute lastNameAttr = customerAttributes.FindAttribute("LastName", this.CustomerId);
                 if (lastNameAttr != null)
                     lastNameAttr = CustomerManager.UpdateCustomerAttribute(lastNameAttr.CustomerAttributeId, lastNameAttr.CustomerId, "LastName", value);
@@ -535,7 +535,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute dateOfBirthAttr = customerAttributes.FindAttribute("DateOfBirth", this.CustomerId);
                 if (dateOfBirthAttr != null)
                 {
@@ -553,7 +553,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute dateOfBirthAttr = customerAttributes.FindAttribute("DateOfBirth", this.CustomerId);
 
                 if (dateOfBirthAttr != null)
@@ -586,7 +586,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute companyAttr = customerAttributes.FindAttribute("Company", this.CustomerId);
                 if (companyAttr != null)
                     return companyAttr.Value;
@@ -599,7 +599,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute companyAttr = customerAttributes.FindAttribute("Company", this.CustomerId);
                 if (companyAttr != null)
                     companyAttr = CustomerManager.UpdateCustomerAttribute(companyAttr.CustomerAttributeId, companyAttr.CustomerId, "Company", value);
@@ -617,7 +617,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute streetAddressAttr = customerAttributes.FindAttribute("StreetAddress", this.CustomerId);
                 if (streetAddressAttr != null)
                     return streetAddressAttr.Value;
@@ -630,7 +630,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute streetAddressAttr = customerAttributes.FindAttribute("StreetAddress", this.CustomerId);
                 if (streetAddressAttr != null)
                     streetAddressAttr = CustomerManager.UpdateCustomerAttribute(streetAddressAttr.CustomerAttributeId, streetAddressAttr.CustomerId, "StreetAddress", value);
@@ -648,7 +648,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute streetAddress2Attr = customerAttributes.FindAttribute("StreetAddress2", this.CustomerId);
                 if (streetAddress2Attr != null)
                     return streetAddress2Attr.Value;
@@ -661,7 +661,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute streetAddress2Attr = customerAttributes.FindAttribute("StreetAddress2", this.CustomerId);
                 if (streetAddress2Attr != null)
                     streetAddress2Attr = CustomerManager.UpdateCustomerAttribute(streetAddress2Attr.CustomerAttributeId, streetAddress2Attr.CustomerId, "StreetAddress2", value);
@@ -679,7 +679,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute zipPostalCodeAttr = customerAttributes.FindAttribute("ZipPostalCode", this.CustomerId);
                 if (zipPostalCodeAttr != null)
                     return zipPostalCodeAttr.Value;
@@ -692,7 +692,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute zipPostalCodeAttr = customerAttributes.FindAttribute("ZipPostalCode", this.CustomerId);
                 if (zipPostalCodeAttr != null)
                     zipPostalCodeAttr = CustomerManager.UpdateCustomerAttribute(zipPostalCodeAttr.CustomerAttributeId, zipPostalCodeAttr.CustomerId, "ZipPostalCode", value);
@@ -710,7 +710,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute cityAttr = customerAttributes.FindAttribute("City", this.CustomerId);
                 if (cityAttr != null)
                     return cityAttr.Value;
@@ -723,7 +723,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute cityAttr = customerAttributes.FindAttribute("City", this.CustomerId);
                 if (cityAttr != null)
                     cityAttr = CustomerManager.UpdateCustomerAttribute(cityAttr.CustomerAttributeId, cityAttr.CustomerId, "City", value);
@@ -741,7 +741,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute phoneNumberAttr = customerAttributes.FindAttribute("PhoneNumber", this.CustomerId);
                 if (phoneNumberAttr != null)
                     return phoneNumberAttr.Value;
@@ -754,7 +754,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute phoneNumberAttr = customerAttributes.FindAttribute("PhoneNumber", this.CustomerId);
                 if (phoneNumberAttr != null)
                     phoneNumberAttr = CustomerManager.UpdateCustomerAttribute(phoneNumberAttr.CustomerAttributeId, phoneNumberAttr.CustomerId, "PhoneNumber", value);
@@ -772,7 +772,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute faxNumberAttr = customerAttributes.FindAttribute("FaxNumber", this.CustomerId);
                 if (faxNumberAttr != null)
                     return faxNumberAttr.Value;
@@ -785,7 +785,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     value = string.Empty;
                 value = value.Trim();
 
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute faxNumberAttr = customerAttributes.FindAttribute("FaxNumber", this.CustomerId);
                 if (faxNumberAttr != null)
                     faxNumberAttr = CustomerManager.UpdateCustomerAttribute(faxNumberAttr.CustomerAttributeId, faxNumberAttr.CustomerId, "FaxNumber", value);
@@ -803,7 +803,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute countryIdAttr = customerAttributes.FindAttribute("CountryId", this.CustomerId);
                 if (countryIdAttr != null)
                 {
@@ -816,7 +816,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute countryIdAttr = customerAttributes.FindAttribute("CountryId", this.CustomerId);
                 if (countryIdAttr != null)
                     countryIdAttr = CustomerManager.UpdateCustomerAttribute(countryIdAttr.CustomerAttributeId, countryIdAttr.CustomerId, "CountryId", value.ToString());
@@ -834,7 +834,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute stateProvinceIdAttr = customerAttributes.FindAttribute("StateProvinceId", this.CustomerId);
                 if (stateProvinceIdAttr != null)
                 {
@@ -847,7 +847,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute stateProvinceIdAttr = customerAttributes.FindAttribute("StateProvinceId", this.CustomerId);
                 if (stateProvinceIdAttr != null)
                     stateProvinceIdAttr = CustomerManager.UpdateCustomerAttribute(stateProvinceIdAttr.CustomerAttributeId, stateProvinceIdAttr.CustomerId, "StateProvinceId", value.ToString());
@@ -911,7 +911,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute passwordRecoveryAttr = customerAttributes.FindAttribute("PasswordRecoveryToken", this.CustomerId);
                 if (passwordRecoveryAttr != null)
                     return passwordRecoveryAttr.Value;
@@ -920,7 +920,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute passwordRecoveryAttr = customerAttributes.FindAttribute("PasswordRecoveryToken", this.CustomerId);
 
                 if (passwordRecoveryAttr != null)
@@ -952,7 +952,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute accountActivationAttr = customerAttributes.FindAttribute("AccountActivationToken", this.CustomerId);
                 if (accountActivationAttr != null)
                     return accountActivationAttr.Value;
@@ -961,7 +961,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute accountActivationAttr = customerAttributes.FindAttribute("AccountActivationToken", this.CustomerId);
 
                 if (accountActivationAttr != null)
@@ -1026,7 +1026,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute useRewardPointsAttr = customerAttributes.FindAttribute("UseRewardPointsDuringCheckout", this.CustomerId);
                 if (useRewardPointsAttr != null)
                 {
@@ -1039,7 +1039,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute useRewardPointsAttr = customerAttributes.FindAttribute("UseRewardPointsDuringCheckout", this.CustomerId);
                 if (useRewardPointsAttr != null)
                     useRewardPointsAttr = CustomerManager.UpdateCustomerAttribute(useRewardPointsAttr.CustomerAttributeId, useRewardPointsAttr.CustomerId, "UseRewardPointsDuringCheckout", value.ToString());
@@ -1057,7 +1057,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             get
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute attr = customerAttributes.FindAttribute("NotifiedAboutNewPrivateMessages", this.CustomerId);
                 if (attr != null)
                 {
@@ -1070,7 +1070,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
             set
             {
-                CustomerAttributeCollection customerAttributes = this.CustomerAttributes;
+                var customerAttributes = this.CustomerAttributes;
                 CustomerAttribute attr = customerAttributes.FindAttribute("NotifiedAboutNewPrivateMessages", this.CustomerId);
                 if (attr != null)
                     attr = CustomerManager.UpdateCustomerAttribute(attr.CustomerAttributeId, attr.CustomerId, "NotifiedAboutNewPrivateMessages", value.ToString());

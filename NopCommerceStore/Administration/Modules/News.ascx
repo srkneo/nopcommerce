@@ -32,7 +32,7 @@
             ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <a href="NewsComments.aspx?NewsID=<%#Eval("NewsId")%>" title="<%#GetLocaleResourceString("Admin.News.ViewComments.Tooltip")%>">
-                    <%# string.Format(GetLocaleResourceString("Admin.News.ViewComments.Link"), ((NewsCommentCollection)Eval("NewsComments")).Count)%>
+                    <%# string.Format(GetLocaleResourceString("Admin.News.ViewComments.Link"), ((ICollection<NewsComment>)Eval("NewsComments")).Count)%>
                 </a>
             </ItemTemplate>
         </asp:TemplateField>

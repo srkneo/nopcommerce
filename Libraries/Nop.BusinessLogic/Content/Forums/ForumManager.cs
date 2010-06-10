@@ -18,11 +18,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
@@ -48,12 +50,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         #endregion
 
         #region Utilities
-        private static ForumGroupCollection DBMapping(DBForumGroupCollection dbCollection)
+        private static List<ForumGroup> DBMapping(DBForumGroupCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ForumGroupCollection();
+            var collection = new List<ForumGroup>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -79,12 +81,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             return item;
         }
 
-        private static ForumCollection DBMapping(DBForumCollection dbCollection)
+        private static List<Forum> DBMapping(DBForumCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ForumCollection();
+            var collection = new List<Forum>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -117,12 +119,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             return item;
         }
 
-        private static ForumTopicCollection DBMapping(DBForumTopicCollection dbCollection)
+        private static List<ForumTopic> DBMapping(DBForumTopicCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ForumTopicCollection();
+            var collection = new List<ForumTopic>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -154,12 +156,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             return item;
         }
 
-        private static ForumPostCollection DBMapping(DBForumPostCollection dbCollection)
+        private static List<ForumPost> DBMapping(DBForumPostCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ForumPostCollection();
+            var collection = new List<ForumPost>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -186,12 +188,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             return item;
         }
 
-        private static PrivateMessageCollection DBMapping(DBPrivateMessageCollection dbCollection)
+        private static List<PrivateMessage> DBMapping(DBPrivateMessageCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new PrivateMessageCollection();
+            var collection = new List<PrivateMessage>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -220,12 +222,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             return item;
         }
 
-        private static ForumSubscriptionCollection DBMapping(DBForumSubscriptionCollection dbCollection)
+        private static List<ForumSubscription> DBMapping(DBForumSubscriptionCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ForumSubscriptionCollection();
+            var collection = new List<ForumSubscription>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -250,6 +252,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             return item;
         }
+
         #endregion
 
         #region Methods
@@ -260,7 +263,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="forumGroupId">The forum group identifier</param>
         public static void DeleteForumGroup(int forumGroupId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeleteForumGroup(forumGroupId);
+            var forumGroup = GetForumGroupById(forumGroupId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumGroups.Attach(forumGroup);
+            context.DeleteObject(forumGroup);
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -285,8 +293,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             {
                 return (ForumGroup)obj2;
             }
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetForumGroupById(forumGroupId);
-            var forumGroup = DBMapping(dbItem);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from fg in context.ForumGroups
+                        where fg.ForumGroupId == forumGroupId
+                        select fg;
+            var forumGroup = query.SingleOrDefault();
 
             if (ForumManager.CacheEnabled)
             {
@@ -299,22 +311,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// Gets all forum groups
         /// </summary>
         /// <returns>Forum groups</returns>
-        public static ForumGroupCollection GetAllForumGroups()
+        public static List<ForumGroup> GetAllForumGroups()
         {
             string key = string.Format(FORUMGROUP_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
-                return (ForumGroupCollection)obj2;
+                return (List<ForumGroup>)obj2;
             }
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllForumGroups();
-            var forumGroupCollection = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from fg in context.ForumGroups
+                        orderby fg.DisplayOrder
+                        select fg;
+            var forumGroups = query.ToList();
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.Max(key, forumGroupCollection);
+                NopCache.Max(key, forumGroups);
             }
-            return forumGroupCollection;
+            return forumGroups;
         }
 
         /// <summary>
@@ -332,10 +348,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertForumGroup(name, 
-                description, displayOrder, createdOn, updatedOn);
+            var forumGroup = new ForumGroup();
+            forumGroup.Name = name;
+            forumGroup.Description = description;
+            forumGroup.DisplayOrder = displayOrder;
+            forumGroup.CreatedOn = createdOn;
+            forumGroup.UpdatedOn = updatedOn;
 
-            var forumGroup = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumGroups.AddObject(forumGroup);
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -363,10 +385,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateForumGroup(forumGroupId, 
-                name, description, displayOrder, createdOn, updatedOn);
+            var forumGroup = GetForumGroupById(forumGroupId);
 
-            var forumGroup = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumGroups.Attach(forumGroup);
+
+            forumGroup.Name = name;
+            forumGroup.Description = description;
+            forumGroup.DisplayOrder = displayOrder;
+            forumGroup.CreatedOn = createdOn;
+            forumGroup.UpdatedOn = updatedOn;
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -408,8 +437,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             {
                 return (Forum)obj2;
             }
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetForumById(forumId);
-            var forum = DBMapping(dbItem);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from f in context.Forums
+                        where f.ForumId == forumId
+                        select f;
+            var forum = query.SingleOrDefault();
 
             if (ForumManager.CacheEnabled)
             {
@@ -423,23 +456,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// </summary>
         /// <param name="forumGroupId">The forum group identifier</param>
         /// <returns>Forums</returns>
-        public static ForumCollection GetAllForumsByGroupId(int forumGroupId)
+        public static List<Forum> GetAllForumsByGroupId(int forumGroupId)
         {
             string key = string.Format(FORUM_ALLBYFORUMGROUPID_KEY, forumGroupId);
             object obj2 = NopCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
-                return (ForumCollection)obj2;
+                return (List<Forum>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllForumsByGroupId(forumGroupId);
-            var forumCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from f in context.Forums
+                        orderby f.DisplayOrder
+                        where f.ForumGroupId == forumGroupId
+                        select f;
+            var forums = query.ToList();
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.Max(key, forumCollection);
+                NopCache.Max(key, forums);
             }
-            return forumCollection;
+            return forums;
         }
 
         /// <summary>
@@ -467,11 +504,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertForum(forumGroupId,
-                name, description, numTopics, numPosts, lastTopicId, lastPostId,
-                lastPostUserId, lastPostTime, displayOrder, createdOn, updatedOn);
+            var forum = new Forum();
+            forum.ForumGroupId = forumGroupId;
+            forum.Name = name;
+            forum.Description = description;
+            forum.NumTopics = numTopics;
+            forum.NumPosts = numPosts;
+            forum.LastTopicId = lastTopicId;
+            forum.LastPostId = lastPostId;
+            forum.LastPostUserId = lastPostUserId;
+            forum.LastPostTime = lastPostTime;
+            forum.DisplayOrder = displayOrder;
+            forum.CreatedOn = createdOn;
+            forum.UpdatedOn = updatedOn;
 
-            var forum = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Forums.AddObject(forum);
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -508,12 +557,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateForum(forumId, 
-                forumGroupId, name, description, numTopics, numPosts, 
-                lastTopicId, lastPostId, lastPostUserId, lastPostTime, 
-                displayOrder, createdOn, updatedOn);
+            var forum = GetForumById(forumId);
 
-            var forum = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Forums.Attach(forum);
+            forum.ForumGroupId = forumGroupId;
+            forum.Name = name;
+            forum.Description = description;
+            forum.NumTopics = numTopics;
+            forum.NumPosts = numPosts;
+            forum.LastTopicId = lastTopicId;
+            forum.LastPostId = lastPostId;
+            forum.LastPostUserId = lastPostUserId;
+            forum.LastPostTime = lastPostTime;
+            forum.DisplayOrder = displayOrder;
+            forum.CreatedOn = createdOn;
+            forum.UpdatedOn = updatedOn;
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -549,7 +609,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="forumTopicId">The topic identifier</param>
         public static void DeleteTopic(int forumTopicId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeleteTopic(forumTopicId);
+            var forumTopic = GetTopicById(forumTopicId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumTopics.Attach(forumTopic);
+            context.DeleteObject(forumTopic);
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -597,7 +662,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Topics</returns>
-        public static ForumTopicCollection GetAllTopics(int forumId,
+        public static List<ForumTopic>GetAllTopics(int forumId,
             int userId, string keywords, bool searchPosts, int pageSize,
             int pageIndex, out int totalRecords)
         {
@@ -613,9 +678,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetAllTopics(forumId,
                 userId, keywords, searchPosts, pageSize, pageIndex, out totalRecords);
-            var forumTopicCollection = DBMapping(dbCollection);
+            var forumTopics = DBMapping(dbCollection);
 
-            return forumTopicCollection;
+            return forumTopics;
         }
         
         /// <summary>
@@ -624,12 +689,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="forumId">The forum group identifier</param>
         /// <param name="topicCount">Topic count. 0 if you want to get all topics</param>
         /// <returns>Topics</returns>
-        public static ForumTopicCollection GetActiveTopics(int forumId, int topicCount)
+        public static List<ForumTopic> GetActiveTopics(int forumId, int topicCount)
         {
             var dbCollection = DBProviderManager<DBForumProvider>.Provider.GetActiveTopics(forumId, topicCount);
-            var forumTopicCollection = DBMapping(dbCollection);
+            var forumTopics = DBMapping(dbCollection);
 
-            return forumTopicCollection;
+            return forumTopics;
         }
         
         /// <summary>
@@ -670,12 +735,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 if (subject.Length > ForumManager.TopicSubjectMaxLength)
                     subject = subject.Substring(0, ForumManager.TopicSubjectMaxLength);
             }
+            
+            var forumTopic = new ForumTopic();
+            forumTopic.ForumId = forumId;
+            forumTopic.UserId = userId;
+            forumTopic.TopicTypeId = (int)topicType;
+            forumTopic.Subject = subject;
+            forumTopic.NumPosts = numPosts;
+            forumTopic.Views = views;
+            forumTopic.LastPostId = lastPostId;
+            forumTopic.LastPostUserId = lastPostUserId;
+            forumTopic.LastPostTime = lastPostTime;
+            forumTopic.CreatedOn = createdOn;
+            forumTopic.UpdatedOn = updatedOn;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertTopic(forumId, 
-                userId, (int)topicType, subject, numPosts, views, lastPostId,
-                lastPostUserId, lastPostTime, createdOn, updatedOn);
-
-            var forumTopic = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumTopics.AddObject(forumTopic);
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -739,13 +815,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                     subject = subject.Substring(0, ForumManager.TopicSubjectMaxLength);
             }
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateTopic(forumTopicId,
-                forumId, userId, (int)topicType, subject,
-                numPosts, views, lastPostId, lastPostUserId, lastPostTime, 
-                createdOn, updatedOn);
+            var forumTopic = GetTopicById(forumTopicId);
 
-            var forumTopic = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumTopics.Attach(forumTopic);
 
+            forumTopic.ForumId = forumId;
+            forumTopic.UserId = userId;
+            forumTopic.TopicTypeId = (int)topicType;
+            forumTopic.Subject = subject;
+            forumTopic.NumPosts = numPosts;
+            forumTopic.Views = views;
+            forumTopic.LastPostId = lastPostId;
+            forumTopic.LastPostUserId = lastPostUserId;
+            forumTopic.LastPostTime = lastPostTime;
+            forumTopic.CreatedOn = createdOn;
+            forumTopic.UpdatedOn = updatedOn;
+            context.SaveChanges();
+            
             if (ForumManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
@@ -796,7 +883,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="forumPostId">The post identifier</param>
         public static void DeletePost(int forumPostId)
         {
-            var forumPost = ForumManager.GetPostById(forumPostId);
+            var forumPost = GetPostById(forumPostId);
             int forumTopicId = 0;
             if (forumPost != null)
             {
@@ -814,8 +901,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 }
             }
 
-            DBProviderManager<DBForumProvider>.Provider.DeletePost(forumPostId);
-          
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumPosts.Attach(forumPost);
+            context.DeleteObject(forumPost);
+            context.SaveChanges();          
 
             if (ForumManager.CacheEnabled)
             {
@@ -834,8 +923,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             if (forumPostId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetPostById(forumPostId);
-            var forumPost = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from fp in context.ForumPosts
+                        where fp.ForumPostId == forumPostId
+                        select fp;
+            var forumPost = query.SingleOrDefault();
 
             return forumPost;
         }
@@ -850,7 +942,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Posts</returns>
-        public static ForumPostCollection GetAllPosts(int forumTopicId,
+        public static List<ForumPost> GetAllPosts(int forumTopicId,
             int userId, string keywords, int pageSize, int pageIndex, out int totalRecords)
         {
             return GetAllPosts(forumTopicId, userId, keywords, true,
@@ -868,7 +960,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Posts</returns>
-        public static ForumPostCollection GetAllPosts(int forumTopicId, int userId,
+        public static List<ForumPost> GetAllPosts(int forumTopicId, int userId,
             string keywords, bool ascSort, int pageSize, int pageIndex, out int totalRecords)
         {
             if (pageSize <= 0)
@@ -920,10 +1012,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                     text = text.Substring(0, ForumManager.PostMaxLength);
             }
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertPost(forumTopicId,
-                userId, text, ipAddress, createdOn, updatedOn);
+            var forumPost = new ForumPost();
+            forumPost.TopicId = forumTopicId;
+            forumPost.UserId = userId;
+            forumPost.Text = text;
+            forumPost.IPAddress = ipAddress;
+            forumPost.CreatedOn = createdOn;
+            forumPost.UpdatedOn = updatedOn;
 
-            var forumPost = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumPosts.AddObject(forumPost);
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -981,10 +1080,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 if (text.Length > ForumManager.PostMaxLength)
                     text = text.Substring(0, ForumManager.PostMaxLength);
             }
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdatePost(forumPostId, 
-                forumTopicId, userId, text, ipAddress, createdOn, updatedOn);
 
-            var forumPost = DBMapping(dbItem);
+            var forumPost = GetPostById(forumPostId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumPosts.Attach(forumPost);
+
+            forumPost.TopicId = forumTopicId;
+            forumPost.UserId = userId;
+            forumPost.Text = text;
+            forumPost.IPAddress = ipAddress;
+            forumPost.CreatedOn = createdOn;
+            forumPost.UpdatedOn = updatedOn;
+            context.SaveChanges();
 
             if (ForumManager.CacheEnabled)
             {
@@ -1001,7 +1109,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="forumPrivateMessageId">The private message identifier</param>
         public static void DeletePrivateMessage(int forumPrivateMessageId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeletePrivateMessage(forumPrivateMessageId);
+            var privateMessage = GetPrivateMessageById(forumPrivateMessageId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.PrivateMessages.Attach(privateMessage);
+            context.DeleteObject(privateMessage);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -1014,8 +1127,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             if (forumPrivateMessageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetPrivateMessageById(forumPrivateMessageId);
-            var privateMessage = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pm in context.PrivateMessages
+                        where pm.PrivateMessageId == forumPrivateMessageId
+                        select pm;
+            var privateMessage = query.SingleOrDefault();
 
             return privateMessage;
         }
@@ -1033,7 +1149,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Private messages</returns>
-        public static PrivateMessageCollection GetAllPrivateMessages(int fromUserId,
+        public static List<PrivateMessage> GetAllPrivateMessages(int fromUserId,
             int toUserId, bool? isRead, bool? isDeletedByAuthor, bool? isDeletedByRecipient,
             string keywords, int pageSize, int pageIndex, out int totalRecords)
         {
@@ -1099,12 +1215,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             if (customerTo == null)
                 throw new NopException("Recipient could not be loaded");
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertPrivateMessage(fromUserId,
-                toUserId, subject, text, isRead, isDeletedByAuthor, isDeletedByRecipient, createdOn);
+            var privateMessage = new PrivateMessage();
+            privateMessage.FromUserId = fromUserId;
+            privateMessage.ToUserId = toUserId;
+            privateMessage.Subject = subject;
+            privateMessage.Text = text;
+            privateMessage.IsRead = isRead;
+            privateMessage.IsDeletedByAuthor = isDeletedByAuthor;
+            privateMessage.IsDeletedByRecipient = isDeletedByRecipient;
+            privateMessage.CreatedOn = createdOn;
 
-            var privateMessage = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.PrivateMessages.AddObject(privateMessage);
+            context.SaveChanges();
             
-            //notofications
+            //notifications
             customerTo.NotifiedAboutNewPrivateMessages = false;
 
             return privateMessage;
@@ -1158,10 +1283,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             }
             else
             {
-                var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdatePrivateMessage(privateMessageId,
-                    fromUserId, toUserId, subject, text, isRead,
-                    isDeletedByAuthor, isDeletedByRecipient, createdOn);
-                var privateMessage = DBMapping(dbItem);
+                var privateMessage = GetPrivateMessageById(privateMessageId);
+
+                var context = ObjectContextHelper.CurrentObjectContext;
+                context.PrivateMessages.Attach(privateMessage);
+
+                privateMessage.FromUserId = fromUserId;
+                privateMessage.ToUserId = toUserId;
+                privateMessage.Subject = subject;
+                privateMessage.Text = text;
+                privateMessage.IsRead = isRead;
+                privateMessage.IsDeletedByAuthor = isDeletedByAuthor;
+                privateMessage.IsDeletedByRecipient = isDeletedByRecipient;
+                privateMessage.CreatedOn = createdOn;
+                context.SaveChanges();
+
                 return privateMessage;
             }
         }
@@ -1172,7 +1308,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="forumSubscriptionId">The forum subscription identifier</param>
         public static void DeleteSubscription(int forumSubscriptionId)
         {
-            DBProviderManager<DBForumProvider>.Provider.DeleteSubscription(forumSubscriptionId);
+            var forumSubscription = GetSubscriptionById(forumSubscriptionId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumSubscriptions.Attach(forumSubscription);
+            context.DeleteObject(forumSubscription);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -1185,20 +1326,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             if (forumSubscriptionId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetSubscriptionById(forumSubscriptionId);
-            var forumSubscription = DBMapping(dbItem);
-            return forumSubscription;
-        }
-
-        /// <summary>
-        /// Gets a forum subscription
-        /// </summary>
-        /// <param name="subscriptionGuid">The forum subscription identifier</param>
-        /// <returns>Forum subscription</returns>
-        public static ForumSubscription GetSubscriptionByGuid(int subscriptionGuid)
-        {
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.GetSubscriptionByGuid(subscriptionGuid);
-            var forumSubscription = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from fs in context.ForumSubscriptions
+                        where fs.ForumSubscriptionId == forumSubscriptionId
+                        select fs;
+            var forumSubscription = query.SingleOrDefault();
 
             return forumSubscription;
         }
@@ -1212,7 +1344,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="pageSize">Page size</param>
         /// <param name="pageIndex">Page index</param>
         /// <returns>Forum subscriptions</returns>
-        public static ForumSubscriptionCollection GetAllSubscriptions(int userId, 
+        public static List<ForumSubscription> GetAllSubscriptions(int userId, 
             int forumId, int topicId, int pageSize, int pageIndex)
         {
             int totalRecords = 0;
@@ -1230,7 +1362,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Forum subscriptions</returns>
-        public static ForumSubscriptionCollection GetAllSubscriptions(int userId, int forumId,
+        public static List<ForumSubscription> GetAllSubscriptions(int userId, int forumId,
             int topicId, int pageSize, int pageIndex, out int totalRecords)
         {
             if (pageSize <= 0)
@@ -1263,11 +1395,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int forumId, int topicId, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.InsertSubscription(subscriptionGuid, 
-                userId, forumId, topicId, createdOn);
             
-            var forumSubscription = DBMapping(dbItem);
+            var forumSubscription = new ForumSubscription();
+            forumSubscription.SubscriptionGuid = subscriptionGuid;
+            forumSubscription.UserId = userId;
+            forumSubscription.ForumId = forumId;
+            forumSubscription.TopicId = topicId;
+            forumSubscription.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumSubscriptions.AddObject(forumSubscription);
+            context.SaveChanges();
 
             return forumSubscription;
         }
@@ -1287,10 +1425,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBForumProvider>.Provider.UpdateSubscription(subscriptionId,
-                subscriptionGuid, userId, forumId, topicId, createdOn);
+            var forumSubscription = GetSubscriptionById(subscriptionId);
 
-            var forumSubscription = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ForumSubscriptions.Attach(forumSubscription);
+
+            forumSubscription.SubscriptionGuid = subscriptionGuid;
+            forumSubscription.UserId = userId;
+            forumSubscription.ForumId = forumId;
+            forumSubscription.TopicId = topicId;
+            forumSubscription.CreatedOn = createdOn;
+            context.SaveChanges();
 
             return forumSubscription;
         }

@@ -153,7 +153,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             get
             {
                 int totalPostRecords =0;
-                ForumPostCollection forumPosts = ForumManager.GetAllPosts(this.ForumTopicId, 0, string.Empty, 1, 0, out totalPostRecords);
+                var forumPosts = ForumManager.GetAllPosts(this.ForumTopicId, 0, string.Empty, 1, 0, out totalPostRecords);
                 if (forumPosts.Count > 0)
                 {
                     return forumPosts[0];

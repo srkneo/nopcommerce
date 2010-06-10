@@ -108,35 +108,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             return item;
         }
         
-        private static CustomerAttributeCollection DBMapping(DBCustomerAttributeCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CustomerAttributeCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static CustomerAttribute DBMapping(DBCustomerAttribute dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CustomerAttribute();
-            item.CustomerAttributeId = dbItem.CustomerAttributeId;
-            item.CustomerId = dbItem.CustomerId;
-            item.Key = dbItem.Key;
-            item.Value = dbItem.Value;
-
-            return item;
-        }
-
         private static List<CustomerRole> DBMapping(DBCustomerRoleCollection dbCollection)
         {
             if (dbCollection == null)
@@ -164,35 +135,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             item.TaxExempt = dbItem.TaxExempt;
             item.Active = dbItem.Active;
             item.Deleted = dbItem.Deleted;
-
-            return item;
-        }
-
-        private static CustomerSessionCollection DBMapping(DBCustomerSessionCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CustomerSessionCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static CustomerSession DBMapping(DBCustomerSession dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CustomerSession();
-            item.CustomerSessionGuid = dbItem.CustomerSessionGuid;
-            item.CustomerId = dbItem.CustomerId;
-            item.LastAccessed = dbItem.LastAccessed;
-            item.IsExpired = dbItem.IsExpired;
 
             return item;
         }
@@ -1919,7 +1861,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="customerAttributeId">Customer attribute identifier</param>
         public static void DeleteCustomerAttribute(int customerAttributeId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.DeleteCustomerAttribute(customerAttributeId);
+            var customerAttribute = GetCustomerAttributeById(customerAttributeId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerAttributes.Attach(customerAttribute);
+            context.DeleteObject(customerAttribute);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -1931,9 +1878,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             if (customerAttributeId == 0)
                 return null;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ca in context.CustomerAttributes
+                        where ca.CustomerAttributeId == customerAttributeId
+                        select ca;
+            var customerAttribute = query.SingleOrDefault();
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerAttributeById(customerAttributeId);
-            var customerAttribute = DBMapping(dbItem);
             return customerAttribute;
         }
 
@@ -1942,11 +1893,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         /// <param name="customerId">Customer identifier</param>
         /// <returns>Customer attributes</returns>
-        public static CustomerAttributeCollection GetCustomerAttributesByCustomerId(int customerId)
+        public static List<CustomerAttribute> GetCustomerAttributesByCustomerId(int customerId)
         {
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerAttributesByCustomerId(customerId);
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ca in context.CustomerAttributes
+                        where ca.CustomerId == customerId
+                        select ca;
+            var customerAttributes = query.ToList();
+            return customerAttributes;
         }
 
         /// <summary>
@@ -1965,9 +1919,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (value == null)
                 value = string.Empty;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerAttribute(customerId, 
-                key, value);
-            var customerAttribute = DBMapping(dbItem);
+            var customerAttribute = new CustomerAttribute();
+            customerAttribute.CustomerId = customerId;
+            customerAttribute.Key = key;
+            customerAttribute.Value = value;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerAttributes.AddObject(customerAttribute);
+            context.SaveChanges();
+
             return customerAttribute;
         }
 
@@ -1988,9 +1948,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (value == null)
                 value = string.Empty;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerAttribute(customerAttributeId, 
-                customerId, key, value);
-            var customerAttribute = DBMapping(dbItem);
+            var customerAttribute = GetCustomerAttributeById(customerAttributeId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerAttributes.Attach(customerAttribute);
+
+            customerAttribute.CustomerId = customerId;
+            customerAttribute.Key = key;
+            customerAttribute.Value = value;
+            context.SaveChanges();
+
             return customerAttribute;
         }
 
@@ -2254,8 +2221,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (customerSessionGuid == Guid.Empty)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerSessionByGuid(customerSessionGuid);
-            var customerSession = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cs in context.CustomerSessions
+                        where cs.CustomerSessionGuid == customerSessionGuid
+                        orderby cs.LastAccessed descending
+                        select cs;
+            var customerSession = query.FirstOrDefault();
             return customerSession;
         }
 
@@ -2269,8 +2240,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (customerId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerSessionByCustomerId(customerId);
-            var customerSession = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cs in context.CustomerSessions
+                        where cs.CustomerId == customerId
+                        orderby cs.LastAccessed descending
+                        select cs;
+            var customerSession = query.FirstOrDefault();
             return customerSession;
         }
 
@@ -2280,18 +2255,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="customerSessionGuid">Customer session GUID</param>
         public static void DeleteCustomerSession(Guid customerSessionGuid)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.DeleteCustomerSession(customerSessionGuid);
+            var customerSession = GetCustomerSessionByGuid(customerSessionGuid);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerSessions.Attach(customerSession);
+            context.DeleteObject(customerSession);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets all customer sessions
         /// </summary>
         /// <returns>Customer session collection</returns>
-        public static CustomerSessionCollection GetAllCustomerSessions()
+        public static List<CustomerSession> GetAllCustomerSessions()
         {
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAllCustomerSessions();
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cs in context.CustomerSessions
+                        orderby cs.LastAccessed descending
+                        select cs;
+            var customerSessions = query.ToList();
+            return customerSessions;
         }
 
         /// <summary>
@@ -2336,9 +2319,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerSession(customerSessionGuid, 
-                customerId, lastAccessed, isExpired);
-            var customerSession = DBMapping(dbItem);
+            var customerSession = new CustomerSession();
+            customerSession.CustomerSessionGuid = customerSessionGuid;
+            customerSession.CustomerId = customerId;
+            customerSession.LastAccessed = lastAccessed;
+            customerSession.IsExpired = isExpired;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerSessions.AddObject(customerSession);
+            context.SaveChanges();
             return customerSession;
         }
 
@@ -2355,9 +2344,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerSession(customerSessionGuid, 
-                customerId, lastAccessed, isExpired);
-            var customerSession = DBMapping(dbItem);
+            var customerSession = GetCustomerSessionByGuid(customerSessionGuid);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerSessions.Attach(customerSession);
+
+            customerSession.CustomerSessionGuid = customerSessionGuid;
+            customerSession.CustomerId = customerId;
+            customerSession.LastAccessed = lastAccessed;
+            customerSession.IsExpired = isExpired;
+            context.SaveChanges();
+
             return customerSession;
         }
 

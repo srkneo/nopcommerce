@@ -19,6 +19,8 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Blog;
+using NopSolutions.NopCommerce.BusinessLogic.Content.Forums;
+using NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
@@ -298,6 +300,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<CustomerAction> _customerActions;
 
+        public ObjectSet<CustomerAttribute> CustomerAttributes
+        {
+            get
+            {
+                if ((_customerAttributes == null))
+                {
+                    _customerAttributes = CreateObjectSet<CustomerAttribute>();
+                }
+                return _customerAttributes;
+            }
+        }
+        private ObjectSet<CustomerAttribute> _customerAttributes;
+
         public ObjectSet<CustomerRole> CustomerRoles
         {
             get
@@ -310,6 +325,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<CustomerRole> _customerRoles;
+
+        public ObjectSet<CustomerSession> CustomerSessions
+        {
+            get
+            {
+                if ((_customerSessions == null))
+                {
+                    _customerSessions = CreateObjectSet<CustomerSession>();
+                }
+                return _customerSessions;
+            }
+        }
+        private ObjectSet<CustomerSession> _customerSessions;
 
         public ObjectSet<DiscountLimitation> DiscountLimitations
         {
@@ -362,6 +390,71 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Download> _downloads;
+
+        public ObjectSet<Forum> Forums
+        {
+            get
+            {
+                if ((_forums == null))
+                {
+                    _forums = CreateObjectSet<Forum>();
+                }
+                return _forums;
+            }
+        }
+        private ObjectSet<Forum> _forums;
+
+        public ObjectSet<ForumGroup> ForumGroups
+        {
+            get
+            {
+                if ((_forumGroups == null))
+                {
+                    _forumGroups = CreateObjectSet<ForumGroup>();
+                }
+                return _forumGroups;
+            }
+        }
+        private ObjectSet<ForumGroup> _forumGroups;
+
+        public ObjectSet<ForumPost> ForumPosts
+        {
+            get
+            {
+                if ((_forumPosts == null))
+                {
+                    _forumPosts = CreateObjectSet<ForumPost>();
+                }
+                return _forumPosts;
+            }
+        }
+        private ObjectSet<ForumPost> _forumPosts;
+
+        public ObjectSet<ForumSubscription> ForumSubscriptions
+        {
+            get
+            {
+                if ((_forumSubscriptions == null))
+                {
+                    _forumSubscriptions = CreateObjectSet<ForumSubscription>();
+                }
+                return _forumSubscriptions;
+            }
+        }
+        private ObjectSet<ForumSubscription> _forumSubscriptions;
+
+        public ObjectSet<ForumTopic> ForumTopics
+        {
+            get
+            {
+                if ((_forumTopics == null))
+                {
+                    _forumTopics = CreateObjectSet<ForumTopic>();
+                }
+                return _forumTopics;
+            }
+        }
+        private ObjectSet<ForumTopic> _forumTopics;
 
         public ObjectSet<Language> Languages
         {
@@ -467,6 +560,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<MessageTemplate> _messageTemplates;
 
+        public ObjectSet<News> News
+        {
+            get
+            {
+                if ((_news == null))
+                {
+                    _news = CreateObjectSet<News>();
+                }
+                return _news;
+            }
+        }
+        private ObjectSet<News> _news;
+
+        public ObjectSet<NewsComment> NewsComments
+        {
+            get
+            {
+                if ((_newsComments == null))
+                {
+                    _newsComments = CreateObjectSet<NewsComment>();
+                }
+                return _newsComments;
+            }
+        }
+        private ObjectSet<NewsComment> _newsComments;
+
         public ObjectSet<OrderStatus> OrderStatuses
         {
             get
@@ -519,6 +638,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<Picture> _pictures;
 
+        public ObjectSet<PrivateMessage> PrivateMessages
+        {
+            get
+            {
+                if ((_privateMessagess == null))
+                {
+                    _privateMessagess = CreateObjectSet<PrivateMessage>();
+                }
+                return _privateMessagess;
+            }
+        }
+        private ObjectSet<PrivateMessage> _privateMessagess;
+
         public ObjectSet<ProductTemplate> ProductTemplates
         {
             get
@@ -544,6 +676,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<QueuedEmail> _queuedEmails;
+
+        public ObjectSet<SearchLog> SearchLog
+        {
+            get
+            {
+                if ((_searchLog == null))
+                {
+                    _searchLog = CreateObjectSet<SearchLog>();
+                }
+                return _searchLog;
+            }
+        }
+        private ObjectSet<SearchLog> _searchLog;
 
         public ObjectSet<Setting> Settings
         {

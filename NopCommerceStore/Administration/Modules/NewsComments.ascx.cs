@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Web;
@@ -81,7 +82,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindData()
         {
-            NewsCommentCollection newsCommentCollection = null;
+            List<NewsComment> newsCommentCollection = null;
             if (this.NewsId > 0)
                 newsCommentCollection = NewsManager.GetNewsCommentsByNewsId(this.NewsId);
             else

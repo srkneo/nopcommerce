@@ -44,29 +44,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
             DateTime? endTime, int count);
        
         /// <summary>
-        /// Gets all search log items
-        /// </summary>
-        /// <returns>Search log collection</returns>
-        public abstract DBSearchLogCollection GetAllSearchLogs();
-
-        /// <summary>
-        /// Gets a search log item
-        /// </summary>
-        /// <param name="searchLogId">The search log item identifier</param>
-        /// <returns>Search log item</returns>
-        public abstract DBSearchLog GetSearchLogById(int searchLogId);
-
-        /// <summary>
-        /// Inserts a search log item
-        /// </summary>
-        /// <param name="searchTerm">The search term</param>
-        /// <param name="customerId">The customer identifier</param>
-        /// <param name="createdOn">The date and time of instance creation</param>
-        /// <returns>Search log item</returns>
-        public abstract DBSearchLog InsertSearchLog(string searchTerm, 
-            int customerId, DateTime createdOn);
-
-        /// <summary>
         /// Clear search log
         /// </summary>
         public abstract void ClearSearchLog();

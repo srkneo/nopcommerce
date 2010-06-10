@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         /// <summary>
         /// Gets the news comments
         /// </summary>
-        public NewsCommentCollection NewsComments
+        public List<NewsComment> NewsComments
         {
             get
             {

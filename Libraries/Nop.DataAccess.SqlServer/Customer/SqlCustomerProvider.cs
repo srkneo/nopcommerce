@@ -69,16 +69,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             return item;
         }
 
-        private DBCustomerAttribute GetCustomerAttributeFromReader(IDataReader dataReader)
-        {
-            var item = new DBCustomerAttribute();
-            item.CustomerAttributeId = NopSqlDataHelper.GetInt(dataReader, "CustomerAttributeID");
-            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            item.Key = NopSqlDataHelper.GetString(dataReader, "Key");
-            item.Value = NopSqlDataHelper.GetString(dataReader, "Value");
-            return item;
-        }
-
         private DBCustomerRole GetCustomerRoleFromReader(IDataReader dataReader)
         {
             var item = new DBCustomerRole();
@@ -91,15 +81,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             return item;
         }
 
-        private DBCustomerSession GetCustomerSessionFromReader(IDataReader dataReader)
-        {
-            var item = new DBCustomerSession();
-            item.CustomerSessionGuid = NopSqlDataHelper.GetGuid(dataReader, "CustomerSessionGUID");
-            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            item.LastAccessed = NopSqlDataHelper.GetUtcDateTime(dataReader, "LastAccessed");
-            item.IsExpired = NopSqlDataHelper.GetBoolean(dataReader, "IsExpired");
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -250,112 +231,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         }
         
         /// <summary>
-        /// Deletes a customer attribute
-        /// </summary>
-        /// <param name="customerAttributeId">Customer attribute identifier</param>
-        public override void DeleteCustomerAttribute(int customerAttributeId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeDelete");
-            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, customerAttributeId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a customer attribute
-        /// </summary>
-        /// <param name="customerAttributeId">Customer attribute identifier</param>
-        /// <returns>A customer attribute</returns>
-        public override DBCustomerAttribute GetCustomerAttributeById(int customerAttributeId)
-        {
-            DBCustomerAttribute item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, customerAttributeId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetCustomerAttributeFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Gets a collection of customer attributes by customer identifier
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <returns>Customer attributes</returns>
-        public override DBCustomerAttributeCollection GetCustomerAttributesByCustomerId(int customerId)
-        {
-            var result = new DBCustomerAttributeCollection();
-            if (customerId == 0)
-                return result;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeLoadAllByCustomerID");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetCustomerAttributeFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Inserts a customer attribute
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="key">An attribute key</param>
-        /// <param name="value">An attribute value</param>
-        /// <returns>A customer attribute</returns>
-        public override DBCustomerAttribute InsertCustomerAttribute(int customerId,
-            string key, string value)
-        {
-            DBCustomerAttribute item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeInsert");
-            db.AddOutParameter(dbCommand, "CustomerAttributeID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "Key", DbType.String, key);
-            db.AddInParameter(dbCommand, "Value", DbType.String, value);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int customerAttributeId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@CustomerAttributeID"));
-                item = GetCustomerAttributeById(customerAttributeId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the customer attribute
-        /// </summary>
-        /// <param name="customerAttributeId">Customer attribute identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="key">An attribute key</param>
-        /// <param name="value">An attribute value</param>
-        /// <returns>A customer attribute</returns>
-        public override DBCustomerAttribute UpdateCustomerAttribute(int customerAttributeId,
-            int customerId, string key, string value)
-        {
-            DBCustomerAttribute item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerAttributeUpdate");
-            db.AddInParameter(dbCommand, "CustomerAttributeID", DbType.Int32, customerAttributeId);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "Key", DbType.String, key);
-            db.AddInParameter(dbCommand, "Value", DbType.String, value);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCustomerAttributeById(customerAttributeId);
-
-            return item;
-        }
-
-        /// <summary>
         /// Adds a customer to role
         /// </summary>
         /// <param name="customerId">Customer identifier</param>
@@ -437,62 +312,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         }
 
         /// <summary>
-        /// Gets a customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        /// <returns>Customer session</returns>
-        public override DBCustomerSession GetCustomerSessionByGuid(Guid customerSessionGuid)
-        {
-            DBCustomerSession item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetCustomerSessionFromReader(dataReader);
-                }
-            }
-
-            return item;
-        }
-
-        /// <summary>
-        /// Gets a customer session by customer identifier
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <returns>Customer session</returns>
-        public override DBCustomerSession GetCustomerSessionByCustomerId(int customerId)
-        {
-            DBCustomerSession item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionLoadByCustomerID");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetCustomerSessionFromReader(dataReader);
-                }
-            }
-
-            return item;
-        }
-
-        /// <summary>
-        /// Deletes a customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        public override void DeleteCustomerSession(Guid customerSessionGuid)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionDelete");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
         /// Deletes all expired customer sessions
         /// </summary>
         /// <param name="olderThan">Older than date and time</param>
@@ -502,76 +321,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionDeleteExpired");
             db.AddInParameter(dbCommand, "OlderThan", DbType.DateTime, olderThan);
             db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets all customer sessions
-        /// </summary>
-        /// <returns>Customer session collection</returns>
-        public override DBCustomerSessionCollection GetAllCustomerSessions()
-        {
-            var result = new DBCustomerSessionCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionLoadAll");
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetCustomerSessionFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Inserts a customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="lastAccessed">The last accessed date and time</param>
-        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
-        /// <returns>Customer session</returns>
-        public override DBCustomerSession InsertCustomerSession(Guid customerSessionGuid, 
-            int customerId, DateTime lastAccessed, bool isExpired)
-        {
-            DBCustomerSession item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionInsert");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "LastAccessed", DbType.DateTime, lastAccessed);
-            db.AddInParameter(dbCommand, "IsExpired", DbType.Boolean, isExpired);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                item = GetCustomerSessionByGuid(customerSessionGuid);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the customer session
-        /// </summary>
-        /// <param name="customerSessionGuid">Customer session GUID</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="lastAccessed">The last accessed date and time</param>
-        /// <param name="isExpired">A value indicating whether the customer session is expired</param>
-        /// <returns>Customer session</returns>
-        public override DBCustomerSession UpdateCustomerSession(Guid customerSessionGuid, 
-            int customerId, DateTime lastAccessed, bool isExpired)
-        {
-            DBCustomerSession item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerSessionUpdate");
-            db.AddInParameter(dbCommand, "CustomerSessionGUID", DbType.Guid, customerSessionGuid);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "LastAccessed", DbType.DateTime, lastAccessed);
-            db.AddInParameter(dbCommand, "IsExpired", DbType.Boolean, isExpired);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetCustomerSessionByGuid(customerSessionGuid);
-
-            return item;
         }
 
         /// <summary>

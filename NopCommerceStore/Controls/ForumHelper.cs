@@ -46,15 +46,14 @@ namespace NopSolutions.NopCommerce.Web
         }
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public static PrivateMessageCollection GetCurrentUserSentPrivateMessages(int StartIndex, int PageSize)
+        public static List<PrivateMessage> GetCurrentUserSentPrivateMessages(int StartIndex, int PageSize)
         {
             int totalRecord = 0;
             return GetCurrentUserSentPrivateMessages(StartIndex, PageSize, out totalRecord);
         }
 
-        public static PrivateMessageCollection GetCurrentUserSentPrivateMessages(int StartIndex, int PageSize, out int totalRecords)
+        public static List<PrivateMessage> GetCurrentUserSentPrivateMessages(int StartIndex, int PageSize, out int totalRecords)
         {
-            PrivateMessageCollection result = new PrivateMessageCollection();
             if (PageSize <= 0)
                 PageSize = 10;
             if (PageSize == int.MaxValue)
@@ -65,9 +64,9 @@ namespace NopSolutions.NopCommerce.Web
             totalRecords = 0;
 
             if (NopContext.Current.User == null)
-                return result;
+                return new List<PrivateMessage>();
 
-            result = ForumManager.GetAllPrivateMessages(NopContext.Current.User.CustomerId, 0, null, false, null,
+            var result = ForumManager.GetAllPrivateMessages(NopContext.Current.User.CustomerId, 0, null, false, null,
                 string.Empty, PageSize, PageIndex, out totalRecords);
             return result;
         }
@@ -80,15 +79,14 @@ namespace NopSolutions.NopCommerce.Web
         }
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public static PrivateMessageCollection GetCurrentUserInboxPrivateMessages(int StartIndex, int PageSize)
+        public static List<PrivateMessage> GetCurrentUserInboxPrivateMessages(int StartIndex, int PageSize)
         {
             int totalRecord = 0;
             return GetCurrentUserInboxPrivateMessages(StartIndex, PageSize, out totalRecord);
         }
 
-        public static PrivateMessageCollection GetCurrentUserInboxPrivateMessages(int StartIndex, int PageSize, out int totalRecords)
+        public static List<PrivateMessage> GetCurrentUserInboxPrivateMessages(int StartIndex, int PageSize, out int totalRecords)
         {
-            PrivateMessageCollection result = new PrivateMessageCollection();
             if (PageSize <= 0)
                 PageSize = 10;
             if (PageSize == int.MaxValue)
@@ -99,9 +97,9 @@ namespace NopSolutions.NopCommerce.Web
             totalRecords = 0;
 
             if (NopContext.Current.User == null)
-                return result;
+                return new List<PrivateMessage>();
 
-            result = ForumManager.GetAllPrivateMessages(0, NopContext.Current.User.CustomerId, null, null, false,
+            var result = ForumManager.GetAllPrivateMessages(0, NopContext.Current.User.CustomerId, null, null, false,
                 string.Empty, PageSize, PageIndex, out totalRecords);
             return result;
         }

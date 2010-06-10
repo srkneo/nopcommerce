@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlForumGroup.Items.Clear();
-            ForumGroupCollection forumGroups = ForumManager.GetAllForumGroups();
+            var forumGroups = ForumManager.GetAllForumGroups();
             foreach (ForumGroup forumGroup in forumGroups)
             {
                 ListItem item2 = new ListItem(forumGroup.Name, forumGroup.ForumGroupId.ToString());

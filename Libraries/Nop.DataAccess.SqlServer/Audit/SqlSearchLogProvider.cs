@@ -34,18 +34,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
         private string _sqlConnectionString;
         #endregion
 
-        #region Utilities
-        private DBSearchLog GetSearchLogFromReader(IDataReader dataReader)
-        {
-            var item = new DBSearchLog();
-            item.SearchLogId = NopSqlDataHelper.GetInt(dataReader, "SearchLogID");
-            item.SearchTerm = NopSqlDataHelper.GetString(dataReader, "SearchTerm");
-            item.CustomerId = NopSqlDataHelper.GetInt(dataReader, "CustomerID");
-            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            return item;
-        }
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -106,75 +94,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Audit
             db.AddInParameter(dbCommand, "Count", DbType.Int32, count);
             return db.ExecuteReader(dbCommand);
         }
-
-        /// <summary>
-        /// Gets all search log items
-        /// </summary>
-        /// <returns>Search log collection</returns>
-        public override DBSearchLogCollection GetAllSearchLogs()
-        {
-            var result = new DBSearchLogCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_SearchLogLoadAll");
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetSearchLogFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a search log item
-        /// </summary>
-        /// <param name="searchLogId">The search log item identifier</param>
-        /// <returns>Search log item</returns>
-        public override DBSearchLog GetSearchLogById(int searchLogId)
-        {
-            DBSearchLog item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_SearchLogLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "SearchLogID", DbType.Int32, searchLogId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetSearchLogFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Inserts a search log item
-        /// </summary>
-        /// <param name="searchTerm">The search term</param>
-        /// <param name="customerId">The customer identifier</param>
-        /// <param name="createdOn">The date and time of instance creation</param>
-        /// <returns>Search log item</returns>
-        public override DBSearchLog InsertSearchLog(string searchTerm,
-            int customerId, DateTime createdOn)
-        {
-            DBSearchLog item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_SearchLogInsert");
-            db.AddOutParameter(dbCommand, "SearchLogID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "SearchTerm", DbType.String, searchTerm);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int searchLogId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@SearchLogID"));
-                item = GetSearchLogById(searchLogId);
-            }
-
-            return item;
-        }
-
+        
         /// <summary>
         /// Clear search log
         /// </summary>
