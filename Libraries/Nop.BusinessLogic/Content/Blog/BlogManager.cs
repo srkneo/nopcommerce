@@ -17,11 +17,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
@@ -43,12 +45,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         #endregion
 
         #region Utilities
-        private static BlogPostCollection DBMapping(DBBlogPostCollection dbCollection)
+        private static List<BlogPost> DBMapping(DBBlogPostCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new BlogPostCollection();
+            var collection = new List<BlogPost>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -75,36 +77,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             return item;
         }
 
-        private static BlogCommentCollection DBMapping(DBBlogCommentCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new BlogCommentCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static BlogComment DBMapping(DBBlogComment dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new BlogComment();
-            item.BlogCommentId = dbItem.BlogCommentId;
-            item.BlogPostId = dbItem.BlogPostId;
-            item.CustomerId = dbItem.CustomerId;
-            item.IPAddress = dbItem.IPAddress;
-            item.CommentText = dbItem.CommentText;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -114,7 +86,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <param name="blogPostId">Blog post identifier</param>
         public static void DeleteBlogPost(int blogPostId)
         {
-            DBProviderManager<DBBlogProvider>.Provider.DeleteBlogPost(blogPostId);
+            var blogPost = GetBlogPostById(blogPostId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BlogPosts.Attach(blogPost);
+            context.DeleteObject(blogPost);
+            context.SaveChanges();
+            
             if (BlogManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
@@ -138,8 +116,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
                 return (BlogPost)obj2;
             }
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.GetBlogPostById(blogPostId);
-            var blogPost = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from bp in context.BlogPosts
+                        where bp.BlogPostId == blogPostId
+                        select bp;
+            var blogPost = query.SingleOrDefault();
 
             if (BlogManager.CacheEnabled)
             {
@@ -153,7 +134,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// </summary>
         /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
         /// <returns>Blog posts</returns>
-        public static BlogPostCollection GetAllBlogPosts(int languageId)
+        public static List<BlogPost> GetAllBlogPosts(int languageId)
         {
             int totalRecords;
             return GetAllBlogPosts(languageId, Int32.MaxValue, 0, out totalRecords);
@@ -167,7 +148,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Blog posts</returns>
-        public static BlogPostCollection GetAllBlogPosts(int languageId, int pageSize,
+        public static List<BlogPost> GetAllBlogPosts(int languageId, int pageSize,
             int pageIndex, out int totalRecords)
         {
             if(pageSize <= 0)
@@ -197,10 +178,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.InsertBlogPost(languageId, 
-                blogPostTitle, blogPostBody, blogPostAllowComments, 
-                createdById, createdOn);
-            var blogPost = DBMapping(dbItem);
+            var blogPost = new BlogPost();
+            blogPost.LanguageId = languageId;
+            blogPost.BlogPostTitle = blogPostTitle;
+            blogPost.BlogPostBody = blogPostBody;
+            blogPost.BlogPostAllowComments = blogPostAllowComments;
+            blogPost.CreatedById = createdById;
+            blogPost.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BlogPosts.AddObject(blogPost);
+            context.SaveChanges();
 
             if (BlogManager.CacheEnabled)
             {
@@ -228,10 +216,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogPost(blogPostId, 
-                languageId, blogPostTitle, blogPostBody,
-                blogPostAllowComments, createdById, createdOn);
-            var blogPost = DBMapping(dbItem);
+            var blogPost = GetBlogPostById(blogPostId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BlogPosts.Attach(blogPost);
+
+            blogPost.LanguageId = languageId;
+            blogPost.BlogPostTitle = blogPostTitle;
+            blogPost.BlogPostBody = blogPostBody;
+            blogPost.BlogPostAllowComments = blogPostAllowComments;
+            blogPost.CreatedById = createdById;
+            blogPost.CreatedOn = createdOn;
+            context.SaveChanges();
 
             if (BlogManager.CacheEnabled)
             {
@@ -247,7 +243,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <param name="blogCommentId">Blog comment identifier</param>
         public static void DeleteBlogComment(int blogCommentId)
         {
-            DBProviderManager<DBBlogProvider>.Provider.DeleteBlogComment(blogCommentId);
+            var blogComment = GetBlogCommentById(blogCommentId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BlogComments.Attach(blogComment);
+            context.DeleteObject(blogComment);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -260,8 +261,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             if (blogCommentId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.GetBlogCommentById(blogCommentId);
-            var blogComment = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from bc in context.BlogComments
+                        where bc.BlogCommentId == blogCommentId
+                        select bc;
+            var blogComment = query.SingleOrDefault();
             return blogComment;
         }
 
@@ -270,10 +274,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// </summary>
         /// <param name="blogPostId">Blog post identifier</param>
         /// <returns>A collection of blog comments</returns>
-        public static BlogCommentCollection GetBlogCommentsByBlogPostId(int blogPostId)
+        public static List<BlogComment> GetBlogCommentsByBlogPostId(int blogPostId)
         {
-            var dbCollection = DBProviderManager<DBBlogProvider>.Provider.GetBlogCommentsByBlogPostId(blogPostId);
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from bc in context.BlogComments
+                        orderby bc.CreatedOn
+                        where bc.BlogPostId == blogPostId
+                        select bc;
+            var collection = query.ToList();
             return collection;
         }
 
@@ -281,10 +289,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// Gets all blog comments
         /// </summary>
         /// <returns>Blog comments</returns>
-        public static BlogCommentCollection GetAllBlogComments()
+        public static List<BlogComment> GetAllBlogComments()
         {
-            var dbCollection = DBProviderManager<DBBlogProvider>.Provider.GetAllBlogComments();
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from bc in context.BlogComments
+                        orderby bc.CreatedOn
+                        select bc;
+            var collection = query.ToList();
             return collection;
         }
 
@@ -338,9 +349,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.InsertBlogComment(blogPostId,
-                customerId, ipAddress, commentText, createdOn);
-            var blogComment = DBMapping(dbItem);
+            var blogComment = new BlogComment();
+            blogComment.BlogPostId = blogPostId;
+            blogComment.CustomerId = customerId;
+            blogComment.IPAddress = ipAddress;
+            blogComment.CommentText = commentText;
+            blogComment.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BlogComments.AddObject(blogComment);
+            context.SaveChanges();
 
             if (notify)
             {
@@ -365,9 +383,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBBlogProvider>.Provider.UpdateBlogComment(blogCommentId,
-                blogPostId, customerId, ipAddress, commentText, createdOn);
-            var blogComment = DBMapping(dbItem);
+            var blogComment = GetBlogCommentById(blogCommentId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.BlogComments.Attach(blogComment);
+
+            blogComment.BlogPostId = blogPostId;
+            blogComment.CustomerId = customerId;
+            blogComment.IPAddress = ipAddress;
+            blogComment.CommentText = commentText;
+            blogComment.CreatedOn = createdOn;
+            context.SaveChanges();
             return blogComment;
         }
         

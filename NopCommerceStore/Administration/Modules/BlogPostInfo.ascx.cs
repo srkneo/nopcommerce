@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.pnlCreatedOn.Visible = true;
                 this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogPost.CreatedOn).ToString();
 
-                BlogCommentCollection blogComments = blogPost.BlogComments;
+                var blogComments = blogPost.BlogComments;
                 if (blogComments.Count > 0)
                 {
                     this.hlViewComments.Visible = true;

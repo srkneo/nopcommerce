@@ -14,19 +14,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 {
-    /// <summary>
-    /// Represents an address collection
-    /// </summary>
-    public partial class AddressCollection : BaseEntityCollection<Address>
+    public static class Extensions
     {
         /// <summary>
-        /// Finds an address
+        /// Find an address
         /// </summary>
+        /// <param name="source">Source</param>
         /// <param name="firstName">First name</param>
         /// <param name="lastName">Last name</param>
         /// <param name="phoneNumber">Phone number</param>
@@ -40,23 +39,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="zipPostalCode">Zip postal code</param>
         /// <param name="countryId">Country identifier</param>
         /// <returns>Address</returns>
-        public Address FindAddress(string firstName, string lastName, string phoneNumber, 
-            string email, string faxNumber, string company,string address1, 
+        public static Address FindAddress(this List<Address> source,
+            string firstName, string lastName, string phoneNumber,
+            string email, string faxNumber, string company, string address1,
             string address2, string city, int stateProvinceId,
             string zipPostalCode, int countryId)
         {
-            return this.Find((a) => a.FirstName == firstName &&
-                a.LastName == lastName && 
-                a.PhoneNumber == phoneNumber &&
-                a.Email == email && 
-                a.FaxNumber == faxNumber &&
-                a.Company == company && 
-                a.Address1 == address1 && 
-                a.Address2 == address2 &&
-                a.City == city && 
-                a.StateProvinceId == stateProvinceId && 
-                a.ZipPostalCode == zipPostalCode &&
-                a.CountryId == countryId);
+            return source.Find((a) => a.FirstName == firstName &&
+               a.LastName == lastName &&
+               a.PhoneNumber == phoneNumber &&
+               a.Email == email &&
+               a.FaxNumber == faxNumber &&
+               a.Company == company &&
+               a.Address1 == address1 &&
+               a.Address2 == address2 &&
+               a.City == city &&
+               a.StateProvinceId == stateProvinceId &&
+               a.ZipPostalCode == zipPostalCode &&
+               a.CountryId == countryId);
         }
     }
 }

@@ -18,6 +18,7 @@ using System.Data.Objects;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Content.Blog;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
@@ -128,6 +129,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<ActivityLogType> _activityLogTypes;
 
+        public ObjectSet<Address> Addresses
+        {
+            get
+            {
+                if ((_addresses == null))
+                {
+                    _addresses = CreateObjectSet<Address>();
+                }
+                return _addresses;
+            }
+        }
+        private ObjectSet<Address> _addresses;
+
         public ObjectSet<Affiliate> Affiliates
         {
             get
@@ -166,6 +180,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<BannedIpNetwork> _bannedIpNetworks;
+
+        public ObjectSet<BlogPost> BlogPosts
+        {
+            get
+            {
+                if ((_blogPosts == null))
+                {
+                    _blogPosts = CreateObjectSet<BlogPost>();
+                }
+                return _blogPosts;
+            }
+        }
+        private ObjectSet<BlogPost> _blogPosts;
+
+        public ObjectSet<BlogComment> BlogComments
+        {
+            get
+            {
+                if ((_blogComments == null))
+                {
+                    _blogComments = CreateObjectSet<BlogComment>();
+                }
+                return _blogComments;
+            }
+        }
+        private ObjectSet<BlogComment> _blogComments;
 
         public ObjectSet<Campaign> Campaigns
         {

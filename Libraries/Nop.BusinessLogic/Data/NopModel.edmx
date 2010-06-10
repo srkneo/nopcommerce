@@ -9,9 +9,12 @@
           <EntitySet Name="Nop_ACL" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ACL" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ActivityLog" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ActivityLogType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLogType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Address" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Address" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Affiliate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Affiliate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_BannedIpAddress" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpAddress" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_BannedIpNetwork" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpNetwork" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_BlogComment" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BlogComment" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_BlogPost" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BlogPost" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Campaign" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Campaign" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CategoryTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CategoryTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Country" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Country" store:Type="Tables" Schema="dbo" />
@@ -70,6 +73,22 @@
           <AssociationSet Name="FK_Nop_ActivityLog_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ActivityLog_Nop_Customer">
             <End Role="Nop_Customer" EntitySet="Nop_Customer" />
             <End Role="Nop_ActivityLog" EntitySet="Nop_ActivityLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Address_Nop_Customer1" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Address_Nop_Customer1">
+            <End Role="Nop_Customer" EntitySet="Nop_Customer" />
+            <End Role="Nop_Address" EntitySet="Nop_Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_BlogComment_Nop_BlogPost" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_BlogComment_Nop_BlogPost">
+            <End Role="Nop_BlogPost" EntitySet="Nop_BlogPost" />
+            <End Role="Nop_BlogComment" EntitySet="Nop_BlogComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_BlogPost_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_BlogPost_Nop_Customer">
+            <End Role="Nop_Customer" EntitySet="Nop_Customer" />
+            <End Role="Nop_BlogPost" EntitySet="Nop_BlogPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_BlogPost_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_BlogPost_Nop_Language">
+            <End Role="Nop_Language" EntitySet="Nop_Language" />
+            <End Role="Nop_BlogPost" EntitySet="Nop_BlogPost" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_Customer_CustomerRole_Mapping_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Customer_CustomerRole_Mapping_Nop_Customer">
             <End Role="Nop_Customer" EntitySet="Nop_Customer" />
@@ -156,6 +175,28 @@
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="IsBillingAddress" Type="bit" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="PhoneNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="FaxNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Company" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Address1" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Address2" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="StateProvinceID" Type="int" Nullable="false" />
+          <Property Name="ZipPostalCode" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="CountryID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_Affiliate">
           <Key>
             <PropertyRef Name="AffiliateID" />
@@ -198,6 +239,29 @@
           <Property Name="IpException" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_BlogComment">
+          <Key>
+            <PropertyRef Name="BlogCommentID" />
+          </Key>
+          <Property Name="BlogCommentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BlogPostID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CommentText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_BlogPost">
+          <Key>
+            <PropertyRef Name="BlogPostID" />
+          </Key>
+          <Property Name="BlogPostID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="BlogPostTitle" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="BlogPostBody" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BlogPostAllowComments" Type="bit" Nullable="false" />
+          <Property Name="CreatedByID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_Campaign">
           <Key>
@@ -727,6 +791,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Nop_Address_Nop_Customer1">
+          <End Role="Nop_Customer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Address" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Nop_Address">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_BlogComment_Nop_BlogPost">
+          <End Role="Nop_BlogPost" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BlogPost" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_BlogComment" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_BlogPost">
+              <PropertyRef Name="BlogPostID" />
+            </Principal>
+            <Dependent Role="Nop_BlogComment">
+              <PropertyRef Name="BlogPostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_BlogPost_Nop_Customer">
+          <End Role="Nop_Customer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_BlogPost" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Nop_BlogPost">
+              <PropertyRef Name="CreatedByID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_BlogPost_Nop_Language">
+          <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_BlogPost" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_BlogPost">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_Customer_CustomerRole_Mapping_Nop_Customer">
           <End Role="Nop_Customer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1043,6 +1163,25 @@
           <AssociationSet Name="FK_Nop_ActivityLog_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Nop_ActivityLog" EntitySet="ActivityLogs" />
+          </AssociationSet>
+          <EntitySet Name="Addresses" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Address" />
+          <EntitySet Name="BlogComments" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogComment" />
+          <EntitySet Name="BlogPosts" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost" />
+          <AssociationSet Name="FK_Nop_Address_Nop_Customer1" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Address_Nop_Customer1">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Nop_Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_BlogComment_Nop_BlogPost" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogComment_Nop_BlogPost">
+            <End Role="Nop_BlogPost" EntitySet="BlogPosts" />
+            <End Role="Nop_BlogComment" EntitySet="BlogComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_BlogPost_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Nop_BlogPost" EntitySet="BlogPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_BlogPost_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Nop_BlogPost" EntitySet="BlogPosts" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
@@ -1789,6 +1928,100 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Type="Int32" Name="AddressId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="Boolean" Name="IsBillingAddress" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FaxNumber" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Company" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address1" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address2" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="StateProvinceId" Nullable="false" />
+          <Property Type="String" Name="ZipPostalCode" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CountryId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+          <NavigationProperty Name="NpCustomer" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Address_Nop_Customer1" FromRole="Nop_Address" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="BlogComment">
+          <Key>
+            <PropertyRef Name="BlogCommentId" />
+          </Key>
+          <Property Type="Int32" Name="BlogCommentId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="BlogPostId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="IPAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CommentText" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogPost">
+          <Key>
+            <PropertyRef Name="BlogPostId" />
+          </Key>
+          <Property Type="Int32" Name="BlogPostId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="LanguageId" Nullable="false" />
+          <Property Type="String" Name="BlogPostTitle" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BlogPostBody" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="BlogPostAllowComments" Nullable="false" />
+          <Property Type="Int32" Name="CreatedById" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Nop_Address_Nop_Customer1">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Address" Role="Nop_Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Nop_Address">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_BlogComment_Nop_BlogPost">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost" Role="Nop_BlogPost" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.BlogComment" Role="Nop_BlogComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_BlogPost">
+              <PropertyRef Name="BlogPostId" />
+            </Principal>
+            <Dependent Role="Nop_BlogComment">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_BlogPost_Nop_Customer">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost" Role="Nop_BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Nop_BlogPost">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_BlogPost_Nop_Language">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Role="Language" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost" Role="Nop_BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_BlogPost">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2382,6 +2615,54 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Address">
+              <MappingFragment StoreEntitySet="Nop_Address">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryID" />
+                <ScalarProperty Name="ZipPostalCode" ColumnName="ZipPostalCode" />
+                <ScalarProperty Name="StateProvinceId" ColumnName="StateProvinceID" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="IsBillingAddress" ColumnName="IsBillingAddress" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogComments">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.BlogComment">
+              <MappingFragment StoreEntitySet="Nop_BlogComment">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostID" />
+                <ScalarProperty Name="BlogCommentId" ColumnName="BlogCommentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogPosts">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost">
+              <MappingFragment StoreEntitySet="Nop_BlogPost">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedByID" />
+                <ScalarProperty Name="BlogPostAllowComments" ColumnName="BlogPostAllowComments" />
+                <ScalarProperty Name="BlogPostBody" ColumnName="BlogPostBody" />
+                <ScalarProperty Name="BlogPostTitle" ColumnName="BlogPostTitle" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageID" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2415,8 +2696,8 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="0.75" PointY="0.5" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="3.25" PointY="0.5" Height="2.9070849609374996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="10.25" PointY="9.125" />
-          <ConnectorPoint PointX="10.25" PointY="1.9535424804687498" />
+          <ConnectorPoint PointX="10.42187375" PointY="9.125" />
+          <ConnectorPoint PointX="10.42187375" PointY="1.9535424804687498" />
           <ConnectorPoint PointX="4.75" PointY="1.9535424804687498" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
@@ -2429,8 +2710,8 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.5" PointY="3.75" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
-          <ConnectorPoint PointX="9.8437475" PointY="9.125" />
-          <ConnectorPoint PointX="9.8437475" PointY="4.832021484375" />
+          <ConnectorPoint PointX="9.929684375" PointY="9.125" />
+          <ConnectorPoint PointX="9.929684375" PointY="4.832021484375" />
           <ConnectorPoint PointX="5.75" PointY="4.832021484375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
@@ -2465,13 +2746,9 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource" Width="2.5" PointX="3.25" PointY="7.125" Height="1.5923063151041657" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Setting" Width="1.625" PointX="7.875" PointY="26" Height="1.5923063151041674" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_LocaleStringResource_Nop_Language" >
-          <ConnectorPoint PointX="10.6562525" PointY="9.125" />
-          <ConnectorPoint PointX="10.6562525" PointY="7.65625" />
-          <ConnectorPoint PointX="10.333333333333334" PointY="7.6562499999999991" />
-          <ConnectorPoint PointX="10.166666666666666" PointY="7.65625" />
-          <ConnectorPoint PointX="9.9270808333333331" PointY="7.6562499999999991" />
-          <ConnectorPoint PointX="9.7604141666666653" PointY="7.65625" />
-          <ConnectorPoint PointX="5.75" PointY="7.65625" />
+          <ConnectorPoint PointX="9.5" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="4.5" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="4.5" PointY="8.7173063151041656" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Picture" Width="1.5" PointX="0.5" PointY="5.5" Height="1.5923063151041665" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByTotal" Width="2" PointX="0.625" PointY="15" Height="2.0853483072916674" />
@@ -2535,10 +2812,34 @@
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer" >
           <ConnectorPoint PointX="16.25" PointY="8.8259895833333335" />
-          <ConnectorPoint PointX="16.25" PointY="19.475403645833335" />
-          <ConnectorPoint PointX="13.583333333333334" PointY="19.475403645833335" />
-          <ConnectorPoint PointX="13.416666666666666" PointY="19.475403645833335" />
-          <ConnectorPoint PointX="12.25" PointY="19.475403645833335" />
+          <ConnectorPoint PointX="16.25" PointY="19.475403645833332" />
+          <ConnectorPoint PointX="13.583333333333334" PointY="19.475403645833332" />
+          <ConnectorPoint PointX="13.416666666666666" PointY="19.475403645833332" />
+          <ConnectorPoint PointX="12.25" PointY="19.475403645833332" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Address" Width="1.5" PointX="30.125" PointY="0.625" Height="3.8931689453124827" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogComment" Width="1.5" PointX="32.25" PointY="5.125" Height="1.9210009765624996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost" Width="1.5" PointX="30.125" PointY="5.125" Height="2.0853483072916665" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Address_Nop_Customer1" >
+          <ConnectorPoint PointX="17.5" PointY="3.8215844726562413" />
+          <ConnectorPoint PointX="30.125" PointY="3.8215844726562413" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogComment_Nop_BlogPost" >
+          <ConnectorPoint PointX="31.625" PointY="6.08550048828125" />
+          <ConnectorPoint PointX="32.25" PointY="6.08550048828125" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Customer" >
+          <ConnectorPoint PointX="17.5" PointY="6.1676741536458337" />
+          <ConnectorPoint PointX="30.125" PointY="6.1676741536458337" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Language" >
+          <ConnectorPoint PointX="11" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="13.416666666666666" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="13.583333333333334" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="16.166666666666668" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="16.333333333333332" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="30.875" PointY="10.167674153645834" />
+          <ConnectorPoint PointX="30.875" PointY="7.2103483072916665" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

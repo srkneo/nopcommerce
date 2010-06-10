@@ -137,6 +137,7 @@
     <Compile Include="Customer\CustomerRegistrationTypeEnum.cs" />
     <Compile Include="Customer\DeleteExpiredCustomerSessionsTask.cs" />
     <Compile Include="Caching\ClearCacheTask.cs" />
+    <Compile Include="Customer\Extensions.cs" />
     <Compile Include="Data\AspNetObjectContextManager.cs" />
     <Compile Include="Data\AspNetObjectContextDisposalModule.cs" />
     <Compile Include="Data\UnitOfWorkScope.cs" />
@@ -293,8 +294,6 @@
     <Compile Include="Products\ProductPicture.cs" />
     <Compile Include="Media\Picture.cs" />
     <Compile Include="BaseEntityCollection.cs" />
-    <Compile Include="Content\Blog\BlogPostCollection.cs" />
-    <Compile Include="Content\Blog\BlogCommentCollection.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeCollection.cs" />
     <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
@@ -335,7 +334,6 @@
     <Compile Include="Shipping\ShippingManager.cs" />
     <Compile Include="Customer\Address.cs" />
     <Compile Include="Localization\LocaleStringResource.cs" />
-    <Compile Include="Customer\AddressCollection.cs" />
     <Compile Include="Promo\Affiliates\Affiliate.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Categories\Category.cs" />

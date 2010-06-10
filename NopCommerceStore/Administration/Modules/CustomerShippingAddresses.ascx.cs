@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer != null)
             {
-                AddressCollection shippingAddressCollection = customer.ShippingAddresses;
+                var shippingAddressCollection = customer.ShippingAddresses;
                 dlShippingAddresses.DataSource = shippingAddressCollection;
                 dlShippingAddresses.DataBind();
             }

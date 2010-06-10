@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Web;
@@ -82,7 +83,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindData()
         {
-            BlogCommentCollection blogCommentCollection = null;
+            List<BlogComment> blogCommentCollection = null;
             if (this.BlogPostId > 0)
                 blogCommentCollection = BlogManager.GetBlogCommentsByBlogPostId(this.BlogPostId);
             else

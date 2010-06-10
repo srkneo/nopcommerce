@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             if (BlogManager.BlogEnabled)
             {
-                BlogPostCollection blogPosts = BlogManager.GetAllBlogPosts(LanguageId);
+                var blogPosts = BlogManager.GetAllBlogPosts(LanguageId);
                 rptrBlogPosts.DataSource = blogPosts;
                 rptrBlogPosts.DataBind();
             }

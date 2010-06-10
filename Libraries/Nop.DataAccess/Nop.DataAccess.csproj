@@ -90,8 +90,6 @@
     <Compile Include="Categories\DBCategoryLocalized.cs" />
     <Compile Include="Categories\DBProductCategory.cs" />
     <Compile Include="Categories\DBProductCategoryCollection.cs" />
-    <Compile Include="Content\Blog\DBBlogComment.cs" />
-    <Compile Include="Content\Blog\DBBlogCommentCollection.cs" />
     <Compile Include="Content\Blog\DBBlogPost.cs" />
     <Compile Include="Content\Blog\DBBlogPostCollection.cs" />
     <Compile Include="Content\Forums\DBForumSubscription.cs" />
@@ -115,8 +113,6 @@
     <Compile Include="Content\Polls\DBPollAnswer.cs" />
     <Compile Include="Content\Polls\DBPollAnswerCollection.cs" />
     <Compile Include="Content\Polls\DBPollCollection.cs" />
-    <Compile Include="Customer\DBAddress.cs" />
-    <Compile Include="Customer\DBAddressCollection.cs" />
     <Compile Include="Customer\DBCustomer.cs" />
     <Compile Include="Customer\DBCustomerAttribute.cs" />
     <Compile Include="Customer\DBCustomerAttributeCollection.cs" />

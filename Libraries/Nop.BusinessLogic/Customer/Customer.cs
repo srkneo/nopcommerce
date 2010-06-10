@@ -305,7 +305,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets the billing addresses
         /// </summary>
-        public AddressCollection BillingAddresses
+        public List<Address> BillingAddresses
         {
             get
             {
@@ -316,7 +316,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets the shipping addresses
         /// </summary>
-        public AddressCollection ShippingAddresses
+        public List<Address> ShippingAddresses
         {
             get
             {

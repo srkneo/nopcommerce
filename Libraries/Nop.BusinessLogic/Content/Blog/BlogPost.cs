@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// <summary>
         /// Gets the blog comment collection
         /// </summary>
-        public BlogCommentCollection BlogComments
+        public List<BlogComment> BlogComments
         {
             get
             {

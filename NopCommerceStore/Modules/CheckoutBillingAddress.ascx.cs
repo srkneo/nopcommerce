@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Text;
@@ -105,9 +106,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 Response.Redirect("~/checkoutshippingmethod.aspx");
         }
         
-        protected AddressCollection GetAllowedBillingAddresses(Customer customer)
+        protected List<Address> GetAllowedBillingAddresses(Customer customer)
         {
-            var addresses = new AddressCollection();
+            var addresses = new List<Address>();
             if (customer == null)
                 return addresses;
 

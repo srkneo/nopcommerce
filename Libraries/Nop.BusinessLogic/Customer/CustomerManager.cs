@@ -55,49 +55,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         #endregion
 
         #region Utilities
-
-        private static AddressCollection DBMapping(DBAddressCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new AddressCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Address DBMapping(DBAddress dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Address();
-            item.AddressId = dbItem.AddressId;
-            item.CustomerId = dbItem.CustomerId;
-            item.IsBillingAddress = dbItem.IsBillingAddress;
-            item.FirstName = dbItem.FirstName;
-            item.LastName = dbItem.LastName;
-            item.PhoneNumber = dbItem.PhoneNumber;
-            item.Email = dbItem.Email;
-            item.FaxNumber = dbItem.FaxNumber;
-            item.Company = dbItem.Company;
-            item.Address1 = dbItem.Address1;
-            item.Address2 = dbItem.Address2;
-            item.City = dbItem.City;
-            item.StateProvinceId = dbItem.StateProvinceId;
-            item.ZipPostalCode = dbItem.ZipPostalCode;
-            item.CountryId = dbItem.CountryId;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-
         private static List<Customer> DBMapping(DBCustomerCollection dbCollection)
         {
             if (dbCollection == null)
@@ -253,7 +210,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var address = GetAddressById(addressId);
             if (address != null)
             {
-                DBProviderManager<DBCustomerProvider>.Provider.DeleteAddress(addressId);
                 var customer = address.Customer;
                 if (customer != null)
                 {
@@ -263,6 +219,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     if (customer.ShippingAddressId == address.AddressId)
                         customer = SetDefaultShippingAddress(customer.CustomerId, 0);
                 }
+
+                var context = ObjectContextHelper.CurrentObjectContext;
+                context.Addresses.Attach(address);
+                context.DeleteObject(address);
+                context.SaveChanges();
             }
         }
 
@@ -276,8 +237,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (addressId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetAddressById(addressId);
-            var address = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from a in context.Addresses
+                        where a.AddressId == addressId
+                        select a;
+            var address = query.SingleOrDefault();
+
             return address;
         }
 
@@ -287,11 +252,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="customerId">Customer identifier</param>
         /// <param name="getBillingAddresses">Gets or sets a value indicating whether the addresses are billing or shipping</param>
         /// <returns>A collection of addresses</returns>
-        public static AddressCollection GetAddressesByCustomerId(int customerId, bool getBillingAddresses)
+        public static List<Address> GetAddressesByCustomerId(int customerId, bool getBillingAddresses)
         {
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAddressesByCustomerId(customerId, getBillingAddresses);
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from a in context.Addresses
+                        orderby a.CreatedOn
+                        where a.CustomerId == customerId && a.IsBillingAddress == getBillingAddresses
+                        select a;
+            var addresses = query.ToList();
+
+            return addresses;
         }
 
         /// <summary>
@@ -353,12 +323,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
+            
+            var address = new Address();
+            address.CustomerId = customerId;
+            address.IsBillingAddress = isBillingAddress;
+            address.FirstName = firstName;
+            address.LastName = lastName;
+            address.PhoneNumber = phoneNumber;
+            address.Email = email;
+            address.FaxNumber = faxNumber;
+            address.Company = company;
+            address.Address1 = address1;
+            address.Address2 = address2;
+            address.City = city;
+            address.StateProvinceId = stateProvinceId;
+            address.ZipPostalCode = zipPostalCode;
+            address.CountryId = countryId;
+            address.CreatedOn = createdOn;
+            address.UpdatedOn = updatedOn;
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertAddress(customerId,
-                isBillingAddress, firstName, lastName, phoneNumber, email, 
-                faxNumber, company, address1, address2, city, stateProvinceId, 
-                zipPostalCode, countryId, createdOn, updatedOn);
-            var address = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Addresses.AddObject(address);
+            context.SaveChanges();
             return address;
         }
 
@@ -423,11 +409,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateAddress(addressId, 
-                customerId, isBillingAddress, firstName, lastName, phoneNumber, 
-                email, faxNumber, company, address1, address2, city, 
-                stateProvinceId, zipPostalCode, countryId, createdOn, updatedOn);
-            var address = DBMapping(dbItem);
+            var address = GetAddressById(addressId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Addresses.Attach(address);
+
+            address.CustomerId = customerId;
+            address.IsBillingAddress = isBillingAddress;
+            address.FirstName = firstName;
+            address.LastName = lastName;
+            address.PhoneNumber = phoneNumber;
+            address.Email = email;
+            address.FaxNumber = faxNumber;
+            address.Company = company;
+            address.Address1 = address1;
+            address.Address2 = address2;
+            address.City = city;
+            address.StateProvinceId = stateProvinceId;
+            address.ZipPostalCode = zipPostalCode;
+            address.CountryId = countryId;
+            address.CreatedOn = createdOn;
+            address.UpdatedOn = updatedOn;
+            context.SaveChanges();
             return address;
         }
 
