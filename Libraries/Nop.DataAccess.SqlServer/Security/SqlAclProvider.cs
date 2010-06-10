@@ -32,21 +32,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         #region Fields
         private string _sqlConnectionString;
         #endregion
-
-        #region Utilities
-
-        private DBACL GetAclFromReader(IDataReader dataReader)
-        {
-            var item = new DBACL();
-            item.AclId = NopSqlDataHelper.GetInt(dataReader, "ACLID");
-            item.CustomerActionId = NopSqlDataHelper.GetInt(dataReader, "CustomerActionID");
-            item.CustomerRoleId = NopSqlDataHelper.GetInt(dataReader, "CustomerRoleID");
-            item.Allow = NopSqlDataHelper.GetBoolean(dataReader, "Allow");
-            return item;
-        }
-
-        #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -83,121 +69,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
             }
         }
         
-        /// <summary>
-        /// Deletes an ACL
-        /// </summary>
-        /// <param name="aclId">ACL identifier</param>
-        public override void DeleteAcl(int aclId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ACLDelete");
-            db.AddInParameter(dbCommand, "ACLID", DbType.Int32, aclId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets an ACL by identifier
-        /// </summary>
-        /// <param name="aclId">ACL identifier</param>
-        /// <returns>ACL</returns>
-        public override DBACL GetAclById(int aclId)
-        {
-            DBACL item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ACLLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ACLID", DbType.Int32, aclId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetAclFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-
-        /// <summary>
-        /// Gets all ACL
-        /// </summary>
-        /// <param name="customerActionId">Customer action identifier; 0 to load all records</param>
-        /// <param name="customerRoleId">Customer role identifier; 0 to load all records</param>
-        /// <param name="allow">Value indicating whether action is allowed; null to load all records</param>
-        /// <returns>ACL collection</returns>
-        public override DBACLCollection GetAllAcl(int customerActionId,
-            int customerRoleId, bool? allow)
-        {
-            var result = new DBACLCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ACLLoadAll");
-            db.AddInParameter(dbCommand, "CustomerActionID", DbType.Int32, customerActionId);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
-            if (allow.HasValue)
-                db.AddInParameter(dbCommand, "Allow", DbType.Boolean, allow.Value);
-            else
-                db.AddInParameter(dbCommand, "Allow", DbType.Boolean, null);
-            
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetAclFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Inserts an ACL
-        /// </summary>
-        /// <param name="customerActionId">The customer action identifier</param>
-        /// <param name="customerRoleId">The customer role identifier</param>
-        /// <param name="allow">The value indicating whether action is allowed</param>
-        /// <returns>An ACL</returns>
-        public override DBACL InsertAcl(int customerActionId,
-            int customerRoleId, bool allow)
-        {
-            DBACL item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ACLInsert");
-            db.AddOutParameter(dbCommand, "ACLID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "CustomerActionID", DbType.Int32, customerActionId);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
-            db.AddInParameter(dbCommand, "Allow", DbType.Boolean, allow);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int aclId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ACLID"));
-                item = GetAclById(aclId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the ACL
-        /// </summary>
-        /// <param name="aclId">The ACL identifier</param>
-        /// <param name="customerActionId">The customer action identifier</param>
-        /// <param name="customerRoleId">The customer role identifier</param>
-        /// <param name="allow">The value indicating whether action is allowed</param>
-        /// <returns>An ACL</returns>
-        public override DBACL UpdateAcl(int aclId, int customerActionId,
-            int customerRoleId, bool allow)
-        {
-            DBACL item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ACLUpdate");
-            db.AddInParameter(dbCommand, "ACLID", DbType.Int32, aclId);
-            db.AddInParameter(dbCommand, "CustomerActionID", DbType.Int32, customerActionId);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
-            db.AddInParameter(dbCommand, "Allow", DbType.Boolean, allow);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetAclById(aclId);
-
-            return item;
-        }
-
         /// <summary>
         /// Indicates whether action is allowed
         /// </summary>

@@ -104,7 +104,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <summary>
         /// Gets the localized topic
         /// </summary>
-        public virtual List<LocalizedTopic> NpLocalizedTopics { get; set; }
+        public virtual ICollection<LocalizedTopic> NpLocalizedTopics { get; set; }
 
         #endregion
     }

@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <summary>
         /// Gets the localized topic
         /// </summary>
-        public virtual List<LocalizedTopic> NpLocalizedTopics { get; set; }
+        public virtual ICollection<LocalizedTopic> NpLocalizedTopics { get; set; }
 
         #endregion
     }

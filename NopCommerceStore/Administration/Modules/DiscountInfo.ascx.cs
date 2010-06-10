@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.cbRequiresCouponCode.Checked = discount.RequiresCouponCode;
                 this.txtCouponCode.Text = discount.CouponCode;
 
-                CustomerRoleCollection customerRoles = discount.CustomerRoles;
+                var customerRoles = discount.CustomerRoles;
                 List<int> _customerRoleIds = new List<int>();
                 foreach (CustomerRole customerRole in customerRoles)
                     _customerRoleIds.Add(customerRole.CustomerRoleId);

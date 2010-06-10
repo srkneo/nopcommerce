@@ -180,12 +180,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             return item;
         }
 
-        private static CustomerRoleCollection DBMapping(DBCustomerRoleCollection dbCollection)
+        private static List<CustomerRole> DBMapping(DBCustomerRoleCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new CustomerRoleCollection();
+            var collection = new List<CustomerRole>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -1032,8 +1032,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static List<Customer> GetCustomersByCustomerRoleId(int customerRoleId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomersByCustomerRoleId(customerRoleId, showHidden);
-            var customers = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var query = from c in context.Customers
+                        from cr in c.NpCustomerRoles
+                        where (showHidden || c.Active) &&
+                            !c.Deleted &&
+                            cr.CustomerRoleId == customerRoleId
+                        orderby c.RegistrationDate descending
+                        select c;
+
+            //var query = from c in context.Customers
+            //            where (showHidden || c.Active) && !c.Deleted
+            //            && c.NpCustomerRoles.Any(cr => cr.CustomerRoleId == customerRoleId)
+            //            orderby c.RegistrationDate descending
+            //            select c;
+
+
+            //var query = context.CustomerRoles.Where(cr => cr.CustomerRoleId == customerRoleId)
+            //    .SelectMany(cr => cr.NpCustomers);
+            //if (!showHidden)
+            //    query = query.Where(c => c.Active);
+            //query = query.Where(c => !c.Deleted);
+            //query = query.OrderByDescending(c => c.RegistrationDate);
+            //var customers = query.ToList();
+
+            var customers = query.ToList();
             return customers;
         }
 
@@ -2003,8 +2028,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 return (CustomerRole)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRoleById(customerRoleId);
-            var customerRole = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cr in context.CustomerRoles
+                        where cr.CustomerRoleId == customerRoleId
+                        select cr;
+            var customerRole = query.SingleOrDefault();
 
             if (CustomerManager.CacheEnabled)
             {
@@ -2017,23 +2045,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// Gets all customer roles
         /// </summary>
         /// <returns>Customer role collection</returns>
-        public static CustomerRoleCollection GetAllCustomerRoles()
+        public static List<CustomerRole> GetAllCustomerRoles()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(CUSTOMERROLES_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (CustomerManager.CacheEnabled && (obj2 != null))
             {
-                return (CustomerRoleCollection)obj2;
+                return (List<CustomerRole>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAllCustomerRoles(showHidden);
-            var customerRoleCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cr in context.CustomerRoles
+                        orderby cr.Name
+                        where (showHidden || cr.Active) && !cr.Deleted
+                        select cr;
+            var customerRoles = query.ToList();
+
             if (CustomerManager.CacheEnabled)
             {
-                NopCache.Max(key, customerRoleCollection);
+                NopCache.Max(key, customerRoles);
             }
-            return customerRoleCollection;
+            return customerRoles;
         }
 
         /// <summary>
@@ -2041,7 +2074,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         /// <param name="customerId">Customer identifier</param>
         /// <returns>Customer role collection</returns>
-        public static CustomerRoleCollection GetCustomerRolesByCustomerId(int customerId)
+        public static List<CustomerRole> GetCustomerRolesByCustomerId(int customerId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetCustomerRolesByCustomerId(customerId, showHidden);
@@ -2053,14 +2086,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="customerId">Customer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer role collection</returns>
-        public static CustomerRoleCollection GetCustomerRolesByCustomerId(int customerId, bool showHidden)
+        public static List<CustomerRole> GetCustomerRolesByCustomerId(int customerId, bool showHidden)
         {
             if (customerId == 0)
-                return new CustomerRoleCollection();
+                return new List<CustomerRole>();
 
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRolesByCustomerId(customerId, showHidden);
-            var customerRoleCollection = DBMapping(dbCollection);
-            return customerRoleCollection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var query = from cr in context.CustomerRoles
+                        from c in cr.NpCustomers
+                        where (showHidden || cr.Active) &&
+                            !cr.Deleted &&
+                            c.CustomerId == customerId
+                        orderby cr.Name descending
+                        select cr;
+
+            var customerRoles = query.ToList();
+            return customerRoles;
         }
 
         /// <summary>
@@ -2075,9 +2117,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static CustomerRole InsertCustomerRole(string name,
             bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.InsertCustomerRole(name,
-                freeShipping, taxExempt, active, deleted);
-            var customerRole = DBMapping(dbItem);
+            var customerRole = new CustomerRole();
+            customerRole.Name = name;
+            customerRole.FreeShipping = freeShipping;
+            customerRole.TaxExempt = taxExempt;
+            customerRole.Active = active;
+            customerRole.Deleted = deleted;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerRoles.AddObject(customerRole);
+            context.SaveChanges();
 
             if (CustomerManager.CacheEnabled)
             {
@@ -2100,9 +2149,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static CustomerRole UpdateCustomerRole(int customerRoleId, string name,
             bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
-            var dbItem = DBProviderManager<DBCustomerProvider>.Provider.UpdateCustomerRole(customerRoleId, 
-                name, freeShipping, taxExempt, active, deleted);
-            var customerRole = DBMapping(dbItem);
+            var customerRole = GetCustomerRoleById(customerRoleId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerRoles.Attach(customerRole);
+
+            customerRole.Name = name;
+            customerRole.FreeShipping = freeShipping;
+            customerRole.TaxExempt = taxExempt;
+            customerRole.Active = active;
+            customerRole.Deleted = deleted;
+            context.SaveChanges();
 
             if (CustomerManager.CacheEnabled)
             {
@@ -2165,14 +2222,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         /// <param name="discountId">Discount identifier</param>
         /// <returns>Customer roles</returns>
-        public static CustomerRoleCollection GetCustomerRolesByDiscountId(int discountId)
+        public static List<CustomerRole> GetCustomerRolesByDiscountId(int discountId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(CUSTOMERROLES_BY_DISCOUNTID_KEY, discountId, showHidden);
             object obj2 = NopCache.Get(key);
             if (CustomerManager.CacheEnabled && (obj2 != null))
             {
-                return (CustomerRoleCollection)obj2;
+                return (List<CustomerRole>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRolesByDiscountId(discountId, showHidden);

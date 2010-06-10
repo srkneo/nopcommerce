@@ -149,7 +149,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             tfAction.HeaderTemplate = new NopGridViewCustomTemplate(DataControlRowType.Header, GetLocaleResourceString("Admin.ACL.Grid.CustomerAction"), "String");
             gvACL.Columns.Add(tfAction);
 
-            CustomerRoleCollection roles = CustomerManager.GetAllCustomerRoles();
+            var roles = CustomerManager.GetAllCustomerRoles();
             foreach (CustomerRole cr in roles)
             {
                 TemplateField tf = new TemplateField();
@@ -183,7 +183,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 foreach (CustomerRole cr in roles)
                 {
-                    ACLCollection acls = ACLManager.GetAllAcl(ca.CustomerActionId, cr.CustomerRoleId, null);
+                    var acls = ACLManager.GetAllAcl(ca.CustomerActionId, cr.CustomerRoleId, null);
                     if (acls.Count > 0)
                     {
                         ACL acl = acls[0];
@@ -227,7 +227,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 try
                 {
-                    CustomerRoleCollection roles = CustomerManager.GetAllCustomerRoles();
+                    var roles = CustomerManager.GetAllCustomerRoles();
                     if (roles.Count == 0)
                     {
                         lblMessage.Text = GetLocaleResourceString("Admin.ACL.NoRolesDefined");
@@ -247,7 +247,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                             bool allow = cbAllow.Checked;
                             int customerActionId = int.Parse(hfCustomerActionId.Value);
 
-                            ACLCollection acls = ACLManager.GetAllAcl(customerActionId, cr.CustomerRoleId, null);
+                            var acls = ACLManager.GetAllAcl(customerActionId, cr.CustomerRoleId, null);
                             if (acls.Count > 0)
                             {
                                 ACL acl = acls[0];

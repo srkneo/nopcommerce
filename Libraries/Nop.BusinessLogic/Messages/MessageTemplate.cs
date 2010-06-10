@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <summary>
         /// Gets the localized message template
         /// </summary>
-        public virtual List<LocalizedMessageTemplate> NpMessageTemplateLocalized { get; set; }
+        public virtual ICollection<LocalizedMessageTemplate> NpMessageTemplateLocalized { get; set; }
 
         #endregion
     }

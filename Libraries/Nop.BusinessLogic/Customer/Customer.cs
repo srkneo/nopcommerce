@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
     {
         #region Fields
         private CustomerAttributeCollection _customerAttributesCache = null;
-        private CustomerRoleCollection _customerRolesCache = null;
+        private List<CustomerRole> _customerRolesCache = null;
         private Address _billingAddressCache = null;
         private Address _shippingAddressCache = null;
         private RewardPointsHistoryCollection _rewardPointsHistoryCache = null;
@@ -241,7 +241,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets the customer roles
         /// </summary>
-        public CustomerRoleCollection CustomerRoles
+        public List<CustomerRole> CustomerRoles
         {
             get
             {
@@ -1080,6 +1080,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 ResetCachedValues();
             }
         }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the customer roles
+        /// </summary>
+        public virtual ICollection<CustomerRole> NpCustomerRoles { get; set; }
 
         #endregion
     }

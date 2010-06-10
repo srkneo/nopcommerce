@@ -24,12 +24,12 @@ using System.Web;
 using System.Web.Security;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Security;
-using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Security
@@ -45,42 +45,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         private const string CUSTOMERACTIONS_PATTERN_KEY = "Nop.customeraction.";
         #endregion
 
-        #region Utilities
-
-        private static ACLCollection DBMapping(DBACLCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ACLCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ACL DBMapping(DBACL dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ACL();
-            item.AclId = dbItem.AclId;
-            item.CustomerActionId = dbItem.CustomerActionId;
-            item.CustomerRoleId = dbItem.CustomerRoleId;
-            item.Allow = dbItem.Allow;
-
-            return item;
-        }
-
-        #endregion
-
         #region Methods
 
         #region Repository methods
+
         /// <summary>
         /// Deletes a customer action
         /// </summary>
@@ -225,7 +193,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="aclId">ACL identifier</param>
         public static void DeleteAcl(int aclId)
         {
-            DBProviderManager<DBACLProvider>.Provider.DeleteAcl(aclId);
+            var acl = GetAclById(aclId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ACL.Attach(acl);
+            context.DeleteObject(acl);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -238,8 +211,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             if (aclId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.GetAclById(aclId);
-            var acl = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from a in context.ACL
+                        where a.AclId == aclId
+                        select a;
+            var acl = query.SingleOrDefault();
             return acl;
         }
 
@@ -250,12 +226,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// <param name="customerRoleId">Customer role identifier; 0 to load all records</param>
         /// <param name="allow">Value indicating whether action is allowed; null to load all records</param>
         /// <returns>ACL collection</returns>
-        public static ACLCollection GetAllAcl(int customerActionId,
+        public static List<ACL> GetAllAcl(int customerActionId,
             int customerRoleId, bool? allow)
         {
-            var dbCollection = DBProviderManager<DBACLProvider>.Provider.GetAllAcl(customerActionId,
-                customerRoleId, allow);
-            var aclCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = (IQueryable<ACL>)context.ACL;
+            if (customerActionId > 0)
+                query = query.Where(a => a.CustomerActionId == customerActionId);
+            if (customerRoleId > 0)
+                query = query.Where(a => a.CustomerRoleId == customerRoleId);
+            if (allow.HasValue)
+                query = query.Where(a => a.Allow == allow.Value);
+            query = query.OrderByDescending(a => a.AclId);
+
+            var aclCollection = query.ToList();
+
             return aclCollection;
         }
 
@@ -269,9 +254,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static ACL InsertAcl(int customerActionId,
             int customerRoleId, bool allow)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.InsertAcl(customerActionId,
-                customerRoleId, allow);
-            var acl = DBMapping(dbItem);
+            var acl = new ACL();
+            acl.CustomerActionId = customerActionId;
+            acl.CustomerRoleId = customerRoleId;
+            acl.Allow = allow;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ACL.AddObject(acl);
+            context.SaveChanges();
+
             return acl;
         }
 
@@ -286,9 +277,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static ACL UpdateAcl(int aclId, int customerActionId,
             int customerRoleId, bool allow)
         {
-            var dbItem = DBProviderManager<DBACLProvider>.Provider.UpdateAcl(aclId,
-                customerActionId, customerRoleId, allow);
-            var acl = DBMapping(dbItem);
+            var acl = GetAclById(aclId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ACL.Attach(acl);
+
+            acl.CustomerActionId = customerActionId;
+            acl.CustomerRoleId = customerRoleId;
+            acl.Allow = allow;
+            context.SaveChanges();
+
             return acl;
         }
         #endregion

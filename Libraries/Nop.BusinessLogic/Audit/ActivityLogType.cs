@@ -54,5 +54,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// </summary>
         public bool Enabled { get; set; }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the activity log
+        /// </summary>
+        public virtual ICollection<ActivityLog> NpActivityLog { get; set; }
+
+        #endregion
     }
 }

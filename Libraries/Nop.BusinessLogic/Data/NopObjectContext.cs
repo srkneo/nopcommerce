@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
@@ -87,6 +88,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
 
             return (ObjectSet<T>)match;
         }
+
+        public ObjectSet<ACL> ACL
+        {
+            get
+            {
+                if ((_acl == null))
+                {
+                    _acl = CreateObjectSet<ACL>();
+                }
+                return _acl;
+            }
+        }
+        private ObjectSet<ACL> _acl;
+
+        public ObjectSet<ActivityLog> ActivityLog
+        {
+            get
+            {
+                if ((_activityLog == null))
+                {
+                    _activityLog = CreateObjectSet<ActivityLog>();
+                }
+                return _activityLog;
+            }
+        }
+        private ObjectSet<ActivityLog> _activityLog;
+
+        public ObjectSet<ActivityLogType> ActivityLogTypes
+        {
+            get
+            {
+                if ((_activityLogTypes == null))
+                {
+                    _activityLogTypes = CreateObjectSet<ActivityLogType>();
+                }
+                return _activityLogTypes;
+            }
+        }
+        private ObjectSet<ActivityLogType> _activityLogTypes;
 
         public ObjectSet<Affiliate> Affiliates
         {
@@ -217,6 +257,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<CustomerAction> _customerActions;
+
+        public ObjectSet<CustomerRole> CustomerRoles
+        {
+            get
+            {
+                if ((_customerRoles == null))
+                {
+                    _customerRoles = CreateObjectSet<CustomerRole>();
+                }
+                return _customerRoles;
+            }
+        }
+        private ObjectSet<CustomerRole> _customerRoles;
 
         public ObjectSet<DiscountLimitation> DiscountLimitations
         {

@@ -83,5 +83,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the activity log type
+        /// </summary>
+        public virtual ActivityLogType NpActivityLogType { get; set; }
+        
+        #endregion
     }
 }

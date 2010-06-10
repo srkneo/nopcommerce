@@ -77,8 +77,6 @@
   <ItemGroup>
     <Compile Include="Audit\DBActivityLog.cs" />
     <Compile Include="Audit\DBActivityLogCollection.cs" />
-    <Compile Include="Audit\DBActivityLogType.cs" />
-    <Compile Include="Audit\DBActivityLogTypeCollection.cs" />
     <Compile Include="Audit\DBCustomerActivityProvider.cs" />
     <Compile Include="Audit\DBLog.cs" />
     <Compile Include="Audit\DBLogCollection.cs" />
@@ -181,8 +179,6 @@
     <Compile Include="Categories\DBCategoryProvider.cs" />
     <Compile Include="Promo\Discounts\DBDiscountUsageHistoryCollection.cs" />
     <Compile Include="Promo\Discounts\DBDiscountUsageHistory.cs" />
-    <Compile Include="Security\DBACL.cs" />
-    <Compile Include="Security\DBACLCollection.cs" />
     <Compile Include="Security\DBACLProvider.cs" />
     <Compile Include="Customer\DBCustomerProvider.cs" />
     <Compile Include="Promo\Discounts\DBDiscountProvider.cs" />

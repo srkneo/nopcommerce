@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Customer customer = CustomerManager.GetCustomerById(this.CustomerId);
             if (customer != null)
             {
-                CustomerRoleCollection customerRoles = customer.CustomerRoles;
+                var customerRoles = customer.CustomerRoles;
                 foreach (CustomerRole customerRole in customerRoles)
                     _customerRoleIds.Add(customerRole.CustomerRoleId);
             }

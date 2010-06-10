@@ -126,14 +126,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             bool dontLoadGuestCustomers, int pageSize, int pageIndex, out int totalRecords);
 
         /// <summary>
-        /// Gets all customers by customer role id
-        /// </summary>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Customer collection</returns>
-        public abstract DBCustomerCollection GetCustomersByCustomerRoleId(int customerRoleId, bool showHidden);
-
-        /// <summary>
         /// Get best customers
         /// </summary>
         /// <param name="startTime">Order start time; null to load all</param>
@@ -200,53 +192,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         /// <returns>A customer attribute</returns>
         public abstract DBCustomerAttribute UpdateCustomerAttribute(int customerAttributeId,
             int customerId, string key, string value);
-
-        /// <summary>
-        /// Gets customer roles by customer identifier
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Customer role collection</returns>
-        public abstract DBCustomerRoleCollection GetCustomerRolesByCustomerId(int customerId, bool showHidden);
-
-        /// <summary>
-        /// Gets all customer roles
-        /// </summary>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Customer role collection</returns>
-        public abstract DBCustomerRoleCollection GetAllCustomerRoles(bool showHidden);
-
-        /// <summary>
-        /// Gets a customer role
-        /// </summary>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        /// <returns>Customer role</returns>
-        public abstract DBCustomerRole GetCustomerRoleById(int customerRoleId);
-
-        /// <summary>
-        /// Inserts a customer role
-        /// </summary>
-        /// <param name="name">The customer role name</param>
-        /// <param name="freeShipping">A value indicating whether the customer role is marked as free shiping</param>
-        /// <param name="taxExempt">A value indicating whether the customer role is marked as tax exempt</param>
-        /// <param name="active">A value indicating whether the customer role is active</param>
-        /// <param name="deleted">A value indicating whether the customer role has been deleted</param>
-        /// <returns>Customer role</returns>
-        public abstract DBCustomerRole InsertCustomerRole(string name, 
-            bool freeShipping, bool taxExempt, bool active, bool deleted);
-
-        /// <summary>
-        /// Updates the customer role
-        /// </summary>
-        /// <param name="customerRoleId">The customer role identifier</param>
-        /// <param name="name">The customer role name</param>
-        /// <param name="freeShipping">A value indicating whether the customer role is marked as free shiping</param>
-        /// <param name="taxExempt">A value indicating whether the customer role is marked as tax exempt</param>
-        /// <param name="active">A value indicating whether the customer role is active</param>
-        /// <param name="deleted">A value indicating whether the customer role has been deleted</param>
-        /// <returns>Customer role</returns>
-        public abstract DBCustomerRole UpdateCustomerRole(int customerRoleId, string name,
-            bool freeShipping, bool taxExempt, bool active, bool deleted);
 
         /// <summary>
         /// Adds a customer to role

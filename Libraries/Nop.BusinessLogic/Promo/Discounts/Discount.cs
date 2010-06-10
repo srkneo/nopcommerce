@@ -171,8 +171,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                     {
                         if (customer != null)
                         {
-                            CustomerRoleCollection customerRoles = customer.CustomerRoles;
-                            CustomerRoleCollection assignedRoles = this.CustomerRoles;
+                            var customerRoles = customer.CustomerRoles;
+                            var assignedRoles = this.CustomerRoles;
                             foreach (CustomerRole _customerRole in customerRoles)
                                 foreach (CustomerRole _assignedRole in assignedRoles)
                                 {
@@ -344,7 +344,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Gets the customer role assigned to discount
         /// </summary>
-        public CustomerRoleCollection CustomerRoles
+        public List<CustomerRole> CustomerRoles
         {
             get
             {

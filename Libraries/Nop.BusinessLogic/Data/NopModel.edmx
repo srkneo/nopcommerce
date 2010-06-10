@@ -6,6 +6,9 @@
     <edmx:StorageModels>
     <Schema Namespace="NopSolutions.NopCommerce.BusinessLogic.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="NopSolutionsNopCommerceBusinessLogicDataStoreContainer">
+          <EntitySet Name="Nop_ACL" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ACL" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ActivityLog" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ActivityLogType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLogType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Affiliate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Affiliate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_BannedIpAddress" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpAddress" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_BannedIpNetwork" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BannedIpNetwork" store:Type="Tables" Schema="dbo" />
@@ -15,7 +18,9 @@
           <EntitySet Name="Nop_CreditCardType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CreditCardType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Currency" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Currency" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Customer" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Customer_CustomerRole_Mapping" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer_CustomerRole_Mapping" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerAction" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_CustomerRole" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountLimitation" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountLimitation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountRequirement" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRequirement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountType" store:Type="Tables" Schema="dbo" />
@@ -50,6 +55,30 @@
           <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Warehouse" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Warehouse" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Nop_ACL_Nop_CustomerAction" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ACL_Nop_CustomerAction">
+            <End Role="Nop_CustomerAction" EntitySet="Nop_CustomerAction" />
+            <End Role="Nop_ACL" EntitySet="Nop_ACL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ACL_Nop_CustomerRole" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ACL_Nop_CustomerRole">
+            <End Role="Nop_CustomerRole" EntitySet="Nop_CustomerRole" />
+            <End Role="Nop_ACL" EntitySet="Nop_ACL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ActivityLog_Nop_ActivityLogType" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ActivityLog_Nop_ActivityLogType">
+            <End Role="Nop_ActivityLogType" EntitySet="Nop_ActivityLogType" />
+            <End Role="Nop_ActivityLog" EntitySet="Nop_ActivityLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ActivityLog_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ActivityLog_Nop_Customer">
+            <End Role="Nop_Customer" EntitySet="Nop_Customer" />
+            <End Role="Nop_ActivityLog" EntitySet="Nop_ActivityLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Customer_CustomerRole_Mapping_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Customer_CustomerRole_Mapping_Nop_Customer">
+            <End Role="Nop_Customer" EntitySet="Nop_Customer" />
+            <End Role="Nop_Customer_CustomerRole_Mapping" EntitySet="Nop_Customer_CustomerRole_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Customer_CustomerRole_Mapping_Nop_CustomerRole" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Customer_CustomerRole_Mapping_Nop_CustomerRole">
+            <End Role="Nop_CustomerRole" EntitySet="Nop_CustomerRole" />
+            <End Role="Nop_Customer_CustomerRole_Mapping" EntitySet="Nop_Customer_CustomerRole_Mapping" />
+          </AssociationSet>
           <AssociationSet Name="FK_Nop_LocaleStringResource_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_LocaleStringResource_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
             <End Role="Nop_LocaleStringResource" EntitySet="Nop_LocaleStringResource" />
@@ -99,6 +128,34 @@
             <End Role="Nop_TopicLocalized" EntitySet="Nop_TopicLocalized" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Nop_ACL">
+          <Key>
+            <PropertyRef Name="ACLID" />
+          </Key>
+          <Property Name="ACLID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerActionID" Type="int" Nullable="false" />
+          <Property Name="CustomerRoleID" Type="int" Nullable="false" />
+          <Property Name="Allow" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_ActivityLog">
+          <Key>
+            <PropertyRef Name="ActivityLogID" />
+          </Key>
+          <Property Name="ActivityLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityLogTypeID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_ActivityLogType">
+          <Key>
+            <PropertyRef Name="ActivityLogTypeID" />
+          </Key>
+          <Property Name="ActivityLogTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_Affiliate">
           <Key>
             <PropertyRef Name="AffiliateID" />
@@ -236,6 +293,14 @@
           <Property Name="TimeZoneID" Type="nvarchar" Nullable="false" MaxLength="200" />
           <Property Name="AvatarID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_Customer_CustomerRole_Mapping">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="CustomerRoleID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="CustomerRoleID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_CustomerAction">
           <Key>
             <PropertyRef Name="CustomerActionID" />
@@ -245,6 +310,17 @@
           <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Comment" Type="nvarchar" Nullable="false" MaxLength="1000" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_CustomerRole">
+          <Key>
+            <PropertyRef Name="CustomerRoleID" />
+          </Key>
+          <Property Name="CustomerRoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="FreeShipping" Type="bit" Nullable="false" />
+          <Property Name="TaxExempt" Type="bit" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_DiscountLimitation">
           <Key>
@@ -595,6 +671,90 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Nop_ACL_Nop_CustomerAction">
+          <End Role="Nop_CustomerAction" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAction" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ACL" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ACL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_CustomerAction">
+              <PropertyRef Name="CustomerActionID" />
+            </Principal>
+            <Dependent Role="Nop_ACL">
+              <PropertyRef Name="CustomerActionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ACL_Nop_CustomerRole">
+          <End Role="Nop_CustomerRole" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ACL" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ACL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_CustomerRole">
+              <PropertyRef Name="CustomerRoleID" />
+            </Principal>
+            <Dependent Role="Nop_ACL">
+              <PropertyRef Name="CustomerRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ActivityLog_Nop_ActivityLogType">
+          <End Role="Nop_ActivityLogType" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLogType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ActivityLog" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ActivityLogType">
+              <PropertyRef Name="ActivityLogTypeID" />
+            </Principal>
+            <Dependent Role="Nop_ActivityLog">
+              <PropertyRef Name="ActivityLogTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ActivityLog_Nop_Customer">
+          <End Role="Nop_Customer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ActivityLog" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Nop_ActivityLog">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Customer_CustomerRole_Mapping_Nop_Customer">
+          <End Role="Nop_Customer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Customer_CustomerRole_Mapping" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer_CustomerRole_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Nop_Customer_CustomerRole_Mapping">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Customer_CustomerRole_Mapping_Nop_CustomerRole">
+          <End Role="Nop_CustomerRole" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Customer_CustomerRole_Mapping" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer_CustomerRole_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_CustomerRole">
+              <PropertyRef Name="CustomerRoleID" />
+            </Principal>
+            <Dependent Role="Nop_Customer_CustomerRole_Mapping">
+              <PropertyRef Name="CustomerRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_LocaleStringResource_Nop_Language">
           <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -859,6 +1019,30 @@
           <AssociationSet Name="FK_Nop_TaxRate_Nop_TaxCategory" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_TaxCategory">
             <End Role="TaxCategory" EntitySet="TaxCategories" />
             <End Role="Nop_TaxRate" EntitySet="TaxRates" />
+          </AssociationSet>
+          <EntitySet Name="CustomerRoles" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" />
+          <AssociationSet Name="Nop_Customer_CustomerRole_Mapping" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Nop_CustomerRole" EntitySet="CustomerRoles" />
+          </AssociationSet>
+          <EntitySet Name="ACLs" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" />
+          <AssociationSet Name="FK_Nop_ACL_Nop_CustomerAction" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerAction">
+            <End Role="CustomerAction" EntitySet="CustomerActions" />
+            <End Role="Nop_ACL" EntitySet="ACLs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ACL_Nop_CustomerRole" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerRole">
+            <End Role="CustomerRole" EntitySet="CustomerRoles" />
+            <End Role="Nop_ACL" EntitySet="ACLs" />
+          </AssociationSet>
+          <EntitySet Name="ActivityLogs" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLog" />
+          <EntitySet Name="ActivityLogTypes" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLogType" />
+          <AssociationSet Name="FK_Nop_ActivityLog_Nop_ActivityLogType" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_ActivityLogType">
+            <End Role="Nop_ActivityLogType" EntitySet="ActivityLogTypes" />
+            <End Role="Nop_ActivityLog" EntitySet="ActivityLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ActivityLog_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Nop_ActivityLog" EntitySet="ActivityLogs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
@@ -1474,6 +1658,7 @@
           <Property Type="DateTime" Name="RegistrationDate" Nullable="false" />
           <Property Type="String" Name="TimeZoneId" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="AvatarId" Nullable="false" />
+          <NavigationProperty Name="NpCustomerRoles" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping" FromRole="Customer" ToRole="Nop_CustomerRole" />
         </EntityType>
         <EntityType Name="TaxRate">
           <Key>
@@ -1507,6 +1692,100 @@
             </Principal>
             <Dependent Role="Nop_TaxRate">
               <PropertyRef Name="TaxCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerRole">
+          <Key>
+            <PropertyRef Name="CustomerRoleId" />
+          </Key>
+          <Property Type="Int32" Name="CustomerRoleId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="FreeShipping" Nullable="false" />
+          <Property Type="Boolean" Name="TaxExempt" Nullable="false" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
+          <Property Type="Boolean" Name="Deleted" Nullable="false" />
+          <NavigationProperty Name="NpCustomers" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping" FromRole="Nop_CustomerRole" ToRole="Customer" />
+        </EntityType>
+        <Association Name="Nop_Customer_CustomerRole_Mapping">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Role="Customer" Multiplicity="*" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Role="Nop_CustomerRole" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ACL">
+          <Key>
+            <PropertyRef Name="AclId" />
+          </Key>
+          <Property Type="Int32" Name="AclId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="CustomerActionId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerRoleId" Nullable="false" />
+          <Property Type="Boolean" Name="Allow" Nullable="false" />
+          </EntityType>
+        <Association Name="FK_Nop_ACL_Nop_CustomerAction">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAction" Role="CustomerAction" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Role="Nop_ACL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerAction">
+              <PropertyRef Name="CustomerActionId" />
+            </Principal>
+            <Dependent Role="Nop_ACL">
+              <PropertyRef Name="CustomerActionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ACL_Nop_CustomerRole">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Role="CustomerRole" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Role="Nop_ACL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerRole">
+              <PropertyRef Name="CustomerRoleId" />
+            </Principal>
+            <Dependent Role="Nop_ACL">
+              <PropertyRef Name="CustomerRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ActivityLog">
+          <Key>
+            <PropertyRef Name="ActivityLogId" />
+          </Key>
+          <Property Type="Int32" Name="ActivityLogId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ActivityLogTypeId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="Comment" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <NavigationProperty Name="NpActivityLogType" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_ActivityLogType" FromRole="Nop_ActivityLog" ToRole="Nop_ActivityLogType" />
+        </EntityType>
+        <EntityType Name="ActivityLogType">
+          <Key>
+            <PropertyRef Name="ActivityLogTypeId" />
+          </Key>
+          <Property Type="Int32" Name="ActivityLogTypeId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="SystemKeyword" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Enabled" Nullable="false" />
+          <NavigationProperty Name="NpActivityLog" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_ActivityLogType" FromRole="Nop_ActivityLogType" ToRole="Nop_ActivityLog" />
+        </EntityType>
+        <Association Name="FK_Nop_ActivityLog_Nop_ActivityLogType">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLogType" Role="Nop_ActivityLogType" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLog" Role="Nop_ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ActivityLogType">
+              <PropertyRef Name="ActivityLogTypeId" />
+            </Principal>
+            <Dependent Role="Nop_ActivityLog">
+              <PropertyRef Name="ActivityLogTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ActivityLog_Nop_Customer">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLog" Role="Nop_ActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Nop_ActivityLog">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2052,6 +2331,57 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CustomerRoles">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole">
+              <MappingFragment StoreEntitySet="Nop_CustomerRole">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="TaxExempt" ColumnName="TaxExempt" />
+                <ScalarProperty Name="FreeShipping" ColumnName="FreeShipping" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CustomerRoleId" ColumnName="CustomerRoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Nop_Customer_CustomerRole_Mapping" TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping" StoreEntitySet="Nop_Customer_CustomerRole_Mapping">
+            <EndProperty Name="Nop_CustomerRole">
+              <ScalarProperty Name="CustomerRoleId" ColumnName="CustomerRoleID" />
+            </EndProperty>
+            <EndProperty Name="Customer">
+              <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="ACLs">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ACL">
+              <MappingFragment StoreEntitySet="Nop_ACL">
+                <ScalarProperty Name="Allow" ColumnName="Allow" />
+                <ScalarProperty Name="CustomerRoleId" ColumnName="CustomerRoleID" />
+                <ScalarProperty Name="CustomerActionId" ColumnName="CustomerActionID" />
+                <ScalarProperty Name="AclId" ColumnName="ACLID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityLogs">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLog">
+              <MappingFragment StoreEntitySet="Nop_ActivityLog">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="ActivityLogTypeId" ColumnName="ActivityLogTypeID" />
+                <ScalarProperty Name="ActivityLogId" ColumnName="ActivityLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivityLogTypes">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLogType">
+              <MappingFragment StoreEntitySet="Nop_ActivityLogType">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SystemKeyword" ColumnName="SystemKeyword" />
+                <ScalarProperty Name="ActivityLogTypeId" ColumnName="ActivityLogTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2112,7 +2442,7 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Affiliate" Width="1.625" PointX="3.375" PointY="25.625" Height="3.5644742838541674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CategoryTemplate" Width="2" PointX="0.5" PointY="31.625" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CreditCardType" Width="1.875" PointX="3.25" PointY="33.75" Height="1.7566536458333388" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAction" Width="2" PointX="0.5" PointY="33.75" Height="1.7566536458333388" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAction" Width="2" PointX="12.75" PointY="20.5" Height="1.7566536458333353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LowStockActivity" Width="2.25" PointX="8.125" PointY="31.625" Height="1.2636116536458388" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ManufacturerTemplate" Width="2.375" PointX="5.625" PointY="31.625" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductTemplate" Width="2.125" PointX="3.25" PointY="31.625" Height="1.9210009765625031" />
@@ -2165,13 +2495,15 @@
           <ConnectorPoint PointX="3.5781227500000004" PointY="18.546153157552084" />
           <ConnectorPoint PointX="3.5781227500000004" PointY="20.625" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Width="2" PointX="11.75" PointY="1.875" Height="5.5366422526041674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Width="2" PointX="15.5" PointY="3.125" Height="5.7009895833333335" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate" Width="1.5" PointX="27.625" PointY="19.125" Height="1.9210009765625031" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_Country" >
-          <ConnectorPoint PointX="7.625" PointY="22.382871059244792" />
-          <ConnectorPoint PointX="8" PointY="22.382871059244792" />
+          <ConnectorPoint PointX="7.625" PointY="21.871368815104169" />
+          <ConnectorPoint PointX="8" PointY="21.871368815104169" />
           <ConnectorPoint PointX="8" PointY="20.25" />
-          <ConnectorPoint PointX="18.25" PointY="20.25" />
+          <ConnectorPoint PointX="10.125" PointY="20.25" />
+          <ConnectorPoint PointX="10.125" PointY="22.506653645833339" />
+          <ConnectorPoint PointX="18.25" PointY="22.506653645833339" />
           <ConnectorPoint PointX="18.25" PointY="21.75" />
           <ConnectorPoint PointX="28.375" PointY="21.75" />
           <ConnectorPoint PointX="28.375" PointY="21.046000976562503" />
@@ -2179,6 +2511,34 @@
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_TaxCategory" >
           <ConnectorPoint PointX="29.75" PointY="20.128326822916669" />
           <ConnectorPoint PointX="29.125" PointY="20.128326822916669" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Width="1.75" PointX="15.5" PointY="0.5" Height="2.085348307291667" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping" >
+          <ConnectorPoint PointX="16.375" PointY="3.125" />
+          <ConnectorPoint PointX="16.375" PointY="2.585348307291667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Width="1.5" PointX="12.75" PointY="17.625" Height="1.5923063151041674" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerAction" >
+          <ConnectorPoint PointX="13.5" PointY="20.5" />
+          <ConnectorPoint PointX="13.5" PointY="19.217306315104167" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerRole" >
+          <ConnectorPoint PointX="15.5" PointY="1.5426741536458337" />
+          <ConnectorPoint PointX="13.5" PointY="1.5426741536458337" />
+          <ConnectorPoint PointX="13.5" PointY="17.625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLog" Width="1.875" PointX="10.375" PointY="17.75" Height="1.9210009765625031" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLogType" Width="2" PointX="10.375" PointY="20.375" Height="1.756653645833353" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_ActivityLogType" >
+          <ConnectorPoint PointX="11.3125" PointY="20.375" />
+          <ConnectorPoint PointX="11.3125" PointY="19.671000976562503" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer" >
+          <ConnectorPoint PointX="16.25" PointY="8.8259895833333335" />
+          <ConnectorPoint PointX="16.25" PointY="19.475403645833335" />
+          <ConnectorPoint PointX="13.583333333333334" PointY="19.475403645833335" />
+          <ConnectorPoint PointX="13.416666666666666" PointY="19.475403645833335" />
+          <ConnectorPoint PointX="12.25" PointY="19.475403645833335" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

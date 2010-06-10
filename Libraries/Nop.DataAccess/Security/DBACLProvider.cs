@@ -35,56 +35,13 @@ namespace NopSolutions.NopCommerce.DataAccess.Security
         #region Methods
         
         /// <summary>
-        /// Deletes an ACL
-        /// </summary>
-        /// <param name="aclId">ACL identifier</param>
-        public abstract void DeleteAcl(int aclId);
-
-        /// <summary>
-        /// Gets an ACL by identifier
-        /// </summary>
-        /// <param name="aclId">ACL identifier</param>
-        /// <returns>ACL</returns>
-        public abstract DBACL GetAclById(int aclId);
-
-        /// <summary>
-        /// Gets all ACL
-        /// </summary>
-        /// <param name="customerActionId">Customer action identifier; 0 to load all records</param>
-        /// <param name="customerRoleId">Customer role identifier; 0 to load all records</param>
-        /// <param name="allow">Value indicating whether action is allowed; null to load all records</param>
-        /// <returns>ACL collection</returns>
-        public abstract DBACLCollection GetAllAcl(int customerActionId,
-            int customerRoleId, bool? allow);
-
-        /// <summary>
-        /// Inserts an ACL
-        /// </summary>
-        /// <param name="customerActionId">The customer action identifier</param>
-        /// <param name="customerRoleId">The customer role identifier</param>
-        /// <param name="allow">The value indicating whether action is allowed</param>
-        /// <returns>An ACL</returns>
-        public abstract DBACL InsertAcl(int customerActionId,
-            int customerRoleId, bool allow);
-
-        /// <summary>
-        /// Updates the ACL
-        /// </summary>
-        /// <param name="aclId">The ACL identifier</param>
-        /// <param name="customerActionId">The customer action identifier</param>
-        /// <param name="customerRoleId">The customer role identifier</param>
-        /// <param name="allow">The value indicating whether action is allowed</param>
-        /// <returns>An ACL</returns>
-        public abstract DBACL UpdateAcl(int aclId, int customerActionId,
-            int customerRoleId, bool allow);
-        
-        /// <summary>
         /// Indicates whether action is allowed
         /// </summary>
         /// <param name="customerId">Customer identifer</param>
         /// <param name="actionSystemKeyword">Action system keyword</param>
         /// <returns>Result</returns>
         public abstract bool IsActionAllowed(int customerId, string actionSystemKeyword);
+
         #endregion
     }
 }

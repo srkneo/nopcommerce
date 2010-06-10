@@ -116,10 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audit\ActivityLog.cs" />
-    <Compile Include="Audit\ActivityLogCollection.cs" />
     <Compile Include="Audit\ActivityLogType.cs" />
-    <Compile Include="Audit\ActivityLogTypeCollection.cs" />
     <Compile Include="Audit\CustomerActivityManager.cs" />
+    <Compile Include="Audit\Extensions.cs" />
     <Compile Include="Categories\CategoryLocalized.cs" />
     <Compile Include="Content\Forums\ForumSubscription.cs" />
     <Compile Include="Content\Forums\ForumSubscriptionCollection.cs" />
@@ -251,7 +250,6 @@
     </Compile>
     <Compile Include="Security\BannedIpAddress.cs" />
     <Compile Include="Security\ACL.cs" />
-    <Compile Include="Security\ACLCollection.cs" />
     <Compile Include="Security\CustomerAction.cs" />
     <Compile Include="Security\ACLManager.cs" />
     <Compile Include="Security\IpBlacklistManager.cs" />
@@ -302,7 +300,6 @@
     <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
     <Compile Include="Products\Specs\ProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
-    <Compile Include="Customer\CustomerRoleCollection.cs" />
     <Compile Include="Audit\SearchLogCollection.cs" />
     <Compile Include="Content\Polls\PollAnswerCollection.cs" />
     <Compile Include="Content\Polls\PollCollection.cs" />
