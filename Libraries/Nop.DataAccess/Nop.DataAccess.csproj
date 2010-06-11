@@ -147,8 +147,6 @@
     <Compile Include="Products\DBProductLocalized.cs" />
     <Compile Include="Products\DBTierPriceCollection.cs" />
     <Compile Include="Products\DBTierPrice.cs" />
-    <Compile Include="Products\DBPricelist.cs" />
-    <Compile Include="Products\DBPricelistCollection.cs" />
     <Compile Include="Products\DBProductVariantPricelist.cs" />
     <Compile Include="Products\DBProductVariantPricelistCollection.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOptionLocalized.cs" />

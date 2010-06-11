@@ -867,7 +867,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             {
                 NewsLetterSubscription subscription = this.NewsLetterSubscription;
 
-                return (subscription != null && subscription.IsActive);
+                return (subscription != null && subscription.Active);
             }
             set
             {

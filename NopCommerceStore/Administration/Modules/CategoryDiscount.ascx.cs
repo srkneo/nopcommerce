@@ -44,8 +44,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Category category = CategoryManager.GetCategoryById(this.CategoryId);
             if (category != null)
             {
-                DiscountCollection discountCollection = category.Discounts;                
-                foreach (Discount dis in discountCollection)
+                var discounts = category.Discounts;                
+                foreach (Discount dis in discounts)
                     _discountIds.Add(dis.DiscountId);
             }
 

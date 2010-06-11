@@ -14,25 +14,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
 {
-    /// <summary>
-    /// Represents a discount collection
-    /// </summary>
-    public partial class DiscountCollection : BaseEntityCollection<Discount>
+    public static class Extensions
     {
         /// <summary>
         /// Determines whether the collection contains the specified discount.
         /// </summary>
-        /// <param name="discountName">Discount name</param>
+        /// <param name="source">Source</param>
+        /// <param name="discountName">The discount name</param>
         /// <returns>true if the collection contains a discount with the specified name; otherwise, false.</returns>
-        public bool ContainsDiscount(string discountName)
+        public static bool ContainsDiscount(this List<Discount> source,
+            string discountName)
         {
             bool result = false;
-            foreach (var discount in this)
+            foreach (var discount in source)
                 if (discount.Name == discountName)
                 {
                     result = true;
@@ -44,14 +44,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <summary>
         /// Finds the specified discount.
         /// </summary>
-        /// <param name="couponCode">Coupon code</param>
+        /// <param name="source">Source</param>
+        /// <param name="couponCode">The coupon code</param>
         /// <returns>Found discount</returns>
-        public Discount FindByCouponCode(string couponCode)
+        public static Discount FindByCouponCode(this List<Discount> source,
+            string couponCode)
         {
-            if (couponCode == null)
+            if (String.IsNullOrEmpty(couponCode))
                 return null;
 
-            foreach (var discount in this)
+            foreach (var discount in source)
                 if (discount.CouponCode.Equals(couponCode, StringComparison.InvariantCultureIgnoreCase))
                     return discount;
 

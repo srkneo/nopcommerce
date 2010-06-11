@@ -43,9 +43,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productVariant">Product variant</param>
         /// <param name="customer">Customer</param>
         /// <returns>Discounts</returns>
-        protected static DiscountCollection GetAllowedDiscounts(ProductVariant productVariant, Customer customer)
+        protected static List<Discount> GetAllowedDiscounts(ProductVariant productVariant, Customer customer)
         {
-            var allowedDiscounts = new DiscountCollection();
+            var allowedDiscounts = new List<Discount>();
 
             string customerCouponCode = string.Empty;
             if (customer != null)

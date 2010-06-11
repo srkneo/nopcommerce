@@ -319,7 +319,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 customerCouponCode = customer.LastAppliedCouponCode;
 
             var allDiscounts = DiscountManager.GetAllDiscounts(DiscountTypeEnum.AssignedToShipping);
-            var allowedDiscounts = new DiscountCollection();
+            var allowedDiscounts = new List<Discount>();
             foreach (var _discount in allDiscounts)
             {
                 if (_discount.IsActive(customerCouponCode) &&

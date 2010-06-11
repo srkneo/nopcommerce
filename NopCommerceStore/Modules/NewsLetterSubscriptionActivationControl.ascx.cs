@@ -25,7 +25,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                 subscription = MessageManager.UpdateNewsLetterSubscription(subscription.NewsLetterSubscriptionId, subscription.Email, IsActive);
 
-                if(subscription.IsActive)
+                if(subscription.Active)
                 {
                     lblActivationResult.Text = GetLocaleResourceString("NewsLetterSubscriptionActivation.ResultActivated");
                 }

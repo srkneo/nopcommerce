@@ -20,7 +20,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     if(rbSubscribe.Checked)
                     {
-                        if (!subscription.IsActive)
+                        if (!subscription.Active)
                         {
                             MessageManager.SendNewsLetterSubscriptionActivationMessage(subscription.NewsLetterSubscriptionId, NopContext.Current.WorkingLanguage.LanguageId);
                         }
@@ -28,7 +28,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                     else if(rbUnsubscribe.Checked)
                     {
-                        if (subscription.IsActive)
+                        if (subscription.Active)
                         {
                             MessageManager.SendNewsLetterSubscriptionDeactivationMessage(subscription.NewsLetterSubscriptionId, NopContext.Current.WorkingLanguage.LanguageId);
                         }

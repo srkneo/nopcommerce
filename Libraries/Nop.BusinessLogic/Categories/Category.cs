@@ -180,7 +180,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets the discounts of the category
         /// </summary>
-        public DiscountCollection Discounts
+        public List<Discount> Discounts
         {
             get
             {

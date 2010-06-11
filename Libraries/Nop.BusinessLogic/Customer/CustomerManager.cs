@@ -1530,7 +1530,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (subscriptionOld != null && !email.ToLower().Equals(subscriptionOld.Email.ToLower()))
             {
                 MessageManager.UpdateNewsLetterSubscription(subscriptionOld.NewsLetterSubscriptionId,
-                    email, subscriptionOld.IsActive);
+                    email, subscriptionOld.Active);
             }
 
             return customer;

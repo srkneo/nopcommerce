@@ -374,7 +374,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the discounts of the product variant
         /// </summary>
-        public DiscountCollection AllDiscounts
+        public List<Discount> AllDiscounts
         {
             get
             {

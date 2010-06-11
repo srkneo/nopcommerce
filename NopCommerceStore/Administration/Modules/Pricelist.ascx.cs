@@ -34,8 +34,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            PricelistCollection pricelistCollection = ProductManager.GetAllPricelists();
-            gvPricelists.DataSource = pricelistCollection;
+            var pricelists = ProductManager.GetAllPricelists();
+            gvPricelists.DataSource = pricelists;
             gvPricelists.DataBind();
         }
 

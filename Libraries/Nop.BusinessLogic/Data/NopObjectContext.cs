@@ -341,6 +341,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<CustomerSession> _customerSessions;
 
+        public ObjectSet<Discount> Discounts
+        {
+            get
+            {
+                if ((_discounts == null))
+                {
+                    _discounts = CreateObjectSet<Discount>();
+                }
+                return _discounts;
+            }
+        }
+        private ObjectSet<Discount> _discounts;
+
         public ObjectSet<DiscountLimitation> DiscountLimitations
         {
             get
@@ -627,6 +640,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<NewsComment> _newsComments;
 
+        public ObjectSet<NewsLetterSubscription> NewsLetterSubscriptions
+        {
+            get
+            {
+                if ((_newsLetterSubscriptions == null))
+                {
+                    _newsLetterSubscriptions = CreateObjectSet<NewsLetterSubscription>();
+                }
+                return _newsLetterSubscriptions;
+            }
+        }
+        private ObjectSet<NewsLetterSubscription> _newsLetterSubscriptions;
+
         public ObjectSet<OrderStatus> OrderStatuses
         {
             get
@@ -717,6 +743,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<PollVotingRecord> _pollVotingRecords;
+
+        public ObjectSet<Pricelist> Pricelists
+        {
+            get
+            {
+                if ((_pricelists == null))
+                {
+                    _pricelists = CreateObjectSet<Pricelist>();
+                }
+                return _pricelists;
+            }
+        }
+        private ObjectSet<Pricelist> _pricelists;
 
         public ObjectSet<PrivateMessage> PrivateMessages
         {

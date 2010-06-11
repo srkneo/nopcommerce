@@ -2763,7 +2763,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 }
 
                 //discount usage history
-                var appliedDiscounts = new DiscountCollection();
+                var appliedDiscounts = new List<Discount>();
 
                 //checkout attributes
                 string checkoutAttributeDescription = string.Empty;

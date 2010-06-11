@@ -35,8 +35,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void BindData(DiscountTypeEnum? DiscountType)
         {
-            DiscountCollection discountCollection = DiscountManager.GetAllDiscounts(DiscountType);
-            foreach (Discount discount in discountCollection)
+            var discounts = DiscountManager.GetAllDiscounts(DiscountType);
+            foreach (Discount discount in discounts)
             {
                 ListItem item = new ListItem(discount.Name, discount.DiscountId.ToString());
                 if (this.selectedDiscountIds.Contains(discount.DiscountId))

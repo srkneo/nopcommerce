@@ -146,8 +146,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         /// <param name="campaignId">Campaign identifier</param>
         /// <param name="subscriptions">Subscriptions</param>
         /// <returns>Total emails sent</returns>
-        public static int SendCampaign(int campaignId, 
-            NewsLetterSubscriptionCollection subscriptions)
+        public static int SendCampaign(int campaignId,
+            List<NewsLetterSubscription> subscriptions)
         {
             int totalEmailsSent = 0;
             var campaign = GetCampaignById(campaignId);

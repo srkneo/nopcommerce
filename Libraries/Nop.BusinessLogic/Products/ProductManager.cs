@@ -21,27 +21,27 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Xml;
+using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
+using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
+using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
+using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
+using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Products;
-using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
-using NopSolutions.NopCommerce.BusinessLogic.Media;
-using NopSolutions.NopCommerce.BusinessLogic.Categories;
-using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
-using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
-using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
-using NopSolutions.NopCommerce.BusinessLogic.Audit;
-using NopSolutions.NopCommerce.Common;
-using NopSolutions.NopCommerce.BusinessLogic.Directory;
-using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
@@ -277,50 +277,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.ProductId1 = dbItem.ProductId1;
             item.ProductId2 = dbItem.ProductId2;
             item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        private static PricelistCollection DBMapping(DBPricelistCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new PricelistCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Pricelist DBMapping(DBPricelist dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Pricelist();
-            item.PricelistId = dbItem.PricelistId;
-            item.ExportModeId = dbItem.ExportModeId;
-            item.ExportTypeId = dbItem.ExportTypeId;
-            item.AffiliateId = dbItem.AffiliateId;
-            item.DisplayName = dbItem.DisplayName;
-            item.ShortName = dbItem.ShortName;
-            item.PricelistGuid = dbItem.PricelistGuid;
-            item.CacheTime = dbItem.CacheTime;
-            item.FormatLocalization = dbItem.FormatLocalization;
-            item.Description = dbItem.Description;
-            item.AdminNotes = dbItem.AdminNotes;
-            item.Header = dbItem.Header;
-            item.Body = dbItem.Body;
-            item.Footer = dbItem.Footer;
-            item.PriceAdjustment = dbItem.PriceAdjustment;
-            item.PriceAdjustmentTypeId = dbItem.PriceAdjustmentTypeId;
-            item.OverrideIndivAdjustment = dbItem.OverrideIndivAdjustment;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
 
             return item;
         }
@@ -2767,17 +2723,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pricelistId">The PricelistId of the item to be deleted</param>
         public static void DeletePricelist(int pricelistId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeletePricelist(pricelistId);
+            var pricelist = GetPricelistById(pricelistId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(pricelist))
+                context.Pricelists.Attach(pricelist);
+            context.DeleteObject(pricelist);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets a collection of all available pricelists
         /// </summary>
         /// <returns>Collection of pricelists</returns>
-        public static PricelistCollection GetAllPricelists()
+        public static List<Pricelist> GetAllPricelists()
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllPricelists();
-            var pricelists = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pl in context.Pricelists
+                        orderby pl.PricelistId
+                        select pl;
+            var pricelists = query.ToList();
+
             return pricelists;
         }
 
@@ -2791,10 +2757,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (pricelistId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetPricelistById(pricelistId);
-            var newPricelist = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pl in context.Pricelists
+                        where pl.PricelistId == pricelistId
+                        select pl;
+            var pricelist = query.SingleOrDefault();
 
-            return newPricelist;
+            return pricelist;
         }
 
         /// <summary>
@@ -2804,9 +2773,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>Pricelist</returns>
         public static Pricelist GetPricelistByGuid(string pricelistGuid)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetPricelistByGuid(pricelistGuid);
-            var newPricelist = DBMapping(dbItem);
-            return newPricelist;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pl in context.Pricelists
+                        where pl.PricelistGuid == pricelistGuid
+                        select pl;
+            var pricelist = query.FirstOrDefault();
+
+            return pricelist;
         }
 
         /// <summary>
@@ -2841,16 +2814,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
+            
+            var pricelist = new Pricelist();
+            pricelist.ExportModeId = (int)exportMode;
+            pricelist.ExportTypeId = (int)exportType;
+            pricelist.AffiliateId = affiliateId;
+            pricelist.DisplayName = displayName;
+            pricelist.ShortName = shortName;
+            pricelist.PricelistGuid = pricelistGuid;
+            pricelist.CacheTime = cacheTime;
+            pricelist.FormatLocalization = formatLocalization;
+            pricelist.Description = description;
+            pricelist.AdminNotes = adminNotes;
+            pricelist.Header = header;
+            pricelist.Body = body;
+            pricelist.Footer = footer;
+            pricelist.PriceAdjustmentTypeId = (int)priceAdjustmentType;
+            pricelist.PriceAdjustment = priceAdjustment;
+            pricelist.OverrideIndivAdjustment = overrideIndivAdjustment;
+            pricelist.CreatedOn = createdOn;
+            pricelist.UpdatedOn = updatedOn;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertPricelist((int)exportMode, 
-                (int)exportType, affiliateId, displayName, shortName, 
-                pricelistGuid, cacheTime, formatLocalization,
-                description, adminNotes, header, body, footer,
-                (int)priceAdjustmentType, priceAdjustment, 
-                overrideIndivAdjustment, createdOn, updatedOn);
-            var newPricelist = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Pricelists.AddObject(pricelist);
+            context.SaveChanges();
 
-            return newPricelist;
+            return pricelist;
         }
 
         /// <summary>
@@ -2888,14 +2877,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdatePricelist(pricelistId, 
-                (int)exportMode, (int)exportType, affiliateId, displayName, shortName, pricelistGuid,
-                cacheTime, formatLocalization, description, adminNotes, header, body, footer,
-                (int)priceAdjustmentType, priceAdjustment, overrideIndivAdjustment,
-                createdOn, updatedOn);
-            var newPricelist = DBMapping(dbItem);
+            var pricelist = GetPricelistById(pricelistId);
 
-            return newPricelist;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(pricelist))
+                context.Pricelists.Attach(pricelist);
+
+            pricelist.ExportModeId = (int)exportMode;
+            pricelist.ExportTypeId = (int)exportType;
+            pricelist.AffiliateId = affiliateId;
+            pricelist.DisplayName = displayName;
+            pricelist.ShortName = shortName;
+            pricelist.PricelistGuid = pricelistGuid;
+            pricelist.CacheTime = cacheTime;
+            pricelist.FormatLocalization = formatLocalization;
+            pricelist.Description = description;
+            pricelist.AdminNotes = adminNotes;
+            pricelist.Header = header;
+            pricelist.Body = body;
+            pricelist.Footer = footer;
+            pricelist.PriceAdjustmentTypeId = (int)priceAdjustmentType;
+            pricelist.PriceAdjustment = priceAdjustment;
+            pricelist.OverrideIndivAdjustment = overrideIndivAdjustment;
+            pricelist.CreatedOn = createdOn;
+            pricelist.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
+            return pricelist;
         }
 
         /// <summary>

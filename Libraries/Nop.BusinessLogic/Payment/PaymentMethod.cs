@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 {
@@ -114,7 +115,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return this.paymentMethodType;
             }
         }
-               
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the restricted countries
+        /// </summary>
+        public virtual ICollection<Country> NpRestrictedCountries { get; set; }
+
         #endregion
     }
 }

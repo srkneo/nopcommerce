@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <summary>
         /// Gets or sets a value indicating whether subscription is active
         /// </summary>
-        public bool IsActive
+        public bool Active
         {
             get;
             set;

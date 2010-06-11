@@ -153,7 +153,6 @@
     <Compile Include="Maintenance\DatabaseMaintanceTask.cs" />
     <Compile Include="Manufacturers\ManufacturerLocalized.cs" />
     <Compile Include="Messages\NewsLetterSubscription.cs" />
-    <Compile Include="Messages\NewsLetterSubscriptionCollection.cs" />
     <Compile Include="Messages\SMSManager.cs" />
     <Compile Include="Orders\BestSellersReportLine.cs" />
     <Compile Include="Orders\AppliedGiftCard.cs" />
@@ -216,7 +215,6 @@
     <Compile Include="Products\PriceListExportTypeEnum.cs" />
     <Compile Include="Products\PriceAdjustmentTypeEnum.cs" />
     <Compile Include="Products\Pricelist.cs" />
-    <Compile Include="Products\PricelistCollection.cs" />
     <Compile Include="ExportImport\PricelistHandler.cs" />
     <Compile Include="Products\ProductVariantPricelist.cs" />
     <Compile Include="Products\ProductVariantPricelistCollection.cs" />
@@ -243,6 +241,7 @@
     <Compile Include="Promo\Discounts\DiscountRequirement.cs" />
     <Compile Include="Promo\Discounts\DiscountRequirementEnum.cs" />
     <Compile Include="Promo\Discounts\DiscountType.cs" />
+    <Compile Include="Promo\Discounts\Extensions.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -342,7 +341,6 @@
     <Compile Include="Customer\CustomerAttribute.cs" />
     <Compile Include="Customer\CustomerSession.cs" />
     <Compile Include="Promo\Discounts\Discount.cs" />
-    <Compile Include="Promo\Discounts\DiscountCollection.cs" />
     <Compile Include="Directory\Language.cs" />
     <Compile Include="Audit\Log.cs" />
     <Compile Include="Manufacturers\Manufacturer.cs" />

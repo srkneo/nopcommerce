@@ -585,7 +585,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 customerCouponCode = customer.LastAppliedCouponCode;
 
             var allDiscounts = DiscountManager.GetAllDiscounts(DiscountTypeEnum.AssignedToOrderSubTotal);
-            var allowedDiscounts = new DiscountCollection();
+            var allowedDiscounts = new List<Discount>();
             foreach (var _discount in allDiscounts)
             {
                 if (_discount.IsActive(customerCouponCode) &&

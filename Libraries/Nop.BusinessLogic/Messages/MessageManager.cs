@@ -67,15 +67,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             item.NewsLetterSubscriptionId = dbItem.NewsLetterSubscriptionId;
             item.NewsLetterSubscriptionGuid = dbItem.NewsLetterSubscriptionGuid;
             item.Email = dbItem.Email;
-            item.IsActive = dbItem.IsActive;
+            item.Active = dbItem.IsActive;
             item.CreatedOn = dbItem.CreatedOn;
 
             return item;
         }
 
-        private static NewsLetterSubscriptionCollection DBMapping(DBNewsLetterSubscriptionCollection dbCollection)
+        private static List<NewsLetterSubscription> DBMapping(DBNewsLetterSubscriptionCollection dbCollection)
         {
-            var collection = new NewsLetterSubscriptionCollection();
+            var collection = new List<NewsLetterSubscription>();
             foreach (var dbItem in dbCollection)
             {
                 collection.Add(DBMapping(dbItem));
@@ -719,10 +719,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// Inserts the new newsletter subscription
         /// </summary>
         /// <param name="email">The subscriber email</param>
-        /// <param name="isActive">A value indicating whether subscription is active</param>
+        /// <param name="active">A value indicating whether subscription is active</param>
         /// <returns>NewsLetterSubscription entity</returns>
         public static NewsLetterSubscription InsertNewsLetterSubscription(string email,
-            bool isActive)
+            bool active)
         {
             if(!CommonHelper.IsValidEmail(email))
             {
@@ -731,7 +731,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             email = email.Trim();
 
-            return DBMapping(DBProviderManager<DBMessageProvider>.Provider.InsertNewsLetterSubscription(Guid.NewGuid(), email, isActive, DateTime.UtcNow));
+            var newsLetterSubscription = new NewsLetterSubscription();
+            newsLetterSubscription.NewsLetterSubscriptionGuid = Guid.NewGuid();
+            newsLetterSubscription.Email = email;
+            newsLetterSubscription.Active = active;
+            newsLetterSubscription.CreatedOn = DateTime.UtcNow;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.NewsLetterSubscriptions.AddObject(newsLetterSubscription);
+            context.SaveChanges();
+
+            return newsLetterSubscription;
         }
 
         /// <summary>
@@ -741,7 +751,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <returns>NewsLetterSubscription entity</returns>
         public static NewsLetterSubscription GetNewsLetterSubscriptionById(int newsLetterSubscriptionId)
         {
-            return DBMapping(DBProviderManager<DBMessageProvider>.Provider.GetNewsLetterSubscriptionById(newsLetterSubscriptionId));
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from n in context.NewsLetterSubscriptions
+                        where n.NewsLetterSubscriptionId == newsLetterSubscriptionId
+                        select n;
+            var newsLetterSubscription = query.SingleOrDefault();
+
+            return newsLetterSubscription;
         }
 
         /// <summary>
@@ -751,11 +767,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <returns>NewsLetterSubscription entity</returns>
         public static NewsLetterSubscription GetNewsLetterSubscriptionByGuid(Guid newsLetterSubscriptionGuid)
         {
-            if(newsLetterSubscriptionGuid == null)
+            if(newsLetterSubscriptionGuid == null || newsLetterSubscriptionGuid == Guid.Empty)
             {
                 return null;
             }
-            return DBMapping(DBProviderManager<DBMessageProvider>.Provider.GetNewsLetterSubscriptionByGuid(newsLetterSubscriptionGuid));
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from n in context.NewsLetterSubscriptions
+                        where n.NewsLetterSubscriptionGuid == newsLetterSubscriptionGuid
+                        orderby n.NewsLetterSubscriptionId
+                        select n;
+            var newsLetterSubscription = query.FirstOrDefault();
+
+            return newsLetterSubscription;
         }
 
         /// <summary>
@@ -772,7 +796,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
             email = email.Trim();
 
-            return DBMapping(DBProviderManager<DBMessageProvider>.Provider.GetNewsLetterSubscriptionByEmail(email));
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from n in context.NewsLetterSubscriptions
+                        where n.Email == email
+                        orderby n.NewsLetterSubscriptionId
+                        select n;
+            var newsLetterSubscription = query.FirstOrDefault();
+
+            return newsLetterSubscription;
         }
 
         /// <summary>
@@ -780,7 +811,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// </summary>
         /// <param name="showHidden">A value indicating whether the not active subscriptions should be loaded</param>
         /// <returns>NewsLetterSubscription entity collection</returns>
-        public static NewsLetterSubscriptionCollection GetAllNewsLetterSubscriptions(bool showHidden)
+        public static List<NewsLetterSubscription> GetAllNewsLetterSubscriptions(bool showHidden)
         {
             return DBMapping(DBProviderManager<DBMessageProvider>.Provider.GetAllNewsLetterSubscriptions(showHidden));
         }
@@ -790,12 +821,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// </summary>
         /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
         /// <param name="email">Email</param>
-        /// <param name="isActive">The value indicating whether subscription is active</param>
+        /// <param name="active">The value indicating whether subscription is active</param>
         /// <returns>NewsLetterSubscription entity</returns>
-        public static NewsLetterSubscription UpdateNewsLetterSubscription(int newsLetterSubscriptionId, string email, bool isActive)
+        public static NewsLetterSubscription UpdateNewsLetterSubscription(int newsLetterSubscriptionId, 
+            string email, bool active)
         {
-            var subscription = GetNewsLetterSubscriptionById(newsLetterSubscriptionId);
-            if(subscription == null)
+            var newsLetterSubscription = GetNewsLetterSubscriptionById(newsLetterSubscriptionId);
+            if (newsLetterSubscription == null)
             {
                 throw new NopException("Subscription does not exist.");
             }
@@ -803,8 +835,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             {
                 throw new NopException("Email is not valid.");
             }
-            return DBMapping(DBProviderManager<DBMessageProvider>.Provider.UpdateNewsLetterSubscription(newsLetterSubscriptionId, 
-                subscription.NewsLetterSubscriptionGuid, email, isActive, subscription.CreatedOn));
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(newsLetterSubscription))
+                context.NewsLetterSubscriptions.Attach(newsLetterSubscription);
+
+            newsLetterSubscription.Email = email;
+            newsLetterSubscription.Active = active;
+            context.SaveChanges();
+
+            return newsLetterSubscription;
         }
 
         /// <summary>
@@ -813,7 +853,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <param name="newsLetterSubscriptionId">The newsletter subscription identifier</param>
         public static void DeleteNewsLetterSubscription(int newsLetterSubscriptionId)
         {
-            DBProviderManager<DBMessageProvider>.Provider.DeleteNewsLetterSubscription(newsLetterSubscriptionId);
+            var newsLetterSubscription = GetNewsLetterSubscriptionById(newsLetterSubscriptionId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(newsLetterSubscription))
+                context.NewsLetterSubscriptions.Attach(newsLetterSubscription);
+            context.DeleteObject(newsLetterSubscription);
+            context.SaveChanges();
         }
         
         #endregion

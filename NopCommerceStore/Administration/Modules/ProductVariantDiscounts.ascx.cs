@@ -44,9 +44,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
             if (productVariant != null)
             {
-                DiscountCollection discountCollection = productVariant.AllDiscounts;
+                var discounts = productVariant.AllDiscounts;
 
-                foreach (Discount dis in discountCollection)
+                foreach (Discount dis in discounts)
                     _discountIds.Add(dis.DiscountId);
             }
 

@@ -50,12 +50,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         #endregion
 
         #region Utilities
-        private static DiscountCollection DBMapping(DBDiscountCollection dbCollection)
+        private static List<Discount> DBMapping(DBDiscountCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new DiscountCollection();
+            var collection = new List<Discount>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -129,7 +129,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discounts">Discounts to analyze</param>
         /// <param name="amount">Amount</param>
         /// <returns>Preferred discount</returns>
-        public static Discount GetPreferredDiscount(DiscountCollection discounts, 
+        public static Discount GetPreferredDiscount(List<Discount> discounts, 
             decimal amount)
         {
             Discount preferredDiscount = null;
@@ -164,8 +164,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return (Discount)obj2;
             }
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountById(discountId);
-            var discount = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from d in context.Discounts
+                        where d.DiscountId == discountId
+                        select d;
+            var discount = query.SingleOrDefault();
 
             if (DiscountManager.CacheEnabled)
             {
@@ -207,23 +210,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// </summary>
         /// <param name="discountType">Discount type; null to load all discount</param>
         /// <returns>Discount collection</returns>
-        public static DiscountCollection GetAllDiscounts(DiscountTypeEnum? discountType)
+        public static List<Discount> GetAllDiscounts(DiscountTypeEnum? discountType)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(DISCOUNTS_ALL_KEY, showHidden, discountType);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
-                return (DiscountCollection)obj2;
+                return (List<Discount>)obj2;
             }
 
             int? discountTypeId = null;
             if (discountType.HasValue)
                 discountTypeId = (int)discountType.Value;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = (IQueryable<Discount>)context.Discounts;
+            if (!showHidden)
+                query = query.Where(d => d.StartDate <= DateTime.UtcNow && d.EndDate >= DateTime.UtcNow);
+            if (discountTypeId.HasValue && discountTypeId.Value > 0)
+                query = query.Where(d => d.DiscountTypeId == discountTypeId);
+            query = query.Where(d => !d.Deleted);
+            query = query.OrderByDescending(d => d.StartDate);
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscounts(showHidden, discountTypeId);
-            var discounts = DBMapping(dbCollection);
-
+            var discounts = query.ToList();
+            
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.Max(key, discounts);
@@ -262,11 +273,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 throw new NopException("Discount requires coupon code. Coupon code could not be empty.");
             }
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.InsertDiscount((int)discountType,
-                (int)discountRequirement, (int)discountLimitation, name,
-                usePercentage, discountPercentage, discountAmount,
-                startDate, endDate, requiresCouponCode, couponCode, deleted);
-            var discount = DBMapping(dbItem);
+            var discount = new Discount();
+            discount.DiscountTypeId = (int)discountType;
+            discount.DiscountRequirementId = (int)discountRequirement;
+            discount.DiscountLimitationId = (int)discountLimitation;
+            discount.Name = name;
+            discount.UsePercentage = usePercentage;
+            discount.DiscountPercentage = discountPercentage;
+            discount.DiscountAmount = discountAmount;
+            discount.StartDate = startDate;
+            discount.EndDate = endDate;
+            discount.RequiresCouponCode = requiresCouponCode;
+            discount.CouponCode = couponCode;
+            discount.Deleted = deleted;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Discounts.AddObject(discount);
+            context.SaveChanges();
 
             if (DiscountManager.CacheEnabled)
             {
@@ -306,11 +329,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 throw new NopException("Discount requires coupon code. Coupon code could not be empty.");
             }
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.UpdateDiscount(discountId, (int)discountType,
-                (int)discountRequirement, (int)discountLimitation, name, 
-                usePercentage, discountPercentage, discountAmount, startDate, endDate,
-                requiresCouponCode, couponCode, deleted);
-            var discount = DBMapping(dbItem);
+            var discount = GetDiscountById(discountId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+
+            discount.DiscountTypeId = (int)discountType;
+            discount.DiscountRequirementId = (int)discountRequirement;
+            discount.DiscountLimitationId = (int)discountLimitation;
+            discount.Name = name;
+            discount.UsePercentage = usePercentage;
+            discount.DiscountPercentage = discountPercentage;
+            discount.DiscountAmount = discountAmount;
+            discount.StartDate = startDate;
+            discount.EndDate = endDate;
+            discount.RequiresCouponCode = requiresCouponCode;
+            discount.CouponCode = couponCode;
+            discount.Deleted = deleted;
+            context.SaveChanges();
 
             if (DiscountManager.CacheEnabled)
             {
@@ -352,14 +389,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// </summary>
         /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Discount collection</returns>
-        public static DiscountCollection GetDiscountsByProductVariantId(int productVariantId)
+        public static List<Discount> GetDiscountsByProductVariantId(int productVariantId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(DISCOUNTS_BY_PRODUCTVARIANTID_KEY, productVariantId, showHidden);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
-                return (DiscountCollection)obj2;
+                return (List<Discount>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByProductVariantId(productVariantId, showHidden);
@@ -405,14 +442,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <returns>Discount collection</returns>
-        public static DiscountCollection GetDiscountsByCategoryId(int categoryId)
+        public static List<Discount> GetDiscountsByCategoryId(int categoryId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(DISCOUNTS_BY_CATEGORYID_KEY, categoryId, showHidden);
             object obj2 = NopCache.Get(key);
             if (DiscountManager.CacheEnabled && (obj2 != null))
             {
-                return (DiscountCollection)obj2;
+                return (List<Discount>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByCategoryId(categoryId, showHidden);

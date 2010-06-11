@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 {
@@ -52,6 +53,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the restricted countries
+        /// </summary>
+        public virtual ICollection<Country> NpRestrictedCountries { get; set; }
 
         #endregion
     }

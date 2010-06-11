@@ -37,66 +37,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         #region Discounts
 
         /// <summary>
-        /// Gets a discount
-        /// </summary>
-        /// <param name="discountId">Discount identifier</param>
-        /// <returns>Discount</returns>
-        public abstract DBDiscount GetDiscountById(int discountId);
-
-        /// <summary>
-        /// Gets all discounts
-        /// </summary>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="discountTypeId">Discount type identifier; null to load all discount</param>
-        /// <returns>Discount collection</returns>
-        public abstract DBDiscountCollection GetAllDiscounts(bool showHidden, int? discountTypeId);
-
-        /// <summary>
-        /// Inserts a discount
-        /// </summary>
-        /// <param name="discountTypeId">The discount type identifier</param>
-        /// <param name="discountRequirementId">The discount requirement identifier</param>
-        /// <param name="discountLimitationId">The discount limitation identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="usePercentage">A value indicating whether to use percentage</param>
-        /// <param name="discountPercentage">The discount percentage</param>
-        /// <param name="discountAmount">The discount amount</param>
-        /// <param name="startDate">The discount start date and time</param>
-        /// <param name="endDate">The discount end date and time</param>
-        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="couponCode">The coupon code</param>
-        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
-        /// <returns>Discount</returns>
-        public abstract DBDiscount InsertDiscount(int discountTypeId, 
-            int discountRequirementId, int discountLimitationId, 
-            string name, bool usePercentage, decimal discountPercentage, 
-            decimal discountAmount, DateTime startDate, DateTime endDate, 
-            bool requiresCouponCode, string couponCode, bool deleted);
-
-        /// <summary>
-        /// Updates the discount
-        /// </summary>
-        /// <param name="discountId">Discount identifier</param>
-        /// <param name="discountTypeId">The discount type identifier</param>
-        /// <param name="discountRequirementId">The discount requirement identifier</param>
-        /// <param name="discountLimitationId">The discount limitation identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="usePercentage">A value indicating whether to use percentage</param>
-        /// <param name="discountPercentage">The discount percentage</param>
-        /// <param name="discountAmount">The discount amount</param>
-        /// <param name="startDate">The discount start date and time</param>
-        /// <param name="endDate">The discount end date and time</param>
-        /// <param name="requiresCouponCode">The value indicating whether discount requires coupon code</param>
-        /// <param name="couponCode">The coupon code</param>
-        /// <param name="deleted">A value indicating whether the entity has been deleted</param>
-        /// <returns>Discount</returns>
-        public abstract DBDiscount UpdateDiscount(int discountId, int discountTypeId,
-            int discountRequirementId, int discountLimitationId,
-            string name, bool usePercentage, decimal discountPercentage,
-            decimal discountAmount, DateTime startDate, DateTime endDate,
-            bool requiresCouponCode, string couponCode, bool deleted);
-
-        /// <summary>
         /// Adds a discount to a product variant
         /// </summary>
         /// <param name="productVariantId">Product variant identifier</param>

@@ -38,8 +38,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            DiscountCollection discountCollection = DiscountManager.GetAllDiscounts(null);
-            gvDiscounts.DataSource = discountCollection;
+            var discounts = DiscountManager.GetAllDiscounts(null);
+            gvDiscounts.DataSource = discounts;
             gvDiscounts.DataBind();
         }
     }
