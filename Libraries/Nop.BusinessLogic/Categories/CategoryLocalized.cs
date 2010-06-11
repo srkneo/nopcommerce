@@ -86,5 +86,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         public string SEName { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the category
+        /// </summary>
+        public virtual Category NpCategory { get; set; }
+
+        #endregion
     }
 }

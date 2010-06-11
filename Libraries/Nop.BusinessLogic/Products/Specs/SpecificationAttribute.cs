@@ -13,6 +13,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 {
@@ -47,6 +48,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized specification attribute
+        /// </summary>
+        public virtual ICollection<SpecificationAttributeLocalized> NpSpecificationAttributeLocalized { get; set; }
+
+        /// <summary>
+        /// Gets the specification attribute options
+        /// </summary>
+        public virtual ICollection<SpecificationAttributeOption> NpSpecificationAttributeOptions { get; set; }
 
         #endregion
     }

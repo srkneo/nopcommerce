@@ -61,5 +61,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public string Name { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the specification attribute option
+        /// </summary>
+        public virtual SpecificationAttributeOption NpSpecificationAttributeOption { get; set; }
+
+        #endregion
     }
 }

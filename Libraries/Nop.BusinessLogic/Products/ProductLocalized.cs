@@ -92,5 +92,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public string SEName { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the product
+        /// </summary>
+        public virtual Product NpProduct { get; set; }
+
+        #endregion
     }
 }

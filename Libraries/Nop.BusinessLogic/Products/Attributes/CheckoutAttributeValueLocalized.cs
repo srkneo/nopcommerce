@@ -61,5 +61,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public string Name { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the checkout attribute value
+        /// </summary>
+        public virtual CheckoutAttributeValue NpCheckoutAttributeValue { get; set; }
+
+        #endregion
     }
 }

@@ -49,5 +49,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         public string Description { get; set; }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized product attributes
+        /// </summary>
+        public virtual ICollection<ProductAttributeLocalized> NpProductAttributeLocalized { get; set; }
+
+        #endregion
     }
 }

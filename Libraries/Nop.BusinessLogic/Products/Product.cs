@@ -13,6 +13,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
@@ -291,6 +292,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 }
             }
         }
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized products
+        /// </summary>
+        public virtual ICollection<ProductLocalized> NpProductLocalized { get; set; }
+
+        /// <summary>
+        /// Gets the product variants
+        /// </summary>
+        public virtual ICollection<ProductVariant> NpProductVariants { get; set; }
+        
         #endregion
     }
 

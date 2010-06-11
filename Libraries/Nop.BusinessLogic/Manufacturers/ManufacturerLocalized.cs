@@ -86,5 +86,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         public string SEName { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the manufacturer
+        /// </summary>
+        public virtual Manufacturer NpManufacturer { get; set; }
+
+        #endregion
     }
 }

@@ -66,5 +66,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public string TextPrompt { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the checkout attribute
+        /// </summary>
+        public virtual CheckoutAttribute NpCheckoutAttribute { get; set; }
+
+        #endregion
     }
 }

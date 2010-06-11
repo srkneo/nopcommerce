@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Data.Objects;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
+using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Blog;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Forums;
@@ -26,12 +27,15 @@ using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
+using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
+using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
+using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
@@ -223,6 +227,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Campaign> _campaigns;
+
+        public ObjectSet<CategoryLocalized> CategoryLocalized
+        {
+            get
+            {
+                if ((_categoryLocalized == null))
+                {
+                    _categoryLocalized = CreateObjectSet<CategoryLocalized>();
+                }
+                return _categoryLocalized;
+            }
+        }
+        private ObjectSet<CategoryLocalized> _categoryLocalized;
+
+        public ObjectSet<Category> Categories
+        {
+            get
+            {
+                if ((_categories == null))
+                {
+                    _categories = CreateObjectSet<Category>();
+                }
+                return _categories;
+            }
+        }
+        private ObjectSet<Category> _categories;
         
         public ObjectSet<CategoryTemplate> CategoryTemplates
         {
@@ -236,6 +266,58 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<CategoryTemplate> _categoryTemplates;
+
+        public ObjectSet<CheckoutAttributeLocalized> CheckoutAttributeLocalized
+        {
+            get
+            {
+                if ((_checkoutAttributeLocalized == null))
+                {
+                    _checkoutAttributeLocalized = CreateObjectSet<CheckoutAttributeLocalized>();
+                }
+                return _checkoutAttributeLocalized;
+            }
+        }
+        private ObjectSet<CheckoutAttributeLocalized> _checkoutAttributeLocalized;
+
+        public ObjectSet<CheckoutAttribute> CheckoutAttributes
+        {
+            get
+            {
+                if ((_checkoutAttributes == null))
+                {
+                    _checkoutAttributes = CreateObjectSet<CheckoutAttribute>();
+                }
+                return _checkoutAttributes;
+            }
+        }
+        private ObjectSet<CheckoutAttribute> _checkoutAttributes;
+
+        public ObjectSet<CheckoutAttributeValueLocalized> CheckoutAttributeValueLocalized
+        {
+            get
+            {
+                if ((_checkoutAttributeValueLocalized == null))
+                {
+                    _checkoutAttributeValueLocalized = CreateObjectSet<CheckoutAttributeValueLocalized>();
+                }
+                return _checkoutAttributeValueLocalized;
+            }
+        }
+        private ObjectSet<CheckoutAttributeValueLocalized> _checkoutAttributeValueLocalized;
+
+        public ObjectSet<CheckoutAttributeValue> CheckoutAttributeValues
+        {
+            get
+            {
+                if ((_checkoutAttributeValues == null))
+                {
+                    _checkoutAttributeValues = CreateObjectSet<CheckoutAttributeValue>();
+                }
+                return _checkoutAttributeValues;
+            }
+        }
+        private ObjectSet<CheckoutAttributeValue> _checkoutAttributeValues;
 
         public ObjectSet<Country> Countries
         {
@@ -562,6 +644,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<LowStockActivity> _lowStockActivities;
 
+        public ObjectSet<ManufacturerLocalized> ManufacturerLocalized
+        {
+            get
+            {
+                if ((_manufacturerLocalized == null))
+                {
+                    _manufacturerLocalized = CreateObjectSet<ManufacturerLocalized>();
+                }
+                return _manufacturerLocalized;
+            }
+        }
+        private ObjectSet<ManufacturerLocalized> _manufacturerLocalized;
+
+        public ObjectSet<Manufacturer> Manufacturers
+        {
+            get
+            {
+                if ((_manufacturers == null))
+                {
+                    _manufacturers = CreateObjectSet<Manufacturer>();
+                }
+                return _manufacturers;
+            }
+        }
+        private ObjectSet<Manufacturer> _manufacturers;
+
         public ObjectSet<ManufacturerTemplate> ManufacturerTemplates
         {
             get
@@ -770,6 +878,84 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<PrivateMessage> _privateMessagess;
 
+        public ObjectSet<ProductAttributeLocalized> ProductAttributeLocalized
+        {
+            get
+            {
+                if ((_productAttributeLocalized == null))
+                {
+                    _productAttributeLocalized = CreateObjectSet<ProductAttributeLocalized>();
+                }
+                return _productAttributeLocalized;
+            }
+        }
+        private ObjectSet<ProductAttributeLocalized> _productAttributeLocalized;
+
+        public ObjectSet<ProductAttribute> ProductAttributes
+        {
+            get
+            {
+                if ((_productAttributes == null))
+                {
+                    _productAttributes = CreateObjectSet<ProductAttribute>();
+                }
+                return _productAttributes;
+            }
+        }
+        private ObjectSet<ProductAttribute> _productAttributes;
+
+        public ObjectSet<ProductLocalized> ProductLocalized
+        {
+            get
+            {
+                if ((_productLocalized == null))
+                {
+                    _productLocalized = CreateObjectSet<ProductLocalized>();
+                }
+                return _productLocalized;
+            }
+        }
+        private ObjectSet<ProductLocalized> _productLocalized;
+
+        public ObjectSet<Product> Products
+        {
+            get
+            {
+                if ((_products == null))
+                {
+                    _products = CreateObjectSet<Product>();
+                }
+                return _products;
+            }
+        }
+        private ObjectSet<Product> _products;
+
+        public ObjectSet<ProductVariantLocalized> ProductVariantLocalized
+        {
+            get
+            {
+                if ((_productVariantLocalized == null))
+                {
+                    _productVariantLocalized = CreateObjectSet<ProductVariantLocalized>();
+                }
+                return _productVariantLocalized;
+            }
+        }
+        private ObjectSet<ProductVariantLocalized> _productVariantLocalized;
+
+        public ObjectSet<ProductVariant> ProductVariants
+        {
+            get
+            {
+                if ((_productVariants == null))
+                {
+                    _productVariants = CreateObjectSet<ProductVariant>();
+                }
+                return _productVariants;
+            }
+        }
+        private ObjectSet<ProductVariant> _productVariants;
+
         public ObjectSet<ProductTemplate> ProductTemplates
         {
             get
@@ -925,6 +1111,58 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ShoppingCartType> _shoppingCartTypes;
+
+        public ObjectSet<SpecificationAttributeLocalized> SpecificationAttributeLocalized
+        {
+            get
+            {
+                if ((_specificationAttributeLocalized == null))
+                {
+                    _specificationAttributeLocalized = CreateObjectSet<SpecificationAttributeLocalized>();
+                }
+                return _specificationAttributeLocalized;
+            }
+        }
+        private ObjectSet<SpecificationAttributeLocalized> _specificationAttributeLocalized;
+
+        public ObjectSet<SpecificationAttributeOptionLocalized> SpecificationAttributeOptionLocalized
+        {
+            get
+            {
+                if ((_specificationAttributeOptionLocalized == null))
+                {
+                    _specificationAttributeOptionLocalized = CreateObjectSet<SpecificationAttributeOptionLocalized>();
+                }
+                return _specificationAttributeOptionLocalized;
+            }
+        }
+        private ObjectSet<SpecificationAttributeOptionLocalized> _specificationAttributeOptionLocalized;
+
+        public ObjectSet<SpecificationAttributeOption> SpecificationAttributeOptions
+        {
+            get
+            {
+                if ((_specificationAttributeOptions == null))
+                {
+                    _specificationAttributeOptions = CreateObjectSet<SpecificationAttributeOption>();
+                }
+                return _specificationAttributeOptions;
+            }
+        }
+        private ObjectSet<SpecificationAttributeOption> _specificationAttributeOptions;
+
+        public ObjectSet<SpecificationAttribute> SpecificationAttributes
+        {
+            get
+            {
+                if ((_specificationAttributes == null))
+                {
+                    _specificationAttributes = CreateObjectSet<SpecificationAttribute>();
+                }
+                return _specificationAttributes;
+            }
+        }
+        private ObjectSet<SpecificationAttribute> _specificationAttributes;
 
         public ObjectSet<StateProvince> StateProvinces
         {

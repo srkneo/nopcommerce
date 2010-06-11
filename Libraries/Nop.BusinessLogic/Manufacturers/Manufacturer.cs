@@ -118,7 +118,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         public DateTime UpdatedOn { get; set; }
         #endregion 
 
-        #region Custom Properties 
+        #region Custom Properties
 
         /// <summary>
         /// Gets the manufacturer template
@@ -166,6 +166,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return featuredProducts;
             }
         }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized manufacturer
+        /// </summary>
+        public virtual ICollection<ManufacturerLocalized> NpManufacturerLocalized { get; set; }
 
         #endregion
     }

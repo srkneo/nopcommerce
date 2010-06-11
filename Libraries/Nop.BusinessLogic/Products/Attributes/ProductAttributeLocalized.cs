@@ -66,5 +66,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public string Description { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the product attribute
+        /// </summary>
+        public virtual ProductAttribute NpProductAttribute { get; set; }
+
+        #endregion
     }
 }

@@ -203,5 +203,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the localized category
+        /// </summary>
+        public virtual ICollection<CategoryLocalized> NpCategoryLocalized { get; set; }
+
+        #endregion
     }
 }

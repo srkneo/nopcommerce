@@ -13,6 +13,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 {
@@ -67,6 +68,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
                 return SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId);
             }
         }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the specification attribute
+        /// </summary>
+        public virtual SpecificationAttribute NpSpecificationAttribute { get; set; }
+
+        /// <summary>
+        /// Gets the localized attribute option values
+        /// </summary>
+        public virtual ICollection<SpecificationAttributeOptionLocalized> NpSpecificationAttributeOptionLocalized { get; set; }
 
         #endregion
     }

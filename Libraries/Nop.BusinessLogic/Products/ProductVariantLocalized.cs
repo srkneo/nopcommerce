@@ -67,5 +67,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public string Description { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the product variant
+        /// </summary>
+        public virtual ProductVariant NpProductVariant { get; set; }
+
+        #endregion
     }
 }

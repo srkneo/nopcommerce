@@ -84,6 +84,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the checkout attribute
+        /// </summary>
+        public virtual CheckoutAttribute NpCheckoutAttribute { get; set; }
+
+        /// <summary>
+        /// Gets the localized checkout attribute values
+        /// </summary>
+        public virtual ICollection<CheckoutAttributeValueLocalized> NpCheckoutAttributeValueLocalized { get; set; }
+
+        #endregion
     }
 
 }
