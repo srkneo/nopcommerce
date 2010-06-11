@@ -38,7 +38,7 @@ using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.CustomerManagement;
- 
+
 
 namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 {
@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
             return item;
         }
-        
+
         private static List<CustomerRole> DBMapping(DBCustomerRoleCollection dbCollection)
         {
             if (dbCollection == null)
@@ -163,7 +163,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 }
 
                 var context = ObjectContextHelper.CurrentObjectContext;
-                context.Addresses.Attach(address);
+                if (!context.IsAttached(address))
+                    context.Addresses.Attach(address);
                 context.DeleteObject(address);
                 context.SaveChanges();
             }
@@ -265,7 +266,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-            
+
             var address = new Address();
             address.CustomerId = customerId;
             address.IsBillingAddress = isBillingAddress;
@@ -354,7 +355,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var address = GetAddressById(addressId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Addresses.Attach(address);
+            if (!context.IsAttached(address))
+                context.Addresses.Attach(address);
 
             address.CustomerId = customerId;
             address.IsBillingAddress = isBillingAddress;
@@ -527,19 +529,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerId, 
+                customer = UpdateCustomer(customer.CustomerId,
                     customer.CustomerGuid, customer.Email,
                     customer.Username, customer.PasswordHash, customer.SaltKey,
                     customer.AffiliateId, billingAddressId,
                     customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
                     customer.CheckoutAttributes, customer.LanguageId,
-                    customer.CurrencyId, customer.TaxDisplayType, 
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
-                    customer.TotalForumPosts, customer.Signature, 
+                    customer.TotalForumPosts, customer.Signature,
                     customer.AdminComment, customer.Active,
-                    customer.Deleted, customer.RegistrationDate, 
+                    customer.Deleted, customer.RegistrationDate,
                     customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
@@ -556,20 +558,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerId, 
+                customer = UpdateCustomer(customer.CustomerId,
                     customer.CustomerGuid, customer.Email,
-                    customer.Username, customer.PasswordHash, 
+                    customer.Username, customer.PasswordHash,
                     customer.SaltKey, customer.AffiliateId,
                     customer.BillingAddressId,
                     shippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
                     customer.CheckoutAttributes, customer.LanguageId,
-                    customer.CurrencyId, customer.TaxDisplayType, 
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
-                    customer.TotalForumPosts, customer.Signature, 
+                    customer.TotalForumPosts, customer.Signature,
                     customer.AdminComment, customer.Active,
-                    customer.Deleted, customer.RegistrationDate, 
+                    customer.Deleted, customer.RegistrationDate,
                     customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
@@ -586,19 +588,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-               customer = UpdateCustomer(customer.CustomerId, 
-                   customer.CustomerGuid, customer.Email,
-                    customer.Username, customer.PasswordHash, 
-                    customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
-                    customer.ShippingAddressId, paymentMethodId, 
-                    customer.LastAppliedCouponCode,
-                    customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
-                    customer.LanguageId, customer.CurrencyId, 
-                    customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin,
-                    customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                    customer.Signature, customer.AdminComment, 
-                    customer.Active, customer.Deleted, 
-                    customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
+                customer = UpdateCustomer(customer.CustomerId,
+                    customer.CustomerGuid, customer.Email,
+                     customer.Username, customer.PasswordHash,
+                     customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
+                     customer.ShippingAddressId, paymentMethodId,
+                     customer.LastAppliedCouponCode,
+                     customer.GiftCardCouponCodes, customer.CheckoutAttributes,
+                     customer.LanguageId, customer.CurrencyId,
+                     customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin,
+                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
+                     customer.Signature, customer.AdminComment,
+                     customer.Active, customer.Deleted,
+                     customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
         }
@@ -617,11 +619,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
                      customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
                      customer.ShippingAddressId, customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
-                     customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
+                     customer.GiftCardCouponCodes, customer.CheckoutAttributes,
                      customer.LanguageId, customer.CurrencyId, customer.TaxDisplayType,
                      customer.IsTaxExempt, customer.IsAdmin,
                      customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
+                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted,
                      customer.RegistrationDate, timeZoneId, customer.AvatarId);
             }
             return customer;
@@ -659,14 +661,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 }
 
                 customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, newEmail,
-                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId, 
-                    customer.BillingAddressId,  customer.ShippingAddressId, customer.LastPaymentMethodId,
+                    customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
+                    customer.BillingAddressId, customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
                     customer.CheckoutAttributes, customer.LanguageId,
                     customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                    customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
+                    customer.Signature, customer.AdminComment, customer.Active, customer.Deleted,
                     customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
@@ -696,7 +698,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.BillingAddressId, customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
                     customer.CheckoutAttributes, customer.LanguageId,
-                    customer.CurrencyId, customer.TaxDisplayType, 
+                    customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
                     signature, customer.AdminComment, customer.Active, customer.Deleted,
@@ -724,7 +726,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                    customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
+                    customer.Signature, customer.AdminComment, customer.Active, customer.Deleted,
                     customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
@@ -742,14 +744,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (customer != null)
             {
                 customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
-                     customer.Username, customer.PasswordHash, customer.SaltKey, 
+                     customer.Username, customer.PasswordHash, customer.SaltKey,
                      customer.AffiliateId, customer.BillingAddressId,
                      customer.ShippingAddressId, customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
-                     customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
+                     customer.GiftCardCouponCodes, customer.CheckoutAttributes,
                      customer.LanguageId, customer.CurrencyId,
                      customer.TaxDisplayType, customer.IsTaxExempt, customer.IsAdmin,
                      customer.IsGuest, customer.IsForumModerator, customer.TotalForumPosts,
-                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted, 
+                     customer.Signature, customer.AdminComment, customer.Active, customer.Deleted,
                      customer.RegistrationDate, customer.TimeZoneId, avatarId);
             }
             return customer;
@@ -807,16 +809,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, 
-                    customer.Email, customer.Username, customer.PasswordHash, 
-                    customer.SaltKey, customer.AffiliateId, customer.BillingAddressId, 
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid,
+                    customer.Email, customer.Username, customer.PasswordHash,
+                    customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
                     customer.ShippingAddressId, customer.LastPaymentMethodId,
                     couponCode, customer.GiftCardCouponCodes,
-                    customer.CheckoutAttributes, customer.LanguageId, 
-                    customer.CurrencyId, customer.TaxDisplayType, customer.IsTaxExempt, 
+                    customer.CheckoutAttributes, customer.LanguageId,
+                    customer.CurrencyId, customer.TaxDisplayType, customer.IsTaxExempt,
                     customer.IsAdmin, customer.IsGuest, customer.IsForumModerator,
-                    customer.TotalForumPosts, customer.Signature, customer.AdminComment, 
-                    customer.Active, customer.Deleted, customer.RegistrationDate, 
+                    customer.TotalForumPosts, customer.Signature, customer.AdminComment,
+                    customer.Active, customer.Deleted, customer.RegistrationDate,
                     customer.TimeZoneId, customer.AvatarId);
             }
             return customer;
@@ -907,7 +909,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static List<Customer> GetAllCustomers()
         {
             int totalRecords = 0;
-            return GetAllCustomers(null, null, null, string.Empty, false, 
+            return GetAllCustomers(null, null, null, string.Empty, false,
                 int.MaxValue, 0, out totalRecords);
         }
 
@@ -924,7 +926,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="totalRecords">Total records</param>
         /// <returns>Customer collection</returns>
         public static List<Customer> GetAllCustomers(DateTime? registrationFrom,
-            DateTime? registrationTo, string email, string username, 
+            DateTime? registrationTo, string email, string username,
             bool dontLoadGuestCustomers, int pageSize, int pageIndex, out int totalRecords)
         {
             if (pageSize <= 0)
@@ -1016,8 +1018,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email, 
-                    customer.Username, customer.PasswordHash, customer.SaltKey, 
+                UpdateCustomer(customer.CustomerId, customer.CustomerGuid, customer.Email,
+                    customer.Username, customer.PasswordHash, customer.SaltKey,
                     customer.AffiliateId, customer.BillingAddressId,
                     customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
@@ -1025,7 +1027,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.CurrencyId, customer.TaxDisplayType,
                     customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
-                    customer.TotalForumPosts, customer.Signature, 
+                    customer.TotalForumPosts, customer.Signature,
                     customer.AdminComment, customer.Active,
                     true, customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
@@ -1118,7 +1120,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="status">Status</param>
         /// <returns>A customer</returns>
         public static Customer AddCustomer(string email, string username, string password,
-            bool isAdmin, bool isGuest,  bool active, out MembershipCreateStatus status)
+            bool isAdmin, bool isGuest, bool active, out MembershipCreateStatus status)
         {
             int affiliateId = 0;
             HttpCookie affiliateCookie = HttpContext.Current.Request.Cookies.Get("NopCommerce.AffiliateId");
@@ -1164,8 +1166,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="active">A value indicating whether the customer is active</param>
         /// <param name="status">Status</param>
         /// <returns>A customer</returns>
-        public static Customer AddCustomer(string email, string username, string password, 
-            int affiliateId, bool isAdmin, bool isGuest, bool active, 
+        public static Customer AddCustomer(string email, string username, string password,
+            int affiliateId, bool isAdmin, bool isGuest, bool active,
             out MembershipCreateStatus status)
         {
             return AddCustomer(Guid.NewGuid(), email, username, password,
@@ -1212,7 +1214,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             string password, int affiliateId, int billingAddressId,
             int shippingAddressId, int lastPaymentMethodId,
             string lastAppliedCouponCode, string giftCardCouponCodes,
-            string checkoutAttributes, int languageId, int currencyId, 
+            string checkoutAttributes, int languageId, int currencyId,
             TaxDisplayTypeEnum taxDisplayType, bool isTaxExempt, bool isAdmin, bool isGuest,
             bool isForumModerator, int totalForumPosts, string signature, string adminComment,
             bool active, bool deleted, DateTime registrationDate,
@@ -1298,8 +1300,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 shippingAddressId, lastPaymentMethodId,
                 lastAppliedCouponCode, giftCardCouponCodes,
                 checkoutAttributes, languageId, currencyId, taxDisplayType,
-                isTaxExempt, isAdmin, isGuest, isForumModerator, 
-                totalForumPosts, signature, adminComment, active, 
+                isTaxExempt, isAdmin, isGuest, isForumModerator,
+                totalForumPosts, signature, adminComment, active,
                 deleted, registrationDate, timeZoneId, avatarId);
 
             if (!isGuest)
@@ -1414,7 +1416,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var context = ObjectContextHelper.CurrentObjectContext;
             context.Customers.AddObject(customer);
             context.SaveChanges();
-                        
+
             //reward points
             if (!isGuest &&
                 OrderManager.RewardPointsEnabled &&
@@ -1468,7 +1470,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             int shippingAddressId, int lastPaymentMethodId,
             string lastAppliedCouponCode, string giftCardCouponCodes,
             string checkoutAttributes, int languageId,
-            int currencyId, TaxDisplayTypeEnum taxDisplayType, 
+            int currencyId, TaxDisplayTypeEnum taxDisplayType,
             bool isTaxExempt, bool isAdmin, bool isGuest, bool isForumModerator,
             int totalForumPosts, string signature, string adminComment, bool active,
             bool deleted, DateTime registrationDate, string timeZoneId, int avatarId)
@@ -1494,7 +1496,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var subscriptionOld = customer.NewsLetterSubscription;
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Customers.Attach(customer);
+            if (!context.IsAttached(customer))
+                context.Customers.Attach(customer);
             customer.CustomerGuid = customerGuid;
             customer.Email = email;
             customer.Username = username;
@@ -1560,7 +1563,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static void ModifyPassword(string email, string newPassword)
         {
             var customer = GetCustomerByEmail(email);
-            if(customer != null)
+            if (customer != null)
             {
                 ModifyPassword(customer.CustomerId, newPassword);
             }
@@ -1576,7 +1579,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (String.IsNullOrEmpty(newPassword))
                 throw new NopException(LocalizationManager.GetLocaleResourceString("Customer.PasswordIsRequired"));
             var customer = GetCustomerById(customerId);
-            if(customer != null)
+            if (customer != null)
             {
                 string newPasswordSalt = CreateSalt(5);
                 string newPasswordHash = CreatePasswordHash(newPassword, newPasswordSalt);
@@ -1626,8 +1629,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid, 
-                    customer.Email, customer.Username, 
+                customer = UpdateCustomer(customer.CustomerId, customer.CustomerGuid,
+                    customer.Email, customer.Username,
                     customer.PasswordHash, customer.SaltKey, customer.AffiliateId, customer.BillingAddressId,
                     customer.ShippingAddressId, customer.LastPaymentMethodId,
                     customer.LastAppliedCouponCode, customer.GiftCardCouponCodes,
@@ -1671,11 +1674,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.Username, customer.PasswordHash, customer.SaltKey, customer.AffiliateId,
                     customer.BillingAddressId, customer.ShippingAddressId,
                     customer.LastPaymentMethodId, customer.LastAppliedCouponCode,
-                    customer.GiftCardCouponCodes, customer.CheckoutAttributes, 
+                    customer.GiftCardCouponCodes, customer.CheckoutAttributes,
                     customer.LanguageId, customer.CurrencyId, customer.TaxDisplayType,
-                    customer.IsTaxExempt, customer.IsAdmin, 
+                    customer.IsTaxExempt, customer.IsAdmin,
                     customer.IsGuest, customer.IsForumModerator,
-                    customer.TotalForumPosts, customer.Signature, 
+                    customer.TotalForumPosts, customer.Signature,
                     customer.AdminComment, false, customer.Deleted,
                     customer.RegistrationDate, customer.TimeZoneId, customer.AvatarId);
             }
@@ -1719,7 +1722,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     var cart1 = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
                     var cart2 = ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.Wishlist);
                     NopContext.Current.Session = registeredCustomerSession;
-                    
+
                     if ((anonCustomerSession != null) && (anonCustomerSession.CustomerSessionGuid != registeredCustomerSession.CustomerSessionGuid))
                     {
                         if (anonCustomerSession.Customer != null)
@@ -1731,20 +1734,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                         foreach (ShoppingCartItem item in cart1)
                         {
                             ShoppingCartManager.AddToCart(
-                                item.ShoppingCartType, 
-                                item.ProductVariantId, 
+                                item.ShoppingCartType,
+                                item.ProductVariantId,
                                 item.AttributesXml,
-                                item.CustomerEnteredPrice, 
+                                item.CustomerEnteredPrice,
                                 item.Quantity);
                             ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemId, true);
                         }
                         foreach (ShoppingCartItem item in cart2)
                         {
                             ShoppingCartManager.AddToCart(
-                                item.ShoppingCartType, 
-                                item.ProductVariantId, 
-                                item.AttributesXml, 
-                                item.CustomerEnteredPrice, 
+                                item.ShoppingCartType,
+                                item.ProductVariantId,
+                                item.AttributesXml,
+                                item.CustomerEnteredPrice,
                                 item.Quantity);
                             ShoppingCartManager.DeleteShoppingCartItem(item.ShoppingCartItemId, true);
                         }
@@ -1813,7 +1816,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="orderBy">1 - order by order total, 2 - order by number of orders</param>
         /// <returns>Report</returns>
         public static IDataReader GetBestCustomersReport(DateTime? startTime,
-            DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps, 
+            DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps,
             ShippingStatusEnum? ss, int orderBy)
         {
             int? orderStatusId = null;
@@ -1829,7 +1832,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 shippingStatusId = (int)ss.Value;
 
             return DBProviderManager<DBCustomerProvider>.Provider.GetBestCustomersReport(startTime,
-                endTime, orderStatusId, paymentStatusId, 
+                endTime, orderStatusId, paymentStatusId,
                 shippingStatusId, orderBy);
         }
 
@@ -1864,7 +1867,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customerAttribute = GetCustomerAttributeById(customerAttributeId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CustomerAttributes.Attach(customerAttribute);
+            if (!context.IsAttached(customerAttribute))
+                context.CustomerAttributes.Attach(customerAttribute);
             context.DeleteObject(customerAttribute);
             context.SaveChanges();
         }
@@ -1878,7 +1882,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             if (customerAttributeId == 0)
                 return null;
-            
+
             var context = ObjectContextHelper.CurrentObjectContext;
             var query = from ca in context.CustomerAttributes
                         where ca.CustomerAttributeId == customerAttributeId
@@ -1910,7 +1914,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="key">An attribute key</param>
         /// <param name="value">An attribute value</param>
         /// <returns>A customer attribute</returns>
-        public static CustomerAttribute InsertCustomerAttribute(int customerId, 
+        public static CustomerAttribute InsertCustomerAttribute(int customerId,
             string key, string value)
         {
             if (customerId == 0)
@@ -1951,7 +1955,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customerAttribute = GetCustomerAttributeById(customerAttributeId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CustomerAttributes.Attach(customerAttribute);
+            if (!context.IsAttached(customerAttribute))
+                context.CustomerAttributes.Attach(customerAttribute);
 
             customerAttribute.CustomerId = customerId;
             customerAttribute.Key = key;
@@ -1970,8 +1975,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customerRole = GetCustomerRoleById(customerRoleId);
             if (customerRole != null)
             {
-                customerRole = UpdateCustomerRole(customerRole.CustomerRoleId, 
-                    customerRole.Name, customerRole.FreeShipping, 
+                customerRole = UpdateCustomerRole(customerRole.CustomerRoleId,
+                    customerRole.Name, customerRole.FreeShipping,
                     customerRole.TaxExempt, customerRole.Active, true);
             }
 
@@ -2122,7 +2127,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customerRole = GetCustomerRoleById(customerRoleId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CustomerRoles.Attach(customerRole);
+            if (!context.IsAttached(customerRole))
+                context.CustomerRoles.Attach(customerRole);
 
             customerRole.Name = name;
             customerRole.FreeShipping = freeShipping;
@@ -2258,7 +2264,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customerSession = GetCustomerSessionByGuid(customerSessionGuid);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CustomerSessions.Attach(customerSession);
+            if (!context.IsAttached(customerSession))
+                context.CustomerSessions.Attach(customerSession);
             context.DeleteObject(customerSession);
             context.SaveChanges();
         }
@@ -2347,7 +2354,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customerSession = GetCustomerSessionByGuid(customerSessionGuid);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CustomerSessions.Attach(customerSession);
+            if (!context.IsAttached(customerSession))
+                context.CustomerSessions.Attach(customerSession);
 
             customerSession.CustomerSessionGuid = customerSessionGuid;
             customerSession.CustomerId = customerId;
@@ -2368,7 +2376,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (customer == null)
                 return string.Empty;
 
-            if(customer.IsGuest)
+            if (customer.IsGuest)
             {
                 return LocalizationManager.GetLocaleResourceString("Customer.Guest");
             }
@@ -2434,7 +2442,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 SettingManager.SetParam("Checkout.AnonymousCheckoutAllowed", value.ToString());
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether usernames are used instead of emails
         /// </summary>
@@ -2450,7 +2458,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 SettingManager.SetParam("Customer.UsernamesEnabled", value.ToString());
             }
         }
-        
+
         /// <summary>
         /// Customer name formatting
         /// </summary>
@@ -2641,7 +2649,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 SettingManager.SetParam("Common.AllowAnonymousUsersToSetProductRatings", value.ToString());
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether 'Gender' is enabled
         /// </summary>

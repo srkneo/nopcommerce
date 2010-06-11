@@ -48,7 +48,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
             var localeStringResource = GetLocaleStringResourceById(localeStringResourceId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.LocaleStringResources.Attach(localeStringResource);
+            if (!context.IsAttached(localeStringResource))
+                context.LocaleStringResources.Attach(localeStringResource);
             context.DeleteObject(localeStringResource);
             context.SaveChanges();
             
@@ -145,7 +146,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
             var localeStringResource = GetLocaleStringResourceById(localeStringResourceId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.LocaleStringResources.Attach(localeStringResource);
+            if (!context.IsAttached(localeStringResource))
+                context.LocaleStringResources.Attach(localeStringResource);
 
             localeStringResource.LanguageId = languageId;
             localeStringResource.ResourceName = resourceName;

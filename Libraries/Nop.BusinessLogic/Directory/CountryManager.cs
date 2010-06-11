@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         private const string COUNTRIES_BY_ID_KEY = "Nop.country.id-{0}";
         private const string COUNTRIES_PATTERN_KEY = "Nop.country.";
         #endregion
-        
+
         #region Methods
         /// <summary>
         /// Deletes a country
@@ -50,7 +50,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             var country = GetCountryById(countryId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Countries.Attach(country);
+            if (!context.IsAttached(country))
+                context.Countries.Attach(country);
             context.DeleteObject(country);
             context.SaveChanges();
 
@@ -59,7 +60,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
             }
         }
-        
+
         /// <summary>
         /// Gets all countries
         /// </summary>
@@ -136,7 +137,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                         where (showHidden || c.Published) && c.AllowsBilling
                         select c;
             var countryCollection = query.ToList();
-            
+
             if (CountryManager.CacheEnabled)
             {
                 NopCache.Max(key, countryCollection);
@@ -165,7 +166,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                         where (showHidden || c.Published) && c.AllowsShipping
                         select c;
             var countryCollection = query.ToList();
-            
+
             if (CountryManager.CacheEnabled)
             {
                 NopCache.Max(key, countryCollection);
@@ -296,7 +297,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             var country = GetCountryById(countryId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Countries.Attach(country);
+            if (!context.IsAttached(country))
+                context.Countries.Attach(country);
 
             country.Name = name;
             country.AllowsRegistration = allowsRegistration;
@@ -308,7 +310,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             country.Published = published;
             country.DisplayOrder = displayOrder;
             context.SaveChanges();
-            
+
             if (CountryManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
@@ -317,7 +319,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             return country;
         }
         #endregion
-        
+
         #region Property
         /// <summary>
         /// Gets a value indicating whether cache is enabled

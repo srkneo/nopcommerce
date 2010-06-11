@@ -17,48 +17,40 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace NopSolutions.NopCommerce.DataAccess.Products
+
+namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 {
     /// <summary>
-    /// Represents a product type
+    /// Represents a poll voting record
     /// </summary>
-    public partial class DBProductType : BaseDBEntity
+    public partial class PollVotingRecord : BaseEntity
     {
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the DBProductType class
+        /// Creates a new instance of the PollVotingRecord class
         /// </summary>
-        public DBProductType()
+        public PollVotingRecord()
         {
         }
         #endregion
 
         #region Properties
         /// <summary>
-        /// Gets or sets the product type identifier
+        /// Gets or sets the poll voting record identifier
         /// </summary>
-        public int ProductTypeId { get; set; }
+        public int PollVotingRecordId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name
+        /// Gets or sets the poll answer identifier
         /// </summary>
-        public string Name { get; set; }
+        public int PollAnswerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the display order
+        /// Gets or sets the customer identifier
         /// </summary>
-        public int DisplayOrder { get; set; }
+        public string CustomerId { get; set; }
 
-        /// <summary>
-        /// Gets or sets the date and time of instance creation
-        /// </summary>
-        public DateTime CreatedOn { get; set; }
-
-        /// <summary>
-        /// Gets or sets the date and time of instance update
-        /// </summary>
-        public DateTime UpdatedOn { get; set; }
-        #endregion 
+        #endregion
     }
 
 }

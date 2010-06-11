@@ -58,7 +58,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var customerAction = GetCustomerActionById(customerActionId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CustomerActions.Attach(customerAction);
+            if (!context.IsAttached(customerAction))
+                context.CustomerActions.Attach(customerAction);
             context.DeleteObject(customerAction);
             context.SaveChanges();
 
@@ -168,7 +169,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var customerAction = GetCustomerActionById(customerActionId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CustomerActions.Attach(customerAction);
+            if (!context.IsAttached(customerAction))
+                context.CustomerActions.Attach(customerAction);
 
             customerAction.Name = name;
             customerAction.SystemKeyword = systemKeyword;
@@ -196,7 +198,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var acl = GetAclById(aclId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ACL.Attach(acl);
+            if (!context.IsAttached(acl))
+                context.ACL.Attach(acl);
             context.DeleteObject(acl);
             context.SaveChanges();
         }
@@ -280,7 +283,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var acl = GetAclById(aclId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ACL.Attach(acl);
+            if (!context.IsAttached(acl))
+                context.ACL.Attach(acl);
 
             acl.CustomerActionId = customerActionId;
             acl.CustomerRoleId = customerRoleId;

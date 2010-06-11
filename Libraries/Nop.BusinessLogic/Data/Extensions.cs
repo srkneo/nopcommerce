@@ -15,30 +15,37 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Globalization;
+using System.Data.Objects;
+using System.Linq;
 using System.Text;
-using System.Configuration.Provider;
-using System.Web.Hosting;
-using System.Web.Configuration;
-using System.Configuration;
-using System.Collections.Specialized;
 
-namespace NopSolutions.NopCommerce.DataAccess.Audit
+
+namespace NopSolutions.NopCommerce.BusinessLogic.Data
 {
-    /// <summary>
-    /// Acts as a base class for deriving custom log provider
-    /// </summary>
-    [DBProviderSectionName("nopDataProviders/LogProvider")]
-    public abstract partial class DBLogProvider : BaseDBProvider
+    public static class Extensions
     {
-        #region Methods
-
         /// <summary>
-        /// Clears a log
+        /// Determines whether record is attached
         /// </summary>
-        public abstract void ClearLog();
-        
-        #endregion
+        /// <param name="context">Context</param>
+        /// <param name="entity">Entity</param>
+        /// <returns>Result</returns>
+        public static bool IsAttached(this ObjectContext context, object entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            ObjectStateEntry entry;
+            try
+            {
+                entry = context.ObjectStateManager.GetObjectStateEntry(entity);
+                return (entry.State != EntityState.Detached);
+            }
+            catch (Exception exc)
+            {
+            }
+            return false;
+        }
     }
 }

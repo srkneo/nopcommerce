@@ -60,7 +60,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingByWeight = GetById(shippingByWeightId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingByWeight.Attach(shippingByWeight);
+            if (!context.IsAttached(shippingByWeight))
+                context.ShippingByWeight.Attach(shippingByWeight);
             context.DeleteObject(shippingByWeight);
             context.SaveChanges();
         }
@@ -126,7 +127,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingByWeight = GetById(shippingByWeightId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingByWeight.Attach(shippingByWeight);
+            if (!context.IsAttached(shippingByWeight))
+                context.ShippingByWeight.Attach(shippingByWeight);
 
             shippingByWeight.ShippingMethodId = shippingMethodId;
             shippingByWeight.From = from;

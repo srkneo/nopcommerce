@@ -156,7 +156,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             var creditCardType = GetCreditCardTypeById(creditCardTypeId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CreditCardTypes.Attach(creditCardType);
+            if (!context.IsAttached(creditCardType))
+                context.CreditCardTypes.Attach(creditCardType);
 
             creditCardType.Name = name;
             creditCardType.SystemKeyword = systemKeyword;

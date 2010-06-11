@@ -15,56 +15,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 
 
-namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
+
+namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 {
     /// <summary>
-    /// Represents a poll
+    /// Represents a log type
     /// </summary>
-    public partial class DBPoll : BaseDBEntity
+    public partial class LogType : BaseEntity
     {
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the DBPoll class
+        /// Creates a new instance of the LogType class
         /// </summary>
-        public DBPoll()
+        public LogType()
         {
         }
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets or sets the poll identifier
-        /// </summary>
-        public int PollId { get; set; }
 
         /// <summary>
-        /// Gets or sets the language identifier
+        /// Gets or sets the log type identifier
         /// </summary>
-        public int LanguageId { get; set; }
-
+        public int LogTypeId { get; set; }
+        
         /// <summary>
         /// Gets or sets the name
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the system keyword
-        /// </summary>
-        public string SystemKeyword { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the entity is published
-        /// </summary>
-        public bool Published { get; set; }
-
-        /// <summary>
-        /// Gets or sets the display order
-        /// </summary>
-        public int DisplayOrder { get; set; }
-
         #endregion
     }
-
 }

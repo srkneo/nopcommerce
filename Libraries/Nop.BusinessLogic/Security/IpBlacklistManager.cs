@@ -163,7 +163,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var ipAddress = GetBannedIpAddressById(ipAddressId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BannedIpAddresses.Attach(ipAddress);
+            if (!context.IsAttached(ipAddress))
+                context.BannedIpAddresses.Attach(ipAddress);
 
             ipAddress.Address = address;
             ipAddress.Comment = comment;
@@ -187,7 +188,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var ipAddress = GetBannedIpAddressById(ipAddressId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BannedIpAddresses.Attach(ipAddress);
+            if (!context.IsAttached(ipAddress))
+                context.BannedIpAddresses.Attach(ipAddress);
             context.DeleteObject(ipAddress);
             context.SaveChanges();
 
@@ -305,7 +307,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var ipNetwork = GetBannedIpNetworkById(bannedIpNetworkId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BannedIpNetworks.Attach(ipNetwork);
+            if (!context.IsAttached(ipNetwork))
+                context.BannedIpNetworks.Attach(ipNetwork);
 
             ipNetwork.StartAddress = startAddress;
             ipNetwork.EndAddress = endAddress;
@@ -331,7 +334,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             var ipNetwork = GetBannedIpNetworkById(bannedIpNetwork);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BannedIpNetworks.Attach(ipNetwork);
+            if (!context.IsAttached(ipNetwork))
+                context.BannedIpNetworks.Attach(ipNetwork);
             context.DeleteObject(ipNetwork);
             context.SaveChanges();
 

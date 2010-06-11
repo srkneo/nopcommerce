@@ -49,7 +49,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingRateComputationMethod = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingRateComputationMethods.Attach(shippingRateComputationMethod);
+            if (!context.IsAttached(shippingRateComputationMethod))
+                context.ShippingRateComputationMethods.Attach(shippingRateComputationMethod);
             context.DeleteObject(shippingRateComputationMethod);
             context.SaveChanges();
 
@@ -179,7 +180,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingRateComputationMethod = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingRateComputationMethods.Attach(shippingRateComputationMethod);
+            if (!context.IsAttached(shippingRateComputationMethod))
+                context.ShippingRateComputationMethods.Attach(shippingRateComputationMethod);
 
             shippingRateComputationMethod.Name = name;
             shippingRateComputationMethod.Description = description;

@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             this.ddlProductType.Items.Clear();
-            ProductTypeCollection productTypeCollection = ProductManager.GetAllProductTypes();
+            var productTypeCollection = ProductManager.GetAllProductTypes();
             foreach (ProductType productType in productTypeCollection)
             {
                 ListItem item2 = new ListItem(productType.Name, productType.ProductTypeId.ToString());

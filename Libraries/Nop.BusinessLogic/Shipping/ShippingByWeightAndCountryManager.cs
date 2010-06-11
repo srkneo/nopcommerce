@@ -60,7 +60,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingByWeightAndCountry = GetById(shippingByWeightAndCountryId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingByWeightAndCountry.Attach(shippingByWeightAndCountry);
+            if (!context.IsAttached(shippingByWeightAndCountry))
+                context.ShippingByWeightAndCountry.Attach(shippingByWeightAndCountry);
             context.DeleteObject(shippingByWeightAndCountry);
             context.SaveChanges();
         }
@@ -129,7 +130,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingByWeightAndCountry = GetById(shippingByWeightAndCountryId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingByWeightAndCountry.Attach(shippingByWeightAndCountry);
+            if (!context.IsAttached(shippingByWeightAndCountry))
+                context.ShippingByWeightAndCountry.Attach(shippingByWeightAndCountry);
 
             shippingByWeightAndCountry.ShippingMethodId = shippingMethodId;
             shippingByWeightAndCountry.CountryId = countryId;

@@ -46,7 +46,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             var stateProvince = GetStateProvinceById(stateProvinceId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.StateProvinces.Attach(stateProvince);
+            if (!context.IsAttached(stateProvince))
+                context.StateProvinces.Attach(stateProvince);
             context.DeleteObject(stateProvince);
             context.SaveChanges();
 
@@ -172,8 +173,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             int countryId, string name, string abbreviation, int displayOrder)
         {
             var stateProvince = GetStateProvinceById(stateProvinceId);
+
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.StateProvinces.Attach(stateProvince);
+            if (!context.IsAttached(stateProvince))
+                context.StateProvinces.Attach(stateProvince);
 
             stateProvince.CountryId = countryId;
             stateProvince.Name = name;

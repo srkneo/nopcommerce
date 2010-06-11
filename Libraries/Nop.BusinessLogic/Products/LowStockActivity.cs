@@ -15,51 +15,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 
-namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
+namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
     /// <summary>
-    /// Represents a poll answer
+    /// Represents a low stock activity
     /// </summary>
-    public partial class DBPollAnswer : BaseDBEntity
+    public partial class LowStockActivity : BaseEntity
     {
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the DBPollAnswer class
+        /// Creates a new instance of the LowStockActivity class
         /// </summary>
-        public DBPollAnswer()
+        public LowStockActivity()
         {
         }
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets or sets the poll answer identifier
-        /// </summary>
-        public int PollAnswerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the poll identifier
+        /// Gets or sets the identifier
         /// </summary>
-        public int PollId { get; set; }
+        public int LowStockActivityId { get; set; }
 
         /// <summary>
-        /// Gets or sets the poll answer name
+        /// Gets or sets the name
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the current count
-        /// </summary>
-        public int Count { get; set; }
-
-        /// <summary>
-        /// Gets or sets the display order
-        /// </summary>
-        public int DisplayOrder { get; set; }
-
-        #endregion
+        #endregion 
     }
 
 }

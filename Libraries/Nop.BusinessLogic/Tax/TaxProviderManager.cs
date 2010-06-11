@@ -48,7 +48,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var taxProvider = GetTaxProviderById(taxProviderId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.TaxProviders.Attach(taxProvider);
+            if (!context.IsAttached(taxProvider))
+                context.TaxProviders.Attach(taxProvider);
             context.DeleteObject(taxProvider);
             context.SaveChanges();
             if (TaxProviderManager.CacheEnabled)
@@ -160,7 +161,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var taxProvider = GetTaxProviderById(taxProviderId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.TaxProviders.Attach(taxProvider);
+            if (!context.IsAttached(taxProvider))
+                context.TaxProviders.Attach(taxProvider);
 
             taxProvider.Name = name;
             taxProvider.Description = description;

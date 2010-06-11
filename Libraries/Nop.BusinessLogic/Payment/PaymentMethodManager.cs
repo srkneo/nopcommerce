@@ -84,7 +84,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             var paymentMethod = GetPaymentMethodById(paymentMethodId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.PaymentMethods.Attach(paymentMethod);
+            if (!context.IsAttached(paymentMethod))
+                context.PaymentMethods.Attach(paymentMethod);
             context.DeleteObject(paymentMethod);
             context.SaveChanges();
 
@@ -237,7 +238,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             var paymentMethod = GetPaymentMethodById(paymentMethodId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.PaymentMethods.Attach(paymentMethod);
+            if (!context.IsAttached(paymentMethod))
+                context.PaymentMethods.Attach(paymentMethod);
 
             paymentMethod.Name = name;
             paymentMethod.VisibleName = visibleName;

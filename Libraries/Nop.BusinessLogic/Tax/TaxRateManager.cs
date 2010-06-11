@@ -81,7 +81,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var taxRate = GetTaxRateById(taxRateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.TaxRates.Attach(taxRate);
+            if (!context.IsAttached(taxRate))
+                context.TaxRates.Attach(taxRate);
             context.DeleteObject(taxRate);
             context.SaveChanges();
             
@@ -256,7 +257,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var taxRate = GetTaxRateById(taxRateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.TaxRates.Attach(taxRate);
+            if (!context.IsAttached(taxRate))
+                context.TaxRates.Attach(taxRate);
 
             taxRate.TaxCategoryId = taxCategoryId;
             taxRate.CountryId = countryId;

@@ -48,10 +48,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="exchangeRateCurrencyCode">Exchange rate currency code</param>
         /// <param name="updateDate">Update date</param>
         /// <param name="rates">Currency rates table</param>
-        public static void GetCurrencyLiveRates(string exchangeRateCurrencyCode, 
+        public static void GetCurrencyLiveRates(string exchangeRateCurrencyCode,
             out DateTime updateDate, out DataTable rates)
         {
-            if (String.IsNullOrEmpty(exchangeRateCurrencyCode) || 
+            if (String.IsNullOrEmpty(exchangeRateCurrencyCode) ||
                 exchangeRateCurrencyCode.ToLower() != "eur")
                 throw new NopException("You can use our \"CurrencyLiveRate\" service only when exchange rate currency code is set to EURO");
 
@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 provider.NumberDecimalSeparator = ".";
                 provider.NumberGroupSeparator = "";
                 foreach (XmlNode node2 in node.ChildNodes)
-                    rates.Rows.Add(new object[] {node2.Attributes["currency"].Value, double.Parse(node2.Attributes["rate"].Value, provider) });
+                    rates.Rows.Add(new object[] { node2.Attributes["currency"].Value, double.Parse(node2.Attributes["rate"].Value, provider) });
             }
         }
 
@@ -86,7 +86,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             var currency = GetCurrencyById(currencyId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Currencies.Attach(currency);
+            if (!context.IsAttached(currency))
+                context.Currencies.Attach(currency);
             context.DeleteObject(currency);
             context.SaveChanges();
 
@@ -260,7 +261,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             var currency = GetCurrencyById(currencyId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Currencies.Attach(currency);
+            if (!context.IsAttached(currency))
+                context.Currencies.Attach(currency);
 
             currency.Name = name;
             currency.CurrencyCode = currencyCode;
@@ -288,7 +290,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="sourceCurrencyCode">Source currency code</param>
         /// <param name="targetCurrencyCode">Target currency code</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertCurrency(decimal amount, Currency sourceCurrencyCode, 
+        public static decimal ConvertCurrency(decimal amount, Currency sourceCurrencyCode,
             Currency targetCurrencyCode)
         {
             decimal result = amount;
@@ -309,7 +311,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="amount">Amount</param>
         /// <param name="sourceCurrencyCode">Source currency code</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertToPrimaryExchangeRateCurrency(decimal amount, 
+        public static decimal ConvertToPrimaryExchangeRateCurrency(decimal amount,
             Currency sourceCurrencyCode)
         {
             decimal result = amount;
@@ -329,7 +331,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// <param name="amount">Amount</param>
         /// <param name="targetCurrencyCode">Target currency code</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertFromPrimaryExchangeRateCurrency(decimal amount, 
+        public static decimal ConvertFromPrimaryExchangeRateCurrency(decimal amount,
             Currency targetCurrencyCode)
         {
             decimal result = amount;
@@ -343,7 +345,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             return result;
         }
         #endregion
-        
+
         #region Property
 
         /// <summary>

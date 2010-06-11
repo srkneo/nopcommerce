@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="Audit\ActivityLog.cs" />
     <Compile Include="Audit\ActivityLogType.cs" />
+    <Compile Include="Audit\LogType.cs" />
     <Compile Include="Audit\CustomerActivityManager.cs" />
     <Compile Include="Audit\Extensions.cs" />
     <Compile Include="Categories\CategoryLocalized.cs" />
@@ -128,12 +129,14 @@
     <Compile Include="Content\Forums\ForumPost.cs" />
     <Compile Include="Content\Forums\ForumTopic.cs" />
     <Compile Include="Content\Forums\Forum.cs" />
+    <Compile Include="Content\Polls\PollVotingRecord.cs" />
     <Compile Include="Customer\CustomerRegistrationTypeEnum.cs" />
     <Compile Include="Customer\DeleteExpiredCustomerSessionsTask.cs" />
     <Compile Include="Caching\ClearCacheTask.cs" />
     <Compile Include="Customer\Extensions.cs" />
     <Compile Include="Data\AspNetObjectContextManager.cs" />
     <Compile Include="Data\AspNetObjectContextDisposalModule.cs" />
+    <Compile Include="Data\Extensions.cs" />
     <Compile Include="Data\UnitOfWorkScope.cs" />
     <Compile Include="Data\ObjectContextHelper.cs" />
     <Compile Include="Data\StaticObjectContextManager.cs" />
@@ -179,6 +182,8 @@
     <Compile Include="Products\Attributes\CheckoutAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeHelper.cs" />
+    <Compile Include="Products\ShoppingCartType.cs" />
+    <Compile Include="Products\LowStockActivity.cs" />
     <Compile Include="Products\ProductTag.cs" />
     <Compile Include="Products\ProductTagCollection.cs" />
     <Compile Include="Products\ProductSortingEnum.cs" />
@@ -293,8 +298,6 @@
     <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
     <Compile Include="Products\Specs\ProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
-    <Compile Include="Content\Polls\PollAnswerCollection.cs" />
-    <Compile Include="Content\Polls\PollCollection.cs" />
     <Compile Include="Products\ProductReviewCollection.cs" />
     <Compile Include="Products\RelatedProductCollection.cs" />
     <Compile Include="Manufacturers\ProductManufacturerCollection.cs" />
@@ -342,7 +345,6 @@
     <Compile Include="Promo\Discounts\DiscountCollection.cs" />
     <Compile Include="Directory\Language.cs" />
     <Compile Include="Audit\Log.cs" />
-    <Compile Include="Audit\LogCollection.cs" />
     <Compile Include="Manufacturers\Manufacturer.cs" />
     <Compile Include="Manufacturers\ManufacturerCollection.cs" />
     <Compile Include="Templates\ManufacturerTemplate.cs" />
@@ -357,7 +359,6 @@
     <Compile Include="Products\ProductCollection.cs" />
     <Compile Include="Templates\ProductTemplate.cs" />
     <Compile Include="Products\ProductType.cs" />
-    <Compile Include="Products\ProductTypeCollection.cs" />
     <Compile Include="Products\ProductVariant.cs" />
     <Compile Include="Products\ProductVariantCollection.cs" />
     <Compile Include="Configuration\Settings\Setting.cs" />

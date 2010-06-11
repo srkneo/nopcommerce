@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = poll.DisplayOrder;
 
                 pnlPollAnswers.Visible = true;
-                PollAnswerCollection pollAnswers = poll.PollAnswers;
+                var pollAnswers = poll.PollAnswers;
                 gvPollAnswers.DataSource = pollAnswers;
                 gvPollAnswers.DataBind();
             }

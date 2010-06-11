@@ -88,17 +88,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             return item;
         }
 
-        private DBProductType GetProductTypeFromReader(IDataReader dataReader)
-        {
-            var item = new DBProductType();
-            item.ProductTypeId = NopSqlDataHelper.GetInt(dataReader, "ProductTypeID");
-            item.Name = NopSqlDataHelper.GetString(dataReader, "Name");
-            item.DisplayOrder = NopSqlDataHelper.GetInt(dataReader, "DisplayOrder");
-            item.CreatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "CreatedOn");
-            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return item;
-        }
-
         private DBProductVariant GetProductVariantFromReader(IDataReader dataReader)
         {
             var item = new DBProductVariant();
@@ -1788,50 +1777,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             if (db.ExecuteNonQuery(dbCommand) > 0)
                 item = GetRelatedProductById(relatedProductId);
 
-            return item;
-        }
-
-        /// <summary>
-        /// Gets all product types
-        /// </summary>
-        /// <returns>Product type collection</returns>
-        public override DBProductTypeCollection GetAllProductTypes()
-        {
-            var result = new DBProductTypeCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTypeLoadAll");
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetProductTypeFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a product type
-        /// </summary>
-        /// <param name="productTypeId">Product type identifier</param>
-        /// <returns>Product type</returns>
-        public override DBProductType GetProductTypeById(int productTypeId)
-        {
-            DBProductType item = null;
-            if (productTypeId == 0)
-                return item;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductTypeLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductTypeID", DbType.Int32, productTypeId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetProductTypeFromReader(dataReader);
-                }
-            }
             return item;
         }
 

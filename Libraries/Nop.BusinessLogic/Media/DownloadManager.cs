@@ -130,7 +130,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             var download = GetDownloadById(downloadId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Downloads.Attach(download);
+            if (!context.IsAttached(download))
+                context.Downloads.Attach(download);
             context.DeleteObject(download);
             context.SaveChanges();
         }
@@ -204,7 +205,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             var download = GetDownloadById(downloadId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Downloads.Attach(download);
+            if (!context.IsAttached(download))
+                context.Downloads.Attach(download);
 
             download.UseDownloadUrl = useDownloadUrl;
             download.DownloadUrl = downloadUrl;

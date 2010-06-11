@@ -120,7 +120,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             var news = GetNewsById(newsId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.News.Attach(news);
+            if (!context.IsAttached(news))
+                context.News.Attach(news);
             context.DeleteObject(news);
             context.SaveChanges();
 
@@ -285,7 +286,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             var news = GetNewsById(newsId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.News.Attach(news);
+            if (!context.IsAttached(news))
+                context.News.Attach(news);
 
             news.LanguageId = languageId;
             news.Title = title;
@@ -347,7 +349,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             var newsComment = GetNewsCommentById(newsCommentId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.NewsComments.Attach(newsComment);
+            if (!context.IsAttached(newsComment))
+                context.NewsComments.Attach(newsComment);
             context.DeleteObject(newsComment);
             context.SaveChanges();
         }
@@ -460,7 +463,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             var newsComment = GetNewsCommentById(newsCommentId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.NewsComments.Attach(newsComment);
+            if (!context.IsAttached(newsComment))
+                context.NewsComments.Attach(newsComment);
 
             newsComment.NewsId = newsId;
             newsComment.CustomerId = customerId;

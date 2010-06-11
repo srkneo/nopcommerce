@@ -15,14 +15,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 
-namespace NopSolutions.NopCommerce.BusinessLogic.Audit
+namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
     /// <summary>
-    /// Represents a log collection
+    /// Represents a shopping cart type
     /// </summary>
-    public partial class LogCollection : BaseEntityCollection<Log>
+    public partial class ShoppingCartType : BaseEntity
     {
+        #region Ctor
+        /// <summary>
+        /// Creates a new instance of the ShoppingCartType class
+        /// </summary>
+        public ShoppingCartType()
+        {
+        }
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the identifier
+        /// </summary>
+        public int ShoppingCartTypeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name
+        /// </summary>
+        public string Name { get; set; }
+
+        #endregion 
     }
+
 }

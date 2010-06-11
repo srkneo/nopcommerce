@@ -108,7 +108,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             var activityLogType = GetActivityTypeById(activityLogTypeId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ActivityLogTypes.Attach(activityLogType);
+            if (!context.IsAttached(activityLogType))
+                context.ActivityLogTypes.Attach(activityLogType);
 
             activityLogType.SystemKeyword = systemKeyword;
             activityLogType.Name = name;
@@ -147,7 +148,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             var activityLogType = GetActivityTypeById(activityLogTypeId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ActivityLogTypes.Attach(activityLogType);
+            if (!context.IsAttached(activityLogType))
+                context.ActivityLogTypes.Attach(activityLogType);
             context.DeleteObject(activityLogType);
             context.SaveChanges();
 
@@ -273,7 +275,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             var activity = GetActivityById(activityLogId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ActivityLog.Attach(activity);
+            if (!context.IsAttached(activity))
+                context.ActivityLog.Attach(activity);
 
             activity.ActivityLogTypeId = activityLogTypeId;
             activity.CustomerId = customerId;
@@ -292,7 +295,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             var activity = GetActivityById(activityLogId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ActivityLog.Attach(activity);
+            if (!context.IsAttached(activity))
+                context.ActivityLog.Attach(activity);
             context.DeleteObject(activity);
             context.SaveChanges();
         }

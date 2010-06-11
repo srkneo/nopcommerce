@@ -157,7 +157,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             var affiliate = GetAffiliateById(affiliateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Affiliates.Attach(affiliate);
+            if (!context.IsAttached(affiliate))
+                context.Affiliates.Attach(affiliate);
 
             affiliate.FirstName = firstName;
             affiliate.LastName = lastName;

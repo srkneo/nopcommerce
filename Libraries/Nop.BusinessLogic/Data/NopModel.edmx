@@ -38,6 +38,7 @@
           <EntitySet Name="Nop_Forums_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Language" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LocaleStringResource" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LocaleStringResource" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Log" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Log" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LogType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LogType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_LowStockActivity" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LowStockActivity" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ManufacturerTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ManufacturerTemplate" store:Type="Tables" Schema="dbo" />
@@ -51,7 +52,11 @@
           <EntitySet Name="Nop_PaymentMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentMethod" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_PaymentStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PaymentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Picture" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Picture" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Poll" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Poll" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_PollAnswer" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PollAnswer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_PollVotingRecord" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PollVotingRecord" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ProductTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductTemplate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ProductType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_SearchLog" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_SearchLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Setting" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Setting" store:Type="Tables" Schema="dbo" />
@@ -129,6 +134,10 @@
             <End Role="Nop_Language" EntitySet="Nop_Language" />
             <End Role="Nop_LocaleStringResource" EntitySet="Nop_LocaleStringResource" />
           </AssociationSet>
+          <AssociationSet Name="FK_Nop_Log_Nop_LogType" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Log_Nop_LogType">
+            <End Role="Nop_LogType" EntitySet="Nop_LogType" />
+            <End Role="Nop_Log" EntitySet="Nop_Log" />
+          </AssociationSet>
           <AssociationSet Name="FK_Nop_MessageTemplateLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_MessageTemplateLocalized_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
             <End Role="Nop_MessageTemplateLocalized" EntitySet="Nop_MessageTemplateLocalized" />
@@ -144,6 +153,22 @@
           <AssociationSet Name="FK_Nop_NewsComment_Nop_News" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_NewsComment_Nop_News">
             <End Role="Nop_News" EntitySet="Nop_News" />
             <End Role="Nop_NewsComment" EntitySet="Nop_NewsComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Poll_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Poll_Nop_Language">
+            <End Role="Nop_Language" EntitySet="Nop_Language" />
+            <End Role="Nop_Poll" EntitySet="Nop_Poll" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_PollAnswer_Nop_Poll" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_PollAnswer_Nop_Poll">
+            <End Role="Nop_Poll" EntitySet="Nop_Poll" />
+            <End Role="Nop_PollAnswer" EntitySet="Nop_PollAnswer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_PollVotingRecord_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_PollVotingRecord_Nop_Customer">
+            <End Role="Nop_Customer" EntitySet="Nop_Customer" />
+            <End Role="Nop_PollVotingRecord" EntitySet="Nop_PollVotingRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_PollVotingRecord_Nop_PollAnswer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_PollVotingRecord_Nop_PollAnswer">
+            <End Role="Nop_PollAnswer" EntitySet="Nop_PollAnswer" />
+            <End Role="Nop_PollVotingRecord" EntitySet="Nop_PollVotingRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingByTotal_Nop_ShippingMethod">
             <End Role="Nop_ShippingMethod" EntitySet="Nop_ShippingMethod" />
@@ -576,6 +601,21 @@
           <Property Name="ResourceName" Type="nvarchar" Nullable="false" MaxLength="200" />
           <Property Name="ResourceValue" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LogTypeID" Type="int" Nullable="false" />
+          <Property Name="Severity" Type="int" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" Nullable="false" MaxLength="1000" />
+          <Property Name="Exception" Type="nvarchar" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="PageURL" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="ReferrerURL" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_LogType">
           <Key>
             <PropertyRef Name="LogTypeID" />
@@ -703,6 +743,35 @@
           <Property Name="Extension" Type="nvarchar" Nullable="false" MaxLength="20" />
           <Property Name="IsNew" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_Poll">
+          <Key>
+            <PropertyRef Name="PollID" />
+          </Key>
+          <Property Name="PollID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LanguageID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="400" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="Nop_PollAnswer">
+          <Key>
+            <PropertyRef Name="PollAnswerID" />
+          </Key>
+          <Property Name="PollAnswerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PollID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="400" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_PollVotingRecord">
+          <Key>
+            <PropertyRef Name="PollVotingRecordID" />
+          </Key>
+          <Property Name="PollVotingRecordID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PollAnswerID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_ProductTemplate">
           <Key>
             <PropertyRef Name="ProductTemplateId" />
@@ -711,6 +780,16 @@
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="TemplatePath" Type="nvarchar" Nullable="false" MaxLength="200" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeID" />
+          </Key>
+          <Property Name="ProductTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="DisplayOrder" Type="int" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1115,6 +1194,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Nop_Log_Nop_LogType">
+          <End Role="Nop_LogType" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_LogType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Log" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_LogType">
+              <PropertyRef Name="LogTypeID" />
+            </Principal>
+            <Dependent Role="Nop_Log">
+              <PropertyRef Name="LogTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_MessageTemplateLocalized_Nop_Language">
           <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1168,6 +1261,62 @@
             </Principal>
             <Dependent Role="Nop_NewsComment">
               <PropertyRef Name="NewsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Poll_Nop_Language">
+          <End Role="Nop_Language" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Poll" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_Poll">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_PollAnswer_Nop_Poll">
+          <End Role="Nop_Poll" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Poll" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_PollAnswer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PollAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Poll">
+              <PropertyRef Name="PollID" />
+            </Principal>
+            <Dependent Role="Nop_PollAnswer">
+              <PropertyRef Name="PollID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_PollVotingRecord_Nop_Customer">
+          <End Role="Nop_Customer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_PollVotingRecord" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PollVotingRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Nop_PollVotingRecord">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_PollVotingRecord_Nop_PollAnswer">
+          <End Role="Nop_PollAnswer" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PollAnswer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_PollVotingRecord" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_PollVotingRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_PollAnswer">
+              <PropertyRef Name="PollAnswerID" />
+            </Principal>
+            <Dependent Role="Nop_PollVotingRecord">
+              <PropertyRef Name="PollAnswerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1524,6 +1673,31 @@
           <AssociationSet Name="FK_Nop_NewsComment_Nop_News" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_NewsComment_Nop_News">
             <End Role="Nop_News" EntitySet="News" />
             <End Role="Nop_NewsComment" EntitySet="NewsComments" />
+          </AssociationSet>
+          <EntitySet Name="Log" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Log" />
+          <EntitySet Name="Polls" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Poll" />
+          <EntitySet Name="PollAnswers" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PollAnswer" />
+          <EntitySet Name="PollVotingRecords" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PollVotingRecord" />
+          <EntitySet Name="ProductTypes" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductType" />
+          <AssociationSet Name="FK_Nop_PollVotingRecord_Nop_Customer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_PollVotingRecord_Nop_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Nop_PollVotingRecord" EntitySet="PollVotingRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Poll_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Poll_Nop_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Nop_Poll" EntitySet="Polls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Log_Nop_LogType" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Log_Nop_LogType">
+            <End Role="LogType" EntitySet="LogTypes" />
+            <End Role="Nop_Log" EntitySet="Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_PollAnswer_Nop_Poll" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_PollAnswer_Nop_Poll">
+            <End Role="Nop_Poll" EntitySet="Polls" />
+            <End Role="Nop_PollAnswer" EntitySet="PollAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_PollVotingRecord_Nop_PollAnswer" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_PollVotingRecord_Nop_PollAnswer">
+            <End Role="Nop_PollAnswer" EntitySet="PollAnswers" />
+            <End Role="Nop_PollVotingRecord" EntitySet="PollVotingRecords" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
@@ -2571,6 +2745,120 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Type="Int32" Name="LogId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="LogTypeId" Nullable="false" />
+          <Property Type="Int32" Name="Severity" Nullable="false" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Exception" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IPAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="PageUrl" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReferrerUrl" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Poll">
+          <Key>
+            <PropertyRef Name="PollId" />
+          </Key>
+          <Property Type="Int32" Name="PollId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="LanguageId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          <Property Type="String" Name="SystemKeyword" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PollAnswer">
+          <Key>
+            <PropertyRef Name="PollAnswerId" />
+          </Key>
+          <Property Type="Int32" Name="PollAnswerId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="PollId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Count" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+          </EntityType>
+        <EntityType Name="PollVotingRecord">
+          <Key>
+            <PropertyRef Name="PollVotingRecordId" />
+          </Key>
+          <Property Type="Int32" Name="PollVotingRecordId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="PollAnswerId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Type="Int32" Name="ProductTypeId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DisplayOrder" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Nop_PollVotingRecord_Nop_Customer">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.PollVotingRecord" Role="Nop_PollVotingRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Nop_PollVotingRecord">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Poll_Nop_Language">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Role="Language" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Poll" Role="Nop_Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageId" />
+            </Principal>
+            <Dependent Role="Nop_Poll">
+              <PropertyRef Name="LanguageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Log_Nop_LogType">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.LogType" Role="LogType" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Log" Role="Nop_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogType">
+              <PropertyRef Name="LogTypeId" />
+            </Principal>
+            <Dependent Role="Nop_Log">
+              <PropertyRef Name="LogTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_PollAnswer_Nop_Poll">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Poll" Role="Nop_Poll" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.PollAnswer" Role="Nop_PollAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Poll">
+              <PropertyRef Name="PollId" />
+            </Principal>
+            <Dependent Role="Nop_PollAnswer">
+              <PropertyRef Name="PollId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_PollVotingRecord_Nop_PollAnswer">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.PollAnswer" Role="Nop_PollAnswer" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.PollVotingRecord" Role="Nop_PollVotingRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_PollAnswer">
+              <PropertyRef Name="PollAnswerId" />
+            </Principal>
+            <Dependent Role="Nop_PollVotingRecord">
+              <PropertyRef Name="PollAnswerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3418,6 +3706,65 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Log">
+              <MappingFragment StoreEntitySet="Nop_Log">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ReferrerUrl" ColumnName="ReferrerURL" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageURL" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Severity" ColumnName="Severity" />
+                <ScalarProperty Name="LogTypeId" ColumnName="LogTypeID" />
+                <ScalarProperty Name="LogId" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Polls">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Poll">
+              <MappingFragment StoreEntitySet="Nop_Poll">
+                <ScalarProperty Name="SystemKeyword" ColumnName="SystemKeyword" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageID" />
+                <ScalarProperty Name="PollId" ColumnName="PollID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PollAnswers">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.PollAnswer">
+              <MappingFragment StoreEntitySet="Nop_PollAnswer">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PollId" ColumnName="PollID" />
+                <ScalarProperty Name="PollAnswerId" ColumnName="PollAnswerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PollVotingRecords">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.PollVotingRecord">
+              <MappingFragment StoreEntitySet="Nop_PollVotingRecord">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerID" />
+                <ScalarProperty Name="PollAnswerId" ColumnName="PollAnswerID" />
+                <ScalarProperty Name="PollVotingRecordId" ColumnName="PollVotingRecordID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ProductType">
+              <MappingFragment StoreEntitySet="Nop_ProductType">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3444,14 +3791,18 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="8.25" PointY="20.5" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
           <ConnectorPoint PointX="7.625" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="21.460500488281248" />
           <ConnectorPoint PointX="8.25" PointY="21.460500488281248" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="0.75" PointY="0.5" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="3.25" PointY="0.5" Height="2.9070849609374996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="10.25" PointY="9.125" />
-          <ConnectorPoint PointX="10.25" PointY="2.7809456380208335" />
-          <ConnectorPoint PointX="4.75" PointY="2.7809456380208335" />
+          <ConnectorPoint PointX="10.0625" PointY="9.125" />
+          <ConnectorPoint PointX="10.0625" PointY="2.9863823014322852" />
+          <ConnectorPoint PointX="9.7708333333333339" PointY="2.9863823014322848" />
+          <ConnectorPoint PointX="9.6041666666666661" PointY="2.9863823014322852" />
+          <ConnectorPoint PointX="4.75" PointY="2.9863823014322852" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
           <ConnectorPoint PointX="2.25" PointY="1.2139794921874998" />
@@ -3463,9 +3814,13 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.5" PointY="3.75" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
-          <ConnectorPoint PointX="9.8437475" PointY="9.125" />
-          <ConnectorPoint PointX="9.8437475" PointY="4.832021484375" />
-          <ConnectorPoint PointX="5.75" PointY="4.832021484375" />
+          <ConnectorPoint PointX="10.5898459375" PointY="9.125" />
+          <ConnectorPoint PointX="10.5898459375" PointY="5.7415983072916621" />
+          <ConnectorPoint PointX="10.145833333333334" PointY="5.7415983072916612" />
+          <ConnectorPoint PointX="9.9791666666666661" PointY="5.7415983072916621" />
+          <ConnectorPoint PointX="9.7708333333333339" PointY="5.7415983072916612" />
+          <ConnectorPoint PointX="9.6041666666666661" PointY="5.7415983072916621" />
+          <ConnectorPoint PointX="5.75" PointY="5.7415983072916621" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
           <ConnectorPoint PointX="2.75" PointY="4.4639794921875" />
@@ -3476,7 +3831,7 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Affiliate" Width="1.625" PointX="3.375" PointY="25.625" Height="3.5644742838541674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CategoryTemplate" Width="2" PointX="0.5" PointY="31.625" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CreditCardType" Width="1.875" PointX="3.25" PointY="33.75" Height="1.7566536458333388" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAction" Width="2" PointX="12.75" PointY="20.5" Height="1.7566536458333353" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAction" Width="2" PointX="27.375" PointY="0.5" Height="1.7566536458333353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LowStockActivity" Width="2.25" PointX="8.125" PointY="31.625" Height="1.2636116536458388" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ManufacturerTemplate" Width="2.375" PointX="5.625" PointY="31.625" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductTemplate" Width="2.125" PointX="3.25" PointY="31.625" Height="1.9210009765625031" />
@@ -3487,7 +3842,7 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountRequirement" Width="2.25" PointX="20.75" PointY="15.25" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountType" Width="1.875" PointX="16.375" PointY="15.25" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Download" Width="1.5" PointX="19.25" PointY="18.125" Height="2.2496956380208246" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LogType" Width="1.5" PointX="21.125" PointY="25.125" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LogType" Width="1.5" PointX="16.75" PointY="25.375" Height="1.2636116536458353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.OrderStatus" Width="1.75" PointX="20.875" PointY="19.125" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod" Width="1.875" PointX="18.5" PointY="22" Height="2.5783902994791674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentStatus" Width="2.125" PointX="22.75" PointY="19.125" Height="1.2636116536458246" />
@@ -3529,33 +3884,32 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate" Width="1.5" PointX="27.625" PointY="19.125" Height="1.9210009765625031" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_Country" >
           <ConnectorPoint PointX="7.625" PointY="21.871368815104169" />
-          <ConnectorPoint PointX="8.234375" PointY="21.871368815104169" />
-          <ConnectorPoint PointX="8.234375" PointY="20.359375" />
-          <ConnectorPoint PointX="13.416666666666666" PointY="20.359375" />
-          <ConnectorPoint PointX="13.583333333333334" PointY="20.359375" />
-          <ConnectorPoint PointX="19.234375" PointY="20.359375" />
-          <ConnectorPoint PointX="19.234375" PointY="18.109375" />
-          <ConnectorPoint PointX="28.375" PointY="18.109375" />
-          <ConnectorPoint PointX="28.375" PointY="19.125" />
+          <ConnectorPoint PointX="8" PointY="21.871368815104169" />
+          <ConnectorPoint PointX="8" PointY="20.25" />
+          <ConnectorPoint PointX="10.125" PointY="20.25" />
+          <ConnectorPoint PointX="10.125" PointY="22.381653645833353" />
+          <ConnectorPoint PointX="16.5" PointY="22.381653645833353" />
+          <ConnectorPoint PointX="16.5" PointY="21.75" />
+          <ConnectorPoint PointX="28.375" PointY="21.75" />
+          <ConnectorPoint PointX="28.375" PointY="21.046000976562503" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_TaxCategory" >
           <ConnectorPoint PointX="29.75" PointY="20.128326822916669" />
           <ConnectorPoint PointX="29.125" PointY="20.128326822916669" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Width="1.75" PointX="15.5" PointY="0.5" Height="2.085348307291667" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Width="1.75" PointX="15" PointY="0.5" Height="2.085348307291667" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping" >
-          <ConnectorPoint PointX="16.375" PointY="3.125" />
-          <ConnectorPoint PointX="16.375" PointY="2.585348307291667" />
+          <ConnectorPoint PointX="16.125" PointY="3.125" />
+          <ConnectorPoint PointX="16.125" PointY="2.585348307291667" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Width="1.5" PointX="12.75" PointY="17.625" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Width="1.5" PointX="25.25" PointY="0.5" Height="1.5923063151041674" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerAction" >
-          <ConnectorPoint PointX="13.5" PointY="20.5" />
-          <ConnectorPoint PointX="13.5" PointY="19.217306315104167" />
+          <ConnectorPoint PointX="27.375" PointY="1.2961531575520837" />
+          <ConnectorPoint PointX="26.75" PointY="1.2961531575520837" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerRole" >
-          <ConnectorPoint PointX="15.5" PointY="1.5426741536458337" />
-          <ConnectorPoint PointX="13.5" PointY="1.5426741536458337" />
-          <ConnectorPoint PointX="13.5" PointY="17.625" />
+          <ConnectorPoint PointX="16.75" PointY="1.2961531575520837" />
+          <ConnectorPoint PointX="25.25" PointY="1.2961531575520837" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLog" Width="1.875" PointX="10.375" PointY="17.75" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLogType" Width="2" PointX="10.375" PointY="20.375" Height="1.756653645833353" />
@@ -3564,18 +3918,16 @@
           <ConnectorPoint PointX="11.3125" PointY="19.671000976562503" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer" >
-          <ConnectorPoint PointX="15.5" PointY="5.9754947916666667" />
-          <ConnectorPoint PointX="13.583333333333334" PointY="5.9754947916666659" />
-          <ConnectorPoint PointX="13.416666666666666" PointY="5.9754947916666667" />
-          <ConnectorPoint PointX="11.5625" PointY="5.9754947916666667" />
-          <ConnectorPoint PointX="11.5625" PointY="17.75" />
+          <ConnectorPoint PointX="15.5" PointY="7.2837939453124978" />
+          <ConnectorPoint PointX="11.65625" PointY="7.2837939453124978" />
+          <ConnectorPoint PointX="11.65625" PointY="17.75" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Address" Width="1.5" PointX="30.125" PointY="0.625" Height="3.8931689453124827" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Address" Width="1.5" PointX="30.125" PointY="0.5" Height="3.8931689453124827" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogComment" Width="1.5" PointX="32.25" PointY="5.125" Height="1.9210009765624996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogPost" Width="1.5" PointX="30.125" PointY="5.125" Height="2.0853483072916665" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Address_Nop_Customer1" >
-          <ConnectorPoint PointX="17.5" PointY="3.8215844726562409" />
-          <ConnectorPoint PointX="30.125" PointY="3.8215844726562409" />
+          <ConnectorPoint PointX="17.5" PointY="3.7590844726562413" />
+          <ConnectorPoint PointX="30.125" PointY="3.7590844726562413" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogComment_Nop_BlogPost" >
           <ConnectorPoint PointX="31.625" PointY="6.08550048828125" />
@@ -3586,14 +3938,12 @@
           <ConnectorPoint PointX="30.125" PointY="6.1676741536458337" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Language" >
-          <ConnectorPoint PointX="11" PointY="10.57377197265625" />
-          <ConnectorPoint PointX="11.479166666666666" PointY="10.57377197265625" />
-          <ConnectorPoint PointX="11.645833333333334" PointY="10.57377197265625" />
-          <ConnectorPoint PointX="13.416666666666666" PointY="10.57377197265625" />
-          <ConnectorPoint PointX="13.583333333333334" PointY="10.57377197265625" />
-          <ConnectorPoint PointX="16.791666666666668" PointY="10.57377197265625" />
-          <ConnectorPoint PointX="16.958333333333332" PointY="10.57377197265625" />
-          <ConnectorPoint PointX="30.65625" PointY="10.57377197265625" />
+          <ConnectorPoint PointX="11" PointY="10.573771972656251" />
+          <ConnectorPoint PointX="11.572916666666666" PointY="10.573771972656251" />
+          <ConnectorPoint PointX="11.739583333333334" PointY="10.573771972656251" />
+          <ConnectorPoint PointX="16.791666666666668" PointY="10.573771972656251" />
+          <ConnectorPoint PointX="16.958333333333332" PointY="10.573771972656251" />
+          <ConnectorPoint PointX="30.65625" PointY="10.573771972656251" />
           <ConnectorPoint PointX="30.65625" PointY="7.2103483072916665" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAttribute" Width="2.125" PointX="16.25" PointY="13.125" Height="1.5923063151041657" />
@@ -3624,20 +3974,44 @@
           <ConnectorPoint PointX="25.875" PointY="29.667674153645834" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_News_Nop_Language" >
-          <ConnectorPoint PointX="11" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="11.479166666666666" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="11.645833333333334" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="13.416666666666666" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="13.583333333333334" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="16.791666666666668" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="16.958333333333332" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="30.572916666666668" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="30.739583333333332" PointY="9.4998478190104159" />
-          <ConnectorPoint PointX="31.25" PointY="9.4998478190104159" />
+          <ConnectorPoint PointX="11" PointY="9.4998478190104176" />
+          <ConnectorPoint PointX="11.572916666666666" PointY="9.4998478190104176" />
+          <ConnectorPoint PointX="11.739583333333334" PointY="9.4998478190104176" />
+          <ConnectorPoint PointX="16.791666666666668" PointY="9.4998478190104176" />
+          <ConnectorPoint PointX="16.958333333333332" PointY="9.4998478190104176" />
+          <ConnectorPoint PointX="30.572916666666668" PointY="9.4998478190104176" />
+          <ConnectorPoint PointX="30.739583333333332" PointY="9.4998478190104176" />
+          <ConnectorPoint PointX="31.25" PointY="9.4998478190104176" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_NewsComment_Nop_News" >
           <ConnectorPoint PointX="32.75" PointY="8.6676741536458337" />
           <ConnectorPoint PointX="33.625" PointY="8.6676741536458337" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Log" Width="1.5" PointX="16.75" PointY="22" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Poll" Width="1.5" PointX="8.375" PointY="0.5" Height="1.9210009765625" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PollAnswer" Width="1.625" PointX="10.25" PointY="0.5" Height="1.7566536458333331" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PollVotingRecord" Width="1.625" PointX="12.25" PointY="0.5" Height="1.4279589843750002" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductType" Width="1.625" PointX="6.375" PointY="3.625" Height="1.7566536458333246" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_PollVotingRecord_Nop_Customer" >
+          <ConnectorPoint PointX="15.5" PointY="5.1731444726562552" />
+          <ConnectorPoint PointX="13.0625" PointY="5.1731444726562552" />
+          <ConnectorPoint PointX="13.0625" PointY="1.9279589843750002" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Poll_Nop_Language" >
+          <ConnectorPoint PointX="9.6875" PointY="9.125" />
+          <ConnectorPoint PointX="9.6875" PointY="2.4210009765625" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Log_Nop_LogType" >
+          <ConnectorPoint PointX="17.5" PointY="25.375" />
+          <ConnectorPoint PointX="17.5" PointY="24.578390299479167" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_PollAnswer_Nop_Poll" >
+          <ConnectorPoint PointX="9.875" PointY="1.3783268229166668" />
+          <ConnectorPoint PointX="10.25" PointY="1.3783268229166668" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_PollVotingRecord_Nop_PollAnswer" >
+          <ConnectorPoint PointX="11.875" PointY="1.2139794921875002" />
+          <ConnectorPoint PointX="12.25" PointY="1.2139794921875002" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

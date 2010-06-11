@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             get
             {
                 int result = 0;
-                PollAnswerCollection pollAnswers = this.PollAnswers;
+                var pollAnswers = this.PollAnswers;
                 foreach (PollAnswer pollAnswer in pollAnswers)
                     result += pollAnswer.Count;
                 return result;
@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets the poll answers
         /// </summary>
-        public PollAnswerCollection PollAnswers
+        public List<PollAnswer> PollAnswers
         {
             get
             {

@@ -89,7 +89,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             var blogPost = GetBlogPostById(blogPostId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BlogPosts.Attach(blogPost);
+            if (!context.IsAttached(blogPost))
+                context.BlogPosts.Attach(blogPost);
             context.DeleteObject(blogPost);
             context.SaveChanges();
             
@@ -219,7 +220,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             var blogPost = GetBlogPostById(blogPostId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BlogPosts.Attach(blogPost);
+            if (!context.IsAttached(blogPost))
+                context.BlogPosts.Attach(blogPost);
 
             blogPost.LanguageId = languageId;
             blogPost.BlogPostTitle = blogPostTitle;
@@ -246,7 +248,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             var blogComment = GetBlogCommentById(blogCommentId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BlogComments.Attach(blogComment);
+            if (!context.IsAttached(blogComment))
+                context.BlogComments.Attach(blogComment);
             context.DeleteObject(blogComment);
             context.SaveChanges();
         }
@@ -386,7 +389,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             var blogComment = GetBlogCommentById(blogCommentId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.BlogComments.Attach(blogComment);
+            if (!context.IsAttached(blogComment))
+                context.BlogComments.Attach(blogComment);
 
             blogComment.BlogPostId = blogPostId;
             blogComment.CustomerId = customerId;

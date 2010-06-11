@@ -49,7 +49,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             var topic = GetTopicById(topicId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Topics.Attach(topic);
+            if (!context.IsAttached(topic))
+                context.Topics.Attach(topic);
             context.DeleteObject(topic);
             context.SaveChanges();
         }
@@ -82,7 +83,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             var topic = GetTopicById(topicId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Topics.Attach(topic);
+            if (!context.IsAttached(topic))
+                context.Topics.Attach(topic);
 
             topic.Name = name;
             context.SaveChanges();
@@ -188,7 +190,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             var localizedTopic = GetLocalizedTopicById(localizedTopicId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.LocalizedTopics.Attach(localizedTopic);
+            if (!context.IsAttached(localizedTopic))
+                context.LocalizedTopics.Attach(localizedTopic);
             context.DeleteObject(localizedTopic);
             context.SaveChanges();
         }
@@ -271,7 +274,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             var localizedTopic = GetLocalizedTopicById(topicLocalizedId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.LocalizedTopics.Attach(localizedTopic);
+            if (!context.IsAttached(localizedTopic))
+                context.LocalizedTopics.Attach(localizedTopic);
 
             localizedTopic.TopicId = topicId;
             localizedTopic.LanguageId = languageId;

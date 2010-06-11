@@ -78,8 +78,6 @@
     <Compile Include="Audit\DBActivityLog.cs" />
     <Compile Include="Audit\DBActivityLogCollection.cs" />
     <Compile Include="Audit\DBCustomerActivityProvider.cs" />
-    <Compile Include="Audit\DBLog.cs" />
-    <Compile Include="Audit\DBLogCollection.cs" />
     <Compile Include="BaseDBEntity.cs" />
     <Compile Include="BaseDBEntityCollection.cs" />
     <Compile Include="BaseDBProvider.cs" />
@@ -105,10 +103,6 @@
     <Compile Include="Content\Forums\DBForumProvider.cs" />
     <Compile Include="Content\News\DBNews.cs" />
     <Compile Include="Content\News\DBNewsCollection.cs" />
-    <Compile Include="Content\Polls\DBPoll.cs" />
-    <Compile Include="Content\Polls\DBPollAnswer.cs" />
-    <Compile Include="Content\Polls\DBPollAnswerCollection.cs" />
-    <Compile Include="Content\Polls\DBPollCollection.cs" />
     <Compile Include="Customer\DBCustomer.cs" />
     <Compile Include="Customer\DBCustomerCollection.cs" />
     <Compile Include="Customer\DBCustomerRole.cs" />
@@ -213,8 +207,6 @@
     <Compile Include="Products\DBProductPictureCollection.cs" />
     <Compile Include="Products\DBProductReview.cs" />
     <Compile Include="Products\DBProductReviewCollection.cs" />
-    <Compile Include="Products\DBProductType.cs" />
-    <Compile Include="Products\DBProductTypeCollection.cs" />
     <Compile Include="Products\DBProductVariant.cs" />
     <Compile Include="Products\DBProductVariantCollection.cs" />
     <Compile Include="Products\DBRelatedProduct.cs" />

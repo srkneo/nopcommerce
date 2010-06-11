@@ -33,60 +33,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
     public abstract partial class DBPollProvider : BaseDBProvider
     {
         #region Methods
-        /// <summary>
-        /// Gets a poll
-        /// </summary>
-        /// <param name="pollId">The poll identifier</param>
-        /// <returns>Poll</returns>
-        public abstract DBPoll GetPollById(int pollId);
-
-        /// <summary>
-        /// Gets a poll
-        /// </summary>
-        /// <param name="systemKeyword">Poll system keyword</param>
-        /// <returns>Poll</returns>
-        public abstract DBPoll GetPollBySystemKeyword(string systemKeyword);
-
-        /// <summary>
-        /// Gets poll collection
-        /// </summary>
-        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
-        /// <param name="pollCount">Poll count to load. 0 if you want to get all polls</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Poll collection</returns>
-        public abstract DBPollCollection GetPolls(int languageId, 
-            int pollCount, bool showHidden);
-
-        /// <summary>
-        /// Deletes a poll
-        /// </summary>
-        /// <param name="pollId">The poll identifier</param>
-        public abstract void DeletePoll(int pollId);
-
-        /// <summary>
-        /// Inserts a poll
-        /// </summary>
-        /// <param name="languageId">The language identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="systemKeyword">The system keyword</param>
-        /// <param name="published">A value indicating whether the entity is published</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Poll</returns>
-        public abstract DBPoll InsertPoll(int languageId, string name, string systemKeyword,
-            bool published, int displayOrder);
-
-        /// <summary>
-        /// Updates the poll
-        /// </summary>
-        /// <param name="pollId">The poll identifier</param>
-        /// <param name="languageId">The language identifier</param>
-        /// <param name="name">The name</param>
-        /// <param name="systemKeyword">The system keyword</param>
-        /// <param name="published">A value indicating whether the entity is published</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Poll</returns>
-        public abstract DBPoll UpdatePoll(int pollId, int languageId, string name, 
-            string systemKeyword, bool published, int displayOrder);
 
         /// <summary>
         /// Is voting record already exists
@@ -95,50 +41,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         /// <param name="customerId">Customer identifier</param>
         /// <returns>Poll</returns>
         public abstract bool PollVotingRecordExists(int pollId, int customerId);
-
-        /// <summary>
-        /// Gets a poll answer
-        /// </summary>
-        /// <param name="pollAnswerId">Poll answer identifier</param>
-        /// <returns>Poll answer</returns>
-        public abstract DBPollAnswer GetPollAnswerById(int pollAnswerId);
-
-        /// <summary>
-        /// Gets a poll answers by poll identifier
-        /// </summary>
-        /// <param name="pollId">Poll identifier</param>
-        /// <returns>Poll answer collection</returns>
-        public abstract DBPollAnswerCollection GetPollAnswersByPollId(int pollId);
-
-        /// <summary>
-        /// Deletes a poll answer
-        /// </summary>
-        /// <param name="pollAnswerId">Poll answer identifier</param>
-        public abstract void DeletePollAnswer(int pollAnswerId);
-
-        /// <summary>
-        /// Inserts a poll answer
-        /// </summary>
-        /// <param name="pollId">The poll identifier</param>
-        /// <param name="name">The poll answer name</param>
-        /// <param name="count">The current count</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Poll answer</returns>
-        public abstract DBPollAnswer InsertPollAnswer(int pollId, 
-            string name, int count, int displayOrder);
-
-        /// <summary>
-        /// Updates the poll answer
-        /// </summary>
-        /// <param name="pollAnswerId">The poll answer identifier</param>
-        /// <param name="pollId">The poll identifier</param>
-        /// <param name="name">The poll answer name</param>
-        /// <param name="count">The current count</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Poll answer</returns>
-        public abstract DBPollAnswer UpdatePollAnswer(int pollAnswerId, 
-            int pollId, string name, int count, int displayOrder);
-
+        
         /// <summary>
         /// Creates a poll voting record
         /// </summary>

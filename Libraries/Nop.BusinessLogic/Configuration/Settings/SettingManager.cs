@@ -62,7 +62,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
             var setting = GetSettingById(settingId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Settings.Attach(setting);
+            if (!context.IsAttached(setting))
+                context.Settings.Attach(setting);
             context.DeleteObject(setting);
             context.SaveChanges();
 
@@ -197,7 +198,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
             var setting = GetSettingById(settingId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Settings.Attach(setting);
+            if (!context.IsAttached(setting))
+                context.Settings.Attach(setting);
 
             setting.Name = name;
             setting.Value = value;

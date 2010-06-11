@@ -21,6 +21,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Blog;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Forums;
 using NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Content.Polls;
 using NopSolutions.NopCommerce.BusinessLogic.Content.Topics;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
@@ -30,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
+using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
@@ -508,6 +510,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<LocalizedTopic> _localizedTopics;
 
+        public ObjectSet<Log> Log
+        {
+            get
+            {
+                if ((_log == null))
+                {
+                    _log = CreateObjectSet<Log>();
+                }
+                return _log;
+            }
+        }
+        private ObjectSet<Log> _log;
+
+        public ObjectSet<LogType> LogTypes
+        {
+            get
+            {
+                if ((_logType == null))
+                {
+                    _logType = CreateObjectSet<LogType>();
+                }
+                return _logType;
+            }
+        }
+        private ObjectSet<LogType> _logType;
+
+        public ObjectSet<LowStockActivity> LowStockActivities
+        {
+            get
+            {
+                if ((_lowStockActivities == null))
+                {
+                    _lowStockActivities = CreateObjectSet<LowStockActivity>();
+                }
+                return _lowStockActivities;
+            }
+        }
+        private ObjectSet<LowStockActivity> _lowStockActivities;
+
         public ObjectSet<ManufacturerTemplate> ManufacturerTemplates
         {
             get
@@ -638,6 +679,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<Picture> _pictures;
 
+        public ObjectSet<Poll> Polls
+        {
+            get
+            {
+                if ((_polls == null))
+                {
+                    _polls = CreateObjectSet<Poll>();
+                }
+                return _polls;
+            }
+        }
+        private ObjectSet<Poll> _polls;
+
+        public ObjectSet<PollAnswer> PollAnswers
+        {
+            get
+            {
+                if ((_pollAnswers == null))
+                {
+                    _pollAnswers = CreateObjectSet<PollAnswer>();
+                }
+                return _pollAnswers;
+            }
+        }
+        private ObjectSet<PollAnswer> _pollAnswers;
+
+        public ObjectSet<PollVotingRecord> PollVotingRecords
+        {
+            get
+            {
+                if ((_pollVotingRecords == null))
+                {
+                    _pollVotingRecords = CreateObjectSet<PollVotingRecord>();
+                }
+                return _pollVotingRecords;
+            }
+        }
+        private ObjectSet<PollVotingRecord> _pollVotingRecords;
+
         public ObjectSet<PrivateMessage> PrivateMessages
         {
             get
@@ -663,6 +743,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ProductTemplate> _productTemplates;
+
+        public ObjectSet<ProductType> ProductTypes
+        {
+            get
+            {
+                if ((_productTypes == null))
+                {
+                    _productTypes = CreateObjectSet<ProductType>();
+                }
+                return _productTypes;
+            }
+        }
+        private ObjectSet<ProductType> _productTypes;
 
         public ObjectSet<QueuedEmail> QueuedEmails
         {
@@ -780,6 +873,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ShippingStatus> _shippingStatuses;
+
+        public ObjectSet<ShoppingCartType> ShoppingCartTypes
+        {
+            get
+            {
+                if ((_shoppingCartTypes == null))
+                {
+                    _shoppingCartTypes = CreateObjectSet<ShoppingCartType>();
+                }
+                return _shoppingCartTypes;
+            }
+        }
+        private ObjectSet<ShoppingCartType> _shoppingCartTypes;
 
         public ObjectSet<StateProvince> StateProvinces
         {

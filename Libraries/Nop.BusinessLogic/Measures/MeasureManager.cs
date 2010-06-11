@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         private const string MEASUREDIMENSIONS_PATTERN_KEY = "Nop.measuredimension.";
         private const string MEASUREWEIGHTS_PATTERN_KEY = "Nop.measureweight.";
         #endregion
-        
+
         #region Methods
 
         #region Dimensions
@@ -53,7 +53,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             var measureDimension = GetMeasureDimensionById(measureDimensionId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.MeasureDimensions.Attach(measureDimension);
+            if (!context.IsAttached(measureDimension))
+                context.MeasureDimensions.Attach(measureDimension);
             context.DeleteObject(measureDimension);
             context.SaveChanges();
             if (MeasureManager.CacheEnabled)
@@ -178,14 +179,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             var measure = GetMeasureDimensionById(measureDimensionId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.MeasureDimensions.Attach(measure);
+            if (!context.IsAttached(measure))
+                context.MeasureDimensions.Attach(measure);
 
             measure.Name = name;
             measure.SystemKeyword = systemKeyword;
             measure.Ratio = ratio;
             measure.DisplayOrder = displayOrder;
             context.SaveChanges();
-            
+
             if (MeasureManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(MEASUREDIMENSIONS_PATTERN_KEY);
@@ -200,7 +202,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <param name="sourceMeasureDimension">Source dimension</param>
         /// <param name="targetMeasureDimension">Target dimension</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertDimension(decimal quantity, 
+        public static decimal ConvertDimension(decimal quantity,
             MeasureDimension sourceMeasureDimension, MeasureDimension targetMeasureDimension)
         {
             decimal result = quantity;
@@ -221,7 +223,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <param name="quantity">Quantity</param>
         /// <param name="sourceMeasureDimension">Source dimension</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertToPrimaryMeasureDimension(decimal quantity, 
+        public static decimal ConvertToPrimaryMeasureDimension(decimal quantity,
             MeasureDimension sourceMeasureDimension)
         {
             decimal result = quantity;
@@ -241,7 +243,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <param name="quantity">Quantity</param>
         /// <param name="targetMeasureDimension">Target dimension</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertFromPrimaryMeasureDimension(decimal quantity, 
+        public static decimal ConvertFromPrimaryMeasureDimension(decimal quantity,
             MeasureDimension targetMeasureDimension)
         {
             decimal result = quantity;
@@ -254,7 +256,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             }
             return result;
         }
-        
+
         #endregion
 
         #region Weights
@@ -268,7 +270,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             var measureWeight = GetMeasureWeightById(measureWeightId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.MeasureWeights.Attach(measureWeight);
+            if (!context.IsAttached(measureWeight))
+                context.MeasureWeights.Attach(measureWeight);
             context.DeleteObject(measureWeight);
             context.SaveChanges();
             if (MeasureManager.CacheEnabled)
@@ -394,7 +397,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             var weight = GetMeasureWeightById(measureWeightId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.MeasureWeights.Attach(weight);
+            if (!context.IsAttached(weight))
+                context.MeasureWeights.Attach(weight);
 
             weight.Name = name;
             weight.SystemKeyword = systemKeyword;
@@ -456,7 +460,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         /// <param name="quantity">Quantity</param>
         /// <param name="targetMeasureWeight">Target weight</param>
         /// <returns>Converted value</returns>
-        public static decimal ConvertFromPrimaryMeasureWeight(decimal quantity, 
+        public static decimal ConvertFromPrimaryMeasureWeight(decimal quantity,
             MeasureWeight targetMeasureWeight)
         {
             decimal result = quantity;
@@ -469,7 +473,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             }
             return result;
         }
-        
+
         #endregion
 
         #endregion
@@ -491,7 +495,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
                     SettingManager.SetParam("Common.BaseDimensionIn", value.MeasureDimensionId.ToString());
             }
         }
-       
+
         /// <summary>
         /// Gets or sets the weight that will be used as a default
         /// </summary>

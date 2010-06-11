@@ -157,7 +157,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             var warehouse = GetWarehouseById(warehouseId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Warehouses.Attach(warehouse);
+            if (!context.IsAttached(warehouse))
+                context.Warehouses.Attach(warehouse);
 
             warehouse.Name = name;
             warehouse.PhoneNumber = phoneNumber;

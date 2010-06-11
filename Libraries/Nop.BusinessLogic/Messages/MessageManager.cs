@@ -420,7 +420,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             var localizedMessageTemplate = GetLocalizedMessageTemplateById(localizedMessageTemplateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.LocalizedMessageTemplates.Attach(localizedMessageTemplate);
+            if (!context.IsAttached(localizedMessageTemplate))
+                context.LocalizedMessageTemplates.Attach(localizedMessageTemplate);
             context.DeleteObject(localizedMessageTemplate);
             context.SaveChanges();
         }
@@ -488,7 +489,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             var localizedMessageTemplate = GetLocalizedMessageTemplateById(messageTemplateLocalizedId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.LocalizedMessageTemplates.Attach(localizedMessageTemplate);
+            if (!context.IsAttached(localizedMessageTemplate))
+                context.LocalizedMessageTemplates.Attach(localizedMessageTemplate);
 
             localizedMessageTemplate.MessageTemplateId = messageTemplateId;
             localizedMessageTemplate.LanguageId = languageId;
@@ -528,7 +530,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             var queuedEmail = GetQueuedEmailById(queuedEmailId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.QueuedEmails.Attach(queuedEmail);
+            if (!context.IsAttached(queuedEmail))
+                context.QueuedEmails.Attach(queuedEmail);
             context.DeleteObject(queuedEmail);
             context.SaveChanges();
         }
@@ -692,7 +695,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             var queuedEmail = GetQueuedEmailById(queuedEmailId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.QueuedEmails.Attach(queuedEmail);
+            if (!context.IsAttached(queuedEmail))
+                context.QueuedEmails.Attach(queuedEmail);
 
             queuedEmail.Priority = priority;
             queuedEmail.From = from;

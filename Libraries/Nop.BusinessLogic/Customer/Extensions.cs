@@ -66,7 +66,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="key">Customer attribute key</param>
         /// <param name="customerId">Customer identifier</param>
         /// <returns>A customer attribute that has the specified attribute value; otherwise null</returns>
-        public static CustomerAttribute FindAttribute(this List<CustomerAttribute> source, string key, int customerId)
+        public static CustomerAttribute FindAttribute(this List<CustomerAttribute> source, 
+            string key, int customerId)
         {
             foreach (CustomerAttribute customerAttribute in source)
             {

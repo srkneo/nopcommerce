@@ -48,7 +48,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             var language = GetLanguageById(languageId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Languages.Attach(language);
+            if (!context.IsAttached(language))
+                context.Languages.Attach(language);
             context.DeleteObject(language);
             context.SaveChanges();
 
@@ -173,7 +174,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             var language = GetLanguageById(languageId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Languages.Attach(language);
+            if (!context.IsAttached(language))
+                context.Languages.Attach(language);
 
             language.Name = name;
             language.LanguageCulture = languageCulture;

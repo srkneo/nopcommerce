@@ -59,7 +59,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingByTotal = GetById(shippingByTotalId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingByTotal.Attach(shippingByTotal);
+            if (!context.IsAttached(shippingByTotal))
+                context.ShippingByTotal.Attach(shippingByTotal);
             context.DeleteObject(shippingByTotal);
             context.SaveChanges();
         }
@@ -125,7 +126,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             var shippingByTotal = GetById(shippingByTotalId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ShippingByTotal.Attach(shippingByTotal);
+            if (!context.IsAttached(shippingByTotal))
+                context.ShippingByTotal.Attach(shippingByTotal);
 
             shippingByTotal.ShippingMethodId = shippingMethodId;
             shippingByTotal.From = from;

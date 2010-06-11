@@ -485,7 +485,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             var picture = GetPictureById(pictureId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Pictures.Attach(picture);
+            if (!context.IsAttached(picture))
+                context.Pictures.Attach(picture);
             context.DeleteObject(picture);
             context.SaveChanges();
         }
@@ -600,7 +601,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             var picture = GetPictureById(pictureId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Pictures.Attach(picture);
+            if (!context.IsAttached(picture))
+                context.Pictures.Attach(picture);
 
             picture.PictureBinary = (StoreInDB ? pictureBinary : new byte[0]);
             picture.Extension = extension;

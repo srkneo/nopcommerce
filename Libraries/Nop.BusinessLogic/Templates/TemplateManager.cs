@@ -49,7 +49,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CategoryTemplates.Attach(categoryTemplate);
+            if (!context.IsAttached(categoryTemplate))
+                context.CategoryTemplates.Attach(categoryTemplate);
             context.DeleteObject(categoryTemplate);
             context.SaveChanges();
             
@@ -169,7 +170,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.CategoryTemplates.Attach(categoryTemplate);
+            if (!context.IsAttached(categoryTemplate))
+                context.CategoryTemplates.Attach(categoryTemplate);
 
             categoryTemplate.Name = name;
             categoryTemplate.TemplatePath = templatePath;
@@ -195,7 +197,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ManufacturerTemplates.Attach(manufacturerTemplate);
+            if (!context.IsAttached(manufacturerTemplate))
+                context.ManufacturerTemplates.Attach(manufacturerTemplate);
             context.DeleteObject(manufacturerTemplate);
             context.SaveChanges();
 
@@ -314,7 +317,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ManufacturerTemplates.Attach(manufacturerTemplate);
+            if (!context.IsAttached(manufacturerTemplate))
+                context.ManufacturerTemplates.Attach(manufacturerTemplate);
 
             manufacturerTemplate.Name = name;
             manufacturerTemplate.TemplatePath = templatePath;
@@ -340,7 +344,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             var productTemplate = GetProductTemplateById(productTemplateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ProductTemplates.Attach(productTemplate);
+            if (!context.IsAttached(productTemplate))
+                context.ProductTemplates.Attach(productTemplate);
             context.DeleteObject(productTemplate);
             context.SaveChanges();
 
@@ -460,7 +465,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             var productTemplate = GetProductTemplateById(productTemplateId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.ProductTemplates.Attach(productTemplate);
+            if (!context.IsAttached(productTemplate))
+                context.ProductTemplates.Attach(productTemplate);
 
             productTemplate.Name = name;
             productTemplate.TemplatePath = templatePath;

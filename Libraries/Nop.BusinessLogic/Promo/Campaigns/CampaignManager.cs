@@ -64,7 +64,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
             var campaign = GetCampaignById(campaignId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Campaigns.Attach(campaign);
+            if (!context.IsAttached(campaign))
+                context.Campaigns.Attach(campaign);
             context.DeleteObject(campaign);
             context.SaveChanges();
         }
@@ -127,7 +128,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
             var campaign = GetCampaignById(campaignId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Campaigns.Attach(campaign);
+            if (!context.IsAttached(campaign))
+                context.Campaigns.Attach(campaign);
 
             campaign.Name = name;
             campaign.Subject = subject;

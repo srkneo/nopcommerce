@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
@@ -33,43 +35,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
     /// </summary>
     public partial class LogManager
     {
-        #region Utilities
-        private static LogCollection DBMapping(DBLogCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new LogCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Log DBMapping(DBLog dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Log();
-            item.LogId = dbItem.LogId;
-            item.LogTypeId = dbItem.LogTypeId;
-            item.Severity = dbItem.Severity;
-            item.Message = dbItem.Message;
-            item.Exception = dbItem.Exception;
-            item.IPAddress = dbItem.IPAddress;
-            item.CustomerId = dbItem.CustomerId;
-            item.PageUrl = dbItem.PageUrl;
-            item.ReferrerUrl = dbItem.ReferrerUrl;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Deletes a log item
@@ -77,7 +42,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <param name="logId">Log item identifier</param>
         public static void DeleteLog(int logId)
         {
-            DBProviderManager<DBLogProvider>.Provider.DeleteLog(logId);
+            var log = GetLogById(logId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(log))
+                context.Log.Attach(log);
+            context.DeleteObject(log);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -92,10 +63,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// Gets all log items
         /// </summary>
         /// <returns>Log item collection</returns>
-        public static LogCollection GetAllLogs()
+        public static List<Log> GetAllLogs()
         {
-            var dbCollection = DBProviderManager<DBLogProvider>.Provider.GetAllLogs();
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from l in context.Log
+                        orderby l.CreatedOn descending
+                        select l;
+            var collection = query.ToList();
             return collection;
         }
 
@@ -108,9 +82,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         {
             if (logId == 0)
                 return null;
-
-            var dbItem = DBProviderManager<DBLogProvider>.Provider.GetLogById(logId);
-            var log = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from l in context.Log
+                        where l.LogId == logId
+                        select l;
+            var log = query.SingleOrDefault();
             return log;
         }
         
@@ -178,10 +154,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 
             DateTime createdOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
 
-            var dbItem = DBProviderManager<DBLogProvider>.Provider.InsertLog((int)logType, 
-                severity, message, exception == null ? string.Empty : exception.ToString(), 
-                IPAddress, customerId, pageUrl, referrerUrl, createdOn);
-            var log = DBMapping(dbItem);
+            var log = new Log();
+            log.LogTypeId = (int)logType;
+            log.Severity = severity;
+            log.Message = message;
+            log.Exception = exception == null ? string.Empty : exception.ToString();
+            log.IPAddress = IPAddress;
+            log.CustomerId = customerId;
+            log.PageUrl = pageUrl;
+            log.ReferrerUrl = referrerUrl;
+            log.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Log.AddObject(log);
+            context.SaveChanges();
+
             return log;
         }
         #endregion

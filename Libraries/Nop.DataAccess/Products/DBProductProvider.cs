@@ -650,19 +650,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             int productId1, int productId2, int displayOrder);
 
         /// <summary>
-        /// Gets all product types
-        /// </summary>
-        /// <returns>Product type collection</returns>
-        public abstract DBProductTypeCollection GetAllProductTypes();
-
-        /// <summary>
-        /// Gets a product type
-        /// </summary>
-        /// <param name="productTypeId">Product type identifier</param>
-        /// <returns>Product type</returns>
-        public abstract DBProductType GetProductTypeById(int productTypeId);
-
-        /// <summary>
         /// Gets all product variants directly assigned to a pricelist
         /// </summary>
         /// <param name="pricelistId">Pricelist identifier</param>

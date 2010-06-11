@@ -49,7 +49,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var taxCategory = GetTaxCategoryById(taxCategoryId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.TaxCategories.Attach(taxCategory);
+            if (!context.IsAttached(taxCategory))
+                context.TaxCategories.Attach(taxCategory);
             context.DeleteObject(taxCategory);
             context.SaveChanges();
 
@@ -164,7 +165,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             var taxCategory = GetTaxCategoryById(taxCategoryId);
 
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.TaxCategories.Attach(taxCategory);
+            if (!context.IsAttached(taxCategory))
+                context.TaxCategories.Attach(taxCategory);
 
             taxCategory.Name = name;
             taxCategory.DisplayOrder = displayOrder;

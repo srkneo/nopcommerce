@@ -39,10 +39,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            LogCollection logCollection = LogManager.GetAllLogs();
-            gvLogs.DataSource = logCollection;
+            var log = LogManager.GetAllLogs();
+            gvLogs.DataSource = log;
             gvLogs.DataBind();
-            btnClear.Visible = logCollection.Count > 0;
+            btnClear.Visible = log.Count > 0;
         }
 
         protected void gvLogs_PageIndexChanging(object sender, GridViewPageEventArgs e)

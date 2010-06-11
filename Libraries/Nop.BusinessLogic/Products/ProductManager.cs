@@ -41,6 +41,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
@@ -167,36 +168,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.HelpfulNoTotal = dbItem.HelpfulNoTotal;
             item.IsApproved = dbItem.IsApproved;
             item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static ProductTypeCollection DBMapping(DBProductTypeCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductTypeCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductType DBMapping(DBProductType dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductType();
-            item.ProductTypeId = dbItem.ProductTypeId;
-            item.Name = dbItem.Name;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
 
             return item;
         }
@@ -2673,10 +2644,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets all product types
         /// </summary>
         /// <returns>Product type collection</returns>
-        public static ProductTypeCollection GetAllProductTypes()
+        public static List<ProductType> GetAllProductTypes()
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductTypes();
-            var productTypes = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pt in context.ProductTypes
+                        orderby pt.DisplayOrder
+                        select pt;
+            var productTypes = query.ToList();
             return productTypes;
         }
 
@@ -2690,8 +2664,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (productTypeId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductTypeById(productTypeId);
-            var productType = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pt in context.ProductTypes
+                        where pt.ProductTypeId == productTypeId
+                        select pt;
+            var productType = query.SingleOrDefault();
             return productType;
         }
 
