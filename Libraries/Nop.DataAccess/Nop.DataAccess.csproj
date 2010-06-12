@@ -141,12 +141,8 @@
     <Compile Include="Products\Attributes\DBProductVariantAttributeCombinationCollection.cs" />
     <Compile Include="Products\DBProductTag.cs" />
     <Compile Include="Products\DBProductTagCollection.cs" />
-    <Compile Include="Products\DBCustomerRoleProductPriceCollection.cs" />
-    <Compile Include="Products\DBCustomerRoleProductPrice.cs" />
     <Compile Include="Products\DBProductVariantLocalized.cs" />
     <Compile Include="Products\DBProductLocalized.cs" />
-    <Compile Include="Products\DBTierPriceCollection.cs" />
-    <Compile Include="Products\DBTierPrice.cs" />
     <Compile Include="Products\DBProductVariantPricelist.cs" />
     <Compile Include="Products\DBProductVariantPricelistCollection.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOptionLocalized.cs" />
@@ -174,7 +170,6 @@
     <Compile Include="Products\DBProductProvider.cs" />
     <Compile Include="Audit\DBSearchLogProvider.cs" />
     <Compile Include="Shipping\DBShippingMethodProvider.cs" />
-    <Compile Include="Orders\DBShoppingCartProvider.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeProvider.cs" />
     <Compile Include="Tax\DBTaxRateProvider.cs" />
     <Compile Include="Manufacturers\DBManufacturer.cs" />
@@ -189,8 +184,6 @@
     <Compile Include="Orders\DBOrderNoteCollection.cs" />
     <Compile Include="Orders\DBOrderProductVariant.cs" />
     <Compile Include="Orders\DBOrderProductVariantCollection.cs" />
-    <Compile Include="Orders\DBShoppingCart.cs" />
-    <Compile Include="Orders\DBShoppingCartItem.cs" />
     <Compile Include="Payment\DBPaymentMethod.cs" />
     <Compile Include="Payment\DBPaymentMethodCollection.cs" />
     <Compile Include="Products\Attributes\DBProductAttribute.cs" />

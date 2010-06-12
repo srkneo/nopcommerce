@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pnlData.Visible = true;
                 pnlMessage.Visible = false;
 
-                TierPriceCollection tierPrices = productVariant.TierPrices;
+                var tierPrices = productVariant.TierPrices;
                 if (tierPrices.Count > 0)
                 {
                     gvTierPrices.Visible = true;

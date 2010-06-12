@@ -252,12 +252,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
-        private static RelatedProductCollection DBMapping(DBRelatedProductCollection dbCollection)
+        private static List<RelatedProduct> DBMapping(DBRelatedProductCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new RelatedProductCollection();
+            var collection = new List<RelatedProduct>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -312,35 +312,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
-        private static TierPriceCollection DBMapping(DBTierPriceCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new TierPriceCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static TierPrice DBMapping(DBTierPrice dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new TierPrice();
-            item.TierPriceId = dbItem.TierPriceId;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.Quantity = dbItem.Quantity;
-            item.Price = dbItem.Price;
-
-            return item;
-        }
-
         private static ProductLocalized DBMapping(DBProductLocalized dbItem)
         {
             if (dbItem == null)
@@ -372,35 +343,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             item.LanguageId = dbItem.LanguageId;
             item.Name = dbItem.Name;
             item.Description = dbItem.Description;
-
-            return item;
-        }
-
-        private static CustomerRoleProductPriceCollection DBMapping(DBCustomerRoleProductPriceCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new CustomerRoleProductPriceCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static CustomerRoleProductPrice DBMapping(DBCustomerRoleProductPrice dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CustomerRoleProductPrice();
-            item.CustomerRoleProductPriceId = dbItem.CustomerRoleProductPriceId;
-            item.CustomerRoleId = dbItem.CustomerRoleId;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.Price = dbItem.Price;
 
             return item;
         }
@@ -2638,7 +2580,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="relatedProductId">Related product identifer</param>
         public static void DeleteRelatedProduct(int relatedProductId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteRelatedProduct(relatedProductId);
+            var relatedProduct = GetRelatedProductById(relatedProductId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(relatedProduct))
+                context.RelatedProducts.Attach(relatedProduct);
+            context.DeleteObject(relatedProduct);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2646,7 +2594,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productId1">The first product identifier</param>
         /// <returns>Related product collection</returns>
-        public static RelatedProductCollection GetRelatedProductsByProductId1(int productId1)
+        public static List<RelatedProduct> GetRelatedProductsByProductId1(int productId1)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRelatedProductsByProductId1(productId1, showHidden);
@@ -2664,8 +2612,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (relatedProductId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetRelatedProductById(relatedProductId);
-            var relatedProduct = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from rp in context.RelatedProducts
+                        where rp.RelatedProductId == relatedProductId
+                        select rp;
+            var relatedProduct = query.SingleOrDefault();
             return relatedProduct;
         }
 
@@ -2679,8 +2630,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static RelatedProduct InsertRelatedProduct(int productId1, 
             int productId2, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertRelatedProduct(productId1, productId2, displayOrder);
-            var relatedProduct = DBMapping(dbItem);
+            var relatedProduct = new RelatedProduct();
+            relatedProduct.ProductId1 = productId1;
+            relatedProduct.ProductId2 = productId2;
+            relatedProduct.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.RelatedProducts.AddObject(relatedProduct);
+            context.SaveChanges();
+
             return relatedProduct;
         }
 
@@ -2695,8 +2653,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static RelatedProduct UpdateRelatedProduct(int relatedProductId, 
             int productId1, int productId2, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateRelatedProduct(relatedProductId, productId1, productId2, displayOrder);
-            var relatedProduct = DBMapping(dbItem);
+            var relatedProduct = GetRelatedProductById(relatedProductId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(relatedProduct))
+                context.RelatedProducts.Attach(relatedProduct);
+
+            relatedProduct.ProductId1 = productId1;
+            relatedProduct.ProductId2 = productId2;
+            relatedProduct.DisplayOrder = displayOrder;
+            context.SaveChanges();
+
             return relatedProduct;
         }
 
@@ -3008,8 +2975,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (tierPriceId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetTierPriceById(tierPriceId);
-            var tierPrice = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tp in context.TierPrices
+                        where tp.TierPriceId == tierPriceId
+                        select tp;
+            var tierPrice = query.SingleOrDefault();
             return tierPrice;
         }
 
@@ -3018,26 +2988,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Tier price collection</returns>
-        public static TierPriceCollection GetTierPricesByProductVariantId(int productVariantId)
+        public static List<TierPrice> GetTierPricesByProductVariantId(int productVariantId)
         {
             if (productVariantId == 0)
-                return new TierPriceCollection();
+                return new List<TierPrice>();
 
             string key = string.Format(TIERPRICES_ALLBYPRODUCTVARIANTID_KEY, productVariantId);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
-                return (TierPriceCollection)obj2;
+                return (List<TierPrice>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetTierPricesByProductVariantId(productVariantId);
-            var tierPriceCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from tp in context.TierPrices
+                        orderby tp.Quantity
+                        where tp.ProductVariantId == productVariantId
+                        select tp;
+            var tierPrices = query.ToList();
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.Max(key, tierPriceCollection);
+                NopCache.Max(key, tierPrices);
             }
-            return tierPriceCollection;
+            return tierPrices;
         }
 
         /// <summary>
@@ -3046,7 +3020,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="tierPriceId">Tier price identifier</param>
         public static void DeleteTierPrice(int tierPriceId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteTierPrice(tierPriceId);
+            var tierPrice = GetTierPriceById(tierPriceId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(tierPrice))
+                context.TierPrices.Attach(tierPrice);
+            context.DeleteObject(tierPrice);
+            context.SaveChanges();
 
             if (ProductManager.CacheEnabled)
             {
@@ -3066,8 +3046,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static TierPrice InsertTierPrice(int productVariantId, 
             int quantity, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertTierPrice(productVariantId, quantity, price);
-            var tierPrice = DBMapping(dbItem);
+            var tierPrice = new TierPrice();
+            tierPrice.ProductVariantId = productVariantId;
+            tierPrice.Quantity = quantity;
+            tierPrice.Price = price;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.TierPrices.AddObject(tierPrice);
+            context.SaveChanges();
 
             if (ProductManager.CacheEnabled)
             {
@@ -3089,9 +3075,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static TierPrice UpdateTierPrice(int tierPriceId, int productVariantId, 
             int quantity, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateTierPrice(tierPriceId,
-                productVariantId, quantity, price);
-            var tierPrice = DBMapping(dbItem);
+            var tierPrice = GetTierPriceById(tierPriceId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(tierPrice))
+                context.TierPrices.Attach(tierPrice);
+
+            tierPrice.ProductVariantId = productVariantId;
+            tierPrice.Quantity = quantity;
+            tierPrice.Price = price;
+            context.SaveChanges();
 
             if (ProductManager.CacheEnabled)
             {
@@ -3113,7 +3106,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="customerRoleProductPriceId">The identifier</param>
         public static void DeleteCustomerRoleProductPrice(int customerRoleProductPriceId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteCustomerRoleProductPrice(customerRoleProductPriceId);
+            var customerRoleProductPrice = GetCustomerRoleProductPriceById(customerRoleProductPriceId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(customerRoleProductPrice))
+                context.CustomerRoleProductPrices.Attach(customerRoleProductPrice);
+            context.DeleteObject(customerRoleProductPrice);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -3126,9 +3125,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (customerRoleProductPriceId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetCustomerRoleProductPriceById(customerRoleProductPriceId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from crpp in context.CustomerRoleProductPrices
+                        where crpp.CustomerRoleProductPriceId == customerRoleProductPriceId
+                        select crpp;
+            var customerRoleProductPrice = query.SingleOrDefault();
+            return customerRoleProductPrice;
         }
 
         /// <summary>
@@ -3136,10 +3138,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>A collection of product prices by customer role</returns>
-        public static CustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int productVariantId)
+        public static List<CustomerRoleProductPrice> GetAllCustomerRoleProductPrices(int productVariantId)
         {
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllCustomerRoleProductPrices(productVariantId);
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from crpp in context.CustomerRoleProductPrices
+                        where crpp.ProductVariantId == productVariantId
+                        select crpp;
+            var collection = query.ToList();
             return collection;
         }
 
@@ -3153,10 +3158,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static CustomerRoleProductPrice InsertCustomerRoleProductPrice(int customerRoleId,
             int productVariantId, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertCustomerRoleProductPrice(customerRoleId,
-                productVariantId, price);
-            var item = DBMapping(dbItem);
-            return item;
+            var customerRoleProductPrice = new CustomerRoleProductPrice();
+            customerRoleProductPrice.CustomerRoleId = customerRoleId;
+            customerRoleProductPrice.ProductVariantId = productVariantId;
+            customerRoleProductPrice.Price = price;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CustomerRoleProductPrices.AddObject(customerRoleProductPrice);
+            context.SaveChanges();
+            return customerRoleProductPrice;
         }
 
         /// <summary>
@@ -3170,10 +3180,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static CustomerRoleProductPrice UpdateCustomerRoleProductPrice(int customerRoleProductPriceId,
             int customerRoleId, int productVariantId, decimal price)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateCustomerRoleProductPrice(customerRoleProductPriceId,
-                customerRoleId, productVariantId, price);
-            var item = DBMapping(dbItem);
-            return item;
+            var customerRoleProductPrice = GetCustomerRoleProductPriceById(customerRoleProductPriceId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(customerRoleProductPrice))
+                context.CustomerRoleProductPrices.Attach(customerRoleProductPrice);
+
+            customerRoleProductPrice.CustomerRoleId = customerRoleId;
+            customerRoleProductPrice.ProductVariantId = productVariantId;
+            customerRoleProductPrice.Price = price;
+            context.SaveChanges();
+
+            return customerRoleProductPrice;
         }
 
         #endregion

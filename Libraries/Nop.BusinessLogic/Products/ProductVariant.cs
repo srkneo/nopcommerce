@@ -447,7 +447,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the tier prices of the product variant
         /// </summary>
-        public TierPriceCollection TierPrices
+        public List<TierPrice> TierPrices
         {
             get
             {
@@ -458,7 +458,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the tier prices of the product variant
         /// </summary>
-        public CustomerRoleProductPriceCollection CustomerRoleProductPrices
+        public List<CustomerRoleProductPrice> CustomerRoleProductPrices
         {
             get
             {
@@ -479,7 +479,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets the product
         /// </summary>
         public virtual Product NpProduct { get; set; }
+        
+        /// <summary>
+        /// Gets the tier prices
+        /// </summary>
+        public virtual ICollection<TierPrice> NpTierPrices { get; set; }
 
+        /// <summary>
+        /// Gets the restrcited discounts
+        /// </summary>
+        public virtual ICollection<Discount> NpRestrictedDiscounts { get; set; }
+                
         #endregion
     }
 }

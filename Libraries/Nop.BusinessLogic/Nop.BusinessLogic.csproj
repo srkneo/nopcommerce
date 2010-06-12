@@ -181,12 +181,12 @@
     <Compile Include="Products\Attributes\CheckoutAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeHelper.cs" />
+    <Compile Include="Products\Extensions.cs" />
     <Compile Include="Products\ShoppingCartType.cs" />
     <Compile Include="Products\LowStockActivity.cs" />
     <Compile Include="Products\ProductTag.cs" />
     <Compile Include="Products\ProductTagCollection.cs" />
     <Compile Include="Products\ProductSortingEnum.cs" />
-    <Compile Include="Products\CustomerRoleProductPriceCollection.cs" />
     <Compile Include="Products\CustomerRoleProductPrice.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\ProductAttributeLocalized.cs" />
@@ -209,7 +209,6 @@
     <Compile Include="Content\Topics\TopicManager.cs" />
     <Compile Include="Content\Topics\Topic.cs" />
     <Compile Include="Media\PictureTypeEnum.cs" />
-    <Compile Include="Products\TierPriceCollection.cs" />
     <Compile Include="Products\TierPrice.cs" />
     <Compile Include="Products\PriceListExportModeEnum.cs" />
     <Compile Include="Products\PriceListExportTypeEnum.cs" />
@@ -298,7 +297,6 @@
     <Compile Include="Products\Specs\ProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
     <Compile Include="Products\ProductReviewCollection.cs" />
-    <Compile Include="Products\RelatedProductCollection.cs" />
     <Compile Include="Manufacturers\ProductManufacturerCollection.cs" />
     <Compile Include="Categories\ProductCategoryCollection.cs" />
     <Compile Include="Products\ProductPictureCollection.cs" />

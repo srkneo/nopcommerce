@@ -410,6 +410,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<CustomerRole> _customerRoles;
 
+        public ObjectSet<CustomerRoleProductPrice> CustomerRoleProductPrices
+        {
+            get
+            {
+                if ((_customerRoleProductPrices == null))
+                {
+                    _customerRoleProductPrices = CreateObjectSet<CustomerRoleProductPrice>();
+                }
+                return _customerRoleProductPrices;
+            }
+        }
+        private ObjectSet<CustomerRoleProductPrice> _customerRoleProductPrices;
+
         public ObjectSet<CustomerSession> CustomerSessions
         {
             get
@@ -995,6 +1008,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<QueuedEmail> _queuedEmails;
 
+        public ObjectSet<RelatedProduct> RelatedProducts
+        {
+            get
+            {
+                if ((_relatedProducts == null))
+                {
+                    _relatedProducts = CreateObjectSet<RelatedProduct>();
+                }
+                return _relatedProducts;
+            }
+        }
+        private ObjectSet<RelatedProduct> _relatedProducts;
+
         public ObjectSet<SearchLog> SearchLog
         {
             get
@@ -1098,6 +1124,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ShippingStatus> _shippingStatuses;
+
+        public ObjectSet<ShoppingCartItem> ShoppingCartItems
+        {
+            get
+            {
+                if ((_shoppingCartItems == null))
+                {
+                    _shoppingCartItems = CreateObjectSet<ShoppingCartItem>();
+                }
+                return _shoppingCartItems;
+            }
+        }
+        private ObjectSet<ShoppingCartItem> _shoppingCartItems;
 
         public ObjectSet<ShoppingCartType> ShoppingCartTypes
         {
@@ -1215,6 +1254,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<TaxRate> _taxRates;
+
+        public ObjectSet<TierPrice> TierPrices
+        {
+            get
+            {
+                if ((_tierPrices == null))
+                {
+                    _tierPrices = CreateObjectSet<TierPrice>();
+                }
+                return _tierPrices;
+            }
+        }
+        private ObjectSet<TierPrice> _tierPrices;
 
         public ObjectSet<Topic> Topics
         {

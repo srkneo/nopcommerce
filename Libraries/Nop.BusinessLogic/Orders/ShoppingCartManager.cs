@@ -19,9 +19,13 @@ using System.Data.Common;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Web;
+using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
@@ -30,13 +34,10 @@ using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
+using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Orders;
-using NopSolutions.NopCommerce.Common;
-using NopSolutions.NopCommerce.BusinessLogic.Audit;
-using NopSolutions.NopCommerce.Common.Utils;
-using System.Web;
-using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 {
@@ -45,43 +46,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     /// </summary>
     public partial class ShoppingCartManager
     {
-        #region Utilities
-        private static ShoppingCart DBMapping(DBShoppingCart dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ShoppingCart();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ShoppingCartItem DBMapping(DBShoppingCartItem dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ShoppingCartItem();
-            item.ShoppingCartItemId = dbItem.ShoppingCartItemId;
-            item.ShoppingCartTypeId = dbItem.ShoppingCartTypeId;
-            item.CustomerSessionGuid = dbItem.CustomerSessionGuid;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.AttributesXml = dbItem.AttributesXml;
-            item.CustomerEnteredPrice = dbItem.CustomerEnteredPrice;
-            item.Quantity = dbItem.Quantity;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-
-        #endregion
-
         #region Methods
 
         #region Repository methods
@@ -93,8 +57,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static void DeleteExpiredShoppingCartItems(DateTime olderThan)
         {
             olderThan = DateTimeHelper.ConvertToUtcTime(olderThan);
-
-            DBProviderManager<DBShoppingCartProvider>.Provider.DeleteExpiredShoppingCartItems(olderThan);
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from sci in context.ShoppingCartItems
+                        where sci.UpdatedOn < olderThan
+                        select sci;
+            var scItems = query.ToList();
+            foreach (var shoppingCartItem in scItems)
+            {
+                context.DeleteObject(shoppingCartItem);
+            }
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -122,8 +95,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         LocalizationManager.GetLocaleResourceString("ActivityLog.RemoveFromShoppingCart"),
                         shoppingCartItem.ProductVariant.FullProductName);
                 }
-
-                DBProviderManager<DBShoppingCartProvider>.Provider.DeleteShoppingCartItem(shoppingCartItemId);
+                
+                var context = ObjectContextHelper.CurrentObjectContext;
+                if (!context.IsAttached(shoppingCartItem))
+                    context.ShoppingCartItems.Attach(shoppingCartItem);
+                context.DeleteObject(shoppingCartItem);
+                context.SaveChanges();
             }
         }
 
@@ -136,9 +113,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static ShoppingCart GetShoppingCartByCustomerSessionGuid(ShoppingCartTypeEnum shoppingCartType, 
             Guid customerSessionGuid)
         {
-            var dbCollection = DBProviderManager<DBShoppingCartProvider>.Provider.GetShoppingCartByCustomerSessionGuid((int)shoppingCartType,
-                customerSessionGuid);
-            var shoppingCart = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from sci in context.ShoppingCartItems
+                        orderby sci.CreatedOn
+                        where sci.ShoppingCartTypeId == (int)shoppingCartType && sci.CustomerSessionGuid == customerSessionGuid
+                        select sci;
+            var scItems = query.ToList();
+
+            var shoppingCart = new ShoppingCart();
+            shoppingCart.AddRange(scItems);
             return shoppingCart;
         }
 
@@ -152,8 +135,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (shoppingCartItemId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBShoppingCartProvider>.Provider.GetShoppingCartItemById(shoppingCartItemId);
-            var shoppingCartItem = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from sci in context.ShoppingCartItems
+                        where sci.ShoppingCartItemId == shoppingCartItemId
+                        select sci;
+            var shoppingCartItem = query.SingleOrDefault();
             return shoppingCartItem;
         }
 
@@ -179,12 +165,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
+            
+            var shoppingCartItem = new ShoppingCartItem();
+            shoppingCartItem.ShoppingCartTypeId = (int)shoppingCartType;
+            shoppingCartItem.CustomerSessionGuid = customerSessionGuid;
+            shoppingCartItem.ProductVariantId = productVariantId;
+            shoppingCartItem.AttributesXml = attributesXml;
+            shoppingCartItem.CustomerEnteredPrice = customerEnteredPrice;
+            shoppingCartItem.Quantity = quantity;
+            shoppingCartItem.CreatedOn = createdOn;
+            shoppingCartItem.UpdatedOn = updatedOn;
 
-            var dbItem = DBProviderManager<DBShoppingCartProvider>.Provider.InsertShoppingCartItem((int)shoppingCartType,
-                customerSessionGuid, productVariantId, attributesXml,
-                customerEnteredPrice, quantity, createdOn, updatedOn);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ShoppingCartItems.AddObject(shoppingCartItem);
+            context.SaveChanges();
 
-            var shoppingCartItem = DBMapping(dbItem);
             if (shoppingCartItem != null)
             {
                 if (shoppingCartItem.ShoppingCartType == ShoppingCartTypeEnum.ShoppingCart)
@@ -226,11 +221,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBShoppingCartProvider>.Provider.UpdateShoppingCartItem(shoppingCartItemId,
-                (int)shoppingCartType, customerSessionGuid, productVariantId, attributesXml,
-                customerEnteredPrice, quantity, createdOn, updatedOn);
+            var shoppingCartItem = GetShoppingCartItemById(shoppingCartItemId);
 
-            var shoppingCartItem = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(shoppingCartItem))
+                context.ShoppingCartItems.Attach(shoppingCartItem);
+
+            shoppingCartItem.ShoppingCartTypeId = (int)shoppingCartType;
+            shoppingCartItem.CustomerSessionGuid = customerSessionGuid;
+            shoppingCartItem.ProductVariantId = productVariantId;
+            shoppingCartItem.AttributesXml = attributesXml;
+            shoppingCartItem.CustomerEnteredPrice = customerEnteredPrice;
+            shoppingCartItem.Quantity = quantity;
+            shoppingCartItem.CreatedOn = createdOn;
+            shoppingCartItem.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
             return shoppingCartItem;
         }
 

@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
-                RelatedProductCollection existingRelatedProducts = product.RelatedProducts;
+                var existingRelatedProducts = product.RelatedProducts;
 
                 foreach (GridViewRow row in gvProducts.Rows)
                 {

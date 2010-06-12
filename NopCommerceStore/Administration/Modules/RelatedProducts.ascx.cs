@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pnlData.Visible = true;
                 pnlMessage.Visible = false;
 
-                RelatedProductCollection existingRelatedProductCollection = product.RelatedProducts;
+                var existingRelatedProductCollection = product.RelatedProducts;
                 List<RelatedProductHelperClass> relatedProducts = GetRelatedProducts(existingRelatedProductCollection);
                 gvRelatedProducts.Columns[1].Visible = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
                 gvRelatedProducts.DataSource = relatedProducts;
@@ -58,10 +58,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        private List<RelatedProductHelperClass> GetRelatedProducts(RelatedProductCollection ExistingRelatedProductCollection)
+        private List<RelatedProductHelperClass> GetRelatedProducts(List<RelatedProduct> existingRelatedProductCollection)
         {
             List<RelatedProductHelperClass> result = new List<RelatedProductHelperClass>();
-            foreach (RelatedProduct relatedProduct in ExistingRelatedProductCollection)
+            foreach (RelatedProduct relatedProduct in existingRelatedProductCollection)
             {
                 Product product = relatedProduct.Product2;
                 if (product != null)

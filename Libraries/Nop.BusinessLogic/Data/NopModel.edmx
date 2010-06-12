@@ -17,6 +17,7 @@
           <EntitySet Name="Nop_BlogPost" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_BlogPost" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Campaign" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Campaign" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Category" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_Category_Discount_Mapping" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Category_Discount_Mapping" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CategoryLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CategoryLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CategoryTemplate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CategoryTemplate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CheckoutAttribute" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CheckoutAttribute" store:Type="Tables" Schema="dbo" />
@@ -31,10 +32,13 @@
           <EntitySet Name="Nop_CustomerAction" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerAttribute" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerAttribute" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerRole" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_CustomerRole_Discount_Mapping" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole_Discount_Mapping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_CustomerRole_ProductPrice" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole_ProductPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_CustomerSession" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerSession" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Discount" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Discount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountLimitation" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountLimitation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountRequirement" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRequirement" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_DiscountRestriction" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRestriction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_DiscountType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Download" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Download" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Forums_Forum" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_Forum" store:Type="Tables" Schema="dbo" />
@@ -76,6 +80,7 @@
           <EntitySet Name="Nop_ProductVariant" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariant" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ProductVariantLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariantLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_RelatedProduct" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_RelatedProduct" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_SearchLog" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_SearchLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Setting" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Setting" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShippingByTotal" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingByTotal" store:Type="Tables" Schema="dbo" />
@@ -85,6 +90,7 @@
           <EntitySet Name="Nop_ShippingMethod_RestrictedCountries" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingMethod_RestrictedCountries" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShippingRateComputationMethod" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingRateComputationMethod" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShippingStatus" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingStatus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_ShoppingCartItem" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartItem" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ShoppingCartType" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_SpecificationAttribute" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_SpecificationAttribute" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_SpecificationAttributeLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_SpecificationAttributeLocalized" store:Type="Tables" Schema="dbo" />
@@ -94,6 +100,7 @@
           <EntitySet Name="Nop_TaxCategory" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxCategory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TaxProvider" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxProvider" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TaxRate" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TaxRate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_TierPrice" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TierPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Topic" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Topic" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_TopicLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TopicLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_Warehouse" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Warehouse" store:Type="Tables" Schema="dbo" />
@@ -128,6 +135,14 @@
           <AssociationSet Name="FK_Nop_BlogPost_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_BlogPost_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
             <End Role="Nop_BlogPost" EntitySet="Nop_BlogPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Category_Discount_Mapping_Nop_Category" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Category_Discount_Mapping_Nop_Category">
+            <End Role="Nop_Category" EntitySet="Nop_Category" />
+            <End Role="Nop_Category_Discount_Mapping" EntitySet="Nop_Category_Discount_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_Category_Discount_Mapping_Nop_Discount" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Category_Discount_Mapping_Nop_Discount">
+            <End Role="Nop_Discount" EntitySet="Nop_Discount" />
+            <End Role="Nop_Category_Discount_Mapping" EntitySet="Nop_Category_Discount_Mapping" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_Category_Nop_CategoryTemplate" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Category_Nop_CategoryTemplate">
             <End Role="Nop_CategoryTemplate" EntitySet="Nop_CategoryTemplate" />
@@ -173,6 +188,22 @@
             <End Role="Nop_Customer" EntitySet="Nop_Customer" />
             <End Role="Nop_CustomerAttribute" EntitySet="Nop_CustomerAttribute" />
           </AssociationSet>
+          <AssociationSet Name="FK_Nop_CustomerRole_Discount_Mapping_Nop_CustomerRole" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_CustomerRole_Discount_Mapping_Nop_CustomerRole">
+            <End Role="Nop_CustomerRole" EntitySet="Nop_CustomerRole" />
+            <End Role="Nop_CustomerRole_Discount_Mapping" EntitySet="Nop_CustomerRole_Discount_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_CustomerRole_Discount_Mapping_Nop_Discount" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_CustomerRole_Discount_Mapping_Nop_Discount">
+            <End Role="Nop_Discount" EntitySet="Nop_Discount" />
+            <End Role="Nop_CustomerRole_Discount_Mapping" EntitySet="Nop_CustomerRole_Discount_Mapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole">
+            <End Role="Nop_CustomerRole" EntitySet="Nop_CustomerRole" />
+            <End Role="Nop_CustomerRole_ProductPrice" EntitySet="Nop_CustomerRole_ProductPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant">
+            <End Role="Nop_ProductVariant" EntitySet="Nop_ProductVariant" />
+            <End Role="Nop_CustomerRole_ProductPrice" EntitySet="Nop_CustomerRole_ProductPrice" />
+          </AssociationSet>
           <AssociationSet Name="FK_Nop_Discount_Nop_DiscountLimitation" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Discount_Nop_DiscountLimitation">
             <End Role="Nop_DiscountLimitation" EntitySet="Nop_DiscountLimitation" />
             <End Role="Nop_Discount" EntitySet="Nop_Discount" />
@@ -184,6 +215,14 @@
           <AssociationSet Name="FK_Nop_Discount_Nop_DiscountType" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Discount_Nop_DiscountType">
             <End Role="Nop_DiscountType" EntitySet="Nop_DiscountType" />
             <End Role="Nop_Discount" EntitySet="Nop_Discount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_DiscountRestriction_Nop_Discount" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_DiscountRestriction_Nop_Discount">
+            <End Role="Nop_Discount" EntitySet="Nop_Discount" />
+            <End Role="Nop_DiscountRestriction" EntitySet="Nop_DiscountRestriction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_DiscountRestriction_Nop_ProductVariant" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_DiscountRestriction_Nop_ProductVariant">
+            <End Role="Nop_ProductVariant" EntitySet="Nop_ProductVariant" />
+            <End Role="Nop_DiscountRestriction" EntitySet="Nop_DiscountRestriction" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_Forums_Forum_Nop_Forums_Group" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_Forums_Forum_Nop_Forums_Group">
             <End Role="Nop_Forums_Group" EntitySet="Nop_Forums_Group" />
@@ -297,6 +336,10 @@
             <End Role="Nop_ProductVariant" EntitySet="Nop_ProductVariant" />
             <End Role="Nop_ProductVariantLocalized" EntitySet="Nop_ProductVariantLocalized" />
           </AssociationSet>
+          <AssociationSet Name="FK_Nop_RelatedProduct_Nop_Product" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_RelatedProduct_Nop_Product">
+            <End Role="Nop_Product" EntitySet="Nop_Product" />
+            <End Role="Nop_RelatedProduct" EntitySet="Nop_RelatedProduct" />
+          </AssociationSet>
           <AssociationSet Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingByTotal_Nop_ShippingMethod">
             <End Role="Nop_ShippingMethod" EntitySet="Nop_ShippingMethod" />
             <End Role="Nop_ShippingByTotal" EntitySet="Nop_ShippingByTotal" />
@@ -320,6 +363,18 @@
           <AssociationSet Name="FK_Nop_ShippingMethod_RestrictedCountries_Nop_ShippingMethod" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShippingMethod_RestrictedCountries_Nop_ShippingMethod">
             <End Role="Nop_ShippingMethod" EntitySet="Nop_ShippingMethod" />
             <End Role="Nop_ShippingMethod_RestrictedCountries" EntitySet="Nop_ShippingMethod_RestrictedCountries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShoppingCart_Nop_CustomerSession" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShoppingCart_Nop_CustomerSession">
+            <End Role="Nop_CustomerSession" EntitySet="Nop_CustomerSession" />
+            <End Role="Nop_ShoppingCartItem" EntitySet="Nop_ShoppingCartItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShoppingCart_Nop_ProductVariant" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShoppingCart_Nop_ProductVariant">
+            <End Role="Nop_ProductVariant" EntitySet="Nop_ProductVariant" />
+            <End Role="Nop_ShoppingCartItem" EntitySet="Nop_ShoppingCartItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShoppingCart_Nop_ShoppingCartType" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_ShoppingCart_Nop_ShoppingCartType">
+            <End Role="Nop_ShoppingCartType" EntitySet="Nop_ShoppingCartType" />
+            <End Role="Nop_ShoppingCartItem" EntitySet="Nop_ShoppingCartItem" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_SpecificationAttributeLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_SpecificationAttributeLocalized_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
@@ -352,6 +407,10 @@
           <AssociationSet Name="FK_Nop_TaxRate_Nop_TaxCategory" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TaxRate_Nop_TaxCategory">
             <End Role="Nop_TaxCategory" EntitySet="Nop_TaxCategory" />
             <End Role="Nop_TaxRate" EntitySet="Nop_TaxRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TierPrice_Nop_ProductVariant" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TierPrice_Nop_ProductVariant">
+            <End Role="Nop_ProductVariant" EntitySet="Nop_ProductVariant" />
+            <End Role="Nop_TierPrice" EntitySet="Nop_TierPrice" />
           </AssociationSet>
           <AssociationSet Name="FK_Nop_TopicLocalized_Nop_Language" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Store.FK_Nop_TopicLocalized_Nop_Language">
             <End Role="Nop_Language" EntitySet="Nop_Language" />
@@ -510,6 +569,14 @@
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_Category_Discount_Mapping">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="DiscountID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_CategoryLocalized">
           <Key>
@@ -692,6 +759,23 @@
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Nop_CustomerRole_Discount_Mapping">
+          <Key>
+            <PropertyRef Name="CustomerRoleID" />
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="CustomerRoleID" Type="int" Nullable="false" />
+          <Property Name="DiscountID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_CustomerRole_ProductPrice">
+          <Key>
+            <PropertyRef Name="CustomerRoleProductPriceID" />
+          </Key>
+          <Property Name="CustomerRoleProductPriceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerRoleID" Type="int" Nullable="false" />
+          <Property Name="ProductVariantID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_CustomerSession">
           <Key>
             <PropertyRef Name="CustomerSessionGUID" />
@@ -732,6 +816,14 @@
           </Key>
           <Property Name="DiscountRequirementID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Nop_DiscountRestriction">
+          <Key>
+            <PropertyRef Name="ProductVariantID" />
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="ProductVariantID" Type="int" Nullable="false" />
+          <Property Name="DiscountID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_DiscountType">
           <Key>
@@ -1272,6 +1364,15 @@
           <Property Name="SendTries" Type="int" Nullable="false" />
           <Property Name="SentOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="Nop_RelatedProduct">
+          <Key>
+            <PropertyRef Name="RelatedProductID" />
+          </Key>
+          <Property Name="RelatedProductID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID1" Type="int" Nullable="false" />
+          <Property Name="ProductID2" Type="int" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_SearchLog">
           <Key>
             <PropertyRef Name="SearchLogID" />
@@ -1363,6 +1464,20 @@
           <Property Name="ShippingStatusID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Nop_ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="ShoppingCartItemID" />
+          </Key>
+          <Property Name="ShoppingCartItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShoppingCartTypeID" Type="int" Nullable="false" />
+          <Property Name="CustomerSessionGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductVariantID" Type="int" Nullable="false" />
+          <Property Name="AttributesXML" Type="xml" Nullable="false" />
+          <Property Name="CustomerEnteredPrice" Type="money" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nop_ShoppingCartType">
           <Key>
             <PropertyRef Name="ShoppingCartTypeID" />
@@ -1446,6 +1561,15 @@
           <Property Name="StateProvinceID" Type="int" Nullable="false" />
           <Property Name="Zip" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Percentage" Type="decimal" Nullable="false" Scale="4" />
+        </EntityType>
+        <EntityType Name="Nop_TierPrice">
+          <Key>
+            <PropertyRef Name="TierPriceID" />
+          </Key>
+          <Property Name="TierPriceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductVariantID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_Topic">
           <Key>
@@ -1597,6 +1721,34 @@
             </Principal>
             <Dependent Role="Nop_BlogPost">
               <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Category_Discount_Mapping_Nop_Category">
+          <End Role="Nop_Category" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Category_Discount_Mapping" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Category_Discount_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Nop_Category_Discount_Mapping">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_Category_Discount_Mapping_Nop_Discount">
+          <End Role="Nop_Discount" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Discount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_Category_Discount_Mapping" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Category_Discount_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Discount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="Nop_Category_Discount_Mapping">
+              <PropertyRef Name="DiscountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1752,6 +1904,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Nop_CustomerRole_Discount_Mapping_Nop_CustomerRole">
+          <End Role="Nop_CustomerRole" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_CustomerRole_Discount_Mapping" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole_Discount_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_CustomerRole">
+              <PropertyRef Name="CustomerRoleID" />
+            </Principal>
+            <Dependent Role="Nop_CustomerRole_Discount_Mapping">
+              <PropertyRef Name="CustomerRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_CustomerRole_Discount_Mapping_Nop_Discount">
+          <End Role="Nop_Discount" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Discount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_CustomerRole_Discount_Mapping" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole_Discount_Mapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Discount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="Nop_CustomerRole_Discount_Mapping">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole">
+          <End Role="Nop_CustomerRole" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_CustomerRole_ProductPrice" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole_ProductPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_CustomerRole">
+              <PropertyRef Name="CustomerRoleID" />
+            </Principal>
+            <Dependent Role="Nop_CustomerRole_ProductPrice">
+              <PropertyRef Name="CustomerRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant">
+          <End Role="Nop_ProductVariant" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_CustomerRole_ProductPrice" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerRole_ProductPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ProductVariant">
+              <PropertyRef Name="ProductVariantId" />
+            </Principal>
+            <Dependent Role="Nop_CustomerRole_ProductPrice">
+              <PropertyRef Name="ProductVariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_Discount_Nop_DiscountLimitation">
           <End Role="Nop_DiscountLimitation" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountLimitation" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1791,6 +1999,34 @@
             </Principal>
             <Dependent Role="Nop_Discount">
               <PropertyRef Name="DiscountTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_DiscountRestriction_Nop_Discount">
+          <End Role="Nop_Discount" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Discount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_DiscountRestriction" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRestriction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Discount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="Nop_DiscountRestriction">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_DiscountRestriction_Nop_ProductVariant">
+          <End Role="Nop_ProductVariant" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_DiscountRestriction" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_DiscountRestriction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ProductVariant">
+              <PropertyRef Name="ProductVariantId" />
+            </Principal>
+            <Dependent Role="Nop_DiscountRestriction">
+              <PropertyRef Name="ProductVariantID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2178,6 +2414,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Nop_RelatedProduct_Nop_Product">
+          <End Role="Nop_Product" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_RelatedProduct" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_RelatedProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Nop_RelatedProduct">
+              <PropertyRef Name="ProductID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Nop_ShippingByTotal_Nop_ShippingMethod">
           <End Role="Nop_ShippingMethod" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShippingMethod" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2259,6 +2509,48 @@
             </Principal>
             <Dependent Role="Nop_ShippingMethod_RestrictedCountries">
               <PropertyRef Name="ShippingMethodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShoppingCart_Nop_CustomerSession">
+          <End Role="Nop_CustomerSession" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_CustomerSession" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ShoppingCartItem" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_CustomerSession">
+              <PropertyRef Name="CustomerSessionGUID" />
+            </Principal>
+            <Dependent Role="Nop_ShoppingCartItem">
+              <PropertyRef Name="CustomerSessionGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShoppingCart_Nop_ProductVariant">
+          <End Role="Nop_ProductVariant" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ShoppingCartItem" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ProductVariant">
+              <PropertyRef Name="ProductVariantId" />
+            </Principal>
+            <Dependent Role="Nop_ShoppingCartItem">
+              <PropertyRef Name="ProductVariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShoppingCart_Nop_ShoppingCartType">
+          <End Role="Nop_ShoppingCartType" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_ShoppingCartItem" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ShoppingCartType">
+              <PropertyRef Name="ShoppingCartTypeID" />
+            </Principal>
+            <Dependent Role="Nop_ShoppingCartItem">
+              <PropertyRef Name="ShoppingCartTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2371,6 +2663,20 @@
             </Principal>
             <Dependent Role="Nop_TaxRate">
               <PropertyRef Name="TaxCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_TierPrice_Nop_ProductVariant">
+          <End Role="Nop_ProductVariant" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nop_TierPrice" Type="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_TierPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nop_ProductVariant">
+              <PropertyRef Name="ProductVariantId" />
+            </Principal>
+            <Dependent Role="Nop_TierPrice">
+              <PropertyRef Name="ProductVariantID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2799,6 +3105,50 @@
           <AssociationSet Name="FK_Nop_ProductAttributeLocalized_Nop_ProductAttribute" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductAttributeLocalized_Nop_ProductAttribute">
             <End Role="Nop_ProductAttribute" EntitySet="ProductAttributes" />
             <End Role="Nop_ProductAttributeLocalized" EntitySet="ProductAttributeLocalized" />
+          </AssociationSet>
+          <EntitySet Name="CustomerRoleProductPrices" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRoleProductPrice" />
+          <EntitySet Name="RelatedProducts" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.RelatedProduct" />
+          <EntitySet Name="ShoppingCartItems" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartItem" />
+          <EntitySet Name="TierPrices" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TierPrice" />
+          <AssociationSet Name="FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole">
+            <End Role="CustomerRole" EntitySet="CustomerRoles" />
+            <End Role="Nop_CustomerRole_ProductPrice" EntitySet="CustomerRoleProductPrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant">
+            <End Role="ProductVariant" EntitySet="ProductVariants" />
+            <End Role="Nop_CustomerRole_ProductPrice" EntitySet="CustomerRoleProductPrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShoppingCart_Nop_CustomerSession" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_CustomerSession">
+            <End Role="CustomerSession" EntitySet="CustomerSessions" />
+            <End Role="Nop_ShoppingCartItem" EntitySet="ShoppingCartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_RelatedProduct_Nop_Product" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_RelatedProduct_Nop_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Nop_RelatedProduct" EntitySet="RelatedProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShoppingCart_Nop_ProductVariant" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_ProductVariant">
+            <End Role="ProductVariant" EntitySet="ProductVariants" />
+            <End Role="Nop_ShoppingCartItem" EntitySet="ShoppingCartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_TierPrice_Nop_ProductVariant" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TierPrice_Nop_ProductVariant">
+            <End Role="ProductVariant" EntitySet="ProductVariants" />
+            <End Role="Nop_TierPrice" EntitySet="TierPrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nop_ShoppingCart_Nop_ShoppingCartType" Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_ShoppingCartType">
+            <End Role="ShoppingCartType" EntitySet="ShoppingCartTypes" />
+            <End Role="Nop_ShoppingCartItem" EntitySet="ShoppingCartItems" />
+          </AssociationSet>
+          <AssociationSet Name="Nop_Category_Discount_Mapping" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Category_Discount_Mapping">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="Nop_CustomerRole_Discount_Mapping" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_CustomerRole_Discount_Mapping">
+            <End Role="CustomerRole" EntitySet="CustomerRoles" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="Nop_DiscountRestriction" Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_DiscountRestriction">
+            <End Role="Discount" EntitySet="Discounts" />
+            <End Role="ProductVariant" EntitySet="ProductVariants" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language">
@@ -3464,6 +3814,7 @@
           <Property Type="Boolean" Name="Active" Nullable="false" />
           <Property Type="Boolean" Name="Deleted" Nullable="false" />
           <NavigationProperty Name="NpCustomers" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping" FromRole="Nop_CustomerRole" ToRole="Customer" />
+          <NavigationProperty Name="NpDiscounts" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_CustomerRole_Discount_Mapping" FromRole="CustomerRole" ToRole="Discount" />
         </EntityType>
         <Association Name="Nop_Customer_CustomerRole_Mapping">
           <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Customer" Role="Customer" Multiplicity="*" />
@@ -3979,6 +4330,9 @@
           <Property Type="Boolean" Name="RequiresCouponCode" Nullable="false" />
           <Property Type="String" Name="CouponCode" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="Deleted" Nullable="false" />
+          <NavigationProperty Name="NpCategories" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Category_Discount_Mapping" FromRole="Discount" ToRole="Category" />
+          <NavigationProperty Name="NpCustomerRoles" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_CustomerRole_Discount_Mapping" FromRole="Discount" ToRole="CustomerRole" />
+          <NavigationProperty Name="NpRestrictedProductVariants" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_DiscountRestriction" FromRole="Discount" ToRole="ProductVariant" />
         </EntityType>
         <EntityType Name="NewsLetterSubscription">
           <Key>
@@ -4211,6 +4565,8 @@
           <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
           <NavigationProperty Name="NpProduct" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariant_Nop_Product1" FromRole="Nop_ProductVariant" ToRole="Product" />
           <NavigationProperty Name="NpProductVariantLocalized" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantLocalized_Nop_ProductVariant" FromRole="Nop_ProductVariant" ToRole="Nop_ProductVariantLocalized" />
+          <NavigationProperty Name="NpTierPrices" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TierPrice_Nop_ProductVariant" FromRole="ProductVariant" ToRole="Nop_TierPrice" />
+          <NavigationProperty Name="NpRestrictedDiscounts" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_DiscountRestriction" FromRole="ProductVariant" ToRole="Discount" />
         </EntityType>
         <EntityType Name="ProductVariantLocalized">
           <Key>
@@ -4405,6 +4761,7 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
           <NavigationProperty Name="NpCategoryLocalized" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CategoryLocalized_Nop_Category" FromRole="Nop_Category" ToRole="Nop_CategoryLocalized" />
+          <NavigationProperty Name="NpDiscounts" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Category_Discount_Mapping" FromRole="Category" ToRole="Discount" />
         </EntityType>
         <EntityType Name="CategoryLocalized">
           <Key>
@@ -4674,6 +5031,144 @@
               <PropertyRef Name="ProductAttributeId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerRoleProductPrice">
+          <Key>
+            <PropertyRef Name="CustomerRoleProductPriceId" />
+          </Key>
+          <Property Type="Int32" Name="CustomerRoleProductPriceId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="CustomerRoleId" Nullable="false" />
+          <Property Type="Int32" Name="ProductVariantId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" Scale="4" />
+          </EntityType>
+        <EntityType Name="RelatedProduct">
+          <Key>
+            <PropertyRef Name="RelatedProductId" />
+          </Key>
+          <Property Type="Int32" Name="RelatedProductId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ProductId1" Nullable="false" />
+          <Property Type="Int32" Name="ProductId2" Nullable="false" />
+          <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="ShoppingCartItemId" />
+          </Key>
+          <Property Type="Int32" Name="ShoppingCartItemId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ShoppingCartTypeId" Nullable="false" />
+          <Property Type="Guid" Name="CustomerSessionGuid" Nullable="false" />
+          <Property Type="Int32" Name="ProductVariantId" Nullable="false" />
+          <Property Type="String" Name="AttributesXml" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="CustomerEnteredPrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+          </EntityType>
+        <EntityType Name="TierPrice">
+          <Key>
+            <PropertyRef Name="TierPriceId" />
+          </Key>
+          <Property Type="Int32" Name="TierPriceId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ProductVariantId" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="NpProductVariant" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TierPrice_Nop_ProductVariant" FromRole="Nop_TierPrice" ToRole="ProductVariant" />
+        </EntityType>
+        <Association Name="FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Role="CustomerRole" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRoleProductPrice" Role="Nop_CustomerRole_ProductPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerRole">
+              <PropertyRef Name="CustomerRoleId" />
+            </Principal>
+            <Dependent Role="Nop_CustomerRole_ProductPrice">
+              <PropertyRef Name="CustomerRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariant" Role="ProductVariant" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRoleProductPrice" Role="Nop_CustomerRole_ProductPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariant">
+              <PropertyRef Name="ProductVariantId" />
+            </Principal>
+            <Dependent Role="Nop_CustomerRole_ProductPrice">
+              <PropertyRef Name="ProductVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShoppingCart_Nop_CustomerSession">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerSession" Role="CustomerSession" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartItem" Role="Nop_ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerSession">
+              <PropertyRef Name="CustomerSessionGuid" />
+            </Principal>
+            <Dependent Role="Nop_ShoppingCartItem">
+              <PropertyRef Name="CustomerSessionGuid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_RelatedProduct_Nop_Product">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Product" Role="Product" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.RelatedProduct" Role="Nop_RelatedProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Nop_RelatedProduct">
+              <PropertyRef Name="ProductId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShoppingCart_Nop_ProductVariant">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariant" Role="ProductVariant" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartItem" Role="Nop_ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariant">
+              <PropertyRef Name="ProductVariantId" />
+            </Principal>
+            <Dependent Role="Nop_ShoppingCartItem">
+              <PropertyRef Name="ProductVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_TierPrice_Nop_ProductVariant">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariant" Role="ProductVariant" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.TierPrice" Role="Nop_TierPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductVariant">
+              <PropertyRef Name="ProductVariantId" />
+            </Principal>
+            <Dependent Role="Nop_TierPrice">
+              <PropertyRef Name="ProductVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nop_ShoppingCart_Nop_ShoppingCartType">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" Role="ShoppingCartType" Multiplicity="1" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartItem" Role="Nop_ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoppingCartType">
+              <PropertyRef Name="ShoppingCartTypeId" />
+            </Principal>
+            <Dependent Role="Nop_ShoppingCartItem">
+              <PropertyRef Name="ShoppingCartTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Nop_Category_Discount_Mapping">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Category" Role="Category" Multiplicity="*" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Discount" Role="Discount" Multiplicity="*" />
+        </Association>
+        <Association Name="Nop_CustomerRole_Discount_Mapping">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Role="CustomerRole" Multiplicity="*" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Discount" Role="Discount" Multiplicity="*" />
+        </Association>
+        <Association Name="Nop_DiscountRestriction">
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.Discount" Role="Discount" Multiplicity="*" />
+          <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariant" Role="ProductVariant" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -5951,6 +6446,75 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CustomerRoleProductPrices">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRoleProductPrice">
+              <MappingFragment StoreEntitySet="Nop_CustomerRole_ProductPrice">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductVariantId" ColumnName="ProductVariantID" />
+                <ScalarProperty Name="CustomerRoleId" ColumnName="CustomerRoleID" />
+                <ScalarProperty Name="CustomerRoleProductPriceId" ColumnName="CustomerRoleProductPriceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RelatedProducts">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.RelatedProduct">
+              <MappingFragment StoreEntitySet="Nop_RelatedProduct">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="ProductId2" ColumnName="ProductID2" />
+                <ScalarProperty Name="ProductId1" ColumnName="ProductID1" />
+                <ScalarProperty Name="RelatedProductId" ColumnName="RelatedProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCartItems">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartItem">
+              <MappingFragment StoreEntitySet="Nop_ShoppingCartItem">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CustomerEnteredPrice" ColumnName="CustomerEnteredPrice" />
+                <ScalarProperty Name="AttributesXml" ColumnName="AttributesXML" />
+                <ScalarProperty Name="ProductVariantId" ColumnName="ProductVariantID" />
+                <ScalarProperty Name="CustomerSessionGuid" ColumnName="CustomerSessionGUID" />
+                <ScalarProperty Name="ShoppingCartTypeId" ColumnName="ShoppingCartTypeID" />
+                <ScalarProperty Name="ShoppingCartItemId" ColumnName="ShoppingCartItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TierPrices">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.TierPrice">
+              <MappingFragment StoreEntitySet="Nop_TierPrice">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductVariantId" ColumnName="ProductVariantID" />
+                <ScalarProperty Name="TierPriceId" ColumnName="TierPriceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Nop_Category_Discount_Mapping" TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Category_Discount_Mapping" StoreEntitySet="Nop_Category_Discount_Mapping">
+            <EndProperty Name="Discount">
+              <ScalarProperty Name="DiscountId" ColumnName="DiscountID" />
+            </EndProperty>
+            <EndProperty Name="Category">
+              <ScalarProperty Name="CategoryId" ColumnName="CategoryID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Nop_CustomerRole_Discount_Mapping" TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_CustomerRole_Discount_Mapping" StoreEntitySet="Nop_CustomerRole_Discount_Mapping">
+            <EndProperty Name="Discount">
+              <ScalarProperty Name="DiscountId" ColumnName="DiscountID" />
+            </EndProperty>
+            <EndProperty Name="CustomerRole">
+              <ScalarProperty Name="CustomerRoleId" ColumnName="CustomerRoleID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Nop_DiscountRestriction" TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_DiscountRestriction" StoreEntitySet="Nop_DiscountRestriction">
+            <EndProperty Name="ProductVariant">
+              <ScalarProperty Name="ProductVariantId" ColumnName="ProductVariantID" />
+            </EndProperty>
+            <EndProperty Name="Discount">
+              <ScalarProperty Name="DiscountId" ColumnName="DiscountID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -5971,23 +6535,23 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NopModel" ZoomLevel="78">
+      <Diagram Name="NopModel" ZoomLevel="86">
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="11.125" PointY="5.125" Height="2.0853483072916665" IsExpanded="true" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="6.125" PointY="20.5" Height="2.7427376302083353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="8.25" PointY="20.5" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
           <ConnectorPoint PointX="7.625" PointY="21.460500488281248" />
           <ConnectorPoint PointX="7.666666666666667" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="7.833333333333333" PointY="21.460500488281248" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="21.460500488281248" />
           <ConnectorPoint PointX="8.0833333333333339" PointY="21.460500488281248" />
           <ConnectorPoint PointX="8.25" PointY="21.460500488281248" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="3.375" PointY="0.5" Height="1.4279589843749996" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="6.5" PointY="0.5" Height="2.9070849609374996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.091254556961953" PointY="5.125" />
-          <ConnectorPoint PointX="12.091254556961953" PointY="2.9452929687499987" />
-          <ConnectorPoint PointX="12.066458111814312" PointY="2.9452929687499982" />
-          <ConnectorPoint PointX="11.899791445147644" PointY="2.9452929687499987" />
+          <ConnectorPoint PointX="11.468748" PointY="5.125" />
+          <ConnectorPoint PointX="11.468748" PointY="2.9452929687499987" />
           <ConnectorPoint PointX="8" PointY="2.9452929687499987" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
@@ -6001,8 +6565,8 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
           <ConnectorPoint PointX="11.125" PointY="5.7415983072916674" />
-          <ConnectorPoint PointX="7.208333333333333" PointY="5.7415983072916665" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="5.7415983072916674" />
+          <ConnectorPoint PointX="6.927083333333333" PointY="5.7415983072916665" />
+          <ConnectorPoint PointX="6.760416666666667" PointY="5.7415983072916674" />
           <ConnectorPoint PointX="5.75" PointY="5.7415983072916674" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
@@ -6020,18 +6584,18 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductTemplate" Width="2.125" PointX="3.25" PointY="31.625" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Warehouse" Width="1.75" PointX="5.25" PointY="25.625" Height="3.2357796223958388" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Campaign" Width="1.5" PointX="16.75" PointY="24.875" Height="1.7566536458333388" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Currency" Width="1.5" PointX="14.625" PointY="16.625" Height="2.5783902994791674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Currency" Width="1.5" PointX="3.875" PointY="14.75" Height="2.5783902994791674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountLimitation" Width="2.125" PointX="18.5" PointY="15.25" Height="1.2636116536458353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountRequirement" Width="2.25" PointX="20.75" PointY="15.25" Height="1.2636116536458353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.DiscountType" Width="1.875" PointX="16.375" PointY="15.25" Height="1.2636116536458353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Download" Width="1.5" PointX="19.25" PointY="18.125" Height="2.2496956380208246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LogType" Width="1.5" PointX="19.25" PointY="25" Height="1.2636116536458353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.OrderStatus" Width="1.75" PointX="20.875" PointY="19.125" Height="1.2636116536458246" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod" Width="1.875" PointX="16.75" PointY="21.875" Height="2.7427376302083353" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod" Width="1.875" PointX="17" PointY="21.875" Height="2.7427376302083353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentStatus" Width="2.125" PointX="22.75" PointY="19.125" Height="1.2636116536458246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingRateComputationMethod" Width="3" PointX="20.875" PointY="22.125" Height="2.0853483072916674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingStatus" Width="2.125" PointX="25.25" PointY="19.125" Height="1.2636116536458246" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" Width="2.125" PointX="16.375" PointY="17.875" Height="1.2636116536458246" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartType" Width="2.125" PointX="8.875" PointY="13.125" Height="1.2636116536458335" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxCategory" Width="2" PointX="29.75" PointY="19.25" Height="1.7566536458333353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TaxProvider" Width="2.125" PointX="29.75" PointY="21.375" Height="1.9210009765625102" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource" Width="2.5" PointX="3.25" PointY="6.375" Height="1.5923063151041657" />
@@ -6040,8 +6604,8 @@
           <ConnectorPoint PointX="11.125" PointY="6.7926741536458337" />
           <ConnectorPoint PointX="9.2083333333333339" PointY="6.7926741536458328" />
           <ConnectorPoint PointX="9.0416666666666661" PointY="6.7926741536458337" />
-          <ConnectorPoint PointX="7.208333333333333" PointY="6.7926741536458328" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="6.7926741536458337" />
+          <ConnectorPoint PointX="6.927083333333333" PointY="6.7926741536458328" />
+          <ConnectorPoint PointX="6.760416666666667" PointY="6.7926741536458337" />
           <ConnectorPoint PointX="5.75" PointY="6.7926741536458337" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Picture" Width="1.5" PointX="0.5" PointY="5.5" Height="1.5923063151041665" />
@@ -6070,22 +6634,28 @@
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TaxRate_Nop_Country" >
           <ConnectorPoint PointX="7.625" PointY="21.871368815104169" />
           <ConnectorPoint PointX="7.666666666666667" PointY="21.871368815104169" />
-          <ConnectorPoint PointX="7.958333333333333" PointY="21.871368815104169" />
+          <ConnectorPoint PointX="7.833333333333333" PointY="21.871368815104169" />
           <ConnectorPoint PointX="8" PointY="21.871368815104169" />
           <ConnectorPoint PointX="8" PointY="20.125" />
           <ConnectorPoint PointX="11.229166666666666" PointY="20.125" />
           <ConnectorPoint PointX="11.395833333333334" PointY="20.125" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="20.125" />
-          <ConnectorPoint PointX="12.708333333333334" PointY="20.125" />
-          <ConnectorPoint PointX="12.875" PointY="20.125" />
-          <ConnectorPoint PointX="12.875" PointY="19.75" />
-          <ConnectorPoint PointX="14.135416666666666" PointY="19.75" />
-          <ConnectorPoint PointX="14.302083333333334" PointY="19.75" />
-          <ConnectorPoint PointX="16.75" PointY="19.75" />
-          <ConnectorPoint PointX="16.75" PointY="20.638611653645825" />
-          <ConnectorPoint PointX="26.354166666666668" PointY="20.638611653645825" />
-          <ConnectorPoint PointX="26.520833333333332" PointY="20.638611653645825" />
-          <ConnectorPoint PointX="27.625" PointY="20.638611653645825" />
+          <ConnectorPoint PointX="12.447916666666666" PointY="20.125" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="20.125" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="20.125" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="20.125" />
+          <ConnectorPoint PointX="13.75" PointY="20.125" />
+          <ConnectorPoint PointX="13.75" PointY="19.75" />
+          <ConnectorPoint PointX="14.479166666666666" PointY="19.75" />
+          <ConnectorPoint PointX="14.645833333333334" PointY="19.75" />
+          <ConnectorPoint PointX="15.151044791666667" PointY="19.75" />
+          <ConnectorPoint PointX="15.317711458333335" PointY="19.75" />
+          <ConnectorPoint PointX="15.486983854166668" PointY="19.75" />
+          <ConnectorPoint PointX="15.653650520833336" PointY="19.75" />
+          <ConnectorPoint PointX="19" PointY="19.75" />
+          <ConnectorPoint PointX="19" PointY="20.888611653645825" />
+          <ConnectorPoint PointX="26.354166666666668" PointY="20.888611653645825" />
+          <ConnectorPoint PointX="26.645833333333332" PointY="20.888611653645825" />
+          <ConnectorPoint PointX="27.625" PointY="20.888611653645825" />
           <ConnectorPoint PointX="27.625" PointY="20.125000000000004" />
           <ConnectorPoint PointX="28.5" PointY="20.125000000000004" />
           <ConnectorPoint PointX="28.5" PointY="20.375" />
@@ -6094,10 +6664,10 @@
           <ConnectorPoint PointX="29.75" PointY="20.690826822916669" />
           <ConnectorPoint PointX="29.25" PointY="20.690826822916669" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Width="1.75" PointX="15" PointY="0.5" Height="2.085348307291667" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRole" Width="1.75" PointX="19.375" PointY="5.875" Height="2.2496956380208331" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Customer_CustomerRole_Mapping" >
-          <ConnectorPoint PointX="16.125" PointY="3.125" />
-          <ConnectorPoint PointX="16.125" PointY="2.585348307291667" />
+          <ConnectorPoint PointX="17.5" PointY="6.9998478190104167" />
+          <ConnectorPoint PointX="19.375" PointY="6.9998478190104167" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Width="1.5" PointX="25.25" PointY="0.5" Height="1.5923063151041674" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerAction" >
@@ -6105,7 +6675,8 @@
           <ConnectorPoint PointX="26.75" PointY="1.2961531575520837" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerRole" >
-          <ConnectorPoint PointX="16.75" PointY="1.2961531575520837" />
+          <ConnectorPoint PointX="20.25" PointY="5.875" />
+          <ConnectorPoint PointX="20.25" PointY="1.2961531575520837" />
           <ConnectorPoint PointX="25.25" PointY="1.2961531575520837" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ActivityLog" Width="1.875" PointX="10.375" PointY="17.75" Height="1.9210009765625031" />
@@ -6115,19 +6686,21 @@
           <ConnectorPoint PointX="11.3125" PointY="19.671000976562503" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer" >
-          <ConnectorPoint PointX="15.5" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="15.333333333333334" PointY="8.13159261067708" />
-          <ConnectorPoint PointX="15.041666666666666" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="12.677082825520833" PointY="8.13159261067708" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="12.241963956622946" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="12.075297289956279" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="11.882588800372949" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="11.715922133706281" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="11.523213644122949" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="11.356546977456281" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="10.71875" PointY="8.1315926106770817" />
-          <ConnectorPoint PointX="10.71875" PointY="17.75" />
+          <ConnectorPoint PointX="15.84375125" PointY="8.8259895833333335" />
+          <ConnectorPoint PointX="15.84375125" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="15.653650520833336" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="15.486983854166668" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="15.317711458333335" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="15.151044791666667" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="14.645833333333334" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="14.479166666666666" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="13.770833333333334" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="13.604166666666666" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="12.447916666666666" PointY="18.710500488281252" />
+          <ConnectorPoint PointX="12.25" PointY="18.710500488281252" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Address" Width="1.5" PointX="30.125" PointY="0.5" Height="3.8931689453124827" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BlogComment" Width="1.5" PointX="32.25" PointY="5.125" Height="1.9210009765624996" />
@@ -6136,6 +6709,8 @@
           <ConnectorPoint PointX="17.5" PointY="3.7911057034254654" />
           <ConnectorPoint PointX="17.791666666666668" PointY="3.7911057034254649" />
           <ConnectorPoint PointX="17.958333333333332" PointY="3.7911057034254654" />
+          <ConnectorPoint PointX="20.166666666666668" PointY="3.7911057034254649" />
+          <ConnectorPoint PointX="20.333333333333332" PointY="3.7911057034254654" />
           <ConnectorPoint PointX="30.125" PointY="3.7911057034254654" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogComment_Nop_BlogPost" >
@@ -6146,22 +6721,28 @@
           <ConnectorPoint PointX="17.5" PointY="3.1265374615384616" />
           <ConnectorPoint PointX="17.875" PointY="2.7515374615384616" />
           <ConnectorPoint PointX="17.875" PointY="4.75" />
+          <ConnectorPoint PointX="20.166666666666668" PointY="4.7499999999999991" />
+          <ConnectorPoint PointX="20.333333333333332" PointY="4.75" />
           <ConnectorPoint PointX="29.75" PointY="4.75" />
           <ConnectorPoint PointX="30.125" PointY="5.125" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_BlogPost_Nop_Language" >
-          <ConnectorPoint PointX="12.625" PointY="6.2498478190104159" />
-          <ConnectorPoint PointX="15.1875" PointY="6.2498478190104159" />
-          <ConnectorPoint PointX="15.1875" PointY="9.1350716145833317" />
-          <ConnectorPoint PointX="16.885416666666668" PointY="9.1350716145833317" />
-          <ConnectorPoint PointX="17.052083333333332" PointY="9.1350716145833317" />
-          <ConnectorPoint PointX="25.104166666666668" PointY="9.1350716145833317" />
-          <ConnectorPoint PointX="25.270833333333332" PointY="9.1350716145833317" />
-          <ConnectorPoint PointX="30.6874995" PointY="9.1350716145833317" />
+          <ConnectorPoint PointX="12.625" PointY="6.1676741536458337" />
+          <ConnectorPoint PointX="15.25" PointY="6.1676741536458337" />
+          <ConnectorPoint PointX="15.25" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="15.760417916666667" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="15.927084583333334" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="18.916666666666668" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="19.083333333333332" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="20.229166666666668" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="20.395833333333332" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="25.104166666666668" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="25.270833333333332" PointY="9.1038216145833353" />
+          <ConnectorPoint PointX="30.6874995" PointY="9.1038216145833353" />
           <ConnectorPoint PointX="30.6874995" PointY="7.2103483072916665" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAttribute" Width="2.125" PointX="16.25" PointY="13.125" Height="1.5923063151041657" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerSession" Width="2" PointX="0.625" PointY="0.5" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAttribute" Width="2.125" PointX="15.25" PointY="0.5" Height="1.5923063151041657" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerSession" Width="2" PointX="8.375" PointY="11" Height="1.5923063151041657" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Forum" Width="1.5" PointX="26.625" PointY="23.875" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumGroup" Width="1.5" PointX="24.125" PointY="23.875" Height="1.9210009765625031" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ForumPost" Width="1.5" PointX="24.375" PointY="28.625" Height="2.0853483072916674" />
@@ -6172,8 +6753,8 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.NewsComment" Width="1.5" PointX="33.625" PointY="7.625" Height="2.0853483072916656" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.SearchLog" Width="1.5" PointX="7.875" PointY="27.75" Height="1.5923063151041674" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerAttribute_Nop_Customer" >
-          <ConnectorPoint PointX="16.96875" PointY="8.8259895833333335" />
-          <ConnectorPoint PointX="16.96875" PointY="13.125" />
+          <ConnectorPoint PointX="16.4375" PointY="3.125" />
+          <ConnectorPoint PointX="16.4375" PointY="2.0923063151041656" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Forums_Forum_Nop_Forums_Group" >
           <ConnectorPoint PointX="25.625" PointY="24.835500488281252" />
@@ -6192,21 +6773,21 @@
           <ConnectorPoint PointX="25.875" PointY="29.667674153645834" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_News_Nop_Language" >
-          <ConnectorPoint PointX="11.439880310789615" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="11.439880310789615" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="11.715922133706281" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="11.882588800372949" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="12.075297289956279" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="12.241963956622946" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="9.2862858072916641" />
-          <ConnectorPoint PointX="12.677082825520833" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="16.885416666666668" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="17.052083333333332" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="25.104166666666668" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="25.270833333333332" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="29.541666666666668" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="29.708333333333332" PointY="9.2862858072916659" />
-          <ConnectorPoint PointX="31.25" PointY="9.2862858072916659" />
+          <ConnectorPoint PointX="11.9277335625" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="11.9277335625" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="11.995279338541666" PointY="9.2706608072916659" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="15.760417916666667" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="15.927084583333334" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="18.916666666666668" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="19.083333333333332" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="20.229166666666668" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="20.395833333333332" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="25.104166666666668" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="25.270833333333332" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="29.541666666666668" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="29.708333333333332" PointY="9.2706608072916676" />
+          <ConnectorPoint PointX="31.25" PointY="9.2706608072916676" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_NewsComment_Nop_News" >
           <ConnectorPoint PointX="32.75" PointY="8.6676741536458337" />
@@ -6223,8 +6804,8 @@
           <ConnectorPoint PointX="13.34375" PointY="1.9279589843750002" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Poll_Nop_Language" >
-          <ConnectorPoint PointX="11.983124778480978" PointY="5.125" />
-          <ConnectorPoint PointX="11.983124778480978" PointY="2.370077311197917" />
+          <ConnectorPoint PointX="11.875" PointY="5.125" />
+          <ConnectorPoint PointX="11.875" PointY="2.370077311197917" />
           <ConnectorPoint PointX="9.875" PointY="2.370077311197917" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Log_Nop_LogType" >
@@ -6239,61 +6820,45 @@
           <ConnectorPoint PointX="11.875" PointY="1.2139794921875002" />
           <ConnectorPoint PointX="12.25" PointY="1.2139794921875002" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Discount" Width="1.75" PointX="19" PointY="11.5" Height="3.0714322916666656" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Discount" Width="1.75" PointX="19.5" PointY="10.75" Height="3.5644742838541656" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.NewsLetterSubscription" Width="2.125" PointX="0.5" PointY="29.125" Height="1.7566536458333246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Pricelist" Width="2" PointX="29.75" PointY="14.75" Height="4.0575162760416674" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Discount_Nop_DiscountLimitation" >
-          <ConnectorPoint PointX="20.21875" PointY="15.25" />
-          <ConnectorPoint PointX="20.21875" PointY="14.571432291666666" />
+          <ConnectorPoint PointX="20.0625" PointY="15.25" />
+          <ConnectorPoint PointX="20.0625" PointY="14.314474283854166" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Discount_Nop_DiscountRequirement" >
-          <ConnectorPoint PointX="21.875" PointY="15.25" />
-          <ConnectorPoint PointX="21.875" PointY="14.946432291666667" />
-          <ConnectorPoint PointX="20.302083333333332" PointY="14.946432291666667" />
-          <ConnectorPoint PointX="20.135416666666668" PointY="14.946432291666667" />
-          <ConnectorPoint PointX="19.578123" PointY="14.946432291666667" />
-          <ConnectorPoint PointX="19.578123" PointY="14.571432291666666" />
+          <ConnectorPoint PointX="21" PointY="15.25" />
+          <ConnectorPoint PointX="21" PointY="14.314474283854166" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Discount_Nop_DiscountType" >
           <ConnectorPoint PointX="17.3125" PointY="15.25" />
-          <ConnectorPoint PointX="17.3125" PointY="14.967306315104167" />
-          <ConnectorPoint PointX="18.625" PointY="14.967306315104167" />
-          <ConnectorPoint PointX="18.625" PointY="13.035716145833334" />
-          <ConnectorPoint PointX="19" PointY="13.035716145833334" />
+          <ConnectorPoint PointX="17.3125" PointY="13.055313720703126" />
+          <ConnectorPoint PointX="19.5" PointY="13.055313720703126" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_PaymentMethod_RestrictedCountries" >
           <ConnectorPoint PointX="7.281252" PointY="20.5" />
-          <ConnectorPoint PointX="7.281252" PointY="20.250000000000004" />
-          <ConnectorPoint PointX="7.604166666666667" PointY="20.250000000000004" />
-          <ConnectorPoint PointX="7.833333333333333" PointY="20.250000000000004" />
-          <ConnectorPoint PointX="7.875" PointY="20.250000000000004" />
-          <ConnectorPoint PointX="7.875" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="10.166666666666666" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="10.166666666666666" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="10.333333333333334" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="10.333333333333334" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="12.614580638020831" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="12.625" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="12.625" PointY="19.71875" />
-          <ConnectorPoint PointX="12.729166666666666" PointY="19.71875" />
-          <ConnectorPoint PointX="12.895833333333334" PointY="19.71875" />
-          <ConnectorPoint PointX="13.760416666666666" PointY="19.71875" />
-          <ConnectorPoint PointX="13.927083333333334" PointY="19.71875" />
-          <ConnectorPoint PointX="14.135416666666666" PointY="19.71875" />
-          <ConnectorPoint PointX="14.302083333333334" PointY="19.71875" />
-          <ConnectorPoint PointX="16.375" PointY="19.71875" />
-          <ConnectorPoint PointX="16.375" PointY="23.246368815104169" />
-          <ConnectorPoint PointX="16.75" PointY="23.246368815104169" />
+          <ConnectorPoint PointX="7.281252" PointY="19.9375" />
+          <ConnectorPoint PointX="7.604166666666667" PointY="19.9375" />
+          <ConnectorPoint PointX="7.833333333333333" PointY="19.9375" />
+          <ConnectorPoint PointX="11.229166666666666" PointY="19.9375" />
+          <ConnectorPoint PointX="11.395833333333334" PointY="19.9375" />
+          <ConnectorPoint PointX="12.447916666666666" PointY="19.9375" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="19.9375" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="19.9375" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="19.9375" />
+          <ConnectorPoint PointX="13.604166666666666" PointY="19.9375" />
+          <ConnectorPoint PointX="13.833333333333334" PointY="19.9375" />
+          <ConnectorPoint PointX="16.90625" PointY="19.9375" />
+          <ConnectorPoint PointX="16.90625" PointY="23.246368815104169" />
+          <ConnectorPoint PointX="17" PointY="23.246368815104169" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_ShippingMethod_RestrictedCountries" >
           <ConnectorPoint PointX="6.875" PointY="20.5" />
           <ConnectorPoint PointX="6.875" PointY="18.503326822916669" />
-          <ConnectorPoint PointX="6.145833333333333" PointY="18.503326822916669" />
-          <ConnectorPoint PointX="5.979166666666667" PointY="18.503326822916669" />
           <ConnectorPoint PointX="3.875" PointY="18.503326822916669" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Product" Width="1.75" PointX="6.125" PointY="7.5" Height="4.3862109375000031" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Product" Width="1.75" PointX="6.125" PointY="7.5" Height="4.5505582682291656" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductLocalized" Width="1.75" PointX="8.25" PointY="7.5" Height="2.7427376302083317" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductLocalized_Nop_Language" >
           <ConnectorPoint PointX="11.125" PointY="6.2671362304687506" />
@@ -6306,53 +6871,50 @@
           <ConnectorPoint PointX="5.5625" PointY="28.923279622395839" />
           <ConnectorPoint PointX="7.6875" PointY="28.923279622395839" />
           <ConnectorPoint PointX="7.6875" PointY="12.144308268229167" />
-          <ConnectorPoint PointX="6.906248" PointY="12.144308268229167" />
-          <ConnectorPoint PointX="6.906248" PointY="12.050558268229166" />
+          <ConnectorPoint PointX="7" PointY="12.144308268229167" />
+          <ConnectorPoint PointX="7" PointY="12.050558268229166" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_Nop_ProductType" >
-          <ConnectorPoint PointX="7.125" PointY="5.3816536458333326" />
-          <ConnectorPoint PointX="7.125" PointY="7.5" />
+          <ConnectorPoint PointX="6.84375" PointY="5.3816536458333326" />
+          <ConnectorPoint PointX="6.84375" PointY="7.5" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductLocalized_Nop_Product" >
           <ConnectorPoint PointX="7.875" PointY="8.8713688151041676" />
           <ConnectorPoint PointX="8.25" PointY="8.8713688151041676" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariant" Width="2.375" PointX="13.125" PointY="20" Height="10.467062174479167" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariantLocalized" Width="2.25" PointX="13.875" PointY="11.5" Height="1.9210009765624996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariant" Width="2.375" PointX="14" PointY="20" Height="10.795756835937496" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariantLocalized" Width="2.25" PointX="10.375" PointY="22.375" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.158630623289612" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.158630623289612" PointY="12.767029622395834" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="12.767029622395832" />
-          <ConnectorPoint PointX="12.677082825520833" PointY="12.767029622395834" />
-          <ConnectorPoint PointX="13.875" PointY="12.767029622395834" />
+          <ConnectorPoint PointX="12.53125" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="12.53125" PointY="22.375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariant_Nop_LowStockActivity" >
           <ConnectorPoint PointX="10.25" PointY="31.625" />
-          <ConnectorPoint PointX="10.25" PointY="22.864934895833333" />
-          <ConnectorPoint PointX="12.541666666666666" PointY="22.864934895833333" />
-          <ConnectorPoint PointX="12.541666666666666" PointY="22.864934895833333" />
-          <ConnectorPoint PointX="12.708333333333334" PointY="22.864934895833333" />
-          <ConnectorPoint PointX="12.708333333333334" PointY="22.864934895833333" />
-          <ConnectorPoint PointX="12.729166666666666" PointY="22.864934895833333" />
-          <ConnectorPoint PointX="12.895833333333334" PointY="22.864934895833333" />
-          <ConnectorPoint PointX="13.125" PointY="22.864934895833333" />
+          <ConnectorPoint PointX="10.25" PointY="29.832130376548719" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="29.832130376548719" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="29.832130376548719" />
+          <ConnectorPoint PointX="13.604166666666666" PointY="29.832130376548719" />
+          <ConnectorPoint PointX="13.770833333333334" PointY="29.832130376548719" />
+          <ConnectorPoint PointX="14" PointY="29.832130376548719" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariant_Nop_Product1" >
           <ConnectorPoint PointX="7.75" PointY="12.050558268229166" />
-          <ConnectorPoint PointX="7.75" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="10.166666666666666" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="10.166666666666666" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="10.333333333333334" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="10.333333333333334" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="12.677082825520833" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="12.729166666666666" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="12.895833333333334" PointY="29.935934244791667" />
-          <ConnectorPoint PointX="13.125" PointY="29.935934244791667" />
+          <ConnectorPoint PointX="7.75" PointY="30.345196106243044" />
+          <ConnectorPoint PointX="10.166666666666666" PointY="30.345196106243044" />
+          <ConnectorPoint PointX="10.333333333333334" PointY="30.345196106243044" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="30.345196106243044" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="30.345196106243044" />
+          <ConnectorPoint PointX="13.604166666666666" PointY="30.345196106243044" />
+          <ConnectorPoint PointX="13.770833333333334" PointY="30.345196106243044" />
+          <ConnectorPoint PointX="14" PointY="30.345196106243044" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantLocalized_Nop_ProductVariant" >
-          <ConnectorPoint PointX="14.21875" PointY="20" />
-          <ConnectorPoint PointX="14.21875" PointY="13.4210009765625" />
+          <ConnectorPoint PointX="14" PointY="23.335500488281248" />
+          <ConnectorPoint PointX="13.770833333333334" PointY="23.335500488281248" />
+          <ConnectorPoint PointX="13.604166666666666" PointY="23.335500488281248" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="23.335500488281248" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="23.335500488281248" />
+          <ConnectorPoint PointX="12.625" PointY="23.335500488281248" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CheckoutAttribute" Width="2.125" PointX="24.875" PointY="31.625" Height="2.7427376302083246" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CheckoutAttributeLocalized" Width="2.375" PointX="21.75" PointY="31.625" Height="1.9210009765625031" />
@@ -6367,8 +6929,16 @@
           <ConnectorPoint PointX="25.9375" PointY="35" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CheckoutAttributeLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.531247304687497" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.531247304687497" PointY="32.585500488281255" />
+          <ConnectorPoint PointX="12.229491781250001" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="12.229491781250001" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="12.297037557291667" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="12.614583333333336" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="12.958333333333334" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="13" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="13" PointY="32.585500488281255" />
+          <ConnectorPoint PointX="15.104166666666666" PointY="32.585500488281255" />
+          <ConnectorPoint PointX="15.270833333333334" PointY="32.585500488281255" />
           <ConnectorPoint PointX="21.75" PointY="32.585500488281255" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CheckoutAttributeValueLocalized_Nop_CheckoutAttributeValue" >
@@ -6376,8 +6946,14 @@
           <ConnectorPoint PointX="24.375" PointY="35.878326822916662" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CheckoutAttributeValueLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.593749492187499" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.593749492187499" PointY="35.878326822916662" />
+          <ConnectorPoint PointX="11.4260224609375" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="11.4260224609375" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="11.995279338541666" PointY="17.25" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="12.875" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="12.875" PointY="35.878326822916662" />
+          <ConnectorPoint PointX="12.979166666666666" PointY="35.878326822916662" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="35.878326822916662" />
           <ConnectorPoint PointX="21.75" PointY="35.878326822916662" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Category" Width="1.5" PointX="26.375" PointY="9.5" Height="4.0575162760416674" />
@@ -6385,75 +6961,71 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Manufacturer" Width="1.5" PointX="25.5" PointY="5.125" Height="3.7288216145833317" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ManufacturerLocalized" Width="2.125" PointX="27.625" PointY="5.5" Height="2.5783902994791656" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Category_Nop_CategoryTemplate" >
-          <ConnectorPoint PointX="1.5" PointY="31.625" />
-          <ConnectorPoint PointX="1.5" PointY="30.944153645833325" />
-          <ConnectorPoint PointX="3.1875" PointY="30.944153645833325" />
-          <ConnectorPoint PointX="3.1875" PointY="25.444153645833339" />
-          <ConnectorPoint PointX="2.6875" PointY="25.444153645833339" />
-          <ConnectorPoint PointX="2.6875" PointY="19.444153645833335" />
-          <ConnectorPoint PointX="6.0625" PointY="19.444153645833335" />
-          <ConnectorPoint PointX="6.0625" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="10.635416666666666" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="10.802083333333334" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="11.715922133706281" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="11.882588800372949" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="12.075297289956279" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="12.241963956622946" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="12.113058268229166" />
-          <ConnectorPoint PointX="12.677082825520833" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="13.8125" PointY="12.113058268229167" />
-          <ConnectorPoint PointX="13.8125" PointY="11.4375" />
-          <ConnectorPoint PointX="16.885416666666668" PointY="11.4375" />
-          <ConnectorPoint PointX="17.052083333333332" PointY="11.4375" />
-          <ConnectorPoint PointX="25.104166666666668" PointY="11.4375" />
-          <ConnectorPoint PointX="25.270833333333332" PointY="11.4375" />
-          <ConnectorPoint PointX="26.28125" PointY="11.4375" />
-          <ConnectorPoint PointX="26.28125" PointY="11.528758138020834" />
-          <ConnectorPoint PointX="26.375" PointY="11.528758138020834" />
+          <ConnectorPoint PointX="2.5" PointY="32.585500488281255" />
+          <ConnectorPoint PointX="3.1875" PointY="32.585500488281255" />
+          <ConnectorPoint PointX="3.1875" PointY="31.5625" />
+          <ConnectorPoint PointX="5.479166666666667" PointY="31.5625" />
+          <ConnectorPoint PointX="5.645833333333333" PointY="31.5625" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="31.5625" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="31.5625" />
+          <ConnectorPoint PointX="15.104166666666666" PointY="31.5625" />
+          <ConnectorPoint PointX="15.270833333333334" PointY="31.5625" />
+          <ConnectorPoint PointX="26.5625" PointY="31.5625" />
+          <ConnectorPoint PointX="26.5625" PointY="20.451111653645825" />
+          <ConnectorPoint PointX="27.4375" PointY="20.451111653645825" />
+          <ConnectorPoint PointX="27.4375" PointY="13.815613606770832" />
+          <ConnectorPoint PointX="27.125" PointY="13.815613606770832" />
+          <ConnectorPoint PointX="27.125" PointY="13.721863606770834" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CategoryLocalized_Nop_Category" >
           <ConnectorPoint PointX="27.875" PointY="11.539195149739584" />
           <ConnectorPoint PointX="28.625" PointY="11.539195149739584" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CategoryLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.625" PointY="6.7613500631510419" />
-          <ConnectorPoint PointX="15.041666666666666" PointY="6.761350063151041" />
-          <ConnectorPoint PointX="15.208333333333334" PointY="6.7613500631510419" />
-          <ConnectorPoint PointX="15.25" PointY="6.7613500631510419" />
-          <ConnectorPoint PointX="15.25" PointY="9.1038216145833317" />
-          <ConnectorPoint PointX="16.885416666666668" PointY="9.1038216145833317" />
-          <ConnectorPoint PointX="17.052083333333332" PointY="9.1038216145833317" />
-          <ConnectorPoint PointX="25.104166666666668" PointY="9.1038216145833317" />
-          <ConnectorPoint PointX="25.270833333333332" PointY="9.1038216145833317" />
-          <ConnectorPoint PointX="29.625" PointY="9.1038216145833317" />
+          <ConnectorPoint PointX="12.625" PointY="6.7202632304687508" />
+          <ConnectorPoint PointX="15" PointY="6.7202632304687508" />
+          <ConnectorPoint PointX="15" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="15.760417916666667" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="15.927084583333334" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="18.916666666666668" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="19.083333333333332" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="20.229166666666668" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="20.395833333333332" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="25.104166666666668" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="25.270833333333332" PointY="9.1350716145833353" />
+          <ConnectorPoint PointX="29.625" PointY="9.1350716145833353" />
           <ConnectorPoint PointX="29.625" PointY="10.25" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ManufacturerLocalized_Nop_Language" >
-          <ConnectorPoint PointX="11.522810389240489" PointY="5.125" />
-          <ConnectorPoint PointX="11.522810389240489" PointY="4.875" />
-          <ConnectorPoint PointX="11.899791445147644" PointY="4.8749999999999991" />
-          <ConnectorPoint PointX="12.174587890295287" PointY="4.875" />
-          <ConnectorPoint PointX="15.125" PointY="4.875" />
-          <ConnectorPoint PointX="15.125" PointY="9.0759895833333317" />
-          <ConnectorPoint PointX="16.885416666666668" PointY="9.0759895833333317" />
-          <ConnectorPoint PointX="17.052083333333332" PointY="9.0759895833333317" />
+          <ConnectorPoint PointX="12.281252" PointY="5.125" />
+          <ConnectorPoint PointX="12.281252" PointY="4.875" />
+          <ConnectorPoint PointX="15.375" PointY="4.875" />
+          <ConnectorPoint PointX="15.375" PointY="9.0759895833333317" />
+          <ConnectorPoint PointX="15.760417916666667" PointY="9.0759895833333317" />
+          <ConnectorPoint PointX="15.927084583333334" PointY="9.0759895833333317" />
+          <ConnectorPoint PointX="18.916666666666668" PointY="9.0759895833333317" />
+          <ConnectorPoint PointX="19.083333333333332" PointY="9.0759895833333317" />
+          <ConnectorPoint PointX="20.229166666666668" PointY="9.0759895833333317" />
+          <ConnectorPoint PointX="20.395833333333332" PointY="9.0759895833333317" />
           <ConnectorPoint PointX="25.104166666666668" PointY="9.0759895833333317" />
           <ConnectorPoint PointX="25.270833333333332" PointY="9.0759895833333317" />
           <ConnectorPoint PointX="27.25" PointY="9.0759895833333317" />
-          <ConnectorPoint PointX="27.25" PointY="7.1114959371744728" />
-          <ConnectorPoint PointX="27.625" PointY="7.1114959371744728" />
+          <ConnectorPoint PointX="27.25" PointY="6.7891951497395837" />
+          <ConnectorPoint PointX="27.625" PointY="6.7891951497395837" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Manufacturer_Nop_ManufacturerTemplate" >
           <ConnectorPoint PointX="8" PointY="32.585500488281255" />
           <ConnectorPoint PointX="8.0625" PointY="32.585500488281255" />
           <ConnectorPoint PointX="8.0625" PointY="31.5625" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="31.5625" />
-          <ConnectorPoint PointX="12.677082825520833" PointY="31.5625" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="31.5625" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="31.5625" />
+          <ConnectorPoint PointX="15.104166666666666" PointY="31.5625" />
+          <ConnectorPoint PointX="15.270833333333334" PointY="31.5625" />
           <ConnectorPoint PointX="26.4375" PointY="31.5625" />
-          <ConnectorPoint PointX="26.4375" PointY="20.451111653645825" />
-          <ConnectorPoint PointX="25.1875" PointY="20.451111653645825" />
-          <ConnectorPoint PointX="25.1875" PointY="8.9475716145833317" />
-          <ConnectorPoint PointX="26.25" PointY="8.9475716145833317" />
+          <ConnectorPoint PointX="26.4375" PointY="20.513611653645825" />
+          <ConnectorPoint PointX="25.1875" PointY="20.513611653645825" />
+          <ConnectorPoint PointX="25.1875" PointY="8.9475716145833353" />
+          <ConnectorPoint PointX="26.25" PointY="8.9475716145833353" />
           <ConnectorPoint PointX="26.25" PointY="8.8538216145833317" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ManufacturerLocalized_Nop_Manufacturer" >
@@ -6465,13 +7037,25 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.SpecificationAttributeOption" Width="2.625" PointX="24.875" PointY="40.625" Height="1.9210009765624818" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.SpecificationAttributeOptionLocalized" Width="2.875" PointX="21.625" PointY="40.625" Height="1.7566536458333317" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_SpecificationAttributeLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.562498398437498" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.562498398437498" PointY="38.878326822916662" />
+          <ConnectorPoint PointX="12.380370890625" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="12.380370890625" PointY="17.625000000000004" />
+          <ConnectorPoint PointX="12.447916666666666" PointY="17.625000000000004" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="17.625000000000004" />
+          <ConnectorPoint PointX="12.9375" PointY="17.625000000000004" />
+          <ConnectorPoint PointX="12.9375" PointY="38.878326822916662" />
+          <ConnectorPoint PointX="12.979166666666666" PointY="38.878326822916662" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="38.878326822916662" />
           <ConnectorPoint PointX="21.75" PointY="38.878326822916662" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_SpecificationAttributeOptionLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.499994804687496" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.499994804687496" PointY="41.503326822916662" />
+          <ConnectorPoint PointX="12.078612671875" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="12.078612671875" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.146158447916667" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.958333333333334" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="13.0625" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="13.0625" PointY="41.503326822916662" />
           <ConnectorPoint PointX="21.625" PointY="41.503326822916662" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_SpecificationAttributeLocalized_Nop_SpecificationAttribute" >
@@ -6486,22 +7070,91 @@
           <ConnectorPoint PointX="24.875" PointY="41.503326822916662" />
           <ConnectorPoint PointX="24.5" PointY="41.503326822916662" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductAttribute" Width="2" PointX="16.25" PointY="27.25" Height="1.5923063151041106" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductAttributeLocalized" Width="2.125" PointX="18.75" PointY="27.25" Height="1.9210009765625031" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductAttribute" Width="2" PointX="18.875" PointY="29.75" Height="1.5923063151041106" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductAttributeLocalized" Width="2.125" PointX="18.75" PointY="27" Height="1.9210009765625031" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductAttributeLocalized_Nop_Language" >
-          <ConnectorPoint PointX="11.799255467039615" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="11.799255467039615" PointY="17.500000000000004" />
-          <ConnectorPoint PointX="12.416661471354162" PointY="17.500000000000004" />
-          <ConnectorPoint PointX="12.677082825520833" PointY="17.500000000000004" />
-          <ConnectorPoint PointX="12.8125" PointY="17.500000000000004" />
-          <ConnectorPoint PointX="12.8125" PointY="30.717062174479167" />
-          <ConnectorPoint PointX="18.375" PointY="30.717062174479167" />
-          <ConnectorPoint PointX="18.375" PointY="28.540306725123443" />
-          <ConnectorPoint PointX="18.75" PointY="28.540306725123443" />
+          <ConnectorPoint PointX="11.676878011718749" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="11.676878011718749" PointY="17.125000000000004" />
+          <ConnectorPoint PointX="11.995279338541666" PointY="17.125" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="17.125000000000004" />
+          <ConnectorPoint PointX="13.6875" PointY="17.125000000000004" />
+          <ConnectorPoint PointX="13.6875" PointY="31.045756835937496" />
+          <ConnectorPoint PointX="15.104166666666666" PointY="31.045756835937496" />
+          <ConnectorPoint PointX="15.270833333333334" PointY="31.045756835937496" />
+          <ConnectorPoint PointX="18.375" PointY="31.045756835937496" />
+          <ConnectorPoint PointX="18.375" PointY="27.960500488281252" />
+          <ConnectorPoint PointX="18.75" PointY="27.960500488281252" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductAttributeLocalized_Nop_ProductAttribute" >
-          <ConnectorPoint PointX="18.25" PointY="27.847108473684397" />
-          <ConnectorPoint PointX="18.75" PointY="27.847108473684397" />
+          <ConnectorPoint PointX="19.875" PointY="29.75" />
+          <ConnectorPoint PointX="19.875" PointY="28.921000976562503" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRoleProductPrice" Width="2.375" PointX="12.75" PointY="11" Height="1.5923063151041657" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.RelatedProduct" Width="1.5" PointX="0.5" PointY="9.25" Height="1.5923063151041657" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShoppingCartItem" Width="1.75" PointX="8.25" PointY="15.375" Height="2.4140429687500031" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.TierPrice" Width="1.5" PointX="8.25" PointY="33.125" Height="1.7566536458333495" />
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole" >
+          <ConnectorPoint PointX="19.375" PointY="8.1246956380208335" />
+          <ConnectorPoint PointX="19" PointY="8.4996956380208317" />
+          <ConnectorPoint PointX="19" PointY="11.796153157552084" />
+          <ConnectorPoint PointX="15.927084583333334" PointY="11.796153157552084" />
+          <ConnectorPoint PointX="15.760417916666667" PointY="11.796153157552084" />
+          <ConnectorPoint PointX="15.125" PointY="11.796153157552084" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant" >
+          <ConnectorPoint PointX="14.5625" PointY="20" />
+          <ConnectorPoint PointX="14.5625" PointY="12.592306315104166" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_CustomerSession" >
+          <ConnectorPoint PointX="8.59375" PointY="12.592306315104166" />
+          <ConnectorPoint PointX="8.59375" PointY="15.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_RelatedProduct_Nop_Product" >
+          <ConnectorPoint PointX="6.125" PointY="10.046153157552084" />
+          <ConnectorPoint PointX="2" PointY="10.046153157552084" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_ProductVariant" >
+          <ConnectorPoint PointX="15.234378125000001" PointY="20" />
+          <ConnectorPoint PointX="15.234378125000001" PointY="16.25" />
+          <ConnectorPoint PointX="14.645833333333334" PointY="16.25" />
+          <ConnectorPoint PointX="14.479166666666666" PointY="16.25" />
+          <ConnectorPoint PointX="12.614583333333334" PointY="16.249999999999996" />
+          <ConnectorPoint PointX="11.995279338541666" PointY="16.25" />
+          <ConnectorPoint PointX="11.760211345052083" PointY="16.25" />
+          <ConnectorPoint PointX="11.593544678385415" PointY="16.25" />
+          <ConnectorPoint PointX="11.509355794270833" PointY="16.25" />
+          <ConnectorPoint PointX="11.342689127604166" PointY="16.25" />
+          <ConnectorPoint PointX="10" PointY="16.25" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TierPrice_Nop_ProductVariant" >
+          <ConnectorPoint PointX="15.1875" PointY="30.795756835937496" />
+          <ConnectorPoint PointX="15.1875" PointY="34.003326822916677" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="34.003326822916677" />
+          <ConnectorPoint PointX="12.791666666666666" PointY="34.003326822916677" />
+          <ConnectorPoint PointX="9.75" PointY="34.003326822916677" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_ShoppingCartType" >
+          <ConnectorPoint PointX="9.4375" PointY="14.388611653645834" />
+          <ConnectorPoint PointX="9.4375" PointY="15.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_Category_Discount_Mapping" >
+          <ConnectorPoint PointX="26.375" PointY="11.15625" />
+          <ConnectorPoint PointX="25.270833333333332" PointY="11.15625" />
+          <ConnectorPoint PointX="25.104166666666668" PointY="11.15625" />
+          <ConnectorPoint PointX="21.25" PointY="11.15625" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_CustomerRole_Discount_Mapping" >
+          <ConnectorPoint PointX="20.3125" PointY="8.1246956380208335" />
+          <ConnectorPoint PointX="20.3125" PointY="10.75" />
+        </AssociationConnector>
+        <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_DiscountRestriction" >
+          <ConnectorPoint PointX="19.5" PointY="13.71614650227864" />
+          <ConnectorPoint PointX="17.395833333333332" PointY="13.71614650227864" />
+          <ConnectorPoint PointX="17.229166666666668" PointY="13.71614650227864" />
+          <ConnectorPoint PointX="15.927084583333334" PointY="13.71614650227864" />
+          <ConnectorPoint PointX="15.760417916666667" PointY="13.71614650227864" />
+          <ConnectorPoint PointX="15.570317187500002" PointY="13.71614650227864" />
+          <ConnectorPoint PointX="15.570317187500002" PointY="20" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

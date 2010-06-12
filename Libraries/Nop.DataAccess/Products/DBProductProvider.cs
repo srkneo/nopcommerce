@@ -609,45 +609,12 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         public abstract DBProductVariantCollection GetProductVariantsRestrictedByDiscountId(int discountId);
 
         /// <summary>
-        /// Deletes a related product
-        /// </summary>
-        /// <param name="relatedProductId">Related product identifer</param>
-        public abstract void DeleteRelatedProduct(int relatedProductId);
-
-        /// <summary>
         /// Gets a related product collection by product identifier
         /// </summary>
         /// <param name="productId1">The first product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Related product collection</returns>
         public abstract DBRelatedProductCollection GetRelatedProductsByProductId1(int productId1, bool showHidden);
-
-        /// <summary>
-        /// Gets a related product
-        /// </summary>
-        /// <param name="relatedProductId">Related product identifer</param>
-        /// <returns></returns>
-        public abstract DBRelatedProduct GetRelatedProductById(int relatedProductId);
-
-        /// <summary>
-        /// Inserts a related product
-        /// </summary>
-        /// <param name="productId1">The first product identifier</param>
-        /// <param name="productId2">The second product identifier</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Related product</returns>
-        public abstract DBRelatedProduct InsertRelatedProduct(int productId1, int productId2, int displayOrder);
-
-        /// <summary>
-        /// Updates a related product
-        /// </summary>
-        /// <param name="relatedProductId">The related product identifier</param>
-        /// <param name="productId1">The first product identifier</param>
-        /// <param name="productId2">The second product identifier</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Related product</returns>
-        public abstract DBRelatedProduct UpdateRelatedProduct(int relatedProductId, 
-            int productId1, int productId2, int displayOrder);
 
         /// <summary>
         /// Gets all product variants directly assigned to a pricelist
@@ -703,88 +670,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         public abstract DBProductVariantPricelist UpdateProductVariantPricelist(int productVariantPricelistId, 
             int productVariantId, int pricelistId, int priceAdjustmentTypeId, 
             decimal priceAdjustment, DateTime updatedOn);
-
-        /// <summary>
-        /// Gets a tier price
-        /// </summary>
-        /// <param name="tierPriceId">Tier price identifier</param>
-        /// <returns>Tier price</returns>
-        public abstract DBTierPrice GetTierPriceById(int tierPriceId);
-
-        /// <summary>
-        /// Gets tier prices by product variant identifier
-        /// </summary>
-        /// <param name="productVariantId">Product variant identifier</param>
-        /// <returns>Tier price collection</returns>
-        public abstract DBTierPriceCollection GetTierPricesByProductVariantId(int productVariantId);
-
-        /// <summary>
-        /// Deletes a tier price
-        /// </summary>
-        /// <param name="tierPriceId">Tier price identifier</param>
-        public abstract void DeleteTierPrice(int tierPriceId);
-
-        /// <summary>
-        /// Inserts a tier price
-        /// </summary>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="quantity">The quantity</param>
-        /// <param name="price">The price</param>
-        /// <returns>Tier price</returns>
-        public abstract DBTierPrice InsertTierPrice(int productVariantId, 
-            int quantity, decimal price);
-
-        /// <summary>
-        /// Updates the tier price
-        /// </summary>
-        /// <param name="tierPriceId">The tier price identifier</param>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="quantity">The quantity</param>
-        /// <param name="price">The price</param>
-        /// <returns>Tier price</returns>
-        public abstract DBTierPrice UpdateTierPrice(int tierPriceId,
-            int productVariantId, int quantity, decimal price);
-
-        /// <summary>
-        /// Deletes a product price by customer role by identifier 
-        /// </summary>
-        /// <param name="customerRoleProductPriceId">The identifier</param>
-        public abstract void DeleteCustomerRoleProductPrice(int customerRoleProductPriceId);
-
-        /// <summary>
-        /// Gets a product price by customer role by identifier 
-        /// </summary>
-        /// <param name="customerRoleProductPriceId">The identifier</param>
-        /// <returns>Product price by customer role by identifier </returns>
-        public abstract DBCustomerRoleProductPrice GetCustomerRoleProductPriceById(int customerRoleProductPriceId);
-
-        /// <summary>
-        /// Gets a collection of product prices by customer role
-        /// </summary>
-        /// <param name="productVariantId">Product variant identifier</param>
-        /// <returns>A collection of product prices by customer role</returns>
-        public abstract DBCustomerRoleProductPriceCollection GetAllCustomerRoleProductPrices(int productVariantId);
-
-        /// <summary>
-        /// Inserts a product price by customer role
-        /// </summary>
-        /// <param name="customerRoleId">The customer role identifier</param>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="price">The price</param>
-        /// <returns>A product price by customer role</returns>
-        public abstract DBCustomerRoleProductPrice InsertCustomerRoleProductPrice(int customerRoleId, 
-            int productVariantId, decimal price);
-
-        /// <summary>
-        /// Updates a product price by customer role
-        /// </summary>
-        /// <param name="customerRoleProductPriceId">The identifier</param>
-        /// <param name="customerRoleId">The customer role identifier</param>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="price">The price</param>
-        /// <returns>A product price by customer role</returns>
-        public abstract DBCustomerRoleProductPrice UpdateCustomerRoleProductPrice(int customerRoleProductPriceId,
-            int customerRoleId, int productVariantId, decimal price);
 
         /// <summary>
         /// Deletes a product tag

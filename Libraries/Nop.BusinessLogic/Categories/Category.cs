@@ -211,6 +211,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// </summary>
         public virtual ICollection<CategoryLocalized> NpCategoryLocalized { get; set; }
 
+        /// <summary>
+        /// Gets the discount
+        /// </summary>
+        public virtual ICollection<Discount> NpDiscounts { get; set; }
+
         #endregion
     }
 }

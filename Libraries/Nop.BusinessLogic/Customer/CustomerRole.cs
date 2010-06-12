@@ -80,15 +80,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
         }
 
+        #endregion
+
         #region Navigation Properties
 
+        /// <summary>
+        /// Gets the discounts
+        /// </summary>
+        public virtual ICollection<Discount> NpDiscounts { get; set; }
         /// <summary>
         /// Gets the customers
         /// </summary>
         public virtual ICollection<Customer> NpCustomers { get; set; }
-
-        #endregion
-
+        
         #endregion
     }
 

@@ -187,7 +187,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the related products
         /// </summary>
-        public RelatedProductCollection RelatedProducts
+        public List<RelatedProduct> RelatedProducts
         {
             get
             {

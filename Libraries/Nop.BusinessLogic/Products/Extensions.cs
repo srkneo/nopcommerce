@@ -14,15 +14,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
-    /// <summary>
-    /// Represents a tier price collection
-    /// </summary>
-    public partial class TierPriceCollection : BaseEntityCollection<TierPrice>
+    public static class Extensions
     {
+        /// <summary>
+        /// Finds a related product item by specified identifiers
+        /// </summary>
+        /// <param name="source">Source</param>
+        /// <param name="productId1">The first product identifier</param>
+        /// <param name="productId2">The second product identifier</param>
+        /// <returns>Related product</returns>
+        public static RelatedProduct FindRelatedProduct(this List<RelatedProduct> source,
+            int productId1, int productId2)
+        {
+           foreach (RelatedProduct relatedProduct in source)
+                if (relatedProduct.ProductId1 == productId1 && relatedProduct.ProductId2 == productId2)
+                    return relatedProduct;
+            return null;
+        }
     }
 }

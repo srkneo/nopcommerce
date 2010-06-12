@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
@@ -351,6 +352,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return CustomerManager.GetCustomerRolesByDiscountId(this.DiscountId);
             }
         }
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the categories
+        /// </summary>
+        public virtual ICollection<Category> NpCategories { get; set; }
+
+        /// <summary>
+        /// Gets the customer roles
+        /// </summary>
+        public virtual ICollection<CustomerRole> NpCustomerRoles { get; set; }
+
+        /// <summary>
+        /// Gets the restricted product variants
+        /// </summary>
+        public virtual ICollection<ProductVariant> NpRestrictedProductVariants { get; set; }
+        
         #endregion
     }
 }
