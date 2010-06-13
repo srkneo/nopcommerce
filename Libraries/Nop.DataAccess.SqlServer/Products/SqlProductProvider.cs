@@ -133,18 +133,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             return item;
         }
 
-        private DBProductVariantPricelist GetProductVariantPricelistFromReader(IDataReader dataReader)
-        {
-            var item = new DBProductVariantPricelist();
-            item.ProductVariantPricelistId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantPricelistID");
-            item.ProductVariantId = NopSqlDataHelper.GetInt(dataReader, "ProductVariantID");
-            item.PricelistId = NopSqlDataHelper.GetInt(dataReader, "PricelistID");
-            item.PriceAdjustmentTypeId = NopSqlDataHelper.GetInt(dataReader, "PriceAdjustmentTypeID");
-            item.PriceAdjustment = NopSqlDataHelper.GetDecimal(dataReader, "PriceAdjustment");
-            item.UpdatedOn = NopSqlDataHelper.GetUtcDateTime(dataReader, "UpdatedOn");
-            return item;
-        }
-
         private DBProductLocalized GetProductLocalizedFromReader(IDataReader dataReader)
         {
             var item = new DBProductLocalized();
@@ -1358,125 +1346,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
 
             return result;
         }
-
-        /// <summary>
-        /// Deletes a product variant pricelist
-        /// </summary>
-        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
-        public override void DeleteProductVariantPricelist(int productVariantPricelistId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_Pricelist_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductVariantPricelistID", DbType.Int32, productVariantPricelistId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public override DBProductVariantPricelist GetProductVariantPricelistById(int productVariantPricelistId)
-        {
-            DBProductVariantPricelist item = null;
-            if (productVariantPricelistId == 0)
-                return item;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_Pricelist_MappingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductVariantPricelistID", DbType.Int32, productVariantPricelistId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetProductVariantPricelistFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Gets ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantId">ProductVariant identifier</param>
-        /// <param name="pricelistId">Pricelist identifier</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public override DBProductVariantPricelist GetProductVariantPricelist(int productVariantId, int pricelistId)
-        {
-            DBProductVariantPricelist item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_Pricelist_MappingLoadByProductVariantIDAndPricelistID");
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
-            db.AddInParameter(dbCommand, "PricelistID", DbType.Int32, pricelistId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetProductVariantPricelistFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Inserts a ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantId">The product variant identifer</param>
-        /// <param name="pricelistId">The pricelist identifier</param>
-        /// <param name="priceAdjustmentTypeId">Price adjustment type identifier</param>
-        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="updatedOn">The date and time of instance update</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public override DBProductVariantPricelist InsertProductVariantPricelist(int productVariantId,
-            int pricelistId, int priceAdjustmentTypeId, decimal priceAdjustment,
-            DateTime updatedOn)
-        {
-            DBProductVariantPricelist item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_Pricelist_MappingInsert");
-            db.AddOutParameter(dbCommand, "ProductVariantPricelistID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
-            db.AddInParameter(dbCommand, "PricelistID", DbType.Int32, pricelistId);
-            db.AddInParameter(dbCommand, "PriceAdjustmentTypeID", DbType.Int32, priceAdjustmentTypeId);
-            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, priceAdjustment);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int productVariantPricelistId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductVariantPricelistID"));
-                item = GetProductVariantPricelistById(productVariantPricelistId);
-            }
-
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantPricelistId">The product variant pricelist identifier</param>
-        /// <param name="productVariantId">The product variant identifer</param>
-        /// <param name="pricelistId">The pricelist identifier</param>
-        /// <param name="priceAdjustmentTypeId">Price adjustment type identifier</param>
-        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="updatedOn">The date and time of instance update</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public override DBProductVariantPricelist UpdateProductVariantPricelist(int productVariantPricelistId,
-            int productVariantId, int pricelistId, int priceAdjustmentTypeId,
-            decimal priceAdjustment, DateTime updatedOn)
-        {
-            DBProductVariantPricelist item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ProductVariant_Pricelist_MappingUpdate");
-            db.AddInParameter(dbCommand, "ProductVariantPricelistID", DbType.Int32, productVariantPricelistId);
-            db.AddInParameter(dbCommand, "ProductVariantID", DbType.Int32, productVariantId);
-            db.AddInParameter(dbCommand, "PricelistID", DbType.Int32, pricelistId);
-            db.AddInParameter(dbCommand, "PriceAdjustmentTypeID", DbType.Int32, priceAdjustmentTypeId);
-            db.AddInParameter(dbCommand, "PriceAdjustment", DbType.Decimal, priceAdjustment);
-            db.AddInParameter(dbCommand, "UpdatedOn", DbType.DateTime, updatedOn);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetProductVariantPricelistById(productVariantPricelistId);
-
-            return item;
-        }
-
+        
         /// <summary>
         /// Gets all product tags
         /// </summary>

@@ -508,54 +508,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         public abstract DBProductVariantCollection GetProductVariantsByPricelistId(int pricelistId);
         
         /// <summary>
-        /// Deletes a product variant pricelist
-        /// </summary>
-        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
-        public abstract void DeleteProductVariantPricelist(int productVariantPricelistId);
-
-        /// <summary>
-        /// Gets a ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantPricelistId">ProductVariantPricelist identifier</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist GetProductVariantPricelistById(int productVariantPricelistId);
-
-        /// <summary>
-        /// Gets ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantId">ProductVariant identifier</param>
-        /// <param name="pricelistId">Pricelist identifier</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist GetProductVariantPricelist(int productVariantId, int pricelistId);
-
-        /// <summary>
-        /// Inserts a ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantId">The product variant identifer</param>
-        /// <param name="pricelistId">The pricelist identifier</param>
-        /// <param name="priceAdjustmentTypeId">Price adjustment type identifier</param>
-        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="updatedOn">The date and time of instance update</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist InsertProductVariantPricelist(int productVariantId,
-            int pricelistId, int priceAdjustmentTypeId, decimal priceAdjustment,
-            DateTime updatedOn);
-
-        /// <summary>
-        /// Updates the ProductVariantPricelist
-        /// </summary>
-        /// <param name="productVariantPricelistId">The product variant pricelist identifier</param>
-        /// <param name="productVariantId">The product variant identifer</param>
-        /// <param name="pricelistId">The pricelist identifier</param>
-        /// <param name="priceAdjustmentTypeId">Price adjustment type identifier</param>
-        /// <param name="priceAdjustment">The price will be adjusted by this amount</param>
-        /// <param name="updatedOn">The date and time of instance update</param>
-        /// <returns>ProductVariantPricelist</returns>
-        public abstract DBProductVariantPricelist UpdateProductVariantPricelist(int productVariantPricelistId, 
-            int productVariantId, int pricelistId, int priceAdjustmentTypeId, 
-            decimal priceAdjustment, DateTime updatedOn);
-
-        /// <summary>
         /// Gets all product tags
         /// </summary>
         /// <param name="productId">Product identifier</param>

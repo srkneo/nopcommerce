@@ -436,7 +436,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the product variant attributes
         /// </summary>
-        public ProductVariantAttributeCollection ProductVariantAttributes
+        public List<ProductVariantAttribute> ProductVariantAttributes
         {
             get
             {
@@ -486,10 +486,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public virtual ICollection<TierPrice> NpTierPrices { get; set; }
 
         /// <summary>
-        /// Gets the restrcited discounts
+        /// Gets the restricted discounts
         /// </summary>
         public virtual ICollection<Discount> NpRestrictedDiscounts { get; set; }
-                
+
+        /// <summary>
+        /// Gets the discounts
+        /// </summary>
+        public virtual ICollection<Discount> NpDiscounts { get; set; }
+
+        /// <summary>
+        /// Gets the product variant pricelists
+        /// </summary>
+        public virtual ICollection<ProductVariantPricelist> NpProductVariantPricelists { get; set; }
+
+        /// <summary>
+        /// Gets the product variant attribute combinations
+        /// </summary>
+        public virtual ICollection<ProductVariantAttributeCombination> NpProductVariantAttributeCombinations { get; set; }
+
+        /// <summary>
+        /// Gets the product variant attributes
+        /// </summary>
+        public virtual ICollection<ProductVariantAttribute> NpProductVariantAttributes { get; set; }
+
         #endregion
     }
 }

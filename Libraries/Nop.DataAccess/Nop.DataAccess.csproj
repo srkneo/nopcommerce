@@ -137,14 +137,10 @@
     <Compile Include="Products\Attributes\DBCheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\DBProductAttributeLocalized.cs" />
-    <Compile Include="Products\Attributes\DBProductVariantAttributeCombination.cs" />
-    <Compile Include="Products\Attributes\DBProductVariantAttributeCombinationCollection.cs" />
     <Compile Include="Products\DBProductTag.cs" />
     <Compile Include="Products\DBProductTagCollection.cs" />
     <Compile Include="Products\DBProductVariantLocalized.cs" />
     <Compile Include="Products\DBProductLocalized.cs" />
-    <Compile Include="Products\DBProductVariantPricelist.cs" />
-    <Compile Include="Products\DBProductVariantPricelistCollection.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOptionLocalized.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeLocalized.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeOption.cs" />
@@ -188,8 +184,6 @@
     <Compile Include="Payment\DBPaymentMethodCollection.cs" />
     <Compile Include="Products\Attributes\DBProductAttribute.cs" />
     <Compile Include="Products\Attributes\DBProductAttributeCollection.cs" />
-    <Compile Include="Products\Attributes\DBProductVariantAttribute.cs" />
-    <Compile Include="Products\Attributes\DBProductVariantAttributeCollection.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeValue.cs" />
     <Compile Include="Products\Attributes\DBProductVariantAttributeValueCollection.cs" />
     <Compile Include="Products\DBProduct.cs" />

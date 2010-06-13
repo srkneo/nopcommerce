@@ -370,6 +370,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// Gets the restricted product variants
         /// </summary>
         public virtual ICollection<ProductVariant> NpRestrictedProductVariants { get; set; }
+
+        /// <summary>
+        /// Gets the product variants
+        /// </summary>
+        public virtual ICollection<ProductVariant> NpProductVariants { get; set; }
         
         #endregion
     }

@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pnlData.Visible = true;
                 pnlMessage.Visible = false;
 
-                ProductVariantAttributeCollection productVariantAttributes = productVariant.ProductVariantAttributes;
+                var productVariantAttributes = productVariant.ProductVariantAttributes;
                 if (productVariantAttributes.Count > 0)
                 {
                     gvProductVariantAttributes.Visible = true;

@@ -113,55 +113,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
             int productAttributeId, int languageId, string name, string description);
 
         /// <summary>
-        /// Deletes a product variant attribute mapping
-        /// </summary>
-        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
-        public abstract void DeleteProductVariantAttribute(int productVariantAttributeId);
-
-        /// <summary>
-        /// Gets product variant attribute mappings by product identifier
-        /// </summary>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <returns>Product variant attribute mapping collection</returns>
-        public abstract DBProductVariantAttributeCollection GetProductVariantAttributesByProductVariantId(int productVariantId);
-
-        /// <summary>
-        /// Gets a product variant attribute mapping
-        /// </summary>
-        /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
-        /// <returns>Product variant attribute mapping</returns>
-        public abstract DBProductVariantAttribute GetProductVariantAttributeById(int productVariantAttributeId);
-
-        /// <summary>
-        /// Inserts a product variant attribute mapping
-        /// </summary>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="productAttributeId">The product attribute identifier</param>
-        /// <param name="textPrompt">The text prompt</param>
-        /// <param name="isRequired">The value indicating whether the entity is required</param>
-        /// <param name="attributeControlTypeId">The attribute control type identifier</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product variant attribute mapping</returns>
-        public abstract DBProductVariantAttribute InsertProductVariantAttribute(int productVariantId,
-            int productAttributeId, string textPrompt, bool isRequired,
-            int attributeControlTypeId, int displayOrder);
-
-        /// <summary>
-        /// Updates the product variant attribute mapping
-        /// </summary>
-        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="productAttributeId">The product attribute identifier</param>
-        /// <param name="textPrompt">The text prompt</param>
-        /// <param name="isRequired">The value indicating whether the entity is required</param>
-        /// <param name="attributeControlTypeId">The attribute control type identifier</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product variant attribute mapping</returns>
-        public abstract DBProductVariantAttribute UpdateProductVariantAttribute(int productVariantAttributeId,
-            int productVariantId, int productAttributeId, string textPrompt, bool isRequired,
-            int attributeControlTypeId, int displayOrder);
-
-        /// <summary>
         /// Deletes a product variant attribute value
         /// </summary>
         /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
@@ -248,55 +199,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Attributes
         /// <returns>Localized product variant attribute value</returns>
         public abstract DBProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int productVariantAttributeValueLocalizedId,
             int productVariantAttributeValueId, int languageId, string name);
-
-        /// <summary>
-        /// Deletes a product variant attribute combination
-        /// </summary>
-        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
-        public abstract void DeleteProductVariantAttributeCombination(int productVariantAttributeCombinationId);
-
-        /// <summary>
-        /// Gets all product variant attribute combinations
-        /// </summary>
-        /// <param name="productVariantId">Product variant identifier</param>
-        /// <returns>Product variant attribute combination collection</returns>
-        public abstract DBProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int productVariantId);
-
-        /// <summary>
-        /// Gets a product variant attribute combination
-        /// </summary>
-        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
-        /// <returns>Product variant attribute combination</returns>
-        public abstract DBProductVariantAttributeCombination GetProductVariantAttributeCombinationById(int productVariantAttributeCombinationId);
-
-        /// <summary>
-        /// Inserts a product variant attribute combination
-        /// </summary>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="attributesXml">The attributes</param>
-        /// <param name="stockQuantity">The stock quantity</param>
-        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <returns>Product variant attribute combination</returns>
-        public abstract DBProductVariantAttributeCombination InsertProductVariantAttributeCombination(int productVariantId,
-            string attributesXml,
-            int stockQuantity,
-            bool allowOutOfStockOrders);
-
-        /// <summary>
-        /// Updates a product variant attribute combination
-        /// </summary>
-        /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
-        /// <param name="productVariantId">The product variant identifier</param>
-        /// <param name="attributesXml">The attributes</param>
-        /// <param name="stockQuantity">The stock quantity</param>
-        /// <param name="allowOutOfStockOrders">The value indicating whether to allow orders when out of stock</param>
-        /// <returns>Product variant attribute combination</returns>
-        public abstract DBProductVariantAttributeCombination UpdateProductVariantAttributeCombination(int productVariantAttributeCombinationId,
-            int productVariantId,
-            string attributesXml,
-            int stockQuantity,
-            bool allowOutOfStockOrders);
-
+        
         #endregion
     } 
 }

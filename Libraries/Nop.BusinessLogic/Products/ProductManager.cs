@@ -216,37 +216,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
-        private static ProductVariantPricelistCollection DBMapping(DBProductVariantPricelistCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductVariantPricelistCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductVariantPricelist DBMapping(DBProductVariantPricelist dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductVariantPricelist();
-            item.ProductVariantPricelistId = dbItem.ProductVariantPricelistId;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.PricelistId = dbItem.PricelistId;
-            item.PriceAdjustmentTypeId = dbItem.PriceAdjustmentTypeId;
-            item.PriceAdjustment = dbItem.PriceAdjustment;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-
         private static ProductLocalized DBMapping(DBProductLocalized dbItem)
         {
             if (dbItem == null)
@@ -315,6 +284,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         #region Methods
 
         #region Products
+
         /// <summary>
         /// Marks a product as deleted
         /// </summary>
@@ -2927,7 +2897,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             if (productVariantPricelistId == 0)
                 return;
-            DBProviderManager<DBProductProvider>.Provider.DeleteProductVariantPricelist(productVariantPricelistId);
+
+            var productVariantPricelist = GetProductVariantPricelistById(productVariantPricelistId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariantPricelist))
+                context.ProductVariantPricelists.Attach(productVariantPricelist);
+            context.DeleteObject(productVariantPricelist);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2940,8 +2917,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (productVariantPricelistId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantPricelistById(productVariantPricelistId);
-            var productVariantPricelist = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvpl in context.ProductVariantPricelists
+                        where pvpl.ProductVariantPricelistId == productVariantPricelistId
+                        select pvpl;
+            var productVariantPricelist = query.SingleOrDefault();
             return productVariantPricelist;
         }
 
@@ -2953,8 +2933,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>ProductVariantPricelist</returns>
         public static ProductVariantPricelist GetProductVariantPricelist(int productVariantId, int pricelistId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantPricelist(productVariantId, pricelistId);
-            var productVariantPricelist = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvpl in context.ProductVariantPricelists
+                        where pvpl.ProductVariantId == productVariantId &&
+                        pvpl.PricelistId == pricelistId 
+                        select pvpl;
+            var productVariantPricelist = query.FirstOrDefault();
             return productVariantPricelist;
         }
 
@@ -2972,11 +2956,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             decimal priceAdjustment, DateTime updatedOn)
         {
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
+            
+            var productVariantPricelist = new ProductVariantPricelist();
+            productVariantPricelist.ProductVariantId = productVariantId;
+            productVariantPricelist.PricelistId = pricelistId;
+            productVariantPricelist.PriceAdjustmentTypeId = (int)priceAdjustmentType;
+            productVariantPricelist.PriceAdjustment = priceAdjustment;
+            productVariantPricelist.UpdatedOn = updatedOn;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductVariantPricelist(productVariantId,
-                pricelistId, (int)priceAdjustmentType, priceAdjustment, updatedOn);
-            var newProductVariantPricelist = DBMapping(dbItem);
-            return newProductVariantPricelist;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductVariantPricelists.AddObject(productVariantPricelist);
+            context.SaveChanges();
+            return productVariantPricelist;
         }
 
         /// <summary>
@@ -2999,12 +2990,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductVariantPricelist(productVariantPricelistId,
-                productVariantId, pricelistId, (int)priceAdjustmentType,
-                priceAdjustment, updatedOn);
-            var newProductVariantPricelist = DBMapping(dbItem);
+            var productVariantPricelist = GetProductVariantPricelistById(productVariantPricelistId);
 
-            return newProductVariantPricelist;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariantPricelist))
+                context.ProductVariantPricelists.Attach(productVariantPricelist);
+
+            productVariantPricelist.ProductVariantId = productVariantId;
+            productVariantPricelist.PricelistId = pricelistId;
+            productVariantPricelist.PriceAdjustmentTypeId = (int)priceAdjustmentType;
+            productVariantPricelist.PriceAdjustment = priceAdjustment;
+            productVariantPricelist.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
+            return productVariantPricelist;
         }
 
         #endregion

@@ -71,9 +71,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="attributes">Attributes</param>
         /// <returns>Selected product variant attributes</returns>
-        public static ProductVariantAttributeCollection ParseProductVariantAttributes(string attributes)
+        public static List<ProductVariantAttribute> ParseProductVariantAttributes(string attributes)
         {
-            var pvaCollection = new ProductVariantAttributeCollection();
+            var pvaCollection = new List<ProductVariantAttribute>();
             var Ids = ParseProductVariantAttributeIds(attributes);
             foreach (int id in Ids)
             {

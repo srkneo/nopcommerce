@@ -135,6 +135,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the product attribute
+        /// </summary>
+        public virtual ProductAttribute NpProductAttribute { get; set; }
+
+        /// <summary>
+        /// Gets the localized product variant attribute values
+        /// </summary>
+        public virtual ICollection<ProductVariantAttributeValueLocalized> NpProductVariantAttributeValueLocalized { get; set; }
+
+        /// <summary>
+        /// Gets the product variant
+        /// </summary>
+        public virtual ProductVariant NpProductVariant { get; set; }
+        
+        /// <summary>
+        /// Gets the product variant attribute values
+        /// </summary>
+        public virtual ICollection<ProductVariantAttributeValue> NpProductVariantAttributeValues { get; set; }
+
+        #endregion
     }
 
 }

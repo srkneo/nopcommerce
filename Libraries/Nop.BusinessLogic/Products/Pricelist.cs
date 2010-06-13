@@ -565,6 +565,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the product variant pricelists
+        /// </summary>
+        public virtual List<ProductVariantPricelist> NpProductVariantPricelists { get; set; }
+
+        #endregion
+        
     }
 }
 

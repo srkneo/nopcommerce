@@ -1073,6 +1073,58 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<ProductType> _productTypes;
 
+        public ObjectSet<ProductVariantAttributeCombination> ProductVariantAttributeCombinations
+        {
+            get
+            {
+                if ((_productVariantAttributeCombinations == null))
+                {
+                    _productVariantAttributeCombinations = CreateObjectSet<ProductVariantAttributeCombination>();
+                }
+                return _productVariantAttributeCombinations;
+            }
+        }
+        private ObjectSet<ProductVariantAttributeCombination> _productVariantAttributeCombinations;
+
+        public ObjectSet<ProductVariantAttribute> ProductVariantAttributes
+        {
+            get
+            {
+                if ((_productVariantAttributes == null))
+                {
+                    _productVariantAttributes = CreateObjectSet<ProductVariantAttribute>();
+                }
+                return _productVariantAttributes;
+            }
+        }
+        private ObjectSet<ProductVariantAttribute> _productVariantAttributes;
+
+        public ObjectSet<ProductVariantAttributeValueLocalized> ProductVariantAttributeValueLocalized
+        {
+            get
+            {
+                if ((_productVariantAttributeValueLocalized == null))
+                {
+                    _productVariantAttributeValueLocalized = CreateObjectSet<ProductVariantAttributeValueLocalized>();
+                }
+                return _productVariantAttributeValueLocalized;
+            }
+        }
+        private ObjectSet<ProductVariantAttributeValueLocalized> _productVariantAttributeValueLocalized;
+
+        public ObjectSet<ProductVariantAttributeValue> ProductVariantAttributeValues
+        {
+            get
+            {
+                if ((_productVariantAttributeValues == null))
+                {
+                    _productVariantAttributeValues = CreateObjectSet<ProductVariantAttributeValue>();
+                }
+                return _productVariantAttributeValues;
+            }
+        }
+        private ObjectSet<ProductVariantAttributeValue> _productVariantAttributeValues;
+
         public ObjectSet<ProductVariantLocalized> ProductVariantLocalized
         {
             get
@@ -1085,6 +1137,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ProductVariantLocalized> _productVariantLocalized;
+
+        public ObjectSet<ProductVariantPricelist> ProductVariantPricelists
+        {
+            get
+            {
+                if ((_productVariantPricelists == null))
+                {
+                    _productVariantPricelists = CreateObjectSet<ProductVariantPricelist>();
+                }
+                return _productVariantPricelists;
+            }
+        }
+        private ObjectSet<ProductVariantPricelist> _productVariantPricelists;
 
         public ObjectSet<ProductVariant> ProductVariants
         {

@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Products.Attributes;
 
@@ -86,38 +88,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             return item;
         }
 
-        private static ProductVariantAttributeCollection DBMapping(DBProductVariantAttributeCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductVariantAttributeCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductVariantAttribute DBMapping(DBProductVariantAttribute dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductVariantAttribute();
-            item.ProductVariantAttributeId = dbItem.ProductVariantAttributeId;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.ProductAttributeId = dbItem.ProductAttributeId;
-            item.TextPrompt = dbItem.TextPrompt;
-            item.IsRequired = dbItem.IsRequired;
-            item.AttributeControlTypeId = dbItem.AttributeControlTypeId;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
         private static ProductVariantAttributeValueCollection DBMapping(DBProductVariantAttributeValueCollection dbCollection)
         {
             if (dbCollection == null)
@@ -164,36 +134,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             return item;
         }
 
-        private static ProductVariantAttributeCombinationCollection DBMapping(DBProductVariantAttributeCombinationCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductVariantAttributeCombinationCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductVariantAttributeCombination DBMapping(DBProductVariantAttributeCombination dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductVariantAttributeCombination();
-            item.ProductVariantAttributeCombinationId = dbItem.ProductVariantAttributeCombinationId;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.AttributesXml = dbItem.AttributesXml;
-            item.StockQuantity = dbItem.StockQuantity;
-            item.AllowOutOfStockOrders = dbItem.AllowOutOfStockOrders;
-
-            return item;
-        }
-       
         #endregion
 
         #region Methods
@@ -426,7 +366,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <param name="productVariantAttributeId">Product variant attribute mapping identifier</param>
         public static void DeleteProductVariantAttribute(int productVariantAttributeId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttribute(productVariantAttributeId);
+            var productVariantAttribute = GetProductVariantAttributeById(productVariantAttributeId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariantAttribute))
+                context.ProductVariantAttributes.Attach(productVariantAttribute);
+            context.DeleteObject(productVariantAttribute);
+            context.SaveChanges();
+
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -440,17 +387,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="productVariantId">The product variant identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public static ProductVariantAttributeCollection GetProductVariantAttributesByProductVariantId(int productVariantId)
+        public static List<ProductVariantAttribute> GetProductVariantAttributesByProductVariantId(int productVariantId)
         {
             string key = string.Format(PRODUCTVARIANTATTRIBUTES_ALL_KEY, productVariantId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
-                return (ProductVariantAttributeCollection)obj2;
+                return (List<ProductVariantAttribute>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributesByProductVariantId(productVariantId);
-            var productVariantAttributes = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pva in context.ProductVariantAttributes
+                        orderby pva.DisplayOrder
+                        where pva.ProductVariantId == productVariantId
+                        select pva;
+            var productVariantAttributes = query.ToList();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -476,8 +427,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 return (ProductVariantAttribute)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeById(productVariantAttributeId);
-            var productVariantAttribute = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pva in context.ProductVariantAttributes
+                        where pva.ProductVariantAttributeId == productVariantAttributeId
+                        select pva;
+            var productVariantAttribute = query.SingleOrDefault();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -499,9 +453,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductVariantAttribute InsertProductVariantAttribute(int productVariantId,
             int productAttributeId, string textPrompt, bool isRequired, AttributeControlTypeEnum attributeControlType, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttribute(productVariantId,
-                productAttributeId, textPrompt, isRequired, (int)attributeControlType, displayOrder);
-            var productVariantAttribute = DBMapping(dbItem);
+            var productVariantAttribute = new ProductVariantAttribute();
+            productVariantAttribute.ProductVariantId = productVariantId;
+            productVariantAttribute.ProductAttributeId = productAttributeId;
+            productVariantAttribute.TextPrompt = textPrompt;
+            productVariantAttribute.IsRequired = isRequired;
+            productVariantAttribute.AttributeControlTypeId = (int)attributeControlType;
+            productVariantAttribute.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductVariantAttributes.AddObject(productVariantAttribute);
+            context.SaveChanges();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -528,9 +490,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             int productVariantId, int productAttributeId, string textPrompt, 
             bool isRequired, AttributeControlTypeEnum attributeControlType, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttribute(productVariantAttributeId,
-                productVariantId, productAttributeId, textPrompt, isRequired, (int)attributeControlType, displayOrder);
-            var productVariantAttribute = DBMapping(dbItem);
+            var productVariantAttribute = GetProductVariantAttributeById(productVariantAttributeId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariantAttribute))
+                context.ProductVariantAttributes.Attach(productVariantAttribute);
+
+            productVariantAttribute.ProductVariantId = productVariantId;
+            productVariantAttribute.ProductAttributeId = productAttributeId;
+            productVariantAttribute.TextPrompt = textPrompt;
+            productVariantAttribute.IsRequired = isRequired;
+            productVariantAttribute.AttributeControlTypeId = (int)attributeControlType;
+            productVariantAttribute.DisplayOrder = displayOrder;
+            context.SaveChanges();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -787,7 +759,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <param name="productVariantAttributeCombinationId">Product variant attribute combination identifier</param>
         public static void DeleteProductVariantAttributeCombination(int productVariantAttributeCombinationId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttributeCombination(productVariantAttributeCombinationId);
+            var combination = GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(combination))
+                context.ProductVariantAttributeCombinations.Attach(combination);
+            context.DeleteObject(combination);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -795,14 +773,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="productVariantId">Product variant identifier</param>
         /// <returns>Product variant attribute combination collection</returns>
-        public static ProductVariantAttributeCombinationCollection GetAllProductVariantAttributeCombinations(int productVariantId)
+        public static List<ProductVariantAttributeCombination> GetAllProductVariantAttributeCombinations(int productVariantId)
         {
             if (productVariantId == 0)
-                return new ProductVariantAttributeCombinationCollection();
-
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductVariantAttributeCombinations(productVariantId);
-            var combination = DBMapping(dbCollection);
-            return combination;
+                return new List<ProductVariantAttributeCombination>();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvac in context.ProductVariantAttributeCombinations
+                        orderby pvac.ProductVariantAttributeCombinationId
+                        where pvac.ProductVariantId == productVariantId
+                        select pvac;
+            var combinations = query.ToList();
+            return combinations;
         }
 
         /// <summary>
@@ -815,9 +796,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (productVariantAttributeCombinationId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvac in context.ProductVariantAttributeCombinations
+                        where pvac.ProductVariantAttributeCombinationId == productVariantAttributeCombinationId
+                        select pvac;
+            var combination = query.SingleOrDefault();
+
+            return combination;
         }
 
         /// <summary>
@@ -833,10 +818,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             int stockQuantity,
             bool allowOutOfStockOrders)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeCombination(productVariantId,
-                attributesXml, stockQuantity, allowOutOfStockOrders);
-            var item = DBMapping(dbItem);
-            return item;
+            var combination = new ProductVariantAttributeCombination();
+            combination.ProductVariantId = productVariantId;
+            combination.AttributesXml = attributesXml;
+            combination.StockQuantity = stockQuantity;
+            combination.AllowOutOfStockOrders = allowOutOfStockOrders;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductVariantAttributeCombinations.AddObject(combination);
+            context.SaveChanges();
+
+            return combination;
         }
 
         /// <summary>
@@ -854,10 +846,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             int stockQuantity,
             bool allowOutOfStockOrders)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeCombination(productVariantAttributeCombinationId,
-                 productVariantId, attributesXml, stockQuantity, allowOutOfStockOrders);
-            var item = DBMapping(dbItem);
-            return item;
+            var combination = GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(combination))
+                context.ProductVariantAttributeCombinations.Attach(combination);
+
+            combination.ProductVariantId = productVariantId;
+            combination.AttributesXml = attributesXml;
+            combination.StockQuantity = stockQuantity;
+            combination.AllowOutOfStockOrders = allowOutOfStockOrders;
+            context.SaveChanges();
+
+            return combination;
         }
 
         /// <summary>
