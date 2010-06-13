@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
+using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
 using NopSolutions.NopCommerce.Common;
 
@@ -210,7 +211,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the product pictures
         /// </summary>
-        public ProductPictureCollection ProductPictures
+        public List<ProductPicture> ProductPictures
         {
             get
             {
@@ -221,7 +222,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the product categories
         /// </summary>
-        public ProductCategoryCollection ProductCategories
+        public List<ProductCategory> ProductCategories
         {
             get
             {
@@ -232,7 +233,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the product manufacturers
         /// </summary>
-        public ProductManufacturerCollection ProductManufacturers
+        public List<ProductManufacturer> ProductManufacturers
         {
             get
             {
@@ -243,7 +244,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the product reviews
         /// </summary>
-        public ProductReviewCollection ProductReviews
+        public List<ProductReview> ProductReviews
         {
             get
             {
@@ -305,6 +306,36 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets the product variants
         /// </summary>
         public virtual ICollection<ProductVariant> NpProductVariants { get; set; }
+
+        /// <summary>
+        /// Gets the product categories
+        /// </summary>
+        public virtual ICollection<ProductCategory> NpProductCategories { get; set; }
+
+        /// <summary>
+        /// Gets the product manufacturers
+        /// </summary>
+        public virtual ICollection<ProductManufacturer> NpProductManufacturers { get; set; }
+
+        /// <summary>
+        /// Gets the product specification attributes
+        /// </summary>
+        public virtual ICollection<ProductSpecificationAttribute> NpProductSpecificationAttributes { get; set; }
+        
+        /// <summary>
+        /// Gets the product tags
+        /// </summary>
+        public virtual ICollection<ProductTag> NpProductTags { get; set; }
+        
+        /// <summary>
+        /// Gets the product pictures
+        /// </summary>
+        public virtual ICollection<ProductPicture> NpProductPictures { get; set; }
+        
+        /// <summary>
+        /// Gets the product review
+        /// </summary>
+        public virtual ICollection<ProductReview> NpProductReviews { get; set; }
         
         #endregion
     }

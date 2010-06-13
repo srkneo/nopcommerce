@@ -126,7 +126,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
             if (manufacturer != null)
             {
-                ProductManufacturerCollection existingProductManufacturers = manufacturer.ProductManufacturers;
+                var existingProductManufacturers = manufacturer.ProductManufacturers;
 
                 foreach (GridViewRow row in gvProducts.Rows)
                 {

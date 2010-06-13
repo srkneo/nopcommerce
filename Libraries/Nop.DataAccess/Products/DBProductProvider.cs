@@ -289,122 +289,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             int languageId, bool showHidden);
 
         /// <summary>
-        /// Deletes a product picture mapping
-        /// </summary>
-        /// <param name="productPictureId">Product picture mapping identifier</param>
-        public abstract void DeleteProductPicture(int productPictureId);
-
-        /// <summary>
-        /// Gets a product picture mapping
-        /// </summary>
-        /// <param name="productPictureId">Product picture mapping identifier</param>
-        /// <returns>Product picture mapping</returns>
-        public abstract DBProductPicture GetProductPictureById(int productPictureId);
-
-        /// <summary>
-        /// Inserts a product picture mapping
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="pictureId">Picture identifier</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product picture mapping</returns>
-        public abstract DBProductPicture InsertProductPicture(int productId,
-          int pictureId, int displayOrder);
-
-        /// <summary>
-        /// Updates the product picture mapping
-        /// </summary>
-        /// <param name="productPictureId">Product picture mapping identifier</param>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="pictureId">Picture identifier</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product picture mapping</returns>
-        public abstract DBProductPicture UpdateProductPicture(int productPictureId,
-            int productId, int pictureId, int displayOrder);
-
-        /// <summary>
-        /// Gets all product picture mappings by product identifier
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="pictureCount">Number of picture to load</param>
-        /// <returns>Product picture mapping collection</returns>
-        public abstract DBProductPictureCollection GetProductPicturesByProductId(int productId, int pictureCount);
-
-        /// <summary>
-        /// Gets a product review
-        /// </summary>
-        /// <param name="productReviewId">Product review identifier</param>
-        /// <returns>Product review</returns>
-        public abstract DBProductReview GetProductReviewById(int productReviewId);
-
-        /// <summary>
-        /// Gets a product review collection by product identifier
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Product review collection</returns>
-        public abstract DBProductReviewCollection GetProductReviewByProductId(int productId, bool showHidden);
-
-        /// <summary>
-        /// Deletes a product review
-        /// </summary>
-        /// <param name="productReviewId">Product review identifier</param>
-        public abstract void DeleteProductReview(int productReviewId);
-
-        /// <summary>
-        /// Gets all product reviews
-        /// </summary>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Product review collection</returns>
-        public abstract DBProductReviewCollection GetAllProductReviews(bool showHidden);
-
-        /// <summary>
-        /// Inserts a product review
-        /// </summary>
-        /// <param name="productId">The product identifier</param>
-        /// <param name="customerId">The customer identifier</param>
-        /// <param name="ipAddress">The IP address</param>
-        /// <param name="title">The review title</param>
-        /// <param name="reviewText">The review text</param>
-        /// <param name="rating">The review rating</param>
-        /// <param name="helpfulYesTotal">Review helpful votes total</param>
-        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
-        /// <param name="isApproved">A value indicating whether the product review is approved</param>
-        /// <param name="createdOn">The date and time of instance creation</param>
-        /// <returns>Product review</returns>
-        public abstract DBProductReview InsertProductReview(int productId, int customerId, string ipAddress, string title,
-            string reviewText, int rating, int helpfulYesTotal,
-            int helpfulNoTotal, bool isApproved, DateTime createdOn);
-
-        /// <summary>
-        /// Updates the product review
-        /// </summary>
-        /// <param name="productReviewId">The product review identifier</param>
-        /// <param name="productId">The product identifier</param>
-        /// <param name="customerId">The customer identifier</param>
-        /// <param name="ipAddress">The IP address</param>
-        /// <param name="title">The review title</param>
-        /// <param name="reviewText">The review text</param>
-        /// <param name="rating">The review rating</param>
-        /// <param name="helpfulYesTotal">Review helpful votes total</param>
-        /// <param name="helpfulNoTotal">Review not helpful votes total</param>
-        /// <param name="isApproved">A value indicating whether the product review is approved</param>
-        /// <param name="createdOn">The date and time of instance creation</param>
-        /// <returns>Product review</returns>
-        public abstract DBProductReview UpdateProductReview(int productReviewId, int productId, int customerId, string ipAddress, string title,
-            string reviewText, int rating, int helpfulYesTotal,
-            int helpfulNoTotal, bool isApproved, DateTime createdOn);
-
-        /// <summary>
-        /// Sets a product rating helpfulness
-        /// </summary>
-        /// <param name="productReviewId">Product review identifer</param>
-        /// <param name="customerId">Customer identifer</param>
-        /// <param name="wasHelpful">A value indicating whether the product review was helpful or not </param>
-        public abstract void SetProductRatingHelpfulness(int productReviewId,
-            int customerId, bool wasHelpful);
-
-        /// <summary>
         /// Gets a product variant
         /// </summary>
         /// <param name="productVariantId">Product variant identifier</param>
@@ -672,12 +556,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             decimal priceAdjustment, DateTime updatedOn);
 
         /// <summary>
-        /// Deletes a product tag
-        /// </summary>
-        /// <param name="productTagId">Product tag identifier</param>
-        public abstract void DeleteProductTag(int productTagId);
-
-        /// <summary>
         /// Gets all product tags
         /// </summary>
         /// <param name="productId">Product identifier</param>
@@ -685,31 +563,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         /// <returns>Product tag collection</returns>
         public abstract DBProductTagCollection GetAllProductTags(int productId, 
             string name);
-
-        /// <summary>
-        /// Gets a product tag
-        /// </summary>
-        /// <param name="productTagId">Product tag identifier</param>
-        /// <returns>Product tag</returns>
-        public abstract DBProductTag GetProductTagById(int productTagId);
-
-        /// <summary>
-        /// Inserts a product tag
-        /// </summary>
-        /// <param name="name">Product tag name</param>
-        /// <param name="productCount">Product count</param>
-        /// <returns>Product tag</returns>
-        public abstract DBProductTag InsertProductTag(string name, int productCount);
-
-        /// <summary>
-        /// Updates a product tag
-        /// </summary>
-        /// <param name="productTagId">Product tag identifier</param>
-        /// <param name="name">Product tag name</param>
-        /// <param name="productCount">Product count</param>
-        /// <returns>Product tag</returns>
-        public abstract DBProductTag UpdateProductTag(int productTagId,
-            string name, int productCount);
 
         /// <summary>
         /// Adds a discount tag mapping

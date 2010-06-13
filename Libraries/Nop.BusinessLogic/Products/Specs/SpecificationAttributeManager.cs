@@ -12,12 +12,15 @@
 // Contributor(s): _______. 
 //------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Products.Specs;
-using System.Data;
-using System.Xml;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 {
@@ -141,48 +144,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             return item;
         }
-
-        /// <summary>
-        /// Maps a DBProductSpecificationAttributeCollection to a ProductSpecificationAttributeCollection
-        /// </summary>
-        /// <param name="dbCollection">DBProductSpecificationAttributeCollection</param>
-        /// <returns>ProductSpecificationAttributeCollection</returns>
-        private static ProductSpecificationAttributeCollection DBMapping(DBProductSpecificationAttributeCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductSpecificationAttributeCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        /// <summary>
-        /// Maps a DBProductSpecificationAttribute to a ProductSpecificationAttribute
-        /// </summary>
-        /// <param name="dbItem">DBProductSpecificationAttribute</param>
-        /// <returns>ProductSpecificationAttribute</returns>
-        private static ProductSpecificationAttribute DBMapping(DBProductSpecificationAttribute dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductSpecificationAttribute();
-            item.ProductSpecificationAttributeId = dbItem.ProductSpecificationAttributeId;
-            item.ProductId = dbItem.ProductId;
-            item.SpecificationAttributeOptionId = dbItem.SpecificationAttributeOptionId;
-            item.AllowFiltering = dbItem.AllowFiltering;
-            item.ShowOnProductPage = dbItem.ShowOnProductPage;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
+        
         /// <summary>
         /// Maps a DBSpecificationAttributeOptionFilter to a SpecificationAttributeOptionFilter
         /// </summary>
@@ -674,7 +636,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <param name="productSpecificationAttributeId">Product specification attribute identifier</param>
         public static void DeleteProductSpecificationAttribute(int productSpecificationAttributeId)
         {
-            DBProviderManager<DBSpecificationAttributeProvider>.Provider.DeleteProductSpecificationAttribute(productSpecificationAttributeId);
+            var productSpecificationAttribute = GetProductSpecificationAttributeById(productSpecificationAttributeId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productSpecificationAttribute))
+                context.ProductSpecificationAttributes.Attach(productSpecificationAttribute);
+            context.DeleteObject(productSpecificationAttribute);
+            context.SaveChanges();
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
@@ -689,7 +657,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product specification attribute mapping collection</returns>
-        public static ProductSpecificationAttributeCollection GetProductSpecificationAttributesByProductId(int productId)
+        public static List<ProductSpecificationAttribute> GetProductSpecificationAttributesByProductId(int productId)
         {
             return GetProductSpecificationAttributesByProductId(productId, null, null);
         }
@@ -701,7 +669,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <param name="allowFiltering">0 to load attributes with AllowFiltering set to false, 0 to load attributes with AllowFiltering set to true, null to load all attributes</param>
         /// <param name="showOnProductPage">0 to load attributes with ShowOnProductPage set to false, 0 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
         /// <returns>Product specification attribute mapping collection</returns>
-        public static ProductSpecificationAttributeCollection GetProductSpecificationAttributesByProductId(int productId, 
+        public static List<ProductSpecificationAttribute> GetProductSpecificationAttributesByProductId(int productId, 
             bool? allowFiltering, bool? showOnProductPage)
         {
             string allowFilteringCacheStr = "null";
@@ -714,13 +682,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             object obj2 = NopCache.Get(key);
             if (SpecificationAttributeManager.CacheEnabled && (obj2 != null))
             {
-                return (ProductSpecificationAttributeCollection)obj2;
+                return (List<ProductSpecificationAttribute>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetProductSpecificationAttributesByProductId(productId, 
-                allowFiltering, showOnProductPage);
-            var productSpecificationAttributes = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = (IQueryable<ProductSpecificationAttribute>)context.ProductSpecificationAttributes;
+            query = query.Where(psa => psa.ProductId == productId);
+            if (allowFiltering.HasValue)
+                query = query.Where(psa => psa.AllowFiltering == allowFiltering.Value);
+            if (showOnProductPage.HasValue)
+                query = query.Where(psa => psa.ShowOnProductPage == showOnProductPage.Value);
+            query = query.OrderBy(psa => psa.DisplayOrder);
 
+            var productSpecificationAttributes = query.ToList();
+            
             if (SpecificationAttributeManager.CacheEnabled)
             {
                 NopCache.Max(key, productSpecificationAttributes);
@@ -738,8 +713,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             if (productSpecificationAttributeId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetProductSpecificationAttributeById(productSpecificationAttributeId);
-            var productSpecificationAttribute = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from psa in context.ProductSpecificationAttributes
+                        where psa.ProductSpecificationAttributeId == productSpecificationAttributeId
+                        select psa;
+            var productSpecificationAttribute = query.SingleOrDefault();
             return productSpecificationAttribute;
         }
 
@@ -752,12 +730,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <param name="showOnProductPage">Show the attribute on the product page</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Product specification attribute mapping</returns>
-        public static ProductSpecificationAttribute InsertProductSpecificationAttribute(int productId, int specificationAttributeOptionId,
-           bool allowFiltering, bool showOnProductPage, int displayOrder)
+        public static ProductSpecificationAttribute InsertProductSpecificationAttribute(int productId,
+            int specificationAttributeOptionId, bool allowFiltering, 
+            bool showOnProductPage, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.InsertProductSpecificationAttribute(productId,
-                specificationAttributeOptionId, allowFiltering, showOnProductPage, displayOrder);
-            var productSpecificationAttribute = DBMapping(dbItem);
+            var productSpecificationAttribute = new ProductSpecificationAttribute();
+            productSpecificationAttribute.ProductId = productId;
+            productSpecificationAttribute.SpecificationAttributeOptionId = specificationAttributeOptionId;
+            productSpecificationAttribute.AllowFiltering = allowFiltering;
+            productSpecificationAttribute.ShowOnProductPage = showOnProductPage;
+            productSpecificationAttribute.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductSpecificationAttributes.AddObject(productSpecificationAttribute);
+            context.SaveChanges();
+
             if (SpecificationAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
@@ -780,9 +767,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static ProductSpecificationAttribute UpdateProductSpecificationAttribute(int productSpecificationAttributeId,
             int productId, int specificationAttributeOptionId, bool allowFiltering, bool showOnProductPage, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBSpecificationAttributeProvider>.Provider.UpdateProductSpecificationAttribute(productSpecificationAttributeId,
-                productId, specificationAttributeOptionId, allowFiltering, showOnProductPage, displayOrder);
-            var productSpecificationAttribute = DBMapping(dbItem);
+            var productSpecificationAttribute = GetProductSpecificationAttributeById(productSpecificationAttributeId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productSpecificationAttribute))
+                context.ProductSpecificationAttributes.Attach(productSpecificationAttribute);
+
+            productSpecificationAttribute.ProductId = productId;
+            productSpecificationAttribute.SpecificationAttributeOptionId = specificationAttributeOptionId;
+            productSpecificationAttribute.AllowFiltering = allowFiltering;
+            productSpecificationAttribute.ShowOnProductPage = showOnProductPage;
+            productSpecificationAttribute.DisplayOrder = displayOrder;
+            context.SaveChanges();
+
             if (SpecificationAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);

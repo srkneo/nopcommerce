@@ -14,15 +14,27 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
-namespace NopSolutions.NopCommerce.BusinessLogic.Products
+namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 {
-    /// <summary>
-    /// Represents a product picture collection
-    /// </summary>
-    public partial class ProductPictureCollection : BaseEntityCollection<ProductPicture>
+    public static class Extensions
     {
+        /// Returns a ProductCategory that has the specified values
+        /// </summary>
+        /// <param name="source">Source</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="categoryId">Category identifier</param>
+        /// <returns>A ProductCategory that has the specified values; otherwise null</returns>
+        public static ProductCategory FindProductCategory(this List<ProductCategory> source,
+            int productId, int categoryId)
+        {
+            foreach (ProductCategory productCategory in source)
+                if (productCategory.ProductId == productId && productCategory.CategoryId == categoryId)
+                    return productCategory;
+            return null;
+        }
     }
 }

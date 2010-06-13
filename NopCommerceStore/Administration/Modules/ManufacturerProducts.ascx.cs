@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
             if (manufacturer != null)
             {
-                ProductManufacturerCollection existingProductManufacturerCollection = manufacturer.ProductManufacturers;
+                var existingProductManufacturerCollection = manufacturer.ProductManufacturers;
                 List<ProductManufacturerMappingHelperClass> productManufacturerMappings = GetProductManufacturerMappings(existingProductManufacturerCollection);
                 gvProductManufacturerMappings.Columns[1].Visible = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
                 gvProductManufacturerMappings.DataSource = productManufacturerMappings;
@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.BindData();
         }
 
-        private List<ProductManufacturerMappingHelperClass> GetProductManufacturerMappings(ProductManufacturerCollection ExistingProductManufacturerCollection)
+        private List<ProductManufacturerMappingHelperClass> GetProductManufacturerMappings(List<ProductManufacturer> ExistingProductManufacturerCollection)
         {
             List<ProductManufacturerMappingHelperClass> result = new List<ProductManufacturerMappingHelperClass>();
             foreach (ProductManufacturer pm in ExistingProductManufacturerCollection)

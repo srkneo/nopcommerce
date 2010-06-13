@@ -86,6 +86,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the manufacturer
+        /// </summary>
+        public virtual Manufacturer NpManufacturer { get; set; }
+
+        /// <summary>
+        /// Gets the product
+        /// </summary>
+        public virtual Product NpProduct { get; set; }
+
+        #endregion
     }
 
 }

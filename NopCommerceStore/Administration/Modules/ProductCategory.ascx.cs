@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
-                ProductCategoryCollection existingProductCategoryCollection = product.ProductCategories;
+                var existingProductCategoryCollection = product.ProductCategories;
                 productCategoryMappings = GetProductCategoryMappings(0, string.Empty, existingProductCategoryCollection);
             }
             else
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         }
        
         private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(int forParentCategoryId,
-            string prefix, ProductCategoryCollection ExistingProductCategoryCollection)
+            string prefix, List<ProductCategory> ExistingProductCategoryCollection)
         {
             CategoryCollection categoryCollection = CategoryManager.GetAllCategories(forParentCategoryId);
             List<ProductCategoryMappingHelperClass> result = new List<ProductCategoryMappingHelperClass>();

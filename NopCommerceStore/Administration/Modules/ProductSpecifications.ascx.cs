@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 pnlData.Visible = true;
                 pnlMessage.Visible = false;
 
-                ProductSpecificationAttributeCollection productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product.ProductId);
+                var productSpecificationAttributes = SpecificationAttributeManager.GetProductSpecificationAttributesByProductId(product.ProductId);
                 if (productSpecificationAttributes.Count > 0)
                 {
                     gvProductSpecificationAttributes.Visible = true;

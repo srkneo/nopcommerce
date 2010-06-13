@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (product != null && product.AllowCustomerReviews)
             {
                 pnlReviews.Visible = true;
-                ProductReviewCollection productReviews = product.ProductReviews;
+                var productReviews = product.ProductReviews;
                 if (productReviews.Count > 0)
                 {
                     rptrProductReviews.DataSource = productReviews;

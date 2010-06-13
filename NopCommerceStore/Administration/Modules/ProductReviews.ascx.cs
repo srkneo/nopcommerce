@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Web;
@@ -91,7 +92,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindData()
         {
-            ProductReviewCollection productReviewCollection = null;
+            List<ProductReview> productReviewCollection = null;
             if (this.ProductId > 0)
                 productReviewCollection = ProductManager.GetProductReviewByProductId(ProductId);
             else

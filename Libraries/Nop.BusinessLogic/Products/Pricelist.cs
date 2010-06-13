@@ -233,7 +233,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                             break;
                         case "product.pictureurl":
                             {
-                                ProductPictureCollection pictures = productVariant.Product.ProductPictures;
+                                var pictures = productVariant.Product.ProductPictures;
                                 if (pictures.Count > 0)
                                 {
                                     tokens.Add(strToken + strFormat, String.Format(locProvider, "{0" + strFormat + "}", PictureManager.GetPictureUrl(pictures[0].PictureId)));
@@ -282,7 +282,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         case "product.manufacturer":
                             {
                                 string mans = string.Empty;
-                                ProductManufacturerCollection productManufacturers = productVariant.Product.ProductManufacturers;
+                                var productManufacturers = productVariant.Product.ProductManufacturers;
                                 foreach (ProductManufacturer pm in productManufacturers)
                                 {
                                     mans += ", " + pm.Manufacturer.Name;
@@ -297,7 +297,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                         case "product.category":
                             {
                                 string cats = string.Empty;
-                                ProductCategoryCollection productCategories = productVariant.Product.ProductCategories;
+                                var productCategories = productVariant.Product.ProductCategories;
                                 foreach (ProductCategory pc in productCategories)
                                 {
                                     cats += ", " + pc.Category.Name;

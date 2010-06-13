@@ -151,12 +151,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
             string metaKeywords, string metaDescription, string metaTitle, string seName);
       
         /// <summary>
-        /// Deletes a product manufacturer mapping
-        /// </summary>
-        /// <param name="productManufacturerId">Product manufacturer mapping identifer</param>
-        public abstract void DeleteProductManufacturer(int productManufacturerId);
-
-        /// <summary>
         /// Gets product product manufacturer collection
         /// </summary>
         /// <param name="manufacturerId">Manufacturer identifier</param>
@@ -171,36 +165,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product manufacturer mapping collection</returns>
         public abstract DBProductManufacturerCollection GetProductManufacturersByProductId(int productId, bool showHidden);
-
-        /// <summary>
-        /// Gets a product manufacturer mapping 
-        /// </summary>
-        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
-        /// <returns>Product manufacturer mapping</returns>
-        public abstract DBProductManufacturer GetProductManufacturerById(int productManufacturerId);
-
-        /// <summary>
-        /// Inserts a product manufacturer mapping
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="manufacturerId">Manufacturer identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product manufacturer mapping </returns>
-        public abstract DBProductManufacturer InsertProductManufacturer(int productId, 
-            int manufacturerId, bool isFeaturedProduct, int displayOrder);
-
-        /// <summary>
-        /// Updates the product manufacturer mapping
-        /// </summary>
-        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="manufacturerId">Manufacturer identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product manufacturer mapping </returns>
-        public abstract DBProductManufacturer UpdateProductManufacturer(int productManufacturerId,
-            int productId, int manufacturerId, bool isFeaturedProduct, int displayOrder);
 
         #endregion
     }

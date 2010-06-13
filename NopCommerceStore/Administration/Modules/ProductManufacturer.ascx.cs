@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
-                ProductManufacturerCollection existingProductManufacturerCollection = product.ProductManufacturers;
+                var existingProductManufacturerCollection = product.ProductManufacturers;
                 productManufacturerMappings = GetProductManufacturerMappings(existingProductManufacturerCollection);
             }
             else
@@ -93,8 +93,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.gvManufacturerMappings.PageIndex = e.NewPageIndex;
             this.BindData();
         }
-        
-        private List<ProductManufacturerMappingHelperClass> GetProductManufacturerMappings(ProductManufacturerCollection ExistingProductManufacturerCollection)
+
+        private List<ProductManufacturerMappingHelperClass> GetProductManufacturerMappings(List<ProductManufacturer> ExistingProductManufacturerCollection)
         {
             ManufacturerCollection manufacturerCollection = ManufacturerManager.GetAllManufacturers();
             List<ProductManufacturerMappingHelperClass> result = new List<ProductManufacturerMappingHelperClass>();

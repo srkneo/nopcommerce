@@ -193,59 +193,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
             int specificationAttributeOptionId, int languageId, string name);
       
         #endregion
-
-        #region Product specification attribute
-
-        /// <summary>
-        /// Deletes a product specification attribute mapping
-        /// </summary>
-        /// <param name="productSpecificationAttributeId">Product specification attribute identifier</param>
-        public abstract void DeleteProductSpecificationAttribute(int productSpecificationAttributeId);
-
-        /// <summary>
-        /// Gets a product specification attribute mapping collection
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="allowFiltering">0 to load attributes with AllowFiltering set to false, 0 to load attributes with AllowFiltering set to true, null to load all attributes</param>
-        /// <param name="showOnProductPage">0 to load attributes with ShowOnProductPage set to false, 0 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
-        /// <returns>Product specification attribute mapping collection</returns>
-        public abstract DBProductSpecificationAttributeCollection GetProductSpecificationAttributesByProductId(int productId, 
-            bool? allowFiltering, bool? showOnProductPage);
-
-        /// <summary>
-        /// Gets a product specification attribute mapping 
-        /// </summary>
-        /// <param name="productSpecificationAttributeId">Product specification attribute mapping identifier</param>
-        /// <returns>Product specification attribute mapping</returns>
-        public abstract DBProductSpecificationAttribute GetProductSpecificationAttributeById(int productSpecificationAttributeId);
-
-        /// <summary>
-        /// Inserts a product specification attribute mapping
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
-        /// <param name="allowFiltering">Allow product filtering by this attribute</param>
-        /// <param name="showOnProductPage">Show the attribute on the product page</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product specification attribute mapping</returns>
-        public abstract DBProductSpecificationAttribute InsertProductSpecificationAttribute(int productId, int specificationAttributeOptionId,
-                 bool allowFiltering, bool showOnProductPage, int displayOrder);
-
-        /// <summary>
-        /// Updates the product specification attribute mapping
-        /// </summary>
-        /// <param name="productSpecificationAttributeId">product specification attribute mapping identifier</param>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="specificationAttributeOptionId">Specification attribute option identifier</param>
-        /// <param name="allowFiltering">Allow product filtering by this attribute</param>
-        /// <param name="showOnProductPage">Show the attribute onn the product page</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product specification attribute mapping</returns>
-        public abstract DBProductSpecificationAttribute UpdateProductSpecificationAttribute(int productSpecificationAttributeId,
-               int productId, int specificationAttributeOptionId, bool allowFiltering, bool showOnProductPage, int displayOrder);
-
-        #endregion
-
+        
         #region Specification attribute option filter
 
         /// <summary>

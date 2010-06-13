@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Manufacturers;
@@ -102,12 +104,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             return item;
         }
 
-        private static ProductManufacturerCollection DBMapping(DBProductManufacturerCollection dbCollection)
+        private static List<ProductManufacturer> DBMapping(DBProductManufacturerCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ProductManufacturerCollection();
+            var collection = new List<ProductManufacturer>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -445,7 +447,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             if (productManufacturerId == 0)
                 return;
 
-            DBProviderManager<DBManufacturerProvider>.Provider.DeleteProductManufacturer(productManufacturerId);
+            var productManufacturer = GetProductManufacturerById(productManufacturerId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productManufacturer))
+                context.ProductManufacturers.Attach(productManufacturer);
+            context.DeleteObject(productManufacturer);
+            context.SaveChanges();
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
@@ -459,17 +467,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// </summary>
         /// <param name="manufacturerId">Manufacturer identifier</param>
         /// <returns>Product manufacturer collection</returns>
-        public static ProductManufacturerCollection GetProductManufacturersByManufacturerId(int manufacturerId)
+        public static List<ProductManufacturer> GetProductManufacturersByManufacturerId(int manufacturerId)
         {
             if (manufacturerId == 0)
-                return new ProductManufacturerCollection();
+                return new List<ProductManufacturer>();
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTMANUFACTURERS_ALLBYMANUFACTURERID_KEY, showHidden, manufacturerId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
-                return (ProductManufacturerCollection)obj2;
+                return (List<ProductManufacturer>)obj2;
             }
             
             var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByManufacturerId(manufacturerId, showHidden);
@@ -487,17 +495,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product manufacturer mapping collection</returns>
-        public static ProductManufacturerCollection GetProductManufacturersByProductId(int productId)
+        public static List<ProductManufacturer> GetProductManufacturersByProductId(int productId)
         {
             if (productId == 0)
-                return new ProductManufacturerCollection();
+                return new List<ProductManufacturer>();
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTMANUFACTURERS_ALLBYPRODUCTID_KEY, showHidden, productId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
-                return (ProductManufacturerCollection)obj2;
+                return (List<ProductManufacturer>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByProductId(productId, showHidden);
@@ -527,8 +535,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return (ProductManufacturer)obj2;
             }
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturerById(productManufacturerId);
-            var productManufacturer = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pm in context.ProductManufacturers
+                        where pm.ProductManufacturerId == productManufacturerId
+                        select pm;
+            var productManufacturer = query.SingleOrDefault();
 
             if (ManufacturerManager.MappingsCacheEnabled)
             {
@@ -548,9 +559,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         public static ProductManufacturer InsertProductManufacturer(int productId, 
             int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertProductManufacturer(productId,
-                manufacturerId, isFeaturedProduct, displayOrder);
-            var productManufacturer = DBMapping(dbItem);
+            var productManufacturer = new ProductManufacturer();
+            productManufacturer.ProductId = productId;
+            productManufacturer.ManufacturerId = manufacturerId;
+            productManufacturer.IsFeaturedProduct = isFeaturedProduct;
+            productManufacturer.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductManufacturers.AddObject(productManufacturer);
+            context.SaveChanges();
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
@@ -573,9 +590,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         public static ProductManufacturer UpdateProductManufacturer(int productManufacturerId,
             int productId, int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateProductManufacturer(productManufacturerId,
-                productId, manufacturerId, isFeaturedProduct, displayOrder);
-            var productManufacturer = DBMapping(dbItem);
+            var productManufacturer = GetProductManufacturerById(productManufacturerId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productManufacturer))
+                context.ProductManufacturers.Attach(productManufacturer);
+
+            productManufacturer.ProductId = productId;
+            productManufacturer.ManufacturerId = manufacturerId;
+            productManufacturer.IsFeaturedProduct = isFeaturedProduct;
+            productManufacturer.DisplayOrder = displayOrder;
+            context.SaveChanges();
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {

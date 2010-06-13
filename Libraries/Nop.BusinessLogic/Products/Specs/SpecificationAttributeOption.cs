@@ -82,7 +82,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// Gets the localized attribute option values
         /// </summary>
         public virtual ICollection<SpecificationAttributeOptionLocalized> NpSpecificationAttributeOptionLocalized { get; set; }
-
+        
+        
+        /// <summary>
+        /// Gets the product specification attribute
+        /// </summary>
+        public virtual ICollection<ProductSpecificationAttribute> NpProductSpecificationAttributes { get; set; }
         #endregion
     }
 }

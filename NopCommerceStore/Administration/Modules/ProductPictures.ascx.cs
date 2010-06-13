@@ -155,8 +155,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             ProductPicture productPicture = ProductManager.GetProductPictureById(productPictureId);
             if (productPicture != null)
             {
-                PictureManager.DeletePicture(productPicture.PictureId);
                 ProductManager.DeleteProductPicture(productPicture.ProductPictureId);
+                PictureManager.DeletePicture(productPicture.PictureId);
                 BindData();
             }
         }

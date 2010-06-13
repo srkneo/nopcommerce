@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             if (category != null)
             {
-                ProductCategoryCollection existingProductCategoryCollection = category.ProductCategories;
+                var existingProductCategoryCollection = category.ProductCategories;
                 List<ProductCategoryMappingHelperClass> productCategoryMappings = GetProductCategoryMappings(existingProductCategoryCollection);
                 gvProductCategoryMappings.Columns[1].Visible = SettingManager.GetSettingValueBoolean("Display.ShowAdminProductImages");
                 gvProductCategoryMappings.DataSource = productCategoryMappings;
@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.BindData();
         }
 
-        private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(ProductCategoryCollection ExistingProductCategoryCollection)
+        private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(List<ProductCategory> ExistingProductCategoryCollection)
         {
             List<ProductCategoryMappingHelperClass> result = new List<ProductCategoryMappingHelperClass>();
             foreach (ProductCategory pc in ExistingProductCategoryCollection)

@@ -14,30 +14,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 {
-    /// <summary>
-    /// Represents a ProductManufacturer collection
-    /// </summary>
-    public partial class ProductManufacturerCollection : BaseEntityCollection<ProductManufacturer>
+    public static class Extensions
     {
         /// <summary>
         /// Finds a ProductManufacturer item by specified identifiers
         /// </summary>
+        /// <param name="source">Source</param>
         /// <param name="productId">Product identifier</param>
         /// <param name="manufacturerId">Manufactureridentifier</param>
-        /// <returns>Found item instance</returns>
-        public ProductManufacturer FindProductManufacturer(int productId, int manufacturerId)
+        /// <returns>A ProductManufacturer that has the specified values; otherwise null</returns>
+        public static ProductManufacturer FindProductManufacturer(this List<ProductManufacturer> source,
+            int productId, int manufacturerId)
         {
-            #region Methods
-            foreach (ProductManufacturer productManufacturer in this)
+            foreach (ProductManufacturer productManufacturer in source)
                 if (productManufacturer.ProductId == productId && productManufacturer.ManufacturerId == manufacturerId)
                     return productManufacturer;
             return null;
-            #endregion
         }
     }
 }

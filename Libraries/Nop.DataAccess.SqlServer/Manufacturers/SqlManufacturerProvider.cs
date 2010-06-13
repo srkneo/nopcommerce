@@ -389,19 +389,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
 
             return item;
         }
-
-        /// <summary>
-        /// Deletes a product manufacturer mapping
-        /// </summary>
-        /// <param name="productManufacturerId">Product manufacturer mapping identifer</param>
-        public override void DeleteProductManufacturer(int productManufacturerId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, productManufacturerId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
+        
         /// <summary>
         /// Gets product product manufacturer collection
         /// </summary>
@@ -450,82 +438,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Manufacturers
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Gets a product manufacturer mapping 
-        /// </summary>
-        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
-        /// <returns>Product manufacturer mapping</returns>
-        public override DBProductManufacturer GetProductManufacturerById(int productManufacturerId)
-        {
-            DBProductManufacturer item = null;
-            if (productManufacturerId == 0)
-                return item;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, productManufacturerId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetProductManufacturerFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Inserts a product manufacturer mapping
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="manufacturerId">Manufacturer identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product manufacturer mapping </returns>
-        public override DBProductManufacturer InsertProductManufacturer(int productId,
-            int manufacturerId, bool isFeaturedProduct, int displayOrder)
-        {
-            DBProductManufacturer item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingInsert");
-            db.AddOutParameter(dbCommand, "ProductManufacturerID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int productManufacturerId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductManufacturerID"));
-                item = GetProductManufacturerById(productManufacturerId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the product manufacturer mapping
-        /// </summary>
-        /// <param name="productManufacturerId">Product manufacturer mapping identifier</param>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="manufacturerId">Manufacturer identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product manufacturer mapping </returns>
-        public override DBProductManufacturer UpdateProductManufacturer(int productManufacturerId,
-            int productId, int manufacturerId, bool isFeaturedProduct, int displayOrder)
-        {
-            DBProductManufacturer item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Manufacturer_MappingUpdate");
-            db.AddInParameter(dbCommand, "ProductManufacturerID", DbType.Int32, productManufacturerId);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
-            db.AddInParameter(dbCommand, "ManufacturerID", DbType.Int32, manufacturerId);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetProductManufacturerById(productManufacturerId);
-
-            return item;
         }
         
         #endregion

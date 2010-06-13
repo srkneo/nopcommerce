@@ -121,6 +121,7 @@
     <Compile Include="Audit\CustomerActivityManager.cs" />
     <Compile Include="Audit\Extensions.cs" />
     <Compile Include="Categories\CategoryLocalized.cs" />
+    <Compile Include="Categories\Extensions.cs" />
     <Compile Include="Content\Forums\ForumSubscription.cs" />
     <Compile Include="Content\Forums\ForumTopicTypeEnum.cs" />
     <Compile Include="Content\Forums\PrivateMessage.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Maintenance\BackupFileCollection.cs" />
     <Compile Include="Maintenance\MaintenanceManager.cs" />
     <Compile Include="Maintenance\DatabaseMaintanceTask.cs" />
+    <Compile Include="Manufacturers\Extensions.cs" />
     <Compile Include="Manufacturers\ManufacturerLocalized.cs" />
     <Compile Include="Messages\NewsLetterSubscription.cs" />
     <Compile Include="Messages\SMSManager.cs" />
@@ -181,11 +183,12 @@
     <Compile Include="Products\Attributes\CheckoutAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeHelper.cs" />
+    <Compile Include="Products\ProductRating.cs" />
+    <Compile Include="Products\ProductReviewHelpfulness.cs" />
     <Compile Include="Products\Extensions.cs" />
     <Compile Include="Products\ShoppingCartType.cs" />
     <Compile Include="Products\LowStockActivity.cs" />
     <Compile Include="Products\ProductTag.cs" />
-    <Compile Include="Products\ProductTagCollection.cs" />
     <Compile Include="Products\ProductSortingEnum.cs" />
     <Compile Include="Products\CustomerRoleProductPrice.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeValueLocalized.cs" />
@@ -294,12 +297,7 @@
     <Compile Include="Products\Attributes\ProductVariantAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\ProductVariantAttributeCollection.cs" />
     <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
-    <Compile Include="Products\Specs\ProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
-    <Compile Include="Products\ProductReviewCollection.cs" />
-    <Compile Include="Manufacturers\ProductManufacturerCollection.cs" />
-    <Compile Include="Categories\ProductCategoryCollection.cs" />
-    <Compile Include="Products\ProductPictureCollection.cs" />
     <Compile Include="Promo\Discounts\DiscountTypeEnum.cs" />
     <Compile Include="Products\LowStockActivityEnum.cs" />
     <Compile Include="Orders\ShoppingCartTypeEnum.cs" />

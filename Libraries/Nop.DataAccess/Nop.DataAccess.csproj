@@ -194,16 +194,10 @@
     <Compile Include="Products\Attributes\DBProductVariantAttributeValueCollection.cs" />
     <Compile Include="Products\DBProduct.cs" />
     <Compile Include="Products\DBProductCollection.cs" />
-    <Compile Include="Products\DBProductPicture.cs" />
-    <Compile Include="Products\DBProductPictureCollection.cs" />
-    <Compile Include="Products\DBProductReview.cs" />
-    <Compile Include="Products\DBProductReviewCollection.cs" />
     <Compile Include="Products\DBProductVariant.cs" />
     <Compile Include="Products\DBProductVariantCollection.cs" />
     <Compile Include="Products\DBRelatedProduct.cs" />
     <Compile Include="Products\DBRelatedProductCollection.cs" />
-    <Compile Include="Products\Specs\DBProductSpecificationAttribute.cs" />
-    <Compile Include="Products\Specs\DBProductSpecificationAttributeCollection.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttribute.cs" />
     <Compile Include="Products\Specs\DBSpecificationAttributeCollection.cs" />
     <Compile Include="Promo\Discounts\DBDiscount.cs" />

@@ -17,9 +17,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Categories;
@@ -106,12 +108,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             return item;
         }
 
-        private static ProductCategoryCollection DBMapping(DBProductCategoryCollection dbCollection)
+        private static List<ProductCategory> DBMapping(DBProductCategoryCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ProductCategoryCollection();
+            var collection = new List<ProductCategory>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -512,7 +514,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             if (productCategoryId == 0)
                 return;
 
-            DBProviderManager<DBCategoryProvider>.Provider.DeleteProductCategory(productCategoryId);
+            var productCategory = GetProductCategoryById(productCategoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productCategory))
+                context.ProductCategories.Attach(productCategory);
+            context.DeleteObject(productCategory);
+            context.SaveChanges();
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
@@ -526,17 +534,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <returns>Product a category mapping collection</returns>
-        public static ProductCategoryCollection GetProductCategoriesByCategoryId(int categoryId)
+        public static List<ProductCategory> GetProductCategoriesByCategoryId(int categoryId)
         {
             if (categoryId == 0)
-                return new ProductCategoryCollection();
+                return new List<ProductCategory>();
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTCATEGORIES_ALLBYCATEGORYID_KEY, showHidden, categoryId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
-                return (ProductCategoryCollection)obj2;
+                return (List<ProductCategory>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByCategoryId(categoryId, showHidden);
@@ -554,17 +562,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product category mapping collection</returns>
-        public static ProductCategoryCollection GetProductCategoriesByProductId(int productId)
+        public static List<ProductCategory> GetProductCategoriesByProductId(int productId)
         {
             if (productId == 0)
-                return new ProductCategoryCollection();
+                return new List<ProductCategory>();
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTCATEGORIES_ALLBYPRODUCTID_KEY, showHidden, productId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
-                return (ProductCategoryCollection)obj2;
+                return (List<ProductCategory>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByProductId(productId, showHidden);
@@ -594,8 +602,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return (ProductCategory)obj2;
             }
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoryById(productCategoryId);
-            var productCategory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pc in context.ProductCategories
+                        where pc.ProductCategoryId == productCategoryId
+                        select pc;
+            var productCategory = query.SingleOrDefault();
 
             if (CategoryManager.MappingsCacheEnabled)
             {
@@ -615,10 +626,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         public static ProductCategory InsertProductCategory(int productId, int categoryId,
            bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertProductCategory(productId, 
-                categoryId, isFeaturedProduct, displayOrder);
+            var productCategory = new ProductCategory();
+            productCategory.ProductId = productId;
+            productCategory.CategoryId = categoryId;
+            productCategory.IsFeaturedProduct = isFeaturedProduct;
+            productCategory.DisplayOrder = displayOrder;
 
-            var productCategory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductCategories.AddObject(productCategory);
+            context.SaveChanges();
+
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
                 NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
@@ -639,9 +656,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         public static ProductCategory UpdateProductCategory(int productCategoryId,
             int productId, int categoryId, bool isFeaturedProduct, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateProductCategory(productCategoryId, 
-                productId, categoryId, isFeaturedProduct, displayOrder);
-            var productCategory = DBMapping(dbItem);
+            var productCategory = GetProductCategoryById(productCategoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productCategory))
+                context.ProductCategories.Attach(productCategory);
+
+            productCategory.ProductId = productId;
+            productCategory.CategoryId = categoryId;
+            productCategory.IsFeaturedProduct = isFeaturedProduct;
+            productCategory.DisplayOrder = displayOrder;
+            context.SaveChanges();
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {

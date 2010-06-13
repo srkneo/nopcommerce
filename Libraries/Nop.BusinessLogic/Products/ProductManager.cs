@@ -107,71 +107,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
-        private static ProductPictureCollection DBMapping(DBProductPictureCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductPictureCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductPicture DBMapping(DBProductPicture dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductPicture();
-            item.ProductPictureId = dbItem.ProductPictureId;
-            item.ProductId = dbItem.ProductId;
-            item.PictureId = dbItem.PictureId;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        private static ProductReviewCollection DBMapping(DBProductReviewCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new ProductReviewCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductReview DBMapping(DBProductReview dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductReview();
-            item.ProductReviewId = dbItem.ProductReviewId;
-            item.ProductId = dbItem.ProductId;
-            item.CustomerId = dbItem.CustomerId;
-            item.IPAddress = dbItem.IPAddress;
-            item.Title = dbItem.Title;
-            item.ReviewText = dbItem.ReviewText;
-            item.Rating = dbItem.Rating;
-            item.HelpfulYesTotal = dbItem.HelpfulYesTotal;
-            item.HelpfulNoTotal = dbItem.HelpfulNoTotal;
-            item.IsApproved = dbItem.IsApproved;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
         private static ProductVariantCollection DBMapping(DBProductVariantCollection dbCollection)
         {
             if (dbCollection == null)
@@ -347,12 +282,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
-        private static ProductTagCollection DBMapping(DBProductTagCollection dbCollection)
+        private static List<ProductTag> DBMapping(DBProductTagCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ProductTagCollection();
+            var collection = new List<ProductTag>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -707,8 +642,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             }
             return product;
         }
-
-
+        
         /// <summary>
         /// Inserts a product
         /// </summary>
@@ -2254,7 +2188,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productPictureId">Product picture mapping identifier</param>
         public static void DeleteProductPicture(int productPictureId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteProductPicture(productPictureId);
+            var productPicture = GetProductPictureById(productPictureId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productPicture))
+                context.ProductPictures.Attach(productPicture);
+            context.DeleteObject(productPicture);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2267,8 +2207,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (productPictureId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductPictureById(productPictureId);
-            var productPicture = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pp in context.ProductPictures
+                        where pp.ProductPictureId == productPictureId
+                        select pp;
+            var productPicture = query.SingleOrDefault();
             return productPicture;
         }
 
@@ -2282,9 +2225,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductPicture InsertProductPicture(int productId,
             int pictureId, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductPicture(productId, 
-                pictureId, displayOrder);
-            var productPicture = DBMapping(dbItem);
+            var productPicture = new ProductPicture();
+            productPicture.ProductId = productId;
+            productPicture.PictureId = pictureId;
+            productPicture.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductPictures.AddObject(productPicture);
+            context.SaveChanges();
+
             return productPicture;
         }
 
@@ -2299,9 +2248,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductPicture UpdateProductPicture(int productPictureId, int productId,
             int pictureId, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductPicture(productPictureId, productId,
-                pictureId, displayOrder);
-            var productPicture = DBMapping(dbItem);
+            var productPicture = GetProductPictureById(productPictureId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productPicture))
+                context.ProductPictures.Attach(productPicture);
+
+            productPicture.ProductId = productId;
+            productPicture.PictureId = pictureId;
+            productPicture.DisplayOrder = displayOrder;
+            context.SaveChanges();
             return productPicture;
         }
 
@@ -2310,7 +2266,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product picture mapping collection</returns>
-        public static ProductPictureCollection GetProductPicturesByProductId(int productId)
+        public static List<ProductPicture> GetProductPicturesByProductId(int productId)
         {
             return GetProductPicturesByProductId(productId, 0);
         }
@@ -2321,17 +2277,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productId">Product identifier</param>
         /// <param name="pictureCount">Number of picture to load</param>
         /// <returns>Product picture mapping collection</returns>
-        public static ProductPictureCollection GetProductPicturesByProductId(int productId, int pictureCount)
+        public static List<ProductPicture> GetProductPicturesByProductId(int productId, int pictureCount)
         {
             if(pictureCount < 0)
             {
                 pictureCount = 0;
             }
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductPicturesByProductId(productId, pictureCount);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = (IQueryable<ProductPicture>)context.ProductPictures;
+            query = query.Where(pp => pp.ProductId == productId);
+            if (pictureCount > 0)
+                query = query.Take(pictureCount);
+            query = query.OrderBy(pp => pp.DisplayOrder);
 
-            var productPictures = DBMapping(dbCollection);
-
+            var productPictures = query.ToList();
             return productPictures;
         }
 
@@ -2349,8 +2309,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (productReviewId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductReviewById(productReviewId);
-            var productReview = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pr in context.ProductReviews
+                        where pr.ProductReviewId == productReviewId
+                        select pr;
+            var productReview = query.SingleOrDefault();
             return productReview;
         }
 
@@ -2359,11 +2322,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product review collection</returns>
-        public static ProductReviewCollection GetProductReviewByProductId(int productId)
+        public static List<ProductReview> GetProductReviewByProductId(int productId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductReviewByProductId(productId, showHidden);
-            var productReviews = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pr in context.ProductReviews
+                        orderby pr.CreatedOn descending
+                        where (showHidden || pr.IsApproved) &&
+                        pr.ProductId == productId
+                        select pr;
+            var productReviews = query.ToList();
             return productReviews;
         }
 
@@ -2373,18 +2342,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productReviewId">Product review identifier</param>
         public static void DeleteProductReview(int productReviewId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteProductReview(productReviewId);
+            var productReview = GetProductReviewById(productReviewId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productReview))
+                context.ProductReviews.Attach(productReview);
+            context.DeleteObject(productReview);
+            context.SaveChanges();
         }
 
         /// <summary>
         /// Gets all product reviews
         /// </summary>
         /// <returns>Product review collection</returns>
-        public static ProductReviewCollection GetAllProductReviews()
+        public static List<ProductReview> GetAllProductReviews()
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductReviews(showHidden);
-            var productReviews = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pr in context.ProductReviews
+                        orderby pr.CreatedOn descending
+                        where (showHidden || pr.IsApproved)
+                        select pr;
+            var productReviews = query.ToList();
             return productReviews;
         }
 
@@ -2466,11 +2446,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductReview(productId, customerId, ipAddress,
-                title, reviewText, rating, helpfulYesTotal, helpfulNoTotal,
-                isApproved, createdOn);
-            var productReview = DBMapping(dbItem);
-            
+            var productReview = new ProductReview();
+            productReview.ProductId = productId;
+            productReview.CustomerId = customerId;
+            productReview.IPAddress = ipAddress;
+            productReview.Title = title;
+            productReview.ReviewText = reviewText;
+            productReview.Rating = rating;
+            productReview.HelpfulYesTotal = helpfulYesTotal;
+            productReview.HelpfulNoTotal = helpfulNoTotal;
+            productReview.IsApproved = isApproved;
+            productReview.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductReviews.AddObject(productReview);
+            context.SaveChanges();
+                        
             //activity log
             CustomerActivityManager.InsertActivity(
                 "WriteProductReview",
@@ -2507,10 +2498,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductReview(productReviewId,
-                productId, customerId, ipAddress, title, reviewText, rating,
-                helpfulYesTotal, helpfulNoTotal, isApproved, createdOn);
-            var productReview = DBMapping(dbItem);
+            var productReview = GetProductReviewById(productReviewId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productReview))
+                context.ProductReviews.Attach(productReview);
+
+            productReview.ProductId = productId;
+            productReview.CustomerId = customerId;
+            productReview.IPAddress = ipAddress;
+            productReview.Title = title;
+            productReview.ReviewText = reviewText;
+            productReview.Rating = rating;
+            productReview.HelpfulYesTotal = helpfulYesTotal;
+            productReview.HelpfulNoTotal = helpfulNoTotal;
+            productReview.IsApproved = isApproved;
+            productReview.CreatedOn = createdOn;
+            context.SaveChanges();
+
             return productReview;
         }
 
@@ -2530,8 +2535,49 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return;
             }
 
-            DBProviderManager<DBProductProvider>.Provider.SetProductRatingHelpfulness(productReviewId,
-                NopContext.Current.User.CustomerId, wasHelpful);
+            //delete previous helpfulness
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var oldPrh = (from prh in context.ProductReviewHelpfulness
+                         where prh.ProductReviewId == productReviewId &&
+                         prh.CustomerId == NopContext.Current.User.CustomerId
+                         select prh).FirstOrDefault();
+            if (oldPrh != null)
+            {
+                context.DeleteObject(oldPrh);
+            }
+            context.SaveChanges();
+
+            //insert new helpfulness
+            var newPrh = new ProductReviewHelpfulness();
+            newPrh.ProductReviewId = productReviewId;
+            newPrh.CustomerId = NopContext.Current.User.CustomerId;
+            newPrh.WasHelpful = wasHelpful;
+
+            context.ProductReviewHelpfulness.AddObject(newPrh);
+            context.SaveChanges();
+
+            //new totals
+            int helpfulYesTotal = (from prh in context.ProductReviewHelpfulness
+                                   where prh.ProductReviewId == productReviewId && 
+                                   prh.WasHelpful == true
+                                   select prh).Count();
+            int helpfulNoTotal = (from prh in context.ProductReviewHelpfulness
+                                   where prh.ProductReviewId == productReviewId &&
+                                   prh.WasHelpful == false
+                                   select prh).Count();
+
+            ProductReview productReview = GetProductReviewById(productReviewId);
+            productReview = UpdateProductReview(productReview.ProductReviewId,
+                productReview.ProductId,
+                productReview.CustomerId,
+                productReview.IPAddress,
+                productReview.Title,
+                productReview.ReviewText,
+                productReview.Rating,
+                helpfulYesTotal,
+                helpfulNoTotal,
+                productReview.IsApproved,
+                productReview.CreatedOn);
         }
         
         #endregion
@@ -3204,7 +3250,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productTagId">Product tag identifier</param>
         public static void DeleteProductTag(int productTagId)
         {
-            DBProviderManager<DBProductProvider>.Provider.DeleteProductTag(productTagId);
+            var productTag = GetProductTagById(productTagId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productTag))
+                context.ProductTags.Attach(productTag);
+            context.DeleteObject(productTag);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -3217,9 +3269,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (productTagId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductTagById(productTagId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pt in context.ProductTags
+                        where pt.ProductTagId == productTagId
+                        select pt;
+            var productTag = query.SingleOrDefault();
+            return productTag;
         }
 
         /// <summary>
@@ -3228,7 +3283,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productId">Product identifier</param>
         /// <param name="name">Product tag name or empty string to load all records</param>
         /// <returns>Product tag collection</returns>
-        public static ProductTagCollection GetAllProductTags(int productId,
+        public static List<ProductTag> GetAllProductTags(int productId,
             string name)
         {
             if (name == null)
@@ -3253,10 +3308,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 name = string.Empty;
             name = name.Trim();
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.InsertProductTag(name,
-                productCount);
-            var item = DBMapping(dbItem);
-            return item;
+            var productTag = new ProductTag();
+            productTag.Name = name;
+            productTag.ProductCount = productCount;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductTags.AddObject(productTag);
+            context.SaveChanges();
+
+            return productTag;
         }
 
         /// <summary>
@@ -3273,10 +3333,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 name = string.Empty;
             name = name.Trim();
 
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.UpdateProductTag(productTagId,
-                name, productCount);
-            var item = DBMapping(dbItem);
-            return item;
+            var productTag = GetProductTagById(productTagId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productTag))
+                context.ProductTags.Attach(productTag);
+
+            productTag.Name = name;
+            productTag.ProductCount = productCount;
+            context.SaveChanges();
+
+            return productTag;
         }
 
         /// <summary>
@@ -3301,8 +3368,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         #endregion
-
-
+        
         #region Etc
 
         /// <summary>

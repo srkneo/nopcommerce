@@ -134,7 +134,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets the products
         /// </summary>
-        public ProductManufacturerCollection ProductManufacturers
+        public List<ProductManufacturer> ProductManufacturers
         {
             get
             {
@@ -175,6 +175,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// Gets the localized manufacturer
         /// </summary>
         public virtual ICollection<ManufacturerLocalized> NpManufacturerLocalized { get; set; }
+
+        /// Gets the product manufacturers
+        /// </summary>
+        public virtual ICollection<ProductManufacturer> NpProductManufacturers { get; set; }
 
         #endregion
     }

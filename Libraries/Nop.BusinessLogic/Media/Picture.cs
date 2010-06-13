@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Products;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Media
@@ -53,6 +54,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         /// Gets or sets a value indicating whether the picture is new
         /// </summary>
         public bool IsNew { get; set; }
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the picture
+        /// </summary>
+        public virtual ICollection<ProductPicture> NpProductPictures { get; set; }
+
         #endregion
     }
 }

@@ -13,54 +13,58 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 
-namespace NopSolutions.NopCommerce.DataAccess.Products.Specs
+
+namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
     /// <summary>
-    /// Represents a product specification attribute
+    /// Represents a product review helpfulness
     /// </summary>
-    public partial class DBProductSpecificationAttribute : BaseDBEntity
+    public partial class ProductReviewHelpfulness : BaseEntity
     {
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the DBProductSpecificationAttribute class
+        /// Creates a new instance of the ProductReviewHelpfulness class
         /// </summary>
-        public DBProductSpecificationAttribute()
+        public ProductReviewHelpfulness()
         {
         }
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets or sets the product specification attribute identifier
-        /// </summary>
-        public int ProductSpecificationAttributeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the product identifier
+        /// Gets or sets the identifier
         /// </summary>
-        public int ProductId { get; set; }
+        public int ProductReviewHelpfulnessId { get; set; }
 
         /// <summary>
-        /// Gets or sets the specification attribute identifier
+        /// Gets or sets the product review identifier
         /// </summary>
-        public int SpecificationAttributeOptionId { get; set; }
+        public int ProductReviewId { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the attribute can be filtered by
+        /// Gets or sets the customer identifier
         /// </summary>
-        public bool AllowFiltering { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the attrbiute will be shown on the product page
+        /// Gets or sets the value indicating whether the review was helpful
         /// </summary>
-        public bool ShowOnProductPage { get; set; }
+        public bool WasHelpful { get; set; }
+
+        #endregion
+
+        #region Navigation Properties
 
         /// <summary>
-        /// Gets or sets the display order
+        /// Gets the product review
         /// </summary>
-        public int DisplayOrder { get; set; }
-        #endregion 
+        public virtual ProductReview NpProductReview { get; set; }
+
+        #endregion
     }
-
 }

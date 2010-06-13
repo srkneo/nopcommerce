@@ -158,7 +158,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets the products
         /// </summary>
-        public ProductCategoryCollection ProductCategories
+        public List<ProductCategory> ProductCategories
         {
             get
             {
@@ -215,6 +215,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// Gets the discount
         /// </summary>
         public virtual ICollection<Discount> NpDiscounts { get; set; }
+
+        /// <summary>
+        /// Gets the product categories
+        /// </summary>
+        public virtual ICollection<ProductCategory> NpProductCategories { get; set; }
 
         #endregion
     }

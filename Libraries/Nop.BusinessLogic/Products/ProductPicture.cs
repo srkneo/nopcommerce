@@ -69,6 +69,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the picture
+        /// </summary>
+        public virtual Picture NpPicture { get; set; }
+
+        /// <summary>
+        /// Gets the product
+        /// </summary>
+        public virtual Product NpProduct { get; set; }
+
+        #endregion
     }
 
 }

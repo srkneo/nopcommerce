@@ -13,6 +13,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 {
@@ -100,6 +101,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
                 return ProductManager.GetProductById(this.ProductId);
             }
         }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the product
+        /// </summary>
+        public virtual Product NpProduct { get; set; }
+
+        /// Gets the specification attribute option
+        /// </summary>
+        public virtual SpecificationAttributeOption NpSpecificationAttributeOption { get; set; }
 
         #endregion
     }

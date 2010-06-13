@@ -166,12 +166,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             string seName);
       
         /// <summary>
-        /// Deletes a product category mapping
-        /// </summary>
-        /// <param name="productCategoryId">Product category identifier</param>
-        public abstract void DeleteProductCategory(int productCategoryId);
-
-        /// <summary>
         /// Gets product category mapping collection
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
@@ -187,35 +181,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         /// <returns>Product category mapping collection</returns>
         public abstract DBProductCategoryCollection GetProductCategoriesByProductId(int productId, bool showHidden);
 
-        /// <summary>
-        /// Gets a product category mapping 
-        /// </summary>
-        /// <param name="productCategoryId">Product category mapping identifier</param>
-        /// <returns>Product category mapping</returns>
-        public abstract DBProductCategory GetProductCategoryById(int productCategoryId);
-
-        /// <summary>
-        /// Inserts a product category mapping
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="categoryId">Category identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product category mapping </returns>
-        public abstract DBProductCategory InsertProductCategory(int productId, int categoryId,
-            bool isFeaturedProduct, int displayOrder);
-
-        /// <summary>
-        /// Updates the product category mapping 
-        /// </summary>
-        /// <param name="productCategoryId">Product category mapping  identifier</param>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="categoryId">Category identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product category mapping </returns>
-        public abstract DBProductCategory UpdateProductCategory(int productCategoryId,
-            int productId, int categoryId, bool isFeaturedProduct, int displayOrder);
         #endregion
     }
 }

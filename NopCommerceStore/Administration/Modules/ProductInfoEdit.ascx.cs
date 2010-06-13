@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.cbAllowCustomerRatings.Checked = product.AllowCustomerRatings;
                 this.cbPublished.Checked = product.Published;
 
-                ProductReviewCollection productReviews = product.ProductReviews;
+                var productReviews = product.ProductReviews;
                 if (productReviews.Count > 0)
                 {
                     hlViewReviews.Visible = true;
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             base.OnPreRender(e);
         }
 
-        private string GenerateListOfProductTagss(ProductTagCollection productTags)
+        private string GenerateListOfProductTagss(List<ProductTag> productTags)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < productTags.Count; i++)

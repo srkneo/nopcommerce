@@ -115,5 +115,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             }
         }
         #endregion
+        
+        
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the products
+        /// </summary>
+        public virtual Product NpProduct { get; set; }
+
+        /// <summary>
+        /// Gets the products
+        /// </summary>
+        public virtual ICollection<ProductReviewHelpfulness> NpProductReviewHelpfulness { get; set; }
+        
+        #endregion
+        
     }
 }

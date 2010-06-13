@@ -429,18 +429,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
         }
 
         /// <summary>
-        /// Deletes a product category mapping
-        /// </summary>
-        /// <param name="productCategoryId">Product category identifier</param>
-        public override void DeleteProductCategory(int productCategoryId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingDelete");
-            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, productCategoryId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
         /// Gets product category mapping collection
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
@@ -490,81 +478,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Categories
             return result;
         }
 
-        /// <summary>
-        /// Gets a product category mapping 
-        /// </summary>
-        /// <param name="productCategoryId">Product category mapping identifier</param>
-        /// <returns>Product category mapping</returns>
-        public override DBProductCategory GetProductCategoryById(int productCategoryId)
-        {
-            DBProductCategory item = null;
-            if (productCategoryId == 0)
-                return item;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, productCategoryId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetProductCategoryFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Inserts a product category mapping
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="categoryId">Category identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product category mapping </returns>
-        public override DBProductCategory InsertProductCategory(int productId, int categoryId,
-            bool isFeaturedProduct, int displayOrder)
-        {
-            DBProductCategory item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingInsert");
-            db.AddOutParameter(dbCommand, "ProductCategoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int productCategoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@ProductCategoryID"));
-                item = GetProductCategoryById(productCategoryId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the product category mapping 
-        /// </summary>
-        /// <param name="productCategoryId">Product category mapping  identifier</param>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="categoryId">Category identifier</param>
-        /// <param name="isFeaturedProduct">A value indicating whether the product is featured</param>
-        /// <param name="displayOrder">The display order</param>
-        /// <returns>Product category mapping </returns>
-        public override DBProductCategory UpdateProductCategory(int productCategoryId,
-            int productId, int categoryId, bool isFeaturedProduct, int displayOrder)
-        {
-            DBProductCategory item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Product_Category_MappingUpdate");
-            db.AddInParameter(dbCommand, "ProductCategoryID", DbType.Int32, productCategoryId);
-            db.AddInParameter(dbCommand, "ProductID", DbType.Int32, productId);
-            db.AddInParameter(dbCommand, "CategoryID", DbType.Int32, categoryId);
-            db.AddInParameter(dbCommand, "IsFeaturedProduct", DbType.Boolean, isFeaturedProduct);
-            db.AddInParameter(dbCommand, "DisplayOrder", DbType.Int32, displayOrder);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetProductCategoryById(productCategoryId);
-
-            return item;
-        }
         #endregion
     }
 }

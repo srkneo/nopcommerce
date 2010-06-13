@@ -13,6 +13,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
@@ -51,6 +52,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets or sets the tagged product count
         /// </summary>
         public int ProductCount { get; set; }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the products
+        /// </summary>
+        public virtual  ICollection<Product> NpProducts { get; set; }
 
         #endregion
     }

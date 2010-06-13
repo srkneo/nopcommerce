@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -29,10 +30,10 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Media;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -59,7 +60,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             base.OnPreRender(e);
         }
 
-        protected ProductTagCollection GetProductTags()
+        protected List<ProductTag> GetProductTags()
         {
             var productTags = ProductManager.GetAllProductTags(0, string.Empty);
             return productTags;
@@ -67,7 +68,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            ProductTagCollection productTags = GetProductTags();
+            var productTags = GetProductTags();
             if (productTags.Count > 0)
             {
                 this.gvProductTags.Visible = true;

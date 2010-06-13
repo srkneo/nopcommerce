@@ -917,6 +917,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<ProductAttribute> _productAttributes;
 
+        public ObjectSet<ProductCategory> ProductCategories
+        {
+            get
+            {
+                if ((_productCategories == null))
+                {
+                    _productCategories = CreateObjectSet<ProductCategory>();
+                }
+                return _productCategories;
+            }
+        }
+        private ObjectSet<ProductCategory> _productCategories;
+
         public ObjectSet<ProductLocalized> ProductLocalized
         {
             get
@@ -929,6 +942,71 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ProductLocalized> _productLocalized;
+
+        public ObjectSet<ProductManufacturer> ProductManufacturers
+        {
+            get
+            {
+                if ((_productManufacturers == null))
+                {
+                    _productManufacturers = CreateObjectSet<ProductManufacturer>();
+                }
+                return _productManufacturers;
+            }
+        }
+        private ObjectSet<ProductManufacturer> _productManufacturers;
+
+        public ObjectSet<ProductPicture> ProductPictures
+        {
+            get
+            {
+                if ((_productPictures == null))
+                {
+                    _productPictures = CreateObjectSet<ProductPicture>();
+                }
+                return _productPictures;
+            }
+        }
+        private ObjectSet<ProductPicture> _productPictures;
+
+        public ObjectSet<ProductRating> ProductRatings
+        {
+            get
+            {
+                if ((_productRatings == null))
+                {
+                    _productRatings = CreateObjectSet<ProductRating>();
+                }
+                return _productRatings;
+            }
+        }
+        private ObjectSet<ProductRating> _productRatings;
+
+        public ObjectSet<ProductReviewHelpfulness> ProductReviewHelpfulness
+        {
+            get
+            {
+                if ((_productReviewHelpfulness == null))
+                {
+                    _productReviewHelpfulness = CreateObjectSet<ProductReviewHelpfulness>();
+                }
+                return _productReviewHelpfulness;
+            }
+        }
+        private ObjectSet<ProductReviewHelpfulness> _productReviewHelpfulness;
+
+        public ObjectSet<ProductReview> ProductReviews
+        {
+            get
+            {
+                if ((_productReviews == null))
+                {
+                    _productReviews = CreateObjectSet<ProductReview>();
+                }
+                return _productReviews;
+            }
+        }
+        private ObjectSet<ProductReview> _productReviews;
 
         public ObjectSet<Product> Products
         {
@@ -943,31 +1021,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<Product> _products;
 
-        public ObjectSet<ProductVariantLocalized> ProductVariantLocalized
+        public ObjectSet<ProductSpecificationAttribute> ProductSpecificationAttributes
         {
             get
             {
-                if ((_productVariantLocalized == null))
+                if ((_productSpecificationAttributes == null))
                 {
-                    _productVariantLocalized = CreateObjectSet<ProductVariantLocalized>();
+                    _productSpecificationAttributes = CreateObjectSet<ProductSpecificationAttribute>();
                 }
-                return _productVariantLocalized;
+                return _productSpecificationAttributes;
             }
         }
-        private ObjectSet<ProductVariantLocalized> _productVariantLocalized;
+        private ObjectSet<ProductSpecificationAttribute> _productSpecificationAttributes;
 
-        public ObjectSet<ProductVariant> ProductVariants
+        public ObjectSet<ProductTag> ProductTags
         {
             get
             {
-                if ((_productVariants == null))
+                if ((productTags == null))
                 {
-                    _productVariants = CreateObjectSet<ProductVariant>();
+                    productTags = CreateObjectSet<ProductTag>();
                 }
-                return _productVariants;
+                return productTags;
             }
         }
-        private ObjectSet<ProductVariant> _productVariants;
+        private ObjectSet<ProductTag> productTags;
 
         public ObjectSet<ProductTemplate> ProductTemplates
         {
@@ -994,6 +1072,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ProductType> _productTypes;
+
+        public ObjectSet<ProductVariantLocalized> ProductVariantLocalized
+        {
+            get
+            {
+                if ((_productVariantLocalized == null))
+                {
+                    _productVariantLocalized = CreateObjectSet<ProductVariantLocalized>();
+                }
+                return _productVariantLocalized;
+            }
+        }
+        private ObjectSet<ProductVariantLocalized> _productVariantLocalized;
+
+        public ObjectSet<ProductVariant> ProductVariants
+        {
+            get
+            {
+                if ((_productVariants == null))
+                {
+                    _productVariants = CreateObjectSet<ProductVariant>();
+                }
+                return _productVariants;
+            }
+        }
+        private ObjectSet<ProductVariant> _productVariants;
 
         public ObjectSet<QueuedEmail> QueuedEmails
         {

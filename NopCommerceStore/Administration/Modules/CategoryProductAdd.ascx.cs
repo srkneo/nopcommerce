@@ -126,7 +126,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Category category = CategoryManager.GetCategoryById(this.CategoryId);
             if (category != null)
             {
-                ProductCategoryCollection existingProductCategories = category.ProductCategories;
+                var existingProductCategories = category.ProductCategories;
 
                 foreach (GridViewRow row in gvProducts.Rows)
                 {

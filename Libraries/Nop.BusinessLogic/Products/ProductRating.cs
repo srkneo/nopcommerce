@@ -16,27 +16,29 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NopSolutions.NopCommerce.DataAccess.Products
+
+namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
     /// <summary>
-    /// Represents a product picture mapping
+    /// Represents a product rating
     /// </summary>
-    public partial class DBProductPicture : BaseDBEntity
+    public partial class ProductRating : BaseEntity
     {
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the DBProductPicture class
+        /// Creates a new instance of the ProductRating class
         /// </summary>
-        public DBProductPicture()
+        public ProductRating()
         {
         }
         #endregion
 
         #region Properties
+
         /// <summary>
-        /// Gets or sets the ProductPicture identifier
+        /// Gets or sets the product rating identifier
         /// </summary>
-        public int ProductPictureId { get; set; }
+        public int ProductRatingId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier
@@ -44,14 +46,20 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
         public int ProductId { get; set; }
 
         /// <summary>
-        /// Gets or sets the picture identifier
+        /// Gets or sets the customer identifier
         /// </summary>
-        public int PictureId { get; set; }
+        public int CustomerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the display order
+        /// Gets or sets the rating
         /// </summary>
-        public int DisplayOrder { get; set; }
+        public int Rating { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date and time of instance creation
+        /// </summary>
+        public DateTime RatedOn { get; set; }
+
         #endregion 
     }
 
