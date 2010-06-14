@@ -51,6 +51,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static void DeleteMeasureDimension(int measureDimensionId)
         {
             var measureDimension = GetMeasureDimensionById(measureDimensionId);
+            if (measureDimension == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(measureDimension))
@@ -177,6 +179,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             string name, string systemKeyword, decimal ratio, int displayOrder)
         {
             var measure = GetMeasureDimensionById(measureDimensionId);
+            if (measure == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(measure))
@@ -268,6 +272,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static void DeleteMeasureWeight(int measureWeightId)
         {
             var measureWeight = GetMeasureWeightById(measureWeightId);
+            if (measureWeight == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(measureWeight))
@@ -395,6 +401,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             string systemKeyword, decimal ratio, int displayOrder)
         {
             var weight = GetMeasureWeightById(measureWeightId);
+            if (weight == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(weight))

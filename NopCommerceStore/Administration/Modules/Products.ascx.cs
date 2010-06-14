@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -29,10 +30,10 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Media;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -71,7 +72,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlManufacturer.Items.Clear();
             ListItem itemEmptyManufacturer = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlManufacturer.Items.Add(itemEmptyManufacturer);
-            ManufacturerCollection manufacturers = ManufacturerManager.GetAllManufacturers();
+            var manufacturers = ManufacturerManager.GetAllManufacturers();
             foreach (Manufacturer manufacturer in manufacturers)
             {
                 ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerId.ToString());
@@ -79,22 +80,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected ProductCollection GetProducts()
+        protected List<Product> GetProducts()
         {
             int languageId = 0;
             if (NopContext.Current != null)
                 languageId = NopContext.Current.WorkingLanguage.LanguageId;
             return GetProducts(languageId);
         }
-        
-        protected ProductCollection GetProducts(int languageId)
+
+        protected List<Product> GetProducts(int languageId)
         {
             string productName = txtProductName.Text;
             int categoryId = ParentCategory.SelectedCategoryId;
             int manufacturerId = int.Parse(this.ddlManufacturer.SelectedItem.Value);
 
             int totalRecords = 0;
-            ProductCollection products = ProductManager.GetAllProducts(categoryId, 
+            var products = ProductManager.GetAllProducts(categoryId, 
                 manufacturerId, 0, null, null, null, productName, 
                 false, int.MaxValue, 0, null, languageId, 
                 ProductSortingEnum.Position, out totalRecords);
@@ -103,7 +104,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            ProductCollection products = GetProducts();
+            var products = GetProducts();
             if (products.Count > 0)
             {
                 this.gvProducts.Visible = true;
@@ -187,7 +188,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = String.Format("products_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
                     
-                    ProductCollection products = GetProducts(0);
+                    var products = GetProducts(0);
                     string xml = ExportManager.ExportProductsToXml(products);
                     CommonHelper.WriteResponseXml(xml, fileName);
                 }
@@ -206,7 +207,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = string.Format("products_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
-                    ProductCollection products = GetProducts(0);
+                    var products = GetProducts(0);
 
                     ExportManager.ExportProductsToXls(filePath, products);
                     CommonHelper.WriteResponseXls(filePath, fileName);

@@ -58,6 +58,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static void DeleteShippingByWeight(int shippingByWeightId)
         {
             var shippingByWeight = GetById(shippingByWeightId);
+            if (shippingByWeight == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingByWeight))
@@ -125,6 +127,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
             var shippingByWeight = GetById(shippingByWeightId);
+            if (shippingByWeight == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingByWeight))

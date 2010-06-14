@@ -144,7 +144,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <summary>
         /// Gets the product variants
         /// </summary>
-        public ProductVariantCollection ProductVariants
+        public List<ProductVariant> ProductVariants
         {
             get
             {
@@ -259,7 +259,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                ProductVariantCollection productVariants = this.ProductVariants;
+                var productVariants = this.ProductVariants;
                 productVariants.Sort(new GenericComparer<ProductVariant>
                     ("Price", GenericComparer<ProductVariant>.SortOrder.Ascending));
                 if (productVariants.Count > 0)
@@ -276,7 +276,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                ProductVariantCollection productVariants = this.ProductVariants;
+                var productVariants = this.ProductVariants;
                 productVariants.Sort(new GenericComparer<ProductVariant>
                     ("Price", GenericComparer<ProductVariant>.SortOrder.Ascending));
                 if (productVariants.Count > 0)

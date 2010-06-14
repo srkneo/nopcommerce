@@ -47,6 +47,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         public static void DeleteTopic(int topicId)
         {
             var topic = GetTopicById(topicId);
+            if (topic == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(topic))
@@ -81,6 +83,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         public static Topic UpdateTopic(int topicId, string name)
         {
             var topic = GetTopicById(topicId);
+            if (topic == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(topic))
@@ -188,6 +192,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         public static void DeleteLocalizedTopic(int localizedTopicId)
         {
             var localizedTopic = GetLocalizedTopicById(localizedTopicId);
+            if (localizedTopic == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(localizedTopic))
@@ -272,6 +278,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             string metaKeywords, string metaDescription, string metaTitle)
         {
             var localizedTopic = GetLocalizedTopicById(topicLocalizedId);
+            if (localizedTopic == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(localizedTopic))

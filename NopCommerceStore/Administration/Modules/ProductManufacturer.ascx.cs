@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private List<ProductManufacturerMappingHelperClass> GetProductManufacturerMappings(List<ProductManufacturer> ExistingProductManufacturerCollection)
         {
-            ManufacturerCollection manufacturerCollection = ManufacturerManager.GetAllManufacturers();
+            var manufacturerCollection = ManufacturerManager.GetAllManufacturers();
             List<ProductManufacturerMappingHelperClass> result = new List<ProductManufacturerMappingHelperClass>();
             for (int i = 0; i < manufacturerCollection.Count; i++)
             {

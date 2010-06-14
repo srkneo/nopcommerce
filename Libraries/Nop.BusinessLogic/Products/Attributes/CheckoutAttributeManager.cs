@@ -40,12 +40,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         #endregion
 
         #region Utilities
-        private static CheckoutAttributeCollection DBMapping(DBCheckoutAttributeCollection dbCollection)
+        private static List<CheckoutAttribute> DBMapping(DBCheckoutAttributeCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new CheckoutAttributeCollection();
+            var collection = new List<CheckoutAttribute>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -89,12 +89,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             return item;
         }
 
-        private static CheckoutAttributeValueCollection DBMapping(DBCheckoutAttributeValueCollection dbCollection)
+        private static List<CheckoutAttributeValue> DBMapping(DBCheckoutAttributeValueCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new CheckoutAttributeValueCollection();
+            var collection = new List<CheckoutAttributeValue>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -160,7 +160,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="dontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
         /// <returns>Checkout attribute collection</returns>
-        public static CheckoutAttributeCollection GetAllCheckoutAttributes(bool dontLoadShippableProductRequired)
+        public static List<CheckoutAttribute> GetAllCheckoutAttributes(bool dontLoadShippableProductRequired)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -174,14 +174,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <param name="languageId">Language identifier</param>
         /// <param name="dontLoadShippableProductRequired">Value indicating whether to do not load attributes for checkout attibutes which require shippable products</param>
         /// <returns>Checkout attribute collection</returns>
-        public static CheckoutAttributeCollection GetAllCheckoutAttributes(int languageId,
+        public static List<CheckoutAttribute> GetAllCheckoutAttributes(int languageId,
             bool dontLoadShippableProductRequired)
         {
             string key = string.Format(CHECKOUTATTRIBUTES_ALL_KEY, languageId, dontLoadShippableProductRequired);
             object obj2 = NopCache.Get(key);
             if (CheckoutAttributeManager.CacheEnabled && (obj2 != null))
             {
-                return (CheckoutAttributeCollection)obj2;
+                return (List<CheckoutAttribute>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetAllCheckoutAttributes(languageId, dontLoadShippableProductRequired);
@@ -399,7 +399,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
         /// <returns>Checkout attribute value collection</returns>
-        public static CheckoutAttributeValueCollection GetCheckoutAttributeValues(int checkoutAttributeId)
+        public static List<CheckoutAttributeValue> GetCheckoutAttributeValues(int checkoutAttributeId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -413,13 +413,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <param name="checkoutAttributeId">The checkout attribute identifier</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Checkout attribute value collection</returns>
-        public static CheckoutAttributeValueCollection GetCheckoutAttributeValues(int checkoutAttributeId, int languageId)
+        public static List<CheckoutAttributeValue> GetCheckoutAttributeValues(int checkoutAttributeId, int languageId)
         {
             string key = string.Format(CHECKOUTATTRIBUTEVALUES_ALL_KEY, checkoutAttributeId, languageId);
             object obj2 = NopCache.Get(key);
             if (CheckoutAttributeManager.CacheEnabled && (obj2 != null))
             {
-                return (CheckoutAttributeValueCollection)obj2;
+                return (List<CheckoutAttributeValue>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBCheckoutAttributeProvider>.Provider.GetCheckoutAttributeValues(checkoutAttributeId, languageId);

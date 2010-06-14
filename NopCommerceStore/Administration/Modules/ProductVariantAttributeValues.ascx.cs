@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.lblTitle.Text = string.Format(GetLocaleResourceString("Admin.ProductVariantAttributeValues.AddEdit"), Server.HtmlEncode(productAttribute.Name), Server.HtmlEncode(productVariant.FullProductName));
                 this.hlProductURL.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantId;
 
-                ProductVariantAttributeValueCollection productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId, 0);
+                var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId, 0);
                 if (productVariantAttributeValues.Count > 0)
                 {
                     this.gvProductVariantAttributeValues.Visible = true;

@@ -155,6 +155,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             int countryId, bool deleted, bool active)
         {
             var affiliate = GetAffiliateById(affiliateId);
+            if (affiliate == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(affiliate))

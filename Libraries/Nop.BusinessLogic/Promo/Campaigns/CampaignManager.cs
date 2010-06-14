@@ -62,6 +62,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         public static void DeleteCampaign(int campaignId)
         {
             var campaign = GetCampaignById(campaignId);
+            if (campaign == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(campaign))
@@ -126,6 +128,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var campaign = GetCampaignById(campaignId);
+            if (campaign == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(campaign))

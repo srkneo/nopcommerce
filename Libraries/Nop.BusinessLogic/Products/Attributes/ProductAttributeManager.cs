@@ -45,12 +45,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         #endregion
 
         #region Utilities
-        private static ProductAttributeCollection DBMapping(DBProductAttributeCollection dbCollection)
+        private static List<ProductAttribute> DBMapping(DBProductAttributeCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ProductAttributeCollection();
+            var collection = new List<ProductAttribute>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -88,12 +88,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             return item;
         }
 
-        private static ProductVariantAttributeValueCollection DBMapping(DBProductVariantAttributeValueCollection dbCollection)
+        private static List<ProductVariantAttributeValue> DBMapping(DBProductVariantAttributeValueCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ProductVariantAttributeValueCollection();
+            var collection = new List<ProductVariantAttributeValue>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -159,7 +159,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// Gets all product attributes
         /// </summary>
         /// <returns>Product attribute collection</returns>
-        public static ProductAttributeCollection GetAllProductAttributes()
+        public static List<ProductAttribute> GetAllProductAttributes()
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -172,13 +172,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Product attribute collection</returns>
-        public static ProductAttributeCollection GetAllProductAttributes(int languageId)
+        public static List<ProductAttribute> GetAllProductAttributes(int languageId)
         {
             string key = string.Format(PRODUCTATTRIBUTES_ALL_KEY, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
-                return (ProductAttributeCollection)obj2;
+                return (List<ProductAttribute>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductAttributes(languageId);
@@ -367,6 +367,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static void DeleteProductVariantAttribute(int productVariantAttributeId)
         {
             var productVariantAttribute = GetProductVariantAttributeById(productVariantAttributeId);
+            if (productVariantAttribute == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productVariantAttribute))
@@ -491,6 +493,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             bool isRequired, AttributeControlTypeEnum attributeControlType, int displayOrder)
         {
             var productVariantAttribute = GetProductVariantAttributeById(productVariantAttributeId);
+            if (productVariantAttribute == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productVariantAttribute))
@@ -538,7 +542,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public static ProductVariantAttributeValueCollection GetProductVariantAttributeValues(int productVariantAttributeId)
+        public static List<ProductVariantAttributeValue> GetProductVariantAttributeValues(int productVariantAttributeId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -552,13 +556,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Product variant attribute mapping collection</returns>
-        public static ProductVariantAttributeValueCollection GetProductVariantAttributeValues(int productVariantAttributeId, int languageId)
+        public static List<ProductVariantAttributeValue> GetProductVariantAttributeValues(int productVariantAttributeId, int languageId)
         {
             string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY, productVariantAttributeId, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
-                return (ProductVariantAttributeValueCollection)obj2;
+                return (List<ProductVariantAttributeValue>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValues(productVariantAttributeId, languageId);
@@ -760,6 +764,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static void DeleteProductVariantAttributeCombination(int productVariantAttributeCombinationId)
         {
             var combination = GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
+            if (combination == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(combination))
@@ -847,6 +853,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             bool allowOutOfStockOrders)
         {
             var combination = GetProductVariantAttributeCombinationById(productVariantAttributeCombinationId);
+            if (combination == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(combination))

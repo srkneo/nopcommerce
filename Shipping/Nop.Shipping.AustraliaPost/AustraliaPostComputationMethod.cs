@@ -13,6 +13,8 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -21,7 +23,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.Common;
-using System.Collections.Specialized;
 
 namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
 {
@@ -134,9 +135,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
         /// <param name="shipmentPackage">Shipment package</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
+        public List<ShippingOption> GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
-            ShippingOptionCollection shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
 
             if (shipmentPackage == null)
             {

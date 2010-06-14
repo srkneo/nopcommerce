@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -82,9 +83,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             BindGrid();
         }
 
-        protected CategoryCollection GetAllCategories(int forParentEntityId)
+        protected List<Category> GetAllCategories(int forParentEntityId)
         {
-            var result = new CategoryCollection();
+            var result = new List<Category>();
             var categories = CategoryManager.GetAllCategories(forParentEntityId);
             foreach (var category in categories)
             {

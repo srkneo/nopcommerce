@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             string strContents = string.Empty;
 
-            ProductVariantCollection productVariants = new ProductVariantCollection();
+            var productVariants = new List<ProductVariant>();
             bool blnOverrideAdjustment = this.OverrideIndivAdjustment;
 
             switch (this.ExportMode)

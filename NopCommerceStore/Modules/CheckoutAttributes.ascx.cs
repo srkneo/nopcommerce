@@ -45,11 +45,11 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return ShoppingCartManager.GetCurrentShoppingCart(ShoppingCartTypeEnum.ShoppingCart);
         }
 
-        protected CheckoutAttributeCollection GetCheckoutAttributes()
+        protected List<CheckoutAttribute> GetCheckoutAttributes()
         {
             ShoppingCart cart = GetCart();
             if (cart == null || cart.Count == 0)
-                return new CheckoutAttributeCollection();
+                return new List<CheckoutAttribute>();
 
             bool shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
             var checkoutAttributes = CheckoutAttributeManager.GetAllCheckoutAttributes(!shoppingCartRequiresShipping);

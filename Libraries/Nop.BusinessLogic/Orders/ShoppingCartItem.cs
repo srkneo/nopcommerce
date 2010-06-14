@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 {
                     decimal attributesTotalWeight = decimal.Zero;
 
-                    ProductVariantAttributeValueCollection pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(this.AttributesXml);
+                    var pvaValues = ProductAttributeHelper.ParseProductVariantAttributeValues(this.AttributesXml);
                     foreach (ProductVariantAttributeValue pvaValue in pvaValues)
                     {
                         attributesTotalWeight += pvaValue.WeightAdjustment;

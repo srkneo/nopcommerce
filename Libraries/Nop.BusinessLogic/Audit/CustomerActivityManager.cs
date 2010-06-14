@@ -106,6 +106,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             string systemKeyword, string name, bool enabled)
         {
             var activityLogType = GetActivityTypeById(activityLogTypeId);
+            if (activityLogType == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(activityLogType))
@@ -146,6 +148,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static void DeleteActivityType(int activityLogTypeId)
         {
             var activityLogType = GetActivityTypeById(activityLogTypeId);
+            if (activityLogType == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(activityLogType))
@@ -273,6 +277,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             int customerId, string comment, DateTime createdOn)
         {
             var activity = GetActivityById(activityLogId);
+            if (activity == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(activity))
@@ -293,6 +299,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static void DeleteActivity(int activityLogId)
         {
             var activity = GetActivityById(activityLogId);
+            if (activity == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(activity))

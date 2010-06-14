@@ -60,7 +60,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
         /// </summary>
         /// <param name="productCollection"></param>
         /// <param name="filePath"></param>
-        public static void PrintProductsToPdf(ProductCollection productCollection, string filePath)
+        public static void PrintProductsToPdf(List<Product> productCollection, string filePath)
         {
             if(String.IsNullOrEmpty(filePath))
             {

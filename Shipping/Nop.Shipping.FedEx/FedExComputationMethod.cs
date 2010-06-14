@@ -257,9 +257,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
             }
         }
 
-        private ShippingOptionCollection ParseResponse(RateReply reply)
+        private List<ShippingOption> ParseResponse(RateReply reply)
         {
-            var result = new ShippingOptionCollection();
+            var result = new List<ShippingOption>();
 
             Debug.WriteLine("RateReply details:");
             Debug.WriteLine("**********************************************************");
@@ -340,9 +340,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.FedEx
         /// <param name="shipmentPackage">Shipment package</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
+        public List<ShippingOption> GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
-            var shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
             if (shipmentPackage == null)
                 throw new ArgumentNullException("shipmentPackage");
             if (shipmentPackage.Items == null)

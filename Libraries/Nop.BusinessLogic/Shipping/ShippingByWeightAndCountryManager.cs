@@ -58,6 +58,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static void DeleteShippingByWeightAndCountry(int shippingByWeightAndCountryId)
         {
             var shippingByWeightAndCountry = GetById(shippingByWeightAndCountryId);
+            if (shippingByWeightAndCountry == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingByWeightAndCountry))
@@ -128,6 +130,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
             var shippingByWeightAndCountry = GetById(shippingByWeightAndCountryId);
+            if (shippingByWeightAndCountry == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingByWeightAndCountry))

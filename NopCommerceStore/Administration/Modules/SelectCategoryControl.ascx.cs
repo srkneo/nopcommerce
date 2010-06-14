@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void BindData(int forParentEntityId, string prefix)
         {
-            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(forParentEntityId);
+            var categoryCollection = CategoryManager.GetAllCategories(forParentEntityId);
 
             foreach (Category category in categoryCollection)
             {

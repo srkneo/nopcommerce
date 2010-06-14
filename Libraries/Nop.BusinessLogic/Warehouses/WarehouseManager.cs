@@ -155,6 +155,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var warehouse = GetWarehouseById(warehouseId);
+            if (warehouse == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(warehouse))

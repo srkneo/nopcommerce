@@ -344,9 +344,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
                 throw new NopException("Shipping Error: Package too large.");
         }
 
-        private ShippingOptionCollection ParseResponse(string response, bool isDomestic, ref string error)
+        private List<ShippingOption> ParseResponse(string response, bool isDomestic, ref string error)
         {
-            var shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
 
             string postageStr = isDomestic ? "Postage" : "Service";
             string mailServiceStr = isDomestic ? "MailService" : "SvcDescription";
@@ -426,9 +426,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.USPS
         /// <param name="shipmentPackage">Shipment package</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
+        public List<ShippingOption> GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
-            var shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
 
             if (shipmentPackage == null)
                 throw new ArgumentNullException("shipmentPackage");

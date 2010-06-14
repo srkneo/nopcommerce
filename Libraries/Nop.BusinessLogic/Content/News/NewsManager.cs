@@ -118,6 +118,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         public static void DeleteNews(int newsId)
         {
             var news = GetNewsById(newsId);
+            if (news == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(news))
@@ -284,6 +286,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var news = GetNewsById(newsId);
+            if (news == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(news))
@@ -347,6 +351,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         public static void DeleteNewsComment(int newsCommentId)
         {
             var newsComment = GetNewsCommentById(newsCommentId);
+            if (newsComment == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(newsComment))
@@ -461,6 +467,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var newsComment = GetNewsCommentById(newsCommentId);
+            if (newsComment == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(newsComment))

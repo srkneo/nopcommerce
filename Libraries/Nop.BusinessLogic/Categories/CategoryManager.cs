@@ -46,12 +46,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
         #region Utilities
 
-        private static CategoryCollection DBMapping(DBCategoryCollection dbCollection)
+        private static List<Category> DBMapping(DBCategoryCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new CategoryCollection();
+            var collection = new List<Category>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -182,7 +182,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// </summary>
         /// <param name="parentCategoryId">Parent category identifier</param>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategories(int parentCategoryId)
+        public static List<Category> GetAllCategories(int parentCategoryId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllCategories(parentCategoryId, showHidden);
@@ -194,7 +194,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="parentCategoryId">Parent category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategories(int parentCategoryId, bool showHidden)
+        public static List<Category> GetAllCategories(int parentCategoryId, bool showHidden)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -209,14 +209,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategories(int parentCategoryId,
+        public static List<Category> GetAllCategories(int parentCategoryId,
             bool showHidden, int languageId)
         {
             string key = string.Format(CATEGORIES_ALL_KEY, showHidden, parentCategoryId, languageId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
-                return (CategoryCollection)obj2;
+                return (List<Category>)obj2;
             }
             var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategories(parentCategoryId, 
                 showHidden, languageId);
@@ -233,7 +233,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// Gets all categories displayed on the home page
         /// </summary>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategoriesDisplayedOnHomePage()
+        public static List<Category> GetAllCategoriesDisplayedOnHomePage()
         {
             return GetAllCategoriesDisplayedOnHomePage(NopContext.Current.IsAdmin, NopContext.Current.WorkingLanguage.LanguageId);
         }
@@ -244,7 +244,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Category collection</returns>
-        public static CategoryCollection GetAllCategoriesDisplayedOnHomePage(bool showHidden, int languageId)
+        public static List<Category> GetAllCategoriesDisplayedOnHomePage(bool showHidden, int languageId)
         {
             var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategoriesDisplayedOnHomePage(showHidden, languageId);
             var categoryCollection = DBMapping(dbCollection);
@@ -296,9 +296,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <returns>Category</returns>
-        public static CategoryCollection GetBreadCrumb(int categoryId)
+        public static List<Category> GetBreadCrumb(int categoryId)
         {
-            var breadCrumb = new CategoryCollection();
+            var breadCrumb = new List<Category>();
             var category = GetCategoryById(categoryId);
             while (category != null && !category.Deleted && category.Published)
             {
@@ -515,6 +515,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return;
 
             var productCategory = GetProductCategoryById(productCategoryId);
+            if (productCategory == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productCategory))
@@ -657,6 +659,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             int productId, int categoryId, bool isFeaturedProduct, int displayOrder)
         {
             var productCategory = GetProductCategoryById(productCategoryId);
+            if (productCategory == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productCategory))

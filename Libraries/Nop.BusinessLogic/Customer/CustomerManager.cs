@@ -150,24 +150,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static void DeleteAddress(int addressId)
         {
             var address = GetAddressById(addressId);
-            if (address != null)
+            if (address == null)
+                return;
+
+            var customer = address.Customer;
+            if (customer != null)
             {
-                var customer = address.Customer;
-                if (customer != null)
-                {
-                    if (customer.BillingAddressId == address.AddressId)
-                        customer = SetDefaultBillingAddress(customer.CustomerId, 0);
+                if (customer.BillingAddressId == address.AddressId)
+                    customer = SetDefaultBillingAddress(customer.CustomerId, 0);
 
-                    if (customer.ShippingAddressId == address.AddressId)
-                        customer = SetDefaultShippingAddress(customer.CustomerId, 0);
-                }
-
-                var context = ObjectContextHelper.CurrentObjectContext;
-                if (!context.IsAttached(address))
-                    context.Addresses.Attach(address);
-                context.DeleteObject(address);
-                context.SaveChanges();
+                if (customer.ShippingAddressId == address.AddressId)
+                    customer = SetDefaultShippingAddress(customer.CustomerId, 0);
             }
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(address))
+                context.Addresses.Attach(address);
+            context.DeleteObject(address);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -353,6 +353,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var address = GetAddressById(addressId);
+            if (address == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(address))
@@ -1865,6 +1867,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static void DeleteCustomerAttribute(int customerAttributeId)
         {
             var customerAttribute = GetCustomerAttributeById(customerAttributeId);
+            if (customerAttribute == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerAttribute))
@@ -1953,6 +1957,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 value = string.Empty;
 
             var customerAttribute = GetCustomerAttributeById(customerAttributeId);
+            if (customerAttribute == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerAttribute))
@@ -2125,6 +2131,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
             var customerRole = GetCustomerRoleById(customerRoleId);
+            if (customerRole == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerRole))
@@ -2262,6 +2270,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static void DeleteCustomerSession(Guid customerSessionGuid)
         {
             var customerSession = GetCustomerSessionByGuid(customerSessionGuid);
+            if (customerSession == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerSession))
@@ -2352,6 +2362,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
 
             var customerSession = GetCustomerSessionByGuid(customerSessionGuid);
+            if (customerSession == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerSession))

@@ -47,6 +47,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static void DeleteTaxCategory(int taxCategoryId)
         {
             var taxCategory = GetTaxCategoryById(taxCategoryId);
+            if (taxCategory == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(taxCategory))
@@ -163,6 +165,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var taxCategory = GetTaxCategoryById(taxCategoryId);
+            if (taxCategory == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(taxCategory))

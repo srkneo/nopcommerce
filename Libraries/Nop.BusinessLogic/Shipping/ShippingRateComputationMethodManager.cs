@@ -47,6 +47,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static void DeleteShippingRateComputationMethod(int shippingRateComputationMethodId)
         {
             var shippingRateComputationMethod = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
+            if (shippingRateComputationMethod == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingRateComputationMethod))
@@ -176,8 +178,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             string name, string description, string configureTemplatePath, string className,
             bool isActive, int displayOrder)
         {
-
             var shippingRateComputationMethod = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
+            if (shippingRateComputationMethod == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingRateComputationMethod))

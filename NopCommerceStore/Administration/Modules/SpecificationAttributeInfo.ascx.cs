@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = specificationAttribute.DisplayOrder;
             }
 
-            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(SpecificationAttributeId, 0);
+            var saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(SpecificationAttributeId, 0);
             grdSpecificationAttributeOptions.DataSource = saoCol;
             grdSpecificationAttributeOptions.DataBind();
         }

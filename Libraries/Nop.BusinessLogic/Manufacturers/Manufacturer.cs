@@ -156,12 +156,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <summary>
         /// Gets the featured products of the manufacturer
         /// </summary>
-        public ProductCollection FeaturedProducts
+        public List<Product> FeaturedProducts
         {
             get
             {
                 int totalFeaturedRecords = 0;
-                ProductCollection featuredProducts = ProductManager.GetAllProducts(0,
+                var featuredProducts = ProductManager.GetAllProducts(0,
                     this.ManufacturerId, 0, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
                 return featuredProducts;
             }

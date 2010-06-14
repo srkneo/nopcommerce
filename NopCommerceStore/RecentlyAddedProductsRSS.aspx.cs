@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web
             if (ProductManager.RecentlyAddedProductsEnabled)
             {
                 int number = 10;
-                ProductCollection productCollection = ProductManager.GetRecentlyAddedProducts(number);
+                var productCollection = ProductManager.GetRecentlyAddedProducts(number);
                 rptrRecentlyAddedProducts.DataSource = productCollection;
                 rptrRecentlyAddedProducts.DataBind();
             }

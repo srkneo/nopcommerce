@@ -79,6 +79,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static void DeleteTaxRate(int taxRateId)
         {
             var taxRate = GetTaxRateById(taxRateId);
+            if (taxRate == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(taxRate))
@@ -255,6 +257,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 zip = zip.Trim();
 
             var taxRate = GetTaxRateById(taxRateId);
+            if (taxRate == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(taxRate))

@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlNewProductSpecificationAttribute.Items.Clear();
-            SpecificationAttributeCollection productSpecificationAttributes = SpecificationAttributeManager.GetSpecificationAttributes();
+            var productSpecificationAttributes = SpecificationAttributeManager.GetSpecificationAttributes();
             foreach (SpecificationAttribute sa in productSpecificationAttributes)
             {
                 ListItem item2 = new ListItem(sa.Name, sa.SpecificationAttributeId.ToString());
@@ -64,8 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!String.IsNullOrEmpty(ddlNewProductSpecificationAttribute.SelectedValue))
             {
                 int saId = Convert.ToInt32(ddlNewProductSpecificationAttribute.SelectedValue.ToString());
-                SpecificationAttributeOptionCollection saoCol =
-                    SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saId);
+                var saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saId);
                 foreach (SpecificationAttributeOption sao in saoCol)
                 {
                     ListItem item2 = new ListItem(sao.Name, sao.SpecificationAttributeOptionId.ToString());
@@ -78,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             ddlNewProductSpecificationAttributeOption.Items.Clear();
             int saId = Convert.ToInt32(ddlNewProductSpecificationAttribute.SelectedValue.ToString());
-            SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saId);
+            var saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(saId);
             foreach (SpecificationAttributeOption sao in saoCol)
             {
                 ListItem item2 = new ListItem(sao.Name, sao.SpecificationAttributeOptionId.ToString());
@@ -183,7 +182,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 DropDownList ddlSpecificationAttributeOption = e.Row.FindControl("ddlSpecificationAttributeOption") as DropDownList;
                 ddlSpecificationAttributeOption.Items.Clear();
-                SpecificationAttributeOptionCollection saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(sao.SpecificationAttributeId);
+                var saoCol = SpecificationAttributeManager.GetSpecificationAttributeOptionsBySpecificationAttribute(sao.SpecificationAttributeId);
                 foreach (SpecificationAttributeOption sao1 in saoCol)
                 {
                     ListItem item = new ListItem(sao1.Name, sao1.SpecificationAttributeOptionId.ToString());

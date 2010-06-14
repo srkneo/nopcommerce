@@ -87,6 +87,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         public static void DeleteBlogPost(int blogPostId)
         {
             var blogPost = GetBlogPostById(blogPostId);
+            if (blogPost == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(blogPost))
@@ -218,6 +220,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var blogPost = GetBlogPostById(blogPostId);
+            if (blogPost == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(blogPost))
@@ -246,6 +250,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         public static void DeleteBlogComment(int blogCommentId)
         {
             var blogComment = GetBlogCommentById(blogCommentId);
+            if (blogComment == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(blogComment))
@@ -387,6 +393,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var blogComment = GetBlogCommentById(blogCommentId);
+            if (blogComment == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(blogComment))

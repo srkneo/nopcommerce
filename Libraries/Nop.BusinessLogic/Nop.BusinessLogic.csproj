@@ -171,11 +171,9 @@
     <Compile Include="Payment\PaymentMethodTypeEnum.cs" />
     <Compile Include="Payment\RecurringPaymentTypeEnum.cs" />
     <Compile Include="Products\Attributes\CheckoutAttribute.cs" />
-    <Compile Include="Products\Attributes\CheckoutAttributeCollection.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeLocalized.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeManager.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeValue.cs" />
-    <Compile Include="Products\Attributes\CheckoutAttributeValueCollection.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeHelper.cs" />
     <Compile Include="Products\ProductRating.cs" />
@@ -198,9 +196,7 @@
     <Compile Include="Products\Specs\SpecificationAttributeOptionLocalized.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeLocalized.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeOption.cs" />
-    <Compile Include="Products\Specs\SpecificationAttributeOptionCollection.cs" />
     <Compile Include="Products\Specs\SpecificationAttributeOptionFilter.cs" />
-    <Compile Include="Products\Specs\SpecificationAttributeOptionFilterCollection.cs" />
     <Compile Include="Profile\CustomerNameFormatEnum.cs" />
     <Compile Include="Content\Topics\LocalizedTopic.cs" />
     <Compile Include="Content\Topics\TopicManager.cs" />
@@ -284,10 +280,6 @@
     <Compile Include="Categories\ProductCategory.cs" />
     <Compile Include="Products\ProductPicture.cs" />
     <Compile Include="Media\Picture.cs" />
-    <Compile Include="BaseEntityCollection.cs" />
-    <Compile Include="Products\Attributes\ProductVariantAttributeValueCollection.cs" />
-    <Compile Include="Products\Attributes\ProductAttributeCollection.cs" />
-    <Compile Include="Products\Specs\SpecificationAttributeCollection.cs" />
     <Compile Include="Promo\Discounts\DiscountTypeEnum.cs" />
     <Compile Include="Products\LowStockActivityEnum.cs" />
     <Compile Include="Orders\ShoppingCartTypeEnum.cs" />
@@ -310,7 +302,6 @@
     <Compile Include="ExportImport\ExportManager.cs" />
     <Compile Include="Linq\ExtensionMethods.cs" />
     <Compile Include="Shipping\ShipmentPackage.cs" />
-    <Compile Include="Shipping\ShippingOptionCollection.cs" />
     <Compile Include="Shipping\ShippingOption.cs" />
     <Compile Include="Shipping\ShippingManager.cs" />
     <Compile Include="Customer\Address.cs" />
@@ -318,7 +309,6 @@
     <Compile Include="Promo\Affiliates\Affiliate.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Categories\Category.cs" />
-    <Compile Include="Categories\CategoryCollection.cs" />
     <Compile Include="Templates\CategoryTemplate.cs" />
     <Compile Include="Directory\Country.cs" />
     <Compile Include="Payment\CreditCardType.cs" />
@@ -330,7 +320,6 @@
     <Compile Include="Directory\Language.cs" />
     <Compile Include="Audit\Log.cs" />
     <Compile Include="Manufacturers\Manufacturer.cs" />
-    <Compile Include="Manufacturers\ManufacturerCollection.cs" />
     <Compile Include="Templates\ManufacturerTemplate.cs" />
     <Compile Include="Content\News\News.cs" />
     <Compile Include="Content\News\NewsComment.cs" />
@@ -338,11 +327,9 @@
     <Compile Include="Orders\OrderProductVariant.cs" />
     <Compile Include="Payment\PaymentMethod.cs" />
     <Compile Include="Products\Product.cs" />
-    <Compile Include="Products\ProductCollection.cs" />
     <Compile Include="Templates\ProductTemplate.cs" />
     <Compile Include="Products\ProductType.cs" />
     <Compile Include="Products\ProductVariant.cs" />
-    <Compile Include="Products\ProductVariantCollection.cs" />
     <Compile Include="Configuration\Settings\Setting.cs" />
     <Compile Include="Shipping\ShippingMethod.cs" />
     <Compile Include="Shipping\ShippingRateComputationMethod.cs" />

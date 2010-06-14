@@ -60,6 +60,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         public static void DeleteSetting(int settingId)
         {
             var setting = GetSettingById(settingId);
+            if (setting == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(setting))
@@ -196,6 +198,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         public static Setting UpdateSetting(int settingId, string name, string value, string description)
         {
             var setting = GetSettingById(settingId);
+            if (setting == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(setting))

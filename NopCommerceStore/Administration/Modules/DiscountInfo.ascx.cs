@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        private string GenerateListOfRestrictedProductVariants(ProductVariantCollection productVariants)
+        private string GenerateListOfRestrictedProductVariants(List<ProductVariant> productVariants)
         {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < productVariants.Count; i++)

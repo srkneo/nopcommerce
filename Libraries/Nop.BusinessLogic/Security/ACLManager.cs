@@ -56,6 +56,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static void DeleteCustomerAction(int customerActionId)
         {
             var customerAction = GetCustomerActionById(customerActionId);
+            if (customerAction == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerAction))
@@ -167,6 +169,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             string name, string systemKeyword, string comment, int displayOrder)
         {
             var customerAction = GetCustomerActionById(customerActionId);
+            if (customerAction == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerAction))
@@ -196,6 +200,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static void DeleteAcl(int aclId)
         {
             var acl = GetAclById(aclId);
+            if (acl == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(acl))
@@ -281,6 +287,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             int customerRoleId, bool allow)
         {
             var acl = GetAclById(aclId);
+            if (acl == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(acl))

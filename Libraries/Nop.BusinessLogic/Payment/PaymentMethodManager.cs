@@ -82,6 +82,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         public static void DeletePaymentMethod(int paymentMethodId)
         {
             var paymentMethod = GetPaymentMethodById(paymentMethodId);
+            if (paymentMethod == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(paymentMethod))
@@ -236,6 +238,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             bool isActive, int displayOrder)
         {
             var paymentMethod = GetPaymentMethodById(paymentMethodId);
+            if (paymentMethod == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(paymentMethod))

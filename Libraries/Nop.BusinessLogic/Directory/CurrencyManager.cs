@@ -84,6 +84,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static void DeleteCurrency(int currencyId)
         {
             var currency = GetCurrencyById(currencyId);
+            if (currency == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(currency))
@@ -259,6 +261,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var currency = GetCurrencyById(currencyId);
+            if (currency == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(currency))

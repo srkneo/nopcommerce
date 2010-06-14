@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets the product variant attribute values
         /// </summary>
-        public ProductVariantAttributeValueCollection ProductVariantAttributeValues
+        public List<ProductVariantAttributeValue> ProductVariantAttributeValues
         {
             get
             {

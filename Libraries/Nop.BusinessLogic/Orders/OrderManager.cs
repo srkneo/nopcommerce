@@ -1375,6 +1375,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var order = GetOrderById(orderId);
+            if (order == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(order))
@@ -1546,6 +1548,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return;
 
             var orderProductVariant = GetOrderProductVariantById(orderProductVariantId);
+            if (orderProductVariant == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(orderProductVariant))
@@ -1761,6 +1765,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 attributeDescription = string.Empty;
 
             var opv = GetOrderProductVariantById(orderProductVariantId);
+            if (opv == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(opv))
@@ -1876,6 +1882,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static void DeleteOrderNote(int orderNoteId)
         {
             var orderNote = GetOrderNoteById(orderNoteId);
+            if (orderNote == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(orderNote))
@@ -1934,9 +1942,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string note, bool displayToCustomer, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
-
+            
             var orderNote = GetOrderNoteById(orderNoteId);
+            if (orderNote == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(orderNote))
@@ -2269,6 +2278,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var recurringPayment = GetRecurringPaymentById(recurringPaymentId);
+            if (recurringPayment == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(recurringPayment))
@@ -2330,6 +2341,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static void DeleteRecurringPaymentHistory(int recurringPaymentHistoryId)
         {
             var recurringPaymentHistory = GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
+            if (recurringPaymentHistory == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(recurringPaymentHistory))
@@ -2393,6 +2406,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var recurringPaymentHistory = GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
+            if (recurringPaymentHistory == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(recurringPaymentHistory))
@@ -2431,6 +2446,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static void DeleteGiftCard(int giftCardId)
         {
             var giftCard = GetGiftCardById(giftCardId);
+            if (giftCard == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(giftCard))
@@ -2566,6 +2583,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var giftCard = GetGiftCardById(giftCardId);
+            if (giftCard == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(giftCard))
@@ -2593,6 +2612,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static void DeleteGiftCardUsageHistory(int giftCardUsageHistoryId)
         {
             var giftCardUsageHistory = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
+            if (giftCardUsageHistory == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(giftCardUsageHistory))
@@ -2684,6 +2705,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var giftCardUsageHistory = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
+            if (giftCardUsageHistory == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(giftCardUsageHistory))
@@ -2710,6 +2733,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static void DeleteRewardPointsHistory(int rewardPointsHistoryId)
         {
             var rewardPointsHistory = GetRewardPointsHistoryById(rewardPointsHistoryId);
+            if (rewardPointsHistory == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(rewardPointsHistory))
@@ -2829,6 +2854,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var rewardPointsHistory = GetRewardPointsHistoryById(rewardPointsHistoryId);
+            if (rewardPointsHistory == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(rewardPointsHistory))

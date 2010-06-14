@@ -77,6 +77,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static void DeleteShippingMethod(int shippingMethodId)
         {
             var shippingMethod = GetShippingMethodById(shippingMethodId);
+            if (shippingMethod == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingMethod))
@@ -179,6 +181,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             string name, string description, int displayOrder)
         {
             var shippingMethod = GetShippingMethodById(shippingMethodId);
+            if (shippingMethod == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingMethod))

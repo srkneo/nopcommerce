@@ -86,13 +86,13 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        private void WriteCategories(StringBuilder sb, CategoryCollection categoryCollection)
+        private void WriteCategories(StringBuilder sb, List<Category> categoryCollection)
         {
             foreach(Category category in categoryCollection)
             {
                 sb.Append("<li>");
                 sb.AppendFormat("<a href=\"{0}\">{1}</a>", SEOHelper.GetCategoryUrl(category.CategoryId), Server.HtmlEncode(category.Name));
-                CategoryCollection childCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
+                var childCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
                 if(childCategoryCollection.Count > 0)
                 {
                     sb.Append("<ul>");
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        private void WriteManufacturers(StringBuilder sb, ManufacturerCollection manufacturerCollection)
+        private void WriteManufacturers(StringBuilder sb, List<Manufacturer> manufacturerCollection)
         {
             foreach(Manufacturer manufacturer in manufacturerCollection)
             {
@@ -111,7 +111,7 @@ namespace NopSolutions.NopCommerce.Web
             }
         }
 
-        private void WriteProducts(StringBuilder sb, ProductCollection productCollection)
+        private void WriteProducts(StringBuilder sb, List<Product> productCollection)
         {
             foreach(Product product in productCollection)
             {

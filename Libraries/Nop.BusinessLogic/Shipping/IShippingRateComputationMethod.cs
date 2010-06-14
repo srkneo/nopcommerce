@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="shipmentPackage">Shipment package</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, 
+        List<ShippingOption> GetShippingOptions(ShipmentPackage shipmentPackage, 
             ref string error);
 
         /// <summary>

@@ -418,6 +418,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         public static void DeleteLocalizedMessageTemplate(int localizedMessageTemplateId)
         {
             var localizedMessageTemplate = GetLocalizedMessageTemplateById(localizedMessageTemplateId);
+            if (localizedMessageTemplate == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(localizedMessageTemplate))
@@ -487,6 +489,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string subject, string body, bool isActive)
         {
             var localizedMessageTemplate = GetLocalizedMessageTemplateById(messageTemplateLocalizedId);
+            if (localizedMessageTemplate == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(localizedMessageTemplate))
@@ -528,6 +532,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         public static void DeleteQueuedEmail(int queuedEmailId)
         {
             var queuedEmail = GetQueuedEmailById(queuedEmailId);
+            if (queuedEmail == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(queuedEmail))
@@ -693,6 +699,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                 sentOn = DateTimeHelper.ConvertToUtcTime(sentOn.Value);
 
             var queuedEmail = GetQueuedEmailById(queuedEmailId);
+            if (queuedEmail == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(queuedEmail))
@@ -828,9 +836,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         {
             var newsLetterSubscription = GetNewsLetterSubscriptionById(newsLetterSubscriptionId);
             if (newsLetterSubscription == null)
-            {
-                throw new NopException("Subscription does not exist.");
-            }
+                return null;
+
             if(!CommonHelper.IsValidEmail(email))
             {
                 throw new NopException("Email is not valid.");
@@ -854,6 +861,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         public static void DeleteNewsLetterSubscription(int newsLetterSubscriptionId)
         {
             var newsLetterSubscription = GetNewsLetterSubscriptionById(newsLetterSubscriptionId);
+            if (newsLetterSubscription == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(newsLetterSubscription))

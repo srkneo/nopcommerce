@@ -77,9 +77,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.ShippingByWeightAndCountryCM
         /// <param name="shipmentPackage">Shipment package</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
+        public List<ShippingOption> GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
-            var shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
 
             if (shipmentPackage == null)
                 throw new ArgumentNullException("shipmentPackage");

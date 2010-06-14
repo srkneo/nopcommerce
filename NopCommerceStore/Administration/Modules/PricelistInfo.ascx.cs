@@ -91,8 +91,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtPriceAdjustment.Value = pricelist.PriceAdjustment;
                 this.ddlFormatLocalization.SelectedValue = pricelist.FormatLocalization;
 
-                ProductVariantCollection productVariants = new ProductVariantCollection();
-                ProductCollection products = ProductManager.GetAllProducts();
+                var productVariants = new List<ProductVariant>();
+                var products = ProductManager.GetAllProducts();
                 foreach (Product product in products)
                 {
                     productVariants.AddRange(product.ProductVariants);
@@ -107,8 +107,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 ddlFormatLocalization.SelectedValue = System.Globalization.CultureInfo.CurrentCulture.IetfLanguageTag;
 
-                ProductVariantCollection productVariants = new ProductVariantCollection();
-                ProductCollection products = ProductManager.GetAllProducts();
+                var productVariants = new List<ProductVariant>();
+                var products = ProductManager.GetAllProducts();
                 foreach (Product product in products)
                 {
                     productVariants.AddRange(product.ProductVariants);

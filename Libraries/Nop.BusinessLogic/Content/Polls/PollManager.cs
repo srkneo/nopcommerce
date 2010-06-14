@@ -129,6 +129,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public static void DeletePoll(int pollId)
         {
             var poll = GetPollById(pollId);
+            if (poll == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(poll))
@@ -189,6 +191,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             string systemKeyword, bool published, int displayOrder)
         {
             var poll = GetPollById(pollId);
+            if (poll == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(poll))
@@ -274,6 +278,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public static void DeletePollAnswer(int pollAnswerId)
         {
             var pollAnswer = GetPollAnswerById(pollAnswerId);
+            if (pollAnswer == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(pollAnswer))
@@ -331,6 +337,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             int pollId, string name, int count, int displayOrder)
         {
             var pollAnswer = GetPollAnswerById(pollAnswerId);
+            if (pollAnswer == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(pollAnswer))

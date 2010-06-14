@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <summary>
         /// Gets checkout attribute values
         /// </summary>
-        public CheckoutAttributeValueCollection CheckoutAttributeValues
+        public List<CheckoutAttributeValue> CheckoutAttributeValues
         {
             get
             {

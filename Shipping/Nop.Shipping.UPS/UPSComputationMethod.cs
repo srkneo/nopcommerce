@@ -326,9 +326,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.UPS
                 return false;
         }
 
-        private ShippingOptionCollection ParseResponse(string response, ref string error)
+        private List<ShippingOption> ParseResponse(string response, ref string error)
         {
-            var shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
 
             using (var sr = new StringReader(response))
             using (var tr = new XmlTextReader(sr))
@@ -417,9 +417,9 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.UPS
         /// <param name="shipmentPackage">Shipment package</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public ShippingOptionCollection GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
+        public List<ShippingOption> GetShippingOptions(ShipmentPackage shipmentPackage, ref string error)
         {
-            var shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
             if (shipmentPackage == null)
                 throw new ArgumentNullException("shipmentPackage");
             if (shipmentPackage.Items == null)

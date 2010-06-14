@@ -43,6 +43,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static void DeleteLog(int logId)
         {
             var log = GetLogById(logId);
+            if (log == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(log))

@@ -57,6 +57,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static void DeleteShippingByTotal(int shippingByTotalId)
         {
             var shippingByTotal = GetById(shippingByTotalId);
+            if (shippingByTotal == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingByTotal))
@@ -124,6 +126,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
             var shippingByTotal = GetById(shippingByTotalId);
+            if (shippingByTotal == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shippingByTotal))

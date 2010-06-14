@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -29,10 +30,10 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Media;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -71,7 +72,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlManufacturer.Items.Clear();
             ListItem itemEmptyManufacturer = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlManufacturer.Items.Add(itemEmptyManufacturer);
-            ManufacturerCollection manufacturers = ManufacturerManager.GetAllManufacturers();
+            var manufacturers = ManufacturerManager.GetAllManufacturers();
             foreach (Manufacturer manufacturer in manufacturers)
             {
                 ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerId.ToString());
@@ -80,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         }
 
 
-        protected ProductVariantCollection GetProductVariants()
+        protected List<ProductVariant> GetProductVariants()
         {
             string productName = txtProductName.Text;
             int categoryId = ParentCategory.SelectedCategoryId;

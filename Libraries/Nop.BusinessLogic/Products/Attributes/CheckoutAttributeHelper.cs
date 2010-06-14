@@ -72,9 +72,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="attributes">Attributes</param>
         /// <returns>Selected checkout attributes</returns>
-        public static CheckoutAttributeCollection ParseCheckoutAttributes(string attributes)
+        public static List<CheckoutAttribute> ParseCheckoutAttributes(string attributes)
         {
-            var caCollection = new CheckoutAttributeCollection();
+            var caCollection = new List<CheckoutAttribute>();
             var Ids = ParseCheckoutAttributeIds(attributes);
             foreach (int id in Ids)
             {
@@ -92,9 +92,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// </summary>
         /// <param name="attributes">Attributes</param>
         /// <returns>Checkout attribute values</returns>
-        public static CheckoutAttributeValueCollection ParseCheckoutAttributeValues(string attributes)
+        public static List<CheckoutAttributeValue> ParseCheckoutAttributeValues(string attributes)
         {
-            var caValues = new CheckoutAttributeValueCollection();
+            var caValues = new List<CheckoutAttributeValue>();
             var caCollection = ParseCheckoutAttributes(attributes);
             foreach (var ca in caCollection)
             {

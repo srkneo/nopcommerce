@@ -191,12 +191,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <summary>
         /// Gets the featured products of the category
         /// </summary>
-        public ProductCollection FeaturedProducts
+        public List<Product> FeaturedProducts
         {
             get
             {
                 int totalFeaturedRecords = 0;
-                ProductCollection featuredProducts = ProductManager.GetAllProducts(this.CategoryId,
+                var featuredProducts = ProductManager.GetAllProducts(this.CategoryId,
                     0, 0, true, int.MaxValue - 1, 0, out totalFeaturedRecords);
                 return featuredProducts;
             }

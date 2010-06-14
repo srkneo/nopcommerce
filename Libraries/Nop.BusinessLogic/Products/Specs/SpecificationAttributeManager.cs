@@ -45,12 +45,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="dbCollection">DBSpecificationAttributeCollection</param>
         /// <returns>SpecificationAttributeCollection</returns>
-        private static SpecificationAttributeCollection DBMapping(DBSpecificationAttributeCollection dbCollection)
+        private static List<SpecificationAttribute> DBMapping(DBSpecificationAttributeCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new SpecificationAttributeCollection();
+            var collection = new List<SpecificationAttribute>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -97,12 +97,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="dbCollection">DBSpecificationAttributeOptionCollection</param>
         /// <returns>SpecificationAttributeOptionCollection</returns>
-        private static SpecificationAttributeOptionCollection DBMapping(DBSpecificationAttributeOptionCollection dbCollection)
+        private static List<SpecificationAttributeOption> DBMapping(DBSpecificationAttributeOptionCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new SpecificationAttributeOptionCollection();
+            var collection = new List<SpecificationAttributeOption>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -169,12 +169,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="dbCol">DBSpecificationAttributeOptionFilterCollection</param>
         /// <returns>SpecificationAttributeOptionFilterCollection</returns>
-        private static SpecificationAttributeOptionFilterCollection DBMapping(DBSpecificationAttributeOptionFilterCollection dbCol)
+        private static List<SpecificationAttributeOptionFilter> DBMapping(DBSpecificationAttributeOptionFilterCollection dbCol)
         {
             if (dbCol == null)
                 return null;
 
-            var col = new SpecificationAttributeOptionFilterCollection();
+            var col = new List<SpecificationAttributeOptionFilter>();
             foreach (var dbItem in dbCol)
             {
                 var item = DBMapping(dbItem);
@@ -233,7 +233,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// Gets specification attribute collection
         /// </summary>
         /// <returns>Specification attribute collection</returns>
-        public static SpecificationAttributeCollection GetSpecificationAttributes()
+        public static List<SpecificationAttribute> GetSpecificationAttributes()
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -246,7 +246,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute collection</returns>
-        public static SpecificationAttributeCollection GetSpecificationAttributes(int languageId)
+        public static List<SpecificationAttribute> GetSpecificationAttributes(int languageId)
         {
             var dbCollection = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributes(languageId);
             var specificationAttributes = DBMapping(dbCollection);
@@ -440,7 +440,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <returns>Specification attribute option</returns>
-        public static SpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId)
+        public static List<SpecificationAttributeOption> GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -454,7 +454,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <param name="specificationAttributeId">The specification attribute identifier</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option</returns>
-        public static SpecificationAttributeOptionCollection GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId, int languageId)
+        public static List<SpecificationAttributeOption> GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId, int languageId)
         {
             var dbCollection = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeOptionsBySpecificationAttributeId(specificationAttributeId, languageId);
             var specificationAttributeOptions = DBMapping(dbCollection);
@@ -465,7 +465,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// Gets specification attribute option collection
         /// </summary>
         /// <returns>Specification attribute option collection</returns>
-        public static SpecificationAttributeOptionCollection GetSpecificationAttributeOptions()
+        public static List<SpecificationAttributeOption> GetSpecificationAttributeOptions()
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -478,7 +478,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Specification attribute option collection</returns>
-        public static SpecificationAttributeOptionCollection GetSpecificationAttributeOptions(int languageId)
+        public static List<SpecificationAttributeOption> GetSpecificationAttributeOptions(int languageId)
         {
             var dbCollection = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeOptions(languageId);
             var specificationAttributeOptions = DBMapping(dbCollection);
@@ -637,6 +637,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static void DeleteProductSpecificationAttribute(int productSpecificationAttributeId)
         {
             var productSpecificationAttribute = GetProductSpecificationAttributeById(productSpecificationAttributeId);
+            if (productSpecificationAttribute == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productSpecificationAttribute))
@@ -768,6 +770,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             int productId, int specificationAttributeOptionId, bool allowFiltering, bool showOnProductPage, int displayOrder)
         {
             var productSpecificationAttribute = GetProductSpecificationAttributeById(productSpecificationAttributeId);
+            if (productSpecificationAttribute == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productSpecificationAttribute))
@@ -799,7 +803,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// </summary>
         /// <param name="categoryId">Category identifier</param>
         /// <returns>Product specification attribute mapping collection</returns>
-        public static SpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilter(int categoryId)
+        public static List<SpecificationAttributeOptionFilter> GetSpecificationAttributeOptionFilter(int categoryId)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -813,7 +817,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <param name="categoryId">Category identifier</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Product specification attribute mapping collection</returns>
-        public static SpecificationAttributeOptionFilterCollection GetSpecificationAttributeOptionFilter(int categoryId, int languageId)
+        public static List<SpecificationAttributeOptionFilter> GetSpecificationAttributeOptionFilter(int categoryId, int languageId)
         {
             var dbCol = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeOptionFilterByCategoryId(categoryId, languageId);
             var col = DBMapping(dbCol);

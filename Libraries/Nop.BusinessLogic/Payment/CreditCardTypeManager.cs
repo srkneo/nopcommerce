@@ -154,6 +154,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             string name, string systemKeyword, int displayOrder, bool deleted)
         {
             var creditCardType = GetCreditCardTypeById(creditCardTypeId);
+            if (creditCardType == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(creditCardType))

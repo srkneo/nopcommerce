@@ -44,12 +44,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         #endregion
 
         #region Utilities
-        private static ManufacturerCollection DBMapping(DBManufacturerCollection dbCollection)
+        private static List<Manufacturer> DBMapping(DBManufacturerCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ManufacturerCollection();
+            var collection = new List<Manufacturer>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -176,7 +176,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// Gets all manufacturers
         /// </summary>
         /// <returns>Manufacturer collection</returns>
-        public static ManufacturerCollection GetAllManufacturers()
+        public static List<Manufacturer> GetAllManufacturers()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllManufacturers(showHidden);
@@ -187,7 +187,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Manufacturer collection</returns>
-        public static ManufacturerCollection GetAllManufacturers(bool showHidden)
+        public static List<Manufacturer> GetAllManufacturers(bool showHidden)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -201,13 +201,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Manufacturer collection</returns>
-        public static ManufacturerCollection GetAllManufacturers(bool showHidden, int languageId)
+        public static List<Manufacturer> GetAllManufacturers(bool showHidden, int languageId)
         {
             string key = string.Format(MANUFACTURERS_ALL_KEY, showHidden, languageId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.ManufacturersCacheEnabled && (obj2 != null))
             {
-                return (ManufacturerCollection)obj2;
+                return (List<Manufacturer>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetAllManufacturers(showHidden, languageId);
@@ -448,6 +448,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return;
 
             var productManufacturer = GetProductManufacturerById(productManufacturerId);
+            if (productManufacturer == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productManufacturer))
@@ -591,6 +593,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             int productId, int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
             var productManufacturer = GetProductManufacturerById(productManufacturerId);
+            if (productManufacturer == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productManufacturer))

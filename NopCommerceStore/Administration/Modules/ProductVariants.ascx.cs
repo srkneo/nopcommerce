@@ -41,7 +41,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             Product product = ProductManager.GetProductById(this.ProductId);
             if (product != null)
             {
-                ProductVariantCollection productVariants = product.ProductVariants;
+                var productVariants = product.ProductVariants;
                 gvProductVariants.DataSource = productVariants;
                 gvProductVariants.DataBind();
             }

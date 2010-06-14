@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void FillDropDowns()
         {
             this.ddlNewProductAttributes.Items.Clear();
-            ProductAttributeCollection productAttributes = ProductAttributeManager.GetAllProductAttributes();
+            var productAttributes = ProductAttributeManager.GetAllProductAttributes();
             foreach (ProductAttribute pa in productAttributes)
             {
                 ListItem item2 = new ListItem(pa.Name, pa.ProductAttributeId.ToString());
@@ -213,7 +213,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (ddlProductAttribute != null)
                 {
                     ddlProductAttribute.Items.Clear();
-                    ProductAttributeCollection productAttributes = ProductAttributeManager.GetAllProductAttributes();
+                    var productAttributes = ProductAttributeManager.GetAllProductAttributes();
                     foreach (ProductAttribute productAttribute in productAttributes)
                     {
                         ListItem item = new ListItem(productAttribute.Name,

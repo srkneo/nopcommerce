@@ -47,6 +47,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static void DeleteCategoryTemplate(int categoryTemplateId)
         {
             var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
+            if (categoryTemplate == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(categoryTemplate))
@@ -168,6 +170,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
+            if (categoryTemplate == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(categoryTemplate))
@@ -195,6 +199,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static void DeleteManufacturerTemplate(int manufacturerTemplateId)
         {
             var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
+            if (manufacturerTemplate == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(manufacturerTemplate))
@@ -315,6 +321,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
+            if (manufacturerTemplate == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(manufacturerTemplate))
@@ -342,6 +350,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static void DeleteProductTemplate(int productTemplateId)
         {
             var productTemplate = GetProductTemplateById(productTemplateId);
+            if (productTemplate == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productTemplate))
@@ -463,6 +473,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var productTemplate = GetProductTemplateById(productTemplateId);
+            if (productTemplate == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productTemplate))

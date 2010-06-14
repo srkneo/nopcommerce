@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Text;
@@ -111,7 +112,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         #region Utilities
         protected void CreateMenu()
         {
-            CategoryCollection breadCrumb = null;
+            List<Category> breadCrumb = null;
             var currentCategory = CategoryManager.GetCategoryById(CommonHelper.QueryStringInt("CategoryId"));
             if (currentCategory == null)
             {
@@ -127,12 +128,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (currentCategory != null)
                 breadCrumb = CategoryManager.GetBreadCrumb(currentCategory.CategoryId);
             else
-                breadCrumb = new CategoryCollection();
+                breadCrumb = new List<Category>();
 
             CreateChildMenu(breadCrumb, 0, currentCategory, 0);
         }
 
-        protected void CreateChildMenu(CategoryCollection breadCrumb, int rootCategoryId, Category currentCategory, int level)
+        protected void CreateChildMenu(List<Category> breadCrumb, int rootCategoryId, Category currentCategory, int level)
         {
             int padding = level++ * 15;
             foreach (var category in CategoryManager.GetAllCategories(rootCategoryId))

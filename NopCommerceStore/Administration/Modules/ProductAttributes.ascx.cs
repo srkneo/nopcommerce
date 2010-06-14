@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         void BindGrid()
         {
-            ProductAttributeCollection productAttributes = ProductAttributeManager.GetAllProductAttributes();
+            var productAttributes = ProductAttributeManager.GetAllProductAttributes();
             gvProductAttributes.DataSource = productAttributes;
             gvProductAttributes.DataBind();
         }

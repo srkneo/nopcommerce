@@ -266,6 +266,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static void DeleteForumGroup(int forumGroupId)
         {
             var forumGroup = GetForumGroupById(forumGroupId);
+            if (forumGroup == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forumGroup))
@@ -389,6 +391,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var forumGroup = GetForumGroupById(forumGroupId);
+            if (forumGroup == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forumGroup))
@@ -562,6 +566,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var forum = GetForumById(forumId);
+            if (forum == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forum))
@@ -615,6 +621,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static void DeleteTopic(int forumTopicId)
         {
             var forumTopic = GetTopicById(forumTopicId);
+            if (forumTopic == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forumTopic))
@@ -835,6 +843,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             }
 
             var forumTopic = GetTopicById(forumTopicId);
+            if (forumTopic == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forumTopic))
@@ -904,11 +914,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static void DeletePost(int forumPostId)
         {
             var forumPost = GetPostById(forumPostId);
-            int forumTopicId = 0;
-            if (forumPost != null)
-            {
-                forumTopicId = forumPost.TopicId;
-            }
+            if (forumPost == null)
+                return;
+
+            int forumTopicId = forumPost.TopicId;
              
             //delete topic if it was the first post
             var forumTopic = ForumManager.GetTopicById(forumTopicId);
@@ -917,7 +926,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 ForumPost firstPost = forumTopic.FirstPost;
                 if (firstPost != null && firstPost.ForumPostId == forumPostId)
                 {
-                    ForumManager.DeleteTopic(forumTopic.ForumTopicId);
+                    DeleteTopic(forumTopic.ForumTopicId);
                 }
             }
 
@@ -1103,6 +1112,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             }
 
             var forumPost = GetPostById(forumPostId);
+            if (forumPost == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forumPost))
@@ -1132,6 +1143,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static void DeletePrivateMessage(int forumPrivateMessageId)
         {
             var privateMessage = GetPrivateMessageById(forumPrivateMessageId);
+            if (privateMessage == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(privateMessage))
@@ -1307,6 +1320,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             else
             {
                 var privateMessage = GetPrivateMessageById(privateMessageId);
+                if (privateMessage == null)
+                    return null;
 
                 var context = ObjectContextHelper.CurrentObjectContext;
                 if (!context.IsAttached(privateMessage))
@@ -1333,6 +1348,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static void DeleteSubscription(int forumSubscriptionId)
         {
             var forumSubscription = GetSubscriptionById(forumSubscriptionId);
+            if (forumSubscription == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forumSubscription))
@@ -1451,6 +1468,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var forumSubscription = GetSubscriptionById(subscriptionId);
+            if (forumSubscription == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(forumSubscription))

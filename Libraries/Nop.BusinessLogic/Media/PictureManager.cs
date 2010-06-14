@@ -483,6 +483,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                 File.Delete(Path.Combine(PictureManager.LocalThumbImagePath, currentFileName));
 
             var picture = GetPictureById(pictureId);
+            if (picture == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(picture))
@@ -597,8 +599,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             string extension, bool isNew)
         {
             ValidatePicture(pictureBinary);
-                        
+
             var picture = GetPictureById(pictureId);
+            if (picture == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(picture))

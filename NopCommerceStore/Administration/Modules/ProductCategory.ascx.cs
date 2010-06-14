@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(int forParentCategoryId,
             string prefix, List<ProductCategory> ExistingProductCategoryCollection)
         {
-            CategoryCollection categoryCollection = CategoryManager.GetAllCategories(forParentCategoryId);
+            var categoryCollection = CategoryManager.GetAllCategories(forParentCategoryId);
             List<ProductCategoryMappingHelperClass> result = new List<ProductCategoryMappingHelperClass>();
             for (int i = 0; i < categoryCollection.Count; i++)
             {

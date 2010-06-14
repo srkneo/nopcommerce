@@ -44,6 +44,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static void DeleteStateProvince(int stateProvinceId)
         {
             var stateProvince = GetStateProvinceById(stateProvinceId);
+            if (stateProvince == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(stateProvince))
@@ -173,6 +175,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             int countryId, string name, string abbreviation, int displayOrder)
         {
             var stateProvince = GetStateProvinceById(stateProvinceId);
+            if (stateProvince == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(stateProvince))

@@ -62,12 +62,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
         #region Utilities
 
-        private static ProductCollection DBMapping(DBProductCollection dbCollection)
+        private static List<Product> DBMapping(DBProductCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ProductCollection();
+            var collection = new List<Product>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -107,12 +107,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return item;
         }
 
-        private static ProductVariantCollection DBMapping(DBProductVariantCollection dbCollection)
+        private static List<ProductVariant> DBMapping(DBProductVariantCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new ProductVariantCollection();
+            var collection = new List<ProductVariant>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -312,7 +312,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets all products
         /// </summary>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts()
+        public static List<Product> GetAllProducts()
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllProducts(showHidden);
@@ -323,7 +323,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(bool showHidden)
+        public static List<Product> GetAllProducts(bool showHidden)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -338,7 +338,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(bool showHidden, int languageId)
+        public static List<Product> GetAllProducts(bool showHidden, int languageId)
         {
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(showHidden, languageId);
             var products = DBMapping(dbCollection);
@@ -352,7 +352,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int pageSize, int pageIndex, 
+        public static List<Product> GetAllProducts(int pageSize, int pageIndex, 
             out int totalRecords)
         {
             return GetAllProducts(0, 0, 0, null, null, null,
@@ -371,7 +371,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId, 
+        public static List<Product> GetAllProducts(int categoryId, 
             int manufacturerId, int productTagId, bool? featuredProducts, 
             int pageSize, int pageIndex, out int totalRecords)
         {
@@ -390,7 +390,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(string keywords, 
+        public static List<Product> GetAllProducts(string keywords, 
             bool searchDescriptions, int pageSize, int pageIndex, out int totalRecords)
         {
             return GetAllProducts(0, 0, 0, null, null, null,
@@ -412,7 +412,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId,
+        public static List<Product> GetAllProducts(int categoryId,
             int manufacturerId, int productTagId, bool? featuredProducts, 
             string keywords, bool searchDescriptions, int pageSize,
             int pageIndex, List<int> filteredSpecs, out int totalRecords)
@@ -437,7 +437,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId,
+        public static List<Product> GetAllProducts(int categoryId,
             int manufacturerId, int productTagId, bool? featuredProducts, 
             decimal? priceMin, decimal? priceMax, int pageSize, 
             int pageIndex, List<int> filteredSpecs, out int totalRecords)
@@ -464,7 +464,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="filteredSpecs">Filtered product specification identifiers</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId,
+        public static List<Product> GetAllProducts(int categoryId,
             int manufacturerId, int productTagId, bool? featuredProducts,
             decimal? priceMin, decimal? priceMax, string keywords, 
             bool searchDescriptions, int pageSize, int pageIndex,
@@ -494,7 +494,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId,
+        public static List<Product> GetAllProducts(int categoryId,
             int manufacturerId, int productTagId, bool? featuredProducts, 
             decimal? priceMin, decimal? priceMax, string keywords, 
             bool searchDescriptions, int pageSize, int pageIndex,
@@ -528,7 +528,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="orderBy">Order by</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProducts(int categoryId,
+        public static List<Product> GetAllProducts(int categoryId,
             int manufacturerId, int productTagId, bool? featuredProducts,
             decimal? priceMin, decimal? priceMax, 
             string keywords, bool searchDescriptions, int pageSize, 
@@ -558,7 +558,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets all products displayed on the home page
         /// </summary>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetAllProductsDisplayedOnHomePage()
+        public static List<Product> GetAllProductsDisplayedOnHomePage()
         {
             bool showHidden = NopContext.Current.IsAdmin;
 
@@ -816,7 +816,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetProductsAlsoPurchasedById(int productId)
+        public static List<Product> GetProductsAlsoPurchasedById(int productId)
         {
             int totalRecords = 0;
             var products = GetProductsAlsoPurchasedById(productId, 
@@ -832,7 +832,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetProductsAlsoPurchasedById(int productId,
+        public static List<Product> GetProductsAlsoPurchasedById(int productId,
             int pageSize, int pageIndex, out int totalRecords)
         {
             int languageId = 0;
@@ -852,7 +852,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product collection</returns>
-        public static ProductCollection GetProductsAlsoPurchasedById(int productId,
+        public static List<Product> GetProductsAlsoPurchasedById(int productId,
             int languageId, int pageSize, int pageIndex, out int totalRecords)
         {
             if (pageSize <= 0)
@@ -919,9 +919,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets a "compare products" list
         /// </summary>
         /// <returns>"Compare products" list</returns>
-        public static ProductCollection GetCompareProducts()
+        public static List<Product> GetCompareProducts()
         {
-            var products = new ProductCollection();
+            var products = new List<Product>();
             var productIds = GetCompareProductsIds();
             foreach (int productId in productIds)
             {
@@ -1014,9 +1014,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="number">Number of products to load</param>
         /// <returns>"recently viewed products" list</returns>
-        public static ProductCollection GetRecentlyViewedProducts(int number)
+        public static List<Product> GetRecentlyViewedProducts(int number)
         {
-            var products = new ProductCollection();
+            var products = new List<Product>();
             var productIds = GetRecentlyViewedProductsIds(number);
             foreach (int productId in productIds)
             {
@@ -1105,7 +1105,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="number">Number of products to load</param>
         /// <returns>"recently added" product list</returns>
-        public static ProductCollection GetRecentlyAddedProducts(int number)
+        public static List<Product> GetRecentlyAddedProducts(int number)
         {
             int languageId = 0;
             if (NopContext.Current != null)
@@ -1425,7 +1425,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Get low stock product variants
         /// </summary>
         /// <returns>Result</returns>
-        public static ProductVariantCollection GetLowStockProductVariants()
+        public static List<ProductVariant> GetLowStockProductVariants()
         {
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetLowStockProductVariants();
             var productVariants = DBMapping(dbCollection);
@@ -1574,7 +1574,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Product variants</returns>
-        public static ProductVariantCollection GetAllProductVariants(int categoryId,
+        public static List<ProductVariant> GetAllProductVariants(int categoryId,
             int manufacturerId, string keywords, 
             int pageSize, int pageIndex, out int totalRecords)
         {
@@ -1842,7 +1842,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="productId">The product identifier</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductId(int productId)
+        public static List<ProductVariant> GetProductVariantsByProductId(int productId)
         {
             bool showHidden = NopContext.Current.IsAdmin;
             return GetProductVariantsByProductId(productId, showHidden);
@@ -1854,7 +1854,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productId">The product identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductId(int productId,
+        public static List<ProductVariant> GetProductVariantsByProductId(int productId,
             bool showHidden)
         {
             int languageId = 0;
@@ -1872,14 +1872,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="languageId">Language identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsByProductId(int productId,
+        public static List<ProductVariant> GetProductVariantsByProductId(int productId,
             int languageId, bool showHidden)
         {
             string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, productId, languageId);
             object obj2 = NopCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
-                return (ProductVariantCollection)obj2;
+                return (List<ProductVariant>)obj2;
             }
 
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByProductId(productId, languageId, showHidden);
@@ -1897,10 +1897,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="discountId">The discount identifier</param>
         /// <returns>Product variant collection</returns>
-        public static ProductVariantCollection GetProductVariantsRestrictedByDiscountId(int discountId)
+        public static List<ProductVariant> GetProductVariantsRestrictedByDiscountId(int discountId)
         {
             if (discountId == 0)
-                return new ProductVariantCollection();
+                return new List<ProductVariant>();
 
             var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsRestrictedByDiscountId(discountId);
             var productVariants = DBMapping(dbCollection);
@@ -2159,6 +2159,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void DeleteProductPicture(int productPictureId)
         {
             var productPicture = GetProductPictureById(productPictureId);
+            if (productPicture == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productPicture))
@@ -2219,6 +2221,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int pictureId, int displayOrder)
         {
             var productPicture = GetProductPictureById(productPictureId);
+            if (productPicture == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productPicture))
@@ -2313,6 +2317,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void DeleteProductReview(int productReviewId)
         {
             var productReview = GetProductReviewById(productReviewId);
+            if (productReview == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productReview))
@@ -2469,6 +2475,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var productReview = GetProductReviewById(productReviewId);
+            if (productReview == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productReview))
@@ -2505,6 +2513,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return;
             }
 
+            ProductReview productReview = GetProductReviewById(productReviewId);
+            if (productReview == null)
+                return;
+
             //delete previous helpfulness
             var context = ObjectContextHelper.CurrentObjectContext;
             var oldPrh = (from prh in context.ProductReviewHelpfulness
@@ -2536,7 +2548,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                                    prh.WasHelpful == false
                                    select prh).Count();
 
-            ProductReview productReview = GetProductReviewById(productReviewId);
             productReview = UpdateProductReview(productReview.ProductReviewId,
                 productReview.ProductId,
                 productReview.CustomerId,
@@ -2597,6 +2608,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void DeleteRelatedProduct(int relatedProductId)
         {
             var relatedProduct = GetRelatedProductById(relatedProductId);
+            if (relatedProduct == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(relatedProduct))
@@ -2670,6 +2683,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int productId1, int productId2, int displayOrder)
         {
             var relatedProduct = GetRelatedProductById(relatedProductId);
+            if (relatedProduct == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(relatedProduct))
@@ -2692,12 +2707,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         /// <param name="pricelistId">Pricelist identifier</param>
         /// <returns>Product variants</returns>
-        public static ProductVariantCollection GetProductVariantsByPricelistId(int pricelistId)
+        public static List<ProductVariant> GetProductVariantsByPricelistId(int pricelistId)
         {
             var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByPricelistId(pricelistId);
-            var newProductVariantCollection = ProductManager.DBMapping(dbItem);
+            var productVariantCollection = DBMapping(dbItem);
 
-            return newProductVariantCollection;
+            return productVariantCollection;
         }
 
         /// <summary>
@@ -2707,6 +2722,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void DeletePricelist(int pricelistId)
         {
             var pricelist = GetPricelistById(pricelistId);
+            if (pricelist == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(pricelist))
@@ -2861,6 +2878,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var pricelist = GetPricelistById(pricelistId);
+            if (pricelist == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(pricelist))
@@ -2899,6 +2918,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return;
 
             var productVariantPricelist = GetProductVariantPricelistById(productVariantPricelistId);
+            if (productVariantPricelist == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productVariantPricelist))
@@ -2991,6 +3012,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var productVariantPricelist = GetProductVariantPricelistById(productVariantPricelistId);
+            if (productVariantPricelist == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productVariantPricelist))
@@ -3066,6 +3089,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void DeleteTierPrice(int tierPriceId)
         {
             var tierPrice = GetTierPriceById(tierPriceId);
+            if (tierPrice == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(tierPrice))
@@ -3121,6 +3146,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int quantity, decimal price)
         {
             var tierPrice = GetTierPriceById(tierPriceId);
+            if (tierPrice == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(tierPrice))
@@ -3152,6 +3179,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void DeleteCustomerRoleProductPrice(int customerRoleProductPriceId)
         {
             var customerRoleProductPrice = GetCustomerRoleProductPriceById(customerRoleProductPriceId);
+            if (customerRoleProductPrice == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerRoleProductPrice))
@@ -3226,6 +3255,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int customerRoleId, int productVariantId, decimal price)
         {
             var customerRoleProductPrice = GetCustomerRoleProductPriceById(customerRoleProductPriceId);
+            if (customerRoleProductPrice == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerRoleProductPrice))
@@ -3250,6 +3281,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static void DeleteProductTag(int productTagId)
         {
             var productTag = GetProductTagById(productTagId);
+            if (productTag == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productTag))
@@ -3333,6 +3366,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             name = name.Trim();
 
             var productTag = GetProductTagById(productTagId);
+            if (productTag == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productTag))

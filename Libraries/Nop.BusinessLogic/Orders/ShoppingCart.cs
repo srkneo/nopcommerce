@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 
@@ -23,7 +24,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
     /// <summary>
     /// Represents a shopping cart
     /// </summary>
-    public partial class ShoppingCart : BaseEntityCollection<ShoppingCartItem>
+    public partial class ShoppingCart : List<ShoppingCartItem>
     {
         /// <summary>
         /// Gets a value indicating whether shopping cart is recurring

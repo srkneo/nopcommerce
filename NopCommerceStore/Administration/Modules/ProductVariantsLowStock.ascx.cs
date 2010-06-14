@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            ProductVariantCollection productVariants = ProductManager.GetLowStockProductVariants();
+            var productVariants = ProductManager.GetLowStockProductVariants();
 
             gvProductVariants.DataSource = productVariants;
             gvProductVariants.DataBind();

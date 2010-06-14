@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Web;
@@ -23,13 +24,13 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using NopSolutions.NopCommerce.BusinessLogic.Categories;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Categories;
-using NopSolutions.NopCommerce.BusinessLogic.Media;
-using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -64,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.ddlManufacturer.Items.Clear();
             ListItem itemEmptyManufacturer = new ListItem(GetLocaleResourceString("Admin.Common.All"), "0");
             this.ddlManufacturer.Items.Add(itemEmptyManufacturer);
-            ManufacturerCollection manufacturers = ManufacturerManager.GetAllManufacturers();
+            var manufacturers = ManufacturerManager.GetAllManufacturers();
             foreach (Manufacturer manufacturer in manufacturers)
             {
                 ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerId.ToString());
@@ -72,14 +73,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected ProductCollection GetProducts()
+        protected List<Product> GetProducts()
         {
             string productName = txtProductName.Text;
             int categoryId = ParentCategory.SelectedCategoryId;
             int manufacturerId = int.Parse(this.ddlManufacturer.SelectedItem.Value);
 
             int totalRecords = 0;
-            ProductCollection products = ProductManager.GetAllProducts(categoryId, 
+            var products = ProductManager.GetAllProducts(categoryId, 
                 manufacturerId, 0, null,
                 null, null, productName, false, 1000, 0, null, out totalRecords);
             return products;
@@ -87,7 +88,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            ProductCollection products = GetProducts();
+            var products = GetProducts();
             if (products.Count > 0)
             {
                 this.gvProducts.Visible = true;

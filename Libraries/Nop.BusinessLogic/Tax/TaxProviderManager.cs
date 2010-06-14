@@ -46,6 +46,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static void DeleteTaxProvider(int taxProviderId)
         {
             var taxProvider = GetTaxProviderById(taxProviderId);
+            if (taxProvider == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(taxProvider))
@@ -159,6 +161,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             string className, int displayOrder)
         {
             var taxProvider = GetTaxProviderById(taxProviderId);
+            if (taxProvider == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(taxProvider))

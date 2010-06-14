@@ -86,22 +86,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             }
 
             var shoppingCartItem = GetShoppingCartItemById(shoppingCartItemId);
-            if (shoppingCartItem != null)
+            if (shoppingCartItem == null)
+                return;
+
+            if (shoppingCartItem.ShoppingCartType == ShoppingCartTypeEnum.ShoppingCart)
             {
-                if (shoppingCartItem.ShoppingCartType == ShoppingCartTypeEnum.ShoppingCart)
-                {
-                    CustomerActivityManager.InsertActivity(
-                        "RemoveFromShoppingCart",
-                        LocalizationManager.GetLocaleResourceString("ActivityLog.RemoveFromShoppingCart"),
-                        shoppingCartItem.ProductVariant.FullProductName);
-                }
-                
-                var context = ObjectContextHelper.CurrentObjectContext;
-                if (!context.IsAttached(shoppingCartItem))
-                    context.ShoppingCartItems.Attach(shoppingCartItem);
-                context.DeleteObject(shoppingCartItem);
-                context.SaveChanges();
+                CustomerActivityManager.InsertActivity(
+                    "RemoveFromShoppingCart",
+                    LocalizationManager.GetLocaleResourceString("ActivityLog.RemoveFromShoppingCart"),
+                    shoppingCartItem.ProductVariant.FullProductName);
             }
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(shoppingCartItem))
+                context.ShoppingCartItems.Attach(shoppingCartItem);
+            context.DeleteObject(shoppingCartItem);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -222,6 +222,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var shoppingCartItem = GetShoppingCartItemById(shoppingCartItemId);
+            if (shoppingCartItem == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(shoppingCartItem))

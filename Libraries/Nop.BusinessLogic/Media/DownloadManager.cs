@@ -128,6 +128,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         public static void DeleteDownload(int downloadId)
         {
             var download = GetDownloadById(downloadId);
+            if (download == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(download))
@@ -203,6 +205,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                 extension = string.Empty;
 
             var download = GetDownloadById(downloadId);
+            if (download == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(download))

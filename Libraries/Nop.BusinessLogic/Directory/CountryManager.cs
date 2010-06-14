@@ -48,6 +48,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static void DeleteCountry(int countryId)
         {
             var country = GetCountryById(countryId);
+            if (country == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(country))
@@ -295,6 +297,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             bool published, int displayOrder)
         {
             var country = GetCountryById(countryId);
+            if (country == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(country))

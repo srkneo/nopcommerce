@@ -93,9 +93,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
         }
 
-        protected SpecificationAttributeOptionFilterCollection getAlreadyFilteredSpecs()
+        protected List<SpecificationAttributeOptionFilter> getAlreadyFilteredSpecs()
         {
-            var result = new SpecificationAttributeOptionFilterCollection();
+            var result = new List<SpecificationAttributeOptionFilter>();
 
             string[] queryStringParams = getAlreadyFilteredSpecsQueryStringParams();
             foreach (string qsp in queryStringParams)
@@ -123,7 +123,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             return result;
         }
 
-        protected SpecificationAttributeOptionFilterCollection getNotFilteredSpecs()
+        protected List<SpecificationAttributeOptionFilter> getNotFilteredSpecs()
         {
             //get all
             var result = SpecificationAttributeManager.GetSpecificationAttributeOptionFilter(this.CategoryId);

@@ -46,6 +46,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static void DeleteLanguage(int languageId)
         {
             var language = GetLanguageById(languageId);
+            if (language == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(language))
@@ -172,6 +174,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string flagImageFileName, bool published, int displayOrder)
         {
             var language = GetLanguageById(languageId);
+            if (language == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(language))

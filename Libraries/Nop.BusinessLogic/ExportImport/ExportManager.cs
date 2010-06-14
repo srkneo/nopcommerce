@@ -337,12 +337,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 }
             }
         }
-
+       
         /// <summary>
         /// Export manufacturer list to xml
         /// </summary>
+        /// <param name="manufacturers">Manufacturers</param>
         /// <returns>Result in XML format</returns>
-        public static string ExportManufacturersToXml(ManufacturerCollection manufacturers)
+        public static string ExportManufacturersToXml(List<Manufacturer> manufacturers)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -421,7 +422,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         /// <param name="products">Products</param>
         /// <returns>Result in XML format</returns>
-        public static string ExportProductsToXml(ProductCollection products)
+        public static string ExportProductsToXml(List<Product> products)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -656,7 +657,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         /// <param name="filePath">File path to use</param>
         /// <param name="products">Products</param>
-        public static void ExportProductsToXls(string filePath, ProductCollection products)
+        public static void ExportProductsToXls(string filePath, List<Product> products)
         {
             using (ExcelHelper excelHelper = new ExcelHelper(filePath))
             {

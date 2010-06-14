@@ -330,6 +330,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             }
 
             var discount = GetDiscountById(discountId);
+            if (discount == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(discount))
@@ -575,6 +577,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         public static void DeleteDiscountUsageHistory(int discountUsageHistoryId)
         {
             var discountUsageHistory = GetDiscountUsageHistoryById(discountUsageHistoryId);
+            if (discountUsageHistory == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(discountUsageHistory))
@@ -628,8 +632,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             int customerId, int orderId, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
-
+            
             var discountUsageHistory = new DiscountUsageHistory();
             discountUsageHistory.DiscountId = discountId;
             discountUsageHistory.CustomerId = customerId;
@@ -658,6 +661,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var discountUsageHistory = GetDiscountUsageHistoryById(discountUsageHistoryId);
+            if (discountUsageHistory == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(discountUsageHistory))

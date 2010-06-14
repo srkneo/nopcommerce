@@ -46,6 +46,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         public static void DeleteLocaleStringResource(int localeStringResourceId)
         {
             var localeStringResource = GetLocaleStringResourceById(localeStringResourceId);
+            if (localeStringResource == null)
+                return;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(localeStringResource))
@@ -144,6 +146,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
             int languageId, string resourceName, string resourceValue)
         {
             var localeStringResource = GetLocaleStringResourceById(localeStringResourceId);
+            if (localeStringResource == null)
+                return null;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(localeStringResource))

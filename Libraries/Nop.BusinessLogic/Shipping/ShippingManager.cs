@@ -390,7 +390,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="shippingAddress">Shipping address</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public static ShippingOptionCollection GetShippingOptions(ShoppingCart cart, 
+        public static List<ShippingOption> GetShippingOptions(ShoppingCart cart, 
             Customer customer, Address shippingAddress, ref string error)
         {
             return GetShippingOptions(cart, customer, shippingAddress, null, ref error);
@@ -405,14 +405,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="allowedShippingRateComputationMethodId">Allowed shipping rate computation method identifier; null to load shipping options of all methods</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
-        public static ShippingOptionCollection GetShippingOptions(ShoppingCart cart,
+        public static List<ShippingOption> GetShippingOptions(ShoppingCart cart,
             Customer customer, Address shippingAddress, 
             int? allowedShippingRateComputationMethodId, ref string error)
         {
             if (cart == null)
                 throw new ArgumentNullException("cart");
 
-            var shippingOptions = new ShippingOptionCollection();
+            var shippingOptions = new List<ShippingOption>();
 
             bool isFreeShipping = IsFreeShipping(cart, customer);
 
