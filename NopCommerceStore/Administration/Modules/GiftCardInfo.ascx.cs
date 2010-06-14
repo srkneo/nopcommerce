@@ -78,7 +78,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             GiftCard gc = OrderManager.GetGiftCardById(this.GiftCardId);
             if (gc != null)
             {
-                GiftCardUsageHistoryCollection giftCardUsageHistory = OrderManager.GetAllGiftCardUsageHistoryEntries(gc.GiftCardId, null, null);
+                var giftCardUsageHistory = OrderManager.GetAllGiftCardUsageHistoryEntries(gc.GiftCardId, null, null);
                 gvUsageHistory.DataSource = giftCardUsageHistory;
                 gvUsageHistory.DataBind();
             }

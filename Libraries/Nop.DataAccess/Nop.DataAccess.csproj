@@ -176,8 +176,6 @@
     <Compile Include="Media\DBPictureCollection.cs" />
     <Compile Include="Orders\DBOrder.cs" />
     <Compile Include="Orders\DBOrderCollection.cs" />
-    <Compile Include="Orders\DBOrderNote.cs" />
-    <Compile Include="Orders\DBOrderNoteCollection.cs" />
     <Compile Include="Orders\DBOrderProductVariant.cs" />
     <Compile Include="Orders\DBOrderProductVariantCollection.cs" />
     <Compile Include="Payment\DBPaymentMethod.cs" />

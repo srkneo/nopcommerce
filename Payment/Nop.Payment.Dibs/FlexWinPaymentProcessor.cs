@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Dibs
             post.Add("ordline0-3", "Quantity");
             post.Add("ordline0-4", "Price");
 
-            OrderProductVariantCollection products = order.OrderProductVariants;
+            var products = order.OrderProductVariants;
             for (int i = 0; i < products.Count; i++)
             {
                 string lineName = String.Format("ordline{0}", (i + 1));

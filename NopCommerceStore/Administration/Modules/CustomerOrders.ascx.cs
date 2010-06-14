@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (customer != null)
             {
                
-                OrderCollection orders = customer.Orders;
+                var orders = customer.Orders;
                 if (orders.Count > 0)
                 {
                     rptrOrders.DataSource = orders;

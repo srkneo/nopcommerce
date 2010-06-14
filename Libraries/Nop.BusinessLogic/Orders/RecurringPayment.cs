@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets the recurring payment history
         /// </summary>
-        public RecurringPaymentHistoryCollection RecurringPaymentHistory
+        public List<RecurringPaymentHistory> RecurringPaymentHistory
         {
             get
             {
@@ -257,6 +257,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return PaymentManager.SupportRecurringPayments(order.PaymentMethodId);
             }
         }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the recurring payment history
+        /// </summary>
+        public virtual ICollection<RecurringPaymentHistory> NpRecurringPaymentHistory { get; set; }
 
         #endregion
     }

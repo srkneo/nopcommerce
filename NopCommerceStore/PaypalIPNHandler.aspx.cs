@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.Web
                                 Order initialOrder = OrderManager.GetOrderByGuid(orderNumberGuid);
                                 if (initialOrder != null)
                                 {
-                                    RecurringPaymentCollection recurringPayments = OrderManager.SearchRecurringPayments(0, initialOrder.OrderId, null);
+                                    var recurringPayments = OrderManager.SearchRecurringPayments(0, initialOrder.OrderId, null);
                                     foreach (var rp in recurringPayments)
                                     {
                                         switch (newPaymentStatus)

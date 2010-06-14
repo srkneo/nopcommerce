@@ -13,7 +13,16 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Text;
+using System.Web;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Shapes;
+using MigraDoc.DocumentObjectModel.Tables;
+using MigraDoc.Rendering;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
@@ -22,16 +31,8 @@ using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
-using NopSolutions.NopCommerce.Common.Utils.Html;
-using System.Text;
-using System.Globalization;
 using NopSolutions.NopCommerce.Common.Utils;
-using System.Web;
-using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
-using MigraDoc.DocumentObjectModel;
-using MigraDoc.Rendering;
-using MigraDoc.DocumentObjectModel.Tables;
-using MigraDoc.DocumentObjectModel.Shapes;
+using NopSolutions.NopCommerce.Common.Utils.Html;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 {
@@ -511,7 +512,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
         /// </summary>
         /// <param name="orderCollection">Order collection</param>
         /// <param name="filePath">File path</param>
-        public static void PrintPackagingSlipsToPdf(OrderCollection orderCollection, 
+        public static void PrintPackagingSlipsToPdf(List<Order> orderCollection, 
             string filePath)
         {
             if(String.IsNullOrEmpty(filePath))
@@ -558,7 +559,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 header.Cells[2].Format.Alignment = ParagraphAlignment.Center;
                 header.Cells[2].AddParagraph(LocalizationManager.GetLocaleResourceString("PdfPackagingSlip.SKU"));
 
-                OrderProductVariantCollection opvc = order.OrderProductVariants;
+                var opvc = order.OrderProductVariants;
                 foreach(var orderProductVariant in opvc)
                 {
                     Row row = productTable.AddRow();

@@ -13,16 +13,10 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Collections;
-using System.Configuration;
-using System.Data;
+using System.Collections.Generic;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
@@ -49,7 +43,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
         }
 
-        protected OrderCollection GetOrders()
+        protected List<Order> GetOrders()
         {
             DateTime? startDate = ctrlStartDatePicker.SelectedDate;
             DateTime? endDate = ctrlEndDatePicker.SelectedDate;
@@ -77,8 +71,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (shippingStatusId > 0)
                 shippingStatus = (ShippingStatusEnum)Enum.ToObject(typeof(ShippingStatusEnum), shippingStatusId);
 
-            OrderCollection orders = OrderManager.SearchOrders(startDate, endDate, txtCustomerEmail.Text, orderStatus, paymentStatus, shippingStatus);
-
+            var orders = OrderManager.SearchOrders(startDate, endDate, txtCustomerEmail.Text, orderStatus, paymentStatus, shippingStatus);
             return orders;
         }
 
@@ -123,7 +116,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = string.Format("orders_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
 
-                    OrderCollection orders = GetOrders();
+                    var orders = GetOrders();
                     string xml = ExportManager.ExportOrdersToXml(orders);
                     CommonHelper.WriteResponseXml(xml, fileName);
                 }
@@ -142,7 +135,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = string.Format("orders_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
-                    OrderCollection orders = GetOrders();
+                    var orders = GetOrders();
 
                     ExportManager.ExportOrdersToXls(filePath, orders);
                     CommonHelper.WriteResponseXls(filePath, fileName);
@@ -173,7 +166,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected void BindGrid()
         {
-            OrderCollection orders = GetOrders();
+            var orders = GetOrders();
             if (orders.Count > 0)
             {
                 this.gvOrders.Visible = true;

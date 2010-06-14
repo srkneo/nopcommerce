@@ -14,8 +14,11 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
+using System.Text;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -39,8 +42,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common.Utils;
-using System.IO;
-using System.Text;
 
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
@@ -328,7 +329,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (order == null)
                 return;
 
-            OrderProductVariantCollection orderProductVariants = order.OrderProductVariants;
+            var orderProductVariants = order.OrderProductVariants;
             bool hasDownloadableItems = false;
             foreach (OrderProductVariant orderProductVariant in orderProductVariants)
             {
@@ -543,7 +544,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.lblOrderTax.Text = PriceHelper.FormatPrice(order.OrderTax, true, false);
             
             //gift cards
-            GiftCardUsageHistoryCollection gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
+            var gcuhC = OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId);
             if (gcuhC.Count > 0)
             {
                 rptrGiftCards.Visible = true;
@@ -620,7 +621,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (order == null)
                 return;
 
-            OrderNoteCollection orderNotes = order.OrderNotes;
+            var orderNotes = order.OrderNotes;
             this.gvOrderNotes.DataSource = orderNotes;
             this.gvOrderNotes.DataBind();
         }
@@ -1162,7 +1163,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Order order = OrderManager.GetOrderById(this.OrderId);
                 if(order != null)
                 {
-                    OrderCollection orderCollection = new OrderCollection();
+                    var orderCollection = new List<Order>();
                     orderCollection.Add(order);
 
                     string fileName = String.Format("packagingslip_{0}_{1}.pdf", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));

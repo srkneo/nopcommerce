@@ -64,6 +64,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public DateTime CreatedOn { get; set; }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the order
+        /// </summary>
+        public virtual Order NpOrder { get; set; }
+
+        #endregion
     }
 
 }

@@ -159,17 +159,12 @@
     <Compile Include="Orders\BestSellersReportLine.cs" />
     <Compile Include="Orders\AppliedGiftCard.cs" />
     <Compile Include="Orders\RewardPointsHistory.cs" />
-    <Compile Include="Orders\RewardPointsHistoryCollection.cs" />
     <Compile Include="Orders\OrderAverageReportLineSummary.cs" />
     <Compile Include="Orders\GiftCard.cs" />
-    <Compile Include="Orders\GiftCardCollection.cs" />
     <Compile Include="Orders\GiftCardUsageHistory.cs" />
-    <Compile Include="Orders\GiftCardUsageHistoryCollection.cs" />
     <Compile Include="Orders\GiftCardHelper.cs" />
     <Compile Include="Orders\RecurringPayment.cs" />
-    <Compile Include="Orders\RecurringPaymentCollection.cs" />
     <Compile Include="Orders\RecurringPaymentHistory.cs" />
-    <Compile Include="Orders\RecurringPaymentHistoryCollection.cs" />
     <Compile Include="Orders\DeleteExpiredShoppingCartsTask.cs" />
     <Compile Include="Orders\OrderAverageReportLine.cs" />
     <Compile Include="Payment\CancelPaymentResult.cs" />
@@ -226,7 +221,6 @@
     <Compile Include="Orders\OrderStatus.cs" />
     <Compile Include="Orders\OrderStatusEnum.cs" />
     <Compile Include="Orders\OrderNote.cs" />
-    <Compile Include="Orders\OrderNoteCollection.cs" />
     <Compile Include="Payment\PaymentStatusManager.cs" />
     <Compile Include="Payment\PaymentStatus.cs" />
     <Compile Include="Products\Attributes\AttributeControlTypeEnum.cs" />
@@ -237,7 +231,6 @@
     <Compile Include="Promo\Discounts\DiscountLimitation.cs" />
     <Compile Include="Promo\Discounts\DiscountLimitationEnum.cs" />
     <Compile Include="Promo\Discounts\DiscountUsageHistory.cs" />
-    <Compile Include="Promo\Discounts\DiscountUsageHistoryCollection.cs" />
     <Compile Include="Promo\Discounts\DiscountRequirement.cs" />
     <Compile Include="Promo\Discounts\DiscountRequirementEnum.cs" />
     <Compile Include="Promo\Discounts\DiscountType.cs" />
@@ -342,9 +335,7 @@
     <Compile Include="Content\News\News.cs" />
     <Compile Include="Content\News\NewsComment.cs" />
     <Compile Include="Orders\Order.cs" />
-    <Compile Include="Orders\OrderCollection.cs" />
     <Compile Include="Orders\OrderProductVariant.cs" />
-    <Compile Include="Orders\OrderProductVariantCollection.cs" />
     <Compile Include="Payment\PaymentMethod.cs" />
     <Compile Include="Products\Product.cs" />
     <Compile Include="Products\ProductCollection.cs" />

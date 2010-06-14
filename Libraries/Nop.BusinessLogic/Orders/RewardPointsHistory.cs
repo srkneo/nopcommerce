@@ -122,5 +122,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the customer
+        /// </summary>
+        public virtual Customer NpCustomer { get; set; }
+
+        #endregion
     }
 }

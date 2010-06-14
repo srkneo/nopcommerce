@@ -436,19 +436,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<CustomerSession> _customerSessions;
 
-        public ObjectSet<Discount> Discounts
-        {
-            get
-            {
-                if ((_discounts == null))
-                {
-                    _discounts = CreateObjectSet<Discount>();
-                }
-                return _discounts;
-            }
-        }
-        private ObjectSet<Discount> _discounts;
-
         public ObjectSet<DiscountLimitation> DiscountLimitations
         {
             get
@@ -475,6 +462,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<DiscountRequirement> _discountRequirements;
 
+        public ObjectSet<Discount> Discounts
+        {
+            get
+            {
+                if ((_discounts == null))
+                {
+                    _discounts = CreateObjectSet<Discount>();
+                }
+                return _discounts;
+            }
+        }
+        private ObjectSet<Discount> _discounts;
+
         public ObjectSet<DiscountType> DiscountTypes
         {
             get
@@ -487,6 +487,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<DiscountType> _discountTypes;
+
+        public ObjectSet<DiscountUsageHistory> DiscountUsageHistory
+        {
+            get
+            {
+                if ((_discountUsageHistory == null))
+                {
+                    _discountUsageHistory = CreateObjectSet<DiscountUsageHistory>();
+                }
+                return _discountUsageHistory;
+            }
+        }
+        private ObjectSet<DiscountUsageHistory> _discountUsageHistory;
 
         public ObjectSet<Download> Downloads
         {
@@ -565,6 +578,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<ForumTopic> _forumTopics;
+
+        public ObjectSet<GiftCard> GiftCards
+        {
+            get
+            {
+                if ((_giftCards == null))
+                {
+                    _giftCards = CreateObjectSet<GiftCard>();
+                }
+                return _giftCards;
+            }
+        }
+        private ObjectSet<GiftCard> _giftCards;
+
+        public ObjectSet<GiftCardUsageHistory> GiftCardUsageHistory
+        {
+            get
+            {
+                if ((_giftCardUsageHistory == null))
+                {
+                    _giftCardUsageHistory = CreateObjectSet<GiftCardUsageHistory>();
+                }
+                return _giftCardUsageHistory;
+            }
+        }
+        private ObjectSet<GiftCardUsageHistory> _giftCardUsageHistory;
 
         public ObjectSet<Language> Languages
         {
@@ -773,6 +812,45 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<NewsLetterSubscription> _newsLetterSubscriptions;
+
+        public ObjectSet<OrderNote> OrderNotes
+        {
+            get
+            {
+                if ((_ordernotes == null))
+                {
+                    _ordernotes = CreateObjectSet<OrderNote>();
+                }
+                return _ordernotes;
+            }
+        }
+        private ObjectSet<OrderNote> _ordernotes;
+
+        public ObjectSet<OrderProductVariant> OrderProductVariants
+        {
+            get
+            {
+                if ((_orderProductVariants == null))
+                {
+                    _orderProductVariants = CreateObjectSet<OrderProductVariant>();
+                }
+                return _orderProductVariants;
+            }
+        }
+        private ObjectSet<OrderProductVariant> _orderProductVariants;
+
+        public ObjectSet<Order> Orders
+        {
+            get
+            {
+                if ((_orders == null))
+                {
+                    _orders = CreateObjectSet<Order>();
+                }
+                return _orders;
+            }
+        }
+        private ObjectSet<Order> _orders;
 
         public ObjectSet<OrderStatus> OrderStatuses
         {
@@ -1177,6 +1255,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<QueuedEmail> _queuedEmails;
 
+        public ObjectSet<RecurringPaymentHistory> RecurringPaymentHistory
+        {
+            get
+            {
+                if ((_recurringPaymentHistory == null))
+                {
+                    _recurringPaymentHistory = CreateObjectSet<RecurringPaymentHistory>();
+                }
+                return _recurringPaymentHistory;
+            }
+        }
+        private ObjectSet<RecurringPaymentHistory> _recurringPaymentHistory;
+
+        public ObjectSet<RecurringPayment> RecurringPayments
+        {
+            get
+            {
+                if ((_recurringPayments == null))
+                {
+                    _recurringPayments = CreateObjectSet<RecurringPayment>();
+                }
+                return _recurringPayments;
+            }
+        }
+        private ObjectSet<RecurringPayment> _recurringPayments;
+
         public ObjectSet<RelatedProduct> RelatedProducts
         {
             get
@@ -1189,6 +1293,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<RelatedProduct> _relatedProducts;
+
+        public ObjectSet<RewardPointsHistory> RewardPointsHistory
+        {
+            get
+            {
+                if ((_rewardPointsHistory == null))
+                {
+                    _rewardPointsHistory = CreateObjectSet<RewardPointsHistory>();
+                }
+                return _rewardPointsHistory;
+            }
+        }
+        private ObjectSet<RewardPointsHistory> _rewardPointsHistory;
 
         public ObjectSet<SearchLog> SearchLog
         {

@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -56,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected GiftCardCollection GetCards()
+        protected List<GiftCard> GetCards()
         {
             //date filter
             DateTime? startDate = ctrlStartDatePicker.SelectedDate;
@@ -86,14 +87,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             //coupon code filter
             string giftCardCouponCode = txtGiftCardCouponCode.Text;
 
-            GiftCardCollection giftCards = OrderManager.GetAllGiftCards(null,
+            var giftCards = OrderManager.GetAllGiftCards(null,
                 null, startDate, endDate, orderStatus, null, null, isGiftCardActivated, giftCardCouponCode);
             return giftCards;
         }
 
         protected void BindGrid()
         {
-            GiftCardCollection customers = GetCards();
+            var customers = GetCards();
             gvGiftCards.DataSource = customers;
             gvGiftCards.DataBind();
         }

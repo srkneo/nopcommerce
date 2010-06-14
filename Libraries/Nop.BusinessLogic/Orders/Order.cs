@@ -18,6 +18,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates;
+using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 
@@ -518,7 +519,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets the order product variants
         /// </summary>
-        public OrderProductVariantCollection OrderProductVariants
+        public List<OrderProductVariant> OrderProductVariants
         {
             get
             {
@@ -529,7 +530,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets the order notes
         /// </summary>
-        public OrderNoteCollection OrderNotes
+        public List<OrderNote> OrderNotes
         {
             get
             {
@@ -633,6 +634,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return _rph;
             }
         }
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the order notes
+        /// </summary>
+        public virtual ICollection<OrderNote> NpOrderNotes { get; set; }
+
+        /// <summary>
+        /// Gets the order product variants
+        /// </summary>
+        public virtual ICollection<OrderProductVariant> NpOrderProductVariants { get; set; }
+
+        /// <summary>
+        /// Gets the discount usage history
+        /// </summary>
+        public virtual ICollection<DiscountUsageHistory> NpDiscountUsageHistory { get; set; }
+        
         #endregion
     }
 }

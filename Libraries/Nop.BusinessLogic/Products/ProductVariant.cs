@@ -18,6 +18,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
+using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products.Attributes;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
@@ -510,6 +511,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// </summary>
         public virtual ICollection<ProductVariantAttribute> NpProductVariantAttributes { get; set; }
 
+        /// <summary>
+        /// Gets the order product variant
+        /// </summary>
+        public virtual ICollection<OrderProductVariant> NpOrderProductVariants { get; set; }
+        
         #endregion
     }
 }

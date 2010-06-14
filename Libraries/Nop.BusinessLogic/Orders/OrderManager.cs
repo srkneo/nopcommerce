@@ -59,12 +59,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
         #region Utilities
 
-        private static OrderCollection DBMapping(DBOrderCollection dbCollection)
+        private static List<Order> DBMapping(DBOrderCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new OrderCollection();
+            var collection = new List<Order>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -169,42 +169,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return item;
         }
 
-        private static OrderNoteCollection DBMapping(DBOrderNoteCollection dbCollection)
+        private static List<OrderProductVariant> DBMapping(DBOrderProductVariantCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new OrderNoteCollection();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static OrderNote DBMapping(DBOrderNote dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new OrderNote();
-            item.OrderNoteId = dbItem.OrderNoteId;
-            item.OrderId = dbItem.OrderId;
-            item.Note = dbItem.Note;
-            item.DisplayToCustomer = dbItem.DisplayToCustomer;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static OrderProductVariantCollection DBMapping(DBOrderProductVariantCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new OrderProductVariantCollection();
+            var collection = new List<OrderProductVariant>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -284,12 +254,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return item;
         }
 
-        private static RecurringPaymentCollection DBMapping(DBRecurringPaymentCollection dbCollection)
+        private static List<RecurringPayment> DBMapping(DBRecurringPaymentCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new RecurringPaymentCollection();
+            var collection = new List<RecurringPayment>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -318,12 +288,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return item;
         }
 
-        private static RecurringPaymentHistoryCollection DBMapping(DBRecurringPaymentHistoryCollection dbCollection)
+        private static List<RecurringPaymentHistory> DBMapping(DBRecurringPaymentHistoryCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new RecurringPaymentHistoryCollection();
+            var collection = new List<RecurringPaymentHistory>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -347,12 +317,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return item;
         }
 
-        private static GiftCardCollection DBMapping(DBGiftCardCollection dbCollection)
+        private static List<GiftCard> DBMapping(DBGiftCardCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new GiftCardCollection();
+            var collection = new List<GiftCard>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -384,12 +354,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return item;
         }
 
-        private static GiftCardUsageHistoryCollection DBMapping(DBGiftCardUsageHistoryCollection dbCollection)
+        private static List<GiftCardUsageHistory> DBMapping(DBGiftCardUsageHistoryCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new GiftCardUsageHistoryCollection();
+            var collection = new List<GiftCardUsageHistory>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -416,12 +386,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             return item;
         }
 
-        private static RewardPointsHistoryCollection DBMapping(DBRewardPointsHistoryCollection dbCollection)
+        private static List<RewardPointsHistory> DBMapping(DBRewardPointsHistoryCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new RewardPointsHistoryCollection();
+            var collection = new List<RewardPointsHistory>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -707,8 +677,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (orderId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderById(orderId);
-            var order = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from o in context.Orders
+                        where o.OrderId == orderId
+                        select o;
+            var order = query.SingleOrDefault();
             return order;
         }
 
@@ -722,8 +695,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (orderGuid == Guid.Empty)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderByGuid(orderGuid);
-            var order = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from o in context.Orders
+                        where o.OrderGuid == orderGuid
+                        select o;
+            var order = query.FirstOrDefault();
             return order;
         }
 
@@ -780,7 +756,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="ps">Order payment status; null to load all orders</param>
         /// <param name="ss">Order shippment status; null to load all orders</param>
         /// <returns>Order collection</returns>
-        public static OrderCollection SearchOrders(DateTime? startTime, DateTime? endTime,
+        public static List<Order> SearchOrders(DateTime? startTime, DateTime? endTime,
             string customerEmail, OrderStatusEnum? os, PaymentStatusEnum? ps, 
             ShippingStatusEnum? ss)
         {
@@ -806,7 +782,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// Load all orders
         /// </summary>
         /// <returns>Order collection</returns>
-        public static OrderCollection LoadAllOrders()
+        public static List<Order> LoadAllOrders()
         {
             return SearchOrders(null, null, string.Empty, null, null, null);
         }
@@ -816,10 +792,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="customerId">Customer identifier</param>
         /// <returns>Order collection</returns>
-        public static OrderCollection GetOrdersByCustomerId(int customerId)
+        public static List<Order> GetOrdersByCustomerId(int customerId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrdersByCustomerId(customerId);
-            var orders = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from o in context.Orders
+                        orderby o.CreatedOn descending
+                        where !o.Deleted && o.CustomerId == customerId
+                        select o;
+            var orders = query.ToList();
             return orders;
         }
 
@@ -832,8 +812,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static Order GetOrderByAuthorizationTransactionIdAndPaymentMethodId(string authorizationTransactionId, 
             int paymentMethodId)
         {
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderByAuthorizationTransactionIdAndPaymentMethodId(authorizationTransactionId, paymentMethodId);
-            var order = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from o in context.Orders
+                        orderby o.CreatedOn descending
+                        where o.AuthorizationTransactionId == authorizationTransactionId && 
+                        o.PaymentMethodId == paymentMethodId
+                        select o;
+            var order = query.FirstOrDefault();
             return order;
         }
 
@@ -842,10 +827,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="affiliateId">Affiliate identifier</param>
         /// <returns>Order collection</returns>
-        public static OrderCollection GetOrdersByAffiliateId(int affiliateId)
+        public static List<Order> GetOrdersByAffiliateId(int affiliateId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrdersByAffiliateId(affiliateId);
-            var orders = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from o in context.Orders
+                        orderby o.CreatedOn descending
+                        where !o.Deleted && o.AffiliateId == affiliateId
+                        select o;
+            var orders = query.ToList();
             return orders;
         }
 
@@ -1106,38 +1095,97 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 trackingNumber = string.Empty;
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrder(orderGuid,
-                customerId, customerLanguageId, (int)customerTaxDisplayType, 
-                customerIP, orderSubtotalInclTax, orderSubtotalExclTax,
-                orderShippingInclTax, orderShippingExclTax,
-             paymentMethodAdditionalFeeInclTax, paymentMethodAdditionalFeeExclTax,
-             orderTax, orderTotal, orderDiscount,
-             orderSubtotalInclTaxInCustomerCurrency, orderSubtotalExclTaxInCustomerCurrency,
-             orderShippingInclTaxInCustomerCurrency, orderShippingExclTaxInCustomerCurrency,
-             paymentMethodAdditionalFeeInclTaxInCustomerCurrency, paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-             orderTaxInCustomerCurrency, orderTotalInCustomerCurrency, 
-             orderDiscountInCustomerCurrency,
-             checkoutAttributeDescription, checkoutAttributesXml,
-             customerCurrencyCode, orderWeight,
-             affiliateId, (int)orderStatus, allowStoringCreditCardNumber,
-             cardType, cardName, cardNumber, maskedCreditCardNumber, cardCvv2,
-             cardExpirationMonth, cardExpirationYear, paymentMethodId,
-             paymentMethodName, authorizationTransactionId, authorizationTransactionCode,
-             authorizationTransactionResult, captureTransactionId, captureTransactionResult,
-             subscriptionTransactionId, purchaseOrderNumber,
-             (int)paymentStatus, paidDate, billingFirstName, billingLastName,
-             billingPhoneNumber, billingEmail, billingFaxNumber, billingCompany,
-             billingAddress1, billingAddress2, billingCity, billingStateProvince, 
-             billingStateProvinceId, billingZipPostalCode, billingCountry, 
-             billingCountryId, (int)shippingStatus, shippingFirstName, shippingLastName,
-             shippingPhoneNumber, shippingEmail,
-             shippingFaxNumber, shippingCompany, shippingAddress1,
-             shippingAddress2, shippingCity, shippingStateProvince, shippingStateProvinceId, 
-             shippingZipPostalCode, shippingCountry, shippingCountryId,
-             shippingMethod, shippingRateComputationMethodId, shippedDate, 
-             deliveryDate, trackingNumber, deleted, createdOn);
 
-            var order = DBMapping(dbItem);
+            var order = new Order();
+            order.OrderGuid = orderGuid;
+            order.CustomerId = customerId;
+            order.CustomerLanguageId = customerLanguageId;
+            order.CustomerTaxDisplayTypeId = (int)customerTaxDisplayType;
+            order.CustomerIP = customerIP;
+            order.OrderSubtotalInclTax = orderSubtotalInclTax;
+            order.OrderSubtotalExclTax = orderSubtotalExclTax;
+            order.OrderShippingInclTax = orderShippingInclTax;
+            order.OrderShippingExclTax = orderShippingExclTax;
+            order.PaymentMethodAdditionalFeeInclTax = paymentMethodAdditionalFeeInclTax;
+            order.PaymentMethodAdditionalFeeExclTax = paymentMethodAdditionalFeeExclTax;
+            order.OrderTax = orderTax;
+            order.OrderTotal = orderTotal;
+            order.OrderDiscount = orderDiscount;
+            order.OrderSubtotalInclTaxInCustomerCurrency = orderSubtotalInclTaxInCustomerCurrency;
+            order.OrderSubtotalExclTaxInCustomerCurrency = orderSubtotalExclTaxInCustomerCurrency;
+            order.OrderShippingInclTaxInCustomerCurrency = orderShippingInclTaxInCustomerCurrency;
+            order.OrderShippingExclTaxInCustomerCurrency = orderShippingExclTaxInCustomerCurrency;
+            order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency = paymentMethodAdditionalFeeInclTaxInCustomerCurrency;
+            order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency = paymentMethodAdditionalFeeExclTaxInCustomerCurrency;
+            order.OrderTaxInCustomerCurrency = orderTaxInCustomerCurrency;
+            order.OrderTotalInCustomerCurrency = orderTotalInCustomerCurrency;
+            order.OrderDiscountInCustomerCurrency = orderDiscountInCustomerCurrency;
+            order.CheckoutAttributeDescription = checkoutAttributeDescription;
+            order.CheckoutAttributesXml = checkoutAttributesXml;
+            order.CustomerCurrencyCode = customerCurrencyCode;
+            order.OrderWeight = orderWeight;
+            order.AffiliateId = affiliateId;
+            order.OrderStatusId = (int)orderStatus;
+            order.AllowStoringCreditCardNumber = allowStoringCreditCardNumber;
+            order.CardType = cardType;
+            order.CardName = cardName;
+            order.CardNumber = cardNumber;
+            order.MaskedCreditCardNumber = maskedCreditCardNumber;
+            order.CardCvv2 = cardCvv2;
+            order.CardExpirationMonth = cardExpirationMonth;
+            order.CardExpirationYear = cardExpirationYear;
+            order.PaymentMethodId = paymentMethodId;
+            order.PaymentMethodName = paymentMethodName;
+            order.AuthorizationTransactionId = authorizationTransactionId;
+            order.AuthorizationTransactionCode = authorizationTransactionCode;
+            order.AuthorizationTransactionResult = authorizationTransactionResult;
+            order.CaptureTransactionId = captureTransactionId;
+            order.CaptureTransactionResult = captureTransactionResult;
+            order.SubscriptionTransactionId = subscriptionTransactionId;
+            order.PurchaseOrderNumber = purchaseOrderNumber;
+            order.PaymentStatusId = (int)paymentStatus;
+            order.PaidDate = paidDate;
+            order.BillingFirstName = billingFirstName;
+            order.BillingLastName = billingLastName;
+            order.BillingPhoneNumber = billingPhoneNumber;
+            order.BillingEmail = billingEmail;
+            order.BillingFaxNumber = billingFaxNumber;
+            order.BillingCompany = billingCompany;
+            order.BillingAddress1 = billingAddress1;
+            order.BillingAddress2 = billingAddress2;
+            order.BillingCity = billingCity;
+            order.BillingStateProvince = billingStateProvince;
+            order.BillingStateProvinceId = billingStateProvinceId;
+            order.BillingZipPostalCode = billingZipPostalCode;
+            order.BillingCountry = billingCountry;
+            order.BillingCountryId = billingCountryId;
+            order.ShippingStatusId = (int)shippingStatus;
+            order.ShippingFirstName = shippingFirstName;
+            order.ShippingLastName = shippingLastName;
+            order.ShippingPhoneNumber = shippingPhoneNumber;
+            order.ShippingEmail = shippingEmail;
+            order.ShippingFaxNumber = shippingFaxNumber;
+            order.ShippingCompany = shippingCompany;
+            order.ShippingAddress1 = shippingAddress1;
+            order.ShippingAddress2 = shippingAddress2;
+            order.ShippingCity = shippingCity;
+            order.ShippingStateProvince = shippingStateProvince;
+            order.ShippingStateProvinceId = shippingStateProvinceId;
+            order.ShippingZipPostalCode = shippingZipPostalCode;
+            order.ShippingCountry = shippingCountry;
+            order.ShippingCountryId = shippingCountryId;
+            order.ShippingMethod = shippingMethod;
+            order.ShippingRateComputationMethodId = shippingRateComputationMethodId;
+            order.ShippedDate = shippedDate;
+            order.DeliveryDate = deliveryDate;
+            order.TrackingNumber = trackingNumber;
+            order.Deleted = deleted;
+            order.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Orders.AddObject(order);
+            context.SaveChanges();
+
             return order;
         }
 
@@ -1326,38 +1374,97 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 trackingNumber = string.Empty;
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrder(orderId,
-                orderGuid, customerId, customerLanguageId,
-                (int)customerTaxDisplayType, customerIP, orderSubtotalInclTax, 
-                orderSubtotalExclTax, orderShippingInclTax, orderShippingExclTax,
-                paymentMethodAdditionalFeeInclTax, paymentMethodAdditionalFeeExclTax,
-                orderTax, orderTotal, orderDiscount,
-                orderSubtotalInclTaxInCustomerCurrency, orderSubtotalExclTaxInCustomerCurrency,
-                orderShippingInclTaxInCustomerCurrency, orderShippingExclTaxInCustomerCurrency,
-                paymentMethodAdditionalFeeInclTaxInCustomerCurrency, paymentMethodAdditionalFeeExclTaxInCustomerCurrency,
-                orderTaxInCustomerCurrency, orderTotalInCustomerCurrency,
-                orderDiscountInCustomerCurrency, checkoutAttributeDescription, 
-                checkoutAttributesXml, customerCurrencyCode, orderWeight,
-                affiliateId, (int)orderStatus, allowStoringCreditCardNumber,
-                cardType, cardName, cardNumber, maskedCreditCardNumber, cardCvv2,
-                cardExpirationMonth, cardExpirationYear, paymentMethodId,
-                paymentMethodName, authorizationTransactionId, authorizationTransactionCode,
-                authorizationTransactionResult, captureTransactionId, captureTransactionResult,
-                subscriptionTransactionId, purchaseOrderNumber,
-                (int)paymentStatus, paidDate, billingFirstName, billingLastName,
-                billingPhoneNumber, billingEmail, billingFaxNumber, billingCompany,
-                billingAddress1, billingAddress2, billingCity, billingStateProvince, 
-                billingStateProvinceId, billingZipPostalCode, billingCountry, 
-                billingCountryId, (int)shippingStatus, shippingFirstName, shippingLastName,
-                shippingPhoneNumber, shippingEmail,
-                shippingFaxNumber, shippingCompany, shippingAddress1,
-                shippingAddress2, shippingCity, shippingStateProvince, 
-                shippingStateProvinceId, shippingZipPostalCode,
-                shippingCountry, shippingCountryId, shippingMethod, 
-                shippingRateComputationMethodId, shippedDate, deliveryDate,
-                trackingNumber, deleted, createdOn);
+            var order = GetOrderById(orderId);
 
-            var order = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(order))
+                context.Orders.Attach(order);
+
+            order.OrderGuid = orderGuid;
+            order.CustomerId = customerId;
+            order.CustomerLanguageId = customerLanguageId;
+            order.CustomerTaxDisplayTypeId = (int)customerTaxDisplayType;
+            order.CustomerIP = customerIP;
+            order.OrderSubtotalInclTax = orderSubtotalInclTax;
+            order.OrderSubtotalExclTax = orderSubtotalExclTax;
+            order.OrderShippingInclTax = orderShippingInclTax;
+            order.OrderShippingExclTax = orderShippingExclTax;
+            order.PaymentMethodAdditionalFeeInclTax = paymentMethodAdditionalFeeInclTax;
+            order.PaymentMethodAdditionalFeeExclTax = paymentMethodAdditionalFeeExclTax;
+            order.OrderTax = orderTax;
+            order.OrderTotal = orderTotal;
+            order.OrderDiscount = orderDiscount;
+            order.OrderSubtotalInclTaxInCustomerCurrency = orderSubtotalInclTaxInCustomerCurrency;
+            order.OrderSubtotalExclTaxInCustomerCurrency = orderSubtotalExclTaxInCustomerCurrency;
+            order.OrderShippingInclTaxInCustomerCurrency = orderShippingInclTaxInCustomerCurrency;
+            order.OrderShippingExclTaxInCustomerCurrency = orderShippingExclTaxInCustomerCurrency;
+            order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency = paymentMethodAdditionalFeeInclTaxInCustomerCurrency;
+            order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency = paymentMethodAdditionalFeeExclTaxInCustomerCurrency;
+            order.OrderTaxInCustomerCurrency = orderTaxInCustomerCurrency;
+            order.OrderTotalInCustomerCurrency = orderTotalInCustomerCurrency;
+            order.OrderDiscountInCustomerCurrency = orderDiscountInCustomerCurrency;
+            order.CheckoutAttributeDescription = checkoutAttributeDescription;
+            order.CheckoutAttributesXml = checkoutAttributesXml;
+            order.CustomerCurrencyCode = customerCurrencyCode;
+            order.OrderWeight = orderWeight;
+            order.AffiliateId = affiliateId;
+            order.OrderStatusId = (int)orderStatus;
+            order.AllowStoringCreditCardNumber = allowStoringCreditCardNumber;
+            order.CardType = cardType;
+            order.CardName = cardName;
+            order.CardNumber = cardNumber;
+            order.MaskedCreditCardNumber = maskedCreditCardNumber;
+            order.CardCvv2 = cardCvv2;
+            order.CardExpirationMonth = cardExpirationMonth;
+            order.CardExpirationYear = cardExpirationYear;
+            order.PaymentMethodId = paymentMethodId;
+            order.PaymentMethodName = paymentMethodName;
+            order.AuthorizationTransactionId = authorizationTransactionId;
+            order.AuthorizationTransactionCode = authorizationTransactionCode;
+            order.AuthorizationTransactionResult = authorizationTransactionResult;
+            order.CaptureTransactionId = captureTransactionId;
+            order.CaptureTransactionResult = captureTransactionResult;
+            order.SubscriptionTransactionId = subscriptionTransactionId;
+            order.PurchaseOrderNumber = purchaseOrderNumber;
+            order.PaymentStatusId = (int)paymentStatus;
+            order.PaidDate = paidDate;
+            order.BillingFirstName = billingFirstName;
+            order.BillingLastName = billingLastName;
+            order.BillingPhoneNumber = billingPhoneNumber;
+            order.BillingEmail = billingEmail;
+            order.BillingFaxNumber = billingFaxNumber;
+            order.BillingCompany = billingCompany;
+            order.BillingAddress1 = billingAddress1;
+            order.BillingAddress2 = billingAddress2;
+            order.BillingCity = billingCity;
+            order.BillingStateProvince = billingStateProvince;
+            order.BillingStateProvinceId = billingStateProvinceId;
+            order.BillingZipPostalCode = billingZipPostalCode;
+            order.BillingCountry = billingCountry;
+            order.BillingCountryId = billingCountryId;
+            order.ShippingStatusId = (int)shippingStatus;
+            order.ShippingFirstName = shippingFirstName;
+            order.ShippingLastName = shippingLastName;
+            order.ShippingPhoneNumber = shippingPhoneNumber;
+            order.ShippingEmail = shippingEmail;
+            order.ShippingFaxNumber = shippingFaxNumber;
+            order.ShippingCompany = shippingCompany;
+            order.ShippingAddress1 = shippingAddress1;
+            order.ShippingAddress2 = shippingAddress2;
+            order.ShippingCity = shippingCity;
+            order.ShippingStateProvince = shippingStateProvince;
+            order.ShippingStateProvinceId = shippingStateProvinceId;
+            order.ShippingZipPostalCode = shippingZipPostalCode;
+            order.ShippingCountry = shippingCountry;
+            order.ShippingCountryId = shippingCountryId;
+            order.ShippingMethod = shippingMethod;
+            order.ShippingRateComputationMethodId = shippingRateComputationMethodId;
+            order.ShippedDate = shippedDate;
+            order.DeliveryDate = deliveryDate;
+            order.TrackingNumber = trackingNumber;
+            order.Deleted = deleted;
+            order.CreatedOn = createdOn;
+            context.SaveChanges();
             return order;
         }
 
@@ -1420,8 +1527,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (orderProductVariantId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderProductVariantById(orderProductVariantId);
-            var orderProductVariant = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from opv in context.OrderProductVariants
+                        where opv.OrderProductVariantId == orderProductVariantId
+                        select opv;
+            var orderProductVariant = query.SingleOrDefault();
+
             return orderProductVariant;
         }
 
@@ -1434,7 +1545,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (orderProductVariantId == 0)
                 return;
 
-            DBProviderManager<DBOrderProvider>.Provider.DeleteOrderProductVariant(orderProductVariantId);
+            var orderProductVariant = GetOrderProductVariantById(orderProductVariantId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(orderProductVariant))
+                context.OrderProductVariants.Attach(orderProductVariant);
+            context.DeleteObject(orderProductVariant);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -1447,8 +1564,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (orderProductVariantGuid == Guid.Empty)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderProductVariantByGuid(orderProductVariantGuid);
-            var orderProductVariant = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from opv in context.OrderProductVariants
+                        where opv.OrderProductVariantGuid == orderProductVariantGuid
+                        select opv;
+            var orderProductVariant = query.FirstOrDefault();
+
             return orderProductVariant;
         }
 
@@ -1463,7 +1584,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="ps">Order payment status; null to load all records</param>
         /// <param name="ss">Order shippment status; null to load all records</param>
         /// <returns>Order collection</returns>
-        public static OrderProductVariantCollection GetAllOrderProductVariants(int? orderId,
+        public static List<OrderProductVariant> GetAllOrderProductVariants(int? orderId,
             int? customerId, DateTime? startTime, DateTime? endTime,
             OrderStatusEnum? os, PaymentStatusEnum? ps, ShippingStatusEnum? ss)
         {
@@ -1483,7 +1604,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="ss">Order shippment status; null to load all records</param>
         /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
         /// <returns>Order collection</returns>
-        public static OrderProductVariantCollection GetAllOrderProductVariants(int? orderId,
+        public static List<OrderProductVariant> GetAllOrderProductVariants(int? orderId,
             int? customerId, DateTime? startTime, DateTime? endTime,
             OrderStatusEnum? os, PaymentStatusEnum? ps, ShippingStatusEnum? ss,
             bool loadDownloableProductsOnly)
@@ -1512,7 +1633,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="orderId">The order identifier</param>
         /// <returns>Order product variant collection</returns>
-        public static OrderProductVariantCollection GetOrderProductVariantsByOrderId(int orderId)
+        public static List<OrderProductVariant> GetOrderProductVariantsByOrderId(int orderId)
         {
             return GetAllOrderProductVariants(orderId, null, null, null, null, null, null);
         }
@@ -1563,15 +1684,32 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (attributeDescription == null)
                 attributeDescription = string.Empty;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrderProductVariant(
-                orderProductVariantGuid, orderId, productVariantId,
-                unitPriceInclTax, unitPriceExclTax, priceInclTax, priceExclTax,
-                unitPriceInclTaxInCustomerCurrency, unitPriceExclTaxInCustomerCurrency,
-                priceInclTaxInCustomerCurrency, priceExclTaxInCustomerCurrency,
-                attributeDescription, attributesXml, quantity, discountAmountInclTax,
-                discountAmountExclTax, downloadCount, isDownloadActivated, licenseDownloadId);
-            var log = DBMapping(dbItem);
-            return log;
+            var opv = new OrderProductVariant();
+            opv.OrderProductVariantGuid = orderProductVariantGuid;
+            opv.OrderId = orderId;
+            opv.ProductVariantId = productVariantId;
+            opv.UnitPriceInclTax = unitPriceInclTax;
+            opv.UnitPriceExclTax = unitPriceExclTax;
+            opv.PriceInclTax = priceInclTax;
+            opv.PriceExclTax = priceExclTax;
+            opv.UnitPriceInclTaxInCustomerCurrency = unitPriceInclTaxInCustomerCurrency;
+            opv.UnitPriceExclTaxInCustomerCurrency = unitPriceExclTaxInCustomerCurrency;
+            opv.PriceInclTaxInCustomerCurrency = priceInclTaxInCustomerCurrency;
+            opv.PriceExclTaxInCustomerCurrency = priceExclTaxInCustomerCurrency;
+            opv.AttributeDescription = attributeDescription;
+            opv.AttributesXml = attributesXml;
+            opv.Quantity = quantity;
+            opv.DiscountAmountInclTax = discountAmountInclTax;
+            opv.DiscountAmountExclTax = discountAmountExclTax;
+            opv.DownloadCount = downloadCount;
+            opv.IsDownloadActivated = isDownloadActivated;
+            opv.LicenseDownloadId = licenseDownloadId;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.OrderProductVariants.AddObject(opv);
+            context.SaveChanges();
+
+            return opv;
         }
 
         /// <summary>
@@ -1622,16 +1760,34 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (attributeDescription == null)
                 attributeDescription = string.Empty;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrderProductVariant(
-                orderProductVariantId, orderProductVariantGuid, orderId,
-                productVariantId, unitPriceInclTax, unitPriceExclTax, 
-                priceInclTax, priceExclTax,
-                unitPriceInclTaxInCustomerCurrency, unitPriceExclTaxInCustomerCurrency,
-                priceInclTaxInCustomerCurrency, priceExclTaxInCustomerCurrency,
-                attributeDescription, attributesXml, quantity, discountAmountInclTax,
-                discountAmountExclTax, downloadCount, isDownloadActivated, licenseDownloadId);
-            var log = DBMapping(dbItem);
-            return log;
+            var opv = GetOrderProductVariantById(orderProductVariantId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(opv))
+                context.OrderProductVariants.Attach(opv);
+
+            opv.OrderProductVariantGuid = orderProductVariantGuid;
+            opv.OrderId = orderId;
+            opv.ProductVariantId = productVariantId;
+            opv.UnitPriceInclTax = unitPriceInclTax;
+            opv.UnitPriceExclTax = unitPriceExclTax;
+            opv.PriceInclTax = priceInclTax;
+            opv.PriceExclTax = priceExclTax;
+            opv.UnitPriceInclTaxInCustomerCurrency = unitPriceInclTaxInCustomerCurrency;
+            opv.UnitPriceExclTaxInCustomerCurrency = unitPriceExclTaxInCustomerCurrency;
+            opv.PriceInclTaxInCustomerCurrency = priceInclTaxInCustomerCurrency;
+            opv.PriceExclTaxInCustomerCurrency = priceExclTaxInCustomerCurrency;
+            opv.AttributeDescription = attributeDescription;
+            opv.AttributesXml = attributesXml;
+            opv.Quantity = quantity;
+            opv.DiscountAmountInclTax = discountAmountInclTax;
+            opv.DiscountAmountExclTax = discountAmountExclTax;
+            opv.DownloadCount = downloadCount;
+            opv.IsDownloadActivated = isDownloadActivated;
+            opv.LicenseDownloadId = licenseDownloadId;
+            context.SaveChanges();
+
+            return opv;
         }
 
         /// <summary>
@@ -1677,8 +1833,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (orderNoteId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetOrderNoteById(orderNoteId);
-            var orderNote = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from onote in context.OrderNotes
+                        where onote.OrderNoteId == orderNoteId
+                        select onote;
+            var orderNote = query.SingleOrDefault();
             return orderNote;
         }
 
@@ -1687,7 +1846,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="orderId">Order identifier</param>
         /// <returns>Order note collection</returns>
-        public static OrderNoteCollection GetOrderNoteByOrderId(int orderId)
+        public static List<OrderNote> GetOrderNoteByOrderId(int orderId)
         {
             return GetOrderNoteByOrderId(orderId, NopContext.Current.IsAdmin);
         }
@@ -1698,10 +1857,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="orderId">Order identifier</param>
         /// <param name="showHidden">A value indicating whether all orders should be loaded</param>
         /// <returns>Order note collection</returns>
-        public static OrderNoteCollection GetOrderNoteByOrderId(int orderId, bool showHidden)
+        public static List<OrderNote> GetOrderNoteByOrderId(int orderId, bool showHidden)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetOrderNoteByOrderId(orderId, showHidden);
-            var orderNotes = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from onote in context.OrderNotes
+                        orderby onote.CreatedOn descending, onote.OrderNoteId descending
+                        where (showHidden || onote.DisplayToCustomer) &&
+                        onote.OrderId == orderId
+                        select onote;
+            var orderNotes = query.ToList();
             return orderNotes;
         }
 
@@ -1711,7 +1875,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="orderNoteId">Order note identifier</param>
         public static void DeleteOrderNote(int orderNoteId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteOrderNote(orderNoteId);
+            var orderNote = GetOrderNoteById(orderNoteId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(orderNote))
+                context.OrderNotes.Attach(orderNote);
+            context.DeleteObject(orderNote);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -1739,9 +1909,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertOrderNote(orderId,
-                note, displayToCustomer, createdOn);
-            var orderNote = DBMapping(dbItem);
+            var orderNote = new OrderNote();
+            orderNote.OrderId = orderId;
+            orderNote.Note = note;
+            orderNote.DisplayToCustomer = displayToCustomer;
+            orderNote.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.OrderNotes.AddObject(orderNote);
+            context.SaveChanges();
             return orderNote;
         }
 
@@ -1759,9 +1935,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateOrderNote(orderNoteId,
-                orderId, note, displayToCustomer, createdOn);
-            var orderNote = DBMapping(dbItem);
+
+            var orderNote = GetOrderNoteById(orderNoteId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(orderNote))
+                context.OrderNotes.Attach(orderNote);
+
+            orderNote.OrderId = orderId;
+            orderNote.Note = note;
+            orderNote.DisplayToCustomer = displayToCustomer;
+            orderNote.CreatedOn = createdOn;
+            context.SaveChanges();
             return orderNote;
         }
 
@@ -2003,8 +2188,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (recurringPaymentId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRecurringPaymentById(recurringPaymentId);
-            var recurringPayment = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from rp in context.RecurringPayments
+                        where rp.RecurringPaymentId == recurringPaymentId
+                        select rp;
+            var recurringPayment = query.SingleOrDefault();
             return recurringPayment;
         }
 
@@ -2043,9 +2231,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             startDate = DateTimeHelper.ConvertToUtcTime(startDate);
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRecurringPayment(initialOrderId,
-                cycleLength, cyclePeriod, totalCycles, startDate, isActive, deleted, createdOn);
-            var recurringPayment = DBMapping(dbItem);
+            var recurringPayment = new RecurringPayment();
+            recurringPayment.InitialOrderId = initialOrderId;
+            recurringPayment.CycleLength = cycleLength;
+            recurringPayment.CyclePeriod = cyclePeriod;
+            recurringPayment.TotalCycles = totalCycles;
+            recurringPayment.StartDate = startDate;
+            recurringPayment.IsActive = isActive;
+            recurringPayment.Deleted = deleted;
+            recurringPayment.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.RecurringPayments.AddObject(recurringPayment);
+            context.SaveChanges();
+
             return recurringPayment;
         }
 
@@ -2069,10 +2268,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             startDate = DateTimeHelper.ConvertToUtcTime(startDate);
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRecurringPayment(recurringPaymentId,
-                initialOrderId, cycleLength, cyclePeriod, totalCycles,
-                startDate, isActive, deleted, createdOn);
-            var recurringPayment = DBMapping(dbItem);
+            var recurringPayment = GetRecurringPaymentById(recurringPaymentId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(recurringPayment))
+                context.RecurringPayments.Attach(recurringPayment);
+
+            recurringPayment.InitialOrderId = initialOrderId;
+            recurringPayment.CycleLength = cycleLength;
+            recurringPayment.CyclePeriod = cyclePeriod;
+            recurringPayment.TotalCycles = totalCycles;
+            recurringPayment.StartDate = startDate;
+            recurringPayment.IsActive = isActive;
+            recurringPayment.Deleted = deleted;
+            recurringPayment.CreatedOn = createdOn;
+            context.SaveChanges();
+
             return recurringPayment;
         }
 
@@ -2083,7 +2294,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="initialOrderId">The initial order identifier; 0 to load all records</param>
         /// <param name="initialOrderStatus">Initial order status identifier; null to load all records</param>
         /// <returns>Recurring payment collection</returns>
-        public static RecurringPaymentCollection SearchRecurringPayments(int customerId, 
+        public static List<RecurringPayment> SearchRecurringPayments(int customerId, 
             int initialOrderId, OrderStatusEnum? initialOrderStatus)
         {
             bool showHidden = NopContext.Current.IsAdmin;
@@ -2099,7 +2310,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="initialOrderId">The initial order identifier; 0 to load all records</param>
         /// <param name="initialOrderStatus">Initial order status identifier; null to load all records</param>
         /// <returns>Recurring payment collection</returns>
-        public static RecurringPaymentCollection SearchRecurringPayments(bool showHidden,
+        public static List<RecurringPayment> SearchRecurringPayments(bool showHidden,
             int customerId, int initialOrderId, OrderStatusEnum? initialOrderStatus)
         {
             int? initialOrderStatusId = null;
@@ -2118,7 +2329,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="recurringPaymentHistoryId">Recurring payment history identifier</param>
         public static void DeleteRecurringPaymentHistory(int recurringPaymentHistoryId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteRecurringPaymentHistory(recurringPaymentHistoryId);
+            var recurringPaymentHistory = GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(recurringPaymentHistory))
+                context.RecurringPaymentHistory.Attach(recurringPaymentHistory);
+            context.DeleteObject(recurringPaymentHistory);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2131,8 +2348,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (recurringPaymentHistoryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
-            var recurringPaymentHistory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from rph in context.RecurringPaymentHistory
+                        where rph.RecurringPaymentHistoryId == recurringPaymentHistoryId
+                        select rph;
+            var recurringPaymentHistory = query.SingleOrDefault();
             return recurringPaymentHistory;
         }
 
@@ -2147,10 +2367,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int orderId, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            
+            var recurringPaymentHistory = new RecurringPaymentHistory();
+            recurringPaymentHistory.RecurringPaymentId = recurringPaymentId;
+            recurringPaymentHistory.OrderId = orderId;
+            recurringPaymentHistory.CreatedOn = createdOn;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRecurringPaymentHistory(recurringPaymentId,
-                orderId, createdOn);
-            var recurringPaymentHistory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.RecurringPaymentHistory.AddObject(recurringPaymentHistory);
+            context.SaveChanges();
             return recurringPaymentHistory;
         }
 
@@ -2167,9 +2392,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRecurringPaymentHistory(recurringPaymentHistoryId,
-                recurringPaymentId, orderId, createdOn);
-            var recurringPaymentHistory = DBMapping(dbItem);
+            var recurringPaymentHistory = GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(recurringPaymentHistory))
+                context.RecurringPaymentHistory.Attach(recurringPaymentHistory);
+
+            recurringPaymentHistory.RecurringPaymentId = recurringPaymentId;
+            recurringPaymentHistory.OrderId = orderId;
+            recurringPaymentHistory.CreatedOn = createdOn;
+            context.SaveChanges();
+
             return recurringPaymentHistory;
         }
 
@@ -2179,7 +2412,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="recurringPaymentId">The recurring payment identifier; 0 to load all records</param>
         /// <param name="orderId">The order identifier; 0 to load all records</param>
         /// <returns>Recurring payment history collection</returns>
-        public static RecurringPaymentHistoryCollection SearchRecurringPaymentHistory(int recurringPaymentId, 
+        public static List<RecurringPaymentHistory> SearchRecurringPaymentHistory(int recurringPaymentId, 
             int orderId)
         {
             var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchRecurringPaymentHistory(recurringPaymentId, orderId);
@@ -2197,7 +2430,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="giftCardId">Gift card identifier</param>
         public static void DeleteGiftCard(int giftCardId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteGiftCard(giftCardId);
+            var giftCard = GetGiftCardById(giftCardId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(giftCard))
+                context.GiftCards.Attach(giftCard);
+            context.DeleteObject(giftCard);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2210,8 +2449,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (giftCardId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetGiftCardById(giftCardId);
-            var giftCard = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from gc in context.GiftCards
+                        where gc.GiftCardId == giftCardId
+                        select gc;
+            var giftCard = query.SingleOrDefault();
             return giftCard;
         }
 
@@ -2228,7 +2470,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="isGiftCardActivated">Value indicating whether gift card is activated; null to load all records</param>
         /// <param name="giftCardCouponCode">Gift card coupon code; null or string.empty to load all records</param>
         /// <returns>Gift cards</returns>
-        public static GiftCardCollection GetAllGiftCards(int? orderId,
+        public static List<GiftCard> GetAllGiftCards(int? orderId,
             int? customerId, DateTime? startTime, DateTime? endTime,
             OrderStatusEnum? os, PaymentStatusEnum? ps, ShippingStatusEnum? ss,
             bool? isGiftCardActivated, string giftCardCouponCode)
@@ -2277,11 +2519,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             bool isRecipientNotified, DateTime createdOn)
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
+            
+            var giftCard = new GiftCard();
+            giftCard.PurchasedOrderProductVariantId = purchasedOrderProductVariantId;
+            giftCard.Amount = amount;
+            giftCard.IsGiftCardActivated = isGiftCardActivated;
+            giftCard.GiftCardCouponCode = giftCardCouponCode;
+            giftCard.RecipientName = recipientName;
+            giftCard.RecipientEmail = recipientEmail;
+            giftCard.SenderName = senderName;
+            giftCard.SenderEmail = senderEmail;
+            giftCard.Message = message;
+            giftCard.IsRecipientNotified = isRecipientNotified;
+            giftCard.CreatedOn = createdOn;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertGiftCard(purchasedOrderProductVariantId,
-                amount, isGiftCardActivated, giftCardCouponCode, recipientName, recipientEmail,
-                senderName, senderEmail, message, isRecipientNotified, createdOn);
-            var giftCard = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.GiftCards.AddObject(giftCard);
+            context.SaveChanges();
+
             return giftCard;
         }
 
@@ -2310,11 +2565,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateGiftCard(giftCardId,
-                purchasedOrderProductVariantId, amount, isGiftCardActivated, 
-                giftCardCouponCode, recipientName, recipientEmail,
-                senderName, senderEmail, message, isRecipientNotified, createdOn);
-            var giftCard = DBMapping(dbItem);
+            var giftCard = GetGiftCardById(giftCardId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(giftCard))
+                context.GiftCards.Attach(giftCard);
+
+            giftCard.PurchasedOrderProductVariantId = purchasedOrderProductVariantId;
+            giftCard.Amount = amount;
+            giftCard.IsGiftCardActivated = isGiftCardActivated;
+            giftCard.GiftCardCouponCode = giftCardCouponCode;
+            giftCard.RecipientName = recipientName;
+            giftCard.RecipientEmail = recipientEmail;
+            giftCard.SenderName = senderName;
+            giftCard.SenderEmail = senderEmail;
+            giftCard.Message = message;
+            giftCard.IsRecipientNotified = isRecipientNotified;
+            giftCard.CreatedOn = createdOn;
+            context.SaveChanges();
             return giftCard;
         }
 
@@ -2324,7 +2592,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="giftCardUsageHistoryId">Gift card usage history entry identifier</param>
         public static void DeleteGiftCardUsageHistory(int giftCardUsageHistoryId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteGiftCardUsageHistory(giftCardUsageHistoryId);
+            var giftCardUsageHistory = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(giftCardUsageHistory))
+                context.GiftCardUsageHistory.Attach(giftCardUsageHistory);
+            context.DeleteObject(giftCardUsageHistory);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2337,8 +2611,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (giftCardUsageHistoryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
-            var giftCardUsageHistory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from gcuh in context.GiftCardUsageHistory
+                        where gcuh.GiftCardUsageHistoryId == giftCardUsageHistoryId
+                        select gcuh;
+            var giftCardUsageHistory = query.SingleOrDefault();
             return giftCardUsageHistory;
         }
 
@@ -2349,7 +2626,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="customerId">Customer identifier; null to load all records</param>
         /// <param name="orderId">Order identifier; null to load all records</param>
         /// <returns>Gift card usage history entries</returns>
-        public static GiftCardUsageHistoryCollection GetAllGiftCardUsageHistoryEntries(int? giftCardId,
+        public static List<GiftCardUsageHistory> GetAllGiftCardUsageHistoryEntries(int? giftCardId,
             int? customerId, int? orderId)
         {
             var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllGiftCardUsageHistoryEntries(giftCardId, 
@@ -2374,9 +2651,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertGiftCardUsageHistory(giftCardId, 
-                customerId, orderId, usedValue, usedValueInCustomerCurrency, createdOn);
-            var giftCardUsageHistory = DBMapping(dbItem);
+            var giftCardUsageHistory = new GiftCardUsageHistory();
+            giftCardUsageHistory.GiftCardId = giftCardId;
+            giftCardUsageHistory.CustomerId = customerId;
+            giftCardUsageHistory.OrderId = orderId;
+            giftCardUsageHistory.UsedValue = usedValue;
+            giftCardUsageHistory.UsedValueInCustomerCurrency = usedValueInCustomerCurrency;
+            giftCardUsageHistory.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.GiftCardUsageHistory.AddObject(giftCardUsageHistory);
+            context.SaveChanges();
+
             return giftCardUsageHistory;
         }
 
@@ -2397,9 +2683,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateGiftCardUsageHistory(giftCardUsageHistoryId,
-                giftCardId, customerId, orderId, usedValue, usedValueInCustomerCurrency, createdOn);
-            var giftCardUsageHistory = DBMapping(dbItem);
+            var giftCardUsageHistory = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(giftCardUsageHistory))
+                context.GiftCardUsageHistory.Attach(giftCardUsageHistory);
+
+            giftCardUsageHistory.GiftCardId = giftCardId;
+            giftCardUsageHistory.CustomerId = customerId;
+            giftCardUsageHistory.OrderId = orderId;
+            giftCardUsageHistory.UsedValue = usedValue;
+            giftCardUsageHistory.UsedValueInCustomerCurrency = usedValueInCustomerCurrency;
+            giftCardUsageHistory.CreatedOn = createdOn;
+            context.SaveChanges();
             return giftCardUsageHistory;
         }
 
@@ -2413,7 +2709,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="rewardPointsHistoryId">Reward point history entry identifier</param>
         public static void DeleteRewardPointsHistory(int rewardPointsHistoryId)
         {
-            DBProviderManager<DBOrderProvider>.Provider.DeleteRewardPointsHistory(rewardPointsHistoryId);
+            var rewardPointsHistory = GetRewardPointsHistoryById(rewardPointsHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(rewardPointsHistory))
+                context.RewardPointsHistory.Attach(rewardPointsHistory);
+            context.DeleteObject(rewardPointsHistory);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2426,8 +2728,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (rewardPointsHistoryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.GetRewardPointsHistoryById(rewardPointsHistoryId);
-            var rewardPointsHistory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from rph in context.RewardPointsHistory
+                        where rph.RewardPointsHistoryId == rewardPointsHistoryId
+                        select rph;
+            var rewardPointsHistory = query.SingleOrDefault();
             return rewardPointsHistory;
         }
 
@@ -2440,7 +2745,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="pageIndex">Page index</param>
         /// <param name="totalRecords">Total records</param>
         /// <returns>Reward point history entries</returns>
-        public static RewardPointsHistoryCollection GetAllRewardPointsHistoryEntries(int? customerId,
+        public static List<RewardPointsHistory> GetAllRewardPointsHistoryEntries(int? customerId,
             int? orderId, int pageSize, int pageIndex, out int totalRecords)
         {
             if (pageSize <= 0)
@@ -2484,10 +2789,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             int newPointsBalance = customer.RewardPointsBalance + points;
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.InsertRewardPointsHistory(customerId,
-                orderId, points, newPointsBalance, usedAmount, usedAmountInCustomerCurrency,
-                customerCurrencyCode, message, createdOn);
-            var rewardPointsHistory = DBMapping(dbItem);
+            var rewardPointsHistory = new RewardPointsHistory();
+            rewardPointsHistory.CustomerId = customerId;
+            rewardPointsHistory.OrderId = orderId;
+            rewardPointsHistory.Points = points;
+            rewardPointsHistory.PointsBalance = newPointsBalance;
+            rewardPointsHistory.UsedAmount = usedAmount;
+            rewardPointsHistory.UsedAmountInCustomerCurrency = usedAmountInCustomerCurrency;
+            rewardPointsHistory.CustomerCurrencyCode = customerCurrencyCode;
+            rewardPointsHistory.Message = message;
+            rewardPointsHistory.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.RewardPointsHistory.AddObject(rewardPointsHistory);
+            context.SaveChanges();
+
             return rewardPointsHistory;
         }
 
@@ -2512,10 +2828,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.UpdateRewardPointsHistory(rewardPointsHistoryId,
-                customerId, orderId, points, pointsBalance, usedAmount,
-                usedAmountInCustomerCurrency, customerCurrencyCode, message, createdOn);
-            var rewardPointsHistory = DBMapping(dbItem);
+            var rewardPointsHistory = GetRewardPointsHistoryById(rewardPointsHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(rewardPointsHistory))
+                context.RewardPointsHistory.Attach(rewardPointsHistory);
+
+            rewardPointsHistory.CustomerId = customerId;
+            rewardPointsHistory.OrderId = orderId;
+            rewardPointsHistory.Points = points;
+            rewardPointsHistory.PointsBalance = pointsBalance;
+            rewardPointsHistory.UsedAmount = usedAmount;
+            rewardPointsHistory.UsedAmountInCustomerCurrency = usedAmountInCustomerCurrency;
+            rewardPointsHistory.CustomerCurrencyCode = customerCurrencyCode;
+            rewardPointsHistory.Message = message;
+            rewardPointsHistory.CreatedOn = createdOn;
+            context.SaveChanges();
             return rewardPointsHistory;
         }
 

@@ -69,5 +69,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the recurring payment
+        /// </summary>
+        public virtual RecurringPayment NpRecurringPayment { get; set; }
+
+        #endregion
     }
 }

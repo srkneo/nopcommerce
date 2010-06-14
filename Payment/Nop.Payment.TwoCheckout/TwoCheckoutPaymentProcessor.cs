@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.TwoCheckout
             builder.AppendFormat("{0}?id_type=1", serverURL);
             
             //products
-            OrderProductVariantCollection orderProductVariants = order.OrderProductVariants;
+            var orderProductVariants = order.OrderProductVariants;
             for (int i = 0; i < orderProductVariants.Count; i++)
             {
                 int pNum = i + 1;

@@ -236,39 +236,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         }
 
         /// <summary>
-        /// Deletes a discount usage history entry
-        /// </summary>
-        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
-        public override void DeleteDiscountUsageHistory(int discountUsageHistoryId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryDelete");
-            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, discountUsageHistoryId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a discount usage history entry
-        /// </summary>
-        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
-        /// <returns>Discount usage history entry</returns>
-        public override DBDiscountUsageHistory GetDiscountUsageHistoryById(int discountUsageHistoryId)
-        {
-            DBDiscountUsageHistory item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryLoadByPrimaryKey");
-            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, discountUsageHistoryId);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                if (dataReader.Read())
-                {
-                    item = GetDiscountUsageHistoryFromReader(dataReader);
-                }
-            }
-            return item;
-        }
-
-        /// <summary>
         /// Gets all discount usage history entries
         /// </summary>
         /// <param name="discountId">Discount type identifier; null to load all</param>
@@ -303,59 +270,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Inserts a discount usage history entry
-        /// </summary>
-        /// <param name="discountId">Discount type identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="orderId">Order identifier</param>
-        /// <param name="createdOn">A date and time of instance creation</param>
-        /// <returns>Discount usage history entry</returns>
-        public override DBDiscountUsageHistory InsertDiscountUsageHistory(int discountId,
-            int customerId, int orderId, DateTime createdOn)
-        {
-            DBDiscountUsageHistory item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryInsert");
-            db.AddOutParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, 0);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-            {
-                int discountUsageHistoryId = Convert.ToInt32(db.GetParameterValue(dbCommand, "@DiscountUsageHistoryID"));
-                item = GetDiscountUsageHistoryById(discountUsageHistoryId);
-            }
-            return item;
-        }
-
-        /// <summary>
-        /// Updates the discount usage history entry
-        /// </summary>
-        /// <param name="discountUsageHistoryId">discount usage history entry identifier</param>
-        /// <param name="discountId">Discount type identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="orderId">Order identifier</param>
-        /// <param name="createdOn">A date and time of instance creation</param>
-        /// <returns>Discount usage history entry</returns>
-        public override DBDiscountUsageHistory UpdateDiscountUsageHistory(int discountUsageHistoryId,
-            int discountId, int customerId, int orderId, DateTime createdOn)
-        {
-            DBDiscountUsageHistory item = null;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_DiscountUsageHistoryUpdate");
-            db.AddInParameter(dbCommand, "DiscountUsageHistoryID", DbType.Int32, discountUsageHistoryId);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "OrderID", DbType.Int32, orderId);
-            db.AddInParameter(dbCommand, "CreatedOn", DbType.DateTime, createdOn);
-            if (db.ExecuteNonQuery(dbCommand) > 0)
-                item = GetDiscountUsageHistoryById(discountUsageHistoryId);
-
-            return item;
         }
 
         #endregion

@@ -99,19 +99,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         #region Discount History
 
         /// <summary>
-        /// Deletes a discount usage history entry
-        /// </summary>
-        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
-        public abstract void DeleteDiscountUsageHistory(int discountUsageHistoryId);
-
-        /// <summary>
-        /// Gets a discount usage history entry
-        /// </summary>
-        /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
-        /// <returns>Discount usage history entry</returns>
-        public abstract DBDiscountUsageHistory GetDiscountUsageHistoryById(int discountUsageHistoryId);
-
-        /// <summary>
         /// Gets all discount usage history entries
         /// </summary>
         /// <param name="discountId">Discount type identifier; null to load all</param>
@@ -121,29 +108,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Promo.Discounts
         public abstract DBDiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? discountId,
             int? customerId, int? orderId);
 
-        /// <summary>
-        /// Inserts a discount usage history entry
-        /// </summary>
-        /// <param name="discountId">Discount type identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="orderId">Order identifier</param>
-        /// <param name="createdOn">A date and time of instance creation</param>
-        /// <returns>Discount usage history entry</returns>
-        public abstract DBDiscountUsageHistory InsertDiscountUsageHistory(int discountId,
-            int customerId, int orderId, DateTime createdOn);
-
-        /// <summary>
-        /// Updates the discount usage history entry
-        /// </summary>
-        /// <param name="discountUsageHistoryId">discount usage history entry identifier</param>
-        /// <param name="discountId">Discount type identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="orderId">Order identifier</param>
-        /// <param name="createdOn">A date and time of instance creation</param>
-        /// <returns>Discount usage history entry</returns>
-        public abstract DBDiscountUsageHistory UpdateDiscountUsageHistory(int discountUsageHistoryId,
-            int discountId, int customerId, int orderId, DateTime createdOn);
-        
         #endregion
 
         #endregion

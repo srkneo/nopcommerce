@@ -21,14 +21,15 @@ using System.Xml;
 using System.Xml.Serialization;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
+using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates;
+using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Xml;
-using NopSolutions.NopCommerce.BusinessLogic.Messages;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 {
@@ -42,7 +43,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         private List<CustomerRole> _customerRolesCache = null;
         private Address _billingAddressCache = null;
         private Address _shippingAddressCache = null;
-        private RewardPointsHistoryCollection _rewardPointsHistoryCache = null;
+        private List<RewardPointsHistory> _rewardPointsHistoryCache = null;
         #endregion
 
         #region Ctor
@@ -327,7 +328,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets the orders
         /// </summary>
-        public OrderCollection Orders
+        public List<Order> Orders
         {
             get
             {
@@ -989,12 +990,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <summary>
         /// Gets reward points collection
         /// </summary>
-        public RewardPointsHistoryCollection RewardPointsHistory
+        public List<RewardPointsHistory> RewardPointsHistory
         {
             get
             {
                 if (this.CustomerId == 0)
-                    return new RewardPointsHistoryCollection();
+                    return new List<RewardPointsHistory>();
                 if (_rewardPointsHistoryCache == null)
                 {
                     int totalRecords = 0;
@@ -1089,7 +1090,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// Gets the customer roles
         /// </summary>
         public virtual ICollection<CustomerRole> NpCustomerRoles { get; set; }
-
+        
+        /// <summary>
+        /// Gets the discount usage history
+        /// </summary>
+        public virtual ICollection<DiscountUsageHistory> NpDiscountUsageHistory { get; set; }
+        
+        /// <summary>
+        /// Gets the gift card usage history
+        /// </summary>
+        public virtual ICollection<GiftCardUsageHistory> NpGiftCardUsageHistory { get; set; }
+        
+        /// <summary>
+        /// Gets the reward points usage history
+        /// </summary>
+        public virtual ICollection<RewardPointsHistory> NpRewardPointsHistory { get; set; }
+        
         #endregion
     }
 }

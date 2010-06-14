@@ -88,12 +88,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             return item;
         }
 
-        private static DiscountUsageHistoryCollection DBMapping(DBDiscountUsageHistoryCollection dbCollection)
+        private static List<DiscountUsageHistory> DBMapping(DBDiscountUsageHistoryCollection dbCollection)
         {
             if (dbCollection == null)
                 return null;
 
-            var collection = new DiscountUsageHistoryCollection();
+            var collection = new List<DiscountUsageHistory>();
             foreach (var dbItem in dbCollection)
             {
                 var item = DBMapping(dbItem);
@@ -574,7 +574,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discountUsageHistoryId">Discount usage history entry identifier</param>
         public static void DeleteDiscountUsageHistory(int discountUsageHistoryId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.DeleteDiscountUsageHistory(discountUsageHistoryId);
+            var discountUsageHistory = GetDiscountUsageHistoryById(discountUsageHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(discountUsageHistory))
+                context.DiscountUsageHistory.Attach(discountUsageHistory);
+            context.DeleteObject(discountUsageHistory);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -587,8 +593,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             if (discountUsageHistoryId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountUsageHistoryById(discountUsageHistoryId);
-            var discountUsageHistory = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from duh in context.DiscountUsageHistory
+                        where duh.DiscountUsageHistoryId == discountUsageHistoryId
+                        select duh;
+            var discountUsageHistory = query.SingleOrDefault();
             return discountUsageHistory;
         }
 
@@ -599,7 +608,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="customerId">Customer identifier; null to load all</param>
         /// <param name="orderId">Order identifier; null to load all</param>
         /// <returns>Discount usage history entries</returns>
-        public static DiscountUsageHistoryCollection GetAllDiscountUsageHistoryEntries(int? discountId,
+        public static List<DiscountUsageHistory> GetAllDiscountUsageHistoryEntries(int? discountId,
             int? customerId, int? orderId)
         {
             var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscountUsageHistoryEntries(discountId, customerId, orderId);
@@ -620,9 +629,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.InsertDiscountUsageHistory(discountId, 
-                customerId, orderId, createdOn);
-            var discountUsageHistory = DBMapping(dbItem);
+
+            var discountUsageHistory = new DiscountUsageHistory();
+            discountUsageHistory.DiscountId = discountId;
+            discountUsageHistory.CustomerId = customerId;
+            discountUsageHistory.OrderId = orderId;
+            discountUsageHistory.CreatedOn = createdOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.DiscountUsageHistory.AddObject(discountUsageHistory);
+            context.SaveChanges();
+
             return discountUsageHistory;
         }
 
@@ -640,9 +657,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         {
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
-            var dbItem = DBProviderManager<DBDiscountProvider>.Provider.UpdateDiscountUsageHistory(discountUsageHistoryId,
-                discountId, customerId, orderId, createdOn);
-            var discountUsageHistory = DBMapping(dbItem);
+            var discountUsageHistory = GetDiscountUsageHistoryById(discountUsageHistoryId);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(discountUsageHistory))
+                context.DiscountUsageHistory.Attach(discountUsageHistory);
+
+            discountUsageHistory.DiscountId = discountId;
+            discountUsageHistory.CustomerId = customerId;
+            discountUsageHistory.OrderId = orderId;
+            discountUsageHistory.CreatedOn = createdOn;
+            context.SaveChanges();
             return discountUsageHistory;
         }
 

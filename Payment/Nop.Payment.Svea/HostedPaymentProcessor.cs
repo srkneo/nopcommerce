@@ -45,7 +45,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
         public string PostProcessPayment(Order order)
         {
             StringBuilder sb = new StringBuilder(HostedPaymentSettings.GatewayUrl);
-            OrderProductVariantCollection opvCollection = order.OrderProductVariants;
+            var opvCollection = order.OrderProductVariants;
             Customer customer = order.Customer;
 
             sb.AppendFormat("?Username={0}&", HostedPaymentSettings.Username);

@@ -824,7 +824,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         /// <param name="orders">Orders</param>
         /// <returns>Result in XML format</returns>
-        public static string ExportOrdersToXml(OrderCollection orders)
+        public static string ExportOrdersToXml(List<Order> orders)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter stringWriter = new StringWriter(sb);
@@ -969,7 +969,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
         /// </summary>
         /// <param name="filePath">File path to use</param>
         /// <param name="orders">Orders</param>
-        public static void ExportOrdersToXls(string filePath, OrderCollection orders)
+        public static void ExportOrdersToXls(string filePath, List<Order> orders)
         {
             using (ExcelHelper excelHelper = new ExcelHelper(filePath))
             {

@@ -181,5 +181,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the order
+        /// </summary>
+        public virtual Order NpOrder { get; set; }
+
+        /// <summary>
+        /// Gets the product variant
+        /// </summary>
+        public virtual ProductVariant NpProductVariant { get; set; }
+
+        /// <summary>
+        /// Gets the purchased gift cards
+        /// </summary>
+        public virtual ICollection<GiftCard> NpGiftCard { get; set; }
+        
+        #endregion
     }
 }

@@ -71,9 +71,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// </summary>
         /// <param name="customer">Customer</param>
         /// <returns>Active gift cards</returns>
-        public static GiftCardCollection GetActiveGiftCards(Customer customer)
+        public static List<GiftCard> GetActiveGiftCards(Customer customer)
         {
-            var result = new GiftCardCollection();
+            var result = new List<GiftCard>();
             if (customer == null)
                 return result;
 

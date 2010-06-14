@@ -118,5 +118,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the order product variant (initial product)
+        /// </summary>
+        public virtual OrderProductVariant NpOrderProductVariant { get; set; }
+
+        /// <summary>
+        /// Gets the gift card usage history
+        /// </summary>
+        public virtual ICollection<GiftCardUsageHistory> NpGiftCardUsageHistory { get; set; }
+        
+        #endregion
     }
 }

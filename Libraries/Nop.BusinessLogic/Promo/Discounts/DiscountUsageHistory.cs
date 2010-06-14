@@ -100,5 +100,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the customer
+        /// </summary>
+        public virtual Customer NpCustomer { get; set; }
+
+        /// <summary>
+        /// Gets the discount
+        /// </summary>
+        public virtual Discount NpDiscount { get; set; }
+
+        /// <summary>
+        /// Gets the order
+        /// </summary>
+        public virtual Order NpOrder { get; set; }
+        
+        #endregion
     }
 }

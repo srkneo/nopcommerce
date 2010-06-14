@@ -121,5 +121,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the gift card
+        /// </summary>
+        public virtual GiftCard NpGiftCard { get; set; }
+
+        /// <summary>
+        /// Gets the customer
+        /// </summary>
+        public virtual Customer NpCustomer { get; set; }
+        
+        #endregion
+
+        
     }
 }
