@@ -40,7 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Category category = CategoryManager.GetCategoryById(this.CategoryId, 0);
+            Category category = CategoryManager.GetCategoryById(this.CategoryId);
 
             if (this.HasLocalizableContent)
             {
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         
         public Category SaveInfo()
         {
-            Category category = CategoryManager.GetCategoryById(this.CategoryId, 0);
+            Category category = CategoryManager.GetCategoryById(this.CategoryId);
 
             if (category != null)
             {
@@ -228,7 +228,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                var category = CategoryManager.GetCategoryById(this.CategoryId, 0);
+                var category = CategoryManager.GetCategoryById(this.CategoryId);
                 if (category != null)
                 {
                     PictureManager.DeletePicture(category.PictureId);

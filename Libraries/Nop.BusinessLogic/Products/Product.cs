@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
 using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
@@ -28,6 +29,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
     /// </summary>
     public partial class Product : BaseEntity
     {
+        #region Fields
+        private List<ProductLocalized> _productLocalized;
+        #endregion
+
         #region Ctor
         /// <summary>
         /// Creates a new instance of the Product class
@@ -138,7 +143,179 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets or sets the date and time of product update
         /// </summary>
         public DateTime UpdatedOn { get; set; }
-        #endregion 
+        #endregion
+
+        #region Localizable properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        public string LocalizedName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_productLocalized == null)
+                        _productLocalized = ProductManager.GetProductLocalizedByProductId(this.ProductId);
+
+                    var temp1 = _productLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+
+                return this.Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized short description 
+        /// </summary>
+        public string LocalizedShortDescription
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_productLocalized == null)
+                        _productLocalized = ProductManager.GetProductLocalizedByProductId(this.ProductId);
+
+                    var temp1 = _productLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.ShortDescription))
+                        return temp1.ShortDescription;
+                }
+
+                return this.ShortDescription;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized full description 
+        /// </summary>
+        public string LocalizedFullDescription
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_productLocalized == null)
+                        _productLocalized = ProductManager.GetProductLocalizedByProductId(this.ProductId);
+
+                    var temp1 = _productLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.FullDescription))
+                        return temp1.FullDescription;
+                }
+
+                return this.FullDescription;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized meta keywords 
+        /// </summary>
+        public string LocalizedMetaKeywords
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_productLocalized == null)
+                        _productLocalized = ProductManager.GetProductLocalizedByProductId(this.ProductId);
+
+                    var temp1 = _productLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaKeywords))
+                        return temp1.MetaKeywords;
+                }
+
+                return this.MetaKeywords;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized meta description
+        /// </summary>
+        public string LocalizedMetaDescription
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_productLocalized == null)
+                        _productLocalized = ProductManager.GetProductLocalizedByProductId(this.ProductId);
+
+                    var temp1 = _productLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaDescription))
+                        return temp1.MetaDescription;
+                }
+
+                return this.MetaDescription;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized meta title 
+        /// </summary>
+        public string LocalizedMetaTitle
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_productLocalized == null)
+                        _productLocalized = ProductManager.GetProductLocalizedByProductId(this.ProductId);
+
+                    var temp1 = _productLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaTitle))
+                        return temp1.MetaTitle;
+                }
+
+                return this.MetaTitle;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized search-engine name 
+        /// </summary>
+        public string LocalizedSEName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_productLocalized == null)
+                        _productLocalized = ProductManager.GetProductLocalizedByProductId(this.ProductId);
+
+                    var temp1 = _productLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.SEName))
+                        return temp1.SEName;
+                }
+
+                return this.SEName;
+            }
+        }
+
+        #endregion
 
         #region Custom Properties
         /// <summary>

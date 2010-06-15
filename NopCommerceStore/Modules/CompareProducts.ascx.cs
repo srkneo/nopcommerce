@@ -143,7 +143,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     headerRow.Cells.Add(headerCell);
                     var productNameCell = new HtmlTableCell();
                     var productLink = new HyperLink();
-                    productLink.Text = Server.HtmlEncode(product.Name);
+                    productLink.Text = Server.HtmlEncode(product.LocalizedName);
                     productLink.NavigateUrl = SEOHelper.GetProductUrl(product);
                     productLink.Attributes.Add("class", "link");
                     productNameCell.Align = "center";
@@ -176,7 +176,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     var specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(specificationAttributeId);
                     var productRow = new HtmlTableRow();
-                    this.AddCell(productRow, Server.HtmlEncode(specificationAttribute.Name)).Align = "left";
+                    this.AddCell(productRow, Server.HtmlEncode(specificationAttribute.LocalizedName)).Align = "left";
 
                     foreach (var product2 in compareProducts)
                     {
@@ -187,7 +187,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                             {
                                 if (specificationAttribute.SpecificationAttributeId == psa2.SpecificationAttribute.SpecificationAttributeId)
                                 {
-                                    productCell.InnerHtml = (!String.IsNullOrEmpty(psa2.SpecificationAttributeOption.Name)) ? Server.HtmlEncode(psa2.SpecificationAttributeOption.Name) : "&nbsp;";
+                                    productCell.InnerHtml = (!String.IsNullOrEmpty(psa2.SpecificationAttributeOption.LocalizedName)) ? Server.HtmlEncode(psa2.SpecificationAttributeOption.LocalizedName) : "&nbsp;";
                                 }
                             }
                         }

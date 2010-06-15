@@ -15,7 +15,7 @@
             </LayoutTemplate>
             <ItemTemplate>
                 <li>
-                    <asp:HyperLink ID="hlProduct" runat="server" Text='<%#Server.HtmlEncode(Eval("Name").ToString()) %>' />
+                    <asp:HyperLink ID="hlProduct" runat="server" Text='<%#Server.HtmlEncode(Eval("LocalizedName").ToString()) %>' />
                 </li>
             </ItemTemplate>
             <ItemSeparatorTemplate>

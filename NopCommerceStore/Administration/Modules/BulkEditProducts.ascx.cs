@@ -143,7 +143,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         decimal price = txtPrice.Value;
                         decimal oldPrice = txtOldPrice.Value;
                         bool published = cbPublished.Checked;
-                        var productVariant = ProductManager.GetProductVariantById(pvId, 0);
+                        var productVariant = ProductManager.GetProductVariantById(pvId);
                         if (productVariant != null)
                         {
                             productVariant = ProductManager.UpdateProductVariant(productVariant.ProductVariantId,

@@ -35,16 +35,16 @@ namespace NopSolutions.NopCommerce.Web
                 {
                     hlImageLink.ImageUrl = PictureManager.GetPictureUrl(manufacturer.PictureId, SettingManager.GetSettingValueInteger("Media.Manufacturer.ThumbnailImageSize", 125), true);
                     hlImageLink.NavigateUrl = manufacturerURL;
-                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageLinkTitleFormat"), manufacturer.Name);
-                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageAlternateTextFormat"), manufacturer.Name);
+                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageLinkTitleFormat"), manufacturer.LocalizedName);
+                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageAlternateTextFormat"), manufacturer.LocalizedName);
                 }
 
                 var hlManufacturer = e.Item.FindControl("hlManufacturer") as HyperLink;
                 if(hlManufacturer != null)
                 {
                     hlManufacturer.NavigateUrl = manufacturerURL;
-                    hlManufacturer.ToolTip = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageLinkTitleFormat"), manufacturer.Name);
-                    hlManufacturer.Text = Server.HtmlEncode(manufacturer.Name);
+                    hlManufacturer.ToolTip = String.Format(GetLocaleResourceString("Media.Manufacturer.ImageLinkTitleFormat"), manufacturer.LocalizedName);
+                    hlManufacturer.Text = Server.HtmlEncode(manufacturer.LocalizedName);
                 }
             }
         }

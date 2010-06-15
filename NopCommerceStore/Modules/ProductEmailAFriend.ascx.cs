@@ -54,8 +54,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (product != null)
             {
                 hlProduct.NavigateUrl = SEOHelper.GetProductUrl(product);
-                hlProduct.Text = Server.HtmlEncode(product.Name);
-                lShortDescription.Text = product.ShortDescription;
+                hlProduct.Text = Server.HtmlEncode(product.LocalizedName);
+                lShortDescription.Text = product.LocalizedShortDescription;
 
                 if(NopContext.Current.User == null && CustomerManager.AllowAnonymousUsersToEmailAFriend)
                 {

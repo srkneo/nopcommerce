@@ -41,19 +41,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
     /// </summary>
     public partial class PDFHelper
     {
-        #region Properties
-        /// <summary>
-        /// Gets a file path to PDF logo
-        /// </summary>
-        public static string LogoFilePath
-        {
-            get
-            {
-                return HttpContext.Current.Request.PhysicalApplicationPath + "images/pdflogo.img";
-            }
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Print product collection to PDF
@@ -225,10 +212,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             }
             addressTable.Borders.Visible = false;
             Row row = addressTable.AddRow();
-
-
+            
             //billing info
-
             row.Cells[0].AddParagraph();
             Paragraph p2 = row.Cells[0].AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.BillingInformation", languageId));
             p2.Format.Font.Bold = true;
@@ -274,8 +259,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
             sec.AddParagraph();
 
-
-
+            
             //products
             Paragraph p4 = sec.AddParagraph(LocalizationManager.GetLocaleResourceString("PDFInvoice.Product(s)", languageId));
             p4.Format.Font.Bold = true;
@@ -595,7 +579,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             renderer.RenderDocument();
             renderer.PdfDocument.Save(filePath);
         }
-        
+
         #endregion
+
+        #region Properties
+        /// <summary>
+        /// Gets a file path to PDF logo
+        /// </summary>
+        public static string LogoFilePath
+        {
+            get
+            {
+                return HttpContext.Current.Request.PhysicalApplicationPath + "images/pdflogo.img";
+            }
+        }
+        #endregion
+
     }
 }

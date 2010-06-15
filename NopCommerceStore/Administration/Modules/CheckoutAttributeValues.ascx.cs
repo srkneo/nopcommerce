@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
+            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId);
             if (checkoutAttribute != null)
             {
                 if (checkoutAttribute.ShouldHaveValues)
@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         rptrLanguageDivs.DataBind();
                     }
 
-                    var values = CheckoutAttributeManager.GetCheckoutAttributeValues(checkoutAttribute.CheckoutAttributeId, 0);
+                    var values = CheckoutAttributeManager.GetCheckoutAttributeValues(checkoutAttribute.CheckoutAttributeId);
                     if (values.Count > 0)
                     {
                         gvValues.Visible = true;
@@ -101,7 +101,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
+                var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId);
                 if (checkoutAttribute != null)
                 {
                     var cav = CheckoutAttributeManager.InsertCheckoutAttributeValue(checkoutAttribute.CheckoutAttributeId,
@@ -245,7 +245,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 bool isPreSelected = cbIsPreSelected.Checked;
                 int displayOrder = txtDisplayOrder.Value;
 
-                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueById(cavId, 0);
+                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueById(cavId);
 
                 if (cav != null)
                 {
@@ -299,7 +299,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 int languageId = int.Parse(lblLanguageId.Text);
                 int cavId = Convert.ToInt32(hfCheckoutAttributeValueId.Value);
-                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueById(cavId, 0);
+                var cav = CheckoutAttributeManager.GetCheckoutAttributeValueById(cavId);
                 if (cav != null)
                 {
                     var content = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueIdAndLanguageId(cavId, languageId);

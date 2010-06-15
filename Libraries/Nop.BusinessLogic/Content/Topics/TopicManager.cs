@@ -126,7 +126,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
                         orderby t.Name
                         select t;
             var topics = query.ToList();
-
             return topics;
         }
 

@@ -203,8 +203,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         iProductVariantPicture.Visible = false;
                     else
                         iProductVariantPicture.ImageUrl = pictureUrl;
-                    iProductVariantPicture.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), productVariant.Name);
-                    iProductVariantPicture.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), productVariant.Name);
+                    iProductVariantPicture.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), productVariant.LocalizedName);
+                    iProductVariantPicture.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), productVariant.LocalizedName);
                 }
 
                 btnAddToWishlist.Visible = SettingManager.GetSettingValueBoolean("Common.EnableWishlist");

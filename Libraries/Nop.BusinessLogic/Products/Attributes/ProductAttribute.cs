@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
@@ -24,6 +25,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
     /// </summary>
     public partial class ProductAttribute : BaseEntity
     {
+        #region Fields
+        private List<ProductAttributeLocalized> _paLocalized;
+        #endregion
+
         #region Ctor
         /// <summary>
         /// Creates a new instance of the ProductAttribute class
@@ -48,6 +53,57 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// Gets or sets the description
         /// </summary>
         public string Description { get; set; }
+        #endregion
+
+        #region Localizable properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        public string LocalizedName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_paLocalized == null)
+                        _paLocalized = ProductAttributeManager.GetProductAttributeLocalizedByProductAttributeId(this.ProductAttributeId);
+
+                    var temp1 = _paLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+
+                return this.Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized description 
+        /// </summary>
+        public string LocalizedDescription
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_paLocalized == null)
+                        _paLocalized = ProductAttributeManager.GetProductAttributeLocalizedByProductAttributeId(this.ProductAttributeId);
+
+                    var temp1 = _paLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Description))
+                        return temp1.Description;
+                }
+
+                return this.Description;
+            }
+        }
         #endregion
 
         #region Navigation Properties

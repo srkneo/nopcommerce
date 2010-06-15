@@ -38,7 +38,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Product product = ProductManager.GetProductById(this.ProductId, 0);
+            Product product = ProductManager.GetProductById(this.ProductId);
 
             if (this.HasLocalizableContent)
             {
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo(int prodId)
         {
-            Product product = ProductManager.GetProductById(prodId, 0);
+            Product product = ProductManager.GetProductById(prodId);
             if (product != null)
             {
                 product = ProductManager.UpdateProduct(product.ProductId, product.Name, product.ShortDescription,

@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
@@ -25,6 +26,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
     /// </summary>
     public partial class CheckoutAttributeValue : BaseEntity
     {
+        #region Fields
+        private List<CheckoutAttributeValueLocalized> _cavLocalized;
+        #endregion
+
         #region Ctor
         /// <summary>
         /// Creates a new instance of the CheckoutAttributeValue class
@@ -69,6 +74,34 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+        #endregion
+
+        #region Localizable properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        public string LocalizedName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_cavLocalized == null)
+                        _cavLocalized = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueId(this.CheckoutAttributeValueId);
+
+                    var temp1 = _cavLocalized.FirstOrDefault(cavl => cavl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+
+                return this.Name;
+            }
+        }
+
         #endregion
 
         #region Custom Properties

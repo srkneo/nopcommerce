@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
@@ -31,6 +32,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
     /// </summary>
     public partial class ProductVariant : BaseEntity
     {
+        #region Fields
+        private List<ProductVariantLocalized> _pvLocalized;
+        #endregion
+
         #region Ctor
         /// <summary>
         /// Creates a new instance of the ProductVariant class
@@ -320,7 +325,78 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// Gets or sets the date and time of instance update
         /// </summary>
         public DateTime UpdatedOn { get; set; }
-        #endregion 
+        #endregion
+
+        #region Localizable properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        public string LocalizedName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_pvLocalized == null)
+                        _pvLocalized = ProductManager.GetProductVariantLocalizedByProductVariantId(this.ProductVariantId);
+
+                    var temp1 = _pvLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+
+                return this.Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized description 
+        /// </summary>
+        public string LocalizedDescription
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_pvLocalized == null)
+                        _pvLocalized = ProductManager.GetProductVariantLocalizedByProductVariantId(this.ProductVariantId);
+
+                    var temp1 = _pvLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Description))
+                        return temp1.Description;
+                }
+
+                return this.Description;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized full product name
+        /// </summary>
+        public string LocalizedFullProductName
+        {
+            get
+            {
+                Product product = this.Product;
+                if (product != null)
+                {
+                    if (!String.IsNullOrEmpty(this.LocalizedName))
+                        return product.LocalizedName + " (" + this.LocalizedName + ")";
+                    return product.LocalizedName;
+                }
+                return string.Empty;
+            }
+        }
+
+
+        #endregion
 
         #region Custom Properties
 

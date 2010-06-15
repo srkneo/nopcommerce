@@ -66,8 +66,8 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     hlImageLink.ImageUrl = PictureManager.GetPictureUrl(category.PictureId, SettingManager.GetSettingValueInteger("Media.Category.ThumbnailImageSize", 125), true);
                     hlImageLink.NavigateUrl = categoryURL;
-                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.Name);
-                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Category.ImageAlternateTextFormat"), category.Name);
+                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.LocalizedName);
+                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Category.ImageAlternateTextFormat"), category.LocalizedName);
                 }
                
                 HyperLink hlCategory = e.Item.FindControl("hlCategory") as HyperLink;

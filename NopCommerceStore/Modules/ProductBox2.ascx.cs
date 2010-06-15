@@ -56,24 +56,24 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 string productURL = SEOHelper.GetProductUrl(product);
 
                 hlProduct.NavigateUrl = productURL;
-                hlProduct.Text = Server.HtmlEncode(product.Name);
+                hlProduct.Text = Server.HtmlEncode(product.LocalizedName);
 
                 ProductPicture productPicture = product.DefaultProductPicture;
                 if(productPicture != null)
                 {
                     hlImageLink.ImageUrl = PictureManager.GetPictureUrl(productPicture.Picture, this.ProductImageSize, true);
-                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageLinkTitleFormat"), product.Name);
-                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
+                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageLinkTitleFormat"), product.LocalizedName);
+                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.LocalizedName);
                 }
                 else
                 {
                     hlImageLink.ImageUrl = PictureManager.GetDefaultPictureUrl(this.ProductImageSize);
-                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageLinkTitleFormat"), product.Name);
-                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.Name);
+                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageLinkTitleFormat"), product.LocalizedName);
+                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.LocalizedName);
                 }
 
                 hlImageLink.NavigateUrl = productURL;
-                lShortDescription.Text = product.ShortDescription;
+                lShortDescription.Text = product.LocalizedShortDescription;
 
                 var productVariantCollection = product.ProductVariants;
                 if (productVariantCollection.Count > 0)

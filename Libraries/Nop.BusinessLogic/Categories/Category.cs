@@ -14,14 +14,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using System.Globalization;
-
-
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 {
@@ -30,6 +29,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
     /// </summary>
     public partial class Category : BaseEntity
     {
+        #region Fields
+        private List<CategoryLocalized> _categoryLocalized;
+        #endregion
+
         #region Ctor
         /// <summary>
         /// Creates a new instance of the Category class
@@ -129,6 +132,152 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// Gets or sets the date and time of instance update
         /// </summary>
         public DateTime UpdatedOn { get; set; }
+        #endregion
+
+        #region Localizable properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        public string LocalizedName
+        {
+            get
+            {
+                int languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_categoryLocalized == null)
+                        _categoryLocalized = CategoryManager.GetCategoryLocalizedByCategoryId(this.CategoryId);
+
+                    var temp1 = _categoryLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+
+                return this.Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized description 
+        /// </summary>
+        public string LocalizedDescription
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_categoryLocalized == null)
+                        _categoryLocalized = CategoryManager.GetCategoryLocalizedByCategoryId(this.CategoryId);
+
+                    var temp1 = _categoryLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Description))
+                        return temp1.Description;
+                }
+
+                return this.Description;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized meta keywords 
+        /// </summary>
+        public string LocalizedMetaKeywords
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_categoryLocalized == null)
+                        _categoryLocalized = CategoryManager.GetCategoryLocalizedByCategoryId(this.CategoryId);
+
+                    var temp1 = _categoryLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaKeywords))
+                        return temp1.MetaKeywords;
+                }
+
+                return this.MetaKeywords;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized meta description
+        /// </summary>
+        public string LocalizedMetaDescription
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_categoryLocalized == null)
+                        _categoryLocalized = CategoryManager.GetCategoryLocalizedByCategoryId(this.CategoryId);
+
+                    var temp1 = _categoryLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaDescription))
+                        return temp1.MetaDescription;
+                }
+
+                return this.MetaDescription;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized meta title 
+        /// </summary>
+        public string LocalizedMetaTitle
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_categoryLocalized == null)
+                        _categoryLocalized = CategoryManager.GetCategoryLocalizedByCategoryId(this.CategoryId);
+
+                    var temp1 = _categoryLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaTitle))
+                        return temp1.MetaTitle;
+                }
+
+                return this.MetaTitle;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized search-engine name 
+        /// </summary>
+        public string LocalizedSEName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_categoryLocalized == null)
+                        _categoryLocalized = CategoryManager.GetCategoryLocalizedByCategoryId(this.CategoryId);
+
+                    var temp1 = _categoryLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.SEName))
+                        return temp1.SEName;
+                }
+
+                return this.SEName;
+            }
+        }
+
         #endregion
 
         #region Custom Properties

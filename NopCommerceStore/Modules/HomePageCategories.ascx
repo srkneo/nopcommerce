@@ -6,7 +6,7 @@
         <ItemTemplate>
             <div class="category-item">
                 <h2 class="title">
-                    <asp:HyperLink ID="hlCategory" runat="server" Text='<%#Server.HtmlEncode(Eval("Name").ToString()) %>' />
+                    <asp:HyperLink ID="hlCategory" runat="server" Text='<%#Server.HtmlEncode(Eval("LocalizedName").ToString()) %>' />
                     </h2>
                 <div class="picture">
                     <asp:HyperLink ID="hlImageLink" runat="server" />

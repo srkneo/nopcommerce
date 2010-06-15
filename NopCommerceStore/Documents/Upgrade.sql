@@ -3010,3 +3010,949 @@ GO
 
 ALTER TABLE [dbo].[Nop_Order] ALTER COLUMN [OrderWeight] decimal(18, 4) NOT NULL
 GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadAll]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLoadDisplayedOnHomePage]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLoadDisplayedOnHomePage]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedLoadByCategoryIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedLoadByCategoryIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CategoryUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CategoryUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeDelete]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLoadAll]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedLoadByCheckoutAttributeIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedLoadByCheckoutAttributeIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueDelete]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLoadByCheckoutAttributeID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLoadByCheckoutAttributeID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedLoadByCheckoutAttributeValueIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedLoadByCheckoutAttributeValueIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CheckoutAttributeValueUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CheckoutAttributeValueUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLoadAll]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedLoadByManufacturerIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedLoadByManufacturerIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ManufacturerUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ManufacturerUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeDelete]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLoadAll]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedLoadByProductAttributeIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedLoadByProductAttributeIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAttributeUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAttributeUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueDelete]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueLoadByProductVariantAttributeID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueLoadByProductVariantAttributeID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueLocalizedLoadByProductVariantAttributeValueIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueLocalizedLoadByProductVariantAttributeValueIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantAttributeValueUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantAttributeValueUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLoadAll]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLoadDisplayedOnHomePage]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLoadDisplayedOnHomePage]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLocalizedLoadByProductIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLocalizedLoadByProductIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLoadByProductID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLoadByProductID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLoadBySKU]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLoadBySKU]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLoadLowStock]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLoadLowStock]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLocalizedLoadByProductVariantIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLocalizedLoadByProductVariantIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeDelete]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLoadAll]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedLoadBySpecificationAttributeIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedLoadBySpecificationAttributeIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeLocalizedUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionDelete]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionDelete]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLoadAll]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLoadBySpecificationAttributeID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLoadBySpecificationAttributeID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLocalizedCleanUp]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLocalizedCleanUp]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLocalizedInsert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLocalizedInsert]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLocalizedLoadByPrimaryKey]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLocalizedLoadByPrimaryKey]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLocalizedLoadBySpecificationAttributeOptionIDAndLanguageID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLocalizedLoadBySpecificationAttributeOptionIDAndLanguageID]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionLocalizedUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionLocalizedUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionUpdate]
+GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeUpdate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeUpdate]
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAlsoPurchasedLoadByProductID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAlsoPurchasedLoadByProductID]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAlsoPurchasedLoadByProductID]
+(
+	@ProductID			int,
+	@ShowHidden			bit,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		ProductID int NOT NULL,
+		ProductsPurchased int NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (ProductID, ProductsPurchased)
+	SELECT p.ProductID, SUM(opv.Quantity) as ProductsPurchased
+	FROM    
+		dbo.Nop_OrderProductVariant opv WITH (NOLOCK)
+		INNER JOIN dbo.Nop_ProductVariant pv ON pv.ProductVariantId = opv.ProductVariantId
+		INNER JOIN dbo.Nop_Product p ON p.ProductId = pv.ProductId
+	WHERE
+		opv.OrderID IN 
+		(
+			/* This inner query should retrieve all orders that have contained the productID */
+			SELECT 
+				DISTINCT OrderID
+			FROM 
+				dbo.Nop_OrderProductVariant opv2 WITH (NOLOCK)
+				INNER JOIN dbo.Nop_ProductVariant pv2 ON pv2.ProductVariantId = opv2.ProductVariantId
+				INNER JOIN dbo.Nop_Product p2 ON p2.ProductId = pv2.ProductId			
+			WHERE 
+				p2.ProductID = @ProductID
+		)
+		AND 
+			(
+				p.ProductId != @ProductID
+			)
+		AND 
+			(
+				@ShowHidden = 1 OR p.Published = 1
+			)
+		AND 
+			(
+				p.Deleted = 0
+			)
+		AND 
+			(
+				@ShowHidden = 1
+				OR
+				GETUTCDATE() BETWEEN ISNULL(pv.AvailableStartDateTime, '1/1/1900') AND ISNULL(pv.AvailableEndDateTime, '1/1/2999')
+			)
+	GROUP BY
+		p.ProductId
+	ORDER BY 
+		ProductsPurchased desc
+
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		p.*
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Product p on p.ProductID = [pi].ProductID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex
+
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLoadAllPaged]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLoadAllPaged]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductLoadAllPaged]
+(
+	@CategoryID			int = 0,
+	@ManufacturerID		int = 0,
+	@ProductTagID		int = 0,
+	@FeaturedProducts	bit = null,	--0 featured only , 1 not featured only, null - load all products
+	@PriceMin			money = null,
+	@PriceMax			money = null,
+	@Keywords			nvarchar(MAX),	
+	@SearchDescriptions bit = 0,
+	@ShowHidden			bit = 0,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@FilteredSpecs		nvarchar(300) = null,	--filter by attributes (comma-separated list). e.g. 14,15,16
+	@LanguageID			int = 0,
+	@OrderBy			int = 0, --0 position, 5 - Name, 10 - Price
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	--init
+	SET @Keywords = isnull(@Keywords, '')
+	SET @Keywords = '%' + rtrim(ltrim(@Keywords)) + '%'
+
+	SET @PriceMin = isnull(@PriceMin, 0)
+	SET @PriceMax = isnull(@PriceMax, 2147483644)
+	
+	--filter by attributes
+	SET @FilteredSpecs = isnull(@FilteredSpecs, '')
+	CREATE TABLE #FilteredSpecs
+	(
+		SpecificationAttributeOptionID int not null
+	)
+	INSERT INTO #FilteredSpecs (SpecificationAttributeOptionID)
+	SELECT CAST(data as int) FROM dbo.[NOP_splitstring_to_table](@FilteredSpecs, ',');
+	
+	DECLARE @SpecAttributesCount int	
+	SELECT @SpecAttributesCount = COUNT(1) FROM #FilteredSpecs
+
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #DisplayOrderTmp 
+	(
+		[ID] int IDENTITY (1, 1) NOT NULL,
+		[ProductID] int NOT NULL,
+		[Name] nvarchar(400) not null,
+		[Price] money not null,
+		[DisplayOrder1] int,
+		[DisplayOrder2] int,
+	)
+
+	INSERT INTO #DisplayOrderTmp ([ProductID], [Name], [Price], [DisplayOrder1], [DisplayOrder2])
+	SELECT p.ProductID, p.Name, pv.Price, pcm.DisplayOrder, pmm.DisplayOrder 
+	FROM Nop_Product p with (NOLOCK) 
+	LEFT OUTER JOIN Nop_Product_Category_Mapping pcm with (NOLOCK) ON p.ProductID=pcm.ProductID
+	LEFT OUTER JOIN Nop_Product_Manufacturer_Mapping pmm with (NOLOCK) ON p.ProductID=pmm.ProductID
+	LEFT OUTER JOIN Nop_ProductTag_Product_Mapping ptpm with (NOLOCK) ON p.ProductID=ptpm.ProductID
+	LEFT OUTER JOIN Nop_ProductVariant pv with (NOLOCK) ON p.ProductID = pv.ProductID
+	LEFT OUTER JOIN Nop_ProductVariantLocalized pvl with (NOLOCK) ON pv.ProductVariantID = pvl.ProductVariantID AND pvl.LanguageID = @LanguageID
+	LEFT OUTER JOIN Nop_ProductLocalized pl with (NOLOCK) ON p.ProductID = pl.ProductID AND pl.LanguageID = @LanguageID
+	WHERE 
+		(
+			(
+				@ShowHidden = 1 OR p.Published = 1
+			)
+		AND 
+			(
+				@ShowHidden = 1 OR pv.Published = 1
+			)
+		AND 
+			(
+				p.Deleted=0
+			)
+		AND (
+				@CategoryID IS NULL OR @CategoryID=0
+				OR (pcm.CategoryID=@CategoryID AND (@FeaturedProducts IS NULL OR pcm.IsFeaturedProduct=@FeaturedProducts))
+			)
+		AND (
+				@ManufacturerID IS NULL OR @ManufacturerID=0
+				OR (pmm.ManufacturerID=@ManufacturerID AND (@FeaturedProducts IS NULL OR pmm.IsFeaturedProduct=@FeaturedProducts))
+			)
+		AND (
+				@ProductTagID IS NULL OR @ProductTagID=0
+				OR ptpm.ProductTagID=@ProductTagID
+			)
+		AND (
+				pv.Price BETWEEN @PriceMin AND @PriceMax
+			)
+		AND	(
+				-- search standard content
+				patindex(@Keywords, isnull(p.name, '')) > 0
+				or patindex(@Keywords, isnull(pv.name, '')) > 0
+				or patindex(@Keywords, isnull(pv.sku , '')) > 0
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(p.ShortDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(p.FullDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pv.Description, '')) > 0)					
+				-- search language content
+				or patindex(@Keywords, isnull(pl.name, '')) > 0
+				or patindex(@Keywords, isnull(pvl.name, '')) > 0
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pl.ShortDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pl.FullDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pvl.Description, '')) > 0)
+			)
+		AND
+			(
+				@ShowHidden = 1
+				OR
+				(getutcdate() between isnull(pv.AvailableStartDateTime, '1/1/1900') and isnull(pv.AvailableEndDateTime, '1/1/2999'))
+			)
+		AND
+			(
+				--filter by specs
+				@SpecAttributesCount = 0
+				OR
+				(
+					NOT EXISTS(
+						SELECT 1 
+						FROM #FilteredSpecs [fs]
+						WHERE [fs].SpecificationAttributeOptionID NOT IN (
+							SELECT psam.SpecificationAttributeOptionID
+							FROM dbo.Nop_Product_SpecificationAttribute_Mapping psam
+							WHERE psam.AllowFiltering = 1 AND psam.ProductID = p.ProductID
+							)
+						)
+					
+				)
+			)
+		)
+	ORDER BY 
+		CASE WHEN @OrderBy = 0 AND @CategoryID IS NOT NULL AND @CategoryID > 0
+		THEN pcm.DisplayOrder END,
+		CASE WHEN @OrderBy = 0 AND @ManufacturerID IS NOT NULL AND @ManufacturerID > 0
+		THEN pmm.DisplayOrder END,
+		CASE WHEN @OrderBy = 0
+		THEN dbo.NOP_getnotnullnotempty(pl.[Name],p.[Name]) END,
+		CASE WHEN @OrderBy = 5
+		THEN dbo.NOP_getnotnullnotempty(pl.[Name],p.[Name]) END,
+		CASE WHEN @OrderBy = 10
+		THEN pv.Price END
+
+	CREATE TABLE #PageIndex 
+	(
+		[IndexID] int IDENTITY (1, 1) NOT NULL,
+		[ProductID] int NOT NULL
+	)
+
+	INSERT INTO #PageIndex ([ProductID])
+	SELECT ProductID
+	FROM #DisplayOrderTmp with (NOLOCK)
+	GROUP BY ProductID
+	ORDER BY min([ID])
+
+	--total records
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	--return
+	SELECT  
+		p.*
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Product p on p.ProductID = [pi].ProductID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #FilteredSpecs
+	DROP TABLE #DisplayOrderTmp
+	DROP TABLE #PageIndex
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLoadRecentlyAdded]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLoadRecentlyAdded]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductLoadRecentlyAdded] 
+(	
+	@Number			int,
+	@ShowHidden		bit = 0
+)
+AS
+BEGIN
+    SET NOCOUNT ON
+    IF @Number is null or @Number = 0
+        SET @Number = 20
+
+	CREATE TABLE #ProductFilter
+	(
+	    ProductFilterID int IDENTITY (1, 1) NOT NULL,
+	    ProductID int not null
+	)
+	
+	INSERT #ProductFilter (ProductID)
+	SELECT p.ProductID
+	FROM Nop_Product p with (NOLOCK)
+	WHERE
+		(p.Published = 1 or @ShowHidden = 1) AND
+		p.Deleted = 0
+	ORDER BY p.CreatedOn desc
+
+	SELECT
+		p.*
+	FROM 
+		Nop_Product p with (NOLOCK)
+		inner join #ProductFilter pf with (NOLOCK) ON p.ProductID = pf.ProductID
+	WHERE pf.ProductFilterID <= @Number
+	DROP TABLE #ProductFilter
+END
+GO
+
+

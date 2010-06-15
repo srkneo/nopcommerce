@@ -496,11 +496,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                         {
                             if (pva.AttributeControlType == AttributeControlTypeEnum.MultilineTextbox)
                             {
-                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.Name, HtmlHelper.FormatText(valueStr, false, true, true, false, false, false));
+                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.LocalizedName, HtmlHelper.FormatText(valueStr, false, true, true, false, false, false));
                             }
                             else
                             {
-                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.Name, valueStr);
+                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.LocalizedName, valueStr);
                             }
                         }
                         else
@@ -508,7 +508,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                             var pvaValue = ProductAttributeManager.GetProductVariantAttributeValueById(Convert.ToInt32(valueStr));
                             if (pvaValue != null)
                             {
-                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.Name, pvaValue.Name);
+                                pvaAttribute = string.Format("{0}: {1}", pva.ProductAttribute.LocalizedName, pvaValue.LocalizedName);
                                 if (renderPrices)
                                 {
                                     decimal priceAdjustmentBase = TaxManager.GetPrice(productVariant, pvaValue.PriceAdjustment, customer);

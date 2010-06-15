@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
@@ -40,7 +41,6 @@ using NopSolutions.NopCommerce.BusinessLogic.SEO;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Media;
 
 namespace NopSolutions.NopCommerce.Web.Modules
 {
@@ -314,7 +314,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             var productVariant = shoppingCartItem.ProductVariant;
             if (productVariant != null)
-                return productVariant.FullProductName;
+                return productVariant.LocalizedFullProductName;
             return "Not available";
         }
 

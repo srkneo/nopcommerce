@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
@@ -24,6 +25,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
     /// </summary>
     public partial class CheckoutAttribute : BaseEntity
     {
+        #region Fields
+        private List<CheckoutAttributeLocalized> _checkoutAttributeLocalized;
+        #endregion
+
         #region Ctor
         /// <summary>
         /// Creates a new instance of the CheckoutAttribute class
@@ -78,6 +83,58 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+        #endregion
+
+        #region Localizable properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        public string LocalizedName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_checkoutAttributeLocalized == null)
+                        _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
+
+                    var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+
+                return this.Name;
+            }
+        }
+
+        /// <summary>
+        /// Gets the localized text prompt 
+        /// </summary>
+        public string LocalizedTextPrompt
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_checkoutAttributeLocalized == null)
+                        _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
+
+                    var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.TextPrompt))
+                        return temp1.TextPrompt;
+                }
+
+                return this.TextPrompt;
+            }
+        }
+
         #endregion
 
         #region Custom Properties

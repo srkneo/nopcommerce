@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.lblTitle.Text = string.Format(GetLocaleResourceString("Admin.ProductVariantAttributeValues.AddEdit"), Server.HtmlEncode(productAttribute.Name), Server.HtmlEncode(productVariant.FullProductName));
                 this.hlProductURL.NavigateUrl = CommonHelper.GetStoreAdminLocation() + "ProductVariantDetails.aspx?ProductVariantID=" + productVariant.ProductVariantId;
 
-                var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId, 0);
+                var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId);
                 if (productVariantAttributeValues.Count > 0)
                 {
                     this.gvProductVariantAttributeValues.Visible = true;
@@ -237,7 +237,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 bool isPreSelected = cbIsPreSelected.Checked;
                 int displayOrder = txtDisplayOrder.Value;
 
-                ProductVariantAttributeValue productVariantAttributeValue = ProductAttributeManager.GetProductVariantAttributeValueById(productVariantAttributeValueId, 0);
+                ProductVariantAttributeValue productVariantAttributeValue = ProductAttributeManager.GetProductVariantAttributeValueById(productVariantAttributeValueId);
 
                 if (productVariantAttributeValue != null)
                 {
@@ -291,7 +291,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 int languageId = int.Parse(lblLanguageId.Text);
                 int pvavId = Convert.ToInt32(hfProductVariantAttributeValueId.Value);
-                ProductVariantAttributeValue pvav = ProductAttributeManager.GetProductVariantAttributeValueById(pvavId, 0);
+                ProductVariantAttributeValue pvav = ProductAttributeManager.GetProductVariantAttributeValueById(pvavId);
                 if (pvav != null)
                 {
                     var content = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIdAndLanguageId(pvavId, languageId);

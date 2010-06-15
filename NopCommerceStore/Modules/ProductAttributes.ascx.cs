@@ -69,14 +69,14 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         if (!string.IsNullOrEmpty(attribute.TextPrompt))
                             textPrompt = attribute.TextPrompt;
                         else
-                            textPrompt = attribute.ProductAttribute.Name;
+                            textPrompt = attribute.ProductAttribute.LocalizedName;
 
                         attributeTitle.Text += Server.HtmlEncode(textPrompt);
                         attributeTitle.Style.Add("font-weight", "bold");
 
                         //description
-                        if (!string.IsNullOrEmpty(attribute.ProductAttribute.Description))
-                            attributeTitle.Text += string.Format("<br /><span>{0}</span>", Server.HtmlEncode(attribute.ProductAttribute.Description));
+                        if (!string.IsNullOrEmpty(attribute.ProductAttribute.LocalizedDescription))
+                            attributeTitle.Text += string.Format("<br /><span>{0}</span>", Server.HtmlEncode(attribute.ProductAttribute.LocalizedDescription));
 
                         bool addBreak = true;
                         switch (attribute.AttributeControlType)
@@ -122,7 +122,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     bool preSelectedSet = false;
                                     foreach (var pvaValue in pvaValues)
                                     {
-                                        string pvaValueName = pvaValue.Name;
+                                        string pvaValueName = pvaValue.LocalizedName;
                                         if (!this.HidePrices &&
                                             (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
                                             (NopContext.Current.User != null &&
@@ -159,7 +159,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     bool preSelectedSet = false;
                                     foreach (var pvaValue in pvaValues)
                                     {
-                                        string pvaValueName = pvaValue.Name;
+                                        string pvaValueName = pvaValue.LocalizedName;
                                         if (!this.HidePrices &&
                                             (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
                                             (NopContext.Current.User != null &&
@@ -194,7 +194,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                     var pvaValues = attribute.ProductVariantAttributeValues;
                                     foreach (var pvaValue in pvaValues)
                                     {
-                                        string pvaValueName = pvaValue.Name;
+                                        string pvaValueName = pvaValue.LocalizedName;
                                         if (!this.HidePrices &&
                                             (!SettingManager.GetSettingValueBoolean("Common.HidePricesForNonRegistered") ||
                                             (NopContext.Current.User != null &&

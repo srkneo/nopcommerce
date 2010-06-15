@@ -256,7 +256,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                     var productVariant = ProductManager.GetProductVariantBySKU(SKU);
                     if (productVariant != null)
                     {
-                        var product = ProductManager.GetProductById(productVariant.ProductId, 0);
+                        var product = ProductManager.GetProductById(productVariant.ProductId);
                         product = ProductManager.UpdateProduct(product.ProductId, Name, ShortDescription,
                             FullDescription, product.AdminComment, ProductTypeId,
                             TemplateId, ShowOnHomePage, MetaKeywords, MetaDescription,

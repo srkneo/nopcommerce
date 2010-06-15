@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId, 0);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
 
             if (this.HasLocalizableContent)
             {
@@ -332,7 +332,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             bool published = cbPublished.Checked;
             int displayOrder = txtDisplayOrder.Value;
 
-            ProductVariant productVariant = ProductManager.GetProductVariantById(ProductVariantId, 0);
+            ProductVariant productVariant = ProductManager.GetProductVariantById(ProductVariantId);
             if (productVariant != null)
             {
                 #region Update
@@ -618,7 +618,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId, 0);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant != null)
                 {
                     PictureManager.DeletePicture(productVariant.PictureId);
@@ -636,7 +636,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId, 0);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant != null)
                 {
                     Download download = productVariant.Download;
@@ -659,7 +659,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId, 0);
+                ProductVariant productVariant = ProductManager.GetProductVariantById(this.ProductVariantId);
                 if (productVariant != null)
                 {
                     Download download = productVariant.SampleDownload;

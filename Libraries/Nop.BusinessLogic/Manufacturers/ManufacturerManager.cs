@@ -34,8 +34,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
     public partial class ManufacturerManager
     {
         #region Constants
-        private const string MANUFACTURERS_ALL_KEY = "Nop.manufacturer.all-{0}-{1}";
-        private const string MANUFACTURERS_BY_ID_KEY = "Nop.manufacturer.id-{0}-{1}";
+        private const string MANUFACTURERS_ALL_KEY = "Nop.manufacturer.all-{0}";
+        private const string MANUFACTURERS_BY_ID_KEY = "Nop.manufacturer.id-{0}";
         private const string PRODUCTMANUFACTURERS_ALLBYMANUFACTURERID_KEY = "Nop.productmanufacturer.allbymanufacturerid-{0}-{1}";
         private const string PRODUCTMANUFACTURERS_ALLBYPRODUCTID_KEY = "Nop.productmanufacturer.allbyproductid-{0}-{1}";
         private const string PRODUCTMANUFACTURERS_BY_ID_KEY = "Nop.productmanufacturer.id-{0}";
@@ -44,65 +44,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         #endregion
 
         #region Utilities
-        private static List<Manufacturer> DBMapping(DBManufacturerCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<Manufacturer>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Manufacturer DBMapping(DBManufacturer dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Manufacturer();
-            item.ManufacturerId = dbItem.ManufacturerId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-            item.TemplateId = dbItem.TemplateId;
-            item.MetaKeywords = dbItem.MetaKeywords;
-            item.MetaDescription = dbItem.MetaDescription;
-            item.MetaTitle = dbItem.MetaTitle;
-            item.SEName = dbItem.SEName;
-            item.PictureId = dbItem.PictureId;
-            item.PageSize = dbItem.PageSize;
-            item.PriceRanges = dbItem.PriceRanges;
-            item.Published = dbItem.Published;
-            item.Deleted = dbItem.Deleted;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-
-        private static ManufacturerLocalized DBMapping(DBManufacturerLocalized dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ManufacturerLocalized();
-            item.ManufacturerLocalizedId = dbItem.ManufacturerLocalizedId;
-            item.ManufacturerId = dbItem.ManufacturerId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-            item.MetaKeywords = dbItem.MetaKeywords;
-            item.MetaDescription = dbItem.MetaDescription;
-            item.MetaTitle = dbItem.MetaTitle;
-            item.SEName = dbItem.SEName;
-
-            return item;
-        }
 
         private static List<ProductManufacturer> DBMapping(DBProductManufacturerCollection dbCollection)
         {
@@ -133,16 +74,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             return item;
         }
+
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Marks a manufacturer as deleted
         /// </summary>
         /// <param name="manufacturerId">Manufacturer identifer</param>
         public static void MarkManufacturerAsDeleted(int manufacturerId)
         {
-            var manufacturer = GetManufacturerById(manufacturerId, 0);
+            var manufacturer = GetManufacturerById(manufacturerId);
             if (manufacturer != null)
             {
                 manufacturer = UpdateManufacturer(manufacturer.ManufacturerId, manufacturer.Name, manufacturer.Description,
@@ -160,7 +103,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <param name="manufacturerId">Manufacturer identifier</param>
         public static void RemoveManufacturerPicture(int manufacturerId)
         {
-            var manufacturer = GetManufacturerById(manufacturerId, 0);
+            var manufacturer = GetManufacturerById(manufacturerId);
             if (manufacturer != null)
             {
                 UpdateManufacturer(manufacturer.ManufacturerId, manufacturer.Name, manufacturer.Description,
@@ -189,35 +132,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <returns>Manufacturer collection</returns>
         public static List<Manufacturer> GetAllManufacturers(bool showHidden)
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetAllManufacturers(showHidden, languageId);
-        }
-
-        /// <summary>
-        /// Gets all manufacturers
-        /// </summary>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Manufacturer collection</returns>
-        public static List<Manufacturer> GetAllManufacturers(bool showHidden, int languageId)
-        {
-            string key = string.Format(MANUFACTURERS_ALL_KEY, showHidden, languageId);
+            string key = string.Format(MANUFACTURERS_ALL_KEY, showHidden);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.ManufacturersCacheEnabled && (obj2 != null))
             {
                 return (List<Manufacturer>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetAllManufacturers(showHidden, languageId);
-            var manufacturerCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from m in context.Manufacturers
+                        orderby m.DisplayOrder
+                        where (showHidden || m.Published) &&
+                        !m.Deleted
+                        select m;
+            var manufacturers = query.ToList();
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
-                NopCache.Max(key, manufacturerCollection);
+                NopCache.Max(key, manufacturers);
             }
-            return manufacturerCollection;
+            return manufacturers;
         }
 
         /// <summary>
@@ -227,32 +161,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         /// <returns>Manufacturer</returns>
         public static Manufacturer GetManufacturerById(int manufacturerId)
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetManufacturerById(manufacturerId, languageId);
-        }
-        
-        /// <summary>
-        /// Gets a manufacturer
-        /// </summary>
-        /// <param name="manufacturerId">Manufacturer identifier</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Manufacturer</returns>
-        public static Manufacturer GetManufacturerById(int manufacturerId, int languageId)
-        {
             if (manufacturerId == 0)
                 return null;
 
-            string key = string.Format(MANUFACTURERS_BY_ID_KEY, manufacturerId, languageId);
+            string key = string.Format(MANUFACTURERS_BY_ID_KEY, manufacturerId);
             object obj2 = NopCache.Get(key);
             if (ManufacturerManager.ManufacturersCacheEnabled && (obj2 != null))
             {
                 return (Manufacturer)obj2;
             }
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerById(manufacturerId, languageId);
-            var manufacturer = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from m in context.Manufacturers
+                        where m.ManufacturerId == manufacturerId
+                        select m;
+            var manufacturer = query.SingleOrDefault();
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
@@ -289,11 +212,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertManufacturer(name, 
-                description, templateId, metaKeywords, metaDescription, metaTitle,
-                seName, pictureId, pageSize, priceRanges, published, deleted,
-                displayOrder, createdOn, updatedOn);
-            var manufacturer = DBMapping(dbItem);
+            var manufacturer = new Manufacturer();
+            manufacturer.Name = name;
+            manufacturer.Description = description;
+            manufacturer.TemplateId = templateId;
+            manufacturer.MetaKeywords = metaKeywords;
+            manufacturer.MetaTitle = metaTitle;
+            manufacturer.SEName = seName;
+            manufacturer.PictureId = pictureId;
+            manufacturer.PageSize = pageSize;
+            manufacturer.PriceRanges = priceRanges;
+            manufacturer.Published = published;
+            manufacturer.Deleted = deleted;
+            manufacturer.DisplayOrder = displayOrder;
+            manufacturer.CreatedOn = createdOn;
+            manufacturer.UpdatedOn = updatedOn;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Manufacturers.AddObject(manufacturer);
+            context.SaveChanges();
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
@@ -334,11 +271,29 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateManufacturer(manufacturerId,
-                name, description, templateId, metaKeywords, metaDescription, metaTitle,
-                seName, pictureId, pageSize, priceRanges, published, deleted,
-                displayOrder, createdOn, updatedOn);
-            var manufacturer = DBMapping(dbItem);
+            var manufacturer = GetManufacturerById(manufacturerId);
+            if (manufacturer == null)
+                return null;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(manufacturer))
+                context.Manufacturers.Attach(manufacturer);
+
+            manufacturer.Name = name;
+            manufacturer.Description = description;
+            manufacturer.TemplateId = templateId;
+            manufacturer.MetaKeywords = metaKeywords;
+            manufacturer.MetaTitle = metaTitle;
+            manufacturer.SEName = seName;
+            manufacturer.PictureId = pictureId;
+            manufacturer.PageSize = pageSize;
+            manufacturer.PriceRanges = priceRanges;
+            manufacturer.Published = published;
+            manufacturer.Deleted = deleted;
+            manufacturer.DisplayOrder = displayOrder;
+            manufacturer.CreatedOn = createdOn;
+            manufacturer.UpdatedOn = updatedOn;
+            context.SaveChanges();
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
@@ -359,9 +314,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             if (manufacturerLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerLocalizedById(manufacturerLocalizedId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ml in context.ManufacturerLocalized
+                        where ml.ManufacturerLocalizedId == manufacturerLocalizedId
+                        select ml;
+            var manufacturerLocalized = query.SingleOrDefault();
+            return manufacturerLocalized;
+        }
+
+        /// <summary>
+        /// Gets localized manufacturer by manufacturer id
+        /// </summary>
+        /// <param name="manufacturerId">Manufacturer identifier</param>
+        /// <returns>Manufacturer content</returns>
+        public static List<ManufacturerLocalized> GetManufacturerLocalizedByManufacturerId(int manufacturerId)
+        {
+            if (manufacturerId == 0)
+                return new List<ManufacturerLocalized>();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ml in context.ManufacturerLocalized
+                        where ml.ManufacturerId == manufacturerId
+                        select ml;
+            var content = query.ToList();
+            return content;
         }
 
         /// <summary>
@@ -375,9 +351,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             if (manufacturerId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.GetManufacturerLocalizedByManufacturerIdAndLanguageId(manufacturerId, languageId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from ml in context.ManufacturerLocalized
+                        orderby ml.ManufacturerLocalizedId
+                        where ml.ManufacturerId == manufacturerId &&
+                        ml.LanguageId == languageId
+                        select ml;
+            var manufacturerLocalized = query.FirstOrDefault();
+            return manufacturerLocalized;
         }
 
         /// <summary>
@@ -396,16 +377,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             int languageId, string name, string description,
             string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.InsertManufacturerLocalized(manufacturerId,
-                languageId, name, description, metaKeywords, metaDescription, metaTitle, seName);
-            var item = DBMapping(dbItem);
+            var manufacturerLocalized = new ManufacturerLocalized();
+            manufacturerLocalized.ManufacturerId = manufacturerId;
+            manufacturerLocalized.LanguageId = languageId;
+            manufacturerLocalized.Name = name;
+            manufacturerLocalized.Description = description;
+            manufacturerLocalized.MetaKeywords = metaKeywords;
+            manufacturerLocalized.MetaDescription = metaDescription;
+            manufacturerLocalized.MetaTitle = metaTitle;
+            manufacturerLocalized.SEName = seName;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ManufacturerLocalized.AddObject(manufacturerLocalized);
+            context.SaveChanges();
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
                 NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
             }
 
-            return item;
+            return manufacturerLocalized;
         }
 
         /// <summary>
@@ -425,17 +416,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             int manufacturerId, int languageId, string name, string description,
             string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
-            var dbItem = DBProviderManager<DBManufacturerProvider>.Provider.UpdateManufacturerLocalized(manufacturerLocalizedId,
-                manufacturerId, languageId, name, description, metaKeywords, 
-                metaDescription, metaTitle, seName);
-            var item = DBMapping(dbItem);
+            var manufacturerLocalized = GetManufacturerLocalizedById(manufacturerLocalizedId);
+            if (manufacturerLocalized == null)
+                return null;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(manufacturerLocalized))
+                context.ManufacturerLocalized.Attach(manufacturerLocalized);
+
+            manufacturerLocalized.ManufacturerId = manufacturerId;
+            manufacturerLocalized.LanguageId = languageId;
+            manufacturerLocalized.Name = name;
+            manufacturerLocalized.Description = description;
+            manufacturerLocalized.MetaKeywords = metaKeywords;
+            manufacturerLocalized.MetaDescription = metaDescription;
+            manufacturerLocalized.MetaTitle = metaTitle;
+            manufacturerLocalized.SEName = seName;
+            context.SaveChanges();
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
                 NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
             }
 
-            return item;
+            return manufacturerLocalized;
         }
 
         /// <summary>

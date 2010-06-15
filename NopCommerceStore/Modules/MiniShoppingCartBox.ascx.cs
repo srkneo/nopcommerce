@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         if (hlProduct != null)
                         {
                             hlProduct.NavigateUrl = SEOHelper.GetProductUrl(sci.ProductVariant.Product);
-                            hlProduct.Text = Server.HtmlEncode(sci.ProductVariant.FullProductName);
+                            hlProduct.Text = Server.HtmlEncode(sci.ProductVariant.LocalizedFullProductName);
                         }
 
                         var lblQty = dataItem.FindControl("lblQty") as Label;

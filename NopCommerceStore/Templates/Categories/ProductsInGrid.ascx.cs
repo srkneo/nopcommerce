@@ -78,7 +78,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             rptrCategoryBreadcrumb.DataSource = CategoryManager.GetBreadCrumb(this.CategoryId);
             rptrCategoryBreadcrumb.DataBind();
 
-            lDescription.Text = category.Description;
+            lDescription.Text = category.LocalizedDescription;
 
             //subcategories
             var subCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
@@ -206,16 +206,16 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 {
                     hlImageLink.ImageUrl = PictureManager.GetPictureUrl(category.PictureId, SettingManager.GetSettingValueInteger("Media.Category.ThumbnailImageSize", 125), true);
                     hlImageLink.NavigateUrl = categoryURL;
-                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.Name);
-                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Category.ImageAlternateTextFormat"), category.Name);
+                    hlImageLink.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.LocalizedName);
+                    hlImageLink.Text = String.Format(GetLocaleResourceString("Media.Category.ImageAlternateTextFormat"), category.LocalizedName);
                 }
 
                 var hlCategory = e.Item.FindControl("hlCategory") as HyperLink;
                 if (hlCategory != null)
                 {
                     hlCategory.NavigateUrl = categoryURL;
-                    hlCategory.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.Name);
-                    hlCategory.Text = Server.HtmlEncode(category.Name);
+                    hlCategory.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.LocalizedName);
+                    hlCategory.Text = Server.HtmlEncode(category.LocalizedName);
                 }
             }
         }

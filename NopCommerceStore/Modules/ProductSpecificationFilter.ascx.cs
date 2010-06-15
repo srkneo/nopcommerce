@@ -111,10 +111,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         result.Add(new SpecificationAttributeOptionFilter
                         {
                             SpecificationAttributeId = sa.SpecificationAttributeId,
-                            SpecificationAttributeName = sa.Name,
+                            SpecificationAttributeName = sa.LocalizedName,
                             DisplayOrder = sa.DisplayOrder,
                             SpecificationAttributeOptionId = sao.SpecificationAttributeOptionId,
-                            SpecificationAttributeOptionName = sao.Name
+                            SpecificationAttributeOptionName = sao.LocalizedName
                         });
                     }
                 }

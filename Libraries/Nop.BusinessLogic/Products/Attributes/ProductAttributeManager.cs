@@ -22,8 +22,6 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Products.Attributes;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
 {
@@ -33,107 +31,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
     public partial class ProductAttributeManager
     {
         #region Constants
-        private const string PRODUCTATTRIBUTES_ALL_KEY = "Nop.productattribute.all-{0}";
-        private const string PRODUCTATTRIBUTES_BY_ID_KEY = "Nop.productattribute.id-{0}-{1}";
+        private const string PRODUCTATTRIBUTES_ALL_KEY = "Nop.productattribute.all";
+        private const string PRODUCTATTRIBUTES_BY_ID_KEY = "Nop.productattribute.id-{0}";
         private const string PRODUCTVARIANTATTRIBUTES_ALL_KEY = "Nop.productvariantattribute.all-{0}";
         private const string PRODUCTVARIANTATTRIBUTES_BY_ID_KEY = "Nop.productvariantattribute.id-{0}";
-        private const string PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY = "Nop.productvariantattributevalue.all-{0}-{1}";
-        private const string PRODUCTVARIANTATTRIBUTEVALUES_BY_ID_KEY = "Nop.productvariantattributevalue.id-{0}-{1}";
+        private const string PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY = "Nop.productvariantattributevalue.all-{0}";
+        private const string PRODUCTVARIANTATTRIBUTEVALUES_BY_ID_KEY = "Nop.productvariantattributevalue.id-{0}";
         private const string PRODUCTATTRIBUTES_PATTERN_KEY = "Nop.productattribute.";
         private const string PRODUCTVARIANTATTRIBUTES_PATTERN_KEY = "Nop.productvariantattribute.";
         private const string PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY = "Nop.productvariantattributevalue.";
-        #endregion
-
-        #region Utilities
-        private static List<ProductAttribute> DBMapping(DBProductAttributeCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ProductAttribute>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductAttribute DBMapping(DBProductAttribute dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductAttribute();
-            item.ProductAttributeId = dbItem.ProductAttributeId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-
-            return item;
-        }
-
-        private static ProductAttributeLocalized DBMapping(DBProductAttributeLocalized dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductAttributeLocalized();
-            item.ProductAttributeLocalizedId = dbItem.ProductAttributeLocalizedId;
-            item.ProductAttributeId = dbItem.ProductAttributeId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-
-            return item;
-        }
-
-        private static List<ProductVariantAttributeValue> DBMapping(DBProductVariantAttributeValueCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ProductVariantAttributeValue>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductVariantAttributeValue DBMapping(DBProductVariantAttributeValue dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductVariantAttributeValue();
-            item.ProductVariantAttributeValueId = dbItem.ProductVariantAttributeValueId;
-            item.ProductVariantAttributeId = dbItem.ProductVariantAttributeId;
-            item.Name = dbItem.Name;
-            item.PriceAdjustment = dbItem.PriceAdjustment;
-            item.WeightAdjustment = dbItem.WeightAdjustment;
-            item.IsPreSelected = dbItem.IsPreSelected;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        private static ProductVariantAttributeValueLocalized DBMapping(DBProductVariantAttributeValueLocalized dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductVariantAttributeValueLocalized();
-            item.ProductVariantAttributeValueLocalizedId = dbItem.ProductVariantAttributeValueLocalizedId;
-            item.ProductVariantAttributeValueId = dbItem.ProductVariantAttributeValueId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Name = dbItem.Name;
-
-            return item;
-        }
-
         #endregion
 
         #region Methods
@@ -146,7 +52,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <param name="productAttributeId">Product attribute identifier</param>
         public static void DeleteProductAttribute(int productAttributeId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductAttribute(productAttributeId);
+            var productAttribute = GetProductAttributeById(productAttributeId);
+            if (productAttribute == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productAttribute))
+                context.ProductAttributes.Attach(productAttribute);
+            context.DeleteObject(productAttribute);
+            context.SaveChanges();
+
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -161,28 +76,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product attribute collection</returns>
         public static List<ProductAttribute> GetAllProductAttributes()
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetAllProductAttributes(languageId);
-        }
-
-        /// <summary>
-        /// Gets all product attributes
-        /// </summary>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Product attribute collection</returns>
-        public static List<ProductAttribute> GetAllProductAttributes(int languageId)
-        {
-            string key = string.Format(PRODUCTATTRIBUTES_ALL_KEY, languageId);
+            string key = string.Format(PRODUCTATTRIBUTES_ALL_KEY);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (List<ProductAttribute>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetAllProductAttributes(languageId);
-            var productAttributes = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pa in context.ProductAttributes
+                        orderby pa.Name
+                        select pa;
+            var productAttributes = query.ToList();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -190,7 +95,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             }
             return productAttributes;
         }
-
+        
         /// <summary>
         /// Gets a product attribute 
         /// </summary>
@@ -198,32 +103,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product attribute </returns>
         public static ProductAttribute GetProductAttributeById(int productAttributeId)
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetProductAttributeById(productAttributeId, languageId);
-        }
-
-        /// <summary>
-        /// Gets a product attribute 
-        /// </summary>
-        /// <param name="productAttributeId">Product attribute identifier</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Product attribute </returns>
-        public static ProductAttribute GetProductAttributeById(int productAttributeId, int languageId)
-        {
             if (productAttributeId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTATTRIBUTES_BY_ID_KEY, productAttributeId, languageId);
+            string key = string.Format(PRODUCTATTRIBUTES_BY_ID_KEY, productAttributeId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductAttribute)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeById(productAttributeId, languageId);
-            var productAttribute = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pa in context.ProductAttributes
+                        where pa.ProductAttributeId == productAttributeId
+                        select pa;
+            var productAttribute = query.SingleOrDefault();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -240,8 +134,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product attribute </returns>
         public static ProductAttribute InsertProductAttribute(string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttribute(name, description);
-            var productAttribute = DBMapping(dbItem);
+            var productAttribute = new ProductAttribute();
+            productAttribute.Name = name;
+            productAttribute.Description = description;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductAttributes.AddObject(productAttribute);
+            context.SaveChanges();
+
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -261,9 +161,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductAttribute UpdateProductAttribute(int productAttributeId,
             string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttribute(productAttributeId,
-                name, description);
-            var productAttribute = DBMapping(dbItem);
+            var productAttribute = GetProductAttributeById(productAttributeId);
+            if (productAttribute == null)
+                return null;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productAttribute))
+                context.ProductAttributes.Attach(productAttribute);
+
+            productAttribute.Name = name;
+            productAttribute.Description = description;
+            context.SaveChanges();
+
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -284,9 +193,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (productAttributeLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedById(productAttributeLocalizedId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pal in context.ProductAttributeLocalized
+                        where pal.ProductAttributeLocalizedId == productAttributeLocalizedId
+                        select pal;
+            var productAttributeLocalized = query.SingleOrDefault();
+            return productAttributeLocalized;
+        }
+
+        /// <summary>
+        /// Gets localized product attribute by product attribute id
+        /// </summary>
+        /// <param name="productAttributeId">Product attribute identifier</param>
+        /// <returns>Product attribute content</returns>
+        public static List<ProductAttributeLocalized> GetProductAttributeLocalizedByProductAttributeId(int productAttributeId)
+        {
+            if (productAttributeId == 0)
+                return new List<ProductAttributeLocalized>();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pal in context.ProductAttributeLocalized
+                        where pal.ProductAttributeId == productAttributeId
+                        select pal;
+            var content = query.ToList();
+            return content;
         }
 
         /// <summary>
@@ -300,9 +230,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (productAttributeId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductAttributeLocalizedByProductAttributeIdAndLanguageId(productAttributeId, languageId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pal in context.ProductAttributeLocalized
+                        orderby pal.ProductAttributeLocalizedId
+                        where pal.ProductAttributeId == productAttributeId &&
+                        pal.LanguageId == languageId
+                        select pal;
+            var productAttributeLocalized = query.FirstOrDefault();
+            return productAttributeLocalized;
         }
 
         /// <summary>
@@ -316,9 +251,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductAttributeLocalized InsertProductAttributeLocalized(int productAttributeId,
             int languageId, string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductAttributeLocalized(productAttributeId,
-            languageId, name, description);
-            var item = DBMapping(dbItem);
+            var productAttributeLocalized = new ProductAttributeLocalized();
+            productAttributeLocalized.ProductAttributeId = productAttributeId;
+            productAttributeLocalized.LanguageId = languageId;
+            productAttributeLocalized.Name = name;
+            productAttributeLocalized.Description = description;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductAttributeLocalized.AddObject(productAttributeLocalized);
+            context.SaveChanges();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -327,7 +268,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
             }
 
-            return item;
+            return productAttributeLocalized;
         }
 
         /// <summary>
@@ -342,9 +283,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductAttributeLocalized UpdateProductAttributeLocalized(int productAttributeLocalizedId,
             int productAttributeId, int languageId, string name, string description)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductAttributeLocalized(productAttributeLocalizedId,
-                productAttributeId, languageId, name, description);
-            var item = DBMapping(dbItem);
+            var productAttributeLocalized = GetProductAttributeLocalizedById(productAttributeLocalizedId);
+            if (productAttributeLocalized == null)
+                return null;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productAttributeLocalized))
+                context.ProductAttributeLocalized.Attach(productAttributeLocalized);
+
+            productAttributeLocalized.ProductAttributeId = productAttributeId;
+            productAttributeLocalized.LanguageId = languageId;
+            productAttributeLocalized.Name = name;
+            productAttributeLocalized.Description = description;
+            context.SaveChanges();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -353,7 +304,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
             }
 
-            return item;
+            return productAttributeLocalized;
         }
         
         #endregion
@@ -520,7 +471,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
 
         #endregion
 
-        #region Product variant attribute values  (ProductVariantAttributeValue)
+        #region Product variant attribute values (ProductVariantAttributeValue)
 
         /// <summary>
         /// Deletes a product variant attribute value
@@ -528,7 +479,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
         public static void DeleteProductVariantAttributeValue(int productVariantAttributeValueId)
         {
-            DBProviderManager<DBProductAttributeProvider>.Provider.DeleteProductVariantAttributeValue(productVariantAttributeValueId);
+            var productVariantAttributeValue = GetProductVariantAttributeValueById(productVariantAttributeValueId);
+            if (productVariantAttributeValue == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariantAttributeValue))
+                context.ProductVariantAttributeValues.Attach(productVariantAttributeValue);
+            context.DeleteObject(productVariantAttributeValue);
+            context.SaveChanges();
+
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(PRODUCTATTRIBUTES_PATTERN_KEY);
@@ -536,7 +496,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
             }
         }
-
+        
         /// <summary>
         /// Gets product variant attribute values by product identifier
         /// </summary>
@@ -544,29 +504,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product variant attribute mapping collection</returns>
         public static List<ProductVariantAttributeValue> GetProductVariantAttributeValues(int productVariantAttributeId)
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetProductVariantAttributeValues(productVariantAttributeId, languageId);
-        }
-
-        /// <summary>
-        /// Gets product variant attribute values by product identifier
-        /// </summary>
-        /// <param name="productVariantAttributeId">The product variant attribute mapping identifier</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Product variant attribute mapping collection</returns>
-        public static List<ProductVariantAttributeValue> GetProductVariantAttributeValues(int productVariantAttributeId, int languageId)
-        {
-            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY, productVariantAttributeId, languageId);
+            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_ALL_KEY, productVariantAttributeId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (List<ProductVariantAttributeValue>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValues(productVariantAttributeId, languageId);
-            var productVariantAttributeValues = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvav in context.ProductVariantAttributeValues
+                        orderby pvav.DisplayOrder
+                        where pvav.ProductVariantAttributeId == productVariantAttributeId
+                        select pvav;
+            var productVariantAttributeValues = query.ToList();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -574,7 +524,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             }
             return productVariantAttributeValues;
         }
-
+        
         /// <summary>
         /// Gets a product variant attribute value
         /// </summary>
@@ -582,32 +532,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product variant attribute value</returns>
         public static ProductVariantAttributeValue GetProductVariantAttributeValueById(int productVariantAttributeValueId)
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetProductVariantAttributeValueById(productVariantAttributeValueId, languageId);
-        }
-
-        /// <summary>
-        /// Gets a product variant attribute value
-        /// </summary>
-        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Product variant attribute value</returns>
-        public static ProductVariantAttributeValue GetProductVariantAttributeValueById(int productVariantAttributeValueId, int languageId)
-        {
             if (productVariantAttributeValueId == 0)
                 return null;
 
-            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_BY_ID_KEY, productVariantAttributeValueId ,languageId);
+            string key = string.Format(PRODUCTVARIANTATTRIBUTEVALUES_BY_ID_KEY, productVariantAttributeValueId);
             object obj2 = NopCache.Get(key);
             if (ProductAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariantAttributeValue)obj2;
             }
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueById(productVariantAttributeValueId, languageId);
-            var productVariantAttributeValue = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvav in context.ProductVariantAttributeValues
+                        where pvav.ProductVariantAttributeValueId == productVariantAttributeValueId
+                        select pvav;
+            var productVariantAttributeValue = query.SingleOrDefault();
+
             if (ProductAttributeManager.CacheEnabled)
             {
                 NopCache.Max(key, productVariantAttributeValue);
@@ -629,9 +569,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             string name, decimal priceAdjustment, decimal weightAdjustment,
             bool isPreSelected, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeValue(productVariantAttributeId,
-                name, priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
-            var productVariantAttributeValue = DBMapping(dbItem);
+            var productVariantAttributeValue = new ProductVariantAttributeValue();
+            productVariantAttributeValue.ProductVariantAttributeId = productVariantAttributeId;
+            productVariantAttributeValue.Name = name;
+            productVariantAttributeValue.PriceAdjustment = priceAdjustment;
+            productVariantAttributeValue.WeightAdjustment = weightAdjustment;
+            productVariantAttributeValue.IsPreSelected = isPreSelected;
+            productVariantAttributeValue.DisplayOrder = displayOrder;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductVariantAttributeValues.AddObject(productVariantAttributeValue);
+            context.SaveChanges();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -659,9 +607,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             decimal priceAdjustment, decimal weightAdjustment,
             bool isPreSelected, int displayOrder)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeValue(productVariantAttributeValueId,
-                productVariantAttributeId, name, priceAdjustment, weightAdjustment, isPreSelected, displayOrder);
-            var productVariantAttributeValue = DBMapping(dbItem);
+            var productVariantAttributeValue = GetProductVariantAttributeValueById(productVariantAttributeValueId);
+            if (productVariantAttributeValue == null)
+                return null;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariantAttributeValue))
+                context.ProductVariantAttributeValues.Attach(productVariantAttributeValue);
+
+            productVariantAttributeValue.ProductVariantAttributeId = productVariantAttributeId;
+            productVariantAttributeValue.Name = name;
+            productVariantAttributeValue.PriceAdjustment = priceAdjustment;
+            productVariantAttributeValue.WeightAdjustment = weightAdjustment;
+            productVariantAttributeValue.IsPreSelected = isPreSelected;
+            productVariantAttributeValue.DisplayOrder = displayOrder;
+            context.SaveChanges();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -683,9 +643,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (productVariantAttributeValueLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueLocalizedById(productVariantAttributeValueLocalizedId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvavl in context.ProductVariantAttributeValueLocalized
+                        where pvavl.ProductVariantAttributeValueLocalizedId == productVariantAttributeValueLocalizedId
+                        select pvavl;
+            var productVariantAttributeValueLocalized = query.SingleOrDefault();
+            return productVariantAttributeValueLocalized;
+        }
+
+        /// <summary>
+        /// Gets localized  product variant attribute value by id
+        /// </summary>
+        /// <param name="productVariantAttributeValueId">Product variant attribute value identifier</param>
+        /// <returns>Content</returns>
+        public static List<ProductVariantAttributeValueLocalized> GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueId(int productVariantAttributeValueId)
+        {
+            if (productVariantAttributeValueId == 0)
+                return new List<ProductVariantAttributeValueLocalized>();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvavl in context.ProductVariantAttributeValueLocalized
+                        where pvavl.ProductVariantAttributeValueId == productVariantAttributeValueId
+                        select pvavl;
+            var content = query.ToList();
+            return content;
         }
 
         /// <summary>
@@ -699,9 +680,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (productVariantAttributeValueId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueIdAndLanguageId(productVariantAttributeValueId, languageId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvavl in context.ProductVariantAttributeValueLocalized
+                        orderby pvavl.ProductVariantAttributeValueLocalizedId
+                        where pvavl.ProductVariantAttributeValueId == productVariantAttributeValueId &&
+                        pvavl.LanguageId == languageId
+                        select pvavl;
+            var productVariantAttributeValueLocalized = query.FirstOrDefault();
+            return productVariantAttributeValueLocalized;
         }
 
         /// <summary>
@@ -714,9 +700,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int productVariantAttributeValueId,
             int languageId, string name)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.InsertProductVariantAttributeValueLocalized(productVariantAttributeValueId,
-                languageId, name);
-            var item = DBMapping(dbItem);
+            var productVariantAttributeValueLocalized = new ProductVariantAttributeValueLocalized();
+            productVariantAttributeValueLocalized.ProductVariantAttributeValueId = productVariantAttributeValueId;
+            productVariantAttributeValueLocalized.LanguageId = languageId;
+            productVariantAttributeValueLocalized.Name = name;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.ProductVariantAttributeValueLocalized.AddObject(productVariantAttributeValueLocalized);
+            context.SaveChanges();
             
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -725,7 +716,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
             }
 
-            return item;
+            return productVariantAttributeValueLocalized;
         }
 
         /// <summary>
@@ -739,9 +730,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int productVariantAttributeValueLocalizedId,
             int productVariantAttributeValueId, int languageId, string name)
         {
-            var dbItem = DBProviderManager<DBProductAttributeProvider>.Provider.UpdateProductVariantAttributeValueLocalized(productVariantAttributeValueLocalizedId,
-                productVariantAttributeValueId, languageId, name);
-            var item = DBMapping(dbItem);
+            var productVariantAttributeValueLocalized = GetProductVariantAttributeValueLocalizedById(productVariantAttributeValueLocalizedId);
+            if (productVariantAttributeValueLocalized == null)
+                return null;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariantAttributeValueLocalized))
+                context.ProductVariantAttributeValueLocalized.Attach(productVariantAttributeValueLocalized);
+
+            productVariantAttributeValueLocalized.ProductVariantAttributeValueId = productVariantAttributeValueId;
+            productVariantAttributeValueLocalized.LanguageId = languageId;
+            productVariantAttributeValueLocalized.Name = name;
+            context.SaveChanges();
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -750,7 +750,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                 NopCache.RemoveByPattern(PRODUCTVARIANTATTRIBUTEVALUES_PATTERN_KEY);
             }
 
-            return item;
+            return productVariantAttributeValueLocalized;
         }
         
         #endregion

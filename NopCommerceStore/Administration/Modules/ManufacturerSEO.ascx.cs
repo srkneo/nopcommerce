@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
+            Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
 
             if (this.HasLocalizableContent)
             {
@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo(int manId)
         {
-            Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(manId, 0);
+            Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(manId);
 
             if (manufacturer != null)
             {

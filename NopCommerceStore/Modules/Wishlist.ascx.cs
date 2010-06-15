@@ -206,7 +206,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             var productVariant = shoppingCartItem.ProductVariant;
             if (productVariant != null)
-                return productVariant.FullProductName;
+                return productVariant.LocalizedFullProductName;
             return "Not available";
         }
 

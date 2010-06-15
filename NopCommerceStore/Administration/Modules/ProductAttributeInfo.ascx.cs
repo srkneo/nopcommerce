@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeById(this.ProductAttributeId, 0);
+            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeById(this.ProductAttributeId);
 
             if (this.HasLocalizableContent)
             {
@@ -67,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public ProductAttribute SaveInfo()
         {
-            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeById(this.ProductAttributeId, 0);
+            ProductAttribute productAttribute = ProductAttributeManager.GetProductAttributeById(this.ProductAttributeId);
 
             if (productAttribute != null)
             {

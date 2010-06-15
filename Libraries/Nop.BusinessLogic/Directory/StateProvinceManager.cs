@@ -124,8 +124,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                         where sp.CountryId == countryId
                         select sp;
             var stateProvinceCollection = query.ToList();
-
-
+            
             if (StateProvinceManager.CacheEnabled)
             {
                 NopCache.Max(key, stateProvinceCollection);

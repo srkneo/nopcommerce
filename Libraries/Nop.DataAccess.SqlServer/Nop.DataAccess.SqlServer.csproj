@@ -115,8 +115,6 @@
     <Compile Include="NopSqlDataHelper.cs" />
     <Compile Include="Orders\SqlOrderProvider.cs" />
     <Compile Include="Payment\SqlPaymentMethodProvider.cs" />
-    <Compile Include="Products\Attributes\SqlCheckoutAttributeProvider.cs" />
-    <Compile Include="Products\Attributes\SqlProductAttributeProvider.cs" />
     <Compile Include="Products\SqlProductProvider.cs" />
     <Compile Include="Products\Specs\SqlSpecificationAttributeProvider.cs" />
     <Compile Include="Promo\Discounts\SqlDiscountProvider.cs" />

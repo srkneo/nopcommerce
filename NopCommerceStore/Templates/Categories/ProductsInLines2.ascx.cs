@@ -45,8 +45,8 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
         protected void BindData()
         {
             var category = CategoryManager.GetCategoryById(this.CategoryId);
-            lName.Text = Server.HtmlEncode(category.Name);
-            lDescription.Text = category.Description;
+            lName.Text = Server.HtmlEncode(category.LocalizedName);
+            lDescription.Text = category.LocalizedDescription;
 
             var subCategoryCollection = CategoryManager.GetAllCategories(this.CategoryId);
             if (subCategoryCollection.Count > 0)

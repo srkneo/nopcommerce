@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 {
@@ -22,6 +23,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
     /// </summary>
     public partial class SpecificationAttribute : BaseEntity
     {
+        #region Fields
+        private List<SpecificationAttributeLocalized> _saLocalized;
+        #endregion
+
         #region Ctor
 
         /// <summary>
@@ -48,6 +53,34 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        #endregion
+
+        #region Localizable properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        public string LocalizedName
+        {
+            get
+            {
+                int languageId = 0;
+                if (NopContext.Current != null)
+                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                if (languageId > 0)
+                {
+                    if (_saLocalized == null)
+                        _saLocalized = SpecificationAttributeManager.GetSpecificationAttributeLocalizedBySpecificationAttributeId(this.SpecificationAttributeId);
+
+                    var temp1 = _saLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+
+                return this.Name;
+            }
+        }
 
         #endregion
 

@@ -34,8 +34,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
     public partial class CategoryManager
     {
         #region Constants
-        private const string CATEGORIES_ALL_KEY = "Nop.category.all-{0}-{1}-{2}";
-        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}-{1}";
+        private const string CATEGORIES_ALL_KEY = "Nop.category.all-{0}-{1}";
+        private const string CATEGORIES_BY_ID_KEY = "Nop.category.id-{0}";
         private const string PRODUCTCATEGORIES_ALLBYCATEGORYID_KEY = "Nop.productcategory.allbycategoryid-{0}-{1}";
         private const string PRODUCTCATEGORIES_ALLBYPRODUCTID_KEY = "Nop.productcategory.allbyproductid-{0}-{1}";
         private const string PRODUCTCATEGORIES_BY_ID_KEY = "Nop.productcategory.id-{0}";
@@ -45,68 +45,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         #endregion
 
         #region Utilities
-
-        private static List<Category> DBMapping(DBCategoryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<Category>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Category DBMapping(DBCategory dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Category();
-            item.CategoryId = dbItem.CategoryId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-            item.TemplateId = dbItem.TemplateId;
-            item.MetaKeywords = dbItem.MetaKeywords;
-            item.MetaDescription = dbItem.MetaDescription;
-            item.MetaTitle = dbItem.MetaTitle;
-            item.SEName = dbItem.SEName;
-            item.ParentCategoryId = dbItem.ParentCategoryId;
-            item.PictureId = dbItem.PictureId;
-            item.PageSize = dbItem.PageSize;
-            item.PriceRanges = dbItem.PriceRanges;
-            item.ShowOnHomePage = dbItem.ShowOnHomePage;
-            item.Published = dbItem.Published;
-            item.Deleted = dbItem.Deleted;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-        
-        private static CategoryLocalized DBMapping(DBCategoryLocalized dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CategoryLocalized();
-            item.CategoryLocalizedId = dbItem.CategoryLocalizedId;
-            item.CategoryId = dbItem.CategoryId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-            item.MetaKeywords = dbItem.MetaKeywords;
-            item.MetaDescription = dbItem.MetaDescription;
-            item.MetaTitle = dbItem.MetaTitle;
-            item.SEName = dbItem.SEName;
-
-            return item;
-        }
 
         private static List<ProductCategory> DBMapping(DBProductCategoryCollection dbCollection)
         {
@@ -147,7 +85,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="categoryId">Category identifier</param>
         public static void MarkCategoryAsDeleted(int categoryId)
         {
-            var category = GetCategoryById(categoryId, 0);
+            var category = GetCategoryById(categoryId);
             if (category != null)
             {
                 category = UpdateCategory(category.CategoryId, category.Name, 
@@ -165,7 +103,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <param name="categoryId">Category identifier</param>
         public static void RemoveCategoryPicture(int categoryId)
         {
-            var category = GetCategoryById(categoryId, 0);
+            var category = GetCategoryById(categoryId);
             if (category != null)
             {
                 UpdateCategory(category.CategoryId, category.Name, category.Description,
@@ -187,70 +125,56 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             bool showHidden = NopContext.Current.IsAdmin;
             return GetAllCategories(parentCategoryId, showHidden);
         }
-
+        
         /// <summary>
         /// Gets all categories
         /// </summary>
         /// <param name="parentCategoryId">Parent category identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Category collection</returns>
-        public static List<Category> GetAllCategories(int parentCategoryId, bool showHidden)
-        {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetAllCategories(parentCategoryId, showHidden, languageId);
-        }
-
-        /// <summary>
-        /// Gets all categories
-        /// </summary>
-        /// <param name="parentCategoryId">Parent category identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="languageId">Language identifier</param>
         /// <returns>Category collection</returns>
         public static List<Category> GetAllCategories(int parentCategoryId,
-            bool showHidden, int languageId)
+            bool showHidden)
         {
-            string key = string.Format(CATEGORIES_ALL_KEY, showHidden, parentCategoryId, languageId);
+            string key = string.Format(CATEGORIES_ALL_KEY, showHidden, parentCategoryId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (List<Category>)obj2;
             }
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategories(parentCategoryId, 
-                showHidden, languageId);
-            var categoryCollection = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Categories
+                        orderby c.DisplayOrder
+                        where (showHidden || c.Published) && 
+                        !c.Deleted && 
+                        c.ParentCategoryId == parentCategoryId
+                        select c;
+            var categories = query.ToList();
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
-                NopCache.Max(key, categoryCollection);
+                NopCache.Max(key, categories);
             }
-            return categoryCollection;
+            return categories;
         }
-
+        
         /// <summary>
         /// Gets all categories displayed on the home page
         /// </summary>
         /// <returns>Category collection</returns>
         public static List<Category> GetAllCategoriesDisplayedOnHomePage()
         {
-            return GetAllCategoriesDisplayedOnHomePage(NopContext.Current.IsAdmin, NopContext.Current.WorkingLanguage.LanguageId);
-        }
+            bool showHidden = NopContext.Current.IsAdmin;
 
-        /// <summary>
-        /// Gets all categories displayed on the home page
-        /// </summary>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Category collection</returns>
-        public static List<Category> GetAllCategoriesDisplayedOnHomePage(bool showHidden, int languageId)
-        {
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetAllCategoriesDisplayedOnHomePage(showHidden, languageId);
-            var categoryCollection = DBMapping(dbCollection);
-            return categoryCollection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Categories
+                        orderby c.DisplayOrder
+                        where (showHidden || c.Published) && !c.Deleted && c.ShowOnHomePage
+                        select c;
+            var categories = query.ToList();
+            return categories;
         }
-
+                
         /// <summary>
         /// Gets a category
         /// </summary>
@@ -258,31 +182,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         /// <returns>Category</returns>
         public static Category GetCategoryById(int categoryId)
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetCategoryById(categoryId, languageId);
-        }
-        
-        /// <summary>
-        /// Gets a category
-        /// </summary>
-        /// <param name="categoryId">Category identifier</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Category</returns>
-        public static Category GetCategoryById(int categoryId, int languageId)
-        {
             if (categoryId == 0)
                 return null;
 
-            string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId, languageId);
+            string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId);
             object obj2 = NopCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (Category)obj2;
             }
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryById(categoryId, languageId);
-            var category = DBMapping(dbItem);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Categories
+                        where c.CategoryId == categoryId
+                        select c;
+            var category = query.SingleOrDefault();
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
@@ -339,12 +253,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategory(name, 
-                description, templateId, metaKeywords, metaDescription, metaTitle,
-                seName, parentCategoryId, pictureId, pageSize, priceRanges, showOnHomePage, published, deleted,
-                displayOrder, createdOn, updatedOn);
+            var category = new Category();
+            category.Name = name;
+            category.Description = description;
+            category.TemplateId = templateId;
+            category.MetaKeywords = metaKeywords;
+            category.MetaTitle = metaTitle;
+            category.SEName = seName;
+            category.ParentCategoryId = parentCategoryId;
+            category.PictureId = pictureId;
+            category.PageSize = pageSize;
+            category.PriceRanges = priceRanges;
+            category.ShowOnHomePage = showOnHomePage;
+            category.Published = published;
+            category.Deleted = deleted;
+            category.DisplayOrder = displayOrder;
+            category.CreatedOn = createdOn;
+            category.UpdatedOn = updatedOn;
 
-            var category = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Categories.AddObject(category);
+            context.SaveChanges();
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
@@ -387,7 +316,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             //validate category hierarchy
-            var parentCategory = GetCategoryById(parentCategoryId, 0);
+            var parentCategory = GetCategoryById(parentCategoryId);
             while (parentCategory != null)
             {
                 if (categoryId == parentCategory.CategoryId)
@@ -395,15 +324,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                     parentCategoryId = 0;
                     break;
                 }
-                parentCategory = GetCategoryById(parentCategory.ParentCategoryId, 0);
+                parentCategory = GetCategoryById(parentCategory.ParentCategoryId);
             }
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategory(categoryId,
-                name, description, templateId, metaKeywords, metaDescription, metaTitle,
-                seName, parentCategoryId, pictureId, pageSize, priceRanges, showOnHomePage, published, deleted,
-                displayOrder, createdOn, updatedOn);
+            var category = GetCategoryById(categoryId);
+            if (category == null)
+                return null;
 
-            var category = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(category))
+                context.Categories.Attach(category);
+
+            category.Name = name;
+            category.Description = description;
+            category.TemplateId = templateId;
+            category.MetaKeywords = metaKeywords;
+            category.MetaTitle = metaTitle;
+            category.SEName = seName;
+            category.ParentCategoryId = parentCategoryId;
+            category.PictureId = pictureId;
+            category.PageSize = pageSize;
+            category.PriceRanges = priceRanges;
+            category.ShowOnHomePage = showOnHomePage;
+            category.Published = published;
+            category.Deleted = deleted;
+            category.DisplayOrder = displayOrder;
+            category.CreatedOn = createdOn;
+            category.UpdatedOn = updatedOn;
+            context.SaveChanges();
+
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
                 NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
@@ -423,9 +372,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             if (categoryLocalizedId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedById(categoryLocalizedId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cl in context.CategoryLocalized
+                        where cl.CategoryLocalizedId == categoryLocalizedId
+                        select cl;
+            var categoryLocalized = query.SingleOrDefault();
+            return categoryLocalized;
+        }
+
+        /// <summary>
+        /// Gets localized category by category id
+        /// </summary>
+        /// <param name="categoryId">Category identifier</param>
+        /// <returns>Category content</returns>
+        public static List<CategoryLocalized> GetCategoryLocalizedByCategoryId(int categoryId)
+        {
+            if (categoryId == 0)
+                return new List<CategoryLocalized>();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cl in context.CategoryLocalized
+                        where cl.CategoryId == categoryId
+                        select cl;
+            var content = query.ToList();
+            return content;
         }
 
         /// <summary>
@@ -439,9 +409,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             if (categoryId == 0 || languageId == 0)
                 return null;
 
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.GetCategoryLocalizedByCategoryIdAndLanguageId(categoryId, languageId);
-            var item = DBMapping(dbItem);
-            return item;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cl in context.CategoryLocalized
+                        orderby cl.CategoryLocalizedId
+                        where cl.CategoryId == categoryId &&
+                        cl.LanguageId == languageId
+                        select cl;
+            var categoryLocalized = query.FirstOrDefault();
+            return categoryLocalized;
         }
 
         /// <summary>
@@ -461,17 +436,26 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             string metaKeywords, string metaDescription, string metaTitle,
             string seName)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.InsertCategoryLocalized(categoryId,
-                languageId, name, description, metaKeywords, 
-                metaDescription, metaTitle, seName);
-            var item = DBMapping(dbItem);
+            var categoryLocalized = new CategoryLocalized();
+            categoryLocalized.CategoryId = categoryId;
+            categoryLocalized.LanguageId = languageId;
+            categoryLocalized.Name = name;
+            categoryLocalized.Description = description;
+            categoryLocalized.MetaKeywords = metaKeywords;
+            categoryLocalized.MetaDescription = metaDescription;
+            categoryLocalized.MetaTitle = metaTitle;
+            categoryLocalized.SEName = seName;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.CategoryLocalized.AddObject(categoryLocalized);
+            context.SaveChanges();
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
                 NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
             }
 
-            return item;
+            return categoryLocalized;
         }
 
         /// <summary>
@@ -492,17 +476,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             string metaKeywords, string metaDescription, string metaTitle,
             string seName)
         {
-            var dbItem = DBProviderManager<DBCategoryProvider>.Provider.UpdateCategoryLocalized(categoryLocalizedId,
-                categoryId, languageId, name, description, metaKeywords, 
-                metaDescription, metaTitle, seName);
-            var item = DBMapping(dbItem);
+            var categoryLocalized = GetCategoryLocalizedById(categoryLocalizedId);
+            if (categoryLocalized == null)
+                return null;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(categoryLocalized))
+                context.CategoryLocalized.Attach(categoryLocalized);
+
+            categoryLocalized.CategoryId = categoryId;
+            categoryLocalized.LanguageId = languageId;
+            categoryLocalized.Name = name;
+            categoryLocalized.Description = description;
+            categoryLocalized.MetaKeywords = metaKeywords;
+            categoryLocalized.MetaDescription = metaDescription;
+            categoryLocalized.MetaTitle = metaTitle;
+            categoryLocalized.SEName = seName;
+            context.SaveChanges();
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
                 NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
             }
 
-            return item;
+            return categoryLocalized;
         }
         
         /// <summary>

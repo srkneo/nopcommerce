@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 else
                 {
-                    //impossible scenario
+                    //impossible
                     lblSubTotalAmount.Text = GetLocaleResourceString("ShoppingCart.CalculatedDuringCheckout");
                     lblSubTotalAmount.CssClass = string.Empty;
                 }

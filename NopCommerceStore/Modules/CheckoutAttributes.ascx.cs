@@ -79,10 +79,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                     //text prompt / title
                     string textPrompt = string.Empty;
-                    if (!string.IsNullOrEmpty(attribute.TextPrompt))
-                        textPrompt = attribute.TextPrompt;
+                    if (!string.IsNullOrEmpty(attribute.LocalizedTextPrompt))
+                        textPrompt = attribute.LocalizedTextPrompt;
                     else
-                        textPrompt = attribute.Name;
+                        textPrompt = attribute.LocalizedName;
 
                     attributeTitle.Text += Server.HtmlEncode(textPrompt);
                     attributeTitle.Style.Add("font-weight", "bold");
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 bool preSelectedSet = false;
                                 foreach (var caValue in caValues)
                                 {
-                                    string caValueName = caValue.Name;
+                                    string caValueName = caValue.LocalizedName;
                                     if (!this.HidePrices)
                                     {
                                         decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue);
@@ -179,7 +179,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 bool preSelectedSet = false;
                                 foreach (var caValue in caValues)
                                 {
-                                    string caValueName = caValue.Name;
+                                    string caValueName = caValue.LocalizedName;
                                     if (!this.HidePrices)
                                     {
                                         decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue);
@@ -231,7 +231,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                                 var caValues = attribute.CheckoutAttributeValues;
                                 foreach (var caValue in caValues)
                                 {
-                                    string caValueName = caValue.Name;
+                                    string caValueName = caValue.LocalizedName;
                                     if (!this.HidePrices)
                                     {
                                         decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue);

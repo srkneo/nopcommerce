@@ -147,7 +147,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 else
                     link.CssClass = "inactive";
                 link.HyperLink.NavigateUrl = categoryURL;
-                link.HyperLink.Text = Server.HtmlEncode(category.Name);
+                link.HyperLink.Text = Server.HtmlEncode(category.LocalizedName);
                 if (padding > 0)
                     link.LiLeftMargin = padding.ToString();
 

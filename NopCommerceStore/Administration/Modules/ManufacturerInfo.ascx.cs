@@ -37,7 +37,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
+            var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
 
             if (this.HasLocalizableContent)
             {
@@ -101,7 +101,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         
         public Manufacturer SaveInfo()
         {
-            var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
+            var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
 
             if (manufacturer != null)
             {
@@ -224,7 +224,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             try
             {
-                Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId, 0);
+                Manufacturer manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
                 if (manufacturer != null)
                 {
                     PictureManager.DeletePicture(manufacturer.PictureId);

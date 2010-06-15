@@ -18,6 +18,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.Common;
+using System.Collections.Generic;
  
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Localization
@@ -174,9 +175,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         {
             return LocaleStringResourceManager.GetAllLocaleStringResourcesAsXml(languageId);
         }
+        
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the default admin language
         /// </summary>
@@ -205,6 +208,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
                     SettingManager.SetParam("Localization.DefaultAdminLanguageId", value.LanguageId.ToString());
             }
         }
+        
         #endregion
     }
 }

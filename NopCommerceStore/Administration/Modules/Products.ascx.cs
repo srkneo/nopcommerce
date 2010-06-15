@@ -79,16 +79,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.ddlManufacturer.Items.Add(item2);
             }
         }
-
+        
         protected List<Product> GetProducts()
-        {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetProducts(languageId);
-        }
-
-        protected List<Product> GetProducts(int languageId)
         {
             string productName = txtProductName.Text;
             int categoryId = ParentCategory.SelectedCategoryId;
@@ -97,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             int totalRecords = 0;
             var products = ProductManager.GetAllProducts(categoryId, 
                 manufacturerId, 0, null, null, null, productName, 
-                false, int.MaxValue, 0, null, languageId, 
+                false, int.MaxValue, 0, null, 
                 ProductSortingEnum.Position, out totalRecords);
             return products;
         }
@@ -188,7 +180,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = String.Format("products_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
                     
-                    var products = GetProducts(0);
+                    var products = GetProducts();
                     string xml = ExportManager.ExportProductsToXml(products);
                     CommonHelper.WriteResponseXml(xml, fileName);
                 }
@@ -207,7 +199,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     string fileName = string.Format("products_{0}_{1}.xls", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
                     string filePath = string.Format("{0}files\\ExportImport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
-                    var products = GetProducts(0);
+                    var products = GetProducts();
 
                     ExportManager.ExportProductsToXls(filePath, products);
                     CommonHelper.WriteResponseXls(filePath, fileName);

@@ -290,11 +290,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                     {
                         if (ca.AttributeControlType == AttributeControlTypeEnum.MultilineTextbox)
                         {
-                            caAttribute = string.Format("{0}: {1}", ca.Name, HtmlHelper.FormatText(valueStr, false, true, true, false, false, false));
+                            caAttribute = string.Format("{0}: {1}", ca.LocalizedName, HtmlHelper.FormatText(valueStr, false, true, true, false, false, false));
                         }
                         else
                         {
-                            caAttribute = string.Format("{0}: {1}", ca.Name, valueStr);
+                            caAttribute = string.Format("{0}: {1}", ca.LocalizedName, valueStr);
                         }
                     }
                     else
@@ -302,7 +302,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
                         var caValue = CheckoutAttributeManager.GetCheckoutAttributeValueById(Convert.ToInt32(valueStr));
                         if (caValue != null)
                         {
-                            caAttribute = string.Format("{0}: {1}", ca.Name, caValue.Name);
+                            caAttribute = string.Format("{0}: {1}", ca.LocalizedName, caValue.LocalizedName);
                             if (renderPrices)
                             {
                                 decimal priceAdjustmentBase = TaxManager.GetCheckoutAttributePrice(caValue, customer);

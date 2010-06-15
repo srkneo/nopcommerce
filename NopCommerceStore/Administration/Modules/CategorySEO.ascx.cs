@@ -39,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            var category = CategoryManager.GetCategoryById(this.CategoryId, 0);
+            var category = CategoryManager.GetCategoryById(this.CategoryId);
 
             if (this.HasLocalizableContent)
             {
@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public void SaveInfo(int catId)
         {
-            var category = CategoryManager.GetCategoryById(catId, 0);
+            var category = CategoryManager.GetCategoryById(catId);
 
             if (category != null)
             {

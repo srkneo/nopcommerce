@@ -14,7 +14,7 @@
     <div class="sub-category-list">
         <asp:Repeater ID="rptrSubCategories" runat="server" OnItemDataBound="rptrSubCategories_ItemDataBound">
             <ItemTemplate>
-                <asp:HyperLink ID="hlCategory" runat="server" Text='<%#Server.HtmlEncode(Eval("Name").ToString()) %>' />
+                <asp:HyperLink ID="hlCategory" runat="server" Text='<%#Server.HtmlEncode(Eval("LocalizedName").ToString()) %>' />
             </ItemTemplate>
             <SeparatorTemplate>
                 <br />
@@ -29,7 +29,7 @@
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <asp:HyperLink ID="hlProduct" runat="server" Text='<%#Server.HtmlEncode(Eval("Name").ToString()) %>' />
+                <asp:HyperLink ID="hlProduct" runat="server" Text='<%#Server.HtmlEncode(Eval("LocalizedName").ToString()) %>' />
             </ItemTemplate>
             <ItemSeparatorTemplate>
                 <br />

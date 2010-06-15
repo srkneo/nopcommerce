@@ -6,10 +6,10 @@
                 <ItemTemplate>
                     <tr>
                         <td width="30%" style="padding: 2px">
-                            <b><%#Server.HtmlEncode(((SpecificationAttribute)Eval("SpecificationAttribute")).Name)%></b>
+                            <b><%#Server.HtmlEncode(((SpecificationAttribute)Eval("SpecificationAttribute")).LocalizedName)%></b>
                         </td>
                         <td width="70%" style="padding: 2px">
-                            <%#Server.HtmlEncode(((SpecificationAttributeOption)Eval("SpecificationAttributeOption")).Name)%>
+                            <%#Server.HtmlEncode(((SpecificationAttributeOption)Eval("SpecificationAttributeOption")).LocalizedName)%>
                         </td>
                     </tr>
                 </ItemTemplate>

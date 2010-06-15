@@ -25,6 +25,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
+using System.Collections.Generic;
 
 namespace NopSolutions.NopCommerce.BusinessLogic
 {
@@ -55,6 +56,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Save customer session to data source
         /// </summary>
@@ -163,6 +165,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic
             application.Response.Cookies.Remove(key);
             application.Response.Cookies.Add(cookie);
         }
+        
         #endregion
 
         #region Properties

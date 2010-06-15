@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             rptrCategoryBreadcrumb.DataSource = CategoryManager.GetBreadCrumb(this.CategoryId);
             rptrCategoryBreadcrumb.DataBind();
 
-            lDescription.Text = category.Description;
+            lDescription.Text = category.LocalizedDescription;
 
             //subcategories
             var subCategoryCollection = CategoryManager.GetAllCategories(this.CategoryId);
@@ -204,8 +204,8 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 if (hlCategory != null)
                 {
                     hlCategory.NavigateUrl = SEOHelper.GetCategoryUrl(category.CategoryId);
-                    hlCategory.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.Name);
-                    hlCategory.Text = Server.HtmlEncode(category.Name);
+                    hlCategory.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.LocalizedName);
+                    hlCategory.Text = Server.HtmlEncode(category.LocalizedName);
                 }
             }
         }

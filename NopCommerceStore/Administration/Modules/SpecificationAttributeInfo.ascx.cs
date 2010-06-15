@@ -24,7 +24,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId, 0);
+            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId);
 
             if (this.HasLocalizableContent)
             {
@@ -72,7 +72,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public SpecificationAttribute SaveInfo()
         {
-            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId, 0);
+            SpecificationAttribute specificationAttribute = SpecificationAttributeManager.GetSpecificationAttributeById(this.SpecificationAttributeId);
 
             if (specificationAttribute != null)
             {
@@ -217,7 +217,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 int displayOrder = txtDisplayOrder.Value;
                 int saoId = int.Parse(hfSpecificationAttributeOptionId.Value);
 
-                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId, 0);
+                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId);
                 if (sao != null)
                 {
                     sao = SpecificationAttributeManager.UpdateSpecificationAttributeOptions(saoId, SpecificationAttributeId, name, displayOrder);
@@ -231,7 +231,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void OnSpecificationAttributeOptionsDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int saoId = (int)grdSpecificationAttributeOptions.DataKeys[e.RowIndex]["SpecificationAttributeOptionId"];
-            SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId, 0);
+            SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId);
             if (sao != null)
             {
                 SpecificationAttributeManager.DeleteSpecificationAttributeOption(sao.SpecificationAttributeOptionId);
@@ -270,7 +270,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 int languageId = int.Parse(lblLanguageId.Text);
                 int saoId = Convert.ToInt32(hfSpecificationAttributeOptionId.Value);
-                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId, 0);
+                SpecificationAttributeOption sao = SpecificationAttributeManager.GetSpecificationAttributeOptionById(saoId);
                 if (sao != null)
                 {
                     var content = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionIdAndLanguageId(saoId, languageId);

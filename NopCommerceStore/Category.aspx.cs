@@ -66,13 +66,13 @@ namespace NopSolutions.NopCommerce.Web
                 Response.Redirect(CommonHelper.GetStoreLocation());
 
             string title = string.Empty;
-            if (!string.IsNullOrEmpty(category.MetaTitle))
-                title = category.MetaTitle;
+            if (!string.IsNullOrEmpty(category.LocalizedMetaTitle))
+                title = category.LocalizedMetaTitle;
             else
-                title = category.Name;
+                title = category.LocalizedName;
             SEOHelper.RenderTitle(this, title, true);
-            SEOHelper.RenderMetaTag(this, "description", category.MetaDescription, true);
-            SEOHelper.RenderMetaTag(this, "keywords", category.MetaKeywords, true);
+            SEOHelper.RenderMetaTag(this, "description", category.LocalizedMetaDescription, true);
+            SEOHelper.RenderMetaTag(this, "keywords", category.LocalizedMetaKeywords, true);
         }
 
         public int CategoryId

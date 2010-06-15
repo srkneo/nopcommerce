@@ -69,8 +69,8 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
         protected void BindData()
         {
             var manufacturer = ManufacturerManager.GetManufacturerById(this.ManufacturerId);
-            lName.Text = Server.HtmlEncode(manufacturer.Name);
-            lDescription.Text = manufacturer.Description;
+            lName.Text = Server.HtmlEncode(manufacturer.LocalizedName);
+            lDescription.Text = manufacturer.LocalizedDescription;
 
             //featured products
             var featuredProducts = manufacturer.FeaturedProducts;
@@ -126,10 +126,10 @@ namespace NopSolutions.NopCommerce.Web.Templates.Manufacturers
                 orderBy = (ProductSortingEnum)Enum.ToObject(typeof(ProductSortingEnum), int.Parse(ddlSorting.SelectedItem.Value));
             }
 
-            var productCollection = ProductManager.GetAllProducts(0, 
+            var productCollection = ProductManager.GetAllProducts(0,
                 this.ManufacturerId, 0, false, minPriceConverted, maxPriceConverted,
-                string.Empty, false, pageSize, this.CurrentPageIndex, 
-                null,orderBy, out totalRecords);
+                string.Empty, false, pageSize, this.CurrentPageIndex,
+                null, orderBy, out totalRecords);
 
             if (productCollection.Count > 0)
             {

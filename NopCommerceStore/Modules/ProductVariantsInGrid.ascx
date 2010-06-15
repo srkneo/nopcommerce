@@ -17,14 +17,14 @@
                 </div>
                 <div class="overview">
                     <div class="productname">
-                        <%#Server.HtmlEncode(Eval("Name").ToString())%>
+                        <%#Server.HtmlEncode(Eval("LocalizedName").ToString())%>
                     </div>
                     <asp:Label runat="server" ID="ProductVariantId" Text='<%#Eval("ProductVariantId")%>'
                         Visible="false" />
                 </div>
                 <div class="description">
-                    <asp:Literal runat="server" ID="lDescription" Visible='<%# !String.IsNullOrEmpty(Eval("Description").ToString()) %>'
-                        Text='<%# Eval("Description")%>'>
+                    <asp:Literal runat="server" ID="lDescription" Visible='<%# !String.IsNullOrEmpty(Eval("LocalizedDescription").ToString()) %>'
+                        Text='<%# Eval("LocalizedDescription")%>'>
                     </asp:Literal>
                 </div>
                 <asp:Panel runat="server" ID="pnlDownloadSample" Visible="false" CssClass="downloadsample">

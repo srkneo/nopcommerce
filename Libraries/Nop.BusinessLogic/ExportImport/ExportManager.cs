@@ -456,7 +456,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                 xmlWriter.WriteElementString("UpdatedOn", null, product.UpdatedOn.ToString());
 
                 xmlWriter.WriteStartElement("ProductVariants");
-                var productVariants = ProductManager.GetProductVariantsByProductId(product.ProductId, 0, true);
+                var productVariants = ProductManager.GetProductVariantsByProductId(product.ProductId, true);
                 foreach (var productVariant in productVariants)
                 {
                     xmlWriter.WriteStartElement("ProductVariant");
@@ -552,7 +552,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
 
 
                         xmlWriter.WriteStartElement("ProductVariantAttributeValues");
-                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId, 0);
+                        var productVariantAttributeValues = ProductAttributeManager.GetProductVariantAttributeValues(productVariantAttribute.ProductVariantAttributeId);
                         foreach (var productVariantAttributeValue in productVariantAttributeValues)
                         {
                             xmlWriter.WriteElementString("ProductVariantAttributeValueId", null, productVariantAttributeValue.ProductVariantAttributeValueId.ToString());
@@ -725,7 +725,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
 
                 foreach (var p in products)
                 {
-                    var productVariants = ProductManager.GetProductVariantsByProductId(p.ProductId, 0, true);
+                    var productVariants = ProductManager.GetProductVariantsByProductId(p.ProductId, true);
 
                     foreach (var pv in productVariants)
                     {

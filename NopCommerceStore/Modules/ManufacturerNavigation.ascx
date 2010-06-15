@@ -13,7 +13,7 @@
             </HeaderTemplate>
             <ItemTemplate>
                 <li>
-                    <asp:HyperLink ID="hlManufacturer" runat="server" Text='<%#Server.HtmlEncode(Eval("Name").ToString()) %>'
+                    <asp:HyperLink ID="hlManufacturer" runat="server" Text='<%#Server.HtmlEncode(Eval("LocalizedName").ToString()) %>'
                         CssClass='<%# ((int)Eval("ManufacturerId") == this.ManufacturerId) ? "active" : "inactive" %>' />
                 </li>
             </ItemTemplate>

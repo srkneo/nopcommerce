@@ -32,7 +32,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
+            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId);
 
             if (this.HasLocalizableContent)
             {
@@ -99,7 +99,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             int attributeControlTypeId = int.Parse(this.ddlAttributeControlType.SelectedItem.Value);
             int displayOrder = txtDisplayOrder.Value;
 
-            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId, 0);
+            var checkoutAttribute = CheckoutAttributeManager.GetCheckoutAttributeById(this.CheckoutAttributeId);
             if (checkoutAttribute != null)
             {
                 checkoutAttribute = CheckoutAttributeManager.UpdateCheckoutAttribute(checkoutAttribute.CheckoutAttributeId,

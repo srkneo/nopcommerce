@@ -331,7 +331,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             var productVariant = ProductManager.GetProductVariantById(productVariantId);
             if (productVariant != null)
-                return productVariant.FullProductName;
+                return productVariant.LocalizedFullProductName;
             return "Not available. ID=" + productVariantId.ToString();
         }
         
