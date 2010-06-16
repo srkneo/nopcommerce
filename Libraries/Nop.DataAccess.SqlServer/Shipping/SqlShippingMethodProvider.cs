@@ -106,23 +106,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
             return result;
         }
 
-        /// <summary>
-        /// Checking whether the shipping method country mapping exists
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        /// <returns>True if mapping exist, otherwise false</returns>
-        public override bool DoesShippingMethodCountryMappingExist(int shippingMethodId, int countryId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethod_RestrictedCountriesContains");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
-            db.AddOutParameter(dbCommand, "Result", DbType.Boolean, 0);
-            db.ExecuteNonQuery(dbCommand);            
-            return Convert.ToBoolean(db.GetParameterValue(dbCommand, "@Result"));
-        }
-
         #endregion
     }
 }

@@ -235,7 +235,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <returns>True if mapping exist, otherwise false</returns>
         public static bool DoesShippingMethodCountryMappingExist(int shippingMethodId, int countryId)
         {
-            return DBProviderManager<DBShippingMethodProvider>.Provider.DoesShippingMethodCountryMappingExist(shippingMethodId, countryId);
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var query = from sm in context.ShippingMethods
+                        from c in sm.NpRestrictedCountries
+                        where sm.ShippingMethodId == shippingMethodId &&
+                        c.CountryId == countryId
+                        select sm;
+
+            bool result = query.Count() > 0;
+            return result;
         }
 
         /// <summary>

@@ -33,46 +33,7 @@ namespace NopSolutions.NopCommerce.DataAccess.Orders
     public abstract partial class DBOrderProvider : BaseDBProvider
     {
         #region Methods
-
-        #region Orders
-
-        /// <summary>
-        /// Search orders
-        /// </summary>
-        /// <param name="startTime">Order start time; null to load all orders</param>
-        /// <param name="endTime">Order end time; null to load all orders</param>
-        /// <param name="customerEmail">Customer email</param>
-        /// <param name="orderStatusId">Order status identifier; null to load all orders</param>
-        /// <param name="paymentStatusId">Order payment status identifier; null to load all orders</param>
-        /// <param name="shippingStatusId">Order shipping status identifier; null to load all orders</param>
-        /// <returns>Order collection</returns>
-        public abstract DBOrderCollection SearchOrders(DateTime? startTime, 
-            DateTime? endTime, string customerEmail, int? orderStatusId, 
-            int? paymentStatusId, int? shippingStatusId);
-
-        #endregion
-
-        #region Orders product variants
-        
-        /// <summary>
-        /// Gets all order product variants
-        /// </summary>
-        /// <param name="orderId">Order identifier; null to load all records</param>
-        /// <param name="customerId">Customer identifier; null to load all records</param>
-        /// <param name="startTime">Order start time; null to load all records</param>
-        /// <param name="endTime">Order end time; null to load all records</param>
-        /// <param name="orderStatusId">Order status identifier; null to load all records</param>
-        /// <param name="paymentStatusId">Order payment status identifier; null to load all records</param>
-        /// <param name="shippingStatusId">Order shipping status identifier; null to load all records</param>
-        /// <param name="loadDownloableProductsOnly">Value indicating whether to load downloadable products only</param>
-        /// <returns>Order collection</returns>
-        public abstract DBOrderProductVariantCollection GetAllOrderProductVariants(int? orderId,
-            int? customerId, DateTime? startTime, DateTime? endTime,
-            int? orderStatusId, int? paymentStatusId, int? shippingStatusId,
-            bool loadDownloableProductsOnly);
-
-        #endregion
-                
+                        
         #region Reports
 
         /// <summary>

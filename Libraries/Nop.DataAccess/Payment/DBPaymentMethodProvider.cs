@@ -43,14 +43,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         public abstract DBPaymentMethodCollection GetAllPaymentMethods(bool showHidden, 
             int? filterByCountryId);
         
-        /// <summary>
-        /// Checking whether the payment method country mapping exists
-        /// </summary>
-        /// <param name="paymentMethodId">The payment method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        /// <returns>True if mapping exist, otherwise false</returns>
-        public abstract bool DoesPaymentMethodCountryMappingExist(int paymentMethodId, int countryId);
-
         #endregion
     }
 }

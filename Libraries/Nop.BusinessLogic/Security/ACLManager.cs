@@ -28,8 +28,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Security;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Security
@@ -46,8 +44,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         #endregion
 
         #region Methods
-
-        #region Repository methods
 
         /// <summary>
         /// Deletes a customer action
@@ -190,9 +186,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             return customerAction;
         }
-
-
-
+        
         /// <summary>
         /// Deletes an ACL
         /// </summary>
@@ -301,9 +295,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             return acl;
         }
-        #endregion
 
-        #region Helper methods
         /// <summary>
         /// Indicates whether action is allowed
         /// </summary>
@@ -328,13 +320,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         {
             if (!ACLManager.Enabled)
                 return true;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
 
-            bool result = DBProviderManager<DBACLProvider>.Provider.IsActionAllowed(customerId,
-                actionSystemKeyword);
+            var query = from c in context.Customers
+                        from cr in c.NpCustomerRoles
+                        join acl in context.ACL on cr.CustomerRoleId equals acl.CustomerRoleId
+                        join ca in context.CustomerActions on acl.CustomerActionId equals ca.CustomerActionId
+                        where c.CustomerId == customerId &&
+                        !cr.Deleted &&
+                        cr.Active &&
+                        acl.Allow &&
+                        ca.SystemKeyword == actionSystemKeyword
+                        select acl;
 
+            bool result = query.Count() > 0;
             return result;
         }
-        #endregion
 
         #endregion
 

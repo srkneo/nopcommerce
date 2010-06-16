@@ -59,161 +59,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
         #region Utilities
 
-        private static List<Order> DBMapping(DBOrderCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<Order>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Order DBMapping(DBOrder dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Order();
-            item.OrderId = dbItem.OrderId;
-            item.OrderGuid = dbItem.OrderGuid;
-            item.CustomerId = dbItem.CustomerId;
-            item.CustomerLanguageId = dbItem.CustomerLanguageId;
-            item.CustomerTaxDisplayTypeId = dbItem.CustomerTaxDisplayTypeId;
-            item.CustomerIP = dbItem.CustomerIP;
-            item.OrderSubtotalInclTax = dbItem.OrderSubtotalInclTax;
-            item.OrderSubtotalExclTax = dbItem.OrderSubtotalExclTax;
-            item.OrderShippingInclTax = dbItem.OrderShippingInclTax;
-            item.OrderShippingExclTax = dbItem.OrderShippingExclTax;
-            item.PaymentMethodAdditionalFeeInclTax = dbItem.PaymentMethodAdditionalFeeInclTax;
-            item.PaymentMethodAdditionalFeeExclTax = dbItem.PaymentMethodAdditionalFeeExclTax;
-            item.OrderTax = dbItem.OrderTax;
-            item.OrderTotal = dbItem.OrderTotal;
-            item.OrderDiscount = dbItem.OrderDiscount;
-            item.OrderSubtotalInclTaxInCustomerCurrency = dbItem.OrderSubtotalInclTaxInCustomerCurrency;
-            item.OrderSubtotalExclTaxInCustomerCurrency = dbItem.OrderSubtotalExclTaxInCustomerCurrency;
-            item.OrderShippingInclTaxInCustomerCurrency = dbItem.OrderShippingInclTaxInCustomerCurrency;
-            item.OrderShippingExclTaxInCustomerCurrency = dbItem.OrderShippingExclTaxInCustomerCurrency;
-            item.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency = dbItem.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency;
-            item.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency = dbItem.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency;
-            item.OrderTaxInCustomerCurrency = dbItem.OrderTaxInCustomerCurrency;
-            item.OrderTotalInCustomerCurrency = dbItem.OrderTotalInCustomerCurrency;
-            item.OrderDiscountInCustomerCurrency = dbItem.OrderDiscountInCustomerCurrency;
-            item.CheckoutAttributeDescription = dbItem.CheckoutAttributeDescription;
-            item.CheckoutAttributesXml = dbItem.CheckoutAttributesXml;
-            item.CustomerCurrencyCode = dbItem.CustomerCurrencyCode;
-            item.OrderWeight = dbItem.OrderWeight;
-            item.AffiliateId = dbItem.AffiliateId;
-            item.OrderStatusId = dbItem.OrderStatusId;
-            item.AllowStoringCreditCardNumber = dbItem.AllowStoringCreditCardNumber;
-            item.CardType = dbItem.CardType;
-            item.CardName = dbItem.CardName;
-            item.CardNumber = dbItem.CardNumber;
-            item.MaskedCreditCardNumber = dbItem.MaskedCreditCardNumber;
-            item.CardCvv2 = dbItem.CardCvv2;
-            item.CardExpirationMonth = dbItem.CardExpirationMonth;
-            item.CardExpirationYear = dbItem.CardExpirationYear;
-            item.PaymentMethodId = dbItem.PaymentMethodId;
-            item.PaymentMethodName = dbItem.PaymentMethodName;
-            item.AuthorizationTransactionId = dbItem.AuthorizationTransactionId;
-            item.AuthorizationTransactionCode = dbItem.AuthorizationTransactionCode;
-            item.AuthorizationTransactionResult = dbItem.AuthorizationTransactionResult;
-            item.CaptureTransactionId = dbItem.CaptureTransactionId;
-            item.CaptureTransactionResult = dbItem.CaptureTransactionResult;
-            item.SubscriptionTransactionId = dbItem.SubscriptionTransactionId;
-            item.PurchaseOrderNumber = dbItem.PurchaseOrderNumber;
-            item.PaymentStatusId = dbItem.PaymentStatusId;
-            item.PaidDate = dbItem.PaidDate;
-            item.BillingFirstName = dbItem.BillingFirstName;
-            item.BillingLastName = dbItem.BillingLastName;
-            item.BillingPhoneNumber = dbItem.BillingPhoneNumber;
-            item.BillingEmail = dbItem.BillingEmail;
-            item.BillingFaxNumber = dbItem.BillingFaxNumber;
-            item.BillingCompany = dbItem.BillingCompany;
-            item.BillingAddress1 = dbItem.BillingAddress1;
-            item.BillingAddress2 = dbItem.BillingAddress2;
-            item.BillingCity = dbItem.BillingCity;
-            item.BillingStateProvince = dbItem.BillingStateProvince;
-            item.BillingStateProvinceId = dbItem.BillingStateProvinceId;
-            item.BillingZipPostalCode = dbItem.BillingZipPostalCode;
-            item.BillingCountry = dbItem.BillingCountry;
-            item.BillingCountryId = dbItem.BillingCountryId;
-            item.ShippingStatusId = dbItem.ShippingStatusId;
-            item.ShippingFirstName = dbItem.ShippingFirstName;
-            item.ShippingLastName = dbItem.ShippingLastName;
-            item.ShippingPhoneNumber = dbItem.ShippingPhoneNumber;
-            item.ShippingEmail = dbItem.ShippingEmail;
-            item.ShippingFaxNumber = dbItem.ShippingFaxNumber;
-            item.ShippingCompany = dbItem.ShippingCompany;
-            item.ShippingAddress1 = dbItem.ShippingAddress1;
-            item.ShippingAddress2 = dbItem.ShippingAddress2;
-            item.ShippingCity = dbItem.ShippingCity;
-            item.ShippingStateProvince = dbItem.ShippingStateProvince;
-            item.ShippingStateProvinceId = dbItem.ShippingStateProvinceId;
-            item.ShippingZipPostalCode = dbItem.ShippingZipPostalCode;
-            item.ShippingCountry = dbItem.ShippingCountry;
-            item.ShippingCountryId = dbItem.ShippingCountryId;
-            item.ShippingMethod = dbItem.ShippingMethod;
-            item.ShippingRateComputationMethodId = dbItem.ShippingRateComputationMethodId;
-            item.ShippedDate = dbItem.ShippedDate;
-            item.DeliveryDate = dbItem.DeliveryDate;
-            item.TrackingNumber = dbItem.TrackingNumber;
-            item.Deleted = dbItem.Deleted;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static List<OrderProductVariant> DBMapping(DBOrderProductVariantCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<OrderProductVariant>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static OrderProductVariant DBMapping(DBOrderProductVariant dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new OrderProductVariant();
-            item.OrderProductVariantId = dbItem.OrderProductVariantId;
-            item.OrderProductVariantGuid = dbItem.OrderProductVariantGuid;
-            item.OrderId = dbItem.OrderId;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.UnitPriceInclTax = dbItem.UnitPriceInclTax;
-            item.UnitPriceExclTax = dbItem.UnitPriceExclTax;
-            item.PriceInclTax = dbItem.PriceInclTax;
-            item.PriceExclTax = dbItem.PriceExclTax;
-            item.UnitPriceInclTaxInCustomerCurrency = dbItem.UnitPriceInclTaxInCustomerCurrency;
-            item.UnitPriceExclTaxInCustomerCurrency = dbItem.UnitPriceExclTaxInCustomerCurrency;
-            item.PriceInclTaxInCustomerCurrency = dbItem.PriceInclTaxInCustomerCurrency;
-            item.PriceExclTaxInCustomerCurrency = dbItem.PriceExclTaxInCustomerCurrency;
-            item.AttributeDescription = dbItem.AttributeDescription;
-            item.AttributesXml = dbItem.AttributesXml;
-            item.Quantity = dbItem.Quantity;
-            item.DiscountAmountInclTax = dbItem.DiscountAmountInclTax;
-            item.DiscountAmountExclTax = dbItem.DiscountAmountExclTax;
-            item.DownloadCount = dbItem.DownloadCount;
-            item.IsDownloadActivated = dbItem.IsDownloadActivated;
-            item.LicenseDownloadId = dbItem.LicenseDownloadId;
-
-            return item;
-        }
-
         private static OrderAverageReportLine DBMapping(DBOrderAverageReportLine dbItem)
         {
             if (dbItem == null)
@@ -772,9 +617,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (ss.HasValue)
                 shippingStatusId = (int)ss.Value;
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchOrders(startTime, 
-                endTime, customerEmail, orderStatusId, paymentStatusId, shippingStatusId);
-            var orders = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var query = from o in context.Orders
+                        join c in context.Customers on o.CustomerId equals c.CustomerId
+                        where (String.IsNullOrEmpty(customerEmail) || c.Email.Contains(customerEmail)) &&
+                        (!startTime.HasValue || startTime.Value <= o.CreatedOn) &&
+                        (!endTime.HasValue || endTime.Value >= o.CreatedOn) &&
+                        (!orderStatusId.HasValue || orderStatusId == o.OrderStatusId) &&
+                        (!paymentStatusId.HasValue || paymentStatusId.Value == o.PaymentStatusId) &&
+                        (!shippingStatusId.HasValue || shippingStatusId.Value == o.ShippingStatusId) &&
+                        !o.Deleted
+                        orderby o.CreatedOn descending
+                        select o;
+            
+            var orders = query.ToList();
             return orders;
         }
 
@@ -1625,10 +1482,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (ss.HasValue)
                 shippingStatusId = (int)ss.Value;
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllOrderProductVariants(orderId,
-                customerId, startTime, endTime, orderStatusId, paymentStatusId, shippingStatusId,
-                loadDownloableProductsOnly);
-            var orderProductVariants = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var query = from opv in context.OrderProductVariants
+                        join o in context.Orders on opv.OrderId equals o.OrderId
+                        join pv in context.ProductVariants on opv.ProductVariantId equals pv.ProductVariantId
+                        where (!orderId.HasValue || orderId.Value == 0 || orderId == o.OrderId) &&
+                        (!customerId.HasValue || customerId.Value == 0 || customerId == o.CustomerId) &&
+                        (!startTime.HasValue || startTime.Value <= o.CreatedOn) &&
+                        (!endTime.HasValue || endTime.Value >= o.CreatedOn) &&
+                        (!orderStatusId.HasValue || orderStatusId == o.OrderStatusId) &&
+                        (!paymentStatusId.HasValue || paymentStatusId.Value == o.PaymentStatusId) &&
+                        (!shippingStatusId.HasValue || shippingStatusId.Value == o.ShippingStatusId) &&
+                        (!loadDownloableProductsOnly || pv.IsDownload) &&
+                        !o.Deleted
+                        orderby o.CreatedOn descending, opv.OrderProductVariantId
+                        select opv;
+
+            var orderProductVariants = query.ToList();
             return orderProductVariants;
         }
 

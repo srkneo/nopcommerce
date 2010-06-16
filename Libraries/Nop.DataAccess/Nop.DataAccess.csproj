@@ -131,7 +131,6 @@
     <Compile Include="Content\Blog\DBBlogProvider.cs" />
     <Compile Include="Promo\Discounts\DBDiscountUsageHistoryCollection.cs" />
     <Compile Include="Promo\Discounts\DBDiscountUsageHistory.cs" />
-    <Compile Include="Security\DBACLProvider.cs" />
     <Compile Include="Customer\DBCustomerProvider.cs" />
     <Compile Include="Promo\Discounts\DBDiscountProvider.cs" />
     <Compile Include="Localization\DBLocaleStringResourceProvider.cs" />
@@ -148,10 +147,6 @@
     <Compile Include="Tax\DBTaxRateProvider.cs" />
     <Compile Include="Media\DBPicture.cs" />
     <Compile Include="Media\DBPictureCollection.cs" />
-    <Compile Include="Orders\DBOrder.cs" />
-    <Compile Include="Orders\DBOrderCollection.cs" />
-    <Compile Include="Orders\DBOrderProductVariant.cs" />
-    <Compile Include="Orders\DBOrderProductVariantCollection.cs" />
     <Compile Include="Payment\DBPaymentMethod.cs" />
     <Compile Include="Payment\DBPaymentMethodCollection.cs" />
     <Compile Include="Products\DBProduct.cs" />
