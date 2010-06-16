@@ -24,6 +24,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.DataAccess;
 using NopSolutions.NopCommerce.DataAccess.Payment;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 {
@@ -270,7 +271,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="countryId">The country identifier</param>
         public static void CreatePaymentMethodCountryMapping(int paymentMethodId, int countryId)
         {
-            DBProviderManager<DBPaymentMethodProvider>.Provider.InsertPaymentMethodCountryMapping(paymentMethodId, countryId);
+            var paymentMethod = GetPaymentMethodById(paymentMethodId);
+            if (paymentMethod == null)
+                return;
+
+            var country = CountryManager.GetCountryById(countryId);
+            if (country == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(paymentMethod))
+                context.PaymentMethods.Attach(paymentMethod);
+            if (!context.IsAttached(country))
+                context.Countries.Attach(country);
+
+            country.NpRestrictedPaymentMethods.Add(paymentMethod);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -291,7 +307,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="countryId">The country identifier</param>
         public static void DeletePaymentMethodCountryMapping(int paymentMethodId, int countryId)
         {
-            DBProviderManager<DBPaymentMethodProvider>.Provider.DeletePaymentMethodCountryMapping(paymentMethodId, countryId);
+            var paymentMethod = GetPaymentMethodById(paymentMethodId);
+            if (paymentMethod == null)
+                return;
+
+            var country = CountryManager.GetCountryById(countryId);
+            if (country == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(paymentMethod))
+                context.PaymentMethods.Attach(paymentMethod);
+            if (!context.IsAttached(country))
+                context.Countries.Attach(country);
+
+            country.NpRestrictedPaymentMethods.Remove(paymentMethod);
+            context.SaveChanges();
         }
         #endregion
 

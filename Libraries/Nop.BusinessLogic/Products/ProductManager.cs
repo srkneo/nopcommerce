@@ -1165,9 +1165,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             bool showHidden = NopContext.Current.IsAdmin;
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRecentlyAddedProducts(number,
-                showHidden);
-            var products = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from p in context.Products
+                        orderby p.CreatedOn descending
+                        where (showHidden || p.Published) &&
+                        !p.Deleted
+                        select p;
+            if (number > 0)
+            {
+                query = query.Take(number);
+            }
+            var products = query.ToList();
             return products;
         }
 
@@ -2038,8 +2046,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (discountId == 0)
                 return new List<ProductVariant>();
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsRestrictedByDiscountId(discountId);
-            var productVariants = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pv in context.ProductVariants
+                        from d in pv.NpRestrictedDiscounts
+                        where d.DiscountId == discountId
+                        select pv;
+            var productVariants = query.ToList();
             return productVariants;
         }
 
@@ -2810,8 +2822,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static List<RelatedProduct> GetRelatedProductsByProductId1(int productId1)
         {
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetRelatedProductsByProductId1(productId1, showHidden);
-            var relatedProducts = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from rp in context.RelatedProducts
+                        join p in context.Products on rp.ProductId2 equals p.ProductId
+                        where rp.ProductId1 == productId1 &&
+                        !p.Deleted &&
+                        (showHidden || p.Published)
+                        orderby rp.DisplayOrder
+                        select rp;
+            var relatedProducts = query.ToList();
+
             return relatedProducts;
         }
 
@@ -2893,10 +2914,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <returns>Product variants</returns>
         public static List<ProductVariant> GetProductVariantsByPricelistId(int pricelistId)
         {
-            var dbItem = DBProviderManager<DBProductProvider>.Provider.GetProductVariantsByPricelistId(pricelistId);
-            var productVariantCollection = DBMapping(dbItem);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pv in context.ProductVariants
+                        join pvpl in context.ProductVariantPricelists on pv.ProductVariantId equals pvpl.ProductVariantId
+                        where pvpl.PricelistId == pricelistId
+                        select pv;
+            var productVariants = query.ToList();
 
-            return productVariantCollection;
+            return productVariants;
         }
 
         /// <summary>

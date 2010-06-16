@@ -222,7 +222,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <returns>Poll</returns>
         public static bool PollVotingRecordExists(int pollId, int customerId)
         {
-            return DBProviderManager<DBPollProvider>.Provider.PollVotingRecordExists(pollId, customerId);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pvr in context.PollVotingRecords
+                        join pa in context.PollAnswers on pvr.PollAnswerId equals pa.PollAnswerId
+                        where pa.PollId == pollId &&
+                        pvr.CustomerId == customerId
+                        select pvr;
+            int count = query.Count();
+            return count > 0;
         }
 
         /// <summary>

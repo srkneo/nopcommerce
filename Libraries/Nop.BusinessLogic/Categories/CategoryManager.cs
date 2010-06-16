@@ -23,8 +23,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Categories;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 {
@@ -43,41 +41,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         private const string PRODUCTCATEGORIES_PATTERN_KEY = "Nop.productcategory.";
 
         #endregion
-
-        #region Utilities
-
-        private static List<ProductCategory> DBMapping(DBProductCategoryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ProductCategory>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductCategory DBMapping(DBProductCategory dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductCategory();
-            item.ProductCategoryId = dbItem.ProductCategoryId;
-            item.ProductId = dbItem.ProductId;
-            item.CategoryId = dbItem.CategoryId;
-            item.IsFeaturedProduct = dbItem.IsFeaturedProduct;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        #endregion
-
+        
         #region Methods
         /// <summary>
         /// Marks category as deleted
@@ -546,14 +510,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return (List<ProductCategory>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByCategoryId(categoryId, showHidden);
-            var productCategoryCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pc in context.ProductCategories
+                        join p in context.Products on pc.ProductId equals p.ProductId
+                        where pc.CategoryId == categoryId &&
+                        !p.Deleted &&
+                        (showHidden || p.Published)
+                        orderby pc.DisplayOrder
+                        select pc;
+            var productCategories = query.ToList();
 
             if (CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productCategoryCollection);
+                NopCache.Max(key, productCategories);
             }
-            return productCategoryCollection;
+            return productCategories;
         }
 
         /// <summary>
@@ -574,14 +545,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return (List<ProductCategory>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCategoryProvider>.Provider.GetProductCategoriesByProductId(productId, showHidden);
-            var productCategoryCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pc in context.ProductCategories
+                        join c in context.Categories on pc.CategoryId equals c.CategoryId
+                        where pc.ProductId == productId &&
+                        !c.Deleted &&
+                        (showHidden || c.Published)
+                        orderby pc.DisplayOrder
+                        select pc;
+            var productCategories = query.ToList();
 
             if (CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productCategoryCollection);
+                NopCache.Max(key, productCategories);
             }
-            return productCategoryCollection;
+            return productCategories;
         }
 
         /// <summary>

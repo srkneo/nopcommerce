@@ -231,87 +231,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         }
         
         /// <summary>
-        /// Adds a customer to role
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        public override void AddCustomerToRole(int customerId, int customerRoleId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Customer_CustomerRole_MappingInsert");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Removes a customer from role
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        public override void RemoveCustomerFromRole(int customerId, int customerRoleId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_Customer_CustomerRole_MappingDelete");
-            db.AddInParameter(dbCommand, "CustomerID", DbType.Int32, customerId);
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Adds a discount to a customer role
-        /// </summary>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        /// <param name="discountId">Discount identifier</param>
-        public override void AddDiscountToCustomerRole(int customerRoleId, int discountId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_Discount_MappingInsert");
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Removes a discount from a customer role
-        /// </summary>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        /// <param name="discountId">Discount identifier</param>
-        public override void RemoveDiscountFromCustomerRole(int customerRoleId, int discountId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRole_Discount_MappingDelete");
-            db.AddInParameter(dbCommand, "CustomerRoleID", DbType.Int32, customerRoleId);
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
-        /// Gets a customer roles assigned to discount
-        /// </summary>
-        /// <param name="discountId">Discount identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Customer roles</returns>
-        public override DBCustomerRoleCollection GetCustomerRolesByDiscountId(int discountId, bool showHidden)
-        {
-            var result = new DBCustomerRoleCollection();
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRoleLoadByDiscountID");
-            db.AddInParameter(dbCommand, "DiscountID", DbType.Int32, discountId);
-            db.AddInParameter(dbCommand, "ShowHidden", DbType.Boolean, showHidden);
-            using (IDataReader dataReader = db.ExecuteReader(dbCommand))
-            {
-                while (dataReader.Read())
-                {
-                    var item = GetCustomerRoleFromReader(dataReader);
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Deletes all expired customer sessions
         /// </summary>
         /// <param name="olderThan">Older than date and time</param>
@@ -323,18 +242,6 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
             db.ExecuteNonQuery(dbCommand);
         }
 
-        /// <summary>
-        /// Gets a report of customers registered from "dateTime" until today
-        /// </summary>
-        /// <param name="dateFrom">Customer registration date</param>
-        /// <returns>Int</returns>
-        public override int GetRegisteredCustomersReport(DateTime dateFrom)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_CustomerRegisteredReport");
-            db.AddInParameter(dbCommand, "Date", DbType.DateTime, dateFrom);
-            return (int)db.ExecuteScalar(dbCommand);
-        }
         #endregion
     }
 }

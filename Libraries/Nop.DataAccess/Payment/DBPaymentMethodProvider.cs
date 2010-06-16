@@ -44,13 +44,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
             int? filterByCountryId);
         
         /// <summary>
-        /// Inserts payment method country mapping
-        /// </summary>
-        /// <param name="paymentMethodId">The payment method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public abstract void InsertPaymentMethodCountryMapping(int paymentMethodId, int countryId);
-
-        /// <summary>
         /// Checking whether the payment method country mapping exists
         /// </summary>
         /// <param name="paymentMethodId">The payment method identifier</param>
@@ -58,13 +51,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         /// <returns>True if mapping exist, otherwise false</returns>
         public abstract bool DoesPaymentMethodCountryMappingExist(int paymentMethodId, int countryId);
 
-        /// <summary>
-        /// Deletes payment method country mapping
-        /// </summary>
-        /// <param name="paymentMethodId">The payment method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public abstract void DeletePaymentMethodCountryMapping(int paymentMethodId, int countryId);
-        
         #endregion
     }
 }

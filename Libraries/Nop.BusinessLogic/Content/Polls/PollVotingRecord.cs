@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets or sets the customer identifier
         /// </summary>
-        public string CustomerId { get; set; }
+        public int CustomerId { get; set; }
 
         #endregion
     }

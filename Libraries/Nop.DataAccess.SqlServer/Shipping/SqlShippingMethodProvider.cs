@@ -107,20 +107,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         }
 
         /// <summary>
-        /// Inserts shipping method country mapping
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public override void InsertShippingMethodCountryMapping(int shippingMethodId, int countryId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethod_RestrictedCountriesInsert");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
         /// Checking whether the shipping method country mapping exists
         /// </summary>
         /// <param name="shippingMethodId">The shipping method identifier</param>
@@ -137,19 +123,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
             return Convert.ToBoolean(db.GetParameterValue(dbCommand, "@Result"));
         }
 
-        /// <summary>
-        /// Deletes shipping method country mapping
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public override void DeleteShippingMethodCountryMapping(int shippingMethodId, int countryId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_ShippingMethod_RestrictedCountriesDelete");
-            db.AddInParameter(dbCommand, "ShippingMethodID", DbType.Int32, shippingMethodId);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
-            db.ExecuteNonQuery(dbCommand);
-        }
         #endregion
     }
 }

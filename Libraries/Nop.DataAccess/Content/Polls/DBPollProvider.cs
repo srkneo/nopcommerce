@@ -35,14 +35,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         #region Methods
 
         /// <summary>
-        /// Is voting record already exists
-        /// </summary>
-        /// <param name="pollId">Poll identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <returns>Poll</returns>
-        public abstract bool PollVotingRecordExists(int pollId, int customerId);
-        
-        /// <summary>
         /// Creates a poll voting record
         /// </summary>
         /// <param name="pollAnswerId">The poll answer identifier</param>

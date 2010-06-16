@@ -70,25 +70,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Content.Polls
         }
 
         /// <summary>
-        /// Is voting record already exists
-        /// </summary>
-        /// <param name="pollId">Poll identifier</param>
-        /// <param name="customerId">Customer identifier</param>
-        /// <returns>Poll</returns>
-        public override bool PollVotingRecordExists(int pollId, int customerId)
-        {
-            bool result = false;
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_PollVotingRecordExists");
-            db.AddInParameter(dbCommand, "PollID", DbType.Int32, pollId);
-            db.AddInParameter(dbCommand, "CustomerID", DbType.String, customerId);
-            if ((int)db.ExecuteScalar(dbCommand) > 0)
-                result = true;
-
-            return result;
-        }
-
-        /// <summary>
         /// Creates a poll voting record
         /// </summary>
         /// <param name="pollAnswerId">The poll answer identifier</param>

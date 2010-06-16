@@ -42,13 +42,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         public abstract DBShippingMethodCollection GetAllShippingMethods(int? filterByCountryId);
 
         /// <summary>
-        /// Inserts shipping method country mapping
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public abstract void InsertShippingMethodCountryMapping(int shippingMethodId, int countryId);
-
-        /// <summary>
         /// Checking whether the shipping method country mapping exists
         /// </summary>
         /// <param name="shippingMethodId">The shipping method identifier</param>
@@ -56,13 +49,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Shipping
         /// <returns>True if mapping exist, otherwise false</returns>
         public abstract bool DoesShippingMethodCountryMappingExist(int shippingMethodId, int countryId);
 
-        /// <summary>
-        /// Deletes shipping method country mapping
-        /// </summary>
-        /// <param name="shippingMethodId">The shipping method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public abstract void DeleteShippingMethodCountryMapping(int shippingMethodId, int countryId);
-        
         #endregion
     }
 }

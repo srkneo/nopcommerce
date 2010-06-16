@@ -15,6 +15,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.Payment;
+using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 
 
@@ -108,6 +110,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets the state/provinces
         /// </summary>
         public virtual ICollection<StateProvince> NpStateProvinces { get; set; }
+
+        /// <summary>
+        /// Gets the restricted payment methods
+        /// </summary>
+        public virtual ICollection<PaymentMethod> NpRestrictedPaymentMethods { get; set; }
+
+        /// <summary>
+        /// Gets the restricted shipping methods
+        /// </summary>
+        public virtual ICollection<ShippingMethod> NpRestrictedShippingMethods { get; set; }
 
         #endregion
     }

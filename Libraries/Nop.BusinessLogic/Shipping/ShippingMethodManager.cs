@@ -70,6 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Deletes a shipping method
         /// </summary>
@@ -208,7 +209,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="countryId">The country identifier</param>
         public static void CreateShippingMethodCountryMapping(int shippingMethodId, int countryId)
         {
-            DBProviderManager<DBShippingMethodProvider>.Provider.InsertShippingMethodCountryMapping(shippingMethodId, countryId);
+            var shippingMethod = GetShippingMethodById(shippingMethodId);
+            if (shippingMethod == null)
+                return;
+
+            var country = CountryManager.GetCountryById(countryId);
+            if (country == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(shippingMethod))
+                context.ShippingMethods.Attach(shippingMethod);
+            if (!context.IsAttached(country))
+                context.Countries.Attach(country);
+
+            country.NpRestrictedShippingMethods.Add(shippingMethod);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -229,8 +245,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="countryId">The country identifier</param>
         public static void DeleteShippingMethodCountryMapping(int shippingMethodId, int countryId)
         {
-            DBProviderManager<DBShippingMethodProvider>.Provider.DeleteShippingMethodCountryMapping(shippingMethodId, countryId);
+            var shippingMethod = GetShippingMethodById(shippingMethodId);
+            if (shippingMethod == null)
+                return;
+
+            var country = CountryManager.GetCountryById(countryId);
+            if (country == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(shippingMethod))
+                context.ShippingMethods.Attach(shippingMethod);
+            if (!context.IsAttached(country))
+                context.Countries.Attach(country);
+
+            country.NpRestrictedShippingMethods.Remove(shippingMethod);
+            context.SaveChanges();
         }
+
         #endregion
 
         #region Property

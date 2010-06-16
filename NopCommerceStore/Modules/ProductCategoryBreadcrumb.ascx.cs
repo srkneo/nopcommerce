@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                 }
 
-                hlProduct.Text = Server.HtmlEncode(product.Name);
+                hlProduct.Text = Server.HtmlEncode(product.LocalizedName);
             }
             else
                 this.Visible = false;

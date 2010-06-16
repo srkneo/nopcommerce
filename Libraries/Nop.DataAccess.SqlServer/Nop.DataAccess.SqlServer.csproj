@@ -101,7 +101,6 @@
     <Compile Include="Audit\SqlCustomerActivityProvider.cs" />
     <Compile Include="Audit\SqlLogProvider.cs" />
     <Compile Include="Audit\SqlSearchLogProvider.cs" />
-    <Compile Include="Categories\SqlCategoryProvider.cs" />
     <Compile Include="Content\Blog\SqlBlogProvider.cs" />
     <Compile Include="Content\Forums\SqlForumProvider.cs" />
     <Compile Include="Content\News\SqlNewsProvider.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Customer\SqlCustomerProvider.cs" />
     <Compile Include="Localization\SqlLocaleStringResourceProvider.cs" />
     <Compile Include="Maintenance\SqlMaintenanceProvider.cs" />
-    <Compile Include="Manufacturers\SqlManufacturerProvider.cs" />
     <Compile Include="Media\SqlPictureProvider.cs" />
     <Compile Include="Messages\SqlMessageProvider.cs" />
     <Compile Include="NopSqlDataHelper.cs" />

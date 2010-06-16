@@ -20,8 +20,10 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
+using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.DataAccess;
@@ -365,7 +367,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discountId">Discount identifier</param>
         public static void AddDiscountToProductVariant(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountToProductVariant(productVariantId, discountId);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
+            if (productVariant == null)
+                return;
+
+            var discount = GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariant))
+                context.ProductVariants.Attach(productVariant);
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+
+            productVariant.NpDiscounts.Add(discount);
+            context.SaveChanges();
+
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -379,7 +397,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discountId">Discount identifier</param>
         public static void RemoveDiscountFromProductVariant(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountFromProductVariant(productVariantId, discountId);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
+            if (productVariant == null)
+                return;
+
+            var discount = GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariant))
+                context.ProductVariants.Attach(productVariant);
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+
+            productVariant.NpDiscounts.Remove(discount);
+            context.SaveChanges();
+
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -401,8 +435,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return (List<Discount>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByProductVariantId(productVariantId, showHidden);
-            var discounts = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from d in context.Discounts
+                        from pv in d.NpProductVariants
+                        where (showHidden || (d.StartDate <= DateTime.UtcNow && d.EndDate >= DateTime.UtcNow)) &&
+                            !d.Deleted &&
+                            pv.ProductVariantId == productVariantId
+                        orderby d.StartDate descending
+                        select d;
+            var discounts = query.ToList();
 
             if (DiscountManager.CacheEnabled)
             {
@@ -418,7 +459,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discountId">Discount identifier</param>
         public static void AddDiscountToCategory(int categoryId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountToCategory(categoryId, discountId);
+            var category = CategoryManager.GetCategoryById(categoryId);
+            if (category == null)
+                return;
+
+            var discount = GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(category))
+                context.Categories.Attach(category);
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+
+            category.NpDiscounts.Add(discount);
+            context.SaveChanges();
+            
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -432,7 +489,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discountId">Discount identifier</param>
         public static void RemoveDiscountFromCategory(int categoryId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountFromCategory(categoryId, discountId);
+            var category = CategoryManager.GetCategoryById(categoryId);
+            if (category == null)
+                return;
+
+            var discount = GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(category))
+                context.Categories.Attach(category);
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+
+            category.NpDiscounts.Remove(discount);
+            context.SaveChanges();
+
             if (DiscountManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(DISCOUNTS_PATTERN_KEY);
@@ -454,8 +527,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 return (List<Discount>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetDiscountsByCategoryId(categoryId, showHidden);
-            var discounts = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from d in context.Discounts
+                        from c in d.NpCategories
+                        where (showHidden || (d.StartDate <= DateTime.UtcNow  && d.EndDate >= DateTime.UtcNow)) &&
+                            !d.Deleted &&
+                            c.CategoryId == categoryId
+                        orderby d.StartDate descending
+                        select d;
+            var discounts = query.ToList();
 
             if (DiscountManager.CacheEnabled)
             {
@@ -471,7 +551,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discountId">Discount identifier</param>
         public static void AddDiscountRestriction(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.AddDiscountRestriction(productVariantId, discountId);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
+            if (productVariant == null)
+                return;
+
+            var discount = GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariant))
+                context.ProductVariants.Attach(productVariant);
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+
+            discount.NpRestrictedProductVariants.Add(productVariant);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -481,7 +576,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// <param name="discountId">Discount identifier</param>
         public static void RemoveDiscountRestriction(int productVariantId, int discountId)
         {
-            DBProviderManager<DBDiscountProvider>.Provider.RemoveDiscountRestriction(productVariantId, discountId);
+            var productVariant = ProductManager.GetProductVariantById(productVariantId);
+            if (productVariant == null)
+                return;
+
+            var discount = GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(productVariant))
+                context.ProductVariants.Attach(productVariant);
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+
+            discount.NpRestrictedProductVariants.Remove(productVariant);
+            context.SaveChanges();
         }
 
         #endregion

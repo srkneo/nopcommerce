@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates;
+using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
@@ -983,7 +984,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             bool showHidden = NopContext.Current.IsAdmin;
 
             var context = ObjectContextHelper.CurrentObjectContext;
-
             var query = from c in context.Customers
                         from cr in c.NpCustomerRoles
                         where (showHidden || c.Active) &&
@@ -1839,6 +1839,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         }
 
         /// <summary>
+        /// Gets a report of customers registered in the last days
+        /// </summary>
+        /// <param name="days">Customers registered in the last days</param>
+        /// <returns>Int</returns>
+        public static int GetRegisteredCustomersReport(int days)
+        {
+            DateTime date = DateTimeHelper.ConvertToUserTime(DateTime.Now).AddDays(-days);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from c in context.Customers
+                        where c.Active &&
+                        !c.Deleted &&
+                        !c.IsGuest &&
+                        c.RegistrationDate >= date &&
+                        c.RegistrationDate <= DateTime.UtcNow
+                        select c;
+            int count = query.Count();
+            
+            return count;
+        }
+
+        /// <summary>
         /// Get customer report by language
         /// </summary>
         /// <returns>Report</returns>
@@ -2160,7 +2182,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="customerRoleId">Customer role identifier</param>
         public static void AddCustomerToRole(int customerId, int customerRoleId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.AddCustomerToRole(customerId, customerRoleId);
+            var customer = GetCustomerById(customerId);
+            if (customer == null)
+                return;
+
+            var customerRole = GetCustomerRoleById(customerRoleId);
+            if (customerRole == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(customer))
+                context.Customers.Attach(customer);
+            if (!context.IsAttached(customerRole))
+                context.CustomerRoles.Attach(customerRole);
+
+            customer.NpCustomerRoles.Add(customerRole);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2170,7 +2207,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="customerRoleId">Customer role identifier</param>
         public static void RemoveCustomerFromRole(int customerId, int customerRoleId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.RemoveCustomerFromRole(customerId, customerRoleId);
+            var customer = GetCustomerById(customerId);
+            if (customer == null)
+                return;
+
+            var customerRole = GetCustomerRoleById(customerRoleId);
+            if (customerRole == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(customer))
+                context.Customers.Attach(customer);
+            if (!context.IsAttached(customerRole))
+                context.CustomerRoles.Attach(customerRole);
+
+            customer.NpCustomerRoles.Remove(customerRole);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2180,11 +2232,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="discountId">Discount identifier</param>
         public static void AddDiscountToCustomerRole(int customerRoleId, int discountId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.AddDiscountToCustomerRole(customerRoleId, discountId);
-            if (CustomerManager.CacheEnabled)
-            {
-                NopCache.RemoveByPattern(CUSTOMERROLES_PATTERN_KEY);
-            }
+            var discount = DiscountManager.GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var customerRole = GetCustomerRoleById(customerRoleId);
+            if (customerRole == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+            if (!context.IsAttached(customerRole))
+                context.CustomerRoles.Attach(customerRole);
+
+            discount.NpCustomerRoles.Add(customerRole);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2194,11 +2257,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="discountId">Discount identifier</param>
         public static void RemoveDiscountFromCustomerRole(int customerRoleId, int discountId)
         {
-            DBProviderManager<DBCustomerProvider>.Provider.RemoveDiscountFromCustomerRole(customerRoleId, discountId);
-            if (CustomerManager.CacheEnabled)
-            {
-                NopCache.RemoveByPattern(CUSTOMERROLES_PATTERN_KEY);
-            }
+            var discount = DiscountManager.GetDiscountById(discountId);
+            if (discount == null)
+                return;
+
+            var customerRole = GetCustomerRoleById(customerRoleId);
+            if (customerRole == null)
+                return;
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            if (!context.IsAttached(discount))
+                context.Discounts.Attach(discount);
+            if (!context.IsAttached(customerRole))
+                context.CustomerRoles.Attach(customerRole);
+
+            discount.NpCustomerRoles.Remove(customerRole);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -2216,8 +2290,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 return (List<CustomerRole>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetCustomerRolesByDiscountId(discountId, showHidden);
-            var customerRoles = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from cr in context.CustomerRoles
+                        from d in cr.NpDiscounts
+                        where (showHidden || cr.Active) &&
+                            !cr.Deleted &&
+                            d.DiscountId == discountId
+                        orderby cr.Name
+                        select cr;
+            var customerRoles = query.ToList();
+
             if (CustomerManager.CacheEnabled)
             {
                 NopCache.Max(key, customerRoles);
@@ -2410,18 +2492,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Gets a report of customers registered in the last days
-        /// </summary>
-        /// <param name="days">Customers registered in the last days</param>
-        /// <returns>Int</returns>
-        public static int GetRegisteredCustomersReport(int days)
-        {
-            DateTime date = DateTimeHelper.ConvertToUserTime(DateTime.Now).AddDays(-days);
-            int count = DBProviderManager<DBCustomerProvider>.Provider.GetRegisteredCustomersReport(date);
-            return count;
         }
 
         #endregion

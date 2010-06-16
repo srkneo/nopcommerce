@@ -116,20 +116,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
         }
 
         /// <summary>
-        /// Inserts payment method country mapping
-        /// </summary>
-        /// <param name="paymentMethodId">The payment method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public override void InsertPaymentMethodCountryMapping(int paymentMethodId, int countryId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethod_RestrictedCountriesInsert");
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
-            db.ExecuteNonQuery(dbCommand);
-        }
-
-        /// <summary>
         /// Checking whether the payment method country mapping exists
         /// </summary>
         /// <param name="paymentMethodId">The payment method identifier</param>
@@ -146,19 +132,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Payment
             return Convert.ToBoolean(db.GetParameterValue(dbCommand, "@Result"));
         }
 
-        /// <summary>
-        /// Deletes payment method country mapping
-        /// </summary>
-        /// <param name="paymentMethodId">The payment method identifier</param>
-        /// <param name="countryId">The country identifier</param>
-        public override void DeletePaymentMethodCountryMapping(int paymentMethodId, int countryId)
-        {
-            Database db = NopSqlDataHelper.CreateConnection(_sqlConnectionString);
-            DbCommand dbCommand = db.GetStoredProcCommand("Nop_PaymentMethod_RestrictedCountriesDelete");
-            db.AddInParameter(dbCommand, "PaymentMethodID", DbType.Int32, paymentMethodId);
-            db.AddInParameter(dbCommand, "CountryID", DbType.Int32, countryId);
-            db.ExecuteNonQuery(dbCommand);
-        }
         #endregion
     }
 }

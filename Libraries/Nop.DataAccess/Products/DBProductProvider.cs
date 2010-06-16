@@ -99,36 +99,6 @@ namespace NopSolutions.NopCommerce.DataAccess.Products
             int rating, DateTime ratedOn);
 
         /// <summary>
-        /// Gets a recently added products list
-        /// </summary>
-        /// <param name="number">Number of products to load</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Recently added products list</returns>
-        public abstract DBProductCollection GetRecentlyAddedProducts(int number, bool showHidden);
-
-        /// <summary>
-        /// Gets restricted product variants by discount identifier
-        /// </summary>
-        /// <param name="discountId">The discount identifier</param>
-        /// <returns>Product variant collection</returns>
-        public abstract DBProductVariantCollection GetProductVariantsRestrictedByDiscountId(int discountId);
-
-        /// <summary>
-        /// Gets a related product collection by product identifier
-        /// </summary>
-        /// <param name="productId1">The first product identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Related product collection</returns>
-        public abstract DBRelatedProductCollection GetRelatedProductsByProductId1(int productId1, bool showHidden);
-
-        /// <summary>
-        /// Gets all product variants directly assigned to a pricelist
-        /// </summary>
-        /// <param name="pricelistId">Pricelist identifier</param>
-        /// <returns>Product variants</returns>
-        public abstract DBProductVariantCollection GetProductVariantsByPricelistId(int pricelistId);
-        
-        /// <summary>
         /// Gets all product tags
         /// </summary>
         /// <param name="productId">Product identifier</param>

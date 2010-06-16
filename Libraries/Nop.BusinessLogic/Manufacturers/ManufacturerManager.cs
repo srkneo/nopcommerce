@@ -23,8 +23,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Manufacturers;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 {
@@ -42,41 +40,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         private const string MANUFACTURERS_PATTERN_KEY = "Nop.manufacturer.";
         private const string PRODUCTMANUFACTURERS_PATTERN_KEY = "Nop.productmanufacturer.";
         #endregion
-
-        #region Utilities
-
-        private static List<ProductManufacturer> DBMapping(DBProductManufacturerCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ProductManufacturer>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductManufacturer DBMapping(DBProductManufacturer dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductManufacturer();
-            item.ProductManufacturerId = dbItem.ProductManufacturerId;
-            item.ProductId = dbItem.ProductId;
-            item.ManufacturerId = dbItem.ManufacturerId;
-            item.IsFeaturedProduct = dbItem.IsFeaturedProduct;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -485,15 +449,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             {
                 return (List<ProductManufacturer>)obj2;
             }
-            
-            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByManufacturerId(manufacturerId, showHidden);
-            var productManufacturerCollection = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pm in context.ProductManufacturers
+                        join p in context.Products on pm.ProductId equals p.ProductId
+                        where pm.ManufacturerId == manufacturerId &&
+                        !p.Deleted &&
+                        (showHidden || p.Published)
+                        orderby pm.DisplayOrder
+                        select pm;
+            var productManufacturers = query.ToList();
 
             if (ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productManufacturerCollection);
+                NopCache.Max(key, productManufacturers);
             }
-            return productManufacturerCollection;
+            return productManufacturers;
         }
 
         /// <summary>
@@ -514,14 +485,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return (List<ProductManufacturer>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBManufacturerProvider>.Provider.GetProductManufacturersByProductId(productId, showHidden);
-            var productManufacturerCollection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from pm in context.ProductManufacturers
+                        join m in context.Manufacturers on pm.ManufacturerId equals m.ManufacturerId
+                        where pm.ProductId == productId &&
+                        !m.Deleted &&
+                        (showHidden || m.Published)
+                        orderby pm.DisplayOrder
+                        select pm;
+            var productManufacturers = query.ToList();
 
             if (ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productManufacturerCollection);
+                NopCache.Max(key, productManufacturers);
             }
-            return productManufacturerCollection;
+            return productManufacturers;
         }
 
         /// <summary>

@@ -79,53 +79,11 @@ namespace NopSolutions.NopCommerce.DataAccess.CustomerManagement
         public abstract IDataReader GetCustomerReportByAttributeKey(string customerAttributeKey);
 
         /// <summary>
-        /// Adds a customer to role
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        public abstract void AddCustomerToRole(int customerId, int customerRoleId);
-
-        /// <summary>
-        /// Removes a customer from role
-        /// </summary>
-        /// <param name="customerId">Customer identifier</param>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        public abstract void RemoveCustomerFromRole(int customerId, int customerRoleId);
-
-        /// <summary>
-        /// Adds a discount to a customer role
-        /// </summary>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        /// <param name="discountId">Discount identifier</param>
-        public abstract void AddDiscountToCustomerRole(int customerRoleId, int discountId);
-
-        /// <summary>
-        /// Removes a discount from a customer role
-        /// </summary>
-        /// <param name="customerRoleId">Customer role identifier</param>
-        /// <param name="discountId">Discount identifier</param>
-        public abstract void RemoveDiscountFromCustomerRole(int customerRoleId, int discountId);
-
-        /// <summary>
-        /// Gets a customer roles assigned to discount
-        /// </summary>
-        /// <param name="discountId">Discount identifier</param>
-        /// <param name="showHidden">A value indicating whether to show hidden records</param>
-        /// <returns>Customer roles</returns>
-        public abstract DBCustomerRoleCollection GetCustomerRolesByDiscountId(int discountId, bool showHidden);
-
-        /// <summary>
         /// Deletes all expired customer sessions
         /// </summary>
         /// <param name="olderThan">Older than date and time</param>
         public abstract void DeleteExpiredCustomerSessions(DateTime olderThan);
 
-        /// <summary>
-        /// Gets a report of customers registered from "dateTime" until today
-        /// </summary>
-        /// <param name="dateFrom">Customer registration date from</param>
-        /// <returns>Customer count</returns>
-        public abstract int GetRegisteredCustomersReport(DateTime dateFrom);
         #endregion
     }
 }

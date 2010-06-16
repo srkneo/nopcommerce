@@ -29,10 +29,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
     public partial class NopCache
     {
         #region Fields
+
         private static readonly Cache _cache;
+
         #endregion
 
         #region Ctor
+
         /// <summary>
         /// Creates a new instance of the NopCache class
         /// </summary>
@@ -55,9 +58,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
         private NopCache()
         {
         }
+
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Removes all keys and values from the cache
         /// </summary>
@@ -69,6 +74,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
                 _cache.Remove(enumerator.Key.ToString());
             }
         }
+
         /// <summary>
         /// Gets or sets the value associated with the specified key.
         /// </summary>
@@ -128,6 +134,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
                 }
             }
         }
+
         #endregion
 
         #region Properties
@@ -142,6 +149,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
                 return NopConfig.CacheEnabled;
             }
         }
+
         #endregion
     }
 }
