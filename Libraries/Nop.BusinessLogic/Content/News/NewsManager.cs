@@ -29,8 +29,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common.Utils.Html;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Content.NewsManagement;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
 {
@@ -42,42 +40,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         #region Constants
         private const string NEWS_BY_ID_KEY = "Nop.news.id-{0}";
         private const string NEWS_PATTERN_KEY = "Nop.news.";
-        #endregion
-
-        #region Utilities
-        private static List<News> DBMapping(DBNewsCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<News>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static News DBMapping(DBNews dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new News();
-            item.NewsId = dbItem.NewsId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Title = dbItem.Title;
-            item.Short = dbItem.Short;
-            item.Full = dbItem.Full;
-            item.Published = dbItem.Published;
-            item.AllowComments = dbItem.AllowComments;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
         #endregion
 
         #region Methods
@@ -225,9 +187,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
                 pageIndex = Int32.MaxValue - 1;
             }
 
-            var dbCollection = DBProviderManager<DBNewsProvider>.Provider.GetAllNews(languageId, showHidden, pageIndex, pageSize, out totalRecords);
-         
-            return DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var news = context.Sp_NewsLoadAll(languageId, showHidden,
+                pageSize, pageIndex, out totalRecords).ToList();
+
+            return news;
         }
 
         /// <summary>

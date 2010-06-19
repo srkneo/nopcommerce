@@ -46,6 +46,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>

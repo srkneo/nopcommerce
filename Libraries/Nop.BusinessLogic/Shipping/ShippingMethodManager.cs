@@ -21,8 +21,6 @@ using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 
@@ -37,38 +35,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         private const string SHIPPINGMETHODS_BY_ID_KEY = "Nop.shippingMethod.id-{0}";
         private const string SHIPPINGMETHODS_PATTERN_KEY = "Nop.shippingMethod.";
         #endregion
-
-        #region Utilities
-        private static List<ShippingMethod> DBMapping(DBShippingMethodCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ShippingMethod>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ShippingMethod DBMapping(DBShippingMethod dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ShippingMethod();
-            item.ShippingMethodId = dbItem.ShippingMethodId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-        #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -139,8 +106,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <returns>Shipping method collection</returns>
         public static List<ShippingMethod> GetAllShippingMethods(int? filterByCountryId)
         {
-            var dbCollection = DBProviderManager<DBShippingMethodProvider>.Provider.GetAllShippingMethods(filterByCountryId);
-            var shippingMethods = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var shippingMethods = context.Sp_ShippingMethodLoadAll(filterByCountryId);
             return shippingMethods;
         }
 

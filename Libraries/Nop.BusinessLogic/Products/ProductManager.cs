@@ -40,8 +40,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils.Html;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Products;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products
 {
@@ -59,228 +57,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         private const string PRODUCTVARIANTS_PATTERN_KEY = "Nop.productvariant.";
         private const string TIERPRICES_PATTERN_KEY = "Nop.tierprice.";
         #endregion
-
-        #region Utilities
-
-        private static List<Product> DBMapping(DBProductCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<Product>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Product DBMapping(DBProduct dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Product();
-            item.ProductId = dbItem.ProductId;
-            item.Name = dbItem.Name;
-            item.ShortDescription = dbItem.ShortDescription;
-            item.FullDescription = dbItem.FullDescription;
-            item.AdminComment = dbItem.AdminComment;
-            item.ProductTypeId = dbItem.ProductTypeId;
-            item.TemplateId = dbItem.TemplateId;
-            item.ShowOnHomePage = dbItem.ShowOnHomePage;
-            item.MetaKeywords = dbItem.MetaKeywords;
-            item.MetaDescription = dbItem.MetaDescription;
-            item.MetaTitle = dbItem.MetaTitle;
-            item.SEName = dbItem.SEName;
-            item.AllowCustomerReviews = dbItem.AllowCustomerReviews;
-            item.AllowCustomerRatings = dbItem.AllowCustomerRatings;
-            item.RatingSum = dbItem.RatingSum;
-            item.TotalRatingVotes = dbItem.TotalRatingVotes;
-            item.Published = dbItem.Published;
-            item.Deleted = dbItem.Deleted;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-
-            return item;
-        }
-
-        private static List<ProductVariant> DBMapping(DBProductVariantCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ProductVariant>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductVariant DBMapping(DBProductVariant dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductVariant();
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.ProductId = dbItem.ProductId;
-            item.Name = dbItem.Name;
-            item.SKU = dbItem.SKU;
-            item.Description = dbItem.Description;
-            item.AdminComment = dbItem.AdminComment;
-            item.ManufacturerPartNumber = dbItem.ManufacturerPartNumber;
-            item.IsGiftCard = dbItem.IsGiftCard;
-            item.IsDownload = dbItem.IsDownload;
-            item.DownloadId = dbItem.DownloadId;
-            item.UnlimitedDownloads = dbItem.UnlimitedDownloads;
-            item.MaxNumberOfDownloads = dbItem.MaxNumberOfDownloads;
-            item.DownloadExpirationDays = dbItem.DownloadExpirationDays;
-            item.DownloadActivationType = dbItem.DownloadActivationType;
-            item.HasSampleDownload = dbItem.HasSampleDownload;
-            item.SampleDownloadId = dbItem.SampleDownloadId;
-            item.HasUserAgreement = dbItem.HasUserAgreement;
-            item.UserAgreementText = dbItem.UserAgreementText;
-            item.IsRecurring = dbItem.IsRecurring;
-            item.CycleLength = dbItem.CycleLength;
-            item.CyclePeriod = dbItem.CyclePeriod;
-            item.TotalCycles = dbItem.TotalCycles;
-            item.IsShipEnabled = dbItem.IsShipEnabled;
-            item.IsFreeShipping = dbItem.IsFreeShipping;
-            item.AdditionalShippingCharge = dbItem.AdditionalShippingCharge;
-            item.IsTaxExempt = dbItem.IsTaxExempt;
-            item.TaxCategoryId = dbItem.TaxCategoryId;
-            item.ManageInventory = dbItem.ManageInventory;
-            item.StockQuantity = dbItem.StockQuantity;
-            item.DisplayStockAvailability = dbItem.DisplayStockAvailability;
-            item.MinStockQuantity = dbItem.MinStockQuantity;
-            item.LowStockActivityId = dbItem.LowStockActivityId;
-            item.NotifyAdminForQuantityBelow = dbItem.NotifyAdminForQuantityBelow;
-            item.AllowOutOfStockOrders = dbItem.AllowOutOfStockOrders;
-            item.OrderMinimumQuantity = dbItem.OrderMinimumQuantity;
-            item.OrderMaximumQuantity = dbItem.OrderMaximumQuantity;
-            item.WarehouseId = dbItem.WarehouseId;
-            item.DisableBuyButton = dbItem.DisableBuyButton;
-            item.Price = dbItem.Price;
-            item.OldPrice = dbItem.OldPrice;
-            item.ProductCost = dbItem.ProductCost;
-            item.CustomerEntersPrice = dbItem.CustomerEntersPrice;
-            item.MinimumCustomerEnteredPrice = dbItem.MinimumCustomerEnteredPrice;
-            item.MaximumCustomerEnteredPrice = dbItem.MaximumCustomerEnteredPrice;
-            item.Weight = dbItem.Weight;
-            item.Length = dbItem.Length;
-            item.Width = dbItem.Width;
-            item.Height = dbItem.Height;
-            item.PictureId = dbItem.PictureId;
-            item.AvailableStartDateTime = dbItem.AvailableStartDateTime;
-            item.AvailableEndDateTime = dbItem.AvailableEndDateTime;
-            item.Published = dbItem.Published;
-            item.Deleted = dbItem.Deleted;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.CreatedOn = dbItem.CreatedOn;
-            item.UpdatedOn = dbItem.UpdatedOn;
-            return item;
-        }
-
-        private static List<RelatedProduct> DBMapping(DBRelatedProductCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<RelatedProduct>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static RelatedProduct DBMapping(DBRelatedProduct dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new RelatedProduct();
-            item.RelatedProductId = dbItem.RelatedProductId;
-            item.ProductId1 = dbItem.ProductId1;
-            item.ProductId2 = dbItem.ProductId2;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
-
-        private static ProductLocalized DBMapping(DBProductLocalized dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductLocalized();
-            item.ProductLocalizedId = dbItem.ProductLocalizedId;
-            item.ProductId = dbItem.ProductId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Name = dbItem.Name;
-            item.ShortDescription = dbItem.ShortDescription;
-            item.FullDescription = dbItem.FullDescription;
-            item.MetaKeywords = dbItem.MetaKeywords;
-            item.MetaDescription = dbItem.MetaDescription;
-            item.MetaTitle = dbItem.MetaTitle;
-            item.SEName = dbItem.SEName;
-
-            return item;
-        }
-
-        private static ProductVariantLocalized DBMapping(DBProductVariantLocalized dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductVariantLocalized();
-            item.ProductVariantLocalizedId = dbItem.ProductVariantLocalizedId;
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.LanguageId = dbItem.LanguageId;
-            item.Name = dbItem.Name;
-            item.Description = dbItem.Description;
-
-            return item;
-        }
-
-        private static List<ProductTag> DBMapping(DBProductTagCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ProductTag>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static ProductTag DBMapping(DBProductTag dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ProductTag();
-            item.ProductTagId = dbItem.ProductTagId;
-            item.Name = dbItem.Name;
-            item.ProductCount = dbItem.ProductCount;
-
-            return item;
-        }
-
-        #endregion
-
+        
         #region Methods
 
         #region Products
@@ -535,11 +312,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 pageIndex = int.MaxValue - 1;
 
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProducts(categoryId,
-               manufacturerId, productTagId, featuredProducts, priceMin, priceMax, 
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var products = context.Sp_ProductLoadAllPaged(categoryId,
+               manufacturerId, productTagId, featuredProducts, priceMin, priceMax,
                keywords, searchDescriptions, pageSize, pageIndex, filteredSpecs,
                languageId, (int)orderBy, showHidden, out totalRecords);
-            var products = DBMapping(dbCollection);
+
             return products;
         }
 
@@ -923,9 +702,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             bool showHidden = NopContext.Current.IsAdmin;
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetProductsAlsoPurchasedById(productId,
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var products = context.Sp_ProductAlsoPurchasedLoadByProductID(productId,
                showHidden, pageSize, pageIndex, out totalRecords);
-            var products = DBMapping(dbCollection);
             return products;
         }
 
@@ -948,7 +727,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (rating < 1 || rating > 5)
                 rating = 1;
             var ratedOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-            DBProviderManager<DBProductProvider>.Provider.SetProductRating(productId, NopContext.Current.User.CustomerId,
+
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_ProductRatingCreate(productId, NopContext.Current.User.CustomerId,
                 rating, ratedOn);
 
             if (ProductManager.CacheEnabled)
@@ -1647,10 +1429,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 pageIndex = int.MaxValue - 1;
 
             bool showHidden = NopContext.Current.IsAdmin;
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductVariants(categoryId,
-               manufacturerId, keywords, showHidden,
-               pageSize, pageIndex, out totalRecords);
-            var productVariants = DBMapping(dbCollection);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var productVariants = context.Sp_ProductVariantLoadAll(categoryId,
+                manufacturerId, keywords, showHidden, pageSize,
+                pageIndex, out totalRecords);
             return productVariants;
         }
 
@@ -3531,10 +3314,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 name = string.Empty;
             name = name.Trim();
 
-            var dbCollection = DBProviderManager<DBProductProvider>.Provider.GetAllProductTags(productId,
-                name);
-            var collection = DBMapping(dbCollection);
-            return collection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var productTags = context.Sp_ProductTagLoadAll(productId, name);
+            return productTags;
         }
 
         /// <summary>
@@ -3596,8 +3378,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productTagId">Product tag identifier</param>
         public static void AddProductTagMapping(int productId, int productTagId)
         {
-            DBProviderManager<DBProductProvider>.Provider.AddProductTagMapping(productId,
-                productTagId);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_ProductTag_Product_MappingInsert(productTagId, productId);
         }
 
         /// <summary>
@@ -3607,7 +3389,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         /// <param name="productTagId">Product tag identifier</param>
         public static void RemoveProductTagMapping(int productId, int productTagId)
         {
-            DBProviderManager<DBProductProvider>.Provider.RemoveProductTagMapping(productId, productTagId);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_ProductTag_Product_MappingDelete(productTagId, productId);
         }
 
         #endregion

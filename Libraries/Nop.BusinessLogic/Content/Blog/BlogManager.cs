@@ -29,8 +29,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common.Utils.Html;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Content.Blog;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
 {
@@ -43,42 +41,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         private const string BLOGPOST_BY_ID_KEY = "Nop.blogpost.id-{0}";
         private const string BLOGPOST_PATTERN_KEY = "Nop.blogpost.";
         #endregion
-
-        #region Utilities
-        private static List<BlogPost> DBMapping(DBBlogPostCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<BlogPost>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static BlogPost DBMapping(DBBlogPost dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new BlogPost();
-            item.BlogPostId = dbItem.BlogPostId;
-            item.LanguageId = dbItem.LanguageId;
-            item.BlogPostTitle = dbItem.BlogPostTitle;
-            item.BlogPostBody = dbItem.BlogPostBody;
-            item.BlogPostAllowComments = dbItem.BlogPostAllowComments;
-            item.CreatedById = dbItem.CreatedById;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        #endregion
-
+        
         #region Methods
         /// <summary>
         /// Deletes an blog post
@@ -162,7 +125,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
                 pageIndex = 0;
             if(pageIndex == Int32.MaxValue)
                 pageIndex = Int32.MaxValue - 1;
-            return DBMapping(DBProviderManager<DBBlogProvider>.Provider.GetAllBlogPosts(languageId, pageSize, pageIndex, out totalRecords));
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var blogPosts = context.Sp_BlogPostLoadAll(languageId,
+                pageSize, pageIndex, out totalRecords).ToList();
+
+            return blogPosts;
         }
 
         /// <summary>

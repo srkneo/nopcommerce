@@ -19,8 +19,6 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Audit;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 {
@@ -34,40 +32,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         private const string ACTIVITYTYPE_BY_ID_KEY = "Nop.activitytype.id-{0}";
         private const string ACTIVITYTYPE_PATTERN_KEY = "Nop.activitytype.";
         #endregion
-
-        #region Utilities
-
-        private static List<ActivityLog> DBMapping(DBActivityLogCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<ActivityLog>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
         
-        private static ActivityLog DBMapping(DBActivityLog dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new ActivityLog();
-            item.ActivityLogId = dbItem.ActivityLogId;
-            item.ActivityLogTypeId = dbItem.ActivityLogTypeId;
-            item.CustomerId = dbItem.CustomerId;
-            item.Comment = dbItem.Comment;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-        #endregion
-
         #region Methods
         /// <summary>
         /// Inserts an activity log type item
@@ -334,12 +299,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                 pageIndex = 0;
             if (pageIndex == int.MaxValue)
                 pageIndex = int.MaxValue - 1;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var activityLog = context.Sp_ActivityLogLoadAll(createdOnFrom,
+                createdOnTo, email, username, activityLogTypeId,
+                pageSize, pageIndex, out totalRecords).ToList();
 
-            var dbCollection = DBProviderManager<DBCustomerActivityProvider>.Provider.GetAllActivities(
-                createdOnFrom, createdOnTo, email, username, activityLogTypeId, 
-                pageSize, pageIndex, out totalRecords);
-            var collection = DBMapping(dbCollection);
-            return collection;
+            return activityLog;
         }
         
         /// <summary>
@@ -365,7 +331,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// </summary>
         public static void ClearAllActivities()
         {
-            DBProviderManager<DBCustomerActivityProvider>.Provider.ClearAllActivities();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_ActivityLogClearAll();
         }
         #endregion
     }

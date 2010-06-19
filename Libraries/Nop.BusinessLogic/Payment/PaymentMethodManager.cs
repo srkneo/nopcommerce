@@ -22,8 +22,6 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Payment
@@ -36,43 +34,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         #region Constants
         private const string PAYMENTMETHODS_BY_ID_KEY = "Nop.paymentmethod.id-{0}";
         private const string PAYMENTMETHODS_PATTERN_KEY = "Nop.paymentmethod.";
-        #endregion
-
-        #region Utilities
-        private static List<PaymentMethod> DBMapping(DBPaymentMethodCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<PaymentMethod>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static PaymentMethod DBMapping(DBPaymentMethod dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new PaymentMethod();
-            item.PaymentMethodId = dbItem.PaymentMethodId;
-            item.Name = dbItem.Name;
-            item.VisibleName = dbItem.VisibleName;
-            item.Description = dbItem.Description;
-            item.ConfigureTemplatePath = dbItem.ConfigureTemplatePath;
-            item.UserTemplatePath = dbItem.UserTemplatePath;
-            item.ClassName = dbItem.ClassName;
-            item.SystemKeyword = dbItem.SystemKeyword;
-            item.IsActive = dbItem.IsActive;
-            item.DisplayOrder = dbItem.DisplayOrder;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -173,10 +134,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <returns>Payment method collection</returns>
         public static List<PaymentMethod> GetAllPaymentMethods(int? filterByCountryId, bool showHidden)
         {
-            var dbCollection = DBProviderManager<DBPaymentMethodProvider>.Provider.GetAllPaymentMethods(showHidden, filterByCountryId);
-            var paymentMethodCollection = DBMapping(dbCollection);
-
-            return paymentMethodCollection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var paymentMethods = context.Sp_PaymentMethodLoadAll(showHidden, filterByCountryId);
+            return paymentMethods;
         }
 
         /// <summary>

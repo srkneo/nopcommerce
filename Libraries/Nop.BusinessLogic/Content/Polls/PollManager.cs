@@ -21,8 +21,6 @@ using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Content.Polls;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
@@ -340,7 +338,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <param name="count">The current count</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Poll answer</returns>
-        public static PollAnswer UpdatePoll(int pollAnswerId,
+        public static PollAnswer UpdatePollAnswer(int pollAnswerId,
             int pollId, string name, int count, int displayOrder)
         {
             var pollAnswer = GetPollAnswerById(pollAnswerId);
@@ -373,8 +371,41 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <param name="customerId">Customer identifer</param>
         public static void CreatePollVotingRecord(int pollAnswerId, int customerId)
         {
-            DBProviderManager<DBPollProvider>.Provider.CreatePollVotingRecord(pollAnswerId,
-                customerId);
+            var pollAnswer = GetPollAnswerById(pollAnswerId);
+            if (pollAnswer == null)
+                return;
+
+            //delete previous vote
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var oldPvr = (from pvr in context.PollVotingRecords
+                          where pvr.PollAnswerId == pollAnswerId &&
+                          pvr.CustomerId == customerId
+                          select pvr).FirstOrDefault();
+            if (oldPvr != null)
+            {
+                context.DeleteObject(oldPvr);
+            }
+            context.SaveChanges();
+
+            //insert new vote
+            var newPvr = new PollVotingRecord();
+            newPvr.PollAnswerId = pollAnswerId;
+            newPvr.CustomerId = customerId;
+
+            context.PollVotingRecords.AddObject(newPvr);
+            context.SaveChanges();
+
+            //new vote records
+            int totalVotingRecords = (from pvr in context.PollVotingRecords
+                                      where pvr.PollAnswerId == pollAnswerId
+                                      select pvr).Count();
+
+            pollAnswer = UpdatePollAnswer(pollAnswer.PollAnswerId,
+                pollAnswer.PollId,
+                pollAnswer.Name,
+                totalVotingRecords,
+                pollAnswer.DisplayOrder);
+
             if (PollManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(POLLS_PATTERN_KEY);

@@ -24,7 +24,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
     /// </summary>
     public partial class PaymentMethod : BaseEntity
     {
-        #region Fields 
+        #region Fields
         /// <summary>
         /// Payment method type
         /// </summary>

@@ -5368,14 +5368,6 @@
       <Project>{E682693C-DC17-4C46-BB57-6DC2C2B02555}</Project>
       <Name>Nop.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Libraries\Nop.DataAccess.SqlServer\Nop.DataAccess.SqlServer.csproj">
-      <Project>{D7FC5FC7-B51D-4524-8047-75A9CD405671}</Project>
-      <Name>Nop.DataAccess.SqlServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Libraries\Nop.DataAccess\Nop.DataAccess.csproj">
-      <Project>{499E7B72-D9AF-4435-8C69-BBE841C86F03}</Project>
-      <Name>Nop.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Libraries\Nop.Froogle\Nop.Froogle.csproj">
       <Project>{1DE849F3-EA26-43A8-9D49-32B6FECBF0AA}</Project>
       <Name>Nop.Froogle</Name>

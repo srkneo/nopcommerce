@@ -25,8 +25,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Audit;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 {
@@ -58,7 +56,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// </summary>
         public static void ClearLog()
         {
-            DBProviderManager<DBLogProvider>.Provider.ClearLog();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_LogClear();
         }
 
         /// <summary>

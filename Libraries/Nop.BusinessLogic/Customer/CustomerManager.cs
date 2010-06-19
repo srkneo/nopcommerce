@@ -37,9 +37,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.CustomerManagement;
-
 
 namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 {
@@ -54,94 +51,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         private const string CUSTOMERROLES_BY_DISCOUNTID_KEY = "Nop.customerrole.bydiscountid-{0}-{1}";
         private const string CUSTOMERROLES_PATTERN_KEY = "Nop.customerrole.";
         #endregion
-
-        #region Utilities
-        private static List<Customer> DBMapping(DBCustomerCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<Customer>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Customer DBMapping(DBCustomer dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Customer();
-            item.CustomerId = dbItem.CustomerId;
-            item.CustomerGuid = dbItem.CustomerGuid;
-            item.Email = dbItem.Email;
-            item.Username = dbItem.Username;
-            item.PasswordHash = dbItem.PasswordHash;
-            item.SaltKey = dbItem.SaltKey;
-            item.AffiliateId = dbItem.AffiliateId;
-            item.BillingAddressId = dbItem.BillingAddressId;
-            item.ShippingAddressId = dbItem.ShippingAddressId;
-            item.LastPaymentMethodId = dbItem.LastPaymentMethodId;
-            item.LastAppliedCouponCode = dbItem.LastAppliedCouponCode;
-            item.GiftCardCouponCodes = dbItem.GiftCardCouponCodes;
-            item.CheckoutAttributes = dbItem.CheckoutAttributes;
-            item.LanguageId = dbItem.LanguageId;
-            item.CurrencyId = dbItem.CurrencyId;
-            item.TaxDisplayTypeId = dbItem.TaxDisplayTypeId;
-            item.IsTaxExempt = dbItem.IsTaxExempt;
-            item.IsAdmin = dbItem.IsAdmin;
-            item.IsGuest = dbItem.IsGuest;
-            item.IsForumModerator = dbItem.IsForumModerator;
-            item.TotalForumPosts = dbItem.TotalForumPosts;
-            item.Signature = dbItem.Signature;
-            item.AdminComment = dbItem.AdminComment;
-            item.Active = dbItem.Active;
-            item.Deleted = dbItem.Deleted;
-            item.RegistrationDate = dbItem.RegistrationDate;
-            item.TimeZoneId = dbItem.TimeZoneId;
-            item.AvatarId = dbItem.AvatarId;
-
-            return item;
-        }
-
-        private static List<CustomerRole> DBMapping(DBCustomerRoleCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<CustomerRole>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static CustomerRole DBMapping(DBCustomerRole dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new CustomerRole();
-            item.CustomerRoleId = dbItem.CustomerRoleId;
-            item.Name = dbItem.Name;
-            item.FreeShipping = dbItem.FreeShipping;
-            item.TaxExempt = dbItem.TaxExempt;
-            item.Active = dbItem.Active;
-            item.Deleted = dbItem.Deleted;
-
-            return item;
-        }
-
-        #endregion
-
+        
         #region Methods
 
         /// <summary>
@@ -948,10 +858,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (username == null)
                 username = string.Empty;
 
-            var dbCollection = DBProviderManager<DBCustomerProvider>.Provider.GetAllCustomers(registrationFrom,
-                registrationTo, email, username, dontLoadGuestCustomers, pageSize,
-                pageIndex, out totalRecords);
-            var customers = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var customers = context.Sp_CustomerLoadAll(registrationFrom,
+                registrationTo, email, username, dontLoadGuestCustomers,
+                pageSize, pageIndex, out totalRecords).ToList();
+
             return customers;
         }
 
@@ -1817,7 +1728,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="ss">Order shippment status; null to load all records</param>
         /// <param name="orderBy">1 - order by order total, 2 - order by number of orders</param>
         /// <returns>Report</returns>
-        public static IDataReader GetBestCustomersReport(DateTime? startTime,
+        public static List<CustomerBestReportLine> GetBestCustomersReport(DateTime? startTime,
             DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps,
             ShippingStatusEnum? ss, int orderBy)
         {
@@ -1833,9 +1744,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (ss.HasValue)
                 shippingStatusId = (int)ss.Value;
 
-            return DBProviderManager<DBCustomerProvider>.Provider.GetBestCustomersReport(startTime,
-                endTime, orderStatusId, paymentStatusId,
-                shippingStatusId, orderBy);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var report = context.Sp_CustomerBestReport(startTime, endTime,
+                orderStatusId, paymentStatusId, shippingStatusId, orderBy).ToList();
+
+            return report;
         }
 
         /// <summary>
@@ -1864,9 +1777,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// Get customer report by language
         /// </summary>
         /// <returns>Report</returns>
-        public static IDataReader GetCustomerReportByLanguage()
+        public static List<CustomerReportByLanguageLine> GetCustomerReportByLanguage()
         {
-            return DBProviderManager<DBCustomerProvider>.Provider.GetCustomerReportByLanguage();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var report = context.Sp_CustomerReportByLanguage().ToList();
+
+            return report;
         }
 
         /// <summary>
@@ -1874,12 +1790,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         /// <param name="customerAttributeKey">Customer attribute key</param>
         /// <returns>Report</returns>
-        public static IDataReader GetCustomerReportByAttributeKey(string customerAttributeKey)
+        public static List<CustomerReportByAttributeKeyLine> GetCustomerReportByAttributeKey(string customerAttributeKey)
         {
             if (String.IsNullOrEmpty(customerAttributeKey))
                 throw new ArgumentNullException("customerAttributeKey");
 
-            return DBProviderManager<DBCustomerProvider>.Provider.GetCustomerReportByAttributeKey(customerAttributeKey);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var report = context.Sp_CustomerReportByAttributeKey(customerAttributeKey).ToList();
+
+            return report;
         }
 
         /// <summary>
@@ -2383,7 +2302,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static void DeleteExpiredCustomerSessions(DateTime olderThan)
         {
             olderThan = DateTimeHelper.ConvertToUtcTime(olderThan);
-            DBProviderManager<DBCustomerProvider>.Provider.DeleteExpiredCustomerSessions(olderThan);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_CustomerSessionDeleteExpired(olderThan);
         }
 
         /// <summary>

@@ -22,8 +22,6 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Tax;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 {
@@ -36,39 +34,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         private const string TAXRATE_ALL_KEY = "Nop.taxrate.all";
         private const string TAXRATE_BY_ID_KEY = "Nop.taxrate.id-{0}";
         private const string TAXRATE_PATTERN_KEY = "Nop.taxrate.";
-        #endregion
-
-        #region Utilities
-        private static List<TaxRate> DBMapping(DBTaxRateCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<TaxRate>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static TaxRate DBMapping(DBTaxRate dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new TaxRate();
-            item.TaxRateId = dbItem.TaxRateId;
-            item.TaxCategoryId = dbItem.TaxCategoryId;
-            item.CountryId = dbItem.CountryId;
-            item.StateProvinceId = dbItem.StateProvinceId;
-            item.Zip = dbItem.Zip;
-            item.Percentage = dbItem.Percentage;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -137,8 +102,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return (List<TaxRate>)obj2;
             }
 
-            var dbCollection = DBProviderManager<DBTaxRateProvider>.Provider.GetAllTaxRates();
-            var collection = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var collection = context.Sp_TaxRateLoadAll();
 
             if (TaxRateManager.CacheEnabled)
             {

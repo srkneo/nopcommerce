@@ -41,8 +41,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Orders;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 {
@@ -58,213 +56,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         #endregion
 
         #region Utilities
-
-        private static OrderAverageReportLine DBMapping(DBOrderAverageReportLine dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new OrderAverageReportLine();
-            item.SumOrders = dbItem.SumOrders;
-            item.CountOrders = dbItem.CountOrders;
-
-            return item;
-        }
-
-        private static List<BestSellersReportLine> DBMapping(List<DBBestSellersReportLine> dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<BestSellersReportLine>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static BestSellersReportLine DBMapping(DBBestSellersReportLine dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new BestSellersReportLine();
-            item.ProductVariantId = dbItem.ProductVariantId;
-            item.SalesTotalCount = dbItem.SalesTotalCount;
-            item.SalesTotalAmount = dbItem.SalesTotalAmount;
-
-            return item;
-        }
-
-        private static List<RecurringPayment> DBMapping(DBRecurringPaymentCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<RecurringPayment>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static RecurringPayment DBMapping(DBRecurringPayment dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new RecurringPayment();
-            item.RecurringPaymentId = dbItem.RecurringPaymentId;
-            item.InitialOrderId = dbItem.InitialOrderId;
-            item.CycleLength = dbItem.CycleLength;
-            item.CyclePeriod = dbItem.CyclePeriod;
-            item.TotalCycles = dbItem.TotalCycles;
-            item.StartDate = dbItem.StartDate;
-            item.IsActive = dbItem.IsActive;
-            item.Deleted = dbItem.Deleted;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static List<RecurringPaymentHistory> DBMapping(DBRecurringPaymentHistoryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<RecurringPaymentHistory>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static RecurringPaymentHistory DBMapping(DBRecurringPaymentHistory dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new RecurringPaymentHistory();
-            item.RecurringPaymentHistoryId = dbItem.RecurringPaymentHistoryId;
-            item.RecurringPaymentId = dbItem.RecurringPaymentId;
-            item.OrderId = dbItem.OrderId;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static List<GiftCard> DBMapping(DBGiftCardCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<GiftCard>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static GiftCard DBMapping(DBGiftCard dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new GiftCard();
-            item.GiftCardId = dbItem.GiftCardId;
-            item.PurchasedOrderProductVariantId = dbItem.PurchasedOrderProductVariantId;
-            item.Amount = dbItem.Amount;
-            item.IsGiftCardActivated = dbItem.IsGiftCardActivated;
-            item.GiftCardCouponCode = dbItem.GiftCardCouponCode;
-            item.RecipientName = dbItem.RecipientName;
-            item.RecipientEmail = dbItem.RecipientEmail;
-            item.SenderName = dbItem.SenderName;
-            item.SenderEmail = dbItem.SenderEmail;
-            item.Message = dbItem.Message;
-            item.IsRecipientNotified = dbItem.IsRecipientNotified;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static List<GiftCardUsageHistory> DBMapping(DBGiftCardUsageHistoryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<GiftCardUsageHistory>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static GiftCardUsageHistory DBMapping(DBGiftCardUsageHistory dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new GiftCardUsageHistory();
-            item.GiftCardUsageHistoryId = dbItem.GiftCardUsageHistoryId;
-            item.GiftCardId = dbItem.GiftCardId;
-            item.CustomerId = dbItem.CustomerId;
-            item.OrderId = dbItem.OrderId;
-            item.UsedValue = dbItem.UsedValue;
-            item.UsedValueInCustomerCurrency = dbItem.UsedValueInCustomerCurrency;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static List<RewardPointsHistory> DBMapping(DBRewardPointsHistoryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<RewardPointsHistory>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static RewardPointsHistory DBMapping(DBRewardPointsHistory dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new RewardPointsHistory();
-            item.RewardPointsHistoryId = dbItem.RewardPointsHistoryId;
-            item.CustomerId = dbItem.CustomerId;
-            item.OrderId = dbItem.OrderId;
-            item.Points = dbItem.Points;
-            item.PointsBalance = dbItem.PointsBalance;
-            item.UsedAmount = dbItem.UsedAmount;
-            item.UsedAmountInCustomerCurrency = dbItem.UsedAmountInCustomerCurrency;
-            item.CustomerCurrencyCode = dbItem.CustomerCurrencyCode;
-            item.Message = dbItem.Message;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
 
         /// <summary>
         /// Sets an order status
@@ -1930,7 +1721,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="ps">Order payment status; null to load all records</param>
         /// <param name="billingCountryId">Billing country identifier; null to load all records</param>
         /// <returns>Result</returns>
-        public static IDataReader OrderProductVariantReport(DateTime? startTime,
+        public static List<OrderProductVariantReportLine> OrderProductVariantReport(DateTime? startTime,
             DateTime? endTime, OrderStatusEnum? os, PaymentStatusEnum? ps,
             int? billingCountryId)
         {
@@ -1942,8 +1733,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (ps.HasValue)
                 paymentStatusId = (int)ps.Value;
 
-            return DBProviderManager<DBOrderProvider>.Provider.OrderProductVariantReport(startTime,
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var report = context.Sp_OrderProductVariantReport(startTime,
                 endTime, orderStatusId, paymentStatusId, billingCountryId);
+            return report;
         }
 
         /// <summary>
@@ -1956,9 +1749,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static List<BestSellersReportLine> BestSellersReport(int lastDays, 
             int recordsToReturn, int orderBy)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.BestSellersReport(lastDays,
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var report = context.Sp_SalesBestSellersReport(lastDays,
                 recordsToReturn, orderBy);
-            var report = DBMapping(dbCollection);
             return report;
         }
 
@@ -1973,8 +1766,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             DateTime? startTime, DateTime? endTime)
         {
             int orderStatusId = (int)os;
-            var dbItem = DBProviderManager<DBOrderProvider>.Provider.OrderAverageReport(orderStatusId, startTime, endTime);
-            var item = DBMapping(dbItem);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var item = context.Sp_OrderAverageReport(startTime, endTime, orderStatusId);
             return item;
         }
         
@@ -2035,7 +1829,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="ps">Order payment status; null to load all orders</param>
         /// <param name="ss">Order shippment status; null to load all orders</param>
         /// <returns>IdataReader</returns>
-        public static IDataReader GetOrderReport(OrderStatusEnum? os, 
+        public static OrderIncompleteReportLine GetOrderReport(OrderStatusEnum? os, 
             PaymentStatusEnum? ps, ShippingStatusEnum? ss)
         {
             int? orderStatusId = null;
@@ -2050,8 +1844,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (ss.HasValue)
                 shippmentStatusId = (int)ss.Value;
 
-            return DBProviderManager<DBOrderProvider>.Provider.GetOrderReport(orderStatusId, 
-                paymentStatusId, shippmentStatusId);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var item = context.Sp_OrderIncompleteReport(orderStatusId, paymentStatusId, shippmentStatusId);
+            return item;
         }
        
         #endregion
@@ -2198,10 +1993,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int? initialOrderStatusId = null;
             if (initialOrderStatus.HasValue)
                 initialOrderStatusId = (int)initialOrderStatus.Value;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchRecurringPayments(showHidden, 
+            var recurringPayments = context.Sp_RecurringPaymentLoadAll(showHidden,
                 customerId, initialOrderId, initialOrderStatusId);
-            var recurringPayments = DBMapping(dbCollection);
             return recurringPayments;
         }
 
@@ -2301,9 +2097,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static List<RecurringPaymentHistory> SearchRecurringPaymentHistory(int recurringPaymentId, 
             int orderId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.SearchRecurringPaymentHistory(recurringPaymentId, orderId);
-            var recurringPaymentHistoryCollection = DBMapping(dbCollection);
-            return recurringPaymentHistoryCollection;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var recurringPaymentHistory = context.Sp_RecurringPaymentHistoryLoadAll(recurringPaymentId, orderId);
+            return recurringPaymentHistory;
         }
 
         #endregion
@@ -2378,10 +2174,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (giftCardCouponCode != null)
                 giftCardCouponCode = giftCardCouponCode.Trim();
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllGiftCards(orderId,
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var giftCards = context.Sp_GiftCardLoadAll(orderId,
                 customerId, startTime, endTime, orderStatusId, paymentStatusId, shippingStatusId,
                 isGiftCardActivated, giftCardCouponCode);
-            var giftCards = DBMapping(dbCollection);
             return giftCards;
         }
 
@@ -2521,9 +2317,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static List<GiftCardUsageHistory> GetAllGiftCardUsageHistoryEntries(int? giftCardId,
             int? customerId, int? orderId)
         {
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllGiftCardUsageHistoryEntries(giftCardId, 
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var giftCardUsageHistoryEntries = context.Sp_GiftCardUsageHistoryLoadAll(giftCardId,
                 customerId, orderId);
-            var giftCardUsageHistoryEntries = DBMapping(dbCollection);
             return giftCardUsageHistoryEntries;
         }
 
@@ -2653,10 +2449,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 pageIndex = 0;
             if (pageIndex == int.MaxValue)
                 pageIndex = int.MaxValue - 1;
+            
+            var context = ObjectContextHelper.CurrentObjectContext;
 
-            var dbCollection = DBProviderManager<DBOrderProvider>.Provider.GetAllRewardPointsHistoryEntries(customerId,
+            var rewardPointsHistoryEntries = context.Sp_RewardPointsHistoryLoadAll(customerId,
                 orderId, pageSize, pageIndex, out totalRecords);
-            var rewardPointsHistoryEntries = DBMapping(dbCollection);
             return rewardPointsHistoryEntries;
         }
 

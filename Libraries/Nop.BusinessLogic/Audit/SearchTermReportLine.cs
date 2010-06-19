@@ -15,61 +15,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NopSolutions.NopCommerce.BusinessLogic.Products;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 
 
-namespace NopSolutions.NopCommerce.BusinessLogic.Orders
+namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 {
     /// <summary>
-    /// Represents a best sellers report line
+    /// Represents a search term report line
     /// </summary>
-    public partial class BestSellersReportLine : BaseEntity
+    public partial class SearchTermReportLine : BaseEntity
     {
-        #region Fields
-        private ProductVariant _pv = null;
-        #endregion
-
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the BestSellersReportLine class
+        /// Creates a new instance of the SearchTermReportLine class
         /// </summary>
-        public BestSellersReportLine()
+        public SearchTermReportLine()
         {
         }
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets or sets the product variant identifier
-        /// </summary>
-        public int ProductVariantId { get; set; }
 
         /// <summary>
-        /// Gets or sets the total count
+        /// Gets or sets the search term
         /// </summary>
-        public int SalesTotalCount { get; set; }
+        public string SearchTerm { get; set; }
 
         /// <summary>
-        /// Gets or sets the total amount
+        /// Gets or sets the search count
         /// </summary>
-        public decimal SalesTotalAmount { get; set; }
+        public int SearchCount { get; set; }
 
-        #endregion
-
-        #region Custom Properties
-        /// <summary>
-        /// Gets a product variant
-        /// </summary>
-        public ProductVariant ProductVariant
-        {
-            get
-            {
-                if (_pv == null)
-                    _pv = ProductManager.GetProductVariantById(this.ProductVariantId);
-                return _pv;
-            }
-        }
-        #endregion
+        #endregion 
     }
 
 }

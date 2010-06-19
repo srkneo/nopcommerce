@@ -24,7 +24,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.DataAccess;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -41,47 +40,19 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         private void BindData()
         {
             //pending
-            decimal os_pendingTotalSum = decimal.Zero;
-            int os_pendingCount = 0;
-            using (IDataReader orders_os_pending = OrderManager.GetOrderReport(OrderStatusEnum.Pending, null, null))
-            {
-                while (orders_os_pending.Read())
-                {
-
-                    os_pendingTotalSum = NopSqlDataHelper.GetDecimal(orders_os_pending, "Total");
-                    os_pendingCount = NopSqlDataHelper.GetInt(orders_os_pending, "Count");
-                }
-                lblTotalIncomplete.Text = os_pendingCount.ToString();
-                lblTotalIncompleteValue.Text = PriceHelper.FormatPrice(os_pendingTotalSum, true, false);
-            }
+            var orders_os_pending = OrderManager.GetOrderReport(OrderStatusEnum.Pending, null, null);
+            lblTotalIncomplete.Text = orders_os_pending.Count.ToString();
+            lblTotalIncompleteValue.Text = PriceHelper.FormatPrice(orders_os_pending.Total, true, false);
 
             //not paid
-            decimal ps_pendingTotalSum = decimal.Zero;
-            int ps_pendingCount = 0;
-            using (IDataReader orders_ps_pending = OrderManager.GetOrderReport(null, PaymentStatusEnum.Pending, null))
-            {
-                while (orders_ps_pending.Read())
-                {
-                    ps_pendingTotalSum = NopSqlDataHelper.GetDecimal(orders_ps_pending, "Total");
-                    ps_pendingCount = NopSqlDataHelper.GetInt(orders_ps_pending, "Count");
-                }
-                lblTotalUnpaid.Text = ps_pendingCount.ToString();
-                lblTotalUnpaidValue.Text = PriceHelper.FormatPrice(ps_pendingTotalSum, true, false);
-            }
+            var orders_ps_pending = OrderManager.GetOrderReport(null, PaymentStatusEnum.Pending, null);
+            lblTotalUnpaid.Text = orders_ps_pending.Count.ToString();
+            lblTotalUnpaidValue.Text = PriceHelper.FormatPrice(orders_ps_pending.Total, true, false);
 
             //not shipped
-            decimal ss_pendingTotalSum = decimal.Zero;
-            int ss_pendingCount = 0;
-            using (IDataReader orders_ss_pending = OrderManager.GetOrderReport(null, null, ShippingStatusEnum.NotYetShipped))
-            {
-                while (orders_ss_pending.Read())
-                {
-                    ss_pendingTotalSum = NopSqlDataHelper.GetDecimal(orders_ss_pending, "Total");
-                    ss_pendingCount = NopSqlDataHelper.GetInt(orders_ss_pending, "Count");
-                }
-                lblTotalUnshipped.Text = ss_pendingCount.ToString();
-                lblTotalUnshippedValue.Text = PriceHelper.FormatPrice(ss_pendingTotalSum, true, false);
-            }
+            var orders_ss_pending = OrderManager.GetOrderReport(null, null, ShippingStatusEnum.NotYetShipped);
+            lblTotalUnshipped.Text = orders_ss_pending.Count.ToString();
+            lblTotalUnshippedValue.Text = PriceHelper.FormatPrice(orders_ss_pending.Total, true, false);
         }
     }
 }

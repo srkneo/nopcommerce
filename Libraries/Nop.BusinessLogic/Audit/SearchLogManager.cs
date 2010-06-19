@@ -22,8 +22,6 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Audit;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 {
@@ -41,11 +39,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <param name="endTime">End time; null to load all</param>
         /// <param name="count">Item count. 0 if you want to get all items</param>
         /// <returns>Result</returns>
-        public static IDataReader SearchTermReport(DateTime? startTime, 
+        public static List<SearchTermReportLine> SearchTermReport(DateTime? startTime, 
             DateTime? endTime, int count)
         {
-            return DBProviderManager<DBSearchLogProvider>.Provider.SearchTermReport(startTime,
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var report = context.Sp_SearchTermReport(startTime,
                 endTime, count);
+            return report;
         }
 
         /// <summary>
@@ -108,7 +108,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// </summary>
         public static void ClearSearchLog()
         {
-            DBProviderManager<DBSearchLogProvider>.Provider.ClearSearchLog();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_SearchLogClear();
         }
         #endregion
     }

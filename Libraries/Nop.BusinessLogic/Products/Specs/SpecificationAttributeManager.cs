@@ -19,8 +19,6 @@ using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Products.Specs;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 {
@@ -36,47 +34,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         private const string SPECIFICATIONATTRIBUTE_PATTERN_KEY = "Nop.specificationattributes.";
         private const string SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY = "Nop.specificationattributeoptions.";
         private const string PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY = "Nop.productspecificationattribute.";
-        #endregion
-
-        #region Utilities
-
-        /// <summary>
-        /// Maps a DBSpecificationAttributeOptionFilter to a SpecificationAttributeOptionFilter
-        /// </summary>
-        /// <param name="dbItem">DBSpecificationAttributeOptionFilter</param>
-        /// <returns>SpecificationAttributeOptionFilter</returns>
-        private static SpecificationAttributeOptionFilter DBMapping(DBSpecificationAttributeOptionFilter dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new SpecificationAttributeOptionFilter();
-            item.SpecificationAttributeId = dbItem.SpecificationAttributeId;
-            item.SpecificationAttributeName = dbItem.SpecificationAttributeName;
-            item.DisplayOrder = dbItem.DisplayOrder;
-            item.SpecificationAttributeOptionId = dbItem.SpecificationAttributeOptionId;
-            item.SpecificationAttributeOptionName = dbItem.SpecificationAttributeOptionName;
-            return item;
-        }
-
-        /// <summary>
-        /// Maps a DBSpecificationAttributeOptionFilterCollection to a SpecificationAttributeOptionFilterCollection
-        /// </summary>
-        /// <param name="dbCol">DBSpecificationAttributeOptionFilterCollection</param>
-        /// <returns>SpecificationAttributeOptionFilterCollection</returns>
-        private static List<SpecificationAttributeOptionFilter> DBMapping(DBSpecificationAttributeOptionFilterCollection dbCol)
-        {
-            if (dbCol == null)
-                return null;
-
-            var col = new List<SpecificationAttributeOptionFilter>();
-            foreach (var dbItem in dbCol)
-            {
-                var item = DBMapping(dbItem);
-                col.Add(item);
-            }
-            return col;
-        }
         #endregion
 
         #region Methods
@@ -785,8 +742,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         #endregion
 
         #region Specification attribute option filter
-
-
+        
         /// <summary>
         /// Gets a filtered product specification attribute mapping collection by category id
         /// </summary>
@@ -808,12 +764,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <returns>Product specification attribute mapping collection</returns>
         public static List<SpecificationAttributeOptionFilter> GetSpecificationAttributeOptionFilter(int categoryId, int languageId)
         {
-            var dbCol = DBProviderManager<DBSpecificationAttributeProvider>.Provider.GetSpecificationAttributeOptionFilterByCategoryId(categoryId, languageId);
-            var col = DBMapping(dbCol);
-            return col;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var result = context.Sp_SpecificationAttributeOptionFilter_LoadByFilter(categoryId, languageId);
+            return result;
         }
-
-
+        
         #endregion
 
         #endregion

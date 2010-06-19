@@ -258,5 +258,68 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Installation
                 return false;
             }
         }
+        
+        /// <summary>
+        /// Backup database
+        /// </summary>
+        /// <param name="fileName">Destination file name</param>
+        public static void Backup(string fileName)
+        {
+            //TODO SQL Server only now
+            string _sqlConnectionString = NopSqlDataHelper.GetConnectionString("NopSqlConnection");
+            using (SqlConnection conn = new SqlConnection(_sqlConnectionString))
+            {
+                string dbName = NopSqlDataHelper.GetDatabaseName(_sqlConnectionString);
+                string commandText = string.Format(
+                    "BACKUP DATABASE [{0}] TO DISK = '{1}' WITH FORMAT",
+                    dbName,
+                    fileName);
+
+                DbCommand dbCommand = new SqlCommand(commandText, conn);
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
+                dbCommand.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Restore database
+        /// </summary>
+        /// <param name="fileName">Target file name</param>
+        public static void RestoreBackup(string fileName)
+        {
+            //TODO SQL Server only now
+
+            string _sqlConnectionString = NopSqlDataHelper.GetConnectionString("NopSqlConnection");
+            string masterConnectionString = NopSqlDataHelper.GetMasterConnectionString(_sqlConnectionString);
+            using (SqlConnection conn = new SqlConnection(masterConnectionString))
+            {
+                string dbName = NopSqlDataHelper.GetDatabaseName(_sqlConnectionString);
+                string commandText = string.Format(
+                    "DECLARE @ErrorMessage NVARCHAR(4000)\n" +
+                    "ALTER DATABASE [{0}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE\n" +
+                    "BEGIN TRY\n" +
+                        "RESTORE DATABASE [{0}] FROM DISK = '{1}' WITH REPLACE\n" +
+                    "END TRY\n" +
+                    "BEGIN CATCH\n" +
+                        "SET @ErrorMessage = ERROR_MESSAGE()\n" +
+                    "END CATCH\n" +
+                    "ALTER DATABASE [{0}] SET MULTI_USER WITH ROLLBACK IMMEDIATE\n" +
+                    "IF (@ErrorMessage is not NULL)\n" +
+                    "BEGIN\n" +
+                        "RAISERROR (@ErrorMessage, 16, 1)\n" +
+                    "END",
+                    dbName,
+                    fileName);
+
+                DbCommand dbCommand = new SqlCommand(commandText, conn);
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
+                dbCommand.ExecuteNonQuery();
+            }
+
+            //clear all pools
+            SqlConnection.ClearAllPools();
+        }
     }
 }

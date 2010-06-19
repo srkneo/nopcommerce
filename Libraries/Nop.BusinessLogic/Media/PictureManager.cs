@@ -21,8 +21,6 @@ using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Media;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Media
 {
@@ -43,35 +41,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         #endregion
 
         #region Utilities
-        private static List<Picture> DBMapping(DBPictureCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
 
-            var collection = new List<Picture>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Picture DBMapping(DBPicture dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Picture();
-            item.PictureId = dbItem.PictureId;
-            item.PictureBinary = dbItem.PictureBinary;
-            item.Extension = dbItem.Extension;
-            item.IsNew = dbItem.IsNew;
-
-            return item;
-        }
-        
         /// <summary>
         /// Returns the first ImageCodeInfo instance with the specified mime type. Some people try to get the ImageCodeInfo instance by index - sounds rather fragile to me.
         /// </summary>
@@ -138,6 +108,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get a picture URL
         /// </summary>
@@ -553,9 +524,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             if (pageIndex == int.MaxValue)
                 pageIndex = int.MaxValue - 1;
 
-            var dbpics = DBProviderManager<DBPictureProvider>.Provider.GetPictures(pageSize, 
-                pageIndex, out totalRecords);
-            var pics = DBMapping(dbpics);
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var pics = context.Sp_PictureLoadAllPaged(pageSize, pageIndex, out totalRecords);
             return pics;
         }
 

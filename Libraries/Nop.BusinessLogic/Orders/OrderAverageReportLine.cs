@@ -43,7 +43,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets or sets the count
         /// </summary>
-        public decimal CountOrders { get; set; }
+        public int CountOrders { get; set; }
 
         #endregion
     }

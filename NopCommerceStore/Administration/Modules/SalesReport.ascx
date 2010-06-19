@@ -74,7 +74,7 @@
                 </div>
             </ItemTemplate>
         </asp:TemplateField>
-        <asp:BoundField DataField="Total" HeaderText="<% $NopResources:Admin.SalesReport.TotalCount %>"
+        <asp:BoundField DataField="Quantity" HeaderText="<% $NopResources:Admin.SalesReport.TotalCount %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
         </asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.SalesReport.TotalPrice %>"

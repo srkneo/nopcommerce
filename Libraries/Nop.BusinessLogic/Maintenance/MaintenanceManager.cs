@@ -17,18 +17,19 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Web;
+using Ionic.Zip;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.BusinessLogic.Installation;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Maintenance;
-using System.IO;
-using System.Web;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Media;
-using Ionic.Zip;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Maintenance
 {
@@ -44,7 +45,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Maintenance
         /// </summary>
         public static void Reindex()
         {
-            DBProviderManager<DBMaintenanceProvider>.Provider.Reindex();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_Maintenance_ReindexTables();
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Maintenance
                 DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"),
                 CommonHelper.GenerateRandomDigitCode(4));
 
-            DBProviderManager<DBMaintenanceProvider>.Provider.Backup(fileName);
+            InstallerHelper.Backup(fileName);
         }
 
         /// <summary>
@@ -101,7 +103,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Maintenance
                         }
                         break;
                     case ".bak":
-                        DBProviderManager<DBMaintenanceProvider>.Provider.RestoreBackup(fileName);
+                        InstallerHelper.RestoreBackup(fileName);
                         break;
                 }
             }

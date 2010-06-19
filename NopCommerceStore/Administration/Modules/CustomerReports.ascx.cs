@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Web;
@@ -24,6 +25,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
@@ -31,7 +33,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
-using NopSolutions.NopCommerce.BusinessLogic.Directory;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -48,7 +49,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected IDataReader GetReportByOrderTotal()
+        protected List<CustomerBestReportLine> GetReportByOrderTotal()
         {
             DateTime? startDate = ctrlStartDatePickerByOrderTotal.SelectedDate;
             DateTime? endDate = ctrlEndDatePickerByOrderTotal.SelectedDate;
@@ -80,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 endDate, orderStatus, paymentStatus, shippingStatus, 1);
         }
 
-        protected IDataReader GetReportByNumberOfOrder()
+        protected List<CustomerBestReportLine> GetReportByNumberOfOrder()
         {
             DateTime? startDate = ctrlStartDatePickerByNumberOfOrder.SelectedDate;
             DateTime? endDate = ctrlEndDatePickerByNumberOfOrder.SelectedDate;

@@ -46,8 +46,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Messages;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 {
@@ -57,31 +55,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
     public partial class MessageManager
     {
         #region Utilities
-
-        private static NewsLetterSubscription DBMapping(DBNewsLetterSubscription dbItem)
-        {
-            if(dbItem == null)
-                return null;
-
-            var item = new NewsLetterSubscription();
-            item.NewsLetterSubscriptionId = dbItem.NewsLetterSubscriptionId;
-            item.NewsLetterSubscriptionGuid = dbItem.NewsLetterSubscriptionGuid;
-            item.Email = dbItem.Email;
-            item.Active = dbItem.IsActive;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
-
-        private static List<NewsLetterSubscription> DBMapping(DBNewsLetterSubscriptionCollection dbCollection)
-        {
-            var collection = new List<NewsLetterSubscription>();
-            foreach (var dbItem in dbCollection)
-            {
-                collection.Add(DBMapping(dbItem));
-            }
-            return collection;
-        }
 
         private static string Replace(string original, string pattern, string replacement)
         {
@@ -821,7 +794,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// <returns>NewsLetterSubscription entity collection</returns>
         public static List<NewsLetterSubscription> GetAllNewsLetterSubscriptions(bool showHidden)
         {
-            return DBMapping(DBProviderManager<DBMessageProvider>.Provider.GetAllNewsLetterSubscriptions(showHidden));
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var newsletterSubscriptions = context.Sp_NewsLetterSubscriptionLoadAll(showHidden);
+
+            return newsletterSubscriptions;
         }
 
         /// <summary>

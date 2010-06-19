@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 PollAnswer pollAnswer = PollManager.GetPollAnswerById(pollAnswerId);
 
                 if (pollAnswer != null)
-                    pollAnswer = PollManager.UpdatePoll(pollAnswer.PollAnswerId, pollAnswer.PollId,
+                    pollAnswer = PollManager.UpdatePollAnswer(pollAnswer.PollAnswerId, pollAnswer.PollId,
                        txtName.Text, pollAnswer.Count, txtDisplayOrder.Value);
 
                 BindData();

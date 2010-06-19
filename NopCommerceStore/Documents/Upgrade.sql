@@ -4147,3 +4147,2122 @@ IF EXISTS (
 		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderSearch]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
 DROP PROCEDURE [dbo].[Nop_OrderSearch]
 GO
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ActivityLogLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ActivityLogLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_ActivityLogLoadAll]
+(
+	@CreatedOnFrom datetime = NULL,
+	@CreatedOnTo datetime = NULL,
+	@Email nvarchar(200),
+	@Username nvarchar(200),
+	@ActivityLogTypeID int,
+	@PageSize int = 2147483644,
+	@PageIndex int = 0,
+	@TotalRecords int = null OUTPUT
+)
+AS
+BEGIN
+	SET @Email = isnull(@Email, '')
+	SET @Email = '%' + rtrim(ltrim(@Email)) + '%'
+
+	SET @Username = isnull(@Username, '')
+	SET @Username = '%' + rtrim(ltrim(@Username)) + '%'
+
+
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		ActivityLogID int NOT NULL,
+		CreatedOn datetime NOT NULL
+	)
+
+	INSERT INTO #PageIndex (ActivityLogID, CreatedOn)
+	SELECT DISTINCT
+		al.ActivityLogID,
+		al.CreatedOn
+	FROM [Nop_ActivityLog] al with (NOLOCK)
+	INNER JOIN [Nop_Customer] c on c.CustomerID = al.CustomerID
+	WHERE 
+		(@CreatedOnFrom is NULL or @CreatedOnFrom <= al.CreatedOn) and
+		(@CreatedOnTo is NULL or @CreatedOnTo >= al.CreatedOn) and 
+		(patindex(@Email, isnull(c.Email, '')) > 0) and
+		(patindex(@Username, isnull(c.Username, '')) > 0) and
+		(c.IsGuest=0) and (c.deleted=0) and
+		(@ActivityLogTypeID is null or @ActivityLogTypeID = 0 or (al.ActivityLogTypeID=@ActivityLogTypeID)) 
+	ORDER BY al.CreatedOn DESC
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT
+		al.ActivityLogId,
+		al.ActivityLogTypeId,
+		al.CustomerId,
+		al.Comment,
+		al.CreatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN [Nop_ActivityLog] al on al.ActivityLogID = [pi].ActivityLogID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex	
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_BlogPostLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_BlogPostLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_BlogPostLoadAll]
+(
+	@LanguageID	int,
+	@PageSize			int = 2147483644,
+	@PageIndex			int = 0, 
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		BlogPostID int NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (BlogPostID)
+	SELECT
+		bp.BlogPostID
+	FROM 
+	    Nop_BlogPost bp 
+	WITH 
+		(NOLOCK)
+	WHERE
+		@LanguageID IS NULL OR @LanguageID = 0 OR LanguageID = @LanguageID
+	ORDER BY 
+		CreatedOn 
+	DESC
+
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		bp.BlogPostId,
+		bp.LanguageId,
+		bp.BlogPostTitle,
+		bp.BlogPostBody,
+		bp.BlogPostAllowComments,
+		bp.CreatedById,
+		bp.CreatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_BlogPost bp on bp.BlogPostID = [pi].BlogPostID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerBestReport]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerBestReport]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerBestReport]
+(
+	@StartTime				datetime = NULL,
+	@EndTime				datetime = NULL,
+	@OrderStatusID			int,
+	@PaymentStatusID		int,
+	@ShippingStatusID		int,
+	@OrderBy				int = 1 
+)
+AS
+BEGIN
+
+	SELECT TOP 20 c.CustomerId, SUM(o.OrderTotal) AS OrderTotal, COUNT(o.OrderID) AS OrderCount
+	FROM [Nop_Customer] c
+	INNER JOIN [Nop_Order] o
+	ON c.CustomerID = o.CustomerID
+	WHERE
+		c.Deleted = 0 AND
+		o.Deleted = 0 AND
+		(@StartTime is NULL or @StartTime <= o.CreatedOn) AND
+		(@EndTime is NULL or @EndTime >= o.CreatedOn) AND 
+		(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) AND
+		(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) AND
+		(@ShippingStatusID IS NULL OR @ShippingStatusID = 0 OR o.ShippingStatusID = @ShippingStatusID) --AND
+	GROUP BY c.CustomerID
+	ORDER BY case @OrderBy when 1 then SUM(o.OrderTotal) when 2 then COUNT(o.OrderID) else SUM(o.OrderTotal) end desc
+
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_CustomerLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_CustomerLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_CustomerLoadAll]
+(
+	@StartTime				datetime = NULL,
+	@EndTime				datetime = NULL,
+	@Email					nvarchar(200),
+	@Username				nvarchar(200),
+	@DontLoadGuestCustomers	bit = 0,
+	@PageSize				int = 2147483644,
+	@PageIndex				int = 0, 
+	@TotalRecords			int = null OUTPUT
+)
+AS
+BEGIN
+
+	SET @Email = isnull(@Email, '')
+	SET @Email = '%' + rtrim(ltrim(@Email)) + '%'
+
+	SET @Username = isnull(@Username, '')
+	SET @Username = '%' + rtrim(ltrim(@Username)) + '%'
+
+
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	DECLARE @TotalThreads int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		CustomerID int NOT NULL,
+		RegistrationDate datetime NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (CustomerID, RegistrationDate)
+	SELECT DISTINCT
+		c.CustomerID, c.RegistrationDate
+	FROM [Nop_Customer] c with (NOLOCK)
+	WHERE 
+		(@StartTime is NULL or @StartTime <= c.RegistrationDate) and
+		(@EndTime is NULL or @EndTime >= c.RegistrationDate) and 
+		(patindex(@Email, isnull(c.Email, '')) > 0) and
+		(patindex(@Username, isnull(c.Username, '')) > 0) and
+		(@DontLoadGuestCustomers = 0 or (c.IsGuest=0)) and 
+		c.deleted=0
+	order by c.RegistrationDate desc 
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		c.CustomerId,
+		c.CustomerGuid,
+		c.Email,
+		c.Username,
+		c.PasswordHash,
+		c.SaltKey,
+		c.AffiliateId,
+		c.BillingAddressId,
+		c.ShippingAddressId,
+		c.LastPaymentMethodId,
+		c.LastAppliedCouponCode,
+		c.GiftCardCouponCodes,
+		c.CheckoutAttributes,
+		c.LanguageId,
+		c.CurrencyId,
+		c.TaxDisplayTypeId,
+		c.IsTaxExempt,
+		c.IsAdmin,
+		c.IsGuest,
+		c.IsForumModerator,
+		c.TotalForumPosts,
+		c.Signature,
+		c.AdminComment,
+		c.Active,
+		c.Deleted,
+		c.RegistrationDate,
+		c.TimeZoneId,
+		c.AvatarId
+	FROM
+		#PageIndex [pi]
+		INNER JOIN [Nop_Customer] c on c.CustomerID = [pi].CustomerID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex
+	
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_DiscountUsageHistoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_DiscountUsageHistoryLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_DiscountUsageHistoryLoadAll]
+(
+	@DiscountID int,
+	@CustomerID int,
+	@OrderID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT  duh2.DiscountUsageHistoryId,
+			duh2.DiscountId,
+			duh2.CustomerId,
+			duh2.OrderId,
+			duh2.CreatedOn
+	FROM [Nop_DiscountUsageHistory] duh2
+	WHERE DiscountUsageHistoryID IN 
+		(
+		SELECT DISTINCT duh.DiscountUsageHistoryID
+		FROM [Nop_DiscountUsageHistory] duh WITH (NOLOCK)
+		LEFT OUTER JOIN Nop_Discount d with (NOLOCK) ON duh.DiscountID=d.DiscountID
+		LEFT OUTER JOIN Nop_Customer c with (NOLOCK) ON duh.CustomerID=c.CustomerID
+		LEFT OUTER JOIN Nop_Order o with (NOLOCK) ON duh.OrderID=o.OrderID
+		WHERE
+				(
+					d.Deleted=0 AND c.Deleted=0 AND o.Deleted=0 
+				)
+				AND
+				(
+					@DiscountID IS NULL OR @DiscountID=0
+					OR (duh.DiscountID=@DiscountID)
+				)
+				AND
+				(
+					@CustomerID IS NULL OR @CustomerID=0
+					OR (duh.CustomerID=@CustomerID)
+				)
+				AND
+				(
+					@OrderID IS NULL OR @OrderID=0
+					OR (duh.OrderID=@OrderID)
+				)
+		)
+	ORDER BY CreatedOn, DiscountUsageHistoryID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_GiftCardLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_GiftCardLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_GiftCardLoadAll]
+(
+	@OrderID int,
+	@CustomerID int,
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@OrderStatusID int,
+	@PaymentStatusID int,
+	@ShippingStatusID int,
+	@IsGiftCardActivated bit = null, --0 not activated records, 1 activated records, null - load all records
+	@GiftCardCouponCode nvarchar(100)
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		gc2.GiftCardId,
+		gc2.PurchasedOrderProductVariantId,
+		gc2.Amount,
+		gc2.IsGiftCardActivated,
+		gc2.GiftCardCouponCode,
+		gc2.RecipientName,
+		gc2.RecipientEmail,
+		gc2.SenderName,
+		gc2.SenderEmail,
+		gc2.Message,
+		gc2.IsRecipientNotified,
+		gc2.CreatedOn
+	FROM [Nop_GiftCard] gc2
+	WHERE GiftCardID IN
+	(
+		SELECT DISTINCT gc.GiftCardID
+		FROM [Nop_GiftCard] gc
+		INNER JOIN [Nop_OrderProductVariant] opv ON gc.PurchasedOrderProductVariantID=opv.OrderProductVariantID
+		INNER JOIN [Nop_Order] o ON opv.OrderID=o.OrderID
+		WHERE
+			(@OrderID IS NULL OR @OrderID=0 or o.OrderID = @OrderID) and
+			(@CustomerID IS NULL OR @CustomerID=0 or o.CustomerID = @CustomerID) and
+			(@StartTime is NULL or @StartTime <= gc.CreatedOn) and
+			(@EndTime is NULL or @EndTime >= gc.CreatedOn) and 
+			(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) and
+			(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) and
+			(@ShippingStatusID IS NULL OR @ShippingStatusID = 0 OR o.ShippingStatusID = @ShippingStatusID) and
+			(@IsGiftCardActivated IS NULL OR gc.IsGiftCardActivated = @IsGiftCardActivated) and
+			(@GiftCardCouponCode IS NULL OR @GiftCardCouponCode ='' OR gc.GiftCardCouponCode = @GiftCardCouponCode)		
+	)
+	ORDER BY CreatedOn desc, GiftCardID 
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_GiftCardUsageHistoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_GiftCardUsageHistoryLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_GiftCardUsageHistoryLoadAll]
+(
+	@GiftCardID int,
+	@CustomerID int,
+	@OrderID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT
+		gcuh2.GiftCardUsageHistoryId, 
+		gcuh2.GiftCardId,
+		gcuh2.CustomerId,
+		gcuh2.OrderId,
+		gcuh2.UsedValue,
+		gcuh2.UsedValueInCustomerCurrency,
+		gcuh2.CreatedOn
+	FROM [Nop_GiftCardUsageHistory] gcuh2
+	WHERE GiftCardUsageHistoryID IN 
+		(
+		SELECT DISTINCT gcuh.GiftCardUsageHistoryID
+		FROM [Nop_GiftCardUsageHistory] gcuh WITH (NOLOCK)
+		LEFT OUTER JOIN Nop_GiftCard gc with (NOLOCK) ON gcuh.GiftCardID=gc.GiftCardID
+		LEFT OUTER JOIN Nop_OrderProductVariant opv with (NOLOCK) ON gc.PurchasedOrderProductVariantID=opv.OrderProductVariantID
+		LEFT OUTER JOIN Nop_Order o with (NOLOCK) ON gcuh.OrderID=o.OrderID
+		WHERE
+				(
+					o.Deleted=0
+				)
+				AND
+				(
+					@GiftCardID IS NULL OR @GiftCardID=0
+					OR (gcuh.GiftCardID=@GiftCardID)
+				)
+				AND
+				(
+					@CustomerID IS NULL OR @CustomerID=0
+					OR (gcuh.CustomerID=@CustomerID)
+				)
+				AND
+				(
+					@OrderID IS NULL OR @OrderID=0
+					OR (gcuh.OrderID=@OrderID)
+				)
+		)
+	ORDER BY CreatedOn, GiftCardUsageHistoryID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_NewsLetterSubscriptionLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_NewsLetterSubscriptionLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_NewsLetterSubscriptionLoadAll]
+(
+	@ShowHidden bit = 0
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT 
+		nls.NewsLetterSubscriptionId,
+		nls.NewsLetterSubscriptionGuid,
+		nls.Email,
+		nls.Active,
+		nls.CreatedOn
+	FROM
+		[Nop_NewsLetterSubscription] nls
+	LEFT OUTER JOIN 
+		Nop_Customer c 
+	ON 
+		nls.Email=c.Email
+	WHERE
+		(nls.Active = 1 OR @ShowHidden = 1) AND 
+		(c.CustomerID IS NULL OR (c.Active = 1 AND c.Deleted = 0))
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_NewsLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_NewsLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_NewsLoadAll]
+(
+	@LanguageID	int,
+	@ShowHidden bit,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		NewsID int NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (NewsID)
+	SELECT
+		n.NewsID
+	FROM 
+	    Nop_News n 
+	WITH 
+		(NOLOCK)
+	WHERE
+		(Published = 1 or @ShowHidden = 1)
+		AND
+		(@LanguageID IS NULL OR @LanguageID = 0 OR LanguageID = @LanguageID)
+	ORDER BY 
+		CreatedOn 
+	DESC
+
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		n.[NewsId],
+		n.[LanguageId],
+		n.[Title],
+		n.[Short],
+		n.[Full],
+		n.[Published],
+		n.[AllowComments],
+		n.[CreatedOn]
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_News n on n.NewsID = [pi].NewsID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderAverageReport]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_OrderAverageReport]
+GO
+CREATE PROCEDURE [dbo].[Nop_OrderAverageReport]
+(
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@OrderStatusID int
+)
+AS
+BEGIN
+
+	SET NOCOUNT ON
+
+	SELECT 
+		isnull(SUM(o.OrderTotal), 0) as SumOrders,
+		COUNT(1) as CountOrders
+	FROM [Nop_Order] o
+	WHERE 
+		(@StartTime is NULL or @StartTime <= o.CreatedOn) AND
+		(@EndTime is NULL or @EndTime >= o.CreatedOn) AND
+		o.OrderTotal > 0 AND 
+		o.OrderStatusID=@OrderStatusID AND 
+		o.Deleted=0	
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderIncompleteReport]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_OrderIncompleteReport]
+GO
+CREATE PROCEDURE [dbo].[Nop_OrderIncompleteReport]
+(
+	@OrderStatusID int,
+	@PaymentStatusID int,
+	@ShippingStatusID int
+)
+AS
+BEGIN
+
+	SELECT
+		isnull(SUM(o.OrderTotal), 0) as [Total],
+		COUNT(o.OrderID) as [Count]
+	FROM Nop_Order o
+	WHERE 
+		(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) AND
+		(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) AND
+		(@ShippingStatusID IS NULL or @ShippingStatusID=0 or o.ShippingStatusID = @ShippingStatusID) AND
+		o.Deleted=0
+
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_OrderProductVariantReport]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_OrderProductVariantReport]
+GO
+CREATE PROCEDURE [dbo].[Nop_OrderProductVariantReport]
+(
+	@StartTime datetime = NULL,
+	@EndTime datetime = NULL,
+	@OrderStatusID int,
+	@PaymentStatusID int,
+	@BillingCountryID int
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT DISTINCT opv.ProductVariantId,
+		(	
+			select isnull(sum(opv2.PriceExclTax), 0)
+			from Nop_OrderProductVariant opv2
+			INNER JOIN [Nop_Order] o2 
+			on o2.OrderId = opv2.OrderID 
+			where
+				(@StartTime is NULL or @StartTime <= o2.CreatedOn) and
+				(@EndTime is NULL or @EndTime >= o2.CreatedOn) and 
+				(@OrderStatusID IS NULL or @OrderStatusID=0 or o2.OrderStatusID = @OrderStatusID) and
+				(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o2.PaymentStatusID = @PaymentStatusID) and
+				(@BillingCountryID IS NULL or @BillingCountryID=0 or o2.BillingCountryID = @BillingCountryID) and
+				(o2.Deleted=0) and 
+				(opv2.ProductVariantID = opv.ProductVariantID)) as PriceExclTax, 
+		(
+			select isnull(sum(opv2.Quantity), 0)
+			from Nop_OrderProductVariant opv2 
+			INNER JOIN [Nop_Order] o2 
+			on o2.OrderId = opv2.OrderID 
+			where
+				(@StartTime is NULL or @StartTime <= o2.CreatedOn) and
+				(@EndTime is NULL or @EndTime >= o2.CreatedOn) and 
+				(@OrderStatusID IS NULL or @OrderStatusID=0 or o2.OrderStatusID = @OrderStatusID) and
+				(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o2.PaymentStatusID = @PaymentStatusID) and
+				(@BillingCountryID IS NULL or @BillingCountryID=0 or o2.BillingCountryID = @BillingCountryID) and
+				(o2.Deleted=0) and 
+				(opv2.ProductVariantID = opv.ProductVariantID)) as Quantity
+	FROM Nop_OrderProductVariant opv 
+	INNER JOIN [Nop_Order] o 
+	on o.OrderId = opv.OrderID
+	WHERE
+		(@StartTime is NULL or @StartTime <= o.CreatedOn) and
+		(@EndTime is NULL or @EndTime >= o.CreatedOn) and 
+		(@OrderStatusID IS NULL or @OrderStatusID=0 or o.OrderStatusID = @OrderStatusID) and
+		(@PaymentStatusID IS NULL or @PaymentStatusID=0 or o.PaymentStatusID = @PaymentStatusID) and
+		(@BillingCountryID IS NULL or @BillingCountryID=0 or o.BillingCountryID = @BillingCountryID) and
+		(o.Deleted=0)
+
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_PaymentMethodLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_PaymentMethodLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_PaymentMethodLoadAll]
+(
+	@ShowHidden bit = 0,
+	@FilterByCountryID int = NULL
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	IF(@FilterByCountryID IS NOT NULL AND @FilterByCountryID != 0)
+		BEGIN
+			SELECT  
+				pm.PaymentMethodId,
+				pm.Name,
+				pm.VisibleName,
+				pm.Description,
+				pm.ConfigureTemplatePath,
+				pm.UserTemplatePath,
+				pm.ClassName,
+				pm.SystemKeyword,
+				pm.IsActive,
+				pm.DisplayOrder
+		    FROM 
+				[Nop_PaymentMethod] pm
+		    WHERE 
+                pm.PaymentMethodID NOT IN 
+				(
+				    SELECT 
+						pmc.PaymentMethodID
+				    FROM 
+						[Nop_PaymentMethod_RestrictedCountries] pmc
+				    WHERE 
+						pmc.CountryID = @FilterByCountryID AND 
+						pm.PaymentMethodID = pmc.PaymentMethodID
+				)
+				AND
+				(IsActive = 1 or @ShowHidden = 1)
+		   ORDER BY 
+				pm.DisplayOrder
+		END
+	ELSE
+		BEGIN
+			SELECT 
+				*
+			FROM 
+				[Nop_PaymentMethod]
+			WHERE 
+				(IsActive = 1 or @ShowHidden = 1)
+			ORDER BY 
+				DisplayOrder
+		END
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_PictureLoadAllPaged]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_PictureLoadAllPaged]
+GO
+CREATE PROCEDURE [dbo].[Nop_PictureLoadAllPaged]
+(
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		PictureID int NOT NULL		 
+	)
+	INSERT INTO #PageIndex (PictureID)
+	SELECT
+		PictureID
+	FROM [Nop_Picture]
+	ORDER BY PictureID DESC
+
+	--total records
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+
+	SELECT 
+		[p].PictureId,
+		[p].PictureBinary,
+		[p].Extension,
+		[p].IsNew
+	FROM [Nop_Picture] [p]
+		INNER JOIN #PageIndex [pi]
+		ON [p].PictureID = [pi].PictureID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+
+	SET ROWCOUNT 0
+	
+	DROP TABLE #PageIndex
+
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_PollVotingRecordCreate]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_PollVotingRecordCreate]
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductAlsoPurchasedLoadByProductID]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductAlsoPurchasedLoadByProductID]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductAlsoPurchasedLoadByProductID]
+(
+	@ProductID			int,
+	@ShowHidden			bit,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		ProductID int NOT NULL,
+		ProductsPurchased int NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (ProductID, ProductsPurchased)
+	SELECT p.ProductID, SUM(opv.Quantity) as ProductsPurchased
+	FROM    
+		dbo.Nop_OrderProductVariant opv WITH (NOLOCK)
+		INNER JOIN dbo.Nop_ProductVariant pv ON pv.ProductVariantId = opv.ProductVariantId
+		INNER JOIN dbo.Nop_Product p ON p.ProductId = pv.ProductId
+	WHERE
+		opv.OrderID IN 
+		(
+			/* This inner query should retrieve all orders that have contained the productID */
+			SELECT 
+				DISTINCT OrderID
+			FROM 
+				dbo.Nop_OrderProductVariant opv2 WITH (NOLOCK)
+				INNER JOIN dbo.Nop_ProductVariant pv2 ON pv2.ProductVariantId = opv2.ProductVariantId
+				INNER JOIN dbo.Nop_Product p2 ON p2.ProductId = pv2.ProductId			
+			WHERE 
+				p2.ProductID = @ProductID
+		)
+		AND 
+			(
+				p.ProductId != @ProductID
+			)
+		AND 
+			(
+				@ShowHidden = 1 OR p.Published = 1
+			)
+		AND 
+			(
+				p.Deleted = 0
+			)
+		AND 
+			(
+				@ShowHidden = 1
+				OR
+				GETUTCDATE() BETWEEN ISNULL(pv.AvailableStartDateTime, '1/1/1900') AND ISNULL(pv.AvailableEndDateTime, '1/1/2999')
+			)
+	GROUP BY
+		p.ProductId
+	ORDER BY 
+		ProductsPurchased desc
+
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		p.ProductId,
+		p.Name,
+		p.ShortDescription,
+		p.FullDescription,
+		p.AdminComment,
+		p.ProductTypeId,
+		p.TemplateId,
+		p.ShowOnHomePage,
+		p.MetaKeywords,
+		p.MetaDescription,
+		p.MetaTitle,
+		p.SEName,
+		p.AllowCustomerReviews,
+		p.AllowCustomerRatings,
+		p.RatingSum,
+		p.TotalRatingVotes,
+		p.Published,
+		p.Deleted,
+		p.CreatedOn,
+		p.UpdatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Product p on p.ProductID = [pi].ProductID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex
+
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductLoadAllPaged]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductLoadAllPaged]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductLoadAllPaged]
+(
+	@CategoryID			int = 0,
+	@ManufacturerID		int = 0,
+	@ProductTagID		int = 0,
+	@FeaturedProducts	bit = null,	--0 featured only , 1 not featured only, null - load all products
+	@PriceMin			money = null,
+	@PriceMax			money = null,
+	@Keywords			nvarchar(MAX),	
+	@SearchDescriptions bit = 0,
+	@ShowHidden			bit = 0,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@FilteredSpecs		nvarchar(300) = null,	--filter by attributes (comma-separated list). e.g. 14,15,16
+	@LanguageID			int = 0,
+	@OrderBy			int = 0, --0 position, 5 - Name, 10 - Price
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	--init
+	SET @Keywords = isnull(@Keywords, '')
+	SET @Keywords = '%' + rtrim(ltrim(@Keywords)) + '%'
+
+	SET @PriceMin = isnull(@PriceMin, 0)
+	SET @PriceMax = isnull(@PriceMax, 2147483644)
+	
+	--filter by attributes
+	SET @FilteredSpecs = isnull(@FilteredSpecs, '')
+	CREATE TABLE #FilteredSpecs
+	(
+		SpecificationAttributeOptionID int not null
+	)
+	INSERT INTO #FilteredSpecs (SpecificationAttributeOptionID)
+	SELECT CAST(data as int) FROM dbo.[NOP_splitstring_to_table](@FilteredSpecs, ',');
+	
+	DECLARE @SpecAttributesCount int	
+	SELECT @SpecAttributesCount = COUNT(1) FROM #FilteredSpecs
+
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #DisplayOrderTmp 
+	(
+		[ID] int IDENTITY (1, 1) NOT NULL,
+		[ProductID] int NOT NULL,
+		[Name] nvarchar(400) not null,
+		[Price] money not null,
+		[DisplayOrder1] int,
+		[DisplayOrder2] int,
+	)
+
+	INSERT INTO #DisplayOrderTmp ([ProductID], [Name], [Price], [DisplayOrder1], [DisplayOrder2])
+	SELECT p.ProductID, p.Name, pv.Price, pcm.DisplayOrder, pmm.DisplayOrder 
+	FROM Nop_Product p with (NOLOCK) 
+	LEFT OUTER JOIN Nop_Product_Category_Mapping pcm with (NOLOCK) ON p.ProductID=pcm.ProductID
+	LEFT OUTER JOIN Nop_Product_Manufacturer_Mapping pmm with (NOLOCK) ON p.ProductID=pmm.ProductID
+	LEFT OUTER JOIN Nop_ProductTag_Product_Mapping ptpm with (NOLOCK) ON p.ProductID=ptpm.ProductID
+	LEFT OUTER JOIN Nop_ProductVariant pv with (NOLOCK) ON p.ProductID = pv.ProductID
+	LEFT OUTER JOIN Nop_ProductVariantLocalized pvl with (NOLOCK) ON pv.ProductVariantID = pvl.ProductVariantID AND pvl.LanguageID = @LanguageID
+	LEFT OUTER JOIN Nop_ProductLocalized pl with (NOLOCK) ON p.ProductID = pl.ProductID AND pl.LanguageID = @LanguageID
+	WHERE 
+		(
+			(
+				@ShowHidden = 1 OR p.Published = 1
+			)
+		AND 
+			(
+				@ShowHidden = 1 OR pv.Published = 1
+			)
+		AND 
+			(
+				p.Deleted=0
+			)
+		AND (
+				@CategoryID IS NULL OR @CategoryID=0
+				OR (pcm.CategoryID=@CategoryID AND (@FeaturedProducts IS NULL OR pcm.IsFeaturedProduct=@FeaturedProducts))
+			)
+		AND (
+				@ManufacturerID IS NULL OR @ManufacturerID=0
+				OR (pmm.ManufacturerID=@ManufacturerID AND (@FeaturedProducts IS NULL OR pmm.IsFeaturedProduct=@FeaturedProducts))
+			)
+		AND (
+				@ProductTagID IS NULL OR @ProductTagID=0
+				OR ptpm.ProductTagID=@ProductTagID
+			)
+		AND (
+				pv.Price BETWEEN @PriceMin AND @PriceMax
+			)
+		AND	(
+				-- search standard content
+				patindex(@Keywords, isnull(p.name, '')) > 0
+				or patindex(@Keywords, isnull(pv.name, '')) > 0
+				or patindex(@Keywords, isnull(pv.sku , '')) > 0
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(p.ShortDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(p.FullDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pv.Description, '')) > 0)					
+				-- search language content
+				or patindex(@Keywords, isnull(pl.name, '')) > 0
+				or patindex(@Keywords, isnull(pvl.name, '')) > 0
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pl.ShortDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pl.FullDescription, '')) > 0)
+				or (@SearchDescriptions = 1 and patindex(@Keywords, isnull(pvl.Description, '')) > 0)
+			)
+		AND
+			(
+				@ShowHidden = 1
+				OR
+				(getutcdate() between isnull(pv.AvailableStartDateTime, '1/1/1900') and isnull(pv.AvailableEndDateTime, '1/1/2999'))
+			)
+		AND
+			(
+				--filter by specs
+				@SpecAttributesCount = 0
+				OR
+				(
+					NOT EXISTS(
+						SELECT 1 
+						FROM #FilteredSpecs [fs]
+						WHERE [fs].SpecificationAttributeOptionID NOT IN (
+							SELECT psam.SpecificationAttributeOptionID
+							FROM dbo.Nop_Product_SpecificationAttribute_Mapping psam
+							WHERE psam.AllowFiltering = 1 AND psam.ProductID = p.ProductID
+							)
+						)
+					
+				)
+			)
+		)
+	ORDER BY 
+		CASE WHEN @OrderBy = 0 AND @CategoryID IS NOT NULL AND @CategoryID > 0
+		THEN pcm.DisplayOrder END,
+		CASE WHEN @OrderBy = 0 AND @ManufacturerID IS NOT NULL AND @ManufacturerID > 0
+		THEN pmm.DisplayOrder END,
+		CASE WHEN @OrderBy = 0
+		THEN dbo.NOP_getnotnullnotempty(pl.[Name],p.[Name]) END,
+		CASE WHEN @OrderBy = 5
+		THEN dbo.NOP_getnotnullnotempty(pl.[Name],p.[Name]) END,
+		CASE WHEN @OrderBy = 10
+		THEN pv.Price END
+
+	CREATE TABLE #PageIndex 
+	(
+		[IndexID] int IDENTITY (1, 1) NOT NULL,
+		[ProductID] int NOT NULL
+	)
+
+	INSERT INTO #PageIndex ([ProductID])
+	SELECT ProductID
+	FROM #DisplayOrderTmp with (NOLOCK)
+	GROUP BY ProductID
+	ORDER BY min([ID])
+
+	--total records
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	--return
+	SELECT  
+		p.ProductId,
+		p.Name,
+		p.ShortDescription,
+		p.FullDescription,
+		p.AdminComment,
+		p.ProductTypeId,
+		p.TemplateId,
+		p.ShowOnHomePage,
+		p.MetaKeywords,
+		p.MetaDescription,
+		p.MetaTitle,
+		p.SEName,
+		p.AllowCustomerReviews,
+		p.AllowCustomerRatings,
+		p.RatingSum,
+		p.TotalRatingVotes,
+		p.Published,
+		p.Deleted,
+		p.CreatedOn,
+		p.UpdatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Product p on p.ProductID = [pi].ProductID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #FilteredSpecs
+	DROP TABLE #DisplayOrderTmp
+	DROP TABLE #PageIndex
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductTagLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductTagLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductTagLoadAll]
+(
+	@ProductID int,
+	@Name nvarchar(100)
+)
+AS
+BEGIN	
+
+	SET @Name = isnull(@Name, '')
+	
+	SELECT
+		pt1.ProductTagId,
+		pt1.Name,
+		pt1.ProductCount
+	FROM [Nop_ProductTag] pt1
+	WHERE pt1.ProductTagID IN
+	(
+		SELECT DISTINCT pt2.ProductTagID
+		FROM [Nop_ProductTag] pt2
+		LEFT OUTER JOIN [Nop_ProductTag_Product_Mapping] ptpm ON pt2.ProductTagID=ptpm.ProductTagID
+		WHERE 
+			(
+				@ProductID IS NULL OR @ProductID=0
+				OR ptpm.ProductID=@ProductID
+			)
+			AND
+			(
+				@Name = '' OR pt2.Name=@Name
+			)
+	)
+	ORDER BY pt1.ProductCount DESC
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ProductVariantLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ProductVariantLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_ProductVariantLoadAll]
+(
+	@CategoryID			int = 0,
+	@ManufacturerID		int = 0,
+	@Keywords			nvarchar(MAX),
+	@ShowHidden			bit = 0,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	--init
+	SET @Keywords = isnull(@Keywords, '')
+	SET @Keywords = '%' + rtrim(ltrim(@Keywords)) + '%'
+
+	--display order
+	CREATE TABLE #DisplayOrder
+	(
+		ProductID int not null PRIMARY KEY,
+		DisplayOrder int not null
+	)	
+
+	IF @CategoryID IS NOT NULL AND @CategoryID > 0
+		BEGIN
+			INSERT #DisplayOrder 
+			SELECT pcm.ProductID, pcm.DisplayOrder 
+			FROM [Nop_Product_Category_Mapping] pcm WHERE pcm.CategoryID = @CategoryID
+		END
+    ELSE IF @ManufacturerID IS NOT NULL AND @ManufacturerID > 0
+		BEGIN
+			INSERT #DisplayOrder 
+			SELECT pmm.ProductID, pmm.Displayorder 
+			FROM [Nop_Product_Manufacturer_Mapping] pmm WHERE pmm.ManufacturerID = @ManufacturerID
+		END
+	ELSE
+		BEGIN
+			INSERT #DisplayOrder 
+			SELECT p.ProductID, 1 
+			FROM [Nop_Product] p
+			ORDER BY p.[Name]
+		END
+	
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		ProductVariantID int NOT NULL,
+		DisplayOrder int NOT NULL,
+	)
+	INSERT INTO #PageIndex (ProductVariantID, DisplayOrder)
+	SELECT DISTINCT pv.ProductVariantID, do.DisplayOrder
+	FROM Nop_Product p with (NOLOCK) 
+	LEFT OUTER JOIN Nop_Product_Category_Mapping pcm with (NOLOCK) ON p.ProductID=pcm.ProductID
+	LEFT OUTER JOIN Nop_Product_Manufacturer_Mapping pmm with (NOLOCK) ON p.ProductID=pmm.ProductID
+	LEFT OUTER JOIN Nop_ProductVariant pv with (NOLOCK) ON p.ProductID = pv.ProductID
+	JOIN #DisplayOrder do on p.ProductID = do.ProductID
+	WHERE 
+		(
+			(
+				@ShowHidden = 1 OR p.Published = 1
+			)
+		AND 
+			(
+				@ShowHidden = 1 OR pv.Published = 1
+			)
+		AND 
+			(
+				p.Deleted=0
+			)
+		AND (
+				@CategoryID IS NULL OR @CategoryID=0
+				OR pcm.CategoryID=@CategoryID
+			)
+		AND (
+				@ManufacturerID IS NULL OR @ManufacturerID=0
+				OR pmm.ManufacturerID=@ManufacturerID
+			)
+		AND	(
+				-- search standard content
+				patindex(@Keywords, isnull(p.name, '')) > 0
+				or patindex(@Keywords, isnull(pv.name, '')) > 0
+				or patindex(@Keywords, isnull(pv.sku , '')) > 0
+			)
+		AND
+			(
+				@ShowHidden = 1
+				OR
+				(getutcdate() between isnull(pv.AvailableStartDateTime, '1/1/1900') and isnull(pv.AvailableEndDateTime, '1/1/2999'))
+			)
+		)
+	ORDER BY do.DisplayOrder
+
+	--total records
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	--return
+	SELECT  
+		pv.ProductVariantId,
+		pv.ProductId,
+		pv.Name,
+		pv.SKU,
+		pv.Description,
+		pv.AdminComment,
+		pv.ManufacturerPartNumber,
+		pv.IsGiftCard,
+		pv.IsDownload,
+		pv.DownloadId,
+		pv.UnlimitedDownloads,
+		pv.MaxNumberOfDownloads,
+		pv.DownloadExpirationDays,
+		pv.DownloadActivationType,
+		pv.HasSampleDownload,
+		pv.SampleDownloadId,
+		pv.HasUserAgreement,
+		pv.UserAgreementText,
+		pv.IsRecurring,
+		pv.CycleLength,
+		pv.CyclePeriod,
+		pv.TotalCycles,
+		pv.IsShipEnabled,
+		pv.IsFreeShipping,
+		pv.AdditionalShippingCharge,
+		pv.IsTaxExempt,
+		pv.TaxCategoryId,
+		pv.ManageInventory,
+		pv.StockQuantity,
+		pv.DisplayStockAvailability,
+		pv.MinStockQuantity,
+		pv.LowStockActivityId,
+		pv.NotifyAdminForQuantityBelow,
+		pv.AllowOutOfStockOrders,
+		pv.OrderMinimumQuantity,
+		pv.OrderMaximumQuantity,
+		pv.WarehouseId,
+		pv.DisableBuyButton,
+		pv.Price,
+		pv.OldPrice,
+		pv.ProductCost,
+		pv.CustomerEntersPrice,
+		pv.MinimumCustomerEnteredPrice,
+		pv.MaximumCustomerEnteredPrice,
+		pv.Weight,
+		pv.Length,
+		pv.Width,
+		pv.Height,
+		pv.PictureId,
+		pv.AvailableStartDateTime,
+		pv.AvailableEndDateTime,
+		pv.Published,
+		pv.Deleted,
+		pv.DisplayOrder,
+		pv.CreatedOn,
+		pv.UpdatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_ProductVariant pv on pv.ProductVariantID = [pi].ProductVariantID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #DisplayOrder
+	DROP TABLE #PageIndex
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RecurringPaymentHistoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RecurringPaymentHistoryLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_RecurringPaymentHistoryLoadAll]
+(
+	@RecurringPaymentID int = NULL,
+	@OrderID int = NULL
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	SELECT
+		rph2.RecurringPaymentHistoryId,
+		rph2.RecurringPaymentId,
+		rph2.OrderId,
+		rph2.CreatedOn
+	FROM [Nop_RecurringPaymentHistory] rph2
+	WHERE RecurringPaymentHistoryID IN 
+		(
+		SELECT DISTINCT rph.RecurringPaymentHistoryID
+		FROM [Nop_RecurringPaymentHistory] rph WITH (NOLOCK)
+		INNER JOIN Nop_RecurringPayment rp with (NOLOCK) ON rph.RecurringPaymentID=rp.RecurringPaymentID
+		LEFT OUTER JOIN Nop_Order o with (NOLOCK) ON rph.OrderID=o.OrderID
+		WHERE
+				(
+					rp.Deleted=0 AND o.Deleted=0 
+				)
+				AND
+				(
+					@RecurringPaymentID IS NULL OR @RecurringPaymentID=0
+					OR (rph.RecurringPaymentID=@RecurringPaymentID)
+				)
+				AND
+				(
+					@OrderID IS NULL OR @OrderID=0
+					OR (rph.OrderID=@OrderID)
+				)
+		)
+	ORDER BY CreatedOn, RecurringPaymentHistoryID
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RecurringPaymentLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RecurringPaymentLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_RecurringPaymentLoadAll]
+(
+	@ShowHidden		bit = 0,
+	@CustomerID		int = NULL,
+	@InitialOrderID	int = NULL,
+	@InitialOrderStatusID int = NULL
+)
+AS
+BEGIN
+
+	SET NOCOUNT ON
+	
+	SELECT
+		rp2.RecurringPaymentId,
+		rp2.InitialOrderId,
+		rp2.CycleLength,
+		rp2.CyclePeriod,
+		rp2.TotalCycles,
+		rp2.StartDate,
+		rp2.IsActive,
+		rp2.Deleted,
+		rp2.CreatedOn
+	FROM [Nop_RecurringPayment] rp2
+	WHERE RecurringPaymentID IN 
+		(
+		SELECT DISTINCT rp.RecurringPaymentID
+		FROM [Nop_RecurringPayment] rp WITH (NOLOCK)
+		INNER JOIN Nop_Order o with (NOLOCK) ON rp.InitialOrderID=o.OrderID
+		INNER JOIN Nop_Customer c with (NOLOCK) ON o.CustomerID=c.CustomerID
+		WHERE
+				(
+					rp.Deleted=0 AND o.Deleted=0 AND c.Deleted=0
+				)
+				AND 
+				(
+					@ShowHidden = 1 OR rp.IsActive=1
+				)
+				AND
+				(
+					@CustomerID IS NULL OR @CustomerID=0
+					OR (o.CustomerID=@CustomerID)
+				)
+				AND
+				(
+					@InitialOrderID IS NULL OR @InitialOrderID=0
+					OR (rp.InitialOrderID=@InitialOrderID)
+				)
+				AND
+				(
+					@InitialOrderStatusID IS NULL OR @InitialOrderStatusID=0
+					OR (o.OrderStatusID=@InitialOrderStatusID)
+				)
+		)
+	ORDER BY StartDate, RecurringPaymentID
+	
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_RewardPointsHistoryLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_RewardPointsHistoryLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_RewardPointsHistoryLoadAll]
+(
+	@CustomerID int,
+	@OrderID int,
+	@PageIndex int = 0, 
+	@PageSize int = 2147483644,
+	@TotalRecords int = null OUTPUT
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		RewardPointsHistoryID int NOT NULL,
+		CreatedOn datetime NOT NULL
+	)
+
+	INSERT INTO #PageIndex (RewardPointsHistoryID, CreatedOn)
+	SELECT DISTINCT
+		rph.RewardPointsHistoryID,
+		rph.CreatedOn
+	FROM [Nop_RewardPointsHistory] rph with (NOLOCK)
+	WHERE 
+		(
+			@CustomerID IS NULL OR @CustomerID=0
+			OR (rph.CustomerID=@CustomerID)
+		)
+		AND
+		(
+			@OrderID IS NULL OR @OrderID=0
+			OR (rph.OrderID=@OrderID)
+		)
+	ORDER BY rph.CreatedOn DESC, RewardPointsHistoryID
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT
+		rph.RewardPointsHistoryId,
+		rph.CustomerId,
+		rph.OrderId,
+		rph.Points,
+		rph.PointsBalance,
+		rph.UsedAmount,
+		rph.UsedAmountInCustomerCurrency,
+		rph.CustomerCurrencyCode,
+		rph.Message,
+		rph.CreatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN [Nop_RewardPointsHistory] rph on rph.RewardPointsHistoryID = [pi].RewardPointsHistoryID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+
+	DROP TABLE #PageIndex
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SalesBestSellersReport]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SalesBestSellersReport]
+GO
+CREATE PROCEDURE [dbo].[Nop_SalesBestSellersReport]
+(
+	@LastDays int = 360,
+	@RecordsToReturn int = 10,
+	@OrderBy int = 1
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @cmd varchar(500)
+	
+	CREATE TABLE #tmp (
+		ID int not null identity,
+		ProductVariantID int,
+		SalesTotalCount int,
+		SalesTotalAmount money)
+	INSERT #tmp (
+		ProductVariantID,
+		SalesTotalCount,
+		SalesTotalAmount)
+	SELECT 
+		s.ProductVariantId,
+		s.SalesTotalCount, 
+		s.SalesTotalAmount 
+	FROM (SELECT opv.ProductVariantId, SUM(opv.Quantity) AS SalesTotalCount, SUM(opv.PriceExclTax) AS SalesTotalAmount
+		  FROM [Nop_OrderProductVariant] opv
+				INNER JOIN [Nop_Order] o on opv.OrderID = o.OrderID 
+				WHERE o.CreatedOn >= dateadd(dy, -@LastDays, getdate())
+				AND o.Deleted=0
+		  GROUP BY opv.ProductVariantID 
+		 ) s
+		INNER JOIN [Nop_ProductVariant] pv with (nolock) on s.ProductVariantID = pv.ProductVariantID
+		INNER JOIN [Nop_Product] p with (nolock) on pv.ProductID = p.ProductID
+	WHERE p.Deleted = 0 
+		AND p.Published = 1  
+		AND pv.Published = 1 
+		AND pv.Deleted = 0
+	ORDER BY case @OrderBy when 1 then s.SalesTotalCount when 2 then s.SalesTotalAmount else s.SalesTotalCount end desc
+
+	SET @cmd = 'SELECT TOP ' + convert(varchar(10), @RecordsToReturn ) + ' * FROM #tmp Order By ID'
+
+	EXEC (@cmd)
+
+	DROP TABLE #tmp
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ShippingMethodLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ShippingMethodLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_ShippingMethodLoadAll]
+(
+	@FilterByCountryID int = NULL
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	IF(@FilterByCountryID IS NOT NULL AND @FilterByCountryID != 0)
+		BEGIN
+			SELECT  
+				sm.ShippingMethodId,
+				sm.Name,
+				sm.Description,
+				sm.DisplayOrder
+		    FROM 
+				[Nop_ShippingMethod] sm
+		    WHERE 
+                sm.ShippingMethodID NOT IN 
+				(
+				    SELECT 
+						smc.ShippingMethodID
+				    FROM 
+						[Nop_ShippingMethod_RestrictedCountries] smc
+				    WHERE 
+						smc.CountryID = @FilterByCountryID AND 
+						sm.ShippingMethodID = smc.ShippingMethodID
+				)
+		   ORDER BY 
+				sm.DisplayOrder
+		END
+	ELSE
+		BEGIN
+			SELECT 
+				*
+			FROM 
+				[Nop_ShippingMethod]
+			ORDER BY
+				DisplayOrder
+		END
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_SpecificationAttributeOptionFilter_LoadByFilter]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_SpecificationAttributeOptionFilter_LoadByFilter]
+GO
+CREATE PROCEDURE [dbo].[Nop_SpecificationAttributeOptionFilter_LoadByFilter]
+(
+	@CategoryID int,
+	@LanguageID int
+)
+AS
+BEGIN
+	SELECT 
+		sa.SpecificationAttributeId,
+		dbo.NOP_getnotnullnotempty(sal.Name,sa.Name) as [SpecificationAttributeName],
+		sa.DisplayOrder,
+		sao.SpecificationAttributeOptionId,
+		dbo.NOP_getnotnullnotempty(saol.Name,sao.Name) as [SpecificationAttributeOptionName]
+	FROM Nop_Product_SpecificationAttribute_Mapping psam with (NOLOCK)
+		INNER JOIN Nop_SpecificationAttributeOption sao with (NOLOCK) ON
+			sao.SpecificationAttributeOptionID = psam.SpecificationAttributeOptionID
+		INNER JOIN Nop_SpecificationAttribute sa with (NOLOCK) ON
+			sa.SpecificationAttributeID = sao.SpecificationAttributeID	
+		INNER JOIN Nop_Product_Category_Mapping pcm with (NOLOCK) ON 
+			pcm.ProductID = psam.ProductID	
+		INNER JOIN Nop_Product p ON 
+			psam.ProductID = p.ProductID
+		LEFT OUTER JOIN Nop_ProductVariant pv with (NOLOCK) ON 
+			p.ProductID = pv.ProductID
+		LEFT OUTER JOIN [Nop_SpecificationAttributeLocalized] sal with (NOLOCK) ON 
+			sa.SpecificationAttributeID = sal.SpecificationAttributeID AND sal.LanguageID = @LanguageID	
+		LEFT OUTER JOIN [Nop_SpecificationAttributeOptionLocalized] saol with (NOLOCK) ON 
+			sao.SpecificationAttributeOptionID = saol.SpecificationAttributeOptionID AND saol.LanguageID = @LanguageID	
+	WHERE 
+			p.Published = 1
+		AND 
+			pv.Published = 1
+		AND 
+			p.Deleted=0
+		AND
+			pcm.CategoryID = @CategoryID
+		AND
+			psam.AllowFiltering = 1
+		AND
+			getutcdate() between isnull(pv.AvailableStartDateTime, '1/1/1900') and isnull(pv.AvailableEndDateTime, '1/1/2999')
+	GROUP BY
+		sa.SpecificationAttributeID, 
+		dbo.NOP_getnotnullnotempty(sal.Name,sa.Name),
+		sa.DisplayOrder,
+		sao.SpecificationAttributeOptionID,
+		dbo.NOP_getnotnullnotempty(saol.Name,sao.Name)
+	ORDER BY sa.DisplayOrder, [SpecificationAttributeName], [SpecificationAttributeOptionName]
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_TaxRateLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_TaxRateLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_TaxRateLoadAll]
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		 tr.TaxRateId,
+		 tr.TaxCategoryId,
+		 tr.CountryId,
+		 tr.StateProvinceId,
+		 tr.Zip,
+		 tr.Percentage
+	FROM Nop_TaxRate tr
+	LEFT OUTER JOIN Nop_Country c
+	ON tr.CountryID = c.CountryID
+	LEFT OUTER JOIN Nop_StateProvince sp
+	ON tr.StateProvinceID = sp.StateProvinceID
+	ORDER BY c.DisplayOrder,c.Name, sp.DisplayOrder,sp.Name, sp.StateProvinceID, Zip, TaxCategoryID
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_Forums_PrivateMessageLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_Forums_PrivateMessageLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_Forums_PrivateMessageLoadAll]
+(
+	@FromUserID			int,
+	@ToUserID			int,
+	@IsRead				bit = null,	--0 not read only, 1 read only, null - load all messages
+	@IsDeletedByAuthor		bit = null,	--0 deleted by author only, 1 not deleted by author only, null - load all messages
+	@IsDeletedByRecipient	bit = null,	--0 deleted by recipient only, 1 not deleted by recipient, null - load all messages
+	@Keywords			nvarchar(MAX),
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	SET @Keywords = isnull(@Keywords, '')
+	SET @Keywords = '%' + rtrim(ltrim(@Keywords)) + '%'
+
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		PrivateMessageID int NOT NULL,
+		CreatedOn datetime NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (PrivateMessageID, CreatedOn)
+	SELECT DISTINCT
+		fpm.PrivateMessageID, fpm.CreatedOn
+	FROM Nop_Forums_PrivateMessage fpm with (NOLOCK)
+	WHERE   (
+				@FromUserID IS NULL OR @FromUserID=0
+				OR (fpm.FromUserID=@FromUserID)
+			)
+		AND (
+				@ToUserID IS NULL OR @ToUserID=0
+				OR (fpm.ToUserID=@ToUserID)
+			)
+		AND (
+				@IsRead IS NULL OR fpm.IsRead=@IsRead
+			)
+		AND (
+				@IsDeletedByAuthor IS NULL OR fpm.IsDeletedByAuthor=@IsDeletedByAuthor
+			)
+		AND (
+				@IsDeletedByRecipient IS NULL OR fpm.IsDeletedByRecipient=@IsDeletedByRecipient
+			)
+		AND	(
+				(patindex(@Keywords, isnull(fpm.Subject, '')) > 0)
+				or (patindex(@Keywords, isnull(fpm.Text, '')) > 0)
+			)
+	ORDER BY fpm.CreatedOn desc, fpm.PrivateMessageID desc
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		fpm.PrivateMessageId,
+		fpm.FromUserId,
+		fpm.ToUserId,
+		fpm.Subject,
+		fpm.Text,
+		fpm.IsRead,
+		fpm.IsDeletedByAuthor,
+		fpm.IsDeletedByRecipient,
+		fpm.CreatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Forums_PrivateMessage fpm on fpm.PrivateMessageID = [pi].PrivateMessageID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_Forums_SubscriptionLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_Forums_SubscriptionLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_Forums_SubscriptionLoadAll]
+(
+	@UserID				int,
+	@ForumID			int,
+	@TopicID			int,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		SubscriptionID int NOT NULL,
+		CreatedOn datetime NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (SubscriptionID, CreatedOn)
+	SELECT DISTINCT
+		fs.SubscriptionID, fs.CreatedOn
+	FROM Nop_Forums_Subscription fs with (NOLOCK)
+	INNER JOIN Nop_Customer c with (NOLOCK) ON fs.UserID=c.CustomerID
+	WHERE   (
+				@UserID IS NULL OR @UserID=0
+				OR (fs.UserID=@UserID)
+			)
+		AND (
+				@ForumID IS NULL OR @ForumID=0
+				OR (fs.ForumID=@ForumID)
+			)
+		AND (
+				@TopicID IS NULL OR @TopicID=0
+				OR (fs.TopicID=@TopicID)
+			)
+		AND (
+				c.Active=1 AND c.Deleted=0
+			)
+	ORDER BY fs.CreatedOn desc, fs.SubscriptionID desc
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		fs.SubscriptionID as ForumSubscriptionId,
+		fs.SubscriptionGuid,
+		fs.UserId,
+		fs.ForumId,
+		fs.TopicId,
+		fs.CreatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Forums_Subscription fs on fs.SubscriptionID = [pi].SubscriptionID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_Forums_PostLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_Forums_PostLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_Forums_PostLoadAll]
+(
+	@TopicID			int,
+	@UserID				int,
+	@Keywords			nvarchar(MAX),
+	@AscSort			bit = 1,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	SET @Keywords = isnull(@Keywords, '')
+	SET @Keywords = '%' + rtrim(ltrim(@Keywords)) + '%'
+
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		PostID int NOT NULL,
+	)
+
+	INSERT INTO #PageIndex (PostID)
+	SELECT
+		fp.PostID
+	FROM Nop_Forums_Post fp with (NOLOCK)
+	WHERE   (
+				@TopicID IS NULL OR @TopicID=0
+				OR (fp.TopicID=@TopicID)
+			)
+		AND (
+				@UserID IS NULL OR @UserID=0
+				OR (fp.UserID=@UserID)
+			)
+		AND	(
+				patindex(@Keywords, isnull(fp.Text, '')) > 0
+			)
+	ORDER BY
+		CASE @AscSort WHEN 0 THEN fp.CreatedOn END DESC,
+		CASE @AscSort WHEN 1 THEN fp.CreatedOn END,
+		fp.PostID
+
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		fp.PostID as ForumPostId,
+		fp.TopicId,
+		fp.UserId,
+		fp.Text,
+		fp.IPAddress,
+		fp.CreatedOn,
+		fp.UpdatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Forums_Post fp on fp.PostID = [pi].PostID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+END
+GO
+
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_Forums_TopicLoadAll]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_Forums_TopicLoadAll]
+GO
+CREATE PROCEDURE [dbo].[Nop_Forums_TopicLoadAll]
+(
+	@ForumID			int,
+	@UserID				int,
+	@Keywords			nvarchar(MAX),	
+	@SearchPosts		bit = 0,
+	@PageIndex			int = 0, 
+	@PageSize			int = 2147483644,
+	@TotalRecords		int = null OUTPUT
+)
+AS
+BEGIN
+	
+	SET @Keywords = isnull(@Keywords, '')
+	SET @Keywords = '%' + rtrim(ltrim(@Keywords)) + '%'
+
+	--paging
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	DECLARE @RowsToReturn int
+	
+	SET @RowsToReturn = @PageSize * (@PageIndex + 1)	
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+	
+	CREATE TABLE #PageIndex 
+	(
+		IndexID int IDENTITY (1, 1) NOT NULL,
+		TopicID int NOT NULL,
+		TopicTypeID int NOT NULL,
+		LastPostTime datetime NULL,
+	)
+
+	INSERT INTO #PageIndex (TopicID, TopicTypeID, LastPostTime)
+	SELECT DISTINCT
+		ft.TopicID, ft.TopicTypeID, ft.LastPostTime
+	FROM Nop_Forums_Topic ft with (NOLOCK) 
+	LEFT OUTER JOIN Nop_Forums_Post fp with (NOLOCK) ON ft.TopicID = fp.TopicID
+	WHERE  (
+				@ForumID IS NULL OR @ForumID=0
+				OR (ft.ForumID=@ForumID)
+			)
+		AND (
+				@UserID IS NULL OR @UserID=0
+				OR (ft.UserID=@UserID)
+			)
+		AND	(
+				(patindex(@Keywords, isnull(ft.Subject, '')) > 0)
+				or (@SearchPosts = 1 and patindex(@Keywords, isnull(fp.Text, '')) > 0)
+			)		
+	ORDER BY ft.TopicTypeID desc, ft.LastPostTime desc, ft.TopicID desc
+
+	SET @TotalRecords = @@rowcount	
+	SET ROWCOUNT @RowsToReturn
+	
+	SELECT  
+		ft.TopicID as ForumTopicId,
+		ft.ForumId,
+		ft.UserId,
+		ft.TopicTypeId,
+		ft.Subject,
+		ft.NumPosts,
+		ft.Views,
+		ft.LastPostId,
+		ft.LastPostUserId,
+		ft.LastPostTime,
+		ft.CreatedOn,
+		ft.UpdatedOn
+	FROM
+		#PageIndex [pi]
+		INNER JOIN Nop_Forums_Topic ft on ft.TopicID = [pi].TopicID
+	WHERE
+		[pi].IndexID > @PageLowerBound AND 
+		[pi].IndexID < @PageUpperBound
+	ORDER BY
+		IndexID
+	
+	SET ROWCOUNT 0
+END
+GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_Forums_TopicLoadActive]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_Forums_TopicLoadActive]
+GO
+CREATE PROCEDURE [dbo].[Nop_Forums_TopicLoadActive]
+(
+	@ForumID			int,
+	@TopicCount			int
+)
+AS
+BEGIN
+	if (@TopicCount > 0)
+	      SET ROWCOUNT @TopicCount
+
+	SELECT
+		ft2.TopicID as ForumTopicId,
+		ft2.ForumId,
+		ft2.UserId,
+		ft2.TopicTypeId,
+		ft2.Subject,
+		ft2.NumPosts,
+		ft2.Views,
+		ft2.LastPostId,
+		ft2.LastPostUserId,
+		ft2.LastPostTime,
+		ft2.CreatedOn,
+		ft2.UpdatedOn
+	FROM Nop_Forums_Topic ft2 with (NOLOCK) 
+	WHERE ft2.TopicID IN 
+	(
+		SELECT DISTINCT
+			ft.TopicID
+		FROM Nop_Forums_Topic ft with (NOLOCK)
+		WHERE  (
+					@ForumID IS NULL OR @ForumID=0
+					OR (ft.ForumID=@ForumID)
+				)
+				AND
+				(
+					ft.LastPostTime is not null
+				)
+	)
+	ORDER BY ft2.LastPostTime desc
+
+	SET ROWCOUNT 0
+END
+GO

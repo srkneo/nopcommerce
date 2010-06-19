@@ -26,8 +26,6 @@ using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Promo.Discounts;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
@@ -49,76 +47,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         private const string DISCOUNTTYPES_PATTERN_KEY = "Nop.discounttype.";
         private const string DISCOUNTREQUIREMENT_PATTERN_KEY = "Nop.discountrequirement.";
         private const string DISCOUNTLIMITATION_PATTERN_KEY = "Nop.discountlimitation.";
-        #endregion
-
-        #region Utilities
-        private static List<Discount> DBMapping(DBDiscountCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<Discount>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static Discount DBMapping(DBDiscount dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new Discount();
-            item.DiscountId = dbItem.DiscountId;
-            item.DiscountTypeId = dbItem.DiscountTypeId;
-            item.DiscountRequirementId = dbItem.DiscountRequirementId;
-            item.DiscountLimitationId = dbItem.DiscountLimitationId;
-            item.Name = dbItem.Name;
-            item.UsePercentage = dbItem.UsePercentage;
-            item.DiscountPercentage = dbItem.DiscountPercentage;
-            item.DiscountAmount = dbItem.DiscountAmount;
-            item.StartDate = dbItem.StartDate;
-            item.EndDate = dbItem.EndDate;
-            item.RequiresCouponCode = dbItem.RequiresCouponCode;
-            item.CouponCode = dbItem.CouponCode;
-            item.Deleted = dbItem.Deleted;
-
-            return item;
-        }
-
-        private static List<DiscountUsageHistory> DBMapping(DBDiscountUsageHistoryCollection dbCollection)
-        {
-            if (dbCollection == null)
-                return null;
-
-            var collection = new List<DiscountUsageHistory>();
-            foreach (var dbItem in dbCollection)
-            {
-                var item = DBMapping(dbItem);
-                collection.Add(item);
-            }
-
-            return collection;
-        }
-
-        private static DiscountUsageHistory DBMapping(DBDiscountUsageHistory dbItem)
-        {
-            if (dbItem == null)
-                return null;
-
-            var item = new DiscountUsageHistory();
-            item.DiscountUsageHistoryId = dbItem.DiscountUsageHistoryId;
-            item.DiscountId = dbItem.DiscountId;
-            item.CustomerId = dbItem.CustomerId;
-            item.OrderId = dbItem.OrderId;
-            item.CreatedOn = dbItem.CreatedOn;
-
-            return item;
-        }
         #endregion
 
         #region Methods
@@ -725,8 +653,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         public static List<DiscountUsageHistory> GetAllDiscountUsageHistoryEntries(int? discountId,
             int? customerId, int? orderId)
         {
-            var dbCollection = DBProviderManager<DBDiscountProvider>.Provider.GetAllDiscountUsageHistoryEntries(discountId, customerId, orderId);
-            var discountUsageHistoryEntries = DBMapping(dbCollection);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var discountUsageHistoryEntries = context.Sp_DiscountUsageHistoryLoadAll(discountId,
+                customerId, orderId).ToList();
+
             return discountUsageHistoryEntries;
         }
 

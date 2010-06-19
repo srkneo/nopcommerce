@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="Audit\ActivityLog.cs" />
     <Compile Include="Audit\ActivityLogType.cs" />
+    <Compile Include="Audit\SearchTermReportLine.cs" />
     <Compile Include="Audit\LogType.cs" />
     <Compile Include="Audit\CustomerActivityManager.cs" />
     <Compile Include="Audit\Extensions.cs" />
@@ -131,6 +132,9 @@
     <Compile Include="Content\Forums\ForumTopic.cs" />
     <Compile Include="Content\Forums\Forum.cs" />
     <Compile Include="Content\Polls\PollVotingRecord.cs" />
+    <Compile Include="Customer\CustomerReportByLanguageLine.cs" />
+    <Compile Include="Customer\CustomerReportByAttributeKeyLine.cs" />
+    <Compile Include="Customer\CustomerBestReportLine.cs" />
     <Compile Include="Customer\CustomerRegistrationTypeEnum.cs" />
     <Compile Include="Customer\DeleteExpiredCustomerSessionsTask.cs" />
     <Compile Include="Caching\ClearCacheTask.cs" />
@@ -147,6 +151,7 @@
     <Compile Include="Data\NopObjectContext.cs" />
     <Compile Include="ExportImport\ExcelHelper.cs" />
     <Compile Include="ExportImport\ExcelHelperReadTableMode.cs" />
+    <Compile Include="Installation\NopSqlDataHelper.cs" />
     <Compile Include="Localization\NopResourceExpressionBuilder.cs" />
     <Compile Include="Maintenance\BackupFile.cs" />
     <Compile Include="Maintenance\BackupFileCollection.cs" />
@@ -158,6 +163,8 @@
     <Compile Include="Messages\SMSManager.cs" />
     <Compile Include="Orders\BestSellersReportLine.cs" />
     <Compile Include="Orders\AppliedGiftCard.cs" />
+    <Compile Include="Orders\OrderProductVariantReportLine.cs" />
+    <Compile Include="Orders\OrderIncompleteReportLine.cs" />
     <Compile Include="Orders\RewardPointsHistory.cs" />
     <Compile Include="Orders\OrderAverageReportLineSummary.cs" />
     <Compile Include="Orders\GiftCard.cs" />
@@ -395,10 +402,6 @@
     <ProjectReference Include="..\Nop.Common\Nop.Common.csproj">
       <Project>{A598DC05-2E62-4114-AC3E-A6E58E085AFF}</Project>
       <Name>Nop.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Nop.DataAccess\Nop.DataAccess.csproj">
-      <Project>{499E7B72-D9AF-4435-8C69-BBE841C86F03}</Project>
-      <Name>Nop.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

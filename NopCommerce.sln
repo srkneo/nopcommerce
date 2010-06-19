@@ -6,13 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 		Dependencies\AjaxControlToolkit.dll = Dependencies\AjaxControlToolkit.dll
 		Dependencies\GCheckout.dll = Dependencies\GCheckout.dll
 		Dependencies\Ionic.Zip.dll = Dependencies\Ionic.Zip.dll
-		Dependencies\Microsoft.Practices.EnterpriseLibrary.Common.dll = Dependencies\Microsoft.Practices.EnterpriseLibrary.Common.dll
-		Dependencies\Microsoft.Practices.EnterpriseLibrary.Data.dll = Dependencies\Microsoft.Practices.EnterpriseLibrary.Data.dll
-		Dependencies\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll = Dependencies\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll
-		Dependencies\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll = Dependencies\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll
-		Dependencies\Microsoft.Practices.EnterpriseLibrary.Logging.dll = Dependencies\Microsoft.Practices.EnterpriseLibrary.Logging.dll
-		Dependencies\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll = Dependencies\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll
-		Dependencies\Microsoft.Practices.ObjectBuilder2.dll = Dependencies\Microsoft.Practices.ObjectBuilder2.dll
 		Dependencies\MigraDoc.DocumentObjectModel.dll = Dependencies\MigraDoc.DocumentObjectModel.dll
 		Dependencies\MigraDoc.Rendering.dll = Dependencies\MigraDoc.Rendering.dll
 		Dependencies\MigraDoc.RtfRendering.dll = Dependencies\MigraDoc.RtfRendering.dll
@@ -81,10 +74,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Payment.PSIGate", "Payment\Nop.Payment.PSIGate\Nop.Payment.PSIGate.csproj", "{2C573ADD-4B09-4CE1-9849-E25732938960}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Payment.CDGcommerce", "Payment\Nop.Payment.CDGcommerce\Nop.Payment.CDGcommerce.csproj", "{23121FD0-FF0B-452C-85F5-47AF5CBD586C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.DataAccess", "Libraries\Nop.DataAccess\Nop.DataAccess.csproj", "{499E7B72-D9AF-4435-8C69-BBE841C86F03}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.DataAccess.SqlServer", "Libraries\Nop.DataAccess.SqlServer\Nop.DataAccess.SqlServer.csproj", "{D7FC5FC7-B51D-4524-8047-75A9CD405671}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlRewritingNet.UrlRewriter", "Libraries\UrlRewritingNet.UrlRewriter\UrlRewritingNet.UrlRewriter.csproj", "{44697772-09C1-4B28-B3F5-C28B693B06F7}"
 EndProject
@@ -647,26 +636,6 @@ Global
 		{23121FD0-FF0B-452C-85F5-47AF5CBD586C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23121FD0-FF0B-452C-85F5-47AF5CBD586C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{23121FD0-FF0B-452C-85F5-47AF5CBD586C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Release|.NET.ActiveCfg = Release|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Release|.NET.ActiveCfg = Release|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{44697772-09C1-4B28-B3F5-C28B693B06F7}.Debug|.NET.ActiveCfg = Debug|Any CPU
 		{44697772-09C1-4B28-B3F5-C28B693B06F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44697772-09C1-4B28-B3F5-C28B693B06F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -1012,8 +981,6 @@ Global
 		{EDF31192-A159-48DA-A737-9935A8A5BC18} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}
 		{ADC07038-4AAC-45E4-B652-75A971A413A5} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}
 		{1DE849F3-EA26-43A8-9D49-32B6FECBF0AA} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}
-		{499E7B72-D9AF-4435-8C69-BBE841C86F03} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}
-		{D7FC5FC7-B51D-4524-8047-75A9CD405671} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}
 		{44697772-09C1-4B28-B3F5-C28B693B06F7} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}
 		{4D26AD7F-0482-4B2D-A5A6-A1AE338B4F4D} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}
 		{E682693C-DC17-4C46-BB57-6DC2C2B02555} = {A3E1635B-ECA0-46B2-B9BD-CA9340A23257}

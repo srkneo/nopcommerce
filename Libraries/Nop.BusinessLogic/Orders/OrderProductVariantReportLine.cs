@@ -15,60 +15,41 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NopSolutions.NopCommerce.BusinessLogic.Products;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 {
     /// <summary>
-    /// Represents a best sellers report line
+    /// Represents an order product variant report line
     /// </summary>
-    public partial class BestSellersReportLine : BaseEntity
+    public partial class OrderProductVariantReportLine : BaseEntity
     {
-        #region Fields
-        private ProductVariant _pv = null;
-        #endregion
-
         #region Ctor
         /// <summary>
-        /// Creates a new instance of the BestSellersReportLine class
+        /// Creates a new instance of the OrderIncompleteReportLine class
         /// </summary>
-        public BestSellersReportLine()
+        public OrderProductVariantReportLine()
         {
         }
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the product variant identifier
         /// </summary>
         public int ProductVariantId { get; set; }
 
         /// <summary>
-        /// Gets or sets the total count
+        /// Gets or sets the price excluding tax
         /// </summary>
-        public int SalesTotalCount { get; set; }
+        public decimal PriceExclTax { get; set; }
 
         /// <summary>
-        /// Gets or sets the total amount
+        /// Gets or sets the quantity
         /// </summary>
-        public decimal SalesTotalAmount { get; set; }
+        public int Quantity { get; set; }
 
-        #endregion
-
-        #region Custom Properties
-        /// <summary>
-        /// Gets a product variant
-        /// </summary>
-        public ProductVariant ProductVariant
-        {
-            get
-            {
-                if (_pv == null)
-                    _pv = ProductManager.GetProductVariantById(this.ProductVariantId);
-                return _pv;
-            }
-        }
         #endregion
     }
 

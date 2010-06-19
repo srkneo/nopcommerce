@@ -23,8 +23,6 @@ using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
-using NopSolutions.NopCommerce.DataAccess;
-using NopSolutions.NopCommerce.DataAccess.Localization;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Localization
 {
@@ -172,7 +170,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <returns>XML</returns>
         public static string GetAllLocaleStringResourcesAsXml(int languageId)
         {
-            return DBProviderManager<DBLocaleStringResourceProvider>.Provider.GetAllLocaleStringResourcesAsXml(languageId);
+            string xmlPackage = string.Empty;
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_LanguagePackExport(languageId, out xmlPackage);
+
+            return xmlPackage;
         }
 
         /// <summary>
@@ -182,7 +184,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         /// <param name="xml">The XML package</param>
         public static void InsertAllLocaleStringResourcesFromXml(int languageId, string xml)
         {
-            DBProviderManager<DBLocaleStringResourceProvider>.Provider.InsertAllLocaleStringResourcesFromXml(languageId, xml);
+            var context = ObjectContextHelper.CurrentObjectContext;
+            context.Sp_LanguagePackImport(languageId, xml);
+
             if (LocaleStringResourceManager.CacheEnabled)
             {
                 NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
