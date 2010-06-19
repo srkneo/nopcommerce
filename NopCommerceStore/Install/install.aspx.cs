@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
@@ -29,13 +30,11 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Xml;
-using Microsoft.Practices.EnterpriseLibrary.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Installation;
 using NopSolutions.NopCommerce.Common.Utils;
-using System.Data.SqlClient;
-using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
-using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 
 namespace NopSolutions.NopCommerce.Web.Install
 {
