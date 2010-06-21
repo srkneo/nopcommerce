@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtBcc.Text = queuedEmail.Bcc;
                 this.txtSubject.Text = queuedEmail.Subject;
                 this.txtBody.Content = queuedEmail.Body;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(queuedEmail.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(queuedEmail.CreatedOn, DateTimeKind.Utc).ToString();
                 this.txtSendTries.Value = queuedEmail.SendTries;
                 this.lblSentOn.Text = GetSentOnInfo(queuedEmail);
             }
@@ -74,7 +74,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         QueuedEmail requeuedEmail = MessageManager.InsertQueuedEmail(txtPriority.Value, 
                             txtFrom.Text, txtFromName.Text,
                             txtTo.Text, txtToName.Text, txtCc.Text, txtBcc.Text,
-                            txtSubject.Text, txtBody.Content, DateTime.Now,
+                            txtSubject.Text, txtBody.Content, DateTime.UtcNow,
                             0, null);
                         Response.Redirect("MessageQueueDetails.aspx?QueuedEmailID=" + requeuedEmail.QueuedEmailId.ToString());
                     }
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!queuedEmail.SentOn.HasValue)
                 return "Not sent yet";
             else
-                return string.Format("Sent on {0}", DateTimeHelper.ConvertToUserTime(queuedEmail.SentOn.Value));
+                return string.Format("Sent on {0}", DateTimeHelper.ConvertToUserTime(queuedEmail.SentOn.Value, DateTimeKind.Utc));
         }
 
         public int QueuedEmailId

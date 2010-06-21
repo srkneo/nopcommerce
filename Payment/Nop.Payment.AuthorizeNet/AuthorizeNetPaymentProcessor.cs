@@ -279,8 +279,6 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
             Byte[] responseData = webClient.UploadValues(GetAuthorizeNETUrl(), form);
             reply = Encoding.ASCII.GetString(responseData);
 
-            DateTime nowDT = DateTime.Now;
-
             if (!String.IsNullOrEmpty(reply))
             {
                 string[] responseFields = reply.Split('|');

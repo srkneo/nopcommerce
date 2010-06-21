@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void BindLiveRateGrid()
         {
             DataTable liveRates = null;
-            DateTime liveRatesUpdateDate = DateTime.Now;
+            DateTime liveRatesUpdateDate = DateTime.UtcNow;
 
             CurrencyManager.GetCurrencyLiveRates(CurrencyManager.PrimaryExchangeRateCurrency.CurrencyCode, out liveRatesUpdateDate, out liveRates);
             gvLiveRates.DataSource = liveRates;
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     CurrencyManager.UpdateCurrency(currency.CurrencyId, currency.Name, currency.CurrencyCode,
                         txtRate.Value, currency.DisplayLocale, currency.CustomFormatting, currency.Published, currency.DisplayOrder,
-                        currency.CreatedOn, DateTime.Now);
+                        currency.CreatedOn, DateTime.UtcNow);
                     BindCurrencyGrid();
                 }
             }

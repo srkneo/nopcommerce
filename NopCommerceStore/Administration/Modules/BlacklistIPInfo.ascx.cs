@@ -48,8 +48,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 txtComment.Text = ipAddress.Comment;
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
-                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(ipAddress.CreatedOn).ToString();
-                lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(ipAddress.UpdatedOn).ToString();
+                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(ipAddress.CreatedOn, DateTimeKind.Utc).ToString();
+                lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(ipAddress.UpdatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         /// <returns>BannedIpAddress</returns>
         public BannedIpAddress SaveBannedIpAddressInfo()
         {
-            DateTime nowDT = DateTime.Now;
+            DateTime nowDT = DateTime.UtcNow;
             BannedIpAddress ipAddress = IpBlacklistManager.GetBannedIpAddressById(this.BannedIpAddressId);
 
             // Check if the IP is valid

@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (news != null && news.Published)
             {
                 this.lTitle.Text = Server.HtmlEncode(news.Title);
-                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(news.CreatedOn).ToString("D");
+                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(news.CreatedOn, DateTimeKind.Utc).ToString("D");
                 this.lFull.Text = news.Full;
 
                 if (news.AllowComments)
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         if (NopContext.Current.User != null && !NopContext.Current.User.IsGuest)
                             customerId = NopContext.Current.User.CustomerId;
 
-                        NewsManager.InsertNewsComment(news.NewsId, customerId, title, comment, DateTime.Now);
+                        NewsManager.InsertNewsComment(news.NewsId, customerId, title, comment, DateTime.UtcNow);
                         txtTitle.Text = string.Empty;
                         txtComment.Text = string.Empty;
                         BindData();

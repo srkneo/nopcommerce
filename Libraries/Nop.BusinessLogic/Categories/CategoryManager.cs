@@ -214,9 +214,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var category = new Category();
             category.Name = name;
             category.Description = description;
@@ -276,9 +273,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             //validate category hierarchy
             var parentCategory = GetCategoryById(parentCategoryId);
             while (parentCategory != null)

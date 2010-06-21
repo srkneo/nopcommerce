@@ -313,7 +313,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     billingAddress.Email, billingAddress.FaxNumber, billingAddress.Company,
                     billingAddress.Address1, billingAddress.Address2,
                     billingAddress.City, billingAddress.StateProvinceId,
-                    billingAddress.ZipPostalCode, billingAddress.CountryId, DateTime.Now, DateTime.Now);
+                    billingAddress.ZipPostalCode, billingAddress.CountryId, DateTime.UtcNow, DateTime.UtcNow);
             }
 
             //shipping address
@@ -342,7 +342,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     shippingAddress.Email, shippingAddress.FaxNumber, shippingAddress.Company,
                     shippingAddress.Address1, shippingAddress.Address2,
                     shippingAddress.City, shippingAddress.StateProvinceId,
-                    shippingAddress.ZipPostalCode, shippingAddress.CountryId, DateTime.Now, DateTime.Now);
+                    shippingAddress.ZipPostalCode, shippingAddress.CountryId, DateTime.UtcNow, DateTime.UtcNow);
             }
         }
 

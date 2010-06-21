@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (blogComment != null)
             {
-                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogComment.CreatedOn).ToString("g");
+                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogComment.CreatedOn, DateTimeKind.Utc).ToString("g");
                 lblComment.Text = BlogManager.FormatCommentText(blogComment.CommentText);
                 lblBlogCommentId.Text = blogComment.BlogCommentId.ToString();
 

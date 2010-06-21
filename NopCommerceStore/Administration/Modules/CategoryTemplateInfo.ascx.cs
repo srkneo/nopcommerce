@@ -40,8 +40,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = categoryTemplate.DisplayOrder;
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(categoryTemplate.CreatedOn).ToString();
-                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(categoryTemplate.UpdatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(categoryTemplate.CreatedOn, DateTimeKind.Utc).ToString();
+                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(categoryTemplate.UpdatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -65,11 +65,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (categoryTemplate != null)
             {
                 categoryTemplate = TemplateManager.UpdateCategoryTemplate(categoryTemplate.CategoryTemplateId, txtName.Text,
-                    txtTemplatePath.Text, txtDisplayOrder.Value, categoryTemplate.CreatedOn, DateTime.Now);                
+                    txtTemplatePath.Text, txtDisplayOrder.Value, categoryTemplate.CreatedOn, DateTime.UtcNow);                
             }
             else
             {
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.UtcNow;
                 categoryTemplate = TemplateManager.InsertCategoryTemplate(txtName.Text,
                     txtTemplatePath.Text, txtDisplayOrder.Value, now, now);
             }

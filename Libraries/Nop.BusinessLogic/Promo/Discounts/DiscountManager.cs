@@ -671,8 +671,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         public static DiscountUsageHistory InsertDiscountUsageHistory(int discountId,
             int customerId, int orderId, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            
             var discountUsageHistory = new DiscountUsageHistory();
             discountUsageHistory.DiscountId = discountId;
             discountUsageHistory.CustomerId = customerId;
@@ -698,8 +696,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         public static DiscountUsageHistory UpdateDiscountUsageHistory(int discountUsageHistoryId, 
             int discountId, int customerId, int orderId, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var discountUsageHistory = GetDiscountUsageHistoryById(discountUsageHistoryId);
             if (discountUsageHistory == null)
                 return null;

@@ -119,9 +119,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static BannedIpAddress InsertBannedIpAddress(string address, string comment,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             address = address.Trim();
 
             var ipAddress = new BannedIpAddress();
@@ -153,9 +150,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static BannedIpAddress UpdateBannedIpAddress(int ipAddressId, string address, 
             string comment, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             address = address.Trim();
 
             var ipAddress = GetBannedIpAddressById(ipAddressId);
@@ -260,9 +254,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             string endAddress, string comment, string ipException, DateTime createdOn, 
             DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             startAddress = startAddress.Trim();
             endAddress = endAddress.Trim();
 
@@ -300,9 +291,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             string startAddress, string endAddress, string comment, string ipException,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             startAddress = startAddress.Trim();
             endAddress = endAddress.Trim();
 

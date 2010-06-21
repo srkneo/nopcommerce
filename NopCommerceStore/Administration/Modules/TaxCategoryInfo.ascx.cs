@@ -39,8 +39,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = taxCategory.DisplayOrder;
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(taxCategory.CreatedOn).ToString();
-                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(taxCategory.UpdatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(taxCategory.CreatedOn, DateTimeKind.Utc).ToString();
+                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(taxCategory.UpdatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -64,11 +64,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (taxCategory != null)
             {
                 taxCategory = TaxCategoryManager.UpdateTaxCategory(taxCategory.TaxCategoryId, txtName.Text,
-                    txtDisplayOrder.Value, taxCategory.CreatedOn, DateTime.Now);
+                    txtDisplayOrder.Value, taxCategory.CreatedOn, DateTime.UtcNow);
             }
             else
             {
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.UtcNow;
                 taxCategory = TaxCategoryManager.InsertTaxCategory(txtName.Text, txtDisplayOrder.Value, now, now);
             }
 

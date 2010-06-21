@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtBody.Content = campaign.Body;
 
                 this.pnlCreatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(campaign.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(campaign.CreatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             else
             {
                 campaign = CampaignManager.InsertCampaign(txtName.Text,
-                       txtSubject.Text, txtBody.Content, DateTime.Now);
+                       txtSubject.Text, txtBody.Content, DateTime.UtcNow);
             }
 
             return campaign;

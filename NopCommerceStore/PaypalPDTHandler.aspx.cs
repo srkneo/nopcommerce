@@ -105,7 +105,7 @@ namespace NopSolutions.NopCommerce.Web
                         sb.AppendLine("invoice: " + invoice);
                         sb.AppendLine("payment_fee: " + payment_fee);
 
-                        OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.Now);
+                        OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.UtcNow);
                         if (OrderManager.CanMarkOrderAsPaid(order))
                         {
                             OrderManager.MarkOrderAsPaid(order.OrderId);
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.Web
                     Order order = OrderManager.GetOrderByGuid(orderNumberGuid);
                     if (order != null)
                     {
-                        OrderManager.InsertOrderNote(order.OrderId, "PayPal PDT failed. " + response, false, DateTime.Now);
+                        OrderManager.InsertOrderNote(order.OrderId, "PayPal PDT failed. " + response, false, DateTime.UtcNow);
                     }
                     Response.Redirect(CommonHelper.GetStoreLocation());
                 }

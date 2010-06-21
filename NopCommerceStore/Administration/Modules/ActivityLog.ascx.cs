@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             public DateTime CreateOn
             {
-                get { return DateTimeHelper.ConvertToUserTime(_activityLog.CreatedOn); }
+                get { return DateTimeHelper.ConvertToUserTime(_activityLog.CreatedOn, DateTimeKind.Utc); }
             }
         }
 

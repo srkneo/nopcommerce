@@ -66,7 +66,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
                     MessageManager.UpdateQueuedEmail(queuedEmail.QueuedEmailId, queuedEmail.Priority,
                         queuedEmail.From, queuedEmail.FromName, queuedEmail.To, queuedEmail.ToName,
                         queuedEmail.CC, queuedEmail.Bcc, queuedEmail.Subject, queuedEmail.Body,
-                        queuedEmail.CreatedOn, ++queuedEmail.SendTries, DateTime.Now);
+                        queuedEmail.CreatedOn, ++queuedEmail.SendTries, DateTime.UtcNow);
                 }
                 catch (Exception exc)
                 {

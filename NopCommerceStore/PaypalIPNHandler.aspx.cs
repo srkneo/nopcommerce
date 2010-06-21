@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.Web
                                                     if (recurringPaymentHistory.Count == 0)
                                                     {
                                                         //first payment
-                                                        OrderManager.InsertRecurringPaymentHistory(rp.RecurringPaymentId, initialOrder.OrderId, DateTime.Now);
+                                                        OrderManager.InsertRecurringPaymentHistory(rp.RecurringPaymentId, initialOrder.OrderId, DateTime.UtcNow);
                                                     }
                                                     else
                                                     {
@@ -141,7 +141,7 @@ namespace NopSolutions.NopCommerce.Web
                                         }
                                     }
 
-                                    //OrderManager.InsertOrderNote(newOrder.OrderId, sb.ToString(), DateTime.Now);
+                                    //OrderManager.InsertOrderNote(newOrder.OrderId, sb.ToString(), DateTime.UtcNow);
                                     LogManager.InsertLog(LogTypeEnum.Unknown, "PayPal IPN. Recurring info", new NopException(sb.ToString()));
                                 }
                                 else
@@ -168,7 +168,7 @@ namespace NopSolutions.NopCommerce.Web
                                 Order order = OrderManager.GetOrderByGuid(orderNumberGuid);
                                 if (order != null)
                                 {
-                                    OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.Now);
+                                    OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.UtcNow);
                                     switch (newPaymentStatus)
                                     {
                                         case PaymentStatusEnum.Pending:

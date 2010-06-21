@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     manufacturer.MetaTitle, manufacturer.SEName,
                     manufacturerPictureId, manufacturer.PageSize, txtPriceRanges.Text,
                     cbPublished.Checked, manufacturer.Deleted, txtDisplayOrder.Value,
-                    manufacturer.CreatedOn, DateTime.Now);
+                    manufacturer.CreatedOn, DateTime.UtcNow);
             }
             else
             {
@@ -140,7 +140,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (manufacturerPicture != null)
                     manufacturerPictureId = manufacturerPicture.PictureId;
 
-                DateTime nowDt = DateTime.Now;
+                DateTime nowDt = DateTime.UtcNow;
                 manufacturer = ManufacturerManager.InsertManufacturer(txtName.Text, txtDescription.Content,
                     int.Parse(this.ddlTemplate.SelectedItem.Value),
                     string.Empty, string.Empty, string.Empty, string.Empty,

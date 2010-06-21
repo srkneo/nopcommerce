@@ -130,7 +130,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 category = CategoryManager.UpdateCategory(category.CategoryId, txtName.Text, txtDescription.Content, int.Parse(this.ddlTemplate.SelectedItem.Value),
                      category.MetaKeywords, category.MetaDescription, category.MetaTitle, category.SEName, ParentCategory.SelectedCategoryId,
-                    categoryPictureId, category.PageSize, txtPriceRanges.Text, cbShowOnHomePage.Checked, cbPublished.Checked, category.Deleted, txtDisplayOrder.Value, category.CreatedOn, DateTime.Now);
+                    categoryPictureId, category.PageSize, txtPriceRanges.Text, cbShowOnHomePage.Checked, cbPublished.Checked, category.Deleted, 
+                    txtDisplayOrder.Value, category.CreatedOn, DateTime.UtcNow);
             }
             else
             {
@@ -145,7 +146,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 if (categoryPicture != null)
                     categoryPictureId = categoryPicture.PictureId;
 
-                DateTime nowDT = DateTime.Now;
+                DateTime nowDT = DateTime.UtcNow;
                 category = CategoryManager.InsertCategory(txtName.Text, txtDescription.Content, int.Parse(this.ddlTemplate.SelectedItem.Value),
                          string.Empty, string.Empty, string.Empty, string.Empty, ParentCategory.SelectedCategoryId,
                          categoryPictureId, 10, txtPriceRanges.Text, cbShowOnHomePage.Checked, cbPublished.Checked, false, txtDisplayOrder.Value, nowDT, nowDT);

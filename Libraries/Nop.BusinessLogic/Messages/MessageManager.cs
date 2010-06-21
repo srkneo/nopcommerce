@@ -592,10 +592,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
              MailAddress to, string cc, string bcc,
             string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            if (sentOn.HasValue)
-                sentOn = DateTimeHelper.ConvertToUtcTime(sentOn.Value);
-
             return InsertQueuedEmail(priority, from.Address, from.DisplayName,
               to.Address, to.DisplayName, cc, bcc, subject, body, createdOn, sendTries, sentOn);
         }
@@ -620,10 +616,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string fromName, string to, string toName, string cc, string bcc,
             string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            if (sentOn.HasValue)
-                sentOn = DateTimeHelper.ConvertToUtcTime(sentOn.Value);
-
             var queuedEmail = new QueuedEmail();
             queuedEmail.Priority = priority;
             queuedEmail.From = from;
@@ -667,10 +659,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string fromName, string to, string toName, string cc, string bcc,
             string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            if (sentOn.HasValue)
-                sentOn = DateTimeHelper.ConvertToUtcTime(sentOn.Value);
-
             var queuedEmail = GetQueuedEmailById(queuedEmailId);
             if (queuedEmail == null)
                 return null;
@@ -873,7 +861,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(order.BillingEmail, order.BillingFullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -900,7 +888,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -926,7 +914,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -952,7 +940,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(order.BillingEmail, order.BillingFullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -978,7 +966,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(order.BillingEmail, order.BillingFullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1004,7 +992,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(order.BillingEmail, order.BillingFullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1030,7 +1018,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(order.BillingEmail, order.BillingFullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1057,7 +1045,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(customer.Email, customer.FullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1084,7 +1072,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(customer.Email, customer.FullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1110,7 +1098,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(customer.Email, customer.FullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1144,7 +1132,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(friendsEmail);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1173,7 +1161,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(customer.Email, customer.FullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1202,7 +1190,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(customer.Email, customer.FullName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1228,7 +1216,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1254,7 +1242,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1281,7 +1269,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 
@@ -1307,7 +1295,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string subject = ReplaceMessageTemplateTokens(subscription, localizedMessageTemplate.Subject);
             string body = ReplaceMessageTemplateTokens(subscription, localizedMessageTemplate.Body);
 
-            var queuedEmail = InsertQueuedEmail(5, from, to, String.Empty, localizedMessageTemplate.BccEmailAddresses, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, String.Empty, localizedMessageTemplate.BccEmailAddresses, subject, body, DateTime.UtcNow, 0, null);
 
             return queuedEmail.QueuedEmailId;
         }
@@ -1334,7 +1322,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string subject = ReplaceMessageTemplateTokens(subscription, localizedMessageTemplate.Subject);
             string body = ReplaceMessageTemplateTokens(subscription, localizedMessageTemplate.Body);
 
-            var queuedEmail = InsertQueuedEmail(5, from, to, String.Empty, localizedMessageTemplate.BccEmailAddresses, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, String.Empty, localizedMessageTemplate.BccEmailAddresses, subject, body, DateTime.UtcNow, 0, null);
 
             return queuedEmail.QueuedEmailId;
         }
@@ -1361,7 +1349,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string bcc = localizedMessageTemplate.BccEmailAddresses;
             var from = new MailAddress(AdminEmailAddress, AdminEmailDisplayName);
             var to = new MailAddress(giftCard.RecipientEmail, giftCard.RecipientName);
-            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.Now, 0, null);
+            var queuedEmail = InsertQueuedEmail(5, from, to, string.Empty, bcc, subject, body, DateTime.UtcNow, 0, null);
             return queuedEmail.QueuedEmailId;
         }
 

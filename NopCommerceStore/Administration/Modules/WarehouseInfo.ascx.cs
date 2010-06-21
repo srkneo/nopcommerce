@@ -48,8 +48,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 CommonHelper.SelectListItem(this.ddlCountry, warehouse.CountryId);
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(warehouse.CreatedOn).ToString();
-                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(warehouse.UpdatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(warehouse.CreatedOn, DateTimeKind.Utc).ToString();
+                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(warehouse.UpdatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -87,12 +87,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 warehouse = WarehouseManager.UpdateWarehouse(warehouse.WarehouseId, txtName.Text,
                     txtPhoneNumber.Text, txtEmail.Text, txtFaxNumber.Text,
                     txtAddress1.Text, txtAddress2.Text, txtCity.Text, txtStateProvince.Text, txtZipPostalCode.Text,
-                    int.Parse(this.ddlCountry.SelectedItem.Value), warehouse.Deleted, warehouse.CreatedOn, DateTime.Now);
+                    int.Parse(this.ddlCountry.SelectedItem.Value), warehouse.Deleted, warehouse.CreatedOn, DateTime.UtcNow);
 
             }
             else
             {
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.UtcNow;
                 warehouse = WarehouseManager.InsertWarehouse(txtName.Text,
                    txtPhoneNumber.Text, txtEmail.Text, txtFaxNumber.Text,
                    txtAddress1.Text, txtAddress2.Text, txtCity.Text, txtStateProvince.Text, txtZipPostalCode.Text,

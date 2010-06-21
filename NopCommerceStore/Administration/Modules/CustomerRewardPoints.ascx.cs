@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     string message = txtNewMessage.Text;
                     RewardPointsHistory rph = OrderManager.InsertRewardPointsHistory(
                         this.CustomerId, 0, points, decimal.Zero, decimal.Zero,
-                        string.Empty, message, DateTime.Now);
+                        string.Empty, message, DateTime.UtcNow);
 
                     BindData();
                 }

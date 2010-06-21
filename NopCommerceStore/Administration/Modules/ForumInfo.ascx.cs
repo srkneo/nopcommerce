@@ -42,9 +42,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = forum.DisplayOrder;
                 
                 this.pnlCreatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(forum.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(forum.CreatedOn, DateTimeKind.Utc).ToString();
                 this.pnlUpdatedOn.Visible = true;
-                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(forum.UpdatedOn).ToString();
+                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(forum.UpdatedOn, DateTimeKind.Utc).ToString();
 
             }
             else
@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         public Forum SaveInfo()
         {
             Forum forum = ForumManager.GetForumById(this.ForumId);
-            DateTime nowDT = DateTime.Now;
+            DateTime nowDT = DateTime.UtcNow;
 
             if (forum != null)
             {

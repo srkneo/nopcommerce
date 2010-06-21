@@ -142,9 +142,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static ForumGroup InsertForumGroup(string name, string description,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var forumGroup = new ForumGroup();
             forumGroup.Name = name;
             forumGroup.Description = description;
@@ -179,9 +176,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             string name, string description, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var forumGroup = GetForumGroupById(forumGroupId);
             if (forumGroup == null)
                 return null;
@@ -305,9 +299,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int lastPostUserId, DateTime? lastPostTime, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var forum = new Forum();
             forum.ForumGroupId = forumGroupId;
             forum.Name = name;
@@ -358,9 +349,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int lastPostUserId, DateTime? lastPostTime, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var forum = GetForumById(forumId);
             if (forum == null)
                 return null;
@@ -542,9 +530,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int lastPostUserId, DateTime? lastPostTime,
             DateTime createdOn, DateTime updatedOn, bool sendNotifications)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             if (subject == null)
                 subject = string.Empty;
 
@@ -621,9 +606,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int numPosts, int views, int lastPostId, int lastPostUserId, 
             DateTime? lastPostTime, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             if (subject == null)
                 subject = string.Empty;
 
@@ -692,7 +674,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                         forumTopic = UpdateTopic(forumTopic.ForumTopicId, newForum.ForumId,
                             forumTopic.UserId, forumTopic.TopicType, forumTopic.Subject, forumTopic.NumPosts,
                             forumTopic.Views, forumTopic.LastPostId, forumTopic.LastPostUserId,
-                            forumTopic.LastPostTime, forumTopic.CreatedOn, DateTime.Now);
+                            forumTopic.LastPostTime, forumTopic.CreatedOn, DateTime.UtcNow);
 
                         //update forum stats
                         UpdateForumStats(previousForumId);
@@ -821,9 +803,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             string text, string ipAddress, DateTime createdOn, DateTime updatedOn, 
             bool sendNotifications)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             if (text == null)
                 text = string.Empty;
 
@@ -890,9 +869,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static ForumPost UpdatePost(int forumPostId, int forumTopicId, int userId,
             string text, string ipAddress, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             if (text == null)
                 text = string.Empty;
 
@@ -1018,8 +994,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int toUserId, string subject, string text, bool isRead,
             bool isDeletedByAuthor, bool isDeletedByRecipient, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             if (subject == null)
                 subject = string.Empty;
             subject = subject.Trim();
@@ -1083,8 +1057,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int fromUserId, int toUserId, string subject, string text, bool isRead,
             bool isDeletedByAuthor, bool isDeletedByRecipient, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             if (subject == null)
                 subject = string.Empty;
             subject = subject.Trim();
@@ -1231,8 +1203,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static ForumSubscription InsertSubscription(Guid subscriptionGuid, int userId,
             int forumId, int topicId, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            
             var forumSubscription = new ForumSubscription();
             forumSubscription.SubscriptionGuid = subscriptionGuid;
             forumSubscription.UserId = userId;
@@ -1260,8 +1230,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static ForumSubscription UpdateSubscription(int subscriptionId, 
             Guid subscriptionGuid, int userId, int forumId, int topicId, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var forumSubscription = GetSubscriptionById(subscriptionId);
             if (forumSubscription == null)
                 return null;

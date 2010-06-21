@@ -31,7 +31,7 @@
                 <asp:TemplateField HeaderText="<% $NopResources:PrivateMessages.Inbox.DateColumn %>"
                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="25%" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

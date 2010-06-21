@@ -262,7 +262,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             TemplateId, ShowOnHomePage, MetaKeywords, MetaDescription,
                             MetaTitle, product.SEName, AllowCustomerReviews, AllowCustomerRatings,
                             product.RatingSum, product.TotalRatingVotes,
-                            Published, product.Deleted, CreatedOn, DateTime.Now);
+                            Published, product.Deleted, CreatedOn, DateTime.UtcNow);
 
                         productVariant = ProductManager.UpdateProductVariant(productVariant.ProductVariantId,
                             productVariant.ProductId, productVariant.Name, SKU,
@@ -283,14 +283,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             Weight, Length, Width, Height,
                             productVariant.PictureId, productVariant.AvailableStartDateTime,
                             productVariant.AvailableEndDateTime, productVariant.Published,
-                            productVariant.Deleted, productVariant.DisplayOrder, CreatedOn, DateTime.Now);
+                            productVariant.Deleted, productVariant.DisplayOrder, CreatedOn, DateTime.UtcNow);
                     }
                     else
                     {
                         var product = ProductManager.InsertProduct(Name, ShortDescription, FullDescription,
                             string.Empty, ProductTypeId, TemplateId, ShowOnHomePage, MetaKeywords, MetaDescription,
                             MetaTitle, string.Empty, AllowCustomerReviews, AllowCustomerRatings, 0, 0,
-                            Published, false, CreatedOn, DateTime.Now);
+                            Published, false, CreatedOn, DateTime.UtcNow);
 
                         productVariant = ProductManager.InsertProductVariant(product.ProductId,
                             string.Empty, SKU, string.Empty, string.Empty, ManufacturerPartNumber,
@@ -305,7 +305,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.ExportImport
                             Price, OldPrice, ProductCost, CustomerEntersPrice,
                             MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice, 
                             Weight, Length, Width, Height, 0, null, null,
-                            true, false, 1, CreatedOn, DateTime.Now);
+                            true, false, 1, CreatedOn, DateTime.UtcNow);
                     }
                 }
             }

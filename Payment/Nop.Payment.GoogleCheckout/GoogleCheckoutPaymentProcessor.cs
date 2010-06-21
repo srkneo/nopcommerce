@@ -155,7 +155,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                         string.Empty, string.Empty, billingAddress1,
                         billingAddress2, billingCity,
                         billingStateProvinceID, billingZipPostalCode,
-                        billingCountryID, DateTime.Now, DateTime.Now);
+                        billingCountryID, DateTime.UtcNow, DateTime.UtcNow);
                 }
                 customer = CustomerManager.SetDefaultBillingAddress(customer.CustomerId, BillingAddress.AddressId);
 
@@ -196,7 +196,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                              string.Empty, string.Empty, shippingAddress1,
                              shippingAddress2, shippingCity, shippingStateProvinceID,
                              shippingZipPostalCode, shippingCountryID,
-                             DateTime.Now, DateTime.Now);
+                             DateTime.UtcNow, DateTime.UtcNow);
                     }
 
                     customer = CustomerManager.SetDefaultShippingAddress(customer.CustomerId, ShippingAddress.AddressId);
@@ -259,7 +259,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 {
                     string message = string.Format("Order status {0} from Google: Order Number {1}", orderState, changeOrder.googleordernumber);
                     logMessage(message);
-                    OrderManager.InsertOrderNote(order.OrderId, message, false, DateTime.Now);
+                    OrderManager.InsertOrderNote(order.OrderId, message, false, DateTime.UtcNow);
 
                     if (orderState == FinancialOrderState.CHARGING ||
                         orderState == FinancialOrderState.REVIEWING)
@@ -323,7 +323,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
             Order order = getMerchantOrderByGoogleOrderID(riskInformationNotification.googleordernumber);
             if (order != null)
             {
-                OrderManager.InsertOrderNote(order.OrderId, message, false, DateTime.Now);
+                OrderManager.InsertOrderNote(order.OrderId, message, false, DateTime.UtcNow);
             }
         }
         private Order getMerchantOrderByGoogleOrderID(string GoogleOrderID)

@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     product.TemplateId, product.ShowOnHomePage, txtMetaKeywords.Text,
                     txtMetaDescription.Text, txtMetaTitle.Text, txtSEName.Text,
                     product.AllowCustomerReviews, product.AllowCustomerRatings, product.RatingSum,
-                    product.TotalRatingVotes, product.Published, product.Deleted, product.CreatedOn, DateTime.Now);
+                    product.TotalRatingVotes, product.Published, product.Deleted, product.CreatedOn, DateTime.UtcNow);
             }
 
             SaveLocalizableContent(product);

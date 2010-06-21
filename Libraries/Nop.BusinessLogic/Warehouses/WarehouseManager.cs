@@ -102,9 +102,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             string city, string stateProvince, string zipPostalCode, int countryId,
             bool deleted, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var warehouse = new Warehouse();
             warehouse.Name = name;
             warehouse.PhoneNumber = phoneNumber;
@@ -151,9 +148,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             string zipPostalCode, int countryId, bool deleted,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var warehouse = GetWarehouseById(warehouseId);
             if (warehouse == null)
                 return null;

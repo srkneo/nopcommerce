@@ -98,8 +98,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         public static Campaign InsertCampaign(string name,
             string subject, string body, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var campaign = new Campaign();
             campaign.Name = name;
             campaign.Subject = subject;
@@ -125,8 +123,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         public static Campaign UpdateCampaign(int campaignId,
             string name, string subject, string body, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var campaign = GetCampaignById(campaignId);
             if (campaign == null)
                 return null;
@@ -167,7 +163,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
                 string body = MessageManager.ReplaceMessageTemplateTokens(subscription, campaign.Body);
                 var from = new MailAddress(MessageManager.AdminEmailAddress, MessageManager.AdminEmailDisplayName);
                 var to = new MailAddress(subscription.Email);
-                MessageManager.InsertQueuedEmail(3, from, to, string.Empty, string.Empty, subject, body, DateTime.Now, 0, null);
+                MessageManager.InsertQueuedEmail(3, from, to, string.Empty, string.Empty, subject, body, DateTime.UtcNow, 0, null);
                 totalEmailsSent++;
             }
             return totalEmailsSent;

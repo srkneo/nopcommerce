@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     var pm = ForumManager.InsertPrivateMessage(
                         NopContext.Current.User.CustomerId, 
                         customer.CustomerId, subject, message,
-                        false, false, false, DateTime.Now);
+                        false, false, false, DateTime.UtcNow);
                 }
 
                 Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}", CustomerId));

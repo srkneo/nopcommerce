@@ -213,7 +213,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                 return null;
 
             int customerId = NopContext.Current.User.CustomerId;
-            DateTime createdOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            DateTime createdOn = DateTime.UtcNow;
             comment = string.Format(comment, commentParams);
 
             var activity = new ActivityLog();

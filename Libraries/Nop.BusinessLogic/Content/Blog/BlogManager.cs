@@ -147,8 +147,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             string blogPostBody, bool blogPostAllowComments,
             int createdById, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var blogPost = new BlogPost();
             blogPost.LanguageId = languageId;
             blogPost.BlogPostTitle = blogPostTitle;
@@ -185,8 +183,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             string blogPostBody, bool blogPostAllowComments,
             int createdById, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var blogPost = GetBlogPostById(blogPostId);
             if (blogPost == null)
                 return null;
@@ -324,8 +320,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         public static BlogComment InsertBlogComment(int blogPostId,
             int customerId, string ipAddress, string commentText, DateTime createdOn, bool notify)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var blogComment = new BlogComment();
             blogComment.BlogPostId = blogPostId;
             blogComment.CustomerId = customerId;
@@ -358,8 +352,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         public static BlogComment UpdateBlogComment(int blogCommentId, int blogPostId,
             int customerId, string ipAddress, string commentText, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var blogComment = GetBlogCommentById(blogCommentId);
             if (blogComment == null)
                 return null;

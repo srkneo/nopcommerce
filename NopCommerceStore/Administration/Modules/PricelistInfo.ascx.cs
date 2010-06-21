@@ -193,12 +193,12 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         if (productVariantPricelist != null)
                         {
                             productVariantPricelist = ProductManager.UpdateProductVariantPricelist(productVariantPricelistId, productVariantPricelist.ProductVariantId,
-                               productVariantPricelist.PricelistId, priceAdjustmentType, priceAdjustment, DateTime.Now);
+                               productVariantPricelist.PricelistId, priceAdjustmentType, priceAdjustment, DateTime.UtcNow);
                         }
                         else
                         {
                             productVariantPricelist = ProductManager.InsertProductVariantPricelist(productVariantId,
-                                priceListId, priceAdjustmentType, priceAdjustment, DateTime.Now);
+                                priceListId, priceAdjustmentType, priceAdjustment, DateTime.UtcNow);
                         }
                     }
                     else
@@ -262,7 +262,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     this.ddlFormatLocalization.SelectedValue, this.txtDescription.Text,
                     this.txtAdminNotes.Text, this.txtHeader.Text, this.txtBody.Text, this.txtFooter.Text,
                     priceAdjustmentType, this.txtPriceAdjustment.Value, this.chkOverrideIndivAdjustment.Checked,
-                    pricelist.CreatedOn, DateTime.Now);
+                    pricelist.CreatedOn, DateTime.UtcNow);
 
                 SavePricelistChanges(pricelist.PricelistId);
 
@@ -274,7 +274,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     this.txtShortName.Text, this.txtPricelistGuid.Text, this.txtCacheTime.Value, this.ddlFormatLocalization.SelectedValue,
                     this.txtDescription.Text, this.txtAdminNotes.Text, this.txtHeader.Text, this.txtBody.Text, this.txtFooter.Text,
                     priceAdjustmentType, priceAdjustment, chkOverrideIndivAdjustment.Checked,
-                    DateTime.Now, DateTime.Now);
+                    DateTime.UtcNow, DateTime.UtcNow);
 
                 SavePricelistChanges(pricelist.PricelistId);
             }

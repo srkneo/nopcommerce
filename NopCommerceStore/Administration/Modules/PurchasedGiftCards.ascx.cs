@@ -139,7 +139,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         protected string GetPurchasedOnInfo(GiftCard gc)
         {
-            string result = DateTimeHelper.ConvertToUserTime(gc.CreatedOn).ToString();
+            string result = DateTimeHelper.ConvertToUserTime(gc.CreatedOn, DateTimeKind.Utc).ToString();
             return result;
         }
                 

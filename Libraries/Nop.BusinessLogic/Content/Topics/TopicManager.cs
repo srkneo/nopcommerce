@@ -236,9 +236,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             DateTime createdOn, DateTime updatedOn,
             string metaKeywords, string metaDescription, string metaTitle)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var localizedTopic = new LocalizedTopic();
             localizedTopic.TopicId = topicId;
             localizedTopic.LanguageId = languageId;

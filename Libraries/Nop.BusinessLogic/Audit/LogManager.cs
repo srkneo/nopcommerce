@@ -153,7 +153,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             if (referrerUrl == null)
                 referrerUrl = string.Empty;
 
-            DateTime createdOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            DateTime createdOn = DateTime.UtcNow;
 
             var log = new Log();
             log.LogTypeId = (int)logType;

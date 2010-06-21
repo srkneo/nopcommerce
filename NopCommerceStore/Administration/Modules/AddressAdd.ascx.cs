@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         txtPhoneNumber.Text, txtEmail.Text, txtFaxNumber.Text, txtCompany.Text,
                         txtAddress1.Text, txtAddress2.Text, txtCity.Text,
                         int.Parse(this.ddlStateProvince.SelectedItem.Value), txtZipPostalCode.Text,
-                        int.Parse(this.ddlCountry.SelectedItem.Value), DateTime.Now, DateTime.Now);
+                        int.Parse(this.ddlCountry.SelectedItem.Value), DateTime.UtcNow, DateTime.UtcNow);
 
                     Response.Redirect("AddressDetails.aspx?AddressID=" + address.AddressId.ToString());
                 }

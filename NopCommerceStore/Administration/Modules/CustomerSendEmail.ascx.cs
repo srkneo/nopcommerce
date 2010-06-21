@@ -61,7 +61,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                         var subject = txtSubject.Text;
                         var body = txtBody.Content;
 
-                        var email = MessageManager.InsertQueuedEmail(5, from, to, string.Empty, string.Empty, subject, body, DateTime.Now, 0, null);
+                        var email = MessageManager.InsertQueuedEmail(5, from, to, string.Empty,
+                            string.Empty, subject, body, DateTime.UtcNow, 0, null);
                     }
 
                     Response.Redirect(string.Format("CustomerDetails.aspx?CustomerID={0}", CustomerId));

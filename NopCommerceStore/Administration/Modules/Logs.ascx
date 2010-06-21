@@ -26,7 +26,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Logs.CreatedOn %>" HeaderStyle-HorizontalAlign="Center"
             ItemStyle-Width="18%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+                <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Logs.Message %>" ItemStyle-Width="20%">

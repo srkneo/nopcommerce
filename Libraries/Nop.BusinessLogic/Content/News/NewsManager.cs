@@ -208,8 +208,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         public static News InsertNews(int languageId, string title, string shortText,
             string fullText, bool published, bool allowComments, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var news = new News();
             news.LanguageId =languageId;
             news.Title =title;
@@ -247,8 +245,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             string title, string shortText, string fullText,
             bool published, bool allowComments, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var news = GetNewsById(newsId);
             if (news == null)
                 return null;
@@ -390,8 +386,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         public static NewsComment InsertNewsComment(int newsId, int customerId, string ipAddress,
             string title, string comment, DateTime createdOn, bool notify)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var newsComment = new NewsComment();
             newsComment.NewsId = newsId;
             newsComment.CustomerId = customerId;
@@ -428,8 +422,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             int newsId, int customerId, string ipAddress, string title,
             string comment, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var newsComment = GetNewsCommentById(newsCommentId);
             if (newsComment == null)
                 return null;

@@ -155,7 +155,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.CreatedOn);
 
                 //order notes, notifications
-                InsertOrderNote(orderId, string.Format("Order status has been changed to {0}", os.ToString()), false, DateTime.Now);
+                InsertOrderNote(orderId, string.Format("Order status has been changed to {0}", os.ToString()), false, DateTime.UtcNow);
 
                 if (order.OrderStatus != OrderStatusEnum.Complete &&
                     os == OrderStatusEnum.Complete
@@ -164,7 +164,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     int orderCompletedCustomerNotificationQueuedEmailId = MessageManager.SendOrderCompletedCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageId);
                     if (orderCompletedCustomerNotificationQueuedEmailId > 0)
                     {
-                        InsertOrderNote(orderId, string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                        InsertOrderNote(orderId, string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailId), false, DateTime.UtcNow);
                     }
                 }
 
@@ -175,7 +175,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     int orderCancelledCustomerNotificationQueuedEmailId = MessageManager.SendOrderCancelledCustomerNotification(updatedOrder, updatedOrder.CustomerLanguageId);
                     if (orderCancelledCustomerNotificationQueuedEmailId > 0)
                     {
-                        InsertOrderNote(orderId, string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                        InsertOrderNote(orderId, string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId), false, DateTime.UtcNow);
                     }
                 }
 
@@ -193,7 +193,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     0, points, decimal.Zero,
                                     decimal.Zero, string.Empty,
                                     string.Format(LocalizationManager.GetLocaleResourceString("RewardPoints.Message.EarnedForOrder"), order.OrderId),
-                                    DateTime.Now);
+                                    DateTime.UtcNow);
                             }
 
 
@@ -203,7 +203,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     0, -points, decimal.Zero,
                                     decimal.Zero, string.Empty,
                                     string.Format(LocalizationManager.GetLocaleResourceString("RewardPoints.Message.ReducedForOrder"), order.OrderId),
-                                    DateTime.Now);
+                                    DateTime.UtcNow);
                             }
                         }
                     }
@@ -257,7 +257,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (order.PaymentStatus == PaymentStatusEnum.Paid && !order.PaidDate.HasValue)
             {
                 //ensure that paid date is set
-                DateTime paidDate = DateTime.Now;
+                DateTime paidDate = DateTime.UtcNow;
                 order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                     order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                     order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
@@ -733,15 +733,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 shippingCountry = string.Empty;
             if (shippingMethod == null)
                 shippingMethod = string.Empty;
-            if (paidDate.HasValue)
-                paidDate = DateTimeHelper.ConvertToUtcTime(paidDate.Value);
-            if (shippedDate.HasValue)
-                shippedDate = DateTimeHelper.ConvertToUtcTime(shippedDate.Value);
-            if (deliveryDate.HasValue)
-                deliveryDate = DateTimeHelper.ConvertToUtcTime(deliveryDate.Value);
             if (trackingNumber == null)
                 trackingNumber = string.Empty;
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
 
             var order = new Order();
@@ -1012,15 +1005,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             bool deleted,
             DateTime createdOn)
         {
-            if (paidDate.HasValue)
-                paidDate = DateTimeHelper.ConvertToUtcTime(paidDate.Value);
-            if (shippedDate.HasValue)
-                shippedDate = DateTimeHelper.ConvertToUtcTime(shippedDate.Value);
-            if (deliveryDate.HasValue)
-                deliveryDate = DateTimeHelper.ConvertToUtcTime(deliveryDate.Value);
             if (trackingNumber == null)
                 trackingNumber = string.Empty;
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
 
             var order = GetOrderById(orderId);
             if (order == null)
@@ -1577,8 +1563,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static OrderNote InsertOrderNote(int orderId, string note, 
             bool displayToCustomer, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var orderNote = new OrderNote();
             orderNote.OrderId = orderId;
             orderNote.Note = note;
@@ -1603,8 +1587,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static OrderNote UpdateOrderNote(int orderNoteId, int orderId, 
             string note, bool displayToCustomer, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            
             var orderNote = GetOrderNoteById(orderNoteId);
             if (orderNote == null)
                 return null;
@@ -1903,9 +1885,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int cycleLength, int cyclePeriod, int totalCycles,
             DateTime startDate, bool isActive, bool deleted, DateTime createdOn)
         {
-            startDate = DateTimeHelper.ConvertToUtcTime(startDate);
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var recurringPayment = new RecurringPayment();
             recurringPayment.InitialOrderId = initialOrderId;
             recurringPayment.CycleLength = cycleLength;
@@ -1940,9 +1919,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int initialOrderId, int cycleLength, int cyclePeriod, int totalCycles,
             DateTime startDate, bool isActive, bool deleted, DateTime createdOn)
         {
-            startDate = DateTimeHelper.ConvertToUtcTime(startDate);
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var recurringPayment = GetRecurringPaymentById(recurringPaymentId);
             if (recurringPayment == null)
                 return null;
@@ -2046,8 +2022,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static RecurringPaymentHistory InsertRecurringPaymentHistory(int recurringPaymentId,
             int orderId, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            
             var recurringPaymentHistory = new RecurringPaymentHistory();
             recurringPaymentHistory.RecurringPaymentId = recurringPaymentId;
             recurringPaymentHistory.OrderId = orderId;
@@ -2070,8 +2044,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static RecurringPaymentHistory UpdateRecurringPaymentHistory(int recurringPaymentHistoryId,
             int recurringPaymentId, int orderId, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var recurringPaymentHistory = GetRecurringPaymentHistoryById(recurringPaymentHistoryId);
             if (recurringPaymentHistory == null)
                 return null;
@@ -2202,8 +2174,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string senderName, string senderEmail, string message,
             bool isRecipientNotified, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            
             var giftCard = new GiftCard();
             giftCard.PurchasedOrderProductVariantId = purchasedOrderProductVariantId;
             giftCard.Amount = amount;
@@ -2247,8 +2217,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string senderName, string senderEmail, string message,
             bool isRecipientNotified, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var giftCard = GetGiftCardById(giftCardId);
             if (giftCard == null)
                 return null;
@@ -2337,8 +2305,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int customerId, int orderId, decimal usedValue, 
             decimal usedValueInCustomerCurrency, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var giftCardUsageHistory = new GiftCardUsageHistory();
             giftCardUsageHistory.GiftCardId = giftCardId;
             giftCardUsageHistory.CustomerId = customerId;
@@ -2369,8 +2335,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int giftCardId, int customerId, int orderId, decimal usedValue,
             decimal usedValueInCustomerCurrency, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var giftCardUsageHistory = GetGiftCardUsageHistoryById(giftCardUsageHistoryId);
             if (giftCardUsageHistory == null)
                 return null;
@@ -2474,8 +2438,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
             string message, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer == null)
                 throw new NopException("Customer not found. ID=" + customerId);
@@ -2521,8 +2483,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
             string message, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var rewardPointsHistory = GetRewardPointsHistoryById(rewardPointsHistoryId);
             if (rewardPointsHistory == null)
                 return null;
@@ -3324,7 +3284,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                              null,
                              string.Empty,
                              false,
-                             DateTime.Now);
+                             DateTime.UtcNow);
 
                         orderId = order.OrderId;
 
@@ -3382,7 +3342,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                             false, GiftCardHelper.GenerateGiftCardCode(),
                                             giftCardRecipientName, giftCardRecipientEmail,
                                            giftCardSenderName, giftCardSenderEmail,
-                                           giftCardMessage, false, DateTime.Now);
+                                           giftCardMessage, false, DateTime.UtcNow);
                                     }
                                 }
 
@@ -3412,7 +3372,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                 //    {
                                 //        GiftCard gc = InsertGiftCard(opv.OrderProductVariantId, opv.UnitPriceExclTax,
                                 //            false, GiftCardHelper.GenerateGiftCardCode(), string.Empty, string.Empty,
-                                //            string.Empty, string.Empty, string.Empty, false, DateTime.Now);
+                                //            string.Empty, string.Empty, string.Empty, false, DateTime.UtcNow);
                                 //    }
                                 //}
 
@@ -3427,7 +3387,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                             foreach (var discount in appliedDiscounts)
                             {
                                 var duh = DiscountManager.InsertDiscountUsageHistory(discount.DiscountId,
-                                    customer.CustomerId, order.OrderId, DateTime.Now);
+                                    customer.CustomerId, order.OrderId, DateTime.UtcNow);
                             }
                         }
 
@@ -3442,7 +3402,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     decimal amountUsedInCustomerCurrency = CurrencyManager.ConvertCurrency(amountUsed, CurrencyManager.PrimaryStoreCurrency, paymentInfo.CustomerCurrency);
                                     var gcuh = InsertGiftCardUsageHistory(agc.GiftCardId,
                                         customer.CustomerId, order.OrderId,
-                                        amountUsed, amountUsedInCustomerCurrency, DateTime.Now);
+                                        amountUsed, amountUsedInCustomerCurrency, DateTime.UtcNow);
                                 }
                             }
                         }
@@ -3459,7 +3419,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                 redeemedRewardPointsAmountInCustomerCurrency,
                                 customerCurrencyCode,
                                 message,
-                                DateTime.Now);
+                                DateTime.UtcNow);
                         }
 
                         //recurring orders
@@ -3470,8 +3430,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                 //create recurring payment
                                 var rp = InsertRecurringPayment(order.OrderId,
                                     paymentInfo.RecurringCycleLength, paymentInfo.RecurringCyclePeriod,
-                                    paymentInfo.RecurringTotalCycles, DateTime.Now,
-                                    true, false, DateTime.Now);
+                                    paymentInfo.RecurringTotalCycles, DateTime.UtcNow,
+                                    true, false, DateTime.UtcNow);
 
 
                                 var recurringPaymentType = PaymentManager.SupportRecurringPayments(paymentMethod.PaymentMethodId);
@@ -3486,7 +3446,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                         {
                                             //first payment
                                             RecurringPaymentHistory rph = InsertRecurringPaymentHistory(rp.RecurringPaymentId,
-                                                order.OrderId, DateTime.Now);
+                                                order.OrderId, DateTime.UtcNow);
                                         }
                                         break;
                                     case RecurringPaymentTypeEnum.Automatic:
@@ -3502,23 +3462,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
 
                         //notes, messages
-                        InsertOrderNote(order.OrderId, string.Format("Order placed"), false, DateTime.Now);
+                        InsertOrderNote(order.OrderId, string.Format("Order placed"), false, DateTime.UtcNow);
 
                         int orderPlacedStoreOwnerNotificationQueuedEmailId = MessageManager.SendOrderPlacedStoreOwnerNotification(order, LocalizationManager.DefaultAdminLanguage.LanguageId);
                         if (orderPlacedStoreOwnerNotificationQueuedEmailId > 0)
                         {
-                            InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailId), false, DateTime.Now);
+                            InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailId), false, DateTime.UtcNow);
                         }
 
                         int orderPlacedCustomerNotificationQueuedEmailId = MessageManager.SendOrderPlacedCustomerNotification(order, order.CustomerLanguageId);
                         if (orderPlacedCustomerNotificationQueuedEmailId > 0)
                         {
-                            InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                            InsertOrderNote(order.OrderId, string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailId), false, DateTime.UtcNow);
                         }
 
                         if (SMSManager.IsSMSAlertsEnabled && SMSManager.SendOrderPlacedNotification(order))
                         {
-                            InsertOrderNote(order.OrderId, "\"Order placed\" SMS alert (to store owner) has been sent", false, DateTime.Now);
+                            InsertOrderNote(order.OrderId, "\"Order placed\" SMS alert (to store owner) has been sent", false, DateTime.UtcNow);
                         }
 
                         //order status
@@ -3622,7 +3582,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 }
                 else
                 {
-                    InsertRecurringPaymentHistory(rp.RecurringPaymentId, newOrderId, DateTime.Now);
+                    InsertRecurringPaymentHistory(rp.RecurringPaymentId, newOrderId, DateTime.UtcNow);
                 }
             }
             catch (Exception exc)
@@ -3673,11 +3633,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     PaymentManager.CancelRecurringPayment(initialOrder, ref cancelPaymentResult);
                     if (String.IsNullOrEmpty(cancelPaymentResult.Error))
                     {
-                        InsertOrderNote(initialOrder.OrderId, string.Format("Recurring payment has been cancelled"), false, DateTime.Now);
+                        InsertOrderNote(initialOrder.OrderId, string.Format("Recurring payment has been cancelled"), false, DateTime.UtcNow);
                     }
                     else
                     {
-                        InsertOrderNote(initialOrder.OrderId, string.Format("Error cancelling recurring payment. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
+                        InsertOrderNote(initialOrder.OrderId, string.Format("Error cancelling recurring payment. Error: {0}", cancelPaymentResult.Error), false, DateTime.UtcNow);
                     }
                 }
             }
@@ -3761,7 +3721,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (!CanShip(order))
                 throw new NopException("Can not do shipment for order.");
 
-            var shippedDate = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            var shippedDate = DateTime.UtcNow;
             order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                 order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                 order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
@@ -3794,14 +3754,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 order.ShippingMethod, order.ShippingRateComputationMethodId, shippedDate,
                 order.DeliveryDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderId, string.Format("Order has been shipped"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been shipped"), false, DateTime.UtcNow);
 
             if (notifyCustomer)
             {
                 int orderShippedCustomerNotificationQueuedEmailId = MessageManager.SendOrderShippedCustomerNotification(order, order.CustomerLanguageId);
                 if (orderShippedCustomerNotificationQueuedEmailId > 0)
                 {
-                    InsertOrderNote(order.OrderId, string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId), false, DateTime.UtcNow);
                 }
             }
 
@@ -3844,7 +3804,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (!CanDeliver(order))
                 throw new NopException("Can not do delivery for order.");
 
-            var deliveryDate = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            var deliveryDate = DateTime.UtcNow;
             order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                 order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                 order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
@@ -3877,14 +3837,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 order.ShippingMethod, order.ShippingRateComputationMethodId, order.ShippedDate,
                 deliveryDate, order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderId, string.Format("Order has been delivered"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been delivered"), false, DateTime.UtcNow);
 
             if (notifyCustomer)
             {
                 int orderDeliveredCustomerNotificationQueuedEmailId = MessageManager.SendOrderDeliveredCustomerNotification(order, order.CustomerLanguageId);
                 if (orderDeliveredCustomerNotificationQueuedEmailId > 0)
                 {
-                    InsertOrderNote(order.OrderId, string.Format("\"Delivered\" email (to customer) has been queued. Queued email identifier: {0}.", orderDeliveredCustomerNotificationQueuedEmailId), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("\"Delivered\" email (to customer) has been queued. Queued email identifier: {0}.", orderDeliveredCustomerNotificationQueuedEmailId), false, DateTime.UtcNow);
                 }
             }
 
@@ -3927,7 +3887,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             //Cancel order
             order = SetOrderStatus(order.OrderId, OrderStatusEnum.Cancelled, notifyCustomer);
 
-            InsertOrderNote(order.OrderId, string.Format("Order has been cancelled"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been cancelled"), false, DateTime.UtcNow);
             
             //cancel recurring payments
             var recurringPayments = SearchRecurringPayments(0, order.OrderId, null);
@@ -4007,7 +3967,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.ShippedDate, order.DeliveryDate, 
                    order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderId, string.Format("Order has been marked as authorized"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as authorized"), false, DateTime.UtcNow);
 
             order = CheckOrderStatus(order.OrderId);
 
@@ -4069,7 +4029,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     var paidDate = order.PaidDate;
                     var paymentStatus = processPaymentResult.PaymentStatus;
                     if (paymentStatus == PaymentStatusEnum.Paid)
-                        paidDate = DateTime.Now;
+                        paidDate = DateTime.UtcNow;
                     order = UpdateOrder(order.OrderId, order.OrderGuid, order.CustomerId, order.CustomerLanguageId,
                         order.CustomerTaxDisplayType, order.CustomerIP, order.OrderSubtotalInclTax, order.OrderSubtotalExclTax, order.OrderShippingInclTax,
                         order.OrderShippingExclTax, order.PaymentMethodAdditionalFeeInclTax, order.PaymentMethodAdditionalFeeExclTax,
@@ -4106,12 +4066,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.ShippedDate, order.DeliveryDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-                    InsertOrderNote(order.OrderId, string.Format("Order has been captured"), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Order has been captured"), false, DateTime.UtcNow);
 
                 }
                 else
                 {
-                    InsertOrderNote(order.OrderId, string.Format("Unable to capture order. Error: {0}", processPaymentResult.Error), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Unable to capture order. Error: {0}", processPaymentResult.Error), false, DateTime.UtcNow);
 
                 }
                 order = CheckOrderStatus(order.OrderId);
@@ -4183,7 +4143,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.AuthorizationTransactionId,
                     order.AuthorizationTransactionCode, order.AuthorizationTransactionResult,
                     order.CaptureTransactionId, order.CaptureTransactionResult,
-                    order.SubscriptionTransactionId, order.PurchaseOrderNumber, PaymentStatusEnum.Paid, DateTime.Now,
+                    order.SubscriptionTransactionId, order.PurchaseOrderNumber, PaymentStatusEnum.Paid, DateTime.UtcNow,
                     order.BillingFirstName, order.BillingLastName, order.BillingPhoneNumber,
                     order.BillingEmail, order.BillingFaxNumber, order.BillingCompany, order.BillingAddress1,
                     order.BillingAddress2, order.BillingCity,
@@ -4198,7 +4158,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     order.ShippedDate, order.DeliveryDate,
                     order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderId, string.Format("Order has been marked as paid"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as paid"), false, DateTime.UtcNow);
 
             order = CheckOrderStatus(order.OrderId);
 
@@ -4289,12 +4249,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.ShippedDate, order.DeliveryDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-                    InsertOrderNote(order.OrderId, string.Format("Order has been refunded"), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Order has been refunded"), false, DateTime.UtcNow);
 
                 }
                 else
                 {
-                    InsertOrderNote(order.OrderId, string.Format("Unable to refund order. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Unable to refund order. Error: {0}", cancelPaymentResult.Error), false, DateTime.UtcNow);
 
                 }
                 order = CheckOrderStatus(order.OrderId);
@@ -4379,7 +4339,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.ShippedDate, order.DeliveryDate,
                    order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderId, string.Format("Order has been marked as refunded"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as refunded"), false, DateTime.UtcNow);
 
             order = CheckOrderStatus(order.OrderId);
 
@@ -4470,12 +4430,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.ShippedDate, order.DeliveryDate,
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-                    InsertOrderNote(order.OrderId, string.Format("Order has been voided"), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Order has been voided"), false, DateTime.UtcNow);
 
                 }
                 else
                 {
-                    InsertOrderNote(order.OrderId, string.Format("Unable to void order. Error: {0}", cancelPaymentResult.Error), false, DateTime.Now);
+                    InsertOrderNote(order.OrderId, string.Format("Unable to void order. Error: {0}", cancelPaymentResult.Error), false, DateTime.UtcNow);
 
                 }
                 order = CheckOrderStatus(order.OrderId);
@@ -4561,7 +4521,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                    order.ShippedDate, order.DeliveryDate,
                    order.TrackingNumber, order.Deleted, order.CreatedOn);
 
-            InsertOrderNote(order.OrderId, string.Format("Order has been marked as voided"), false, DateTime.Now);
+            InsertOrderNote(order.OrderId, string.Format("Order has been marked as voided"), false, DateTime.UtcNow);
 
             order = CheckOrderStatus(order.OrderId);
 

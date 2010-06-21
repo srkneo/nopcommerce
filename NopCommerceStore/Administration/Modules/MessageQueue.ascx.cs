@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         {
             DateTime? startDate = ctrlStartDatePicker.SelectedDate;
             DateTime? endDate = ctrlEndDatePicker.SelectedDate;
-            DateTime startDateTmp = DateTime.Now;
+            DateTime startDateTmp = DateTime.UtcNow;
             if(startDate.HasValue)
             {
                 startDate = DateTimeHelper.ConvertToUtcTime(startDate.Value, DateTimeHelper.CurrentTimeZone);
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!queuedEmail.SentOn.HasValue)
                 return "Not sent yet";
             else
-                return string.Format("Sent on {0}", DateTimeHelper.ConvertToUserTime(queuedEmail.SentOn.Value));
+                return string.Format("Sent on {0}", DateTimeHelper.ConvertToUserTime(queuedEmail.SentOn.Value, DateTimeKind.Utc));
         }
 
         protected void btnGoDirectlyToEmailNumber_Click(object sender, EventArgs e)

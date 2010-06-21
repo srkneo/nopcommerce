@@ -24,7 +24,7 @@
                     <a class="blogtitle" href="<%#SEOHelper.GetBlogPostUrl(Convert.ToInt32(Eval("BlogPostId")))%>">
                         <%#Server.HtmlEncode(Eval("BlogPostTitle").ToString())%></a><span class="blogdate">
                             -
-                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString("D")%>
+                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString("D")%>
                         </span>
                     <div class="blogbody">
                         <%#Eval("BlogPostBody")%>

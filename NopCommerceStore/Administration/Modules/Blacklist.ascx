@@ -32,13 +32,13 @@
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Blacklist.IpAddress.CreatedOn %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Blacklist.IpAddress.UpdatedOn %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("UpdatedOn")).ToString()%>
+                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("UpdatedOn"), DateTimeKind.Utc).ToString()%>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -65,13 +65,13 @@
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Blacklist.IpNetwork.CreatedOn %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<% $NopResources:Admin.Blacklist.IpNetwork.UpdatedOn %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("UpdatedOn")).ToString()%>
+                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("UpdatedOn"), DateTimeKind.Utc).ToString()%>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

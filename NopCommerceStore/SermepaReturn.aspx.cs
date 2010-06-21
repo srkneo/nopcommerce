@@ -85,12 +85,12 @@ namespace NopSolutions.NopCommerce.Web
                     {
                         OrderManager.MarkOrderAsPaid(order.OrderId);
                     }
-                    //OrderManager.InsertOrderNote(order.OrderId, "Información del pago: " + Request.Form.ToString(), DateTime.Now);
+                    //OrderManager.InsertOrderNote(order.OrderId, "Información del pago: " + Request.Form.ToString(), DateTime.UtcNow);
                 }
                 else
                 {
                     LogManager.InsertLog(LogTypeEnum.OrderError, "TPV SERMEPA: Pago no autorizado", "Pago no autorizado con ERROR: " + Ds_Response);
-                    //OrderManager.InsertOrderNote(order.OrderId, "!!! PAGO DENEGADO !!! " + Request.Form.ToString(), DateTime.Now);
+                    //OrderManager.InsertOrderNote(order.OrderId, "!!! PAGO DENEGADO !!! " + Request.Form.ToString(), DateTime.UtcNow);
                 }
 
             }

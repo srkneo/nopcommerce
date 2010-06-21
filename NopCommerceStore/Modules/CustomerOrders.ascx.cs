@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             DateTime? nextPaymentDate = recurringPayment.NextPaymentDate;
             if (nextPaymentDate.HasValue)
             {
-                nextPaymentInfo = DateTimeHelper.ConvertToUserTime(nextPaymentDate.Value).ToString();
+                nextPaymentInfo = DateTimeHelper.ConvertToUserTime(nextPaymentDate.Value, DateTimeKind.Utc).ToString();
             }
             return nextPaymentInfo;
         }

@@ -22,7 +22,7 @@
                 <div class="item">
                     <a class="newstitle" href="<%#SEOHelper.GetNewsUrl(Convert.ToInt32(Eval("NewsId")))%>">
                         <%#Server.HtmlEncode(Eval("Title").ToString())%></a> <span class="newsdate">-
-                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString("D")%>
+                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString("D")%>
                         </span>
                     <div class="newsdetails">
                         <%#Eval("Short")%>

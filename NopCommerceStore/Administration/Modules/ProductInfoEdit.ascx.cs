@@ -153,7 +153,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                      cbShowOnHomePage.Checked, product.MetaKeywords, product.MetaDescription,
                      product.MetaTitle, product.SEName, cbAllowCustomerReviews.Checked,
                      cbAllowCustomerRatings.Checked, product.RatingSum, product.TotalRatingVotes, cbPublished.Checked,
-                     product.Deleted, product.CreatedOn, DateTime.Now);
+                     product.Deleted, product.CreatedOn, DateTime.UtcNow);
 
                 SaveLocalizableContent(product);
 

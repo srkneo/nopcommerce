@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (blogPost != null)
             {
                 this.lBlogPostTitle.Text = Server.HtmlEncode(blogPost.BlogPostTitle);
-                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogPost.CreatedOn).ToString("D");
+                this.lCreatedOn.Text = DateTimeHelper.ConvertToUserTime(blogPost.CreatedOn, DateTimeKind.Utc).ToString("D");
                 this.lBlogPostBody.Text = blogPost.BlogPostBody;
 
                 if (blogPost.BlogPostAllowComments)
@@ -109,7 +109,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         if (NopContext.Current.User != null && !NopContext.Current.User.IsGuest)
                             customerId = NopContext.Current.User.CustomerId;
 
-                        BlogManager.InsertBlogComment(blogPost.BlogPostId, customerId, comment, DateTime.Now);
+                        BlogManager.InsertBlogComment(blogPost.BlogPostId, customerId, comment, DateTime.UtcNow);
                         txtComment.Text = string.Empty;
                         BindData();
                     }

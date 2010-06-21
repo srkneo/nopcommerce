@@ -40,8 +40,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = productTemplate.DisplayOrder;
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(productTemplate.CreatedOn).ToString();
-                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(productTemplate.UpdatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(productTemplate.CreatedOn, DateTimeKind.Utc).ToString();
+                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(productTemplate.UpdatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -65,11 +65,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (productTemplate != null)
             {
                 productTemplate = TemplateManager.UpdateProductTemplate(productTemplate.ProductTemplateId, txtName.Text,
-                    txtTemplatePath.Text, txtDisplayOrder.Value, productTemplate.CreatedOn, DateTime.Now);
+                    txtTemplatePath.Text, txtDisplayOrder.Value, productTemplate.CreatedOn, DateTime.UtcNow);
             }
             else
             {
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.UtcNow;
                 productTemplate = TemplateManager.InsertProductTemplate(txtName.Text,
                     txtTemplatePath.Text, txtDisplayOrder.Value, now, now);
 

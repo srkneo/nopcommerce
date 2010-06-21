@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.cbAllowComments.Checked = news.AllowComments;
 
                 this.pnlCreatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(news.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(news.CreatedOn, DateTimeKind.Utc).ToString();
 
                 var newsComments = news.NewsComments;
                 if (newsComments.Count > 0)
@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 news = NewsManager.InsertNews(int.Parse(this.ddlLanguage.SelectedItem.Value),
                    txtTitle.Text, txtShort.Text, txtFull.Content,
-                   cbPublished.Checked, cbAllowComments.Checked, DateTime.Now);
+                   cbPublished.Checked, cbAllowComments.Checked, DateTime.UtcNow);
             }
             return news;
         }

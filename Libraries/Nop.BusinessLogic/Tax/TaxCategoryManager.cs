@@ -127,9 +127,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static TaxCategory InsertTaxCategory(string name,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var taxCategory = new TaxCategory();
             taxCategory.Name = name;
             taxCategory.DisplayOrder = displayOrder;
@@ -159,9 +156,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static TaxCategory UpdateTaxCategory(int taxCategoryId, string name,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var taxCategory = GetTaxCategoryById(taxCategoryId);
             if (taxCategory == null)
                 return null;

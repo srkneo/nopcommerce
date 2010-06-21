@@ -136,7 +136,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (CustomerManager.ShowCustomersJoinDate)
             {
                 phJoinDate.Visible = true;
-                lblJoinDate.Text = DateTimeHelper.ConvertToUserTime(customer.RegistrationDate).ToString("f");
+                lblJoinDate.Text = DateTimeHelper.ConvertToUserTime(customer.RegistrationDate, DateTimeKind.Utc).ToString("f");
             }
             else
             {
@@ -199,7 +199,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var lblPosted = e.Item.FindControl("lblPosted") as Label;
                 if (lblPosted != null)
                 {
-                    lblPosted.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn).ToString("f");
+                    lblPosted.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn, DateTimeKind.Utc).ToString("f");
                 }
 
                 var lblPost = e.Item.FindControl("lblPost") as Label;

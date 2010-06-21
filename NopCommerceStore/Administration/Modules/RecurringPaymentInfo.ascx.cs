@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtTotalCycles.Value = recurringPayment.TotalCycles;
                 this.lblCyclesRemaining.Text = recurringPayment.CyclesRemaining.ToString();
                 this.lblRecurringPaymentType.Text = CommonHelper.ConvertEnum(recurringPayment.RecurringPaymentType.ToString());
-                this.lblStartDate.Text = DateTimeHelper.ConvertToUserTime(recurringPayment.StartDate).ToString();
+                this.lblStartDate.Text = DateTimeHelper.ConvertToUserTime(recurringPayment.StartDate, DateTimeKind.Utc).ToString();
                 this.cbIsActive.Checked = recurringPayment.IsActive;
             }
             else
@@ -88,7 +88,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 DateTime? nextPaymentDate = recurringPayment.NextPaymentDate;
                 if (nextPaymentDate.HasValue)
                 {
-                    lblNextPaymentDate.Text = string.Format(GetLocaleResourceString("Admin.RecurringPaymentInfo.NextPaymentDateIs"), DateTimeHelper.ConvertToUserTime(nextPaymentDate.Value).ToString());
+                    lblNextPaymentDate.Text = string.Format(GetLocaleResourceString("Admin.RecurringPaymentInfo.NextPaymentDateIs"), DateTimeHelper.ConvertToUserTime(nextPaymentDate.Value, DateTimeKind.Utc).ToString());
                     lblNextPaymentDate.Visible = true;
                     btnProcessNextPayment.Visible = true;
                 }

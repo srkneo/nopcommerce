@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 exchangeRateCurrencyCode.ToLower() != "eur")
                 throw new NopException("You can use our \"CurrencyLiveRate\" service only when exchange rate currency code is set to EURO");
 
-            updateDate = DateTime.Now;
+            updateDate = DateTime.UtcNow;
             rates = new DataTable();
             rates.Columns.Add("CurrencyCode", typeof(string));
             rates.Columns.Add("Rate", typeof(decimal));
@@ -204,9 +204,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 throw new NopException("Specified display locale culture is not supported");
             }
 
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var currency = new Currency();
             currency.Name = name;
             currency.CurrencyCode = currencyCode;
@@ -256,9 +253,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             {
                 throw new NopException("Specified display locale culture is not supported");
             }
-
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var currency = GetCurrencyById(currencyId);
             if (currency == null)

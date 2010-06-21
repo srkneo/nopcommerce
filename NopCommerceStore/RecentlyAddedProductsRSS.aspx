@@ -19,7 +19,7 @@
          <author><![CDATA[<%# SettingManager.StoreName%>]]></author>
          <description><![CDATA[<%# Eval("LocalizedShortDescription") %>]]></description>
          <link><![CDATA[<%# SEOHelper.GetProductUrl(Convert.ToInt32(Eval("ProductId"))) %>]]></link>
-         <pubDate><%# string.Format("{0:R}", DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")))%></pubDate>
+         <pubDate><%# string.Format("{0:R}", DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc))%></pubDate>
       </item>
     </ItemTemplate>
     <FooterTemplate>

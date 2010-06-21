@@ -28,7 +28,7 @@
                         <%#Server.HtmlEncode(GetCustomerInfo(Convert.ToInt32(Eval("CustomerId"))))%>
                         |
                         <%=GetLocaleResourceString("Products.ProductReviewCreatedOn")%>:
-                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString("g")%>
+                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString("g")%>
                     </p>
                     <nopCommerce:ProductReviewHelpfulness ID="ctrlProductReviewHelpfulness" runat="server"
                         ProductReviewID='<%#Eval("ProductReviewId")%>'></nopCommerce:ProductReviewHelpfulness>

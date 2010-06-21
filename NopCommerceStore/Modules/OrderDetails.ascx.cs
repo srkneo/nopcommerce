@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             this.lnkPrint.NavigateUrl = Page.ResolveUrl("~/PrintOrderDetails.aspx?OrderID=" + this.OrderId).ToLowerInvariant();
             this.lblOrderId.Text = order.OrderId.ToString();
-            this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(order.CreatedOn).ToString("D");
+            this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(order.CreatedOn, DateTimeKind.Utc).ToString("D");
             this.lblOrderStatus.Text = OrderManager.GetOrderStatusName(order.OrderStatusId);
             btnReOrder.Visible = OrderManager.IsReOrderAllowed;
 
@@ -86,12 +86,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 this.lblOrderWeight.Text = string.Format("{0} [{1}]", order.OrderWeight, MeasureManager.BaseWeightIn.Name);
 
                 if (order.ShippedDate.HasValue)
-                    this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value).ToString("D");
+                    this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value, DateTimeKind.Utc).ToString("D");
                 else
                     this.lblShippedDate.Text = GetLocaleResourceString("Order.NotYetShipped");
 
                 if (order.DeliveryDate.HasValue)
-                    this.lblDeliveredOn.Text = DateTimeHelper.ConvertToUserTime(order.DeliveryDate.Value).ToString("D");
+                    this.lblDeliveredOn.Text = DateTimeHelper.ConvertToUserTime(order.DeliveryDate.Value, DateTimeKind.Utc).ToString("D");
                 else
                     this.lblDeliveredOn.Text = GetLocaleResourceString("Order.Order.NotYetDelivered");
 

@@ -91,8 +91,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtDisplayOrder.Value = currency.DisplayOrder;
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(currency.CreatedOn).ToString();
-                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(currency.UpdatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(currency.CreatedOn, DateTimeKind.Utc).ToString();
+                this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(currency.UpdatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -119,11 +119,11 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 currency = CurrencyManager.UpdateCurrency(currency.CurrencyId, txtName.Text, txtCurrencyCode.Text,
                     txtRate.Value, displayLocale, txtCustomFormatting.Text, cbPublished.Checked, txtDisplayOrder.Value,
-                    currency.CreatedOn, DateTime.Now);
+                    currency.CreatedOn, DateTime.UtcNow);
             }
             else
             {
-                DateTime now = DateTime.Now;
+                DateTime now = DateTime.UtcNow;
                 currency = CurrencyManager.InsertCurrency(txtName.Text, txtCurrencyCode.Text,
                     txtRate.Value, displayLocale, txtCustomFormatting.Text, 
                     cbPublished.Checked, txtDisplayOrder.Value, now, now);

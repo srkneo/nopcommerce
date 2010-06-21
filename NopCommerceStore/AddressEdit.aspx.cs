@@ -109,7 +109,7 @@ namespace NopSolutions.NopCommerce.Web
                         inputedAddress.PhoneNumber, inputedAddress.Email, inputedAddress.FaxNumber,
                         inputedAddress.Company, inputedAddress.Address1, inputedAddress.Address2,
                         inputedAddress.City, inputedAddress.StateProvinceId, inputedAddress.ZipPostalCode,
-                        inputedAddress.CountryId, oldAddress.CreatedOn, DateTime.Now);
+                        inputedAddress.CountryId, oldAddress.CreatedOn, DateTime.UtcNow);
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace NopSolutions.NopCommerce.Web
                         inputedAddress.PhoneNumber, inputedAddress.Email, inputedAddress.FaxNumber,
                         inputedAddress.Company, inputedAddress.Address1, inputedAddress.Address2,
                         inputedAddress.City, inputedAddress.StateProvinceId, inputedAddress.ZipPostalCode,
-                        inputedAddress.CountryId, DateTime.Now, DateTime.Now);
+                        inputedAddress.CountryId, DateTime.UtcNow, DateTime.UtcNow);
                 }
                 Response.Redirect("~/account.aspx");
             }

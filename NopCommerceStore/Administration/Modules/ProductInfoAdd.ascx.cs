@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public Product SaveInfo()
         {
-            DateTime nowDT = DateTime.Now;
+            DateTime nowDT = DateTime.UtcNow;
 
             string name = txtName.Text.Trim();
             string shortDescription = txtShortDescription.Text.Trim();

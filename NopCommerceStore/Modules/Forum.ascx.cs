@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             if (forumSubscription == null)
             {
                 forumSubscription = ForumManager.InsertSubscription(Guid.NewGuid(),
-                    NopContext.Current.User.CustomerId, forum.ForumId, 0, DateTime.Now);
+                    NopContext.Current.User.CustomerId, forum.ForumId, 0, DateTime.UtcNow);
             }
             else
             {

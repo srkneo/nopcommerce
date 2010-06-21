@@ -53,7 +53,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         {
             if (forumPost != null)
             {
-                lblLastPostDate.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn).ToString("f");
+                lblLastPostDate.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn, DateTimeKind.Utc).ToString("f");
                 var forumTopic = forumPost.Topic;
                 if (forumTopic != null)
                 {

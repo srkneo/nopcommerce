@@ -44,7 +44,7 @@
                 <%#Eval("DisplayOrder")%>
             </td>
             <td>
-                <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+                <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
             </td>
             <td>
                 <a href="ForumGroupDetails.aspx?ForumGroupID=<%#Eval("ForumGroupId")%>">
@@ -62,7 +62,7 @@
                         <%#Eval("DisplayOrder")%>
                     </td>
                     <td>
-                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
                     </td>
                     <td>
                         <a href="ForumDetails.aspx?ForumID=<%#Eval("ForumId")%>">

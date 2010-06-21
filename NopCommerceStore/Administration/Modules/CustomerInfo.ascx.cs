@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtAdminComment.Text = customer.AdminComment;
                 this.cbActive.Checked = customer.Active;
                 this.pnlRegistrationDate.Visible = true;
-                this.lblRegistrationDate.Text = DateTimeHelper.ConvertToUserTime(customer.RegistrationDate).ToString();
+                this.lblRegistrationDate.Text = DateTimeHelper.ConvertToUserTime(customer.RegistrationDate, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -258,7 +258,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     isTaxExempt, isAdmin,
                     false, isForumModerator,
                     0, string.Empty, adminComment, active,
-                    false, DateTime.Now, string.Empty, 0, out createStatus);
+                    false, DateTime.UtcNow, string.Empty, 0, out createStatus);
                 if (createStatus != MembershipCreateStatus.Success)
                 {
                     throw new NopException(string.Format("Could not create new customer: {0}", createStatus.ToString()));

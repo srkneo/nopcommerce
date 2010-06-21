@@ -62,6 +62,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         /// <returns>A DateTime value that represents time that corresponds to the dateTime parameter in customer time zone.</returns>
         public static DateTime ConvertToUserTime(DateTime dt)
         {
+            return ConvertToUserTime(dt, dt.Kind);
+        }
+
+        /// <summary>
+        /// Converts the date and time to current user date and time
+        /// </summary>
+        /// <param name="dt">The date and time (respesents local system time or UTC time) to convert.</param>
+        /// <param name="sourceDateTimeKind">The source datetimekind</param>
+        /// <returns>A DateTime value that represents time that corresponds to the dateTime parameter in customer time zone.</returns>
+        public static DateTime ConvertToUserTime(DateTime dt, DateTimeKind sourceDateTimeKind)
+        {
+            dt = DateTime.SpecifyKind(dt, sourceDateTimeKind);
             var currentUserTimeZoneInfo = DateTimeHelper.CurrentTimeZone;
             return TimeZoneInfo.ConvertTime(dt, currentUserTimeZoneInfo);
         }
@@ -85,6 +97,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
         /// <returns>A DateTime value that represents the Coordinated Universal Time (UTC) that corresponds to the dateTime parameter. The DateTime value's Kind property is always set to DateTimeKind.Utc.</returns>
         public static DateTime ConvertToUtcTime(DateTime dt)
         {
+            return ConvertToUtcTime(dt, dt.Kind);
+        }
+
+        /// <summary>
+        /// Converts the date and time to Coordinated Universal Time (UTC)
+        /// </summary>
+        /// <param name="dt">The date and time (respesents local system time or UTC time) to convert.</param>
+        /// <param name="sourceDateTimeKind">The source datetimekind</param>
+        /// <returns>A DateTime value that represents the Coordinated Universal Time (UTC) that corresponds to the dateTime parameter. The DateTime value's Kind property is always set to DateTimeKind.Utc.</returns>
+        public static DateTime ConvertToUtcTime(DateTime dt, DateTimeKind sourceDateTimeKind)
+        {
+            dt = DateTime.SpecifyKind(dt, sourceDateTimeKind);
             return TimeZoneInfo.ConvertTimeToUtc(dt);
         }
 

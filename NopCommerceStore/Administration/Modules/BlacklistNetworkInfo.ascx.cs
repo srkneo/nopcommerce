@@ -49,8 +49,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 txtIpException.Text = ipNetwork.IpException;
                 this.pnlCreatedOn.Visible = true;
                 this.pnlUpdatedOn.Visible = true;
-                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(ipNetwork.CreatedOn).ToString();
-                lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(ipNetwork.UpdatedOn).ToString();
+                lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(ipNetwork.CreatedOn, DateTimeKind.Utc).ToString();
+                lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(ipNetwork.UpdatedOn, DateTimeKind.Utc).ToString();
             }
             else
             {
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         /// <returns>BannedIpNetwork</returns>
         public BannedIpNetwork SaveBannedIpNetworkInfo()
         {
-            DateTime nowDT = DateTime.Now;
+            DateTime nowDT = DateTime.UtcNow;
             //split the text in the BannedIP to get the current IPs
             string[] rangeItems = txtBannedIP.Text.ToString().Split("-".ToCharArray());
 

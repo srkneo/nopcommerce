@@ -126,7 +126,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.eWay
                     processPaymentResult.AuthorizationTransactionResult = eWAYResponse.InvoiceReference;
                     processPaymentResult.AuthorizationTransactionId = eWAYResponse.TransactionNumber;
                     processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
-                    //processPaymentResult.AuthorizationDate = DateTime.Now;
+                    //processPaymentResult.AuthorizationDate = DateTime.UtcNow;
                 }
                 else
                 {

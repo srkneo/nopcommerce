@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     lblIsRecipientNotified.Text = GetLocaleResourceString("Admin.Common.No");
                 }
-                this.lblPurchasedOn.Text = DateTimeHelper.ConvertToUserTime(gc.CreatedOn).ToString();
+                this.lblPurchasedOn.Text = DateTimeHelper.ConvertToUserTime(gc.CreatedOn, DateTimeKind.Utc).ToString();
 
             }
             else

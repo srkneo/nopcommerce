@@ -53,8 +53,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     this.pnlCreatedOn.Visible = true;
                     this.pnlUpdatedOn.Visible = true;
-                    this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(localizedTopic.CreatedOn).ToString();
-                    this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(localizedTopic.UpdatedOn).ToString();
+                    this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(localizedTopic.CreatedOn, DateTimeKind.Utc).ToString();
+                    this.lblUpdatedOn.Text = DateTimeHelper.ConvertToUserTime(localizedTopic.UpdatedOn, DateTimeKind.Utc).ToString();
 
                     this.txtMetaKeywords.Text = localizedTopic.MetaKeywords;
                     this.txtMetaDescription.Text = localizedTopic.MetaDescription;
@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     Topic topic = TopicManager.GetTopicById(this.TopicId);
                     if (topic != null)
                     {
-                        DateTime nowDT = DateTime.Now;
+                        DateTime nowDT = DateTime.UtcNow;
                         LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, this.LanguageId);
                         if (localizedTopic != null)
                         {

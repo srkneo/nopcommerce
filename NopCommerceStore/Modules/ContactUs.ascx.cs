@@ -75,7 +75,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         body = string.Format("<b>From</b>: {0} - {1}<br /><br />{2}", Server.HtmlEncode(fullName), Server.HtmlEncode(email), body);
                     }
                     var to = new MailAddress(MessageManager.AdminEmailAddress, MessageManager.AdminEmailDisplayName);
-                    MessageManager.InsertQueuedEmail(5, from, to, string.Empty, string.Empty, subject, body, DateTime.Now, 0, null);
+                    MessageManager.InsertQueuedEmail(5, from, to, string.Empty, string.Empty, subject, body, DateTime.UtcNow, 0, null);
 
                     pnlResult.Visible = true;
                     pnlContactUs.Visible = false;

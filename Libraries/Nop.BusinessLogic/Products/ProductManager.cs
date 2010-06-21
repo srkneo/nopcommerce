@@ -406,9 +406,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int ratingSum, int totalRatingVotes, bool published,
             bool deleted, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var product = new Product();
             product.Name = name;
             product.ShortDescription = shortDescription;
@@ -476,9 +473,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int ratingSum, int totalRatingVotes, bool published,
             bool deleted, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var product = GetProductById(productId);
             if (product == null)
                 return null;
@@ -726,7 +720,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (rating < 1 || rating > 5)
                 rating = 1;
-            var ratedOn = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            var ratedOn = DateTime.UtcNow;
 
 
             var context = ObjectContextHelper.CurrentObjectContext;
@@ -1519,16 +1513,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             bool published, bool deleted, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            if (availableStartDateTime.HasValue)
-                availableStartDateTime = DateTimeHelper.ConvertToUtcTime(availableStartDateTime.Value);
-            if (availableEndDateTime.HasValue)
-                availableEndDateTime = DateTimeHelper.ConvertToUtcTime(availableEndDateTime.Value);
-
             sku = sku.Trim();
 
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-            
             var productVariant = new ProductVariant();
             productVariant.ProductId = productId;
             productVariant.Name = name;
@@ -1683,15 +1669,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             bool published, bool deleted, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            if (availableStartDateTime.HasValue)
-                availableStartDateTime = DateTimeHelper.ConvertToUtcTime(availableStartDateTime.Value);
-            if (availableEndDateTime.HasValue)
-                availableEndDateTime = DateTimeHelper.ConvertToUtcTime(availableEndDateTime.Value);
-
             sku = sku.Trim();
-
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var productVariant = GetProductVariantById(productVariantId);
             if (productVariant == null)
@@ -2399,8 +2377,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (rating > 5)
                 rating = 5;
 
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var productReview = new ProductReview();
             productReview.ProductId = productId;
             productReview.CustomerId = customerId;
@@ -2451,8 +2427,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var productReview = GetProductReviewById(productReviewId);
             if (productReview == null)
                 return null;
@@ -2804,9 +2778,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment, 
             bool overrideIndivAdjustment, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-            
             var pricelist = new Pricelist();
             pricelist.ExportModeId = (int)exportMode;
             pricelist.ExportTypeId = (int)exportType;
@@ -2866,9 +2837,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment, 
             bool overrideIndivAdjustment, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var pricelist = GetPricelistById(pricelistId);
             if (pricelist == null)
                 return null;
@@ -2968,8 +2936,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int pricelistId, PriceAdjustmentTypeEnum priceAdjustmentType,
             decimal priceAdjustment, DateTime updatedOn)
         {
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-            
             var productVariantPricelist = new ProductVariantPricelist();
             productVariantPricelist.ProductVariantId = productVariantId;
             productVariantPricelist.PricelistId = pricelistId;
@@ -3000,8 +2966,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             if (productVariantPricelistId == 0)
                 return null;
-
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var productVariantPricelist = GetProductVariantPricelistById(productVariantPricelistId);
             if (productVariantPricelist == null)

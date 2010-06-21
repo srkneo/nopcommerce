@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 btnDelete.Visible = ForumManager.IsUserAllowedToDeletePost(NopContext.Current.User, forumPost);
                 btnDelete.OnClientClick = string.Format("return confirm('{0}')", GetLocaleResourceString("Common.AreYouSure"));
 
-                lblDate.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn).ToString("f");
+                lblDate.Text = DateTimeHelper.ConvertToUserTime(forumPost.CreatedOn, DateTimeKind.Utc).ToString("f");
                 lText.Text = ForumManager.FormatPostText(forumPost.Text);
                 lblForumPostId.Text = forumPost.ForumPostId.ToString();
 
@@ -123,7 +123,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
                     if(CustomerManager.ShowCustomersJoinDate && !customer.IsGuest)
                     {
-                        lblJoined.Text = DateTimeHelper.ConvertToUserTime(customer.RegistrationDate).ToString("d");
+                        lblJoined.Text = DateTimeHelper.ConvertToUserTime(customer.RegistrationDate, DateTimeKind.Utc).ToString("d");
                     }
                     else
                     {

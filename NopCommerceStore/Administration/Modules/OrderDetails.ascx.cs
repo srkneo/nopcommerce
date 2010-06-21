@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 else
                     this.divAffiliate.Visible = false;
 
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(order.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(order.CreatedOn, DateTimeKind.Utc).ToString();
 
                 BindOrderTotals(order);
                 BindPaymentInfo(order);
@@ -285,7 +285,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.btnSetAsShipped.Visible = OrderManager.CanShip(order);
                 if (order.ShippedDate.HasValue)
                 {
-                    this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value).ToString();
+                    this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value, DateTimeKind.Utc).ToString();
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.btnSetAsDelivered.Visible = OrderManager.CanDeliver(order);
                 if (order.DeliveryDate.HasValue)
                 {
-                    this.lblDeliveryDate.Text = DateTimeHelper.ConvertToUserTime(order.DeliveryDate.Value).ToString();
+                    this.lblDeliveryDate.Text = DateTimeHelper.ConvertToUserTime(order.DeliveryDate.Value, DateTimeKind.Utc).ToString();
                 }
                 else
                 {
@@ -1189,7 +1189,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 banItem.Address = order.CustomerIP;
                 if(!IpBlacklistManager.IsIpAddressBanned(banItem))
                 {
-                    IpBlacklistManager.InsertBannedIpAddress(order.CustomerIP, String.Empty, DateTime.Now, DateTime.Now);
+                    IpBlacklistManager.InsertBannedIpAddress(order.CustomerIP, String.Empty, DateTime.UtcNow, DateTime.UtcNow);
                 }
             }
         }
@@ -1204,7 +1204,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 bool displayToCustomer = cbNewDisplayToCustomer.Checked;
 
-                OrderNote orderNote = OrderManager.InsertOrderNote(this.OrderId, note, displayToCustomer, DateTime.Now);
+                OrderNote orderNote = OrderManager.InsertOrderNote(this.OrderId, note, displayToCustomer, DateTime.UtcNow);
                 BindData();
                 txtNewOrderNote.Text = string.Empty;
             }

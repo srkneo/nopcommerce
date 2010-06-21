@@ -394,7 +394,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 if (HttpContext.Current != null && HttpContext.Current.Request != null)
                     IPAddress = HttpContext.Current.Request.UserHostAddress;
 
-                DateTime nowDT = DateTime.Now;
+                DateTime nowDT = DateTime.UtcNow;
 
                 if (ForumManager.IsUserAllowedToSetTopicPriority(NopContext.Current.User))
                 {

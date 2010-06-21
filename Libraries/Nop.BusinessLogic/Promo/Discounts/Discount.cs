@@ -130,8 +130,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 if (couponCodeToValidate != this.CouponCode)
                     return false;
             }
-            DateTime now = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-            bool isActive = (!Deleted) && (StartDate.CompareTo(now) < 0) && (EndDate.CompareTo(now) > 0);
+            DateTime _now = DateTime.UtcNow;
+            DateTime _startDate = DateTime.SpecifyKind(this.StartDate, DateTimeKind.Utc);
+            DateTime _endDate = DateTime.SpecifyKind(this.EndDate, DateTimeKind.Utc);
+            bool isActive = (!this.Deleted) && 
+                (_startDate.CompareTo(_now) < 0) && 
+                (_endDate.CompareTo(_now) > 0);
             return isActive;
         }
         

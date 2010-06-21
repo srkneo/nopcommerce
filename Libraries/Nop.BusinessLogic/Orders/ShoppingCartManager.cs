@@ -54,8 +54,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <param name="olderThan">Older than date and time</param>
         public static void DeleteExpiredShoppingCartItems(DateTime olderThan)
         {
-            olderThan = DateTimeHelper.ConvertToUtcTime(olderThan);
-            
             var context = ObjectContextHelper.CurrentObjectContext;
             var query = from sci in context.ShoppingCartItems
                         where sci.UpdatedOn < olderThan
@@ -161,9 +159,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (attributesXml == null)
                 attributesXml = string.Empty;
 
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-            
             var shoppingCartItem = new ShoppingCartItem();
             shoppingCartItem.ShoppingCartTypeId = (int)shoppingCartType;
             shoppingCartItem.CustomerSessionGuid = customerSessionGuid;
@@ -215,9 +210,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (attributesXml == null)
                 attributesXml = string.Empty;
-
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
 
             var shoppingCartItem = GetShoppingCartItemById(shoppingCartItemId);
             if (shoppingCartItem == null)
@@ -734,16 +726,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (productVariant.AvailableStartDateTime.HasValue)
             {
-                DateTime now = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-                if (productVariant.AvailableStartDateTime.Value.CompareTo(now) > 0)
+                DateTime _now = DateTime.UtcNow;
+                DateTime _availableStartDateTime = DateTime.SpecifyKind(productVariant.AvailableStartDateTime.Value, DateTimeKind.Utc);
+                if (_availableStartDateTime.CompareTo(_now) > 0)
                 {
                     warnings.Add("Product is not available");
                 }
             }
             else if (productVariant.AvailableEndDateTime.HasValue)
             {
-                DateTime now = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
-                if (productVariant.AvailableEndDateTime.Value.CompareTo(now) < 0)
+                DateTime _now = DateTime.UtcNow;
+                DateTime _availableEndDateTime = DateTime.SpecifyKind(productVariant.AvailableEndDateTime.Value, DateTimeKind.Utc);
+                if (_availableEndDateTime.CompareTo(_now) < 0)
                 {
                     warnings.Add("Product is not available");
                 }
@@ -1157,7 +1151,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 }
             }
 
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
             if (shoppingCartItem != null)
             {
                 int newQuantity = shoppingCartItem.Quantity + quantity;
@@ -1247,8 +1241,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                             shoppingCartItem.AttributesXml,
                             shoppingCartItem.CustomerEnteredPrice,
                             newQuantity, 
-                            shoppingCartItem.CreatedOn, 
-                            DateTime.Now);
+                            shoppingCartItem.CreatedOn,
+                            DateTime.UtcNow);
                     }
                 }
                 else

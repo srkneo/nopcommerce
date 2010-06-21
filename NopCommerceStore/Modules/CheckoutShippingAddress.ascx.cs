@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 else
                 {
-                    address.CreatedOn = DateTime.Now;
+                    address.CreatedOn = DateTime.UtcNow;
                 }
 
                 return address;
@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                               shippingAddress.LastName, shippingAddress.PhoneNumber, shippingAddress.Email,
                               shippingAddress.FaxNumber, shippingAddress.Company, shippingAddress.Address1, shippingAddress.Address2,
                               shippingAddress.City, shippingAddress.StateProvinceId, shippingAddress.ZipPostalCode,
-                              shippingAddress.CountryId, DateTime.Now, DateTime.Now);
+                              shippingAddress.CountryId, DateTime.UtcNow, DateTime.UtcNow);
                 }
             }
 

@@ -91,8 +91,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static SearchLog InsertSearchLog(string searchTerm,
             int customerId, DateTime createdOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-
             var searchLog = new SearchLog();
             searchLog.SearchTerm = searchTerm;
             searchLog.CustomerId = customerId;

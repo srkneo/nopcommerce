@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web
                         string value = HttpContext.Current.Request.Form[key];
                         sbDebug.AppendLine(key + ": " + value);
                     }
-                    OrderManager.InsertOrderNote(order.OrderId, sbDebug.ToString(), false, DateTime.Now);
+                    OrderManager.InsertOrderNote(order.OrderId, sbDebug.ToString(), false, DateTime.UtcNow);
 
 
                     bool useSandbox = SettingManager.GetSettingValueBoolean("PaymentMethod.TwoCheckout.UseSandbox");
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.Web
 
                         if (compareHash1.ToUpperInvariant() != compareHash2.ToUpperInvariant())
                         {
-                            OrderManager.InsertOrderNote(order.OrderId, "Hash validation failed", false, DateTime.Now);
+                            OrderManager.InsertOrderNote(order.OrderId, "Hash validation failed", false, DateTime.UtcNow);
                             Response.Redirect(CommonHelper.GetStoreLocation());
                         }
                     }
@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.Web
                     sb.AppendLine("fraud_status: " + fraud_status);
                     sb.AppendLine("payment_type: " + payment_type);
                     sb.AppendLine("New payment status: " + PaymentStatusManager.GetPaymentStatusName((int)newPaymentStatus));
-                    OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.Now);
+                    OrderManager.InsertOrderNote(order.OrderId, sb.ToString(), false, DateTime.UtcNow);
 
                     //new payment status
                     switch (newPaymentStatus)

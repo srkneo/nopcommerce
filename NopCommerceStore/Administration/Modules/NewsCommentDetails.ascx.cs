@@ -42,7 +42,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.lblCustomer.Text = GetCustomerInfo(newsComment.CustomerId);
                 this.lblIPAddress.Text = newsComment.IPAddress;
                 this.txtComment.Text = newsComment.Comment;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(newsComment.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(newsComment.CreatedOn, DateTimeKind.Utc).ToString();
             }
             else
                 Response.Redirect("NewsComments.aspx");

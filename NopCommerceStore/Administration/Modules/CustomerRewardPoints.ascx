@@ -34,7 +34,7 @@
                                 <asp:TemplateField HeaderText="<% $NopResources:Admin.CustomerRewardPoints.Grid.Date %>"
                                     HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="20%" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+                                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

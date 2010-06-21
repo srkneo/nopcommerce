@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             Order order = opv.Order;
             if (order != null)
             {
-                result = DateTimeHelper.ConvertToUserTime(order.CreatedOn).ToString("d");
+                result = DateTimeHelper.ConvertToUserTime(order.CreatedOn, DateTimeKind.Utc).ToString("d");
             }
             return result;
         }

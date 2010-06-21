@@ -120,7 +120,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
 
                 var pm = ForumManager.InsertPrivateMessage(NopContext.Current.User.CustomerId, toCustomer.CustomerId,
-                    subject, message, false, false, false, DateTime.Now);
+                    subject, message, false, false, false, DateTime.UtcNow);
 
                 Response.Redirect(CommonHelper.GetStoreLocation() + "privatemessages.aspx?tab=sent");
             }

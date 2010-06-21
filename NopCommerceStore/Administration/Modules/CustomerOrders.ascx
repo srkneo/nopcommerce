@@ -10,7 +10,7 @@
                 </strong>
             </p>
             <%#GetLocaleResourceString("Admin.CustomerOrders.Date")%>
-            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
             <br />
             <%#GetLocaleResourceString("Admin.CustomerOrders.OrderStatus")%>
             <%#OrderManager.GetOrderStatusName(Convert.ToInt32(Eval("OrderStatusId")))%>

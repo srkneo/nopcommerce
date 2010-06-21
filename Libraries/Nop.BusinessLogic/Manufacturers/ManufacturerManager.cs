@@ -173,9 +173,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             bool published, bool deleted, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var manufacturer = new Manufacturer();
             manufacturer.Name = name;
             manufacturer.Description = description;
@@ -232,9 +229,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             bool published, bool deleted, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var manufacturer = GetManufacturerById(manufacturerId);
             if (manufacturer == null)
                 return null;

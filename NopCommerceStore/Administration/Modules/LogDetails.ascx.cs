@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     this.lblCustomer.Text = string.Format("<a href=\"CustomerDetails.aspx?CustomerID={0}\">{1}</a>", customer.CustomerId, Server.HtmlEncode(customer.Email));
                 lblPageURL.Text = Server.HtmlEncode(log.PageUrl);
                 lblReferrerURL.Text = Server.HtmlEncode(log.ReferrerUrl);
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(log.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(log.CreatedOn, DateTimeKind.Utc).ToString();
             }
             else
                 Response.Redirect("Logs.aspx");

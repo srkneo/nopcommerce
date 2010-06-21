@@ -46,7 +46,7 @@
             </div>
             <div class="status-bar">
                 <div class="help">
-                    <%=DateTimeHelper.ConvertToUserTime(DateTime.Now).ToString("f")%>
+                    <%=DateTimeHelper.ConvertToUserTime(DateTime.UtcNow).ToString("f")%>
                     <asp:HyperLink runat="server" ID="lnkHelp" />
                 </div>
                 <div class="breadcrumb">

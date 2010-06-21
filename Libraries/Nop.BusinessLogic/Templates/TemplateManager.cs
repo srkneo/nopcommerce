@@ -130,9 +130,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static CategoryTemplate InsertCategoryTemplate(string name,
             string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var categoryTemplate = new CategoryTemplate();
             categoryTemplate.Name = name;
             categoryTemplate.TemplatePath = templatePath;
@@ -166,9 +163,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             string name, string templatePath, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
             if (categoryTemplate == null)
                 return null;
@@ -282,9 +276,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static ManufacturerTemplate InsertManufacturerTemplate(string name,
             string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var manufacturerTemplate = new ManufacturerTemplate();
             manufacturerTemplate.Name = name;
             manufacturerTemplate.TemplatePath = templatePath;
@@ -317,9 +308,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             string name, string templatePath, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
             if (manufacturerTemplate == null)
                 return null;
@@ -433,9 +421,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static ProductTemplate InsertProductTemplate(string name, string templatePath,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var productTemplate = new ProductTemplate();
             productTemplate.Name = name;
             productTemplate.TemplatePath = templatePath;
@@ -469,9 +454,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             string name, string templatePath, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var productTemplate = GetProductTemplateById(productTemplateId);
             if (productTemplate == null)
                 return null;

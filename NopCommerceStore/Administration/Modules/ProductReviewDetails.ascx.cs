@@ -44,7 +44,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtReviewText.Text = productReview.ReviewText;
                 this.productRating.CurrentRating = productReview.Rating;
                 this.cbIsApproved.Checked = productReview.IsApproved;
-                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(productReview.CreatedOn).ToString();
+                this.lblCreatedOn.Text = DateTimeHelper.ConvertToUserTime(productReview.CreatedOn, DateTimeKind.Utc).ToString();
             }
             else
                 Response.Redirect("ProductReviews.aspx");

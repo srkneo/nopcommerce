@@ -24,7 +24,7 @@
             <%#NewsManager.FormatCommentText((string)Eval("Comment"))%>
         </p>
         <p>
-            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%>
+            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
             -
             <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
             (<%#Eval("IPAddress").ToString()%>)

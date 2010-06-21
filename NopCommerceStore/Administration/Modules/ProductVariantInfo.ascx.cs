@@ -269,7 +269,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public ProductVariant SaveInfo()
         {
-            DateTime nowDT = DateTime.Now;
+            DateTime nowDT = DateTime.UtcNow;
 
             string name = txtName.Text.Trim();
             string sku = txtSKU.Text.Trim();

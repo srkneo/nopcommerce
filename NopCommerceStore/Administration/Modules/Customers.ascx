@@ -102,7 +102,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Customers.RegistrationColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("RegistrationDate")).ToString()%>
+                <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("RegistrationDate"), DateTimeKind.Utc).ToString()%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Customers.EditColumn %>" HeaderStyle-HorizontalAlign="Center"

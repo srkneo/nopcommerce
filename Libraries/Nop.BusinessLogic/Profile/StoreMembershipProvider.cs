@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
 
             if (status == MembershipCreateStatus.Success)
             {
-                var dt = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+                var dt = DateTime.UtcNow;
                 user = new MembershipUser(this.Name, _username, customer.CustomerGuid, _email, string.Empty, null, true, false, dt, dt, dt, dt, dt);
             }
             return user;
@@ -227,7 +227,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Profile
 
             if (customer == null)
                 return null;
-            var dt = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+            var dt = DateTime.UtcNow;
 
             return new MembershipUser(this.Name, _username, customer.CustomerGuid, _email, string.Empty, null, true, false, dt, dt, dt, dt, dt);
         }

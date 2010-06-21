@@ -15,7 +15,7 @@
                     <asp:TemplateField HeaderText="<% $NopResources:Order.RecurringPayments.StartDateColumn %>"
                         HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("StartDate")).ToString()%>
+                            <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("StartDate"), DateTimeKind.Utc).ToString()%>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="<% $NopResources:Order.RecurringPayments.CycleInfoColumn %>"
@@ -85,7 +85,7 @@
                                                         <%#OrderManager.GetOrderStatusName(Convert.ToInt32(Eval("OrderStatusId")))%></div>
                                                     <div>
                                                         <%=GetLocaleResourceString("Account.OrderDate")%>:
-                                                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn")).ToString()%></div>
+                                                        <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%></div>
                                                     <div>
                                                         <%=GetLocaleResourceString("Account.OrderTotal")%>:
                                                         <%# GetOrderTotal(Container.DataItem as Order)%>

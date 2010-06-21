@@ -121,7 +121,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         
                         ProductManager.InsertProductReview(product.ProductId, NopContext.Current.User.CustomerId,
                             productReviewTitle, productReviewText,
-                            rating, 0, 0, isApproved, DateTime.Now);
+                            rating, 0, 0, isApproved, DateTime.UtcNow);
                         txtProductReviewTitle.Text = string.Empty;
                         txtProductReviewText.Text = string.Empty;
 

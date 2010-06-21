@@ -175,9 +175,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             city = city.Trim();
             zipPostalCode = zipPostalCode.Trim();
 
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
             var address = new Address();
             address.CustomerId = customerId;
             address.IsBillingAddress = isBillingAddress;
@@ -259,10 +256,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             address2 = address2.Trim();
             city = city.Trim();
             zipPostalCode = zipPostalCode.Trim();
-
-            createdOn = DateTimeHelper.ConvertToUtcTime(createdOn);
-            updatedOn = DateTimeHelper.ConvertToUtcTime(updatedOn);
-
+            
             var address = GetAddressById(addressId);
             if (address == null)
                 return null;
@@ -690,7 +684,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     NopContext.Current.Session = NopContext.Current.GetSession(true);
                 }
 
-                DateTime LastAccessed = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+                DateTime LastAccessed = DateTime.UtcNow;
 
                 NopContext.Current.Session = UpdateCustomerSession(NopContext.Current.Session.CustomerSessionGuid,
                     guestCustomer.CustomerId, LastAccessed, NopContext.Current.Session.IsExpired);
@@ -1050,7 +1044,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 NopContext.Current.WorkingCurrency.CurrencyId,
                 NopContext.Current.TaxDisplayType, false, isAdmin, isGuest,
                 false, 0, string.Empty, string.Empty, active,
-                false, DateTime.Now, string.Empty, 0, out status);
+                false, DateTime.UtcNow, string.Empty, 0, out status);
 
             if (status == MembershipCreateStatus.Success)
             {
@@ -1089,7 +1083,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 NopContext.Current.WorkingCurrency.CurrencyId,
                 NopContext.Current.TaxDisplayType, false,
                 isAdmin, isGuest, false, 0, string.Empty, string.Empty, active,
-                false, DateTime.Now, string.Empty, 0, out status);
+                false, DateTime.UtcNow, string.Empty, 0, out status);
         }
 
         /// <summary>
@@ -1134,8 +1128,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             string timeZoneId, int avatarId, out MembershipCreateStatus status)
         {
             Customer customer = null;
-
-            registrationDate = DateTimeHelper.ConvertToUtcTime(registrationDate);
 
             if (username == null)
                 username = string.Empty;
@@ -1219,7 +1211,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
             if (!isGuest)
             {
-                DateTime lastAccessed = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+                DateTime lastAccessed = DateTime.UtcNow;
                 SaveCustomerSession(Guid.NewGuid(), customer.CustomerId, lastAccessed, false);
             }
 
@@ -1295,8 +1287,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 email = string.Empty;
             email = email.Trim();
 
-            registrationDate = DateTimeHelper.ConvertToUtcTime(registrationDate);
-
             var customer = new Customer();
             customer.CustomerGuid = customerGuid;
             customer.Email = email;
@@ -1338,7 +1328,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 var rph = OrderManager.InsertRewardPointsHistory(customer.CustomerId, 0,
                     OrderManager.RewardPointsForRegistration, decimal.Zero, decimal.Zero,
                     string.Empty, LocalizationManager.GetLocaleResourceString("RewardPoints.Message.EarnedForRegistration"),
-                    DateTime.Now);
+                    DateTime.UtcNow);
             }
 
             return customer;
@@ -1388,8 +1378,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             int totalForumPosts, string signature, string adminComment, bool active,
             bool deleted, DateTime registrationDate, string timeZoneId, int avatarId)
         {
-            registrationDate = DateTimeHelper.ConvertToUtcTime(registrationDate);
-
             if (username == null)
                 username = string.Empty;
             username = username.Trim();
@@ -1669,7 +1657,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 if (NopContext.Current.Session == null)
                     NopContext.Current.Session = NopContext.Current.GetSession(true);
                 NopContext.Current.Session.IsExpired = false;
-                NopContext.Current.Session.LastAccessed = DateTimeHelper.ConvertToUtcTime(DateTime.Now);
+                NopContext.Current.Session.LastAccessed = DateTime.UtcNow;
                 NopContext.Current.Session.CustomerId = customer.CustomerId;
                 NopContext.Current.Session = SaveCustomerSession(NopContext.Current.Session.CustomerSessionGuid, NopContext.Current.Session.CustomerId, NopContext.Current.Session.LastAccessed, NopContext.Current.Session.IsExpired);
             }
@@ -2301,8 +2289,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// <param name="olderThan">Older than date and time</param>
         public static void DeleteExpiredCustomerSessions(DateTime olderThan)
         {
-            olderThan = DateTimeHelper.ConvertToUtcTime(olderThan);
-
             var context = ObjectContextHelper.CurrentObjectContext;
             context.Sp_CustomerSessionDeleteExpired(olderThan);
         }
@@ -2318,8 +2304,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static CustomerSession SaveCustomerSession(Guid customerSessionGuid,
             int customerId, DateTime lastAccessed, bool isExpired)
         {
-            lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
-
             if (GetCustomerSessionByGuid(customerSessionGuid) == null)
                 return InsertCustomerSession(customerSessionGuid, customerId, lastAccessed, isExpired);
             else
@@ -2337,8 +2321,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         protected static CustomerSession InsertCustomerSession(Guid customerSessionGuid,
             int customerId, DateTime lastAccessed, bool isExpired)
         {
-            lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
-
             var customerSession = new CustomerSession();
             customerSession.CustomerSessionGuid = customerSessionGuid;
             customerSession.CustomerId = customerId;
@@ -2362,8 +2344,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         protected static CustomerSession UpdateCustomerSession(Guid customerSessionGuid,
             int customerId, DateTime lastAccessed, bool isExpired)
         {
-            lastAccessed = DateTimeHelper.ConvertToUtcTime(lastAccessed);
-
             var customerSession = GetCustomerSessionByGuid(customerSessionGuid);
             if (customerSession == null)
                 return null;
