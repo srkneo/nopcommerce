@@ -69,8 +69,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
         }
 
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             string key = string.Format(FORUMGROUP_BY_ID_KEY, forumGroupId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
                 return (ForumGroup)obj2;
@@ -99,7 +99,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.Max(key, forumGroup);
+                NopRequestCache.Add(key, forumGroup);
             }
             return forumGroup;
         }
@@ -111,7 +111,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static List<ForumGroup> GetAllForumGroups()
         {
             string key = string.Format(FORUMGROUP_ALL_KEY);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
                 return (List<ForumGroup>)obj2;
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.Max(key, forumGroups);
+                NopRequestCache.Add(key, forumGroups);
             }
             return forumGroups;
         }
@@ -158,8 +158,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             return forumGroup;
@@ -199,8 +199,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             return forumGroup;
@@ -220,8 +220,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
         }
 
@@ -236,7 +236,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 return null;
 
             string key = string.Format(FORUM_BY_ID_KEY, forumId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
                 return (Forum)obj2;
@@ -250,7 +250,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.Max(key, forum);
+                NopRequestCache.Add(key, forum);
             }
             return forum;
         }
@@ -263,7 +263,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static List<Forum> GetAllForumsByGroupId(int forumGroupId)
         {
             string key = string.Format(FORUM_ALLBYFORUMGROUPID_KEY, forumGroupId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ForumManager.CacheEnabled && (obj2 != null))
             {
                 return (List<Forum>)obj2;
@@ -278,7 +278,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.Max(key, forums);
+                NopRequestCache.Add(key, forums);
             }
             return forums;
         }
@@ -328,8 +328,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             return forum;
@@ -384,8 +384,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             return forum;
@@ -406,8 +406,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
         }
 
@@ -429,8 +429,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
         }
 
@@ -578,8 +578,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             if (sendNotifications)
@@ -661,8 +661,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             return forumTopic;
@@ -734,8 +734,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
         }
 
@@ -852,8 +852,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             if (sendNotifications)
@@ -925,8 +925,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
             if (ForumManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
-                NopCache.RemoveByPattern(FORUM_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUMGROUP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(FORUM_PATTERN_KEY);
             }
 
             return forumPost;

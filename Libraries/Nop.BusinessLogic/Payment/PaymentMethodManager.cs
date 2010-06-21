@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (PaymentMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PAYMENTMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PAYMENTMETHODS_PATTERN_KEY);
             }
         }
 
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return null;
 
             string key = string.Format(PAYMENTMETHODS_BY_ID_KEY, paymentMethodId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (PaymentMethodManager.CacheEnabled && (obj2 != null))
             {
                 return (PaymentMethod)obj2;
@@ -84,7 +84,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (PaymentMethodManager.CacheEnabled)
             {
-                NopCache.Max(key, paymentMethod);
+                NopRequestCache.Add(key, paymentMethod);
             }
             return paymentMethod;
         }
@@ -174,7 +174,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (PaymentMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PAYMENTMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PAYMENTMETHODS_PATTERN_KEY);
             }
             return paymentMethod;
         }
@@ -219,7 +219,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (PaymentMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PAYMENTMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PAYMENTMETHODS_PATTERN_KEY);
             }
             return paymentMethod;
         }

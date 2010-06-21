@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Administration
 
         protected void lbClearCache_Click(object sender, EventArgs e)
         {
-            NopCache.Clear();
+            NopStaticCache.Clear();
         }
 
         public override void ShowMessage(string message)

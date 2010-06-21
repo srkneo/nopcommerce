@@ -24,9 +24,9 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration;
 namespace NopSolutions.NopCommerce.BusinessLogic.Caching
 {
     /// <summary>
-    /// Represents a NopCache
+    /// Represents a NopStaticCache
     /// </summary>
-    public partial class NopCache
+    public partial class NopStaticCache
     {
         #region Fields
 
@@ -37,9 +37,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
         #region Ctor
 
         /// <summary>
-        /// Creates a new instance of the NopCache class
+        /// Creates a new instance of the NopStaticCache class
         /// </summary>
-        static NopCache()
+        static NopStaticCache()
         {
             HttpContext current = HttpContext.Current;
             if (current != null)
@@ -53,9 +53,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
         }
 
         /// <summary>
-        /// Creates a new instance of the NopCache class
+        /// Creates a new instance of the NopStaticCache class
         /// </summary>
-        private NopCache()
+        private NopStaticCache()
         {
         }
 
@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
         {
             get
             {
-                return NopConfig.CacheEnabled;
+                return true;
             }
         }
 

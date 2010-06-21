@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (StateProvinceManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
             }
         }
 
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             string key = string.Format(STATEPROVINCES_BY_ID_KEY, stateProvinceId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (StateProvinceManager.CacheEnabled && (obj2 != null))
             {
                 return (StateProvince)obj2;
@@ -84,7 +84,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             
             if (StateProvinceManager.CacheEnabled)
             {
-                NopCache.Max(key, stateProvince);
+                NopRequestCache.Add(key, stateProvince);
             }
             return stateProvince;
         }
@@ -112,7 +112,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static List<StateProvince> GetStateProvincesByCountryId(int countryId)
         {
             string key = string.Format(STATEPROVINCES_ALL_KEY, countryId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (StateProvinceManager.CacheEnabled && (obj2 != null))
             {
                 return (List<StateProvince>)obj2;
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             
             if (StateProvinceManager.CacheEnabled)
             {
-                NopCache.Max(key, stateProvinceCollection);
+                NopRequestCache.Add(key, stateProvinceCollection);
             }
             return stateProvinceCollection;
         }
@@ -155,7 +155,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             
             if (StateProvinceManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
             }
 
             return stateProvince;
@@ -189,7 +189,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (StateProvinceManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(STATEPROVINCES_PATTERN_KEY);
             }
 
             return stateProvince;

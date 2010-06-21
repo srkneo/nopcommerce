@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
 
             if (SettingManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SETTINGS_ALL_KEY);
+                NopStaticCache.RemoveByPattern(SETTINGS_ALL_KEY);
             }
         }
 
@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         public static Dictionary<string, Setting> GetAllSettings()
         {
             string key = SETTINGS_ALL_KEY;
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (SettingManager.CacheEnabled && (obj2 != null))
             {
                 return (Dictionary<string, Setting>)obj2;
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
 
             if (SettingManager.CacheEnabled)
             {
-                NopCache.Max(key, settings);
+                NopStaticCache.Max(key, settings);
             }
             return settings;
         }
@@ -181,7 +181,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
 
             if (SettingManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SETTINGS_ALL_KEY);
+                NopStaticCache.RemoveByPattern(SETTINGS_ALL_KEY);
             }
 
             return setting;
@@ -212,7 +212,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
             
             if (SettingManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SETTINGS_ALL_KEY);
+                NopStaticCache.RemoveByPattern(SETTINGS_ALL_KEY);
             }
 
             return setting;

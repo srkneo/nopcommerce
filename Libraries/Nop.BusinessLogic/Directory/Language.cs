@@ -98,14 +98,5 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             }
         }
         #endregion
-
-        #region Navigation Properties
-
-        /// <summary>
-        /// Gets the localized topic
-        /// </summary>
-        public virtual ICollection<LocalizedTopic> NpLocalizedTopics { get; set; }
-
-        #endregion
     }
 }

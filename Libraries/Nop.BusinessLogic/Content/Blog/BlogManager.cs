@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             
             if (BlogManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
             }
         }
 
@@ -76,7 +76,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
                 return null;
 
             string key = string.Format(BLOGPOST_BY_ID_KEY, blogPostId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (BlogManager.CacheEnabled && (obj2 != null))
             {
                 return (BlogPost)obj2;
@@ -90,7 +90,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
 
             if (BlogManager.CacheEnabled)
             {
-                NopCache.Max(key, blogPost);
+                NopRequestCache.Add(key, blogPost);
             }
             return blogPost;
         }
@@ -163,7 +163,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
 
             if (BlogManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
             }
 
             return blogPost;
@@ -205,7 +205,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
 
             if (BlogManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLOGPOST_PATTERN_KEY);
             }
 
             return blogPost;

@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
         {
             try
             {
-                NopCache.Clear();
+                NopStaticCache.Clear();
             }
             catch (Exception ex)
             {

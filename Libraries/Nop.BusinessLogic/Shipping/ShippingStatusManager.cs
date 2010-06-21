@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return null;
 
             string key = string.Format(SHIPPINGTATUSES_BY_ID_KEY, shippingStatusId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ShippingStatusManager.CacheEnabled && (obj2 != null))
             {
                 return (ShippingStatus)obj2;
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingStatusManager.CacheEnabled)
             {
-                NopCache.Max(key, shippingStatus);
+                NopRequestCache.Add(key, shippingStatus);
             }
             return shippingStatus;
         }
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static List<ShippingStatus> GetAllShippingStatuses()
         {
             string key = string.Format(SHIPPINGTATUSES_ALL_KEY);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ShippingStatusManager.CacheEnabled && (obj2 != null))
             {
                 return (List<ShippingStatus>)obj2;
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             
             if (ShippingStatusManager.CacheEnabled)
             {
-                NopCache.Max(key, shippingStatuses);
+                NopRequestCache.Add(key, shippingStatuses);
             }
             return shippingStatuses;
         }

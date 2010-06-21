@@ -48,7 +48,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return null;
 
             string key = string.Format(CREDITCARDS_BY_ID_KEY, creditCardTypeId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CreditCardTypeManager.CacheEnabled && (obj2 != null))
             {
                 return (CreditCardType)obj2;
@@ -62,7 +62,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (CreditCardTypeManager.CacheEnabled)
             {
-                NopCache.Max(key, creditCardType);
+                NopRequestCache.Add(key, creditCardType);
             }
             return creditCardType;
         }
@@ -82,7 +82,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             }
             if (CreditCardTypeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);
             }
         }
 
@@ -93,7 +93,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         public static List<CreditCardType> GetAllCreditCardTypes()
         {
             string key = string.Format(CREDITCARDS_ALL_KEY);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CreditCardTypeManager.CacheEnabled && (obj2 != null))
             {
                 return (List<CreditCardType>)obj2;
@@ -108,7 +108,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (CreditCardTypeManager.CacheEnabled)
             {
-                NopCache.Max(key, creditCardTypeCollection);
+                NopRequestCache.Add(key, creditCardTypeCollection);
             }
             return creditCardTypeCollection;
         }
@@ -136,7 +136,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (CreditCardTypeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);
             }
             return creditCardType;
         }
@@ -169,7 +169,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (CreditCardTypeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CREDITCARDS_PATTERN_KEY);
             }
             return creditCardType;
         }

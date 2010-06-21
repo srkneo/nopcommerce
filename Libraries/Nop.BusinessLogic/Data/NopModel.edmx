@@ -4893,7 +4893,6 @@
           <Property Name="FlagImageFileName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Published" Type="Boolean" Nullable="false" />
           <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="NpLocalizedTopics" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" FromRole="Language" ToRole="Nop_TopicLocalized" />
           </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -4958,7 +4957,6 @@
           <Property Type="String" Name="MetaTitle" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="MetaKeywords" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="MetaDescription" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NpLanguage" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" FromRole="Nop_TopicLocalized" ToRole="Language" />
           <NavigationProperty Name="NpTopic" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" FromRole="Nop_TopicLocalized" ToRole="Nop_Topic" />
         </EntityType>
         <Association Name="FK_Nop_TopicLocalized_Nop_Language">
@@ -5044,7 +5042,6 @@
           <Property Type="String" Name="Subject" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Body" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <NavigationProperty Name="NpLanguage" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" FromRole="Nop_MessageTemplateLocalized" ToRole="Language" />
           <NavigationProperty Name="NpMessageTemplate" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" FromRole="Nop_MessageTemplateLocalized" ToRole="Nop_MessageTemplate" />
         </EntityType>
         <Association Name="FK_Nop_MessageTemplateLocalized_Nop_Language">
@@ -9630,7 +9627,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="NopModel" ZoomLevel="82">
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="11.125" PointY="5.125" Height="2.0853483072916665" IsExpanded="true" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="1.5" PointX="11.125" PointY="5.125" Height="1.9210009765624996" IsExpanded="true" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="1.5" PointX="6.125" PointY="20.5" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.5" PointX="8.25" PointY="20.5" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_StateProvince_Nop_Country" >
@@ -9642,15 +9639,13 @@
           <ConnectorPoint PointX="8.25" PointY="21.335693342122397" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Topic" Width="1.5" PointX="3.375" PointY="0.5" Height="1.4279589843749996" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="6.5" PointY="0.5" Height="2.9070849609374996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedTopic" Width="1.5" PointX="6.5" PointY="0.5" Height="2.7427376302083331" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.10937375" PointY="5.125" />
-          <ConnectorPoint PointX="12.10937375" PointY="3.12541748046875" />
-          <ConnectorPoint PointX="12.075517708333335" PointY="3.1254174804687493" />
-          <ConnectorPoint PointX="11.908851041666667" PointY="3.12541748046875" />
-          <ConnectorPoint PointX="8.3333333333333339" PointY="3.1254174804687493" />
-          <ConnectorPoint PointX="8.1666666666666661" PointY="3.12541748046875" />
-          <ConnectorPoint PointX="8" PointY="3.12541748046875" />
+          <ConnectorPoint PointX="12.116211796875" PointY="5.125" />
+          <ConnectorPoint PointX="12.116211796875" PointY="2.8631193033854156" />
+          <ConnectorPoint PointX="12.065751927083335" PointY="2.8631193033854152" />
+          <ConnectorPoint PointX="11.899085260416667" PointY="2.8631193033854156" />
+          <ConnectorPoint PointX="8" PointY="2.8631193033854156" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TopicLocalized_Nop_Topic" >
           <ConnectorPoint PointX="4.875" PointY="1.2139794921874998" />
@@ -9660,14 +9655,12 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpAddress" Width="2.125" PointX="5.5" PointY="23.625" Height="1.7566536458333317" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.BannedIpNetwork" Width="2.25" PointX="7.875" PointY="23.625" Height="2.0853483072916674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.MessageTemplate" Width="2.25" PointX="0.5" PointY="3.75" Height="1.4279589843749996" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.4140429687499996" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocalizedMessageTemplate" Width="2.5" PointX="3.25" PointY="3.625" Height="2.2496956380208335" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_Language" >
-          <ConnectorPoint PointX="11.125" PointY="5.8978483072916674" />
-          <ConnectorPoint PointX="7.3802073333333329" PointY="5.8978483072916665" />
-          <ConnectorPoint PointX="7.2135406666666668" PointY="5.8978483072916674" />
-          <ConnectorPoint PointX="7.083333333333333" PointY="5.8978483072916665" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="5.8978483072916674" />
-          <ConnectorPoint PointX="5.75" PointY="5.8978483072916674" />
+          <ConnectorPoint PointX="11.125" PointY="5.8156746419270844" />
+          <ConnectorPoint PointX="7.083333333333333" PointY="5.8156746419270835" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="5.8156746419270844" />
+          <ConnectorPoint PointX="5.75" PointY="5.8156746419270844" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_MessageTemplateLocalized_Nop_MessageTemplate" >
           <ConnectorPoint PointX="2.75" PointY="4.4639794921875" />
@@ -9701,14 +9694,12 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.LocaleStringResource" Width="2.5" PointX="3.25" PointY="6.375" Height="1.5923063151041657" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Setting" Width="1.625" PointX="7.875" PointY="26" Height="1.5923063151041674" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_LocaleStringResource_Nop_Language" >
-          <ConnectorPoint PointX="11.125" PointY="6.7926741536458337" />
-          <ConnectorPoint PointX="9.5833333333333339" PointY="6.7926741536458328" />
-          <ConnectorPoint PointX="9.4166666666666661" PointY="6.7926741536458337" />
-          <ConnectorPoint PointX="7.3802073333333329" PointY="6.7926741536458328" />
-          <ConnectorPoint PointX="7.2135406666666668" PointY="6.7926741536458337" />
-          <ConnectorPoint PointX="7.083333333333333" PointY="6.7926741536458328" />
-          <ConnectorPoint PointX="6.916666666666667" PointY="6.7926741536458337" />
-          <ConnectorPoint PointX="5.75" PointY="6.7926741536458337" />
+          <ConnectorPoint PointX="11.125" PointY="6.71050048828125" />
+          <ConnectorPoint PointX="9.5833333333333339" PointY="6.7105004882812489" />
+          <ConnectorPoint PointX="9.4166666666666661" PointY="6.71050048828125" />
+          <ConnectorPoint PointX="7.083333333333333" PointY="6.7105004882812489" />
+          <ConnectorPoint PointX="6.916666666666667" PointY="6.71050048828125" />
+          <ConnectorPoint PointX="5.75" PointY="6.71050048828125" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Picture" Width="1.5" PointX="0.5" PointY="5.5" Height="1.5923063151041665" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ShippingByTotal" Width="2" PointX="0.625" PointY="15" Height="2.0853483072916674" />
@@ -9739,24 +9730,24 @@
           <ConnectorPoint PointX="7.833333333333333" PointY="22.035716145833334" />
           <ConnectorPoint PointX="8" PointY="22.035716145833334" />
           <ConnectorPoint PointX="8" PointY="20.125" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="20.125" />
+          <ConnectorPoint PointX="10.208333333333334" PointY="20.125" />
           <ConnectorPoint PointX="11.229166666666666" PointY="20.125" />
           <ConnectorPoint PointX="11.395833333333334" PointY="20.125" />
-          <ConnectorPoint PointX="12.486977916666666" PointY="20.125" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="20.125" />
           <ConnectorPoint PointX="12.791666666666666" PointY="20.125" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="20.125" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="20.125" />
           <ConnectorPoint PointX="13.75" PointY="20.125" />
           <ConnectorPoint PointX="13.75" PointY="19.75" />
           <ConnectorPoint PointX="13.854166666666666" PointY="19.75" />
           <ConnectorPoint PointX="14.020833333333334" PointY="19.75" />
-          <ConnectorPoint PointX="14.335440471140544" PointY="19.75" />
-          <ConnectorPoint PointX="14.502107137807212" PointY="19.75" />
-          <ConnectorPoint PointX="14.859893927179973" PointY="19.75" />
-          <ConnectorPoint PointX="15.026560593846641" PointY="19.75" />
-          <ConnectorPoint PointX="15.377335595804849" PointY="19.75" />
-          <ConnectorPoint PointX="15.544002262471517" PointY="19.75" />
-          <ConnectorPoint PointX="15.939835595804849" PointY="19.75" />
-          <ConnectorPoint PointX="16.106502262471516" PointY="19.75" />
+          <ConnectorPoint PointX="14.32578029692332" PointY="19.75" />
+          <ConnectorPoint PointX="14.492446963589988" PointY="19.75" />
+          <ConnectorPoint PointX="14.851557946364084" PointY="19.75" />
+          <ConnectorPoint PointX="15.018224613030752" PointY="19.75" />
+          <ConnectorPoint PointX="15.375582648951212" PointY="19.75" />
+          <ConnectorPoint PointX="15.54224931561788" PointY="19.75" />
+          <ConnectorPoint PointX="15.938082648951211" PointY="19.75" />
+          <ConnectorPoint PointX="16.104749315617877" PointY="19.75" />
           <ConnectorPoint PointX="19" PointY="19.75" />
           <ConnectorPoint PointX="19" PointY="20.624695638020825" />
           <ConnectorPoint PointX="27.5" PointY="20.624695638020825" />
@@ -9792,20 +9783,18 @@
           <ConnectorPoint PointX="11.3125" PointY="19.671000976562503" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ActivityLog_Nop_Customer" >
-          <ConnectorPoint PointX="15.733837858276367" PointY="9.3190315755208335" />
-          <ConnectorPoint PointX="15.733837858276367" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="15.544002262471517" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="15.377335595804849" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="15.026560593846641" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="14.859893927179973" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="14.502107137807212" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="14.335440471140544" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="15.730331964569093" PointY="9.3190315755208335" />
+          <ConnectorPoint PointX="15.730331964569093" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="15.54224931561788" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="15.375582648951212" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="15.018224613030752" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="14.851557946364084" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="14.492446963589988" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="14.32578029692332" PointY="18.638313336588606" />
           <ConnectorPoint PointX="14.020833333333334" PointY="18.638313336588606" />
           <ConnectorPoint PointX="13.854166666666666" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="18.638313336588606" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="18.638313336588606" />
           <ConnectorPoint PointX="12.791666666666666" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="18.638313336588606" />
-          <ConnectorPoint PointX="12.486977916666666" PointY="18.638313336588606" />
           <ConnectorPoint PointX="12.25" PointY="18.638313336588606" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Address" Width="1.5" PointX="30.125" PointY="0.5" Height="3.8931689453124827" />
@@ -9815,7 +9804,7 @@
           <ConnectorPoint PointX="17.5" PointY="4.0367032877604174" />
           <ConnectorPoint PointX="17.791666666666668" PointY="4.0367032877604165" />
           <ConnectorPoint PointX="17.958333333333332" PointY="4.0367032877604174" />
-          <ConnectorPoint PointX="18.041666666666668" PointY="4.0367032877604165" />
+          <ConnectorPoint PointX="17.979166666666668" PointY="4.0367032877604165" />
           <ConnectorPoint PointX="18.208333333333332" PointY="4.0367032877604174" />
           <ConnectorPoint PointX="20.697916666666668" PointY="4.0367032877604165" />
           <ConnectorPoint PointX="20.864583333333332" PointY="4.0367032877604174" />
@@ -9840,10 +9829,10 @@
           <ConnectorPoint PointX="12.625" PointY="6.1676741536458337" />
           <ConnectorPoint PointX="13.197916666666666" PointY="6.1676741536458328" />
           <ConnectorPoint PointX="13.364583333333334" PointY="6.1676741536458337" />
-          <ConnectorPoint PointX="14.916666666666666" PointY="6.1676741536458328" />
-          <ConnectorPoint PointX="15.083333333333334" PointY="6.1676741536458337" />
-          <ConnectorPoint PointX="15.25" PointY="6.1676741536458337" />
-          <ConnectorPoint PointX="15.25" PointY="2.8750000000000004" />
+          <ConnectorPoint PointX="15.104166666666666" PointY="6.1676741536458328" />
+          <ConnectorPoint PointX="15.270833333333334" PointY="6.1676741536458337" />
+          <ConnectorPoint PointX="15.375" PointY="6.1676741536458337" />
+          <ConnectorPoint PointX="15.375" PointY="2.8750000000000004" />
           <ConnectorPoint PointX="16.354166666666668" PointY="2.875" />
           <ConnectorPoint PointX="16.520833333333332" PointY="2.8750000000000004" />
           <ConnectorPoint PointX="17.668204128205126" PointY="2.8749999999999996" />
@@ -9852,8 +9841,8 @@
           <ConnectorPoint PointX="18.125" PointY="4.875" />
           <ConnectorPoint PointX="20.697916666666668" PointY="4.8749999999999991" />
           <ConnectorPoint PointX="20.864583333333332" PointY="4.875" />
-          <ConnectorPoint PointX="27.166666666666668" PointY="4.8749999999999991" />
-          <ConnectorPoint PointX="27.333333333333332" PointY="4.875" />
+          <ConnectorPoint PointX="27.197819512820516" PointY="4.8749999999999991" />
+          <ConnectorPoint PointX="27.36448617948718" PointY="4.875" />
           <ConnectorPoint PointX="29.791666666666668" PointY="4.8749999999999991" />
           <ConnectorPoint PointX="29.958333333333332" PointY="4.875" />
           <ConnectorPoint PointX="30.906252000000002" PointY="4.875" />
@@ -9887,16 +9876,16 @@
           <ConnectorPoint PointX="25.875" PointY="29.667674153645834" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_News_Nop_Language" >
-          <ConnectorPoint PointX="12.328366769947257" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.328366769947257" PointY="9.4095157877604176" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="9.4095157877604176" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="9.4095157877604176" />
+          <ConnectorPoint PointX="12.339034154338739" PointY="7.0460009765625" />
+          <ConnectorPoint PointX="12.339034154338739" PointY="9.4095157877604176" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="9.4095157877604176" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="9.4095157877604176" />
           <ConnectorPoint PointX="15.104166666666666" PointY="9.4095157877604176" />
           <ConnectorPoint PointX="15.333333333333334" PointY="9.4095157877604176" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="9.4095157877604176" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="9.4095157877604176" />
-          <ConnectorPoint PointX="16.471088095804852" PointY="9.4095157877604176" />
-          <ConnectorPoint PointX="16.637754762471516" PointY="9.4095157877604176" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="9.4095157877604176" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="9.4095157877604176" />
+          <ConnectorPoint PointX="16.469335148951213" PointY="9.4095157877604176" />
+          <ConnectorPoint PointX="16.636001815617877" PointY="9.4095157877604176" />
           <ConnectorPoint PointX="18.916666666666668" PointY="9.4095157877604176" />
           <ConnectorPoint PointX="19.083333333333332" PointY="9.4095157877604176" />
           <ConnectorPoint PointX="20.229166666666668" PointY="9.4095157877604176" />
@@ -9921,17 +9910,17 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Poll" Width="1.5" PointX="8.375" PointY="0.5" Height="1.9210009765625" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PollAnswer" Width="1.625" PointX="10.25" PointY="0.5" Height="1.7566536458333331" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.PollVotingRecord" Width="1.625" PointX="12.25" PointY="0.5" Height="1.4279589843750002" />
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductType" Width="1.625" PointX="6.375" PointY="3.625" Height="1.7566536458333326" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductType" Width="1.625" PointX="3" PointY="10.25" Height="1.7566536458333326" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_PollVotingRecord_Nop_Customer" >
-          <ConnectorPoint PointX="15.5" PointY="8.29593994140625" />
-          <ConnectorPoint PointX="15.333333333333334" PointY="8.29593994140625" />
-          <ConnectorPoint PointX="15.104166666666666" PointY="8.29593994140625" />
-          <ConnectorPoint PointX="13.28125" PointY="8.29593994140625" />
+          <ConnectorPoint PointX="15.5" PointY="8.2137662760416674" />
+          <ConnectorPoint PointX="15.333333333333334" PointY="8.2137662760416674" />
+          <ConnectorPoint PointX="15.104166666666666" PointY="8.2137662760416674" />
+          <ConnectorPoint PointX="13.28125" PointY="8.2137662760416674" />
           <ConnectorPoint PointX="13.28125" PointY="1.9279589843750002" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Poll_Nop_Language" >
-          <ConnectorPoint PointX="11.992184375" PointY="5.125" />
-          <ConnectorPoint PointX="11.992184375" PointY="2.370077311197917" />
+          <ConnectorPoint PointX="11.982418593750001" PointY="5.125" />
+          <ConnectorPoint PointX="11.982418593750001" PointY="2.370077311197917" />
           <ConnectorPoint PointX="9.875" PointY="2.370077311197917" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Log_Nop_LogType" >
@@ -9969,12 +9958,12 @@
           <ConnectorPoint PointX="7.4988616048177077" PointY="19.9375" />
           <ConnectorPoint PointX="7.604166666666667" PointY="19.9375" />
           <ConnectorPoint PointX="7.833333333333333" PointY="19.9375" />
+          <ConnectorPoint PointX="10.041666666666666" PointY="19.9375" />
+          <ConnectorPoint PointX="10.208333333333334" PointY="19.9375" />
           <ConnectorPoint PointX="11.229166666666666" PointY="19.9375" />
           <ConnectorPoint PointX="11.395833333333334" PointY="19.9375" />
-          <ConnectorPoint PointX="12.486977916666666" PointY="19.9375" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="19.9375" />
           <ConnectorPoint PointX="12.791666666666666" PointY="19.9375" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="19.9375" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="19.9375" />
           <ConnectorPoint PointX="13.666666666666666" PointY="19.9375" />
           <ConnectorPoint PointX="13.833333333333334" PointY="19.9375" />
           <ConnectorPoint PointX="13.854166666666666" PointY="19.9375" />
@@ -9991,8 +9980,8 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Product" Width="1.75" PointX="6.125" PointY="7.5" Height="5.5366422526041656" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductLocalized" Width="1.75" PointX="8.625" PointY="7.5" Height="2.7427376302083317" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductLocalized_Nop_Language" >
-          <ConnectorPoint PointX="11.125" PointY="6.3452612304687506" />
-          <ConnectorPoint PointX="9.5" PointY="6.3452612304687506" />
+          <ConnectorPoint PointX="11.125" PointY="6.2630875651041666" />
+          <ConnectorPoint PointX="9.5" PointY="6.2630875651041666" />
           <ConnectorPoint PointX="9.5" PointY="7.5" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_Nop_ProductTemplate" >
@@ -10007,8 +9996,8 @@
           <ConnectorPoint PointX="7" PointY="13.036642252604166" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_Nop_ProductType" >
-          <ConnectorPoint PointX="7.296874" PointY="5.3816536458333326" />
-          <ConnectorPoint PointX="7.296874" PointY="7.5" />
+          <ConnectorPoint PointX="4.625" PointY="11.128326822916666" />
+          <ConnectorPoint PointX="6.125" PointY="11.128326822916666" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductLocalized_Nop_Product" >
           <ConnectorPoint PointX="7.875" PointY="8.8713688151041659" />
@@ -10017,13 +10006,18 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariant" Width="2.375" PointX="14" PointY="20" Height="10.795756835937496" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariantLocalized" Width="2.25" PointX="10.375" PointY="22.375" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.57031125" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.57031125" PointY="22.375" />
+          <ConnectorPoint PointX="11.53719753873022" PointY="7.0460009765625" />
+          <ConnectorPoint PointX="11.53719753873022" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="10.25" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="10.25" PointY="18.039042968750007" />
+          <ConnectorPoint PointX="10.125" PointY="18.039042968750007" />
+          <ConnectorPoint PointX="10.125" PointY="22.9999995" />
+          <ConnectorPoint PointX="10.375" PointY="22.9999995" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariant_Nop_LowStockActivity" >
           <ConnectorPoint PointX="10.375" PointY="32.521013148388732" />
           <ConnectorPoint PointX="12.791666666666666" PointY="32.521013148388732" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="32.521013148388732" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="32.521013148388732" />
           <ConnectorPoint PointX="14.7031225" PointY="32.521013148388732" />
           <ConnectorPoint PointX="14.7031225" PointY="31.617493489583332" />
         </AssociationConnector>
@@ -10031,12 +10025,12 @@
           <ConnectorPoint PointX="7.75" PointY="13.036642252604166" />
           <ConnectorPoint PointX="7.75" PointY="30.452403157552084" />
           <ConnectorPoint PointX="12.791666666666666" PointY="30.452403157552084" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="30.452403157552084" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="30.452403157552084" />
           <ConnectorPoint PointX="14" PointY="30.452403157552084" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantLocalized_Nop_ProductVariant" >
           <ConnectorPoint PointX="14" PointY="23.335500488281248" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="23.335500488281248" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="23.335500488281248" />
           <ConnectorPoint PointX="12.791666666666666" PointY="23.335500488281248" />
           <ConnectorPoint PointX="12.625" PointY="23.335500488281248" />
         </AssociationConnector>
@@ -10053,18 +10047,18 @@
           <ConnectorPoint PointX="25.9375" PointY="35" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CheckoutAttributeLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.507935384973628" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.507935384973628" PointY="17.500000000000004" />
+          <ConnectorPoint PointX="12.513269077169369" PointY="7.0460009765625" />
+          <ConnectorPoint PointX="12.513269077169369" PointY="17.500000000000004" />
           <ConnectorPoint PointX="12.875" PointY="17.500000000000004" />
           <ConnectorPoint PointX="12.875" PointY="33.033506562475623" />
-          <ConnectorPoint PointX="12.916666666666666" PointY="33.033506562475623" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="33.033506562475623" />
+          <ConnectorPoint PointX="12.885416666666666" PointY="33.033506562475623" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="33.033506562475623" />
           <ConnectorPoint PointX="15.385416666666666" PointY="33.033506562475623" />
           <ConnectorPoint PointX="15.552083333333334" PointY="33.033506562475623" />
-          <ConnectorPoint PointX="15.723795572916666" PointY="33.033506562475623" />
-          <ConnectorPoint PointX="15.890462239583334" PointY="33.033506562475623" />
-          <ConnectorPoint PointX="16.038978619791667" PointY="33.033506562475623" />
-          <ConnectorPoint PointX="16.205645286458331" PointY="33.033506562475623" />
+          <ConnectorPoint PointX="15.712197643229166" PointY="33.033506562475623" />
+          <ConnectorPoint PointX="15.878864309895834" PointY="33.033506562475623" />
+          <ConnectorPoint PointX="16.033179654947919" PointY="33.033506562475623" />
+          <ConnectorPoint PointX="16.199846321614583" PointY="33.033506562475623" />
           <ConnectorPoint PointX="21.75" PointY="33.033506562475623" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CheckoutAttributeValueLocalized_Nop_CheckoutAttributeValue" >
@@ -10072,20 +10066,18 @@
           <ConnectorPoint PointX="24.375" PointY="35.878326822916662" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CheckoutAttributeValueLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.011899077460441" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="12.011899077460441" PointY="7.0460009765625" />
           <ConnectorPoint PointX="12.011899077460441" PointY="17.625000000000004" />
-          <ConnectorPoint PointX="12.486977916666666" PointY="17.625000000000004" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="17.625000000000004" />
           <ConnectorPoint PointX="12.791666666666666" PointY="17.625000000000004" />
-          <ConnectorPoint PointX="13.114583333333334" PointY="17.625000000000004" />
+          <ConnectorPoint PointX="13.083333333333334" PointY="17.625000000000004" />
           <ConnectorPoint PointX="13.125" PointY="17.625000000000004" />
           <ConnectorPoint PointX="13.125" PointY="36.881653645833332" />
           <ConnectorPoint PointX="14.354166666666666" PointY="36.881653645833332" />
           <ConnectorPoint PointX="14.520833333333334" PointY="36.881653645833332" />
           <ConnectorPoint PointX="15.385416666666666" PointY="36.881653645833332" />
           <ConnectorPoint PointX="15.552083333333334" PointY="36.881653645833332" />
-          <ConnectorPoint PointX="16.038978619791667" PointY="36.881653645833332" />
-          <ConnectorPoint PointX="16.205645286458331" PointY="36.881653645833332" />
+          <ConnectorPoint PointX="16.033179654947919" PointY="36.881653645833332" />
+          <ConnectorPoint PointX="16.199846321614583" PointY="36.881653645833332" />
           <ConnectorPoint PointX="21.375" PointY="36.881653645833332" />
           <ConnectorPoint PointX="21.375" PointY="35.878326822916662" />
           <ConnectorPoint PointX="21.75" PointY="35.878326822916662" />
@@ -10101,19 +10093,19 @@
           <ConnectorPoint PointX="5.479166666666667" PointY="31.562499999999996" />
           <ConnectorPoint PointX="5.645833333333333" PointY="31.562499999999996" />
           <ConnectorPoint PointX="12.791666666666666" PointY="31.562499999999996" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="31.562499999999996" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="31.562499999999996" />
           <ConnectorPoint PointX="13.9375" PointY="31.562499999999996" />
           <ConnectorPoint PointX="13.9375" PointY="18.0625" />
-          <ConnectorPoint PointX="14.335440471140544" PointY="18.0625" />
-          <ConnectorPoint PointX="14.502107137807212" PointY="18.0625" />
-          <ConnectorPoint PointX="14.859893927179973" PointY="18.0625" />
-          <ConnectorPoint PointX="15.026560593846641" PointY="18.0625" />
-          <ConnectorPoint PointX="15.377335595804849" PointY="18.0625" />
-          <ConnectorPoint PointX="15.544002262471517" PointY="18.0625" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="18.0625" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="18.0625" />
-          <ConnectorPoint PointX="15.939835595804849" PointY="18.0625" />
-          <ConnectorPoint PointX="16.106502262471516" PointY="18.0625" />
+          <ConnectorPoint PointX="14.32578029692332" PointY="18.0625" />
+          <ConnectorPoint PointX="14.492446963589988" PointY="18.0625" />
+          <ConnectorPoint PointX="14.851557946364084" PointY="18.0625" />
+          <ConnectorPoint PointX="15.018224613030752" PointY="18.0625" />
+          <ConnectorPoint PointX="15.375582648951212" PointY="18.0625" />
+          <ConnectorPoint PointX="15.54224931561788" PointY="18.0625" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="18.0625" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="18.0625" />
+          <ConnectorPoint PointX="15.938082648951211" PointY="18.0625" />
+          <ConnectorPoint PointX="16.104749315617877" PointY="18.0625" />
           <ConnectorPoint PointX="26.8437505" PointY="18.0625" />
           <ConnectorPoint PointX="26.8437505" PointY="13.8862109375" />
         </AssociationConnector>
@@ -10122,15 +10114,15 @@
           <ConnectorPoint PointX="28.625" PointY="11.539195149739584" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CategoryLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.625" PointY="6.7202632304687508" />
-          <ConnectorPoint PointX="13.197916666666666" PointY="6.72026323046875" />
-          <ConnectorPoint PointX="13.364583333333334" PointY="6.7202632304687508" />
-          <ConnectorPoint PointX="15.25" PointY="6.7202632304687508" />
+          <ConnectorPoint PointX="12.625" PointY="6.6380895651041669" />
+          <ConnectorPoint PointX="13.197916666666666" PointY="6.638089565104166" />
+          <ConnectorPoint PointX="13.364583333333334" PointY="6.6380895651041669" />
+          <ConnectorPoint PointX="15.25" PointY="6.6380895651041669" />
           <ConnectorPoint PointX="15.25" PointY="9.5690315755208335" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="9.5690315755208335" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="9.5690315755208335" />
-          <ConnectorPoint PointX="16.471088095804852" PointY="9.5690315755208335" />
-          <ConnectorPoint PointX="16.637754762471516" PointY="9.5690315755208335" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="9.5690315755208335" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="9.5690315755208335" />
+          <ConnectorPoint PointX="16.469335148951213" PointY="9.5690315755208335" />
+          <ConnectorPoint PointX="16.636001815617877" PointY="9.5690315755208335" />
           <ConnectorPoint PointX="18.916666666666668" PointY="9.5690315755208335" />
           <ConnectorPoint PointX="19.083333333333332" PointY="9.5690315755208335" />
           <ConnectorPoint PointX="20.229166666666668" PointY="9.5690315755208335" />
@@ -10150,10 +10142,10 @@
           <ConnectorPoint PointX="13.364583333333334" PointY="5.6150850768229166" />
           <ConnectorPoint PointX="15.1875" PointY="5.6150850768229166" />
           <ConnectorPoint PointX="15.1875" PointY="9.6002815755208335" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="9.6002815755208335" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="9.6002815755208335" />
-          <ConnectorPoint PointX="16.471088095804852" PointY="9.6002815755208335" />
-          <ConnectorPoint PointX="16.637754762471516" PointY="9.6002815755208335" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="9.6002815755208335" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="9.6002815755208335" />
+          <ConnectorPoint PointX="16.469335148951213" PointY="9.6002815755208335" />
+          <ConnectorPoint PointX="16.636001815617877" PointY="9.6002815755208335" />
           <ConnectorPoint PointX="18.916666666666668" PointY="9.6002815755208335" />
           <ConnectorPoint PointX="19.083333333333332" PointY="9.6002815755208335" />
           <ConnectorPoint PointX="20.229166666666668" PointY="9.6002815755208335" />
@@ -10173,14 +10165,14 @@
           <ConnectorPoint PointX="7.6875" PointY="28.923279622395839" />
           <ConnectorPoint PointX="7.6875" PointY="13.099142252604167" />
           <ConnectorPoint PointX="7.9375" PointY="13.099142252604167" />
-          <ConnectorPoint PointX="7.9375" PointY="7.2728483072916674" />
-          <ConnectorPoint PointX="9.4166666666666661" PointY="7.2728483072916665" />
-          <ConnectorPoint PointX="9.5833333333333339" PointY="7.2728483072916674" />
-          <ConnectorPoint PointX="13.197916666666666" PointY="7.2728483072916665" />
-          <ConnectorPoint PointX="13.364583333333334" PointY="7.2728483072916674" />
-          <ConnectorPoint PointX="15.104166666666666" PointY="7.2728483072916665" />
-          <ConnectorPoint PointX="15.333333333333334" PointY="7.2728483072916674" />
-          <ConnectorPoint PointX="15.4375" PointY="7.2728483072916674" />
+          <ConnectorPoint PointX="7.9375" PointY="7.1085009765625" />
+          <ConnectorPoint PointX="9.4166666666666661" PointY="7.1085009765624987" />
+          <ConnectorPoint PointX="9.5833333333333339" PointY="7.1085009765625" />
+          <ConnectorPoint PointX="13.197916666666666" PointY="7.1085009765624987" />
+          <ConnectorPoint PointX="13.364583333333334" PointY="7.1085009765625" />
+          <ConnectorPoint PointX="15.104166666666666" PointY="7.1085009765624987" />
+          <ConnectorPoint PointX="15.333333333333334" PointY="7.1085009765625" />
+          <ConnectorPoint PointX="15.4375" PointY="7.1085009765625" />
           <ConnectorPoint PointX="15.4375" PointY="9.3815315755208335" />
           <ConnectorPoint PointX="18.916666666666668" PointY="9.3815315755208335" />
           <ConnectorPoint PointX="19.083333333333332" PointY="9.3815315755208335" />
@@ -10203,31 +10195,33 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.SpecificationAttributeOption" Width="2.625" PointX="25" PointY="40.625" Height="2.0853483072916674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.SpecificationAttributeOptionLocalized" Width="2.875" PointX="21.625" PointY="40.625" Height="1.7566536458333317" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_SpecificationAttributeLocalized_Nop_Language" >
-          <ConnectorPoint PointX="11.378963692486813" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="11.378963692486813" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="11.299846769365111" PointY="7.0460009765625" />
+          <ConnectorPoint PointX="11.299846769365111" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="11.453864205396886" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="11.778764718306963" PointY="17.250000000000004" />
           <ConnectorPoint PointX="11.928565744127107" PointY="17.250000000000004" />
-          <ConnectorPoint PointX="12.253466257037184" PointY="17.250000000000004" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="17.250000000000004" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="12.258799949232925" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="17.250000000000004" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="17.250000000000004" />
           <ConnectorPoint PointX="13" PointY="17.250000000000004" />
           <ConnectorPoint PointX="13" PointY="40.078390299479167" />
-          <ConnectorPoint PointX="16.038978619791667" PointY="40.078390299479167" />
-          <ConnectorPoint PointX="16.205645286458331" PointY="40.078390299479167" />
+          <ConnectorPoint PointX="16.033179654947919" PointY="40.078390299479167" />
+          <ConnectorPoint PointX="16.199846321614583" PointY="40.078390299479167" />
           <ConnectorPoint PointX="21.375" PointY="40.078390299479167" />
           <ConnectorPoint PointX="21.375" PointY="38.878326822916662" />
           <ConnectorPoint PointX="21.75" PointY="38.878326822916662" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_SpecificationAttributeOptionLocalized_Nop_Language" >
-          <ConnectorPoint PointX="12.17013292370385" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="12.17013292370385" PointY="17.375000000000004" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="17.375000000000004" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="17.375000000000004" />
-          <ConnectorPoint PointX="12.854166666666666" PointY="17.375000000000004" />
-          <ConnectorPoint PointX="13.020833333333334" PointY="17.375000000000004" />
-          <ConnectorPoint PointX="13.0625" PointY="17.375000000000004" />
-          <ConnectorPoint PointX="13.0625" PointY="40.375" />
-          <ConnectorPoint PointX="16.038978619791667" PointY="40.375" />
-          <ConnectorPoint PointX="16.205645286458331" PointY="40.375" />
+          <ConnectorPoint PointX="12.175466615899591" PointY="7.0460009765625" />
+          <ConnectorPoint PointX="12.175466615899591" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.96875" PointY="17.375000000000004" />
+          <ConnectorPoint PointX="12.96875" PointY="40.375" />
+          <ConnectorPoint PointX="12.979166666666666" PointY="40.375" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="40.375" />
+          <ConnectorPoint PointX="16.033179654947919" PointY="40.375" />
+          <ConnectorPoint PointX="16.199846321614583" PointY="40.375" />
           <ConnectorPoint PointX="21.25" PointY="40.375" />
           <ConnectorPoint PointX="21.25" PointY="41.503326822916662" />
           <ConnectorPoint PointX="21.625" PointY="41.503326822916662" />
@@ -10247,20 +10241,20 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductAttribute" Width="2" PointX="13.375" PointY="34.875" Height="1.7566536458333353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductAttributeLocalized" Width="2.125" PointX="10.375" PointY="34.75" Height="1.9210009765625031" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductAttributeLocalized_Nop_Language" >
-          <ConnectorPoint PointX="11.695431384973627" PointY="7.2103483072916665" />
-          <ConnectorPoint PointX="11.695431384973627" PointY="17.000000000000004" />
-          <ConnectorPoint PointX="11.7703318978837" PointY="17.000000000000004" />
-          <ConnectorPoint PointX="12.253466257037182" PointY="17.000000000000004" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="17.000000000000004" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="17.000000000000004" />
-          <ConnectorPoint PointX="12.9375" PointY="17.000000000000004" />
-          <ConnectorPoint PointX="12.9375" PointY="35.710500488281255" />
+          <ConnectorPoint PointX="11.695431384973627" PointY="7.0460009765625" />
+          <ConnectorPoint PointX="11.695431384973627" PointY="17.562500000000004" />
+          <ConnectorPoint PointX="12.885416666666666" PointY="17.562500000000004" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="17.562500000000004" />
+          <ConnectorPoint PointX="13.1875" PointY="17.562500000000004" />
+          <ConnectorPoint PointX="13.1875" PointY="35.710500488281255" />
+          <ConnectorPoint PointX="13.145833333333334" PointY="35.710500488281255" />
+          <ConnectorPoint PointX="12.885416666666666" PointY="35.710500488281255" />
           <ConnectorPoint PointX="12.5" PointY="35.710500488281255" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductAttributeLocalized_Nop_ProductAttribute" >
           <ConnectorPoint PointX="13.375" PointY="36.2335770670573" />
           <ConnectorPoint PointX="13.208333333333334" PointY="36.2335770670573" />
-          <ConnectorPoint PointX="12.916666666666666" PointY="36.2335770670573" />
+          <ConnectorPoint PointX="12.885416666666666" PointY="36.2335770670573" />
           <ConnectorPoint PointX="12.5" PointY="36.2335770670573" />
         </AssociationConnector>
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerRoleProductPrice" Width="2.375" PointX="12.75" PointY="11" Height="1.5923063151041657" />
@@ -10270,10 +10264,10 @@
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerRole_ProductPrice_Nop_CustomerRole" >
           <ConnectorPoint PointX="19.375" PointY="8.1246956380208353" />
           <ConnectorPoint PointX="19" PointY="8.4996956380208353" />
-          <ConnectorPoint PointX="19" PointY="11.521249104716734" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="11.521249104716734" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="11.521249104716734" />
-          <ConnectorPoint PointX="15.125" PointY="11.521249104716734" />
+          <ConnectorPoint PointX="19" PointY="11.521893062149236" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="11.521893062149236" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="11.521893062149236" />
+          <ConnectorPoint PointX="15.125" PointY="11.521893062149236" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_CustomerRole_ProductPrice_Nop_ProductVariant" >
           <ConnectorPoint PointX="14.418773804473878" PointY="20" />
@@ -10284,29 +10278,29 @@
           <ConnectorPoint PointX="8.78125" PointY="15.375" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_RelatedProduct_Nop_Product" >
-          <ConnectorPoint PointX="6.125" PointY="11.921153157552084" />
-          <ConnectorPoint PointX="2" PointY="11.921153157552084" />
+          <ConnectorPoint PointX="6.125" PointY="12.39322998046875" />
+          <ConnectorPoint PointX="2" PointY="12.39322998046875" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_ProductVariant" >
-          <ConnectorPoint PointX="14.943227260513307" PointY="20" />
-          <ConnectorPoint PointX="14.943227260513307" PointY="16.25" />
-          <ConnectorPoint PointX="14.502107137807212" PointY="16.25" />
-          <ConnectorPoint PointX="14.335440471140544" PointY="16.25" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="16.25" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="16.25" />
-          <ConnectorPoint PointX="12.253466257037184" PointY="16.249999999999996" />
-          <ConnectorPoint PointX="11.612098051640293" PointY="16.25" />
-          <ConnectorPoint PointX="11.462297025820147" PointY="16.25" />
-          <ConnectorPoint PointX="11.29563035915348" PointY="16.25" />
-          <ConnectorPoint PointX="10" PointY="16.25" />
+          <ConnectorPoint PointX="14.934891279697418" PointY="20" />
+          <ConnectorPoint PointX="14.934891279697418" PointY="16.1875" />
+          <ConnectorPoint PointX="14.492446963589988" PointY="16.1875" />
+          <ConnectorPoint PointX="14.32578029692332" PointY="16.1875" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="16.1875" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="16.1875" />
+          <ConnectorPoint PointX="12.258799949232925" PointY="16.187499999999996" />
+          <ConnectorPoint PointX="11.453864205396888" PointY="16.1875" />
+          <ConnectorPoint PointX="11.383180102698445" PointY="16.1875" />
+          <ConnectorPoint PointX="11.216513436031777" PointY="16.1875" />
+          <ConnectorPoint PointX="10" PointY="16.1875" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_TierPrice_Nop_ProductVariant" >
-          <ConnectorPoint PointX="15.80712890625" PointY="31.617493489583332" />
-          <ConnectorPoint PointX="15.80712890625" PointY="33.90625" />
+          <ConnectorPoint PointX="15.7955309765625" PointY="31.617493489583332" />
+          <ConnectorPoint PointX="15.7955309765625" PointY="33.90625" />
           <ConnectorPoint PointX="15.552083333333334" PointY="33.90625" />
           <ConnectorPoint PointX="15.385416666666666" PointY="33.90625" />
-          <ConnectorPoint PointX="13.208333333333334" PointY="33.90625" />
-          <ConnectorPoint PointX="12.854166666666666" PointY="33.90625" />
+          <ConnectorPoint PointX="13.270833333333334" PointY="33.90625" />
+          <ConnectorPoint PointX="12.885416666666666" PointY="33.90625" />
           <ConnectorPoint PointX="9.75" PointY="33.90625" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ShoppingCart_Nop_ShoppingCartType" >
@@ -10358,8 +10352,8 @@
           <ConnectorPoint PointX="22.25" PointY="8.2844246419270817" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductReview_Nop_Customer" >
-          <ConnectorPoint PointX="16.554421429138184" PointY="9.3190315755208335" />
-          <ConnectorPoint PointX="16.554421429138184" PointY="10.65625" />
+          <ConnectorPoint PointX="16.552668482284545" PointY="9.3190315755208335" />
+          <ConnectorPoint PointX="16.552668482284545" PointY="10.65625" />
           <ConnectorPoint PointX="18.916666666666668" PointY="10.65625" />
           <ConnectorPoint PointX="19.083333333333332" PointY="10.65625" />
           <ConnectorPoint PointX="20.229166666666668" PointY="10.65625" />
@@ -10369,29 +10363,29 @@
           <ConnectorPoint PointX="23" PointY="10.65625" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_Manufacturer_Mapping_Nop_Manufacturer1" >
-          <ConnectorPoint PointX="27" PointY="5.125" />
-          <ConnectorPoint PointX="27.375" PointY="4.75" />
-          <ConnectorPoint PointX="34.015626" PointY="4.75" />
-          <ConnectorPoint PointX="34.015626" PointY="4.2103483072916674" />
+          <ConnectorPoint PointX="27" PointY="5.1561528461538453" />
+          <ConnectorPoint PointX="27.374902846153844" PointY="4.78125" />
+          <ConnectorPoint PointX="33.75" PointY="4.78125" />
+          <ConnectorPoint PointX="33.75" PointY="4.2103483072916674" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductPicture_Nop_Picture" >
           <ConnectorPoint PointX="1.25" PointY="7.2566536458333335" />
           <ConnectorPoint PointX="1.25" PointY="8.5" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_Category_Mapping_Nop_Product1" >
-          <ConnectorPoint PointX="7.875" PointY="10.985257533854217" />
-          <ConnectorPoint PointX="8.375" PointY="10.985257533854217" />
+          <ConnectorPoint PointX="7.875" PointY="10.268321126302084" />
+          <ConnectorPoint PointX="8.375" PointY="10.268321126302084" />
           <ConnectorPoint PointX="8.375" PointY="10.375" />
-          <ConnectorPoint PointX="11.29563035915348" PointY="10.375" />
-          <ConnectorPoint PointX="11.462297025820147" PointY="10.375" />
-          <ConnectorPoint PointX="11.612098051640293" PointY="10.374999999999998" />
-          <ConnectorPoint PointX="12.253466257037184" PointY="10.375" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="10.375" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="10.375" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="10.375" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="10.375" />
-          <ConnectorPoint PointX="16.471088095804852" PointY="10.375" />
-          <ConnectorPoint PointX="16.637754762471516" PointY="10.375" />
+          <ConnectorPoint PointX="11.216513436031777" PointY="10.375" />
+          <ConnectorPoint PointX="11.383180102698445" PointY="10.375" />
+          <ConnectorPoint PointX="11.453864205396886" PointY="10.374999999999996" />
+          <ConnectorPoint PointX="12.258799949232927" PointY="10.375" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="10.375" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="10.375" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="10.375" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="10.375" />
+          <ConnectorPoint PointX="16.469335148951213" PointY="10.375" />
+          <ConnectorPoint PointX="16.636001815617877" PointY="10.375" />
           <ConnectorPoint PointX="18.916666666666668" PointY="10.375" />
           <ConnectorPoint PointX="19.083333333333332" PointY="10.375" />
           <ConnectorPoint PointX="20.229166666666668" PointY="10.375" />
@@ -10409,15 +10403,13 @@
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_Manufacturer_Mapping_Nop_Product1" >
           <ConnectorPoint PointX="7" PointY="7.5" />
-          <ConnectorPoint PointX="7" PointY="5.6316536458333353" />
-          <ConnectorPoint PointX="7.2135406666666668" PointY="5.6316536458333344" />
-          <ConnectorPoint PointX="7.3802073333333329" PointY="5.6316536458333353" />
-          <ConnectorPoint PointX="8.25" PointY="5.6316536458333353" />
-          <ConnectorPoint PointX="8.25" PointY="2.8437500000000004" />
-          <ConnectorPoint PointX="11.908851041666667" PointY="2.84375" />
-          <ConnectorPoint PointX="12.075517708333335" PointY="2.8437500000000004" />
-          <ConnectorPoint PointX="13.197916666666666" PointY="2.84375" />
-          <ConnectorPoint PointX="13.364583333333334" PointY="2.8437500000000004" />
+          <ConnectorPoint PointX="7" PointY="3.4927376302083335" />
+          <ConnectorPoint PointX="11.899085260416667" PointY="3.4927376302083326" />
+          <ConnectorPoint PointX="12.199545130208334" PointY="3.4927376302083335" />
+          <ConnectorPoint PointX="13.197916666666666" PointY="3.4927376302083331" />
+          <ConnectorPoint PointX="13.364583333333334" PointY="3.4927376302083335" />
+          <ConnectorPoint PointX="15" PointY="3.4927376302083335" />
+          <ConnectorPoint PointX="15" PointY="2.8437500000000004" />
           <ConnectorPoint PointX="16.354166666666668" PointY="2.84375" />
           <ConnectorPoint PointX="16.520833333333332" PointY="2.8437500000000004" />
           <ConnectorPoint PointX="17.699454128205126" PointY="2.8437499999999996" />
@@ -10431,28 +10423,28 @@
           <ConnectorPoint PointX="32.75" PointY="3.1676741536458337" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_SpecificationAttribute_Mapping_Nop_Product" >
-          <ConnectorPoint PointX="7.875" PointY="12.042201893229244" />
-          <ConnectorPoint PointX="8.5" PointY="12.042201893229244" />
-          <ConnectorPoint PointX="8.5" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="11.29563035915348" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="11.462297025820147" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="11.612098051640293" PointY="10.49273763020833" />
-          <ConnectorPoint PointX="12.253466257037184" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="16.471088095804852" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="16.637754762471516" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="18.916666666666668" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="19.083333333333332" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="20.229166666666668" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="20.395833333333332" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="21.260416666666668" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="21.427083333333332" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="24.135416666666668" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="24.302083333333332" PointY="10.492737630208332" />
-          <ConnectorPoint PointX="26.0625" PointY="10.492737630208332" />
+          <ConnectorPoint PointX="7.875" PointY="8.8529085631509918" />
+          <ConnectorPoint PointX="8.3125" PointY="8.8529085631509918" />
+          <ConnectorPoint PointX="8.3125" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="11.216513436031777" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="11.383180102698445" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="11.453864205396886" PointY="10.492737630208332" />
+          <ConnectorPoint PointX="12.258799949232927" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="16.469335148951213" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="16.636001815617877" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="18.916666666666668" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="19.083333333333332" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="20.229166666666668" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="20.395833333333332" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="21.260416666666668" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="21.427083333333332" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="24.135416666666668" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="24.302083333333332" PointY="10.492737630208335" />
+          <ConnectorPoint PointX="26.0625" PointY="10.492737630208335" />
           <ConnectorPoint PointX="26.0625" PointY="14.75" />
           <ConnectorPoint PointX="26.760417166666667" PointY="14.75" />
           <ConnectorPoint PointX="26.927083833333331" PointY="14.75" />
@@ -10466,47 +10458,49 @@
           <ConnectorPoint PointX="2" PointY="9.4605004882812409" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductRating_Nop_Product" >
-          <ConnectorPoint PointX="7.875" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="11.29563035915348" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="11.462297025820147" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="11.612098051640293" PointY="10.433868815104164" />
-          <ConnectorPoint PointX="12.253466257037184" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="16.471088095804852" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="16.637754762471516" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="18.916666666666668" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="19.083333333333332" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="20.229166666666668" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="20.395833333333332" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="21.260416666666668" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="21.427083333333332" PointY="10.433868815104166" />
-          <ConnectorPoint PointX="22.59375" PointY="10.433868815104166" />
+          <ConnectorPoint PointX="7.875" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="11.216513436031777" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="11.383180102698445" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="11.453864205396886" PointY="10.433868815104164" />
+          <ConnectorPoint PointX="12.258799949232927" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="16.469335148951213" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="16.636001815617877" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="18.916666666666668" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="19.083333333333332" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="20.229166666666668" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="20.395833333333332" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="21.260416666666668" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="21.427083333333332" PointY="10.433868815104168" />
+          <ConnectorPoint PointX="22.59375" PointY="10.433868815104168" />
           <ConnectorPoint PointX="22.59375" PointY="8.3816536458333335" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductReview_Nop_Product1" >
-          <ConnectorPoint PointX="7.875" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="11.29563035915348" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="11.462297025820147" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="11.612098051640293" PointY="10.340118815104164" />
-          <ConnectorPoint PointX="12.253466257037184" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="15.650504524943033" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="15.8171711916097" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="16.471088095804852" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="16.637754762471516" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="18.916666666666668" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="19.083333333333332" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="20.229166666666668" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="20.395833333333332" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="21.260416666666668" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="21.427083333333332" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="22.510416666666668" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="22.677083333333332" PointY="10.340118815104166" />
-          <ConnectorPoint PointX="24.21875" PointY="10.340118815104166" />
+          <ConnectorPoint PointX="7.875" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="8.2291666666666661" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="8.3958333333333339" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="11.216513436031777" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="11.383180102698445" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="11.453864205396886" PointY="10.340118815104164" />
+          <ConnectorPoint PointX="12.258799949232927" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="15.646998631235759" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="15.813665297902427" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="16.469335148951213" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="16.636001815617877" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="18.916666666666668" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="19.083333333333332" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="20.229166666666668" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="20.395833333333332" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="21.260416666666668" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="21.427083333333332" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="22.510416666666668" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="22.677083333333332" PointY="10.340118815104168" />
+          <ConnectorPoint PointX="24.21875" PointY="10.340118815104168" />
           <ConnectorPoint PointX="24.21875" PointY="10.625" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_Product_SpecificationAttribute_Mapping_Nop_SpecificationAttributeOption" >
@@ -10533,16 +10527,14 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariantAttributeValue" Width="2.375" PointX="10.375" PointY="37.375" Height="2.4140429687499818" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ProductVariantAttributeValueLocalized" Width="2.875" PointX="10.125" PointY="40.75" Height="1.7566536458333353" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantAttributeValueLocalized_Nop_Language" >
-          <ConnectorPoint PointX="11.853665231217034" PointY="7.2103483072916665" />
+          <ConnectorPoint PointX="11.853665231217034" PointY="7.0460009765625" />
           <ConnectorPoint PointX="11.853665231217034" PointY="17.125000000000004" />
           <ConnectorPoint PointX="11.928565744127107" PointY="17.125000000000004" />
-          <ConnectorPoint PointX="12.253466257037184" PointY="17.125000000000004" />
-          <ConnectorPoint PointX="12.424602051640294" PointY="17.125000000000004" />
-          <ConnectorPoint PointX="12.653644583333334" PointY="17.125000000000004" />
-          <ConnectorPoint PointX="12.854166666666666" PointY="17.125000000000004" />
-          <ConnectorPoint PointX="13.020833333333334" PointY="17.125000000000004" />
-          <ConnectorPoint PointX="13.03125" PointY="17.125000000000004" />
-          <ConnectorPoint PointX="13.03125" PointY="40.500000000000007" />
+          <ConnectorPoint PointX="12.258799949232925" PointY="17.125000000000004" />
+          <ConnectorPoint PointX="12.429935743836035" PointY="17.125000000000004" />
+          <ConnectorPoint PointX="12.596602410502703" PointY="17.125000000000004" />
+          <ConnectorPoint PointX="13.0625" PointY="17.125000000000004" />
+          <ConnectorPoint PointX="13.0625" PointY="40.500000000000007" />
           <ConnectorPoint PointX="13.25" PointY="40.500000000000007" />
           <ConnectorPoint PointX="13.25" PointY="41.628326822916669" />
           <ConnectorPoint PointX="13" PointY="41.628326822916669" />
@@ -10570,13 +10562,13 @@
           <ConnectorPoint PointX="15.46875" PointY="37.25" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantAttributeCombination_Nop_ProductVariant" >
-          <ConnectorPoint PointX="16.122311953125" PointY="31.617493489583332" />
-          <ConnectorPoint PointX="16.122311953125" PointY="40.625" />
+          <ConnectorPoint PointX="16.116512988281251" PointY="31.617493489583332" />
+          <ConnectorPoint PointX="16.116512988281251" PointY="40.625" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantAttributeValue_Nop_ProductVariant_ProductAttribute_Mapping" >
           <ConnectorPoint PointX="13.5" PointY="38.582021484374991" />
           <ConnectorPoint PointX="13.145833333333334" PointY="38.582021484374991" />
-          <ConnectorPoint PointX="12.916666666666666" PointY="38.582021484374991" />
+          <ConnectorPoint PointX="12.885416666666666" PointY="38.582021484374991" />
           <ConnectorPoint PointX="12.75" PointY="38.582021484374991" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ProductVariantAttributeValueLocalized_Nop_ProductVariantAttributeValue" >
@@ -10631,36 +10623,34 @@
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.RecurringPaymentHistory" Width="2" PointX="30.125" PointY="15" Height="1.756653645833353" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.RewardPointsHistory" Width="2" PointX="18.375" PointY="0.875" Height="2.742737630208353" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_DiscountUsageHistory_Nop_Customer" >
-          <ConnectorPoint PointX="17.5" PointY="4.6340844726562409" />
-          <ConnectorPoint PointX="17.791666666666668" PointY="4.63408447265624" />
-          <ConnectorPoint PointX="17.958333333333332" PointY="4.6340844726562409" />
-          <ConnectorPoint PointX="18.041666666666668" PointY="4.63408447265624" />
-          <ConnectorPoint PointX="18.208333333333332" PointY="4.6340844726562409" />
-          <ConnectorPoint PointX="20.697916666666668" PointY="4.63408447265624" />
-          <ConnectorPoint PointX="20.864583333333332" PointY="4.6340844726562409" />
-          <ConnectorPoint PointX="33.932292666666662" PointY="4.63408447265624" />
-          <ConnectorPoint PointX="34.098959333333333" PointY="4.6340844726562409" />
-          <ConnectorPoint PointX="35.65625" PointY="4.6340844726562409" />
+          <ConnectorPoint PointX="17.5" PointY="4.5859140339925162" />
+          <ConnectorPoint PointX="17.791666666666668" PointY="4.5859140339925153" />
+          <ConnectorPoint PointX="17.958333333333332" PointY="4.5859140339925162" />
+          <ConnectorPoint PointX="18.041666666666668" PointY="4.5859140339925153" />
+          <ConnectorPoint PointX="18.208333333333332" PointY="4.5859140339925162" />
+          <ConnectorPoint PointX="20.697916666666668" PointY="4.5859140339925153" />
+          <ConnectorPoint PointX="20.864583333333332" PointY="4.5859140339925162" />
+          <ConnectorPoint PointX="33.666666666666664" PointY="4.5859140339925153" />
+          <ConnectorPoint PointX="33.833333333333336" PointY="4.5859140339925162" />
+          <ConnectorPoint PointX="35.65625" PointY="4.5859140339925162" />
           <ConnectorPoint PointX="35.65625" PointY="5" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_GiftCardUsageHistory_Nop_Customer" >
-          <ConnectorPoint PointX="17.5" PointY="4.81640625" />
-          <ConnectorPoint PointX="20.697916666666668" PointY="4.8164062499999991" />
-          <ConnectorPoint PointX="20.864583333333332" PointY="4.81640625" />
-          <ConnectorPoint PointX="27.225260416666668" PointY="4.8164062499999991" />
-          <ConnectorPoint PointX="27.391927083333332" PointY="4.81640625" />
-          <ConnectorPoint PointX="29.733072916666668" PointY="4.8164062499999991" />
-          <ConnectorPoint PointX="29.899739583333332" PointY="4.81640625" />
-          <ConnectorPoint PointX="35.572916666666664" PointY="4.8164062499999991" />
-          <ConnectorPoint PointX="35.739583333333336" PointY="4.81640625" />
-          <ConnectorPoint PointX="44.9375" PointY="4.81640625" />
+          <ConnectorPoint PointX="17.5" PointY="4.6992095169962518" />
+          <ConnectorPoint PointX="18.041666666666668" PointY="4.6992095169962509" />
+          <ConnectorPoint PointX="18.208333333333332" PointY="4.6992095169962518" />
+          <ConnectorPoint PointX="20.697916666666668" PointY="4.6992095169962509" />
+          <ConnectorPoint PointX="20.864583333333332" PointY="4.6992095169962518" />
+          <ConnectorPoint PointX="35.572916666666664" PointY="4.6992095169962509" />
+          <ConnectorPoint PointX="35.739583333333336" PointY="4.6992095169962518" />
+          <ConnectorPoint PointX="44.9375" PointY="4.6992095169962518" />
           <ConnectorPoint PointX="44.9375" PointY="12.5" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_RewardPointsHistory_Nop_Customer" >
           <ConnectorPoint PointX="17.5" PointY="3.403390045873401" />
           <ConnectorPoint PointX="17.791666666666668" PointY="3.4033900458734005" />
           <ConnectorPoint PointX="17.958333333333332" PointY="3.403390045873401" />
-          <ConnectorPoint PointX="18.041666666666668" PointY="3.4033900458734005" />
+          <ConnectorPoint PointX="17.979166666666668" PointY="3.4033900458734" />
           <ConnectorPoint PointX="18.208333333333332" PointY="3.403390045873401" />
           <ConnectorPoint PointX="18.375" PointY="3.403390045873401" />
         </AssociationConnector>

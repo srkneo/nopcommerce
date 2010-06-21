@@ -94,17 +94,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             get
             {
-                int languageId = 0;
-                if (NopContext.Current != null)
-                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                if (languageId > 0)
+                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
                 {
-                    if (_checkoutAttributeLocalized == null)
-                        _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
+                    int languageId = 0;
+                    if (NopContext.Current != null)
+                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                    if (languageId > 0)
+                    {
+                        if (_checkoutAttributeLocalized == null)
+                            _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
 
-                    var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
-                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
-                        return temp1.Name;
+                        var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
+                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                            return temp1.Name;
+                    }
                 }
 
                 return this.Name;
@@ -118,17 +121,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             get
             {
-                int languageId = 0;
-                if (NopContext.Current != null)
-                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                if (languageId > 0)
+                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
                 {
-                    if (_checkoutAttributeLocalized == null)
-                        _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
+                    int languageId = 0;
+                    if (NopContext.Current != null)
+                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                    if (languageId > 0)
+                    {
+                        if (_checkoutAttributeLocalized == null)
+                            _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
 
-                    var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
-                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.TextPrompt))
-                        return temp1.TextPrompt;
+                        var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
+                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.TextPrompt))
+                            return temp1.TextPrompt;
+                    }
                 }
 
                 return this.TextPrompt;

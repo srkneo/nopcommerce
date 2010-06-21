@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             
             if (TaxRateManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
             }
         }
 
@@ -70,7 +70,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 return null;
 
             string key = string.Format(TAXRATE_BY_ID_KEY, taxRateId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (TaxRateManager.CacheEnabled && (obj2 != null))
             {
                 return (TaxRate)obj2;
@@ -84,7 +84,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 
             if (TaxRateManager.CacheEnabled)
             {
-                NopCache.Max(key, taxRate);
+                NopRequestCache.Add(key, taxRate);
             }
             return taxRate;
         }
@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static List<TaxRate> GetAllTaxRates()
         {
             string key = TAXRATE_ALL_KEY;
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (TaxRateManager.CacheEnabled && (obj2 != null))
             {
                 return (List<TaxRate>)obj2;
@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 
             if (TaxRateManager.CacheEnabled)
             {
-                NopCache.Max(key, collection);
+                NopRequestCache.Add(key, collection);
             } 
             
             return collection;
@@ -196,7 +196,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             
             if (TaxRateManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
             }
 
             return taxRate;
@@ -238,7 +238,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             
             if (TaxRateManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TAXRATE_PATTERN_KEY);
             }
 
             return taxRate;

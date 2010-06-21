@@ -81,11 +81,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             File.WriteAllBytes(Path.Combine(LocalImagePath, localFilename), pictureBinary);
         }
 
-        private static byte[] LoadPictureFromFile(int pictureId, string extension)
+        #endregion
+
+        #region Methods
+
+        public static byte[] LoadPictureFromFile(int pictureId, string extension)
         {
             string[] parts = extension.Split('/');
             string lastPart = parts[parts.Length - 1];
-            switch(lastPart)
+            switch (lastPart)
             {
                 case "pjpeg":
                     lastPart = "jpg";
@@ -99,15 +103,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             }
             string localFilename = string.Empty;
             localFilename = string.Format("{0}_0.{1}", pictureId.ToString("0000000"), lastPart);
-            if(!File.Exists(Path.Combine(LocalImagePath, localFilename)))
+            if (!File.Exists(Path.Combine(LocalImagePath, localFilename)))
             {
                 return new byte[0];
             }
             return File.ReadAllBytes(Path.Combine(LocalImagePath, localFilename));
         }
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Get a picture URL
@@ -289,7 +290,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             bool showDefaultPicture)
         {
             string url = string.Empty;
-            if (picture == null || picture.PictureBinary.Length == 0)
+            if (picture == null || picture.LoadPictureBinary().Length == 0)
             {
                 if(showDefaultPicture)
                 {
@@ -321,7 +322,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                 foreach (string currentFileName in currentFiles)
                     File.Delete(Path.Combine(PictureManager.LocalThumbImagePath, currentFileName));
 
-                picture = PictureManager.UpdatePicture(picture.PictureId, picture.PictureBinary, picture.Extension, false);
+                picture = UpdatePicture(picture.PictureId, picture.LoadPictureBinary(), picture.Extension, false);
             }
             lock (s_lock)
             {
@@ -334,7 +335,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                         {
                             System.IO.Directory.CreateDirectory(PictureManager.LocalThumbImagePath);
                         }
-                        File.WriteAllBytes(Path.Combine(PictureManager.LocalThumbImagePath, localFilename), picture.PictureBinary);
+                        File.WriteAllBytes(Path.Combine(PictureManager.LocalThumbImagePath, localFilename), picture.LoadPictureBinary());
                     }
                 }
                 else
@@ -346,7 +347,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                         {
                             System.IO.Directory.CreateDirectory(PictureManager.LocalThumbImagePath);
                         }
-                        using (MemoryStream stream = new MemoryStream(picture.PictureBinary))
+                        using (MemoryStream stream = new MemoryStream(picture.LoadPictureBinary()))
                         {
                             var b = new Bitmap(stream);
 
@@ -435,10 +436,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                         select p;
             var picture = query.SingleOrDefault();
 
-            if(!StoreInDB && picture != null)
-            {
-                picture.PictureBinary = LoadPictureFromFile(pictureId, picture.Extension);
-            }
+            
+
+             
+        
             return picture;
         }
 
@@ -542,7 +543,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             pictureBinary = ValidatePicture(pictureBinary);
                         
             var picture = new Picture();
-            picture.PictureBinary = (StoreInDB ? pictureBinary : new byte[0]);
+            picture.PictureBinary = (PictureManager.StoreInDB ? pictureBinary : new byte[0]);
             picture.Extension = extension;
             picture.IsNew = isNew;
 
@@ -550,10 +551,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             context.Pictures.AddObject(picture);
             context.SaveChanges();
 
-            if(!StoreInDB && picture != null)
+            if(!PictureManager.StoreInDB && picture != null)
             {
                 SavePictureInFile(picture.PictureId, pictureBinary, extension);
-                picture.PictureBinary = pictureBinary;
             }
             return picture;
         }
@@ -579,15 +579,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             if (!context.IsAttached(picture))
                 context.Pictures.Attach(picture);
 
-            picture.PictureBinary = (StoreInDB ? pictureBinary : new byte[0]);
+            picture.PictureBinary = (PictureManager.StoreInDB ? pictureBinary : new byte[0]);
             picture.Extension = extension;
             picture.IsNew = isNew;
             context.SaveChanges();
 
-            if(!StoreInDB && picture != null)
+            if(!PictureManager.StoreInDB && picture != null)
             {
                 SavePictureInFile(picture.PictureId, pictureBinary, extension);
-                picture.PictureBinary = pictureBinary;
             }
             return picture;
         }

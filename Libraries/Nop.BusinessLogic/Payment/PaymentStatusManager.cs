@@ -77,7 +77,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
                 return null;
 
             string key = string.Format(PAYMENTSTATUSES_BY_ID_KEY, paymentStatusId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (PaymentStatusManager.CacheEnabled && (obj2 != null))
             {
                 return (PaymentStatus)obj2;
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (PaymentStatusManager.CacheEnabled)
             {
-                NopCache.Max(key, paymentStatus);
+                NopRequestCache.Add(key, paymentStatus);
             }
             return paymentStatus;
         }
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         public static List<PaymentStatus> GetAllPaymentStatuses()
         {
             string key = string.Format(PAYMENTSTATUSES_ALL_KEY);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (PaymentStatusManager.CacheEnabled && (obj2 != null))
             {
                 return (List<PaymentStatus>)obj2;
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 
             if (PaymentStatusManager.CacheEnabled)
             {
-                NopCache.Max(key, paymentStatuses);
+                NopRequestCache.Add(key, paymentStatuses);
             }
             return paymentStatuses;
         }

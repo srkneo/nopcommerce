@@ -54,7 +54,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
                 return null;
 
             string key = string.Format(NEWS_BY_ID_KEY, newsId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (NewsManager.CacheEnabled && (obj2 != null))
             {
                 return (News)obj2;
@@ -68,7 +68,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
 
             if (NewsManager.CacheEnabled)
             {
-                NopCache.Max(key, news);
+                NopRequestCache.Add(key, news);
             }
             return news;
         }
@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
 
             if (NewsManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(NEWS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(NEWS_PATTERN_KEY);
             }
         }
 
@@ -225,7 +225,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
 
             if (NewsManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(NEWS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(NEWS_PATTERN_KEY);
             }
 
             return news;
@@ -268,7 +268,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
 
             if (NewsManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(NEWS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(NEWS_PATTERN_KEY);
             }
 
             return news;

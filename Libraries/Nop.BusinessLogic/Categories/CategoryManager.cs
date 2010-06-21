@@ -100,7 +100,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             bool showHidden)
         {
             string key = string.Format(CATEGORIES_ALL_KEY, showHidden, parentCategoryId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (List<Category>)obj2;
@@ -117,7 +117,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
-                NopCache.Max(key, categories);
+                NopRequestCache.Add(key, categories);
             }
             return categories;
         }
@@ -150,7 +150,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return null;
 
             string key = string.Format(CATEGORIES_BY_ID_KEY, categoryId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CategoryManager.CategoriesCacheEnabled && (obj2 != null))
             {
                 return (Category)obj2;
@@ -164,7 +164,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
-                NopCache.Max(key, category);
+                NopRequestCache.Add(key, category);
             }
             return category;
         }
@@ -241,8 +241,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
             }
 
             return category;
@@ -319,8 +319,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
             }
 
             return category;
@@ -416,7 +416,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
-                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
             }
 
             return categoryLocalized;
@@ -460,7 +460,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled)
             {
-                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
             }
 
             return categoryLocalized;
@@ -487,8 +487,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
             }
         }
 
@@ -504,7 +504,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTCATEGORIES_ALLBYCATEGORYID_KEY, showHidden, categoryId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (List<ProductCategory>)obj2;
@@ -522,7 +522,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productCategories);
+                NopRequestCache.Add(key, productCategories);
             }
             return productCategories;
         }
@@ -539,7 +539,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTCATEGORIES_ALLBYPRODUCTID_KEY, showHidden, productId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (List<ProductCategory>)obj2;
@@ -557,7 +557,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productCategories);
+                NopRequestCache.Add(key, productCategories);
             }
             return productCategories;
         }
@@ -573,7 +573,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
                 return null;
 
             string key = string.Format(PRODUCTCATEGORIES_BY_ID_KEY, productCategoryId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CategoryManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductCategory)obj2;
@@ -587,7 +587,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productCategory);
+                NopRequestCache.Add(key, productCategory);
             }
             return productCategory;
         }
@@ -615,8 +615,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
             }
             return productCategory;
         }
@@ -649,8 +649,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 
             if (CategoryManager.CategoriesCacheEnabled || CategoryManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CATEGORIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTCATEGORIES_PATTERN_KEY);
             }
             return productCategory;
         }

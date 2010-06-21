@@ -121,6 +121,8 @@
     <Compile Include="Audit\LogType.cs" />
     <Compile Include="Audit\CustomerActivityManager.cs" />
     <Compile Include="Audit\Extensions.cs" />
+    <Compile Include="Caching\NopRequestCache.cs" />
+    <Compile Include="Caching\NopStaticCache.cs" />
     <Compile Include="Categories\CategoryLocalized.cs" />
     <Compile Include="Categories\Extensions.cs" />
     <Compile Include="Content\Forums\ForumSubscription.cs" />
@@ -375,7 +377,6 @@
     <Compile Include="Tax\TaxRateManager.cs" />
     <Compile Include="Tax\TaxCategoryManager.cs" />
     <Compile Include="Warehouses\WarehouseManager.cs" />
-    <Compile Include="Caching\NopCache.cs" />
     <Compile Include="Configuration\NopConfig.cs" />
     <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="NopContext.cs" />

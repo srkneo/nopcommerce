@@ -108,10 +108,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         /// </summary>
         public virtual MessageTemplate NpMessageTemplate { get; set; }
 
-        /// <summary>
-        /// Gets the language
-        /// </summary>
-        public Language NpLanguage { get; set; }
         #endregion
     }
 

@@ -402,6 +402,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         }
 
         /// <summary>
+        /// Get a value indicating whether we have localized entity properties
+        /// </summary>
+        public bool LocalizedEntityPropertiesEnabled
+        {
+            get
+            {
+                bool showHidden = NopContext.Current.IsAdmin;
+                var languages = LanguageManager.GetAllLanguages(showHidden);
+
+                bool result = languages.Count > 1;
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Get or set current tax display type
         /// </summary>
         public TaxDisplayTypeEnum TaxDisplayType

@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SHIPPINGMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SHIPPINGMETHODS_PATTERN_KEY);
             }
         }
 
@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return null;
 
             string key = string.Format(SHIPPINGMETHODS_BY_ID_KEY, shippingMethodId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ShippingMethodManager.CacheEnabled && (obj2 != null))
             {
                 return (ShippingMethod)obj2;
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingMethodManager.CacheEnabled)
             {
-                NopCache.Max(key, shippingMethod);
+                NopRequestCache.Add(key, shippingMethod);
             }
             return shippingMethod;
         }
@@ -132,7 +132,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SHIPPINGMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SHIPPINGMETHODS_PATTERN_KEY);
             }
             return shippingMethod;
         }
@@ -163,7 +163,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SHIPPINGMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SHIPPINGMETHODS_PATTERN_KEY);
             }
 
             return shippingMethod;

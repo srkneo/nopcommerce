@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
                 return null;
 
             string key = string.Format(POLLS_BY_ID_KEY, pollId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (PollManager.CacheEnabled && (obj2 != null))
             {
                 return (Poll)obj2;
@@ -64,7 +64,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.Max(key, poll);
+                NopRequestCache.Add(key, poll);
             }
             return poll;
         }
@@ -138,8 +138,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             
             if (PollManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
-                NopCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
             }
         }
         
@@ -168,8 +168,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
-                NopCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
             }
 
             return poll;
@@ -205,8 +205,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
-                NopCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
             }
 
             return poll;
@@ -256,7 +256,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public static List<PollAnswer> GetPollAnswersByPollId(int pollId)
         {
             string key = string.Format(POLLANSWERS_BY_POLLID_KEY, pollId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (PollManager.CacheEnabled && (obj2 != null))
             {
                 return (List<PollAnswer>)obj2;
@@ -271,7 +271,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.Max(key, pollAnswers);
+                NopRequestCache.Add(key, pollAnswers);
             }
             return pollAnswers;
         }
@@ -294,8 +294,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
-                NopCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
             }
         }
 
@@ -322,8 +322,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
-                NopCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
             }
 
             return pollAnswer;
@@ -357,8 +357,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
-                NopCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
             }
 
             return pollAnswer;
@@ -408,8 +408,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
             if (PollManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(POLLS_PATTERN_KEY);
-                NopCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(POLLANSWERS_PATTERN_KEY);
             }
         }
 

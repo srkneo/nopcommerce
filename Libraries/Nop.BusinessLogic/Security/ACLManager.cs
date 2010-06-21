@@ -63,7 +63,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (ACLManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
             }
         }
 
@@ -78,7 +78,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
                 return null;
 
             string key = string.Format(CUSTOMERACTIONS_BY_ID_KEY, customerActionId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ACLManager.CacheEnabled && (obj2 != null))
             {
                 return (CustomerAction)obj2;
@@ -92,7 +92,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (ACLManager.CacheEnabled)
             {
-                NopCache.Max(key, customerAction);
+                NopRequestCache.Add(key, customerAction);
             }
             return customerAction;
         }
@@ -104,7 +104,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static List<CustomerAction> GetAllCustomerActions()
         {
             string key = string.Format(CUSTOMERACTIONS_ALL_KEY);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ACLManager.CacheEnabled && (obj2 != null))
             {
                 return (List<CustomerAction>)obj2;
@@ -118,7 +118,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (ACLManager.CacheEnabled)
             {
-                NopCache.Max(key, customerActions);
+                NopRequestCache.Add(key, customerActions);
             }
             return customerActions;
         }
@@ -146,7 +146,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (ACLManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
             }
 
             return customerAction;
@@ -181,7 +181,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (ACLManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(CUSTOMERACTIONS_PATTERN_KEY);
             }
 
             return customerAction;

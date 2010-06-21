@@ -57,7 +57,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (LanguageManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
             }
         }
 
@@ -79,7 +79,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static List<Language> GetAllLanguages(bool showHidden)
         {
             string key = string.Format(LANGUAGES_ALL_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (LanguageManager.CacheEnabled && (obj2 != null))
             {
                 return (List<Language>)obj2;
@@ -94,7 +94,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (LanguageManager.CacheEnabled)
             {
-                NopCache.Max(key, languages);
+                NopStaticCache.Max(key, languages);
             }
             return languages;
         }
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             string key = string.Format(LANGUAGES_BY_ID_KEY, languageId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (LanguageManager.CacheEnabled && (obj2 != null))
             {
                 return (Language)obj2;
@@ -124,7 +124,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (LanguageManager.CacheEnabled)
             {
-                NopCache.Max(key, language);
+                NopStaticCache.Max(key, language);
             }
             return language;
         }
@@ -154,7 +154,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (LanguageManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
             }
             return language;
         }
@@ -190,7 +190,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (LanguageManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(LANGUAGES_PATTERN_KEY);
             }
             return language;
         }

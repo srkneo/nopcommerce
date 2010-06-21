@@ -70,17 +70,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             get
             {
-                int languageId = 0;
-                if (NopContext.Current != null)
-                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                if (languageId > 0)
+                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
                 {
-                    if (_saoLocalized == null)
-                        _saoLocalized = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionId(this.SpecificationAttributeOptionId);
+                    int languageId = 0;
+                    if (NopContext.Current != null)
+                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                    if (languageId > 0)
+                    {
+                        if (_saoLocalized == null)
+                            _saoLocalized = SpecificationAttributeManager.GetSpecificationAttributeOptionLocalizedBySpecificationAttributeOptionId(this.SpecificationAttributeOptionId);
 
-                    var temp1 = _saoLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
-                        return temp1.Name;
+                        var temp1 = _saoLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                            return temp1.Name;
+                    }
                 }
 
                 return this.Name;

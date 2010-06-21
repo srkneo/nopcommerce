@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
             }
         }
 
@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_ALL_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
                 return (List<Country>)obj2;
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.Max(key, countryCollection);
+                NopRequestCache.Add(key, countryCollection);
             }
             return countryCollection;
         }
@@ -99,7 +99,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_REGISTRATION_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
                 return (List<Country>)obj2;
@@ -114,7 +114,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.Max(key, countryCollection);
+                NopRequestCache.Add(key, countryCollection);
             }
             return countryCollection;
         }
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_BILLING_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
                 return (List<Country>)obj2;
@@ -142,7 +142,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.Max(key, countryCollection);
+                NopRequestCache.Add(key, countryCollection);
             }
             return countryCollection;
         }
@@ -156,7 +156,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(COUNTRIES_SHIPPING_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
                 return (List<Country>)obj2;
@@ -171,7 +171,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.Max(key, countryCollection);
+                NopRequestCache.Add(key, countryCollection);
             }
             return countryCollection;
         }
@@ -187,7 +187,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             string key = string.Format(COUNTRIES_BY_ID_KEY, countryId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CountryManager.CacheEnabled && (obj2 != null))
             {
                 return (Country)obj2;
@@ -201,7 +201,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.Max(key, country);
+                NopRequestCache.Add(key, country);
             }
             return country;
         }
@@ -272,7 +272,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
             }
             return country;
         }
@@ -317,7 +317,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CountryManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(COUNTRIES_PATTERN_KEY);
             }
 
             return country;

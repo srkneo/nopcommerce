@@ -95,7 +95,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CurrencyManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
             }
         }
 
@@ -110,7 +110,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 return null;
 
             string key = string.Format(CURRENCIES_BY_ID_KEY, currencyId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (CurrencyManager.CacheEnabled && (obj2 != null))
             {
                 return (Currency)obj2;
@@ -124,7 +124,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CurrencyManager.CacheEnabled)
             {
-                NopCache.Max(key, currency);
+                NopStaticCache.Max(key, currency);
             }
             return currency;
         }
@@ -157,7 +157,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(CURRENCIES_ALL_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (CurrencyManager.CacheEnabled && (obj2 != null))
             {
                 return (List<Currency>)obj2;
@@ -168,13 +168,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                         orderby c.DisplayOrder
                         where showHidden || c.Published
                         select c;
-            var currencyCollection = query.ToList();
+            var currencies = query.ToList();
 
             if (CurrencyManager.CacheEnabled)
             {
-                NopCache.Max(key, currencyCollection);
+                NopStaticCache.Max(key, currencies);
             }
-            return currencyCollection;
+            return currencies;
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CurrencyManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
             }
             return currency;
         }
@@ -282,7 +282,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
             if (CurrencyManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(CURRENCIES_PATTERN_KEY);
             }
             return currency;
         }

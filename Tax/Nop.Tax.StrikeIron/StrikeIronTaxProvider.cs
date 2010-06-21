@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.Tax
         {
             decimal result = decimal.Zero;
             string key = string.Format(TAXRATEUSA_KEY, zipCode);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (StrikeIronTaxProvider.CacheEnabled && (obj2 != null))
             {
                 return (decimal)obj2;
@@ -181,7 +181,7 @@ namespace NopSolutions.NopCommerce.Tax
 
             if (StrikeIronTaxProvider.CacheEnabled)
             {
-                NopCache.Max(key, result);
+                NopStaticCache.Max(key, result);
             }
 
             return result;
@@ -200,7 +200,7 @@ namespace NopSolutions.NopCommerce.Tax
         {
             decimal result = decimal.Zero;
             string key = string.Format(TAXRATECANADA_KEY, province);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (StrikeIronTaxProvider.CacheEnabled && (obj2 != null))
             {
                 return (decimal)obj2;
@@ -258,7 +258,7 @@ namespace NopSolutions.NopCommerce.Tax
 
             if (StrikeIronTaxProvider.CacheEnabled)
             {
-                NopCache.Max(key, result);
+                NopStaticCache.Max(key, result);
             }
 
             return result;

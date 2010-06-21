@@ -85,17 +85,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             get
             {
-                int languageId = 0;
-                if (NopContext.Current != null)
-                    languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                if (languageId > 0)
+                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
                 {
-                    if (_cavLocalized == null)
-                        _cavLocalized = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueId(this.CheckoutAttributeValueId);
+                    int languageId = 0;
+                    if (NopContext.Current != null)
+                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
+                    if (languageId > 0)
+                    {
+                        if (_cavLocalized == null)
+                            _cavLocalized = CheckoutAttributeManager.GetCheckoutAttributeValueLocalizedByCheckoutAttributeValueId(this.CheckoutAttributeValueId);
 
-                    var temp1 = _cavLocalized.FirstOrDefault(cavl => cavl.LanguageId == languageId);
-                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
-                        return temp1.Name;
+                        var temp1 = _cavLocalized.FirstOrDefault(cavl => cavl.LanguageId == languageId);
+                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                            return temp1.Name;
+                    }
                 }
 
                 return this.Name;

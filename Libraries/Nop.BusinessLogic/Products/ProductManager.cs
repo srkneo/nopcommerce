@@ -356,7 +356,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             string key = string.Format(PRODUCTS_BY_ID_KEY, productId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (Product)obj2;
@@ -370,7 +370,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.Max(key, product);
+                NopRequestCache.Add(key, product);
             }
             return product;
         }
@@ -436,9 +436,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
             return product;
         }
@@ -510,9 +510,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return product;
@@ -610,9 +610,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return productLocalized;
@@ -658,9 +658,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return productLocalized;
@@ -735,7 +735,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
             }
         }
 
@@ -1363,7 +1363,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return null;
 
             string key = string.Format(PRODUCTVARIANTS_BY_ID_KEY, productVariantId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (ProductVariant)obj2;
@@ -1377,7 +1377,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.Max(key, productVariant);
+                NopRequestCache.Add(key, productVariant);
             }
             return productVariant;
         }
@@ -1592,9 +1592,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return productVariant;
@@ -1760,9 +1760,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return productVariant;
@@ -1789,7 +1789,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static List<ProductVariant> GetProductVariantsByProductId(int productId, bool showHidden)
         {
             string key = string.Format(PRODUCTVARIANTS_ALL_KEY, showHidden, productId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (List<ProductVariant>)obj2;
@@ -1814,7 +1814,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.Max(key, productVariants);
+                NopRequestCache.Add(key, productVariants);
             }
             return productVariants;
         }
@@ -1918,9 +1918,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return productVariantLocalized;
@@ -1954,9 +1954,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return productVariantLocalized;
@@ -3054,7 +3054,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 return new List<TierPrice>();
 
             string key = string.Format(TIERPRICES_ALLBYPRODUCTVARIANTID_KEY, productVariantId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ProductManager.CacheEnabled && (obj2 != null))
             {
                 return (List<TierPrice>)obj2;
@@ -3069,7 +3069,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.Max(key, tierPrices);
+                NopRequestCache.Add(key, tierPrices);
             }
             return tierPrices;
         }
@@ -3092,9 +3092,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
         }
 
@@ -3119,9 +3119,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
             return tierPrice;
         }
@@ -3152,9 +3152,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             if (ProductManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
-                NopCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTVARIANTS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(TIERPRICES_PATTERN_KEY);
             }
 
             return tierPrice;

@@ -56,7 +56,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
             }
         }
 
@@ -71,7 +71,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 return null;
 
             string key = string.Format(SHIPPINGRATECOMPUTATIONMETHODS_BY_ID_KEY, shippingRateComputationMethodId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ShippingRateComputationMethodManager.CacheEnabled && (obj2 != null))
             {
                 return (ShippingRateComputationMethod)obj2;
@@ -85,7 +85,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
-                NopCache.Max(key, shippingRateComputationMethod);
+                NopRequestCache.Add(key, shippingRateComputationMethod);
             }
             return shippingRateComputationMethod;
         }
@@ -108,7 +108,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static List<ShippingRateComputationMethod> GetAllShippingRateComputationMethods(bool showHidden)
         {
             string key = string.Format(SHIPPINGRATECOMPUTATIONMETHODS_ALL_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ShippingRateComputationMethodManager.CacheEnabled && (obj2 != null))
             {
                 return (List<ShippingRateComputationMethod>)obj2;
@@ -123,7 +123,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
-                NopCache.Max(key, shippingRateComputationMethods);
+                NopRequestCache.Add(key, shippingRateComputationMethods);
             }
             return shippingRateComputationMethods;
         }
@@ -156,7 +156,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
             }
             return shippingRateComputationMethod;
         }
@@ -194,7 +194,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             if (ShippingRateComputationMethodManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SHIPPINGRATECOMPUTATIONMETHODS_PATTERN_KEY);
             }
             return shippingRateComputationMethod;
         }

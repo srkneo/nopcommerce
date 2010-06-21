@@ -1663,7 +1663,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 return null;
 
             string key = string.Format(ORDERSTATUSES_BY_ID_KEY, orderStatusId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (OrderManager.CacheEnabled && (obj2 != null))
             {
                 return (OrderStatus)obj2;
@@ -1677,7 +1677,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (OrderManager.CacheEnabled)
             {
-                NopCache.Max(key, orderStatus);
+                NopRequestCache.Add(key, orderStatus);
             }
             return orderStatus;
         }
@@ -1689,7 +1689,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static List<OrderStatus> GetAllOrderStatuses()
         {
             string key = string.Format(ORDERSTATUSES_ALL_KEY);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (OrderManager.CacheEnabled && (obj2 != null))
             {
                 return (List<OrderStatus>)obj2;
@@ -1703,7 +1703,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             if (OrderManager.CacheEnabled)
             {
-                NopCache.Max(key, orderStatuses);
+                NopRequestCache.Add(key, orderStatuses);
             }
             return orderStatuses;
         }
@@ -2496,6 +2496,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             var context = ObjectContextHelper.CurrentObjectContext;
             context.RewardPointsHistory.AddObject(rewardPointsHistory);
             context.SaveChanges();
+
+            customer.ResetCachedValues();
 
             return rewardPointsHistory;
         }

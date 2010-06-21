@@ -51,7 +51,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
                 return null;
 
             string key = string.Format(SPECIFICATIONATTRIBUTE_BY_ID_KEY, specificationAttributeId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (SpecificationAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (SpecificationAttribute)obj2;
@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.Max(key, specificationAttribute);
+                NopRequestCache.Add(key, specificationAttribute);
             }
             return specificationAttribute;
         }
@@ -115,9 +115,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
         }
 
@@ -139,9 +139,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttribute;
@@ -170,9 +170,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttribute;
@@ -257,9 +257,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttributeLocalized;
@@ -291,9 +291,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttributeLocalized;
@@ -314,7 +314,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
                 return null;
 
             string key = string.Format(SPECIFICATIONATTRIBUTEOPTION_BY_ID_KEY, specificationAttributeOptionId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (SpecificationAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (SpecificationAttributeOption)obj2;
@@ -328,7 +328,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.Max(key, specificationAttributeOption);
+                NopRequestCache.Add(key, specificationAttributeOption);
             }
             return specificationAttributeOption;
         }
@@ -382,9 +382,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
         }
 
@@ -409,9 +409,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttributeOption;
@@ -443,9 +443,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttributeOption;
@@ -530,9 +530,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttributeOptionLocalized;
@@ -564,9 +564,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
 
             return specificationAttributeOptionLocalized;
@@ -594,9 +594,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
         }
 
@@ -627,7 +627,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             if (showOnProductPage.HasValue)
                 showOnProductPageCacheStr = showOnProductPage.ToString();
             string key = string.Format(PRODUCTSPECIFICATIONATTRIBUTE_ALLBYPRODUCTID_KEY, productId, allowFilteringCacheStr, showOnProductPageCacheStr);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (SpecificationAttributeManager.CacheEnabled && (obj2 != null))
             {
                 return (List<ProductSpecificationAttribute>)obj2;
@@ -646,7 +646,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.Max(key, productSpecificationAttributes);
+                NopRequestCache.Add(key, productSpecificationAttributes);
             }
             return productSpecificationAttributes;
         }
@@ -695,9 +695,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
             return productSpecificationAttribute;
         }
@@ -732,9 +732,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(SPECIFICATIONATTRIBUTEOPTION_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTSPECIFICATIONATTRIBUTE_PATTERN_KEY);
             }
             return productSpecificationAttribute;
         }

@@ -113,11 +113,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         #region Navigation Properties
 
         /// <summary>
-        /// Gets the language
-        /// </summary>
-        public virtual Language NpLanguage { get; set; }
-
-        /// <summary>
         /// Gets the topic
         /// </summary>
         public virtual Topic NpTopic { get; set; }

@@ -97,7 +97,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         public static List<Manufacturer> GetAllManufacturers(bool showHidden)
         {
             string key = string.Format(MANUFACTURERS_ALL_KEY, showHidden);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ManufacturerManager.ManufacturersCacheEnabled && (obj2 != null))
             {
                 return (List<Manufacturer>)obj2;
@@ -113,7 +113,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
-                NopCache.Max(key, manufacturers);
+                NopRequestCache.Add(key, manufacturers);
             }
             return manufacturers;
         }
@@ -129,7 +129,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return null;
 
             string key = string.Format(MANUFACTURERS_BY_ID_KEY, manufacturerId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ManufacturerManager.ManufacturersCacheEnabled && (obj2 != null))
             {
                 return (Manufacturer)obj2;
@@ -143,7 +143,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
-                NopCache.Max(key, manufacturer);
+                NopRequestCache.Add(key, manufacturer);
             }
             return manufacturer;
         }
@@ -198,8 +198,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
             }
 
             return manufacturer;
@@ -261,8 +261,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
             }
 
             return manufacturer;
@@ -357,7 +357,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
-                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
             }
 
             return manufacturerLocalized;
@@ -400,7 +400,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {
-                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
             }
 
             return manufacturerLocalized;
@@ -427,8 +427,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
             }
         }
 
@@ -444,7 +444,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTMANUFACTURERS_ALLBYMANUFACTURERID_KEY, showHidden, manufacturerId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (List<ProductManufacturer>)obj2;
@@ -462,7 +462,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productManufacturers);
+                NopRequestCache.Add(key, productManufacturers);
             }
             return productManufacturers;
         }
@@ -479,7 +479,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             bool showHidden = NopContext.Current.IsAdmin;
             string key = string.Format(PRODUCTMANUFACTURERS_ALLBYPRODUCTID_KEY, showHidden, productId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (List<ProductManufacturer>)obj2;
@@ -497,7 +497,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productManufacturers);
+                NopRequestCache.Add(key, productManufacturers);
             }
             return productManufacturers;
         }
@@ -513,7 +513,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
                 return null;
 
             string key = string.Format(PRODUCTMANUFACTURERS_BY_ID_KEY, productManufacturerId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (ManufacturerManager.MappingsCacheEnabled && (obj2 != null))
             {
                 return (ProductManufacturer)obj2;
@@ -527,7 +527,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.Max(key, productManufacturer);
+                NopRequestCache.Add(key, productManufacturer);
             }
             return productManufacturer;
         }
@@ -555,8 +555,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
             }
 
             return productManufacturer;
@@ -590,8 +590,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 
             if (ManufacturerManager.ManufacturersCacheEnabled || ManufacturerManager.MappingsCacheEnabled)
             {
-                NopCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
-                NopCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(MANUFACTURERS_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(PRODUCTMANUFACTURERS_PATTERN_KEY);
             }
 
             return productManufacturer;

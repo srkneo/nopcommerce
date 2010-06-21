@@ -30,7 +30,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
         private static string _connectionString = "";
         private static bool _initialized = false;
         private static int _cookieExpires = 128;
-        private static bool _cacheEnabled = false;
         private static XmlNode _scheduleTasks;
         #endregion
 
@@ -51,18 +50,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
                 if ((attribute != null) && (WebConfigurationManager.ConnectionStrings[attribute.Value] != null))
                     _connectionString = WebConfigurationManager.ConnectionStrings[attribute.Value].ConnectionString;
             }
-
-            XmlNode cacheNode = section.SelectSingleNode("Cache");
-            if (cacheNode != null)
-            {
-                XmlAttribute attribute = cacheNode.Attributes["Enabled"];
-                if (attribute != null && attribute.Value != null)
-                {
-                    string str1 = attribute.Value.ToUpperInvariant();
-                    _cacheEnabled = (str1 == "TRUE" || str1 == "YES" || str1 == "1");
-                }
-            }
-
+            
             _scheduleTasks = section.SelectSingleNode("ScheduleTasks");
 
             return null;
@@ -111,22 +99,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration
                 _cookieExpires = value;
             }
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the cache is enabled
-        /// </summary>
-        public static bool CacheEnabled
-        {
-            get
-            {
-                return _cacheEnabled;
-            }
-            set
-            {
-                _cacheEnabled = value;
-            }
-        }
-
+        
         /// <summary>
         /// Gets or sets a schedule tasks section
         /// </summary>

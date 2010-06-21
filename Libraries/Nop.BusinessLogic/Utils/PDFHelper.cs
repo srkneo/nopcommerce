@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
+using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 
@@ -62,13 +63,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
             foreach(var product in productCollection)
             {
-                Paragraph p1 = section.AddParagraph(String.Format("{0}. {1}", productNumber, product.Name));
+                Paragraph p1 = section.AddParagraph(String.Format("{0}. {1}", productNumber, product.LocalizedName));
                 p1.Format.Font.Bold = true;
                 p1.Format.Font.Color = Colors.Black;
 
                 section.AddParagraph();
 
-                section.AddParagraph(HtmlHelper.StripTags(HtmlHelper.ConvertHtmlToPlainText(product.FullDescription)));
+                section.AddParagraph(HtmlHelper.StripTags(HtmlHelper.ConvertHtmlToPlainText(product.LocalizedFullDescription)));
 
                 section.AddParagraph();
 
@@ -88,7 +89,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
                         var pic = productPictureCollection[i].Picture;
 
-                        if (pic != null && pic.PictureBinary != null && pic.PictureBinary.Length > 0)
+                        if (pic != null && pic.LoadPictureBinary() != null && pic.LoadPictureBinary().Length > 0)
                         {
                             row.Cells[cellNum].AddImage(PictureManager.GetPictureLocalPath(pic, 200, true));
                         }
@@ -106,19 +107,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
                 foreach(var productVariant in product.ProductVariants)
                 {
-                    string pvName = String.IsNullOrEmpty(productVariant.Name) ? LocalizationManager.GetLocaleResourceString("PDFProductCatalog.UnnamedProductVariant") : productVariant.Name;
+                    string pvName = String.IsNullOrEmpty(productVariant.LocalizedName) ? LocalizationManager.GetLocaleResourceString("PDFProductCatalog.UnnamedProductVariant") : productVariant.LocalizedName;
                     section.AddParagraph(String.Format("{0}.{1}. {2}", productNumber, pvNum, pvName));
 
                     section.AddParagraph();
 
-                    if(!String.IsNullOrEmpty(productVariant.Description))
+                    if (!String.IsNullOrEmpty(productVariant.LocalizedDescription))
                     {
-                        section.AddParagraph(HtmlHelper.StripTags(HtmlHelper.ConvertHtmlToPlainText(productVariant.Description)));
+                        section.AddParagraph(HtmlHelper.StripTags(HtmlHelper.ConvertHtmlToPlainText(productVariant.LocalizedDescription)));
                         section.AddParagraph();
                     }
 
                     var pic = productVariant.Picture;
-                    if (pic != null && pic.PictureBinary != null && pic.PictureBinary.Length > 0)
+                    if (pic != null && pic.LoadPictureBinary() != null && pic.LoadPictureBinary().Length > 0)
                     {
                         section.AddImage(PictureManager.GetPictureLocalPath(pic, 200, true));
                     }
@@ -168,6 +169,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
             if(String.IsNullOrEmpty(filePath))
                 throw new ArgumentNullException("filePath");
+
+            Language lang = LanguageManager.GetLanguageById(languageId);
+
+            if (lang == null)
+                throw new NopException("Language could not be loaded");
 
             Document doc = new Document();
 
@@ -314,10 +320,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 switch(order.CustomerTaxDisplayType)
                 {
                     case TaxDisplayTypeEnum.ExcludingTax:
-                        unitPrice = PriceHelper.FormatPrice(orderProductVariant.UnitPriceExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
+                        unitPrice = PriceHelper.FormatPrice(orderProductVariant.UnitPriceExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, false);
                         break;
                     case TaxDisplayTypeEnum.IncludingTax:
-                        unitPrice = PriceHelper.FormatPrice(orderProductVariant.UnitPriceInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
+                        unitPrice = PriceHelper.FormatPrice(orderProductVariant.UnitPriceInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, true);
                         break;
                 }
 
@@ -329,10 +335,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 switch(order.CustomerTaxDisplayType)
                 {
                     case TaxDisplayTypeEnum.ExcludingTax:
-                        subTotal = PriceHelper.FormatPrice(orderProductVariant.PriceExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
+                        subTotal = PriceHelper.FormatPrice(orderProductVariant.PriceExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, false);
                         break;
                     case TaxDisplayTypeEnum.IncludingTax:
-                        subTotal = PriceHelper.FormatPrice(orderProductVariant.PriceInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
+                        subTotal = PriceHelper.FormatPrice(orderProductVariant.PriceInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, true);
                         break;
                 }
                 prodRow.Cells[3].AddParagraph(subTotal);
@@ -358,13 +364,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             {
                 case TaxDisplayTypeEnum.ExcludingTax:
                     {
-                        string orderSubtotalExclTaxStr = PriceHelper.FormatPrice(order.OrderSubtotalExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
+                        string orderSubtotalExclTaxStr = PriceHelper.FormatPrice(order.OrderSubtotalExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, false);
                         p6 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Sub-Total", languageId), orderSubtotalExclTaxStr));
                     }
                     break;
                 case TaxDisplayTypeEnum.IncludingTax:
                     {
-                        string orderSubtotalInclTaxStr = PriceHelper.FormatPrice(order.OrderSubtotalInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
+                        string orderSubtotalInclTaxStr = PriceHelper.FormatPrice(order.OrderSubtotalInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, true);
                         p6 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Sub-Total", languageId), orderSubtotalInclTaxStr));
                     }
                     break;
@@ -390,13 +396,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 {
                     case TaxDisplayTypeEnum.ExcludingTax:
                         {
-                            string orderShippingExclTaxStr = PriceHelper.FormatShippingPrice(order.OrderShippingExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
+                            string orderShippingExclTaxStr = PriceHelper.FormatShippingPrice(order.OrderShippingExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, false);
                             p9 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Shipping", languageId), orderShippingExclTaxStr));
                         }
                         break;
                     case TaxDisplayTypeEnum.IncludingTax:
                         {
-                            string orderShippingInclTaxStr = PriceHelper.FormatShippingPrice(order.OrderShippingInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
+                            string orderShippingInclTaxStr = PriceHelper.FormatShippingPrice(order.OrderShippingInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, true);
                             p9 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.Shipping", languageId), orderShippingInclTaxStr));
                         }
                         break;
@@ -416,13 +422,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 {
                     case TaxDisplayTypeEnum.ExcludingTax:
                         {
-                            string paymentMethodAdditionalFeeExclTaxStr = PriceHelper.FormatPaymentMethodAdditionalFee(order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, false);
+                            string paymentMethodAdditionalFeeExclTaxStr = PriceHelper.FormatPaymentMethodAdditionalFee(order.PaymentMethodAdditionalFeeExclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, false);
                             p10 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.PaymentMethodAdditionalFee", languageId), paymentMethodAdditionalFeeExclTaxStr));
                         }
                         break;
                     case TaxDisplayTypeEnum.IncludingTax:
                         {
-                            string paymentMethodAdditionalFeeInclTaxStr = PriceHelper.FormatPaymentMethodAdditionalFee(order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, NopContext.Current.WorkingLanguage, true);
+                            string paymentMethodAdditionalFeeInclTaxStr = PriceHelper.FormatPaymentMethodAdditionalFee(order.PaymentMethodAdditionalFeeInclTaxInCustomerCurrency, true, order.CustomerCurrencyCode, lang, true);
                             p10 = sec.AddParagraph(String.Format("{0} {1}", LocalizationManager.GetLocaleResourceString("PDFInvoice.PaymentMethodAdditionalFee", languageId), paymentMethodAdditionalFeeInclTaxStr));
                         }
                         break;

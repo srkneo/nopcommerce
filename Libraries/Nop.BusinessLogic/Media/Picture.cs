@@ -35,6 +35,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the picture identifier
         /// </summary>
@@ -54,6 +55,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         /// Gets or sets a value indicating whether the picture is new
         /// </summary>
         public bool IsNew { get; set; }
+
+        #endregion
+
+        #region Methods properties
+
+        /// <summary>
+        /// Gets the loaded picture binary depending on picture storage settings
+        /// </summary>
+        public byte[] LoadPictureBinary()
+        {
+            byte[] result = null;
+            if (PictureManager.StoreInDB)
+            {
+                result = this.PictureBinary;
+            }
+            else
+            {
+                result = PictureManager.LoadPictureFromFile(this.PictureId, this.Extension);
+            }
+            return result;
+        }
+
         #endregion
 
         #region Navigation Properties

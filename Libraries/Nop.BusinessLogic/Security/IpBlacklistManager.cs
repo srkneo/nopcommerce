@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static List<BannedIpAddress> GetBannedIpAddressAll()
         {
             string key = BLACKLIST_ALLIP_KEY;
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (CacheEnabled && (obj2 != null))
             {
                 return (List<BannedIpAddress>)obj2;
@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.Max(key, collection);
+                NopRequestCache.Add(key, collection);
             }
             return collection;
         }
@@ -136,7 +136,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
             }
             return ipAddress;
         }
@@ -174,7 +174,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
             }
             return ipAddress;
         }
@@ -197,7 +197,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLACKLIST_IP_PATTERN_KEY);
             }
         }
 
@@ -227,7 +227,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static List<BannedIpNetwork> GetBannedIpNetworkAll()
         {
             string key = BLACKLIST_ALLNETWORK_KEY;
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopRequestCache.Get(key);
             if (IpBlacklistManager.CacheEnabled && (obj2 != null))
             {
                 return (List<BannedIpNetwork>)obj2;
@@ -241,7 +241,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.Max(key, collection);
+                NopRequestCache.Add(key, collection);
             }
             return collection;
         }
@@ -280,7 +280,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
             }
             return ipNetwork;
         }
@@ -324,7 +324,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
             }
             return ipNetwork;
         }
@@ -347,7 +347,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
             if (IpBlacklistManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
+                NopRequestCache.RemoveByPattern(BLACKLIST_NETWORK_PATTERN_KEY);
             }
         }
 

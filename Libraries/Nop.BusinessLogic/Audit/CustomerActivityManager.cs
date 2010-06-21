@@ -53,8 +53,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             context.ActivityLogTypes.AddObject(activityLogType);
             context.SaveChanges();
 
-            if (NopCache.IsEnabled)
-                NopCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
+            if (NopRequestCache.IsEnabled)
+                NopRequestCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
 
             return activityLogType;
         }
@@ -84,8 +84,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 
             context.SaveChanges();
 
-            if (NopCache.IsEnabled)
-                NopCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
+            if (NopRequestCache.IsEnabled)
+                NopRequestCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
 
             return activityLogType;
         }
@@ -122,8 +122,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             context.DeleteObject(activityLogType);
             context.SaveChanges();
 
-            if (NopCache.IsEnabled)
-                NopCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
+            if (NopRequestCache.IsEnabled)
+                NopRequestCache.RemoveByPattern(ACTIVITYTYPE_PATTERN_KEY);
         }
         
         /// <summary>
@@ -132,9 +132,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// <returns>Activity log type collection</returns>
         public static List<ActivityLogType> GetAllActivityTypes()
         {
-            if (NopCache.IsEnabled)
+            if (NopRequestCache.IsEnabled)
             {
-                object cache = NopCache.Get(ACTIVITYTYPE_ALL_KEY);
+                object cache = NopRequestCache.Get(ACTIVITYTYPE_ALL_KEY);
                 if (cache != null)
                     return (List<ActivityLogType>)cache;
             }
@@ -145,8 +145,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                         select at;
             var collection = query.ToList();
 
-            if (NopCache.IsEnabled)
-                NopCache.Max(ACTIVITYTYPE_ALL_KEY, collection);
+            if (NopRequestCache.IsEnabled)
+                NopRequestCache.Add(ACTIVITYTYPE_ALL_KEY, collection);
             
             return collection;
         }
@@ -162,9 +162,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                 return null;
 
             string key = string.Format(ACTIVITYTYPE_BY_ID_KEY, activityLogTypeId);
-            if (NopCache.IsEnabled)
+            if (NopRequestCache.IsEnabled)
             {
-                object cache = NopCache.Get(key);
+                object cache = NopRequestCache.Get(key);
                 if (cache != null)
                     return (ActivityLogType)cache;
             }
@@ -175,8 +175,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
                         select at;
             var activityLogType = query.SingleOrDefault();
 
-            if (NopCache.IsEnabled)
-                NopCache.Max(key, activityLogType);
+            if (NopRequestCache.IsEnabled)
+                NopRequestCache.Add(key, activityLogType);
             
             return activityLogType;
         }

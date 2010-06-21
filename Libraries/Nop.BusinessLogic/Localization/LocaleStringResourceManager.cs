@@ -55,7 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
             
             if (LocaleStringResourceManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
             }
         }
 
@@ -86,7 +86,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         public static Dictionary<string, LocaleStringResource> GetAllResourcesByLanguageId(int languageId)
         {
             string key = string.Format(LOCALSTRINGRESOURCES_ALL_KEY, languageId);
-            object obj2 = NopCache.Get(key);
+            object obj2 = NopStaticCache.Get(key);
             if (LocaleStringResourceManager.CacheEnabled && (obj2 != null))
             {
                 return (Dictionary<string, LocaleStringResource>)obj2;
@@ -101,7 +101,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
 
             if (LocaleStringResourceManager.CacheEnabled)
             {
-                NopCache.Max(key, localeStringResourceDictionary);
+                NopStaticCache.Max(key, localeStringResourceDictionary);
             }
             return localeStringResourceDictionary;
         }
@@ -127,7 +127,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
 
             if (LocaleStringResourceManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
             }
             return localeStringResource;
         }
@@ -158,7 +158,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
             
             if (LocaleStringResourceManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
             }
             return localeStringResource;
         }
@@ -189,7 +189,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
 
             if (LocaleStringResourceManager.CacheEnabled)
             {
-                NopCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
+                NopStaticCache.RemoveByPattern(LOCALSTRINGRESOURCES_PATTERN_KEY);
             }
         }
 
