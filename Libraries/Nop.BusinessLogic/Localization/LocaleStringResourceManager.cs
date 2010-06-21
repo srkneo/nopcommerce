@@ -185,7 +185,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         public static void InsertAllLocaleStringResourcesFromXml(int languageId, string xml)
         {
             var context = ObjectContextHelper.CurrentObjectContext;
-            context.Sp_LanguagePackImport(languageId, xml);
+            //long-running query
+            int? timeout = context.CommandTimeout;
+            try
+            {
+                context.CommandTimeout = 600;
+                context.Sp_LanguagePackImport(languageId, xml);
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+            finally
+            {
+                context.CommandTimeout = timeout;
+            }
 
             if (LocaleStringResourceManager.CacheEnabled)
             {
