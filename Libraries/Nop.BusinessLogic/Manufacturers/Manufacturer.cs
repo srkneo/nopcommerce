@@ -123,7 +123,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         public DateTime UpdatedOn { get; set; }
         #endregion
 
-        #region Localizable properties
+        #region Localizable methods/properties
+
+        /// <summary>
+        /// Gets the localized name
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized name</returns>
+        public string GetLocalizedName(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_manufacturerLocalized == null)
+                        _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
+
+                    var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+            }
+
+            return this.Name;
+        }
 
         /// <summary>
         /// Gets the localized name 
@@ -132,24 +155,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_manufacturerLocalized == null)
-                            _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
-
-                        var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
-                            return temp1.Name;
-                    }
-                }
-
-                return this.Name;
+                return GetLocalizedName(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized description
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized description</returns>
+        public string GetLocalizedDescription(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_manufacturerLocalized == null)
+                        _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
+
+                    var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Description))
+                        return temp1.Description;
+                }
+            }
+
+            return this.Description;
         }
 
         /// <summary>
@@ -159,24 +189,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_manufacturerLocalized == null)
-                            _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
-
-                        var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Description))
-                            return temp1.Description;
-                    }
-                }
-
-                return this.Description;
+                return GetLocalizedDescription(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized meta keywords
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized meta keywords</returns>
+        public string GetLocalizedMetaKeywords(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_manufacturerLocalized == null)
+                        _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
+
+                    var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaKeywords))
+                        return temp1.MetaKeywords;
+                }
+            }
+
+            return this.MetaKeywords;
         }
 
         /// <summary>
@@ -186,24 +223,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_manufacturerLocalized == null)
-                            _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
-
-                        var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaKeywords))
-                            return temp1.MetaKeywords;
-                    }
-                }
-
-                return this.MetaKeywords;
+                return GetLocalizedMetaKeywords(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized meta description
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized meta description</returns>
+        public string GetLocalizedMetaDescription(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_manufacturerLocalized == null)
+                        _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
+
+                    var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaDescription))
+                        return temp1.MetaDescription;
+                }
+            }
+
+            return this.MetaDescription;
         }
 
         /// <summary>
@@ -213,24 +257,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_manufacturerLocalized == null)
-                            _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
-
-                        var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaDescription))
-                            return temp1.MetaDescription;
-                    }
-                }
-
-                return this.MetaDescription;
+                return GetLocalizedMetaDescription(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized meta title 
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized meta title </returns>
+        public string GetLocalizedMetaTitle(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_manufacturerLocalized == null)
+                        _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
+
+                    var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaTitle))
+                        return temp1.MetaTitle;
+                }
+            }
+
+            return this.MetaTitle;
         }
 
         /// <summary>
@@ -240,24 +291,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_manufacturerLocalized == null)
-                            _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
-
-                        var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.MetaTitle))
-                            return temp1.MetaTitle;
-                    }
-                }
-
-                return this.MetaTitle;
+                return GetLocalizedMetaTitle(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized search-engine name
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized search-engine name</returns>
+        public string GetLocalizedSEName(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_manufacturerLocalized == null)
+                        _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
+
+                    var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.SEName))
+                        return temp1.SEName;
+                }
+            }
+
+            return this.SEName;
         }
 
         /// <summary>
@@ -267,23 +325,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_manufacturerLocalized == null)
-                            _manufacturerLocalized = ManufacturerManager.GetManufacturerLocalizedByManufacturerId(this.ManufacturerId);
-
-                        var temp1 = _manufacturerLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.SEName))
-                            return temp1.SEName;
-                    }
-                }
-
-                return this.SEName;
+                return GetLocalizedSEName(NopContext.Current.WorkingLanguage.LanguageId);
             }
         }
 

@@ -328,7 +328,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public DateTime UpdatedOn { get; set; }
         #endregion
 
-        #region Localizable properties
+        #region Localizable methods/properties
+
+        /// <summary>
+        /// Gets the localized name
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized name</returns>
+        public string GetLocalizedName(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_pvLocalized == null)
+                        _pvLocalized = ProductManager.GetProductVariantLocalizedByProductVariantId(this.ProductVariantId);
+
+                    var temp1 = _pvLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+            }
+
+            return this.Name;
+        }
 
         /// <summary>
         /// Gets the localized name 
@@ -337,24 +360,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_pvLocalized == null)
-                            _pvLocalized = ProductManager.GetProductVariantLocalizedByProductVariantId(this.ProductVariantId);
-
-                        var temp1 = _pvLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
-                            return temp1.Name;
-                    }
-                }
-
-                return this.Name;
+                return GetLocalizedName(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized description 
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized description</returns>
+        public string GetLocalizedDescription(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_pvLocalized == null)
+                        _pvLocalized = ProductManager.GetProductVariantLocalizedByProductVariantId(this.ProductVariantId);
+
+                    var temp1 = _pvLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Description))
+                        return temp1.Description;
+                }
+            }
+
+            return this.Description;
         }
 
         /// <summary>
@@ -364,24 +394,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_pvLocalized == null)
-                            _pvLocalized = ProductManager.GetProductVariantLocalizedByProductVariantId(this.ProductVariantId);
-
-                        var temp1 = _pvLocalized.FirstOrDefault(cl => cl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Description))
-                            return temp1.Description;
-                    }
-                }
-
-                return this.Description;
+                return GetLocalizedDescription(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized full product name
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized full product name</returns>
+        public string GetLocalizedFullProductName(int languageId)
+        {
+            Product product = this.Product;
+            if (product != null)
+            {
+                if (!String.IsNullOrEmpty(this.GetLocalizedName(languageId)))
+                    return product.GetLocalizedName(languageId) + " (" + this.GetLocalizedName(languageId) + ")";
+                
+                return product.GetLocalizedName(languageId);
+            }
+
+            return string.Empty;
         }
 
         /// <summary>
@@ -391,24 +424,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             get
             {
-                Product product = this.Product;
-                if (product != null)
-                {
-                    if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                    {
-                        if (!String.IsNullOrEmpty(this.LocalizedName))
-                            return product.LocalizedName + " (" + this.LocalizedName + ")";
-                    }
-                    return product.LocalizedName;
-                }
-                else
-                {
-                    return string.Empty;
-                }
+                return GetLocalizedFullProductName(NopContext.Current.WorkingLanguage.LanguageId);
             }
         }
-
-
+        
         #endregion
 
         #region Custom Properties

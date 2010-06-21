@@ -85,7 +85,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public int DisplayOrder { get; set; }
         #endregion
 
-        #region Localizable properties
+        #region Localizable methods/properties
+
+        /// <summary>
+        /// Gets the localized name 
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized name</returns>
+        public string GetLocalizedName(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_checkoutAttributeLocalized == null)
+                        _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
+
+                    var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+            }
+
+            return this.Name;
+        }
 
         /// <summary>
         /// Gets the localized name 
@@ -94,24 +117,31 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_checkoutAttributeLocalized == null)
-                            _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
-
-                        var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
-                            return temp1.Name;
-                    }
-                }
-
-                return this.Name;
+                return GetLocalizedName(NopContext.Current.WorkingLanguage.LanguageId);
             }
+        }
+
+        /// <summary>
+        /// Gets the localized text prompt
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized text prompt</returns>
+        public string GetLocalizedTextPrompt(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_checkoutAttributeLocalized == null)
+                        _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
+
+                    var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.TextPrompt))
+                        return temp1.TextPrompt;
+                }
+            }
+
+            return this.TextPrompt;
         }
 
         /// <summary>
@@ -121,23 +151,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_checkoutAttributeLocalized == null)
-                            _checkoutAttributeLocalized = CheckoutAttributeManager.GetCheckoutAttributeLocalizedByCheckoutAttributeId(this.CheckoutAttributeId);
-
-                        var temp1 = _checkoutAttributeLocalized.FirstOrDefault(cal => cal.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.TextPrompt))
-                            return temp1.TextPrompt;
-                    }
-                }
-
-                return this.TextPrompt;
+                return GetLocalizedTextPrompt(NopContext.Current.WorkingLanguage.LanguageId);
             }
         }
 

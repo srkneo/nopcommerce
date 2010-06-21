@@ -76,7 +76,30 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public int DisplayOrder { get; set; }
         #endregion
 
-        #region Localizable properties
+        #region Localizable methods/properties
+
+        /// <summary>
+        /// Gets the localized name
+        /// </summary>
+        /// <param name="languageId">Language identifier</param>
+        /// <returns>Localized name</returns>
+        public string GetLocalizedName(int languageId)
+        {
+            if (NopContext.Current.LocalizedEntityPropertiesEnabled)
+            {
+                if (languageId > 0)
+                {
+                    if (_pvavLocalized == null)
+                        _pvavLocalized = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueId(this.ProductVariantAttributeValueId);
+
+                    var temp1 = _pvavLocalized.FirstOrDefault(cavl => cavl.LanguageId == languageId);
+                    if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
+                        return temp1.Name;
+                }
+            }
+
+            return this.Name;
+        }
 
         /// <summary>
         /// Gets the localized name 
@@ -85,23 +108,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             get
             {
-                if (NopContext.Current.LocalizedEntityPropertiesEnabled)
-                {
-                    int languageId = 0;
-                    if (NopContext.Current != null)
-                        languageId = NopContext.Current.WorkingLanguage.LanguageId;
-                    if (languageId > 0)
-                    {
-                        if (_pvavLocalized == null)
-                            _pvavLocalized = ProductAttributeManager.GetProductVariantAttributeValueLocalizedByProductVariantAttributeValueId(this.ProductVariantAttributeValueId);
-
-                        var temp1 = _pvavLocalized.FirstOrDefault(cavl => cavl.LanguageId == languageId);
-                        if (temp1 != null && !String.IsNullOrWhiteSpace(temp1.Name))
-                            return temp1.Name;
-                    }
-                }
-
-                return this.Name;
+                return GetLocalizedName(NopContext.Current.WorkingLanguage.LanguageId);
             }
         }
 

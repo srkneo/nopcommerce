@@ -308,7 +308,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                 var pv = ProductManager.GetProductVariantById(orderProductVariant.ProductVariantId);
                 if(pv != null)
                 {
-                    name = pv.FullProductName;
+                    name = pv.GetLocalizedFullProductName(languageId);
                 }
 
                 prodRow.Cells[0].AddParagraph(name);
@@ -561,7 +561,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                     var pv = ProductManager.GetProductVariantById(orderProductVariant.ProductVariantId);
                     if(pv != null)
                     {
-                        name = pv.FullProductName;
+                        name = pv.LocalizedFullProductName;
                     }
                     row.Cells[1].Format.Alignment = ParagraphAlignment.Left;
                     row.Cells[1].AddParagraph(name);
@@ -600,6 +600,5 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             }
         }
         #endregion
-
     }
 }

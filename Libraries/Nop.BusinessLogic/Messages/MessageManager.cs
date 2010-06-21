@@ -126,7 +126,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
 
                 sb.AppendLine(string.Format("<tr style=\"background-color: {0};text-align: center;\">", color2));
 
-                sb.AppendLine("<td style=\"padding: 0.6em 0.4em;text-align: left;\">" + HttpUtility.HtmlEncode(productVariant.FullProductName));
+                sb.AppendLine("<td style=\"padding: 0.6em 0.4em;text-align: left;\">" + HttpUtility.HtmlEncode(productVariant.GetLocalizedFullProductName(languageId)));
                 if (OrderManager.IsDownloadAllowed(opv))
                 {
                     string downloadUrl = string.Format("<a class=\"link\" href=\"{0}\" >{1}</a>", DownloadManager.GetDownloadUrl(opv), LocalizationManager.GetLocaleResourceString("Order.Download", languageId));
