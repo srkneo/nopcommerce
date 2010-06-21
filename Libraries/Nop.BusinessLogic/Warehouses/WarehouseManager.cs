@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
 {
@@ -102,6 +103,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             string city, string stateProvince, string zipPostalCode, int countryId,
             bool deleted, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 255);
+            phoneNumber = CommonHelper.EnsureMaximumLength(phoneNumber, 50);
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            faxNumber = CommonHelper.EnsureMaximumLength(faxNumber, 50);
+            address1 = CommonHelper.EnsureMaximumLength(address1, 100);
+            address2 = CommonHelper.EnsureMaximumLength(address2, 100);
+            city = CommonHelper.EnsureMaximumLength(city, 100);
+            stateProvince = CommonHelper.EnsureMaximumLength(stateProvince, 100);
+            zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
+
             var warehouse = new Warehouse();
             warehouse.Name = name;
             warehouse.PhoneNumber = phoneNumber;
@@ -148,6 +159,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             string zipPostalCode, int countryId, bool deleted,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 255);
+            phoneNumber = CommonHelper.EnsureMaximumLength(phoneNumber, 50);
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            faxNumber = CommonHelper.EnsureMaximumLength(faxNumber, 50);
+            address1 = CommonHelper.EnsureMaximumLength(address1, 100);
+            address2 = CommonHelper.EnsureMaximumLength(address2, 100);
+            city = CommonHelper.EnsureMaximumLength(city, 100);
+            stateProvince = CommonHelper.EnsureMaximumLength(stateProvince, 100);
+            zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
+
             var warehouse = GetWarehouseById(warehouseId);
             if (warehouse == null)
                 return null;

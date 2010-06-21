@@ -21,8 +21,9 @@ using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
-using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 {
@@ -121,6 +122,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static ShippingMethod InsertShippingMethod(string name,
             string description, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 2000);
+
             var shippingMethod = new ShippingMethod();
             shippingMethod.Name = name;
             shippingMethod.Description = description;
@@ -148,6 +152,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         public static ShippingMethod UpdateShippingMethod(int shippingMethodId,
             string name, string description, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 2000);
+
             var shippingMethod = GetShippingMethodById(shippingMethodId);
             if (shippingMethod == null)
                 return null;

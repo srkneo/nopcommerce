@@ -24,9 +24,10 @@ using System.Text;
 using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
+using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
-using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 {
@@ -42,6 +43,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Gets currency live rates
         /// </summary>
@@ -195,6 +197,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string customFormatting, bool published, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 50);
+            currencyCode = CommonHelper.EnsureMaximumLength(currencyCode, 5);
+            displayLocale = CommonHelper.EnsureMaximumLength(displayLocale, 50);
+            customFormatting = CommonHelper.EnsureMaximumLength(customFormatting, 50);
+
             try
             {
                 CultureInfo ci = CultureInfo.GetCultureInfo(displayLocale);
@@ -245,6 +252,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string customFormatting, bool published, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 50);
+            currencyCode = CommonHelper.EnsureMaximumLength(currencyCode, 5);
+            displayLocale = CommonHelper.EnsureMaximumLength(displayLocale, 50);
+            customFormatting = CommonHelper.EnsureMaximumLength(customFormatting, 50);
+
             try
             {
                 CultureInfo ci = CultureInfo.GetCultureInfo(displayLocale);
@@ -342,6 +354,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             }
             return result;
         }
+
         #endregion
 
         #region Property

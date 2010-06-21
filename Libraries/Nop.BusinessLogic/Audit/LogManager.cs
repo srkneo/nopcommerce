@@ -34,6 +34,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
     public partial class LogManager
     {
         #region Methods
+
         /// <summary>
         /// Deletes a log item
         /// </summary>
@@ -145,6 +146,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             if (IPAddress == null)
                 IPAddress = string.Empty;
 
+            string exceptionStr = exception == null ? string.Empty : exception.ToString();
+
             string referrerUrl = string.Empty;
             if (HttpContext.Current != null &&
                 HttpContext.Current.Request != null &&
@@ -153,13 +156,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             if (referrerUrl == null)
                 referrerUrl = string.Empty;
 
+            message = CommonHelper.EnsureMaximumLength(message, 1000);
+            exceptionStr = CommonHelper.EnsureMaximumLength(exceptionStr, 4000);
+            IPAddress = CommonHelper.EnsureMaximumLength(IPAddress, 100);
+            pageUrl = CommonHelper.EnsureMaximumLength(pageUrl, 100);
+            referrerUrl = CommonHelper.EnsureMaximumLength(referrerUrl, 100);
+
             DateTime createdOn = DateTime.UtcNow;
 
             var log = new Log();
             log.LogTypeId = (int)logType;
             log.Severity = severity;
             log.Message = message;
-            log.Exception = exception == null ? string.Empty : exception.ToString();
+            log.Exception = exceptionStr;
             log.IPAddress = IPAddress;
             log.CustomerId = customerId;
             log.PageUrl = pageUrl;
@@ -172,6 +181,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 
             return log;
         }
+
         #endregion
     }
 }

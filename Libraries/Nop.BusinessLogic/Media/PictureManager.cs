@@ -540,6 +540,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         /// <returns>Picture</returns>
         public static Picture InsertPicture(byte[] pictureBinary, string extension, bool isNew)
         {
+            extension = CommonHelper.EnsureMaximumLength(extension, 20);
+            
             pictureBinary = ValidatePicture(pictureBinary);
                         
             var picture = new Picture();
@@ -569,6 +571,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
         public static Picture UpdatePicture(int pictureId, byte[] pictureBinary,
             string extension, bool isNew)
         {
+            extension = CommonHelper.EnsureMaximumLength(extension, 20);
+            
             ValidatePicture(pictureBinary);
 
             var picture = GetPictureById(pictureId);

@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 {
@@ -183,6 +184,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             if (!String.IsNullOrEmpty(zip))
                 zip = zip.Trim();
 
+            zip = CommonHelper.EnsureMaximumLength(zip, 50);
+
             var taxRate = new TaxRate();
             taxRate.TaxCategoryId = taxCategoryId;
             taxRate.CountryId = countryId;
@@ -220,6 +223,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
                 zip = string.Empty;
             if (!String.IsNullOrEmpty(zip))
                 zip = zip.Trim();
+
+            zip = CommonHelper.EnsureMaximumLength(zip, 50);
 
             var taxRate = GetTaxRateById(taxRateId);
             if (taxRate == null)

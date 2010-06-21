@@ -175,6 +175,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             city = city.Trim();
             zipPostalCode = zipPostalCode.Trim();
 
+            firstName = CommonHelper.EnsureMaximumLength(firstName, 100);
+            lastName = CommonHelper.EnsureMaximumLength(lastName, 100);
+            phoneNumber = CommonHelper.EnsureMaximumLength(phoneNumber, 50);
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            faxNumber = CommonHelper.EnsureMaximumLength(faxNumber, 50);
+            company = CommonHelper.EnsureMaximumLength(company, 100);
+            address1 = CommonHelper.EnsureMaximumLength(address1, 100);
+            address2 = CommonHelper.EnsureMaximumLength(address2, 100);
+            city = CommonHelper.EnsureMaximumLength(city, 100);
+            zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
+
             var address = new Address();
             address.CustomerId = customerId;
             address.IsBillingAddress = isBillingAddress;
@@ -256,7 +267,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             address2 = address2.Trim();
             city = city.Trim();
             zipPostalCode = zipPostalCode.Trim();
-            
+
+            firstName = CommonHelper.EnsureMaximumLength(firstName, 100);
+            lastName = CommonHelper.EnsureMaximumLength(lastName, 100);
+            phoneNumber = CommonHelper.EnsureMaximumLength(phoneNumber, 50);
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            faxNumber = CommonHelper.EnsureMaximumLength(faxNumber, 50);
+            company = CommonHelper.EnsureMaximumLength(company, 100);
+            address1 = CommonHelper.EnsureMaximumLength(address1, 100);
+            address2 = CommonHelper.EnsureMaximumLength(address2, 100);
+            city = CommonHelper.EnsureMaximumLength(city, 100);
+            zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
+
             var address = GetAddressById(addressId);
             if (address == null)
                 return null;
@@ -1286,6 +1308,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (email == null)
                 email = string.Empty;
             email = email.Trim();
+            
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            username = CommonHelper.EnsureMaximumLength(username, 100);
+            passwordHash = CommonHelper.EnsureMaximumLength(passwordHash, 255);
+            saltKey = CommonHelper.EnsureMaximumLength(saltKey, 255);
+            signature = CommonHelper.EnsureMaximumLength(signature, 300);
+            adminComment = CommonHelper.EnsureMaximumLength(adminComment, 4000);
+            timeZoneId = CommonHelper.EnsureMaximumLength(timeZoneId, 200);
 
             var customer = new Customer();
             customer.CustomerGuid = customerGuid;
@@ -1389,6 +1419,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (signature == null)
                 signature = string.Empty;
             signature = signature.Trim();
+
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            username = CommonHelper.EnsureMaximumLength(username, 100);
+            passwordHash = CommonHelper.EnsureMaximumLength(passwordHash, 255);
+            saltKey = CommonHelper.EnsureMaximumLength(saltKey, 255);
+            signature = CommonHelper.EnsureMaximumLength(signature, 300);
+            adminComment = CommonHelper.EnsureMaximumLength(adminComment, 4000);
+            timeZoneId = CommonHelper.EnsureMaximumLength(timeZoneId, 200);
 
             var customer = GetCustomerById(customerId);
             if (customer == null)
@@ -1856,6 +1894,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             if (value == null)
                 value = string.Empty;
 
+            key = CommonHelper.EnsureMaximumLength(key, 100);
+            value = CommonHelper.EnsureMaximumLength(value, 1000);
+
             var customerAttribute = new CustomerAttribute();
             customerAttribute.CustomerId = customerId;
             customerAttribute.Key = key;
@@ -1884,6 +1925,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 
             if (value == null)
                 value = string.Empty;
+
+            key = CommonHelper.EnsureMaximumLength(key, 100);
+            value = CommonHelper.EnsureMaximumLength(value, 1000);
 
             var customerAttribute = GetCustomerAttributeById(customerAttributeId);
             if (customerAttribute == null)
@@ -2027,6 +2071,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static CustomerRole InsertCustomerRole(string name,
             bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 255);
+
             var customerRole = new CustomerRole();
             customerRole.Name = name;
             customerRole.FreeShipping = freeShipping;
@@ -2059,6 +2105,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         public static CustomerRole UpdateCustomerRole(int customerRoleId, string name,
             bool freeShipping, bool taxExempt, bool active, bool deleted)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 255);
+
             var customerRole = GetCustomerRoleById(customerRoleId);
             if (customerRole == null)
                 return null;
@@ -2066,7 +2114,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(customerRole))
                 context.CustomerRoles.Attach(customerRole);
-
+            
             customerRole.Name = name;
             customerRole.FreeShipping = freeShipping;
             customerRole.TaxExempt = taxExempt;

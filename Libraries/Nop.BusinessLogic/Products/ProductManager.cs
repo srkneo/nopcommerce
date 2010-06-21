@@ -39,6 +39,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products
@@ -406,6 +407,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int ratingSum, int totalRatingVotes, bool published,
             bool deleted, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var product = new Product();
             product.Name = name;
             product.ShortDescription = shortDescription;
@@ -473,6 +480,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int ratingSum, int totalRatingVotes, bool published,
             bool deleted, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var product = GetProductById(productId);
             if (product == null)
                 return null;
@@ -587,6 +600,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             string metaKeywords, string metaDescription, string metaTitle,
             string seName)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var productLocalized = new ProductLocalized();
             productLocalized.ProductId = productId;
             productLocalized.LanguageId = languageId;
@@ -631,6 +650,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             string fullDescription, string metaKeywords, string metaDescription,
             string metaTitle, string seName)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var productLocalized = GetProductLocalizedById(productLocalizedId);
             if (productLocalized == null)
                 return null;
@@ -1515,6 +1540,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             sku = sku.Trim();
 
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            sku = CommonHelper.EnsureMaximumLength(sku, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            adminComment = CommonHelper.EnsureMaximumLength(adminComment, 4000);
+            manufacturerPartNumber = CommonHelper.EnsureMaximumLength(manufacturerPartNumber, 100);
+
             var productVariant = new ProductVariant();
             productVariant.ProductId = productId;
             productVariant.Name = name;
@@ -1670,6 +1701,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             DateTime createdOn, DateTime updatedOn)
         {
             sku = sku.Trim();
+
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            sku = CommonHelper.EnsureMaximumLength(sku, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            adminComment = CommonHelper.EnsureMaximumLength(adminComment, 4000);
+            manufacturerPartNumber = CommonHelper.EnsureMaximumLength(manufacturerPartNumber, 100);
 
             var productVariant = GetProductVariantById(productVariantId);
             if (productVariant == null)
@@ -1884,6 +1921,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductVariantLocalized InsertProductVariantLocalized(int productVariantId,
             int languageId, string name, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+
             var productVariantLocalized = new ProductVariantLocalized();
             productVariantLocalized.ProductVariantId = productVariantId;
             productVariantLocalized.LanguageId = languageId;
@@ -1916,6 +1955,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductVariantLocalized UpdateProductVariantLocalized(int productVariantLocalizedId,
             int productVariantId, int languageId, string name, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+
             var productVariantLocalized = GetProductVariantLocalizedById(productVariantLocalizedId);
             if (productVariantLocalized == null)
                 return null;
@@ -2377,6 +2418,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (rating > 5)
                 rating = 5;
 
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
+            title = CommonHelper.EnsureMaximumLength(title, 1000);
+
             var productReview = new ProductReview();
             productReview.ProductId = productId;
             productReview.CustomerId = customerId;
@@ -2427,6 +2471,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             string reviewText, int rating, int helpfulYesTotal,
             int helpfulNoTotal, bool isApproved, DateTime createdOn)
         {
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
+            title = CommonHelper.EnsureMaximumLength(title, 1000);
+
             var productReview = GetProductReviewById(productReviewId);
             if (productReview == null)
                 return null;
@@ -2778,6 +2825,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment, 
             bool overrideIndivAdjustment, DateTime createdOn, DateTime updatedOn)
         {
+            displayName = CommonHelper.EnsureMaximumLength(displayName, 100);
+            shortName = CommonHelper.EnsureMaximumLength(shortName, 20);
+            pricelistGuid = CommonHelper.EnsureMaximumLength(pricelistGuid, 40);
+            formatLocalization = CommonHelper.EnsureMaximumLength(formatLocalization, 5);
+            description = CommonHelper.EnsureMaximumLength(description, 500);
+            adminNotes = CommonHelper.EnsureMaximumLength(adminNotes, 500);
+            header = CommonHelper.EnsureMaximumLength(header, 500);
+            body = CommonHelper.EnsureMaximumLength(body, 500);
+            footer = CommonHelper.EnsureMaximumLength(footer, 500);
+
             var pricelist = new Pricelist();
             pricelist.ExportModeId = (int)exportMode;
             pricelist.ExportTypeId = (int)exportType;
@@ -2837,6 +2894,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             PriceAdjustmentTypeEnum priceAdjustmentType, decimal priceAdjustment, 
             bool overrideIndivAdjustment, DateTime createdOn, DateTime updatedOn)
         {
+            displayName = CommonHelper.EnsureMaximumLength(displayName, 100);
+            shortName = CommonHelper.EnsureMaximumLength(shortName, 20);
+            pricelistGuid = CommonHelper.EnsureMaximumLength(pricelistGuid, 40);
+            formatLocalization = CommonHelper.EnsureMaximumLength(formatLocalization, 5);
+            description = CommonHelper.EnsureMaximumLength(description, 500);
+            adminNotes = CommonHelper.EnsureMaximumLength(adminNotes, 500);
+            header = CommonHelper.EnsureMaximumLength(header, 500);
+            body = CommonHelper.EnsureMaximumLength(body, 500);
+            footer = CommonHelper.EnsureMaximumLength(footer, 500);
+
             var pricelist = GetPricelistById(pricelistId);
             if (pricelist == null)
                 return null;
@@ -3295,6 +3362,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 name = string.Empty;
             name = name.Trim();
 
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var productTag = new ProductTag();
             productTag.Name = name;
             productTag.ProductCount = productCount;
@@ -3319,6 +3388,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (name == null)
                 name = string.Empty;
             name = name.Trim();
+
+            name = CommonHelper.EnsureMaximumLength(name, 100);
 
             var productTag = GetProductTagById(productTagId);
             if (productTag == null)

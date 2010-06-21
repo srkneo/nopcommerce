@@ -23,6 +23,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Categories
 {
@@ -214,6 +215,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+            priceRanges = CommonHelper.EnsureMaximumLength(priceRanges, 400);
+
             var category = new Category();
             category.Name = name;
             category.Description = description;
@@ -273,6 +281,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             int pageSize, string priceRanges, bool showOnHomePage, bool published, bool deleted,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+            priceRanges = CommonHelper.EnsureMaximumLength(priceRanges, 400);
+
             //validate category hierarchy
             var parentCategory = GetCategoryById(parentCategoryId);
             while (parentCategory != null)
@@ -394,6 +409,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             string metaKeywords, string metaDescription, string metaTitle,
             string seName)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var categoryLocalized = new CategoryLocalized();
             categoryLocalized.CategoryId = categoryId;
             categoryLocalized.LanguageId = languageId;
@@ -434,6 +455,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             string metaKeywords, string metaDescription, string metaTitle,
             string seName)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var categoryLocalized = GetCategoryLocalizedById(categoryLocalizedId);
             if (categoryLocalized == null)
                 return null;

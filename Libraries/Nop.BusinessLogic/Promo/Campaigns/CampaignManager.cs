@@ -26,6 +26,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
  
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
@@ -98,6 +99,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         public static Campaign InsertCampaign(string name,
             string subject, string body, DateTime createdOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+            subject = CommonHelper.EnsureMaximumLength(subject, 200);
+
             var campaign = new Campaign();
             campaign.Name = name;
             campaign.Subject = subject;
@@ -123,6 +127,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
         public static Campaign UpdateCampaign(int campaignId,
             string name, string subject, string body, DateTime createdOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+            subject = CommonHelper.EnsureMaximumLength(subject, 200);
+
             var campaign = GetCampaignById(campaignId);
             if (campaign == null)
                 return null;

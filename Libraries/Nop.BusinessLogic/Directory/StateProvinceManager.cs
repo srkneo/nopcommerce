@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 {
@@ -143,6 +144,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static StateProvince InsertStateProvince(int countryId,
             string name, string abbreviation, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            abbreviation = CommonHelper.EnsureMaximumLength(abbreviation, 30);
+
             var stateProvince = new StateProvince();
             stateProvince.CountryId = countryId;
             stateProvince.Name = name;
@@ -173,6 +177,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static StateProvince UpdateStateProvince(int stateProvinceId,
             int countryId, string name, string abbreviation, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            abbreviation = CommonHelper.EnsureMaximumLength(abbreviation, 30);
+
             var stateProvince = GetStateProvinceById(stateProvinceId);
             if (stateProvince == null)
                 return null;

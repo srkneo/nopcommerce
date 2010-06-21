@@ -23,6 +23,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
 {
@@ -173,6 +174,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             bool published, bool deleted, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+            priceRanges = CommonHelper.EnsureMaximumLength(priceRanges, 400);
+
             var manufacturer = new Manufacturer();
             manufacturer.Name = name;
             manufacturer.Description = description;
@@ -229,6 +237,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             bool published, bool deleted, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+            priceRanges = CommonHelper.EnsureMaximumLength(priceRanges, 400);
+
             var manufacturer = GetManufacturerById(manufacturerId);
             if (manufacturer == null)
                 return null;
@@ -335,6 +350,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             int languageId, string name, string description,
             string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var manufacturerLocalized = new ManufacturerLocalized();
             manufacturerLocalized.ManufacturerId = manufacturerId;
             manufacturerLocalized.LanguageId = languageId;
@@ -374,6 +395,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             int manufacturerId, int languageId, string name, string description,
             string metaKeywords, string metaDescription, string metaTitle, string seName)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            seName = CommonHelper.EnsureMaximumLength(seName, 100);
+
             var manufacturerLocalized = GetManufacturerLocalizedById(manufacturerLocalizedId);
             if (manufacturerLocalized == null)
                 return null;

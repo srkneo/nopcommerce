@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 {
@@ -91,6 +92,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static SearchLog InsertSearchLog(string searchTerm,
             int customerId, DateTime createdOn)
         {
+            searchTerm = CommonHelper.EnsureMaximumLength(searchTerm, 100);
+
             var searchLog = new SearchLog();
             searchLog.SearchTerm = searchTerm;
             searchLog.CustomerId = customerId;
@@ -101,6 +104,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             context.SaveChanges();
             return searchLog;
         }
+
         /// <summary>
         /// Clear search log
         /// </summary>

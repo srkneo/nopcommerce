@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 {
@@ -124,6 +125,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         public static CreditCardType InsertCreditCardType(string name,
             string systemKeyword, int displayOrder, bool deleted)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
+
             var creditCardType = new CreditCardType();
             creditCardType.Name = name;
             creditCardType.SystemKeyword = systemKeyword;
@@ -153,6 +157,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         public static CreditCardType UpdateCreditCardType(int creditCardTypeId,
             string name, string systemKeyword, int displayOrder, bool deleted)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
+
             var creditCardType = GetCreditCardTypeById(creditCardTypeId);
             if (creditCardType == null)
                 return null;

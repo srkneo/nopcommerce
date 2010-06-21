@@ -134,6 +134,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static CustomerAction InsertCustomerAction(string name,
             string systemKeyword, string comment, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
+            comment = CommonHelper.EnsureMaximumLength(comment, 1000);
+
             var customerAction = new CustomerAction();
             customerAction.Name = name;
             customerAction.SystemKeyword = systemKeyword;
@@ -164,6 +168,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static CustomerAction UpdateCustomerAction(int customerActionId,
             string name, string systemKeyword, string comment, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
+            comment = CommonHelper.EnsureMaximumLength(comment, 1000);
+
             var customerAction = GetCustomerActionById(customerActionId);
             if (customerAction == null)
                 return null;

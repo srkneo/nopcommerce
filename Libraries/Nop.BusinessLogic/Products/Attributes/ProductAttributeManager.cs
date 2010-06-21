@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
 {
@@ -134,6 +135,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         /// <returns>Product attribute </returns>
         public static ProductAttribute InsertProductAttribute(string name, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 400);
+
             var productAttribute = new ProductAttribute();
             productAttribute.Name = name;
             productAttribute.Description = description;
@@ -161,6 +165,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductAttribute UpdateProductAttribute(int productAttributeId,
             string name, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 400);
+
             var productAttribute = GetProductAttributeById(productAttributeId);
             if (productAttribute == null)
                 return null;
@@ -251,6 +258,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductAttributeLocalized InsertProductAttributeLocalized(int productAttributeId,
             int languageId, string name, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 400);
+
             var productAttributeLocalized = new ProductAttributeLocalized();
             productAttributeLocalized.ProductAttributeId = productAttributeId;
             productAttributeLocalized.LanguageId = languageId;
@@ -283,6 +293,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductAttributeLocalized UpdateProductAttributeLocalized(int productAttributeLocalizedId,
             int productAttributeId, int languageId, string name, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 400);
+
             var productAttributeLocalized = GetProductAttributeLocalizedById(productAttributeLocalizedId);
             if (productAttributeLocalized == null)
                 return null;
@@ -406,6 +419,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductVariantAttribute InsertProductVariantAttribute(int productVariantId,
             int productAttributeId, string textPrompt, bool isRequired, AttributeControlTypeEnum attributeControlType, int displayOrder)
         {
+            textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 200);
+
             var productVariantAttribute = new ProductVariantAttribute();
             productVariantAttribute.ProductVariantId = productVariantId;
             productVariantAttribute.ProductAttributeId = productAttributeId;
@@ -443,6 +458,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             int productVariantId, int productAttributeId, string textPrompt, 
             bool isRequired, AttributeControlTypeEnum attributeControlType, int displayOrder)
         {
+            textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 200);
+
             var productVariantAttribute = GetProductVariantAttributeById(productVariantAttributeId);
             if (productVariantAttribute == null)
                 return null;
@@ -569,6 +586,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             string name, decimal priceAdjustment, decimal weightAdjustment,
             bool isPreSelected, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var productVariantAttributeValue = new ProductVariantAttributeValue();
             productVariantAttributeValue.ProductVariantAttributeId = productVariantAttributeId;
             productVariantAttributeValue.Name = name;
@@ -607,6 +626,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             decimal priceAdjustment, decimal weightAdjustment,
             bool isPreSelected, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var productVariantAttributeValue = GetProductVariantAttributeValueById(productVariantAttributeValueId);
             if (productVariantAttributeValue == null)
                 return null;
@@ -700,6 +721,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductVariantAttributeValueLocalized InsertProductVariantAttributeValueLocalized(int productVariantAttributeValueId,
             int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var productVariantAttributeValueLocalized = new ProductVariantAttributeValueLocalized();
             productVariantAttributeValueLocalized.ProductVariantAttributeValueId = productVariantAttributeValueId;
             productVariantAttributeValueLocalized.LanguageId = languageId;
@@ -730,6 +753,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static ProductVariantAttributeValueLocalized UpdateProductVariantAttributeValueLocalized(int productVariantAttributeValueLocalizedId,
             int productVariantAttributeValueId, int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var productVariantAttributeValueLocalized = GetProductVariantAttributeValueLocalizedById(productVariantAttributeValueLocalizedId);
             if (productVariantAttributeValueLocalized == null)
                 return null;

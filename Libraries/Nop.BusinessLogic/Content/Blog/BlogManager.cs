@@ -28,6 +28,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
+using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
@@ -147,6 +148,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             string blogPostBody, bool blogPostAllowComments,
             int createdById, DateTime createdOn)
         {
+            blogPostTitle = CommonHelper.EnsureMaximumLength(blogPostTitle, 200);
+
             var blogPost = new BlogPost();
             blogPost.LanguageId = languageId;
             blogPost.BlogPostTitle = blogPostTitle;
@@ -183,6 +186,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             string blogPostBody, bool blogPostAllowComments,
             int createdById, DateTime createdOn)
         {
+            blogPostTitle = CommonHelper.EnsureMaximumLength(blogPostTitle, 200);
+
             var blogPost = GetBlogPostById(blogPostId);
             if (blogPost == null)
                 return null;
@@ -320,6 +325,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         public static BlogComment InsertBlogComment(int blogPostId,
             int customerId, string ipAddress, string commentText, DateTime createdOn, bool notify)
         {
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
+
             var blogComment = new BlogComment();
             blogComment.BlogPostId = blogPostId;
             blogComment.CustomerId = customerId;
@@ -352,6 +359,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         public static BlogComment UpdateBlogComment(int blogCommentId, int blogPostId,
             int customerId, string ipAddress, string commentText, DateTime createdOn)
         {
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
+
             var blogComment = GetBlogCommentById(blogCommentId);
             if (blogComment == null)
                 return null;

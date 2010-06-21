@@ -80,8 +80,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             }
             return url.ToLowerInvariant();
         }
-
-
+        
         /// <summary>
         /// Gets a sample download url for a product variant
         /// </summary>
@@ -160,6 +159,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             if (extension == null)
                 extension = string.Empty;
 
+            downloadUrl = CommonHelper.EnsureMaximumLength(downloadUrl, 400);
+            contentType = CommonHelper.EnsureMaximumLength(contentType, 20);
+            filename = CommonHelper.EnsureMaximumLength(filename, 100);
+            extension = CommonHelper.EnsureMaximumLength(extension, 20);
+
             var download = new Download();
             download.UseDownloadUrl = useDownloadUrl;
             download.DownloadUrl = downloadUrl;
@@ -201,6 +205,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
                 contentType = string.Empty;
             if (extension == null)
                 extension = string.Empty;
+
+            downloadUrl = CommonHelper.EnsureMaximumLength(downloadUrl, 400);
+            contentType = CommonHelper.EnsureMaximumLength(contentType, 20);
+            filename = CommonHelper.EnsureMaximumLength(filename, 100);
+            extension = CommonHelper.EnsureMaximumLength(extension, 20);
 
             var download = GetDownloadById(downloadId);
             if (download == null)

@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
 {
@@ -105,6 +106,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             string address2, string city, string stateProvince, string zipPostalCode,
             int countryId, bool deleted, bool active)
         {
+            firstName = CommonHelper.EnsureMaximumLength(firstName, 100);
+            lastName = CommonHelper.EnsureMaximumLength(lastName, 100);
+            middleName = CommonHelper.EnsureMaximumLength(middleName, 100);
+            phoneNumber = CommonHelper.EnsureMaximumLength(phoneNumber, 50);
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            faxNumber = CommonHelper.EnsureMaximumLength(faxNumber, 50);
+            company = CommonHelper.EnsureMaximumLength(company, 100);
+            address1 = CommonHelper.EnsureMaximumLength(address1, 100);
+            address2 = CommonHelper.EnsureMaximumLength(address2, 100);
+            city = CommonHelper.EnsureMaximumLength(city, 100);
+            stateProvince = CommonHelper.EnsureMaximumLength(stateProvince, 100);
+            zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
+
             var affiliate = new Affiliate();
             affiliate.FirstName = firstName;
             affiliate.LastName = lastName;
@@ -154,6 +168,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             string address2, string city, string stateProvince, string zipPostalCode,
             int countryId, bool deleted, bool active)
         {
+            firstName = CommonHelper.EnsureMaximumLength(firstName, 100);
+            lastName = CommonHelper.EnsureMaximumLength(lastName, 100);
+            middleName = CommonHelper.EnsureMaximumLength(middleName, 100);
+            phoneNumber = CommonHelper.EnsureMaximumLength(phoneNumber, 50);
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+            faxNumber = CommonHelper.EnsureMaximumLength(faxNumber, 50);
+            company = CommonHelper.EnsureMaximumLength(company, 100);
+            address1 = CommonHelper.EnsureMaximumLength(address1, 100);
+            address2 = CommonHelper.EnsureMaximumLength(address2, 100);
+            city = CommonHelper.EnsureMaximumLength(city, 100);
+            stateProvince = CommonHelper.EnsureMaximumLength(stateProvince, 100);
+            zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
+
             var affiliate = GetAffiliateById(affiliateId);
             if (affiliate == null)
                 return null;

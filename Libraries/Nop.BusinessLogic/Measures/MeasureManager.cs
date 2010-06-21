@@ -23,6 +23,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Measures
 {
@@ -148,6 +149,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureDimension InsertMeasureDimension(string name,
             string systemKeyword, decimal ratio, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
+
             var measure = new MeasureDimension();
             measure.Name = name;
             measure.SystemKeyword = systemKeyword;
@@ -177,6 +181,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureDimension UpdateMeasureDimension(int measureDimensionId,
             string name, string systemKeyword, decimal ratio, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
+
             var measure = GetMeasureDimensionById(measureDimensionId);
             if (measure == null)
                 return null;
@@ -369,6 +376,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureWeight InsertMeasureWeight(string name,
             string systemKeyword, decimal ratio, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
 
             var weight = new MeasureWeight();
             weight.Name = name;
@@ -399,6 +408,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
         public static MeasureWeight UpdateMeasureWeight(int measureWeightId, string name,
             string systemKeyword, decimal ratio, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
+
             var weight = GetMeasureWeightById(measureWeightId);
             if (weight == null)
                 return null;

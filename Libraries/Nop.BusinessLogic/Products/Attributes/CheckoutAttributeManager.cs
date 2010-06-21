@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
 {
@@ -141,6 +142,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             bool isTaxExempt, int taxCategoryId, int attributeControlTypeId,
             int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 300);
+
             var checkoutAttribute = new CheckoutAttribute();
             checkoutAttribute.Name = name;
             checkoutAttribute.TextPrompt = textPrompt;
@@ -181,6 +185,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             bool isTaxExempt, int taxCategoryId, int attributeControlTypeId,
             int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 300);
+
             var checkoutAttribute = GetCheckoutAttributeById(checkoutAttributeId);
             if (checkoutAttribute == null)
                 return null;
@@ -276,6 +283,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static CheckoutAttributeLocalized InsertCheckoutAttributeLocalized(int checkoutAttributeId,
             int languageId, string name, string textPrompt)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 300);
+
             var checkoutAttributeLocalized = new CheckoutAttributeLocalized();
             checkoutAttributeLocalized.CheckoutAttributeId = checkoutAttributeId;
             checkoutAttributeLocalized.LanguageId = languageId;
@@ -307,6 +317,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static CheckoutAttributeLocalized UpdateCheckoutAttributeLocalized(int checkoutAttributeLocalizedId,
             int checkoutAttributeId, int languageId, string name, string textPrompt)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 300);
+
             var checkoutAttributeLocalized = GetCheckoutAttributeLocalizedById(checkoutAttributeLocalizedId);
             if (checkoutAttributeLocalized == null)
                 return null;
@@ -429,6 +442,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             string name, decimal priceAdjustment, decimal weightAdjustment,
             bool isPreSelected, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var checkoutAttributeValue = new CheckoutAttributeValue();
             checkoutAttributeValue.CheckoutAttributeId = checkoutAttributeId;
             checkoutAttributeValue.Name = name;
@@ -465,6 +480,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             int checkoutAttributeId, string name, decimal priceAdjustment, decimal weightAdjustment,
             bool isPreSelected, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var checkoutAttributeValue = GetCheckoutAttributeValueById(checkoutAttributeValueId);
             if (checkoutAttributeValue == null)
                 return null;
@@ -557,6 +574,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static CheckoutAttributeValueLocalized InsertCheckoutAttributeValueLocalized(int checkoutAttributeValueId,
             int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var checkoutAttributeValueLocalized = new CheckoutAttributeValueLocalized();
             checkoutAttributeValueLocalized.CheckoutAttributeValueId = checkoutAttributeValueId;
             checkoutAttributeValueLocalized.LanguageId = languageId;
@@ -586,6 +605,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         public static CheckoutAttributeValueLocalized UpdateCheckoutAttributeValueLocalized(int checkoutAttributeValueLocalizedId,
             int checkoutAttributeValueId, int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var checkoutAttributeValueLocalized = GetCheckoutAttributeValueLocalizedById(checkoutAttributeValueLocalizedId);
             if (checkoutAttributeValueLocalized == null)
                 return null;

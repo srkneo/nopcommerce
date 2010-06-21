@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Directory
@@ -255,6 +256,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
             bool published, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            twoLetterIsoCode = CommonHelper.EnsureMaximumLength(twoLetterIsoCode, 2);
+            threeLetterIsoCode = CommonHelper.EnsureMaximumLength(threeLetterIsoCode, 3);
+
             var country = new Country();
             country.Name = name;
             country.AllowsRegistration = allowsRegistration;
@@ -296,6 +301,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string twoLetterIsoCode, string threeLetterIsoCode, int numericIsoCode,
             bool published, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            twoLetterIsoCode = CommonHelper.EnsureMaximumLength(twoLetterIsoCode, 2);
+            threeLetterIsoCode = CommonHelper.EnsureMaximumLength(threeLetterIsoCode, 3);
+
             var country = GetCountryById(countryId);
             if (country == null)
                 return null;

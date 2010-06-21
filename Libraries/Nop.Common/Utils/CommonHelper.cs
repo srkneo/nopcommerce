@@ -791,7 +791,7 @@ namespace NopSolutions.NopCommerce.Common.Utils
         /// Convert enum for front-end
         /// </summary>
         /// <param name="str">Input string</param>
-        /// <returns>Covnerted string</returns>
+        /// <returns>Converted string</returns>
         public static string ConvertEnum(string str)
         {
             string result = string.Empty;
@@ -849,6 +849,23 @@ namespace NopSolutions.NopCommerce.Common.Utils
             response.Expires = 0;
             response.AddHeader("pragma", "no-cache");
         }
+
+        /// <summary>
+        /// Ensure that a string doesn't exceed maximum allowed length
+        /// </summary>
+        /// <param name="str">Input string</param>
+        /// <returns>Input string if its lengh is OK; otherwise, truncated input string</returns>
+        public static string EnsureMaximumLength(string str, int maxLength)
+        {
+            if (String.IsNullOrEmpty(str))
+                return str;
+
+            if (str.Length > maxLength)
+                return str.Substring(0, maxLength);
+            else
+                return str;
+        }
+
 
         #endregion
     }

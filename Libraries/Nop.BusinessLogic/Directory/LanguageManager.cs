@@ -24,6 +24,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 {
@@ -141,6 +142,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static Language InsertLanguage(string name, string languageCulture,
             string flagImageFileName, bool published, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            languageCulture = CommonHelper.EnsureMaximumLength(languageCulture, 20);
+            flagImageFileName = CommonHelper.EnsureMaximumLength(flagImageFileName, 50);
+
             var language = new Language();
             language.Name = name;
             language.LanguageCulture = languageCulture;
@@ -173,6 +178,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             string name, string languageCulture,
             string flagImageFileName, bool published, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            languageCulture = CommonHelper.EnsureMaximumLength(languageCulture, 20);
+            flagImageFileName = CommonHelper.EnsureMaximumLength(flagImageFileName, 50);
+
             var language = GetLanguageById(languageId);
             if (language == null)
                 return null;

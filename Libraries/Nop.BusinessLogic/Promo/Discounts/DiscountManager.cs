@@ -26,6 +26,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
@@ -203,6 +204,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                 throw new NopException("Discount requires coupon code. Coupon code could not be empty.");
             }
 
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            couponCode = CommonHelper.EnsureMaximumLength(couponCode, 100);
+
             var discount = new Discount();
             discount.DiscountTypeId = (int)discountType;
             discount.DiscountRequirementId = (int)discountRequirement;
@@ -258,6 +262,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             {
                 throw new NopException("Discount requires coupon code. Coupon code could not be empty.");
             }
+
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            couponCode = CommonHelper.EnsureMaximumLength(couponCode, 100);
 
             var discount = GetDiscountById(discountId);
             if (discount == null)

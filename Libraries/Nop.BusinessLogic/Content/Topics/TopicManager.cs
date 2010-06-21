@@ -30,6 +30,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.SEO;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
 {
@@ -64,6 +65,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <returns>Topic</returns>
         public static Topic InsertTopic(string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+
             var topic = new Topic();
             topic.Name = name;
 
@@ -82,6 +85,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         /// <returns>Topic</returns>
         public static Topic UpdateTopic(int topicId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+
             var topic = GetTopicById(topicId);
             if (topic == null)
                 return null;
@@ -236,6 +241,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             DateTime createdOn, DateTime updatedOn,
             string metaKeywords, string metaDescription, string metaTitle)
         {
+            title = CommonHelper.EnsureMaximumLength(title, 200);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+
             var localizedTopic = new LocalizedTopic();
             localizedTopic.TopicId = topicId;
             localizedTopic.LanguageId = languageId;
@@ -273,6 +283,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             DateTime createdOn, DateTime updatedOn,
             string metaKeywords, string metaDescription, string metaTitle)
         {
+            title = CommonHelper.EnsureMaximumLength(title, 200);
+            metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
+            metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
+            metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
+
             var localizedTopic = GetLocalizedTopicById(topicLocalizedId);
             if (localizedTopic == null)
                 return null;

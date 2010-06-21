@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 {
@@ -142,6 +143,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             string description, string configureTemplatePath, string className,
             bool isActive, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
+            className = CommonHelper.EnsureMaximumLength(className, 500);
+
             var shippingRateComputationMethod = new ShippingRateComputationMethod();
             shippingRateComputationMethod.Name = name;
             shippingRateComputationMethod.Description = description;
@@ -176,6 +182,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             string name, string description, string configureTemplatePath, string className,
             bool isActive, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
+            className = CommonHelper.EnsureMaximumLength(className, 500);
+
             var shippingRateComputationMethod = GetShippingRateComputationMethodById(shippingRateComputationMethodId);
             if (shippingRateComputationMethod == null)
                 return null;

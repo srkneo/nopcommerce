@@ -22,6 +22,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Security
 {
@@ -121,6 +122,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         {
             address = address.Trim();
 
+            address = CommonHelper.EnsureMaximumLength(address, 50);
+            comment = CommonHelper.EnsureMaximumLength(comment, 500);
+
             var ipAddress = new BannedIpAddress();
             ipAddress.Address = address;
             ipAddress.Comment = comment;
@@ -151,6 +155,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             string comment, DateTime createdOn, DateTime updatedOn)
         {
             address = address.Trim();
+
+            address = CommonHelper.EnsureMaximumLength(address, 50);
+            comment = CommonHelper.EnsureMaximumLength(comment, 500);
 
             var ipAddress = GetBannedIpAddressById(ipAddressId);
             if (ipAddress == null)
@@ -257,6 +264,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             startAddress = startAddress.Trim();
             endAddress = endAddress.Trim();
 
+            startAddress = CommonHelper.EnsureMaximumLength(startAddress, 50);
+            endAddress = CommonHelper.EnsureMaximumLength(endAddress, 50);
+            comment = CommonHelper.EnsureMaximumLength(comment, 500);
+
             var ipNetwork = new BannedIpNetwork();
             ipNetwork.StartAddress = startAddress;
             ipNetwork.EndAddress = endAddress;
@@ -293,6 +304,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         {
             startAddress = startAddress.Trim();
             endAddress = endAddress.Trim();
+
+            startAddress = CommonHelper.EnsureMaximumLength(startAddress, 50);
+            endAddress = CommonHelper.EnsureMaximumLength(endAddress, 50);
+            comment = CommonHelper.EnsureMaximumLength(comment, 500);
 
             var ipNetwork = GetBannedIpNetworkById(bannedIpNetworkId);
             if (ipNetwork == null)

@@ -601,7 +601,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string checkoutAttributesXml,
             string customerCurrencyCode,
             decimal orderWeight,
-            int affiliateId, 
+            int affiliateId,
             OrderStatusEnum orderStatus,
             bool allowStoringCreditCardNumber,
             string cardType,
@@ -620,7 +620,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string captureTransactionResult,
             string subscriptionTransactionId,
             string purchaseOrderNumber,
-            PaymentStatusEnum paymentStatus, 
+            PaymentStatusEnum paymentStatus,
             DateTime? paidDate,
             string billingFirstName,
             string billingLastName,
@@ -636,7 +636,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string billingZipPostalCode,
             string billingCountry,
             int billingCountryId,
-            ShippingStatusEnum shippingStatus, 
+            ShippingStatusEnum shippingStatus,
             string shippingFirstName,
             string shippingLastName,
             string shippingPhoneNumber,
@@ -736,6 +736,48 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (trackingNumber == null)
                 trackingNumber = string.Empty;
 
+            customerIP = CommonHelper.EnsureMaximumLength(customerIP, 50);
+            cardType = CommonHelper.EnsureMaximumLength(cardType, 100);
+            cardName = CommonHelper.EnsureMaximumLength(cardName, 100);
+            cardNumber = CommonHelper.EnsureMaximumLength(cardNumber, 100);
+            maskedCreditCardNumber = CommonHelper.EnsureMaximumLength(maskedCreditCardNumber, 100);
+            cardCvv2 = CommonHelper.EnsureMaximumLength(cardCvv2, 100);
+            cardExpirationMonth = CommonHelper.EnsureMaximumLength(cardExpirationMonth, 100);
+            cardExpirationYear = CommonHelper.EnsureMaximumLength(cardExpirationYear, 100);
+            paymentMethodName = CommonHelper.EnsureMaximumLength(paymentMethodName, 100);
+            authorizationTransactionId = CommonHelper.EnsureMaximumLength(authorizationTransactionId, 4000);
+            authorizationTransactionCode = CommonHelper.EnsureMaximumLength(authorizationTransactionCode, 4000);
+            authorizationTransactionResult = CommonHelper.EnsureMaximumLength(authorizationTransactionResult, 4000);
+            captureTransactionId = CommonHelper.EnsureMaximumLength(captureTransactionId, 4000);
+            captureTransactionResult = CommonHelper.EnsureMaximumLength(captureTransactionResult, 4000);
+            subscriptionTransactionId = CommonHelper.EnsureMaximumLength(subscriptionTransactionId, 4000);
+            purchaseOrderNumber = CommonHelper.EnsureMaximumLength(purchaseOrderNumber, 100);
+            billingFirstName = CommonHelper.EnsureMaximumLength(billingFirstName, 100);
+            billingLastName = CommonHelper.EnsureMaximumLength(billingLastName, 100);
+            billingPhoneNumber = CommonHelper.EnsureMaximumLength(billingPhoneNumber, 50);
+            billingEmail = CommonHelper.EnsureMaximumLength(billingEmail, 255);
+            billingFaxNumber = CommonHelper.EnsureMaximumLength(billingFaxNumber, 50);
+            billingCompany = CommonHelper.EnsureMaximumLength(billingCompany, 100);
+            billingAddress1 = CommonHelper.EnsureMaximumLength(billingAddress1, 100);
+            billingAddress2 = CommonHelper.EnsureMaximumLength(billingAddress2, 100);
+            billingCity = CommonHelper.EnsureMaximumLength(billingCity, 100);
+            billingStateProvince = CommonHelper.EnsureMaximumLength(billingStateProvince, 100);
+            billingZipPostalCode = CommonHelper.EnsureMaximumLength(billingZipPostalCode, 10);
+            billingCountry = CommonHelper.EnsureMaximumLength(billingCountry, 100);
+            shippingFirstName = CommonHelper.EnsureMaximumLength(shippingFirstName, 100);
+            shippingLastName = CommonHelper.EnsureMaximumLength(shippingLastName, 100);
+            shippingPhoneNumber = CommonHelper.EnsureMaximumLength(shippingPhoneNumber, 50);
+            shippingEmail = CommonHelper.EnsureMaximumLength(shippingEmail, 255);
+            shippingFaxNumber = CommonHelper.EnsureMaximumLength(shippingFaxNumber, 50);
+            shippingCompany = CommonHelper.EnsureMaximumLength(shippingCompany, 100);
+            shippingAddress1 = CommonHelper.EnsureMaximumLength(shippingAddress1, 100);
+            shippingAddress2 = CommonHelper.EnsureMaximumLength(shippingAddress2, 100);
+            shippingCity = CommonHelper.EnsureMaximumLength(shippingCity, 100);
+            shippingStateProvince = CommonHelper.EnsureMaximumLength(shippingStateProvince, 100);
+            shippingZipPostalCode = CommonHelper.EnsureMaximumLength(shippingZipPostalCode, 10);
+            shippingCountry = CommonHelper.EnsureMaximumLength(shippingCountry, 100);
+            shippingMethod = CommonHelper.EnsureMaximumLength(shippingMethod, 100);
+            trackingNumber = CommonHelper.EnsureMaximumLength(trackingNumber, 100);
 
             var order = new Order();
             order.OrderGuid = orderGuid;
@@ -1007,6 +1049,49 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             if (trackingNumber == null)
                 trackingNumber = string.Empty;
+
+            customerIP = CommonHelper.EnsureMaximumLength(customerIP, 50);
+            cardType = CommonHelper.EnsureMaximumLength(cardType, 100);
+            cardName = CommonHelper.EnsureMaximumLength(cardName, 100);
+            cardNumber = CommonHelper.EnsureMaximumLength(cardNumber, 100);
+            maskedCreditCardNumber = CommonHelper.EnsureMaximumLength(maskedCreditCardNumber, 100);
+            cardCvv2 = CommonHelper.EnsureMaximumLength(cardCvv2, 100);
+            cardExpirationMonth = CommonHelper.EnsureMaximumLength(cardExpirationMonth, 100);
+            cardExpirationYear = CommonHelper.EnsureMaximumLength(cardExpirationYear, 100);
+            paymentMethodName = CommonHelper.EnsureMaximumLength(paymentMethodName, 100);
+            authorizationTransactionId = CommonHelper.EnsureMaximumLength(authorizationTransactionId, 4000);
+            authorizationTransactionCode = CommonHelper.EnsureMaximumLength(authorizationTransactionCode, 4000);
+            authorizationTransactionResult = CommonHelper.EnsureMaximumLength(authorizationTransactionResult, 4000);
+            captureTransactionId = CommonHelper.EnsureMaximumLength(captureTransactionId, 4000);
+            captureTransactionResult = CommonHelper.EnsureMaximumLength(captureTransactionResult, 4000);
+            subscriptionTransactionId = CommonHelper.EnsureMaximumLength(subscriptionTransactionId, 4000);
+            purchaseOrderNumber = CommonHelper.EnsureMaximumLength(purchaseOrderNumber, 100);
+            billingFirstName = CommonHelper.EnsureMaximumLength(billingFirstName, 100);
+            billingLastName = CommonHelper.EnsureMaximumLength(billingLastName, 100);
+            billingPhoneNumber = CommonHelper.EnsureMaximumLength(billingPhoneNumber, 50);
+            billingEmail = CommonHelper.EnsureMaximumLength(billingEmail, 255);
+            billingFaxNumber = CommonHelper.EnsureMaximumLength(billingFaxNumber, 50);
+            billingCompany = CommonHelper.EnsureMaximumLength(billingCompany, 100);
+            billingAddress1 = CommonHelper.EnsureMaximumLength(billingAddress1, 100);
+            billingAddress2 = CommonHelper.EnsureMaximumLength(billingAddress2, 100);
+            billingCity = CommonHelper.EnsureMaximumLength(billingCity, 100);
+            billingStateProvince = CommonHelper.EnsureMaximumLength(billingStateProvince, 100);
+            billingZipPostalCode = CommonHelper.EnsureMaximumLength(billingZipPostalCode, 10);
+            billingCountry = CommonHelper.EnsureMaximumLength(billingCountry, 100);
+            shippingFirstName = CommonHelper.EnsureMaximumLength(shippingFirstName, 100);
+            shippingLastName = CommonHelper.EnsureMaximumLength(shippingLastName, 100);
+            shippingPhoneNumber = CommonHelper.EnsureMaximumLength(shippingPhoneNumber, 50);
+            shippingEmail = CommonHelper.EnsureMaximumLength(shippingEmail, 255);
+            shippingFaxNumber = CommonHelper.EnsureMaximumLength(shippingFaxNumber, 50);
+            shippingCompany = CommonHelper.EnsureMaximumLength(shippingCompany, 100);
+            shippingAddress1 = CommonHelper.EnsureMaximumLength(shippingAddress1, 100);
+            shippingAddress2 = CommonHelper.EnsureMaximumLength(shippingAddress2, 100);
+            shippingCity = CommonHelper.EnsureMaximumLength(shippingCity, 100);
+            shippingStateProvince = CommonHelper.EnsureMaximumLength(shippingStateProvince, 100);
+            shippingZipPostalCode = CommonHelper.EnsureMaximumLength(shippingZipPostalCode, 10);
+            shippingCountry = CommonHelper.EnsureMaximumLength(shippingCountry, 100);
+            shippingMethod = CommonHelper.EnsureMaximumLength(shippingMethod, 100);
+            trackingNumber = CommonHelper.EnsureMaximumLength(trackingNumber, 100);
 
             var order = GetOrderById(orderId);
             if (order == null)
@@ -1336,6 +1421,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (attributeDescription == null)
                 attributeDescription = string.Empty;
 
+            attributeDescription = CommonHelper.EnsureMaximumLength(attributeDescription, 4000);
+
             var opv = new OrderProductVariant();
             opv.OrderProductVariantGuid = orderProductVariantGuid;
             opv.OrderId = orderId;
@@ -1411,6 +1498,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             if (attributeDescription == null)
                 attributeDescription = string.Empty;
+
+            attributeDescription = CommonHelper.EnsureMaximumLength(attributeDescription, 4000);
 
             var opv = GetOrderProductVariantById(orderProductVariantId);
             if (opv == null)
@@ -1563,6 +1652,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static OrderNote InsertOrderNote(int orderId, string note, 
             bool displayToCustomer, DateTime createdOn)
         {
+            note = CommonHelper.EnsureMaximumLength(note, 4000);
+
             var orderNote = new OrderNote();
             orderNote.OrderId = orderId;
             orderNote.Note = note;
@@ -1587,6 +1678,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static OrderNote UpdateOrderNote(int orderNoteId, int orderId, 
             string note, bool displayToCustomer, DateTime createdOn)
         {
+            note = CommonHelper.EnsureMaximumLength(note, 4000);
+
             var orderNote = GetOrderNoteById(orderNoteId);
             if (orderNote == null)
                 return null;
@@ -2174,6 +2267,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string senderName, string senderEmail, string message,
             bool isRecipientNotified, DateTime createdOn)
         {
+            giftCardCouponCode = CommonHelper.EnsureMaximumLength(giftCardCouponCode, 100);
+            recipientName = CommonHelper.EnsureMaximumLength(recipientName, 100);
+            recipientEmail = CommonHelper.EnsureMaximumLength(recipientEmail, 100);
+            senderName = CommonHelper.EnsureMaximumLength(senderName, 100);
+            senderEmail = CommonHelper.EnsureMaximumLength(senderEmail, 100);
+            message = CommonHelper.EnsureMaximumLength(message, 4000);
+
             var giftCard = new GiftCard();
             giftCard.PurchasedOrderProductVariantId = purchasedOrderProductVariantId;
             giftCard.Amount = amount;
@@ -2217,6 +2317,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             string senderName, string senderEmail, string message,
             bool isRecipientNotified, DateTime createdOn)
         {
+            giftCardCouponCode = CommonHelper.EnsureMaximumLength(giftCardCouponCode, 100);
+            recipientName = CommonHelper.EnsureMaximumLength(recipientName, 100);
+            recipientEmail = CommonHelper.EnsureMaximumLength(recipientEmail, 100);
+            senderName = CommonHelper.EnsureMaximumLength(senderName, 100);
+            senderEmail = CommonHelper.EnsureMaximumLength(senderEmail, 100);
+            message = CommonHelper.EnsureMaximumLength(message, 4000);
+
             var giftCard = GetGiftCardById(giftCardId);
             if (giftCard == null)
                 return null;
@@ -2438,6 +2545,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
             string message, DateTime createdOn)
         {
+            customerCurrencyCode = CommonHelper.EnsureMaximumLength(customerCurrencyCode, 5);
+            message = CommonHelper.EnsureMaximumLength(message, 1000);
+
             Customer customer = CustomerManager.GetCustomerById(customerId);
             if (customer == null)
                 throw new NopException("Customer not found. ID=" + customerId);
@@ -2483,6 +2593,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             decimal usedAmountInCustomerCurrency, string customerCurrencyCode,
             string message, DateTime createdOn)
         {
+            customerCurrencyCode = CommonHelper.EnsureMaximumLength(customerCurrencyCode, 5);
+            message = CommonHelper.EnsureMaximumLength(message, 1000);
+
             var rewardPointsHistory = GetRewardPointsHistoryById(rewardPointsHistoryId);
             if (rewardPointsHistory == null)
                 return null;

@@ -431,6 +431,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         public static LocalizedMessageTemplate InsertLocalizedMessageTemplate(int messageTemplateId,
             int languageId, string bccEmailAddresses, string subject, string body, bool isActive)
         {
+            bccEmailAddresses = CommonHelper.EnsureMaximumLength(bccEmailAddresses, 200);
+            subject = CommonHelper.EnsureMaximumLength(subject, 200);
+
             var localizedMessageTemplate = new LocalizedMessageTemplate();
             localizedMessageTemplate.MessageTemplateId = messageTemplateId;
             localizedMessageTemplate.LanguageId = languageId;
@@ -461,6 +464,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             int messageTemplateId, int languageId, string bccEmailAddresses,
             string subject, string body, bool isActive)
         {
+            bccEmailAddresses = CommonHelper.EnsureMaximumLength(bccEmailAddresses, 200);
+            subject = CommonHelper.EnsureMaximumLength(subject, 200);
+
             var localizedMessageTemplate = GetLocalizedMessageTemplateById(messageTemplateLocalizedId);
             if (localizedMessageTemplate == null)
                 return null;
@@ -616,6 +622,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string fromName, string to, string toName, string cc, string bcc,
             string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn)
         {
+            from = CommonHelper.EnsureMaximumLength(from, 500);
+            fromName = CommonHelper.EnsureMaximumLength(fromName, 500);
+            to = CommonHelper.EnsureMaximumLength(to, 500);
+            toName = CommonHelper.EnsureMaximumLength(toName, 500);
+            cc = CommonHelper.EnsureMaximumLength(cc, 500);
+            bcc = CommonHelper.EnsureMaximumLength(bcc, 500);
+            subject = CommonHelper.EnsureMaximumLength(subject, 500);
+
             var queuedEmail = new QueuedEmail();
             queuedEmail.Priority = priority;
             queuedEmail.From = from;
@@ -659,6 +673,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             string fromName, string to, string toName, string cc, string bcc,
             string subject, string body, DateTime createdOn, int sendTries, DateTime? sentOn)
         {
+            from = CommonHelper.EnsureMaximumLength(from, 500);
+            fromName = CommonHelper.EnsureMaximumLength(fromName, 500);
+            to = CommonHelper.EnsureMaximumLength(to, 500);
+            toName = CommonHelper.EnsureMaximumLength(toName, 500);
+            cc = CommonHelper.EnsureMaximumLength(cc, 500);
+            bcc = CommonHelper.EnsureMaximumLength(bcc, 500);
+            subject = CommonHelper.EnsureMaximumLength(subject, 500);
+
             var queuedEmail = GetQueuedEmailById(queuedEmailId);
             if (queuedEmail == null)
                 return null;
@@ -699,6 +721,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             }
 
             email = email.Trim();
+            email = CommonHelper.EnsureMaximumLength(email, 255);
 
             var newsLetterSubscription = new NewsLetterSubscription();
             newsLetterSubscription.NewsLetterSubscriptionGuid = Guid.NewGuid();
@@ -798,6 +821,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
         public static NewsLetterSubscription UpdateNewsLetterSubscription(int newsLetterSubscriptionId, 
             string email, bool active)
         {
+            email = CommonHelper.EnsureMaximumLength(email, 255);
+
             var newsLetterSubscription = GetNewsLetterSubscriptionById(newsLetterSubscriptionId);
             if (newsLetterSubscription == null)
                 return null;

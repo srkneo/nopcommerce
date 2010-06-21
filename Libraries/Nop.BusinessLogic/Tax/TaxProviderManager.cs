@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 {
@@ -126,6 +127,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static TaxProvider InsertTaxProvider(string name, string description,
            string configureTemplatePath, string className, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
+            className = CommonHelper.EnsureMaximumLength(className, 500);
+
             var taxProvider = new TaxProvider();
             taxProvider.Name = name;
             taxProvider.Description = description;
@@ -158,6 +164,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             string name, string description, string configureTemplatePath,
             string className, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
+            className = CommonHelper.EnsureMaximumLength(className, 500);
+
             var taxProvider = GetTaxProviderById(taxProviderId);
             if (taxProvider == null)
                 return null;

@@ -23,6 +23,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Payment
 {
@@ -157,6 +158,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             string userTemplatePath, string className, string systemKeyword,
             bool isActive, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            visibleName = CommonHelper.EnsureMaximumLength(visibleName, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
+            userTemplatePath = CommonHelper.EnsureMaximumLength(userTemplatePath, 500);
+            className = CommonHelper.EnsureMaximumLength(className, 500);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 500);
+
             var paymentMethod = new PaymentMethod();
             paymentMethod.Name = name;
             paymentMethod.VisibleName = visibleName;
@@ -198,6 +207,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             string userTemplatePath, string className, string systemKeyword,
             bool isActive, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            visibleName = CommonHelper.EnsureMaximumLength(visibleName, 100);
+            description = CommonHelper.EnsureMaximumLength(description, 4000);
+            configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
+            userTemplatePath = CommonHelper.EnsureMaximumLength(userTemplatePath, 500);
+            className = CommonHelper.EnsureMaximumLength(className, 500);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 500);
+
             var paymentMethod = GetPaymentMethodById(paymentMethodId);
             if (paymentMethod == null)
                 return null;

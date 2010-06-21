@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
 {
@@ -170,6 +171,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <returns>Setting</returns>
         public static Setting AddSetting(string name, string value, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+            value = CommonHelper.EnsureMaximumLength(value, 2000);
+
             var setting = new Setting();
             setting.Name = name;
             setting.Value = value;
@@ -197,6 +201,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
         /// <returns>Setting</returns>
         public static Setting UpdateSetting(int settingId, string name, string value, string description)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+            value = CommonHelper.EnsureMaximumLength(value, 2000);
+
             var setting = GetSettingById(settingId);
             if (setting == null)
                 return null;

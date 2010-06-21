@@ -19,6 +19,7 @@ using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
 {
@@ -129,6 +130,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <returns>Specification attribute</returns>
         public static SpecificationAttribute InsertSpecificationAttribute(string name, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var specificationAttribute = new SpecificationAttribute();
             specificationAttribute.Name = name;
             specificationAttribute.DisplayOrder = displayOrder;
@@ -156,6 +159,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <returns>Specification attribute</returns>
         public static SpecificationAttribute UpdateSpecificationAttribute(int specificationAttributeId, string name, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var specificationAttribute = GetSpecificationAttributeById(specificationAttributeId);
             if (specificationAttribute == null)
                 return null;
@@ -213,8 +218,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             var content = query.ToList();
             return content;
         }
-
-
+        
         /// <summary>
         /// Gets localized specification attribute by specification attribute id and language id
         /// </summary>
@@ -246,6 +250,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static SpecificationAttributeLocalized InsertSpecificationAttributeLocalized(int specificationAttributeId,
             int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var specificationAttributeLocalized = new SpecificationAttributeLocalized();
             specificationAttributeLocalized.SpecificationAttributeId = specificationAttributeId;
             specificationAttributeLocalized.LanguageId = languageId;
@@ -276,6 +282,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static SpecificationAttributeLocalized UpdateSpecificationAttributeLocalized(int specificationAttributeLocalizedId,
             int specificationAttributeId, int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var specificationAttributeLocalized = GetSpecificationAttributeLocalizedById(specificationAttributeLocalizedId);
             if (specificationAttributeLocalized == null)
                 return null;
@@ -398,6 +406,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static SpecificationAttributeOption InsertSpecificationAttributeOption(int specificationAttributeId, 
             string name, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 500);
+
             var specificationAttributeOption = new SpecificationAttributeOption();
             specificationAttributeOption.SpecificationAttributeId = specificationAttributeId;
             specificationAttributeOption.Name = name;
@@ -428,6 +438,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static SpecificationAttributeOption UpdateSpecificationAttributeOptions(int specificationAttributeOptionId, 
             int specificationAttributeId, string name, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 500);
+
             var specificationAttributeOption = GetSpecificationAttributeOptionById(specificationAttributeOptionId);
             if (specificationAttributeOption == null)
                 return null;
@@ -519,6 +531,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static SpecificationAttributeOptionLocalized InsertSpecificationAttributeOptionLocalized(int specificationAttributeOptionId,
             int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 500);
+
             var specificationAttributeOptionLocalized = new SpecificationAttributeOptionLocalized();
             specificationAttributeOptionLocalized.SpecificationAttributeOptionId = specificationAttributeOptionId;
             specificationAttributeOptionLocalized.LanguageId = languageId;
@@ -549,6 +563,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         public static SpecificationAttributeOptionLocalized UpdateSpecificationAttributeOptionLocalized(int specificationAttributeOptionLocalizedId,
             int specificationAttributeOptionId, int languageId, string name)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 500);
+
             var specificationAttributeOptionLocalized = GetSpecificationAttributeOptionLocalizedById(specificationAttributeOptionLocalizedId);
             if (specificationAttributeOptionLocalized == null)
                 return null;

@@ -19,6 +19,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Templates
 {
@@ -130,6 +131,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static CategoryTemplate InsertCategoryTemplate(string name,
             string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
+
             var categoryTemplate = new CategoryTemplate();
             categoryTemplate.Name = name;
             categoryTemplate.TemplatePath = templatePath;
@@ -163,6 +167,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             string name, string templatePath, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
+
             var categoryTemplate = GetCategoryTemplateById(categoryTemplateId);
             if (categoryTemplate == null)
                 return null;
@@ -276,6 +283,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static ManufacturerTemplate InsertManufacturerTemplate(string name,
             string templatePath, int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
+
             var manufacturerTemplate = new ManufacturerTemplate();
             manufacturerTemplate.Name = name;
             manufacturerTemplate.TemplatePath = templatePath;
@@ -308,6 +318,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             string name, string templatePath, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
+
             var manufacturerTemplate = GetManufacturerTemplateById(manufacturerTemplateId);
             if (manufacturerTemplate == null)
                 return null;
@@ -421,6 +434,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
         public static ProductTemplate InsertProductTemplate(string name, string templatePath,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
+
             var productTemplate = new ProductTemplate();
             productTemplate.Name = name;
             productTemplate.TemplatePath = templatePath;
@@ -454,6 +470,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             string name, string templatePath, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+            templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
+
             var productTemplate = GetProductTemplateById(productTemplateId);
             if (productTemplate == null)
                 return null;

@@ -23,6 +23,7 @@ using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Localization
 {
@@ -116,6 +117,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         public static LocaleStringResource InsertLocaleStringResource(int languageId,
             string resourceName, string resourceValue)
         {
+            resourceName = CommonHelper.EnsureMaximumLength(resourceName, 200);
+
             var localeStringResource = new LocaleStringResource();
             localeStringResource.LanguageId = languageId;
             localeStringResource.ResourceName = resourceName;
@@ -143,6 +146,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         public static LocaleStringResource UpdateLocaleStringResource(int localeStringResourceId,
             int languageId, string resourceName, string resourceValue)
         {
+            resourceName = CommonHelper.EnsureMaximumLength(resourceName, 200);
+
             var localeStringResource = GetLocaleStringResourceById(localeStringResourceId);
             if (localeStringResource == null)
                 return null;

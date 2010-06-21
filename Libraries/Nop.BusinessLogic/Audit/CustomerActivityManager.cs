@@ -19,6 +19,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 {
@@ -34,6 +35,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         #endregion
         
         #region Methods
+
         /// <summary>
         /// Inserts an activity log type item
         /// </summary>
@@ -44,6 +46,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static ActivityLogType InsertActivityType(string systemKeyword,
             string name, bool enabled)
         {
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 50);
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var activityLogType = new ActivityLogType();
             activityLogType.SystemKeyword = systemKeyword;
             activityLogType.Name = name;
@@ -70,6 +75,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static ActivityLogType UpdateActivityType(int activityLogTypeId,
             string systemKeyword, string name, bool enabled)
         {
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 50);
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var activityLogType = GetActivityTypeById(activityLogTypeId);
             if (activityLogType == null)
                 return null;
@@ -215,6 +223,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             int customerId = NopContext.Current.User.CustomerId;
             DateTime createdOn = DateTime.UtcNow;
             comment = string.Format(comment, commentParams);
+            comment = CommonHelper.EnsureMaximumLength(comment, 4000);
 
             var activity = new ActivityLog();
             activity.ActivityLogTypeId = activityType.ActivityLogTypeId;
@@ -241,6 +250,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         public static ActivityLog UpdateActivity(int activityLogId, int activityLogTypeId,
             int customerId, string comment, DateTime createdOn)
         {
+            comment = CommonHelper.EnsureMaximumLength(comment, 4000);
+
             var activity = GetActivityById(activityLogId);
             if (activity == null)
                 return null;

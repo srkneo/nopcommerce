@@ -14,15 +14,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
-using NopSolutions.NopCommerce.BusinessLogic.Profile;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 {
@@ -127,6 +123,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static TaxCategory InsertTaxCategory(string name,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var taxCategory = new TaxCategory();
             taxCategory.Name = name;
             taxCategory.DisplayOrder = displayOrder;
@@ -156,6 +154,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         public static TaxCategory UpdateTaxCategory(int taxCategoryId, string name,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 100);
+
             var taxCategory = GetTaxCategoryById(taxCategoryId);
             if (taxCategory == null)
                 return null;

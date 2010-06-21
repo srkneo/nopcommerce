@@ -22,6 +22,7 @@ using System.Text;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 {
@@ -155,6 +156,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public static Poll InsertPoll(int languageId, string name, string systemKeyword,
             bool published, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 400);
+
             var poll = new Poll();
             poll.LanguageId = languageId;
             poll.Name = name;
@@ -188,6 +192,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public static Poll UpdatePoll(int pollId, int languageId, string name,
             string systemKeyword, bool published, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+            systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 400);
+
             var poll = GetPollById(pollId);
             if (poll == null)
                 return null;
@@ -310,6 +317,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public static PollAnswer InsertPollAnswer(int pollId,
             string name, int count, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+
             var pollAnswer = new PollAnswer();
             pollAnswer.PollId = pollId;
             pollAnswer.Name = name;
@@ -341,6 +350,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public static PollAnswer UpdatePollAnswer(int pollAnswerId,
             int pollId, string name, int count, int displayOrder)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 400);
+
             var pollAnswer = GetPollAnswerById(pollAnswerId);
             if (pollAnswer == null)
                 return null;

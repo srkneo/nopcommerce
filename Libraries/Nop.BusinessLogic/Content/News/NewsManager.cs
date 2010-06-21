@@ -29,6 +29,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common.Utils.Html;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
 {
@@ -43,6 +44,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Gets a news
         /// </summary>
@@ -208,6 +210,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         public static News InsertNews(int languageId, string title, string shortText,
             string fullText, bool published, bool allowComments, DateTime createdOn)
         {
+            title = CommonHelper.EnsureMaximumLength(title, 1000);
+            shortText = CommonHelper.EnsureMaximumLength(shortText, 4000);
+
             var news = new News();
             news.LanguageId =languageId;
             news.Title =title;
@@ -245,6 +250,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             string title, string shortText, string fullText,
             bool published, bool allowComments, DateTime createdOn)
         {
+            title = CommonHelper.EnsureMaximumLength(title, 1000);
+            shortText = CommonHelper.EnsureMaximumLength(shortText, 4000);
+
             var news = GetNewsById(newsId);
             if (news == null)
                 return null;
@@ -386,6 +394,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
         public static NewsComment InsertNewsComment(int newsId, int customerId, string ipAddress,
             string title, string comment, DateTime createdOn, bool notify)
         {
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
+            title = CommonHelper.EnsureMaximumLength(title, 1000);
+
             var newsComment = new NewsComment();
             newsComment.NewsId = newsId;
             newsComment.CustomerId = customerId;
@@ -422,6 +433,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             int newsId, int customerId, string ipAddress, string title,
             string comment, DateTime createdOn)
         {
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
+            title = CommonHelper.EnsureMaximumLength(title, 1000);
+
             var newsComment = GetNewsCommentById(newsCommentId);
             if (newsComment == null)
                 return null;

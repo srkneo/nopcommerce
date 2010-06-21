@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Messages;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
@@ -142,6 +143,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static ForumGroup InsertForumGroup(string name, string description,
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+            
             var forumGroup = new ForumGroup();
             forumGroup.Name = name;
             forumGroup.Description = description;
@@ -176,6 +179,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             string name, string description, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+
             var forumGroup = GetForumGroupById(forumGroupId);
             if (forumGroup == null)
                 return null;
@@ -299,6 +304,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int lastPostUserId, DateTime? lastPostTime, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+
             var forum = new Forum();
             forum.ForumGroupId = forumGroupId;
             forum.Name = name;
@@ -349,6 +356,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int lastPostUserId, DateTime? lastPostTime, int displayOrder,
             DateTime createdOn, DateTime updatedOn)
         {
+            name = CommonHelper.EnsureMaximumLength(name, 200);
+
             var forum = GetForumById(forumId);
             if (forum == null)
                 return null;
@@ -543,6 +552,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 if (subject.Length > ForumManager.TopicSubjectMaxLength)
                     subject = subject.Substring(0, ForumManager.TopicSubjectMaxLength);
             }
+
+            subject = CommonHelper.EnsureMaximumLength(subject, 450);
             
             var forumTopic = new ForumTopic();
             forumTopic.ForumId = forumId;
@@ -620,6 +631,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                     subject = subject.Substring(0, ForumManager.TopicSubjectMaxLength);
             }
 
+            subject = CommonHelper.EnsureMaximumLength(subject, 450);
+            
             var forumTopic = GetTopicById(forumTopicId);
             if (forumTopic == null)
                 return null;
@@ -817,6 +830,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                     text = text.Substring(0, ForumManager.PostMaxLength);
             }
 
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
+            
             var forumPost = new ForumPost();
             forumPost.TopicId = forumTopicId;
             forumPost.UserId = userId;
@@ -882,6 +897,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 if (text.Length > ForumManager.PostMaxLength)
                     text = text.Substring(0, ForumManager.PostMaxLength);
             }
+
+            ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);            
 
             var forumPost = GetPostById(forumPostId);
             if (forumPost == null)
@@ -1010,6 +1027,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             text = text.Trim();
             if (String.IsNullOrEmpty(text))
                 throw new NopException("Text cannot be empty");
+
+            subject = CommonHelper.EnsureMaximumLength(subject, 450);
+
             if (ForumManager.PMTextMaxLength > 0)
             {
                 if (text.Length > ForumManager.PMTextMaxLength)
@@ -1078,6 +1098,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
                 if (text.Length > ForumManager.PMTextMaxLength)
                     text = text.Substring(0, ForumManager.PMTextMaxLength);
             }
+
+            subject = CommonHelper.EnsureMaximumLength(subject, 450);
 
             if (isDeletedByAuthor && isDeletedByRecipient)
             {
