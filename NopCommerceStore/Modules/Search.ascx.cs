@@ -165,7 +165,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
             foreach (var category in categories)
             {
-                ListItem item = new ListItem(prefix + category.Name, category.CategoryId.ToString());
+                ListItem item = new ListItem(prefix + category.LocalizedName, category.CategoryId.ToString());
                 this.ddlCategories.Items.Add(item);
                 if (CategoryManager.GetAllCategories(category.CategoryId).Count > 0)
                     BindCategories(category.CategoryId, prefix + "--");
@@ -191,7 +191,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 foreach (var manufacturer in manufacturers)
                 {
-                    ListItem item2 = new ListItem(manufacturer.Name, manufacturer.ManufacturerId.ToString());
+                    ListItem item2 = new ListItem(manufacturer.LocalizedName, manufacturer.ManufacturerId.ToString());
                     this.ddlManufacturers.Items.Add(item2);
                 }
             }

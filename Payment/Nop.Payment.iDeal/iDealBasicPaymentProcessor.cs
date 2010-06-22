@@ -93,15 +93,15 @@ namespace NopSolutions.NopCommerce.Payment.Methods.iDeal
                 hasString.Append(product.ProductVariantId.ToString());
                 remotePostHelper.Add("itemNumber" + i, product.ProductVariantId.ToString());
 
-                if (!string.IsNullOrEmpty(product.ProductVariant.Product.ShortDescription))
+                if (!string.IsNullOrEmpty(product.ProductVariant.Product.LocalizedShortDescription))
                 {
-                    string shortDescription = HttpUtility.UrlEncode(product.ProductVariant.Product.ShortDescription);
+                    string shortDescription = HttpUtility.UrlEncode(product.ProductVariant.Product.LocalizedShortDescription);
                     remotePostHelper.Add("itemDescription" + i, shortDescription);
                     hasString.Append(shortDescription);
                 }
                 else
                 {
-                    string fullProductName = HttpUtility.UrlEncode(product.ProductVariant.FullProductName);
+                    string fullProductName = HttpUtility.UrlEncode(product.ProductVariant.LocalizedFullProductName);
                     remotePostHelper.Add("itemDescription" + i, fullProductName);
                     hasString.Append(fullProductName);
                 }

@@ -839,7 +839,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         }
                         else
                         {
-                            warnings.Add(string.Format(LocalizationManager.GetLocaleResourceString("ShoppingCart.SelectAttribute"), pva2.ProductAttribute.Name));
+                            warnings.Add(string.Format(LocalizationManager.GetLocaleResourceString("ShoppingCart.SelectAttribute"), pva2.ProductAttribute.LocalizedName));
                         }
                     }
                 }
@@ -979,13 +979,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         //if not found
                         if (!found)
                         {
-                            if (!string.IsNullOrEmpty(ca2.TextPrompt))
+                            if (!string.IsNullOrEmpty(ca2.LocalizedTextPrompt))
                             {
-                                warnings.Add(ca2.TextPrompt);
+                                warnings.Add(ca2.LocalizedTextPrompt);
                             }
                             else
                             {
-                                warnings.Add(string.Format(LocalizationManager.GetLocaleResourceString("ShoppingCart.SelectAttribute"), ca2.Name));
+                                warnings.Add(string.Format(LocalizationManager.GetLocaleResourceString("ShoppingCart.SelectAttribute"), ca2.LocalizedName));
                             }
                         }
                     }

@@ -215,7 +215,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.SagePay
 
                 //'** Add another item to our Form basket **
                 //intBasketItems = intBasketItems + 1
-                string name = item.ProductVariant.FullProductName;
+                string name = item.ProductVariant.LocalizedFullProductName;
                 if (string.IsNullOrEmpty(name))
                     name = "anonymous product";
 

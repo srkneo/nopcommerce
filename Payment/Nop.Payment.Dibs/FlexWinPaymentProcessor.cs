@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Dibs
                 ProductVariant pv = products[i].ProductVariant;
 
                 post.Add(lineName + "-1", HttpUtility.HtmlEncode(pv.SKU));
-                post.Add(lineName + "-2", HttpUtility.HtmlEncode(pv.Name));
+                post.Add(lineName + "-2", HttpUtility.HtmlEncode(pv.LocalizedName));
                 post.Add(lineName + "-3", HttpUtility.HtmlEncode(products[i].Quantity.ToString()));
                 post.Add(lineName + "-4", pv.Price.ToString(NumberFormatInfo.CurrentInfo));
             }

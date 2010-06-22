@@ -451,7 +451,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
                 if (productVariant != null)
                 {
                     string description = ProductAttributeHelper.FormatAttributes(productVariant, sci.AttributesXml, NopContext.Current.User, ", ", false);
-                    string fullName = productVariant.FullProductName;
+                    string fullName = productVariant.LocalizedFullProductName;
                     decimal unitPrice = TaxManager.GetPrice(sci.ProductVariant, PriceHelper.GetUnitPrice(sci, NopContext.Current.User, true));
                     req.AddItem(fullName, description, sci.ShoppingCartItemId.ToString(), unitPrice, sci.Quantity);
                 }

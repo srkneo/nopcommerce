@@ -98,11 +98,11 @@ namespace NopSolutions.NopCommerce.Payment.Methods.TwoCheckout
                 string c_prod_value = string.Format("{0},{1}", pv.SKU, opv.Quantity);
                 builder.AppendFormat("&{0}={1}", c_prod, c_prod_value);
                 string c_name = string.Format("c_name_{0}", pNum);
-                string c_name_value = pv.FullProductName;
+                string c_name_value = pv.LocalizedFullProductName;
                 builder.AppendFormat("&{0}={1}", HttpUtility.UrlEncode(c_name), HttpUtility.UrlEncode(c_name_value));
 
                 string c_description = string.Format("c_description_{0}", pNum);
-                string c_description_value = pv.FullProductName;
+                string c_description_value = pv.LocalizedFullProductName;
                 if (!String.IsNullOrEmpty(opv.AttributeDescription))
                 {
                     c_description_value = c_description_value + ". " + opv.AttributeDescription;

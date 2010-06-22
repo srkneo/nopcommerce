@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.Web
             foreach(Category category in categoryCollection)
             {
                 sb.Append("<li>");
-                sb.AppendFormat("<a href=\"{0}\">{1}</a>", SEOHelper.GetCategoryUrl(category.CategoryId), Server.HtmlEncode(category.Name));
+                sb.AppendFormat("<a href=\"{0}\">{1}</a>", SEOHelper.GetCategoryUrl(category.CategoryId), Server.HtmlEncode(category.LocalizedName));
                 var childCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
                 if(childCategoryCollection.Count > 0)
                 {
@@ -107,7 +107,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             foreach(Manufacturer manufacturer in manufacturerCollection)
             {
-                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetManufacturerUrl(manufacturer), Server.HtmlEncode(manufacturer.Name));
+                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetManufacturerUrl(manufacturer), Server.HtmlEncode(manufacturer.LocalizedName));
             }
         }
 
@@ -115,7 +115,7 @@ namespace NopSolutions.NopCommerce.Web
         {
             foreach(Product product in productCollection)
             {
-                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetProductUrl(product), Server.HtmlEncode(product.Name));
+                sb.AppendFormat("<li><a href=\"{0}\">{1}</a></li>", SEOHelper.GetProductUrl(product), Server.HtmlEncode(product.LocalizedName));
             }
         }
 

@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Svea
                 ProductVariant pv = opv.ProductVariant;
 
                 sb.AppendFormat("Row{0}AmountExVAT={1}&", rowNumber, opv.UnitPriceExclTax);
-                sb.AppendFormat("Row{0}Description={1}&", rowNumber, HttpUtility.UrlEncode(pv.FullProductName, Encoding.UTF8));
+                sb.AppendFormat("Row{0}Description={1}&", rowNumber, HttpUtility.UrlEncode(pv.LocalizedFullProductName, Encoding.UTF8));
                 sb.AppendFormat("Row{0}Quantity={1}&", rowNumber, opv.Quantity);
 
                 string errStr = String.Empty;
