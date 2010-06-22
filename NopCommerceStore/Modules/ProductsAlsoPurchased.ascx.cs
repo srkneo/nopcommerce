@@ -94,9 +94,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                     if (hlImageLink != null)
                     {
-                        ProductPicture productPicture = product.DefaultProductPicture;
-                        if(productPicture != null)
-                            hlImageLink.ImageUrl = PictureManager.GetPictureUrl(productPicture.Picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125), true);
+                        var picture = product.DefaultPicture;
+                        if (picture != null)
+                            hlImageLink.ImageUrl = PictureManager.GetPictureUrl(picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125), true);
                         else
                             hlImageLink.ImageUrl = PictureManager.GetDefaultPictureUrl(SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize", 125));
                         hlImageLink.NavigateUrl = productURL;

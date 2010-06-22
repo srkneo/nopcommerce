@@ -74,10 +74,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         public string GetProductImageUrl(Product product)
         {
-            ProductPicture productPicture = product.DefaultProductPicture;
-            if(productPicture != null)
+            var picture = product.DefaultPicture;
+            if (picture != null)
             {
-                return PictureManager.GetPictureUrl(productPicture.Picture, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
+                return PictureManager.GetPictureUrl(picture, SettingManager.GetSettingValueInteger("Media.ShoppingCart.ThumbnailImageSize", 80));
             }
             else
             {

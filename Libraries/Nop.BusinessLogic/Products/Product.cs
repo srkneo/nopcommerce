@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NopSolutions.NopCommerce.BusinessLogic.Categories;
 using NopSolutions.NopCommerce.BusinessLogic.Manufacturers;
+using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Products.Specs;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
 using NopSolutions.NopCommerce.Common;
@@ -444,14 +445,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         }
 
         /// <summary>
-        /// Gets the one of top product pictures
+        /// Gets the default product pictures
         /// </summary>
-        public ProductPicture DefaultProductPicture
+        public Picture DefaultPicture
         {
             get
             {
-                var pictureCollection = ProductManager.GetProductPicturesByProductId(ProductId, 1);
-                return (pictureCollection.Count == 0 ? null : pictureCollection[0]);
+                var picture = PictureManager.GetPicturesByProductId(this.ProductId, 1).FirstOrDefault();
+                return picture;
             }
         }
 

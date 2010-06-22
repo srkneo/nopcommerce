@@ -85,9 +85,9 @@ namespace NopSolutions.NopCommerce.Froogle
                         writer.WriteElementString("g", "expiration_date", googleBaseNamespace, DateTime.Now.AddDays(28).ToString("yyyy-MM-dd"));
                         writer.WriteElementString("g", "id", googleBaseNamespace, productVariant.ProductVariantId.ToString());
                         string imageUrl = string.Empty;
-                        var productPictures = product.ProductPictures;
-                        if (productPictures.Count > 0)
-                            imageUrl = PictureManager.GetPictureUrl(productPictures[0].Picture, SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize"), true);
+                        var pictures = PictureManager.GetPicturesByProductId(product.ProductId, 1);
+                        if (pictures.Count > 0)
+                            imageUrl = PictureManager.GetPictureUrl(pictures[0], SettingManager.GetSettingValueInteger("Media.Product.ThumbnailImageSize"), true);
                         writer.WriteElementString("g", "image_link", googleBaseNamespace, imageUrl);
                         decimal price = productVariant.Price;
                         writer.WriteElementString("g", "price", googleBaseNamespace, price.ToString(new CultureInfo("en-US", false).NumberFormat));

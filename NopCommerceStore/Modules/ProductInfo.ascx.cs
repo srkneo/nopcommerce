@@ -49,18 +49,18 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 lShortDescription.Text = product.LocalizedShortDescription;
                 lFullDescription.Text = product.LocalizedFullDescription;
 
-                var productPictures = product.ProductPictures;
-                if (productPictures.Count > 1)
+                var pictures = PictureManager.GetPicturesByProductId(product.ProductId);
+                if (pictures.Count > 1)
                 {
-                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
+                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(pictures[0], SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
                     defaultImage.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.LocalizedName);
                     defaultImage.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.LocalizedName);
-                    lvProductPictures.DataSource = productPictures;
+                    lvProductPictures.DataSource = pictures;
                     lvProductPictures.DataBind();
                 }
-                else if (productPictures.Count == 1)
+                else if (pictures.Count == 1)
                 {
-                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(productPictures[0].PictureId, SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
+                    defaultImage.ImageUrl = PictureManager.GetPictureUrl(pictures[0], SettingManager.GetSettingValueInteger("Media.Product.DetailImageSize", 300));
                     defaultImage.ToolTip = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.LocalizedName);
                     defaultImage.AlternateText = String.Format(GetLocaleResourceString("Media.Product.ImageAlternateTextFormat"), product.LocalizedName);
                     lvProductPictures.Visible = false;
@@ -74,10 +74,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
                 if(SettingManager.GetSettingValueBoolean("Media.Product.DefaultPictureZoomEnabled", false))
                 {
-                    ProductPicture pic = product.DefaultProductPicture;
-                    if(pic != null)
+                    var picture = product.DefaultPicture;
+                    if (picture != null)
                     {
-                        lnkMainLightbox.Attributes["href"] = PictureManager.GetPictureUrl(pic.PictureId);
+                        lnkMainLightbox.Attributes["href"] = PictureManager.GetPictureUrl(picture);
                         lnkMainLightbox.Attributes["rel"] = "lightbox-pd";
                     }
                 }

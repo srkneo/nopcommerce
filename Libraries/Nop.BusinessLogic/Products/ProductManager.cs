@@ -2233,40 +2233,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             return productPicture;
         }
 
-         /// <summary>
+        /// <summary>
         /// Gets all product picture mappings by product identifier
         /// </summary>
         /// <param name="productId">Product identifier</param>
         /// <returns>Product picture mapping collection</returns>
         public static List<ProductPicture> GetProductPicturesByProductId(int productId)
         {
-            return GetProductPicturesByProductId(productId, 0);
-        }
-
-        /// <summary>
-        /// Gets all product picture mappings by product identifier
-        /// </summary>
-        /// <param name="productId">Product identifier</param>
-        /// <param name="pictureCount">Number of picture to load</param>
-        /// <returns>Product picture mapping collection</returns>
-        public static List<ProductPicture> GetProductPicturesByProductId(int productId, int pictureCount)
-        {
-            if(pictureCount < 0)
-            {
-                pictureCount = 0;
-            }
-
             var context = ObjectContextHelper.CurrentObjectContext;
             var query = (IQueryable<ProductPicture>)context.ProductPictures;
             query = query.Where(pp => pp.ProductId == productId);
-            if (pictureCount > 0)
-                query = query.Take(pictureCount);
             query = query.OrderBy(pp => pp.DisplayOrder);
 
             var productPictures = query.ToList();
             return productPictures;
         }
-
         #endregion
 
         #region Product reviews

@@ -85,6 +85,88 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
 
         #region Methods
 
+        /// <summary>
+        /// Gets the default picture URL
+        /// </summary>
+        /// <param name="targetSize">The target picture size (longest side)</param>
+        /// <returns></returns>
+        public static string GetDefaultPictureUrl(int targetSize)
+        {
+            return GetDefaultPictureUrl(PictureTypeEnum.Entity, targetSize);
+        }
+
+        /// <summary>
+        /// Gets the default picture URL
+        /// </summary>
+        /// <param name="defaultPictureType">Default picture type</param>
+        /// <param name="targetSize">The target picture size (longest side)</param>
+        /// <returns></returns>
+        public static string GetDefaultPictureUrl(PictureTypeEnum defaultPictureType,
+            int targetSize)
+        {
+            string defaultImageName = string.Empty;
+            switch (defaultPictureType)
+            {
+                case PictureTypeEnum.Entity:
+                    defaultImageName = SettingManager.GetSettingValue("Media.DefaultImageName");
+                    break;
+                case PictureTypeEnum.Avatar:
+                    defaultImageName = SettingManager.GetSettingValue("Media.Customer.DefaultAvatarImageName");
+                    break;
+                default:
+                    defaultImageName = SettingManager.GetSettingValue("Media.DefaultImageName");
+                    break;
+            }
+
+
+            string relPath = CommonHelper.GetStoreLocation() + "images/" + defaultImageName;
+            if (targetSize == 0)
+                return relPath;
+            else
+            {
+                string filePath = Path.Combine(LocalImagePath, defaultImageName);
+                if (File.Exists(filePath))
+                {
+                    string fname = string.Format("{0}_{1}{2}",
+                        Path.GetFileNameWithoutExtension(filePath),
+                        targetSize,
+                        Path.GetExtension(filePath));
+                    if (!File.Exists(Path.Combine(LocalThumbImagePath, fname)))
+                    {
+                        var b = new Bitmap(filePath);
+
+                        var newSize = CalculateDimensions(b.Size, targetSize);
+
+                        if (newSize.Width < 1)
+                            newSize.Width = 1;
+                        if (newSize.Height < 1)
+                            newSize.Height = 1;
+
+                        var newBitMap = new Bitmap(newSize.Width, newSize.Height);
+                        var g = Graphics.FromImage(newBitMap);
+                        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                        g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                        g.DrawImage(b, 0, 0, newSize.Width, newSize.Height);
+                        var ep = new EncoderParameters();
+                        ep.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, PictureManager.ImageQuality);
+                        newBitMap.Save(Path.Combine(LocalThumbImagePath, fname), getImageCodeInfo("image/jpeg"), ep);
+                        newBitMap.Dispose();
+                        b.Dispose();
+                    }
+                    return CommonHelper.GetStoreLocation() + "images/thumbs/" + fname;
+                }
+                return relPath;
+            }
+        }
+
+        /// <summary>
+        /// Loads a cpiture from file
+        /// </summary>
+        /// <param name="pictureId">Picture identifier</param>
+        /// <param name="extension">Extension</param>
+        /// <returns>Picture binary</returns>
         public static byte[] LoadPictureFromFile(int pictureId, string extension)
         {
             string[] parts = extension.Split('/');
@@ -201,82 +283,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             }
 
             return urls;
-        }
-
-        /// <summary>
-        /// Gets the default picture URL
-        /// </summary>
-        /// <param name="targetSize">The target picture size (longest side)</param>
-        /// <returns></returns>
-        public static string GetDefaultPictureUrl(int targetSize)
-        {
-            return GetDefaultPictureUrl(PictureTypeEnum.Entity, targetSize);
-        }
-
-        /// <summary>
-        /// Gets the default picture URL
-        /// </summary>
-        /// <param name="defaultPictureType">Default picture type</param>
-        /// <param name="targetSize">The target picture size (longest side)</param>
-        /// <returns></returns>
-        public static string GetDefaultPictureUrl(PictureTypeEnum defaultPictureType, 
-            int targetSize)
-        {
-            string defaultImageName = string.Empty;
-            switch (defaultPictureType)
-            {
-                case PictureTypeEnum.Entity:
-                    defaultImageName = SettingManager.GetSettingValue("Media.DefaultImageName");
-                    break;
-                case PictureTypeEnum.Avatar:
-                    defaultImageName = SettingManager.GetSettingValue("Media.Customer.DefaultAvatarImageName");
-                    break;
-                default:
-                    defaultImageName = SettingManager.GetSettingValue("Media.DefaultImageName");
-                    break;
-            }
-
-
-            string relPath = CommonHelper.GetStoreLocation() + "images/" + defaultImageName;
-            if (targetSize == 0)
-                return relPath;
-            else
-            {
-                string filePath = Path.Combine(LocalImagePath, defaultImageName);
-                if (File.Exists(filePath))
-                {
-                    string fname = string.Format("{0}_{1}{2}",
-                        Path.GetFileNameWithoutExtension(filePath),
-                        targetSize,
-                        Path.GetExtension(filePath));
-                    if (!File.Exists(Path.Combine(LocalThumbImagePath, fname)))
-                    {
-                        var b = new Bitmap(filePath);
-
-                        var newSize = CalculateDimensions(b.Size, targetSize);
-
-                        if (newSize.Width < 1)
-                            newSize.Width = 1;
-                        if (newSize.Height < 1)
-                            newSize.Height = 1;
-
-                        var newBitMap = new Bitmap(newSize.Width, newSize.Height);
-                        var g = Graphics.FromImage(newBitMap);
-                        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                        g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                        g.DrawImage(b, 0, 0, newSize.Width, newSize.Height);
-                        var ep = new EncoderParameters();
-                        ep.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, PictureManager.ImageQuality);
-                        newBitMap.Save(Path.Combine(LocalThumbImagePath, fname), getImageCodeInfo("image/jpeg"), ep);
-                        newBitMap.Dispose();
-                        b.Dispose();
-                    }
-                    return CommonHelper.GetStoreLocation() + "images/thumbs/" + fname;
-                }
-                return relPath;
-            }
         }
 
         /// <summary>
@@ -528,6 +534,42 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
 
             var context = ObjectContextHelper.CurrentObjectContext;
             var pics = context.Sp_PictureLoadAllPaged(pageSize, pageIndex, out totalRecords);
+            return pics;
+        }
+        
+        /// <summary>
+        /// Gets pictures by product identifier
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <returns>Pictures</returns>
+        public static List<Picture> GetPicturesByProductId(int productId)
+        {
+            return GetPicturesByProductId(productId, 0);
+        }
+
+        /// <summary>
+        /// Gets pictures by product identifier
+        /// </summary>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="recordsToReturn">Number of records to return. 0 if you want to get all items</param>
+        /// <returns>Pictures</returns>
+        public static List<Picture> GetPicturesByProductId(int productId,
+            int recordsToReturn)
+        {
+            if (productId == 0)
+                return new List<Picture>();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var query = from p in context.Pictures
+                        join pp in context.ProductPictures on p.PictureId equals pp.PictureId
+                        orderby pp.DisplayOrder
+                        where pp.ProductId == productId
+                        select p;
+
+            if (recordsToReturn > 0)
+                query = query.Take(recordsToReturn);
+
+            var pics = query.ToList();
             return pics;
         }
 

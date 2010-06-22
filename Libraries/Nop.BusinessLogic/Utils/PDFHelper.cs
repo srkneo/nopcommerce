@@ -73,8 +73,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
 
                 section.AddParagraph();
 
-                var productPictureCollection = product.ProductPictures;
-                if(productPictureCollection.Count > 0)
+                var pictures = PictureManager.GetPicturesByProductId(product.ProductId);
+                if (pictures.Count > 0)
                 {
                     Table table = section.AddTable();
                     table.Borders.Visible = false;
@@ -83,11 +83,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
                     table.AddColumn(Unit.FromCentimeter(10));
 
                     Row row = table.AddRow();
-                    for(int i = 0; i < productPictureCollection.Count; i++)
+                    for (int i = 0; i < pictures.Count; i++)
                     {
                         int cellNum = i % 2;
-
-                        var pic = productPictureCollection[i].Picture;
+                        var pic = pictures[i];
 
                         if (pic != null && pic.LoadPictureBinary() != null && pic.LoadPictureBinary().Length > 0)
                         {

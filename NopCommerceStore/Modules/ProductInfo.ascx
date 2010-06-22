@@ -36,9 +36,9 @@
             </GroupTemplate>
             <ItemTemplate>
                 <td align="left">
-                    <a href="<%#PictureManager.GetPictureUrl((int)Eval("PictureId"))%>" rel="lightbox-p"
+                    <a href="<%#PictureManager.GetPictureUrl((Picture)Container.DataItem)%>" rel="lightbox-p"
                         title="<%= lProductName.Text%>">
-                        <img src="<%#PictureManager.GetPictureUrl((int)Eval("PictureId"), 70)%>" alt="Product image" /></a>
+                        <img src="<%#PictureManager.GetPictureUrl((Picture)Container.DataItem, 70)%>" alt="Product image" /></a>
                 </td>
             </ItemTemplate>
         </asp:ListView>
