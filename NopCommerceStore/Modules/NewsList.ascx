@@ -9,7 +9,8 @@
                 </td>
                 <td style="text-align: right; vertical-align: middle;">
                     <a href="<%= GetNewsRSSUrl()%>">
-                        <asp:Image ID="imgRSS" runat="server" ImageUrl="~/images/icon_rss.gif" AlternateText="RSS" /></a>
+                        <asp:Image ID="imgRSS" runat="server" ImageUrl="~/images/icon_rss.gif" ToolTip="<% $NopResources:NewsRSS.Tooltip %>"
+                            AlternateText="RSS" /></a>
                 </td>
             </tr>
         </table>

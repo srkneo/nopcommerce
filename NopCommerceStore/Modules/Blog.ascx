@@ -5,11 +5,13 @@
         <table width="100%">
             <tr>
                 <td style="text-align: left; vertical-align: middle;">
-                    <h1><%=GetLocaleResourceString("Blog.Blog")%></h1>
+                    <h1>
+                        <%=GetLocaleResourceString("Blog.Blog")%></h1>
                 </td>
                 <td style="text-align: right; vertical-align: middle;">
                     <a href="<%= GetBlogRSSUrl()%>">
-                        <asp:Image ID="imgRSS" runat="server" ImageUrl="~/images/icon_rss.gif" AlternateText="RSS" />
+                        <asp:Image ID="imgRSS" runat="server" ImageUrl="~/images/icon_rss.gif" ToolTip="<% $NopResources:BlogRSS.Tooltip %>"
+                            AlternateText="RSS" />
                     </a>
                 </td>
             </tr>

@@ -17,6 +17,15 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Code.Tooltip">
     <Value>Place your google adsense code here.</Value>
   </LocaleResource>
+  <LocaleResource Name="BlogRSS.Tooltip">
+    <Value>Click here to receive automatic BLOG updates from our site</Value>
+  </LocaleResource>
+  <LocaleResource Name="NewsRSS.Tooltip">
+    <Value>Click here to receive automatic NEWS updates from our site</Value>
+  </LocaleResource>
+  <LocaleResource Name="RecentlyAddedProductsRSS.Tooltip">
+    <Value>Click here to be informed automatically when we add new items to our site</Value>
+  </LocaleResource>
 </Language>
 '
 
