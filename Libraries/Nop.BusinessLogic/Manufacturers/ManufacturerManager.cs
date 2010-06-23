@@ -186,6 +186,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             manufacturer.Description = description;
             manufacturer.TemplateId = templateId;
             manufacturer.MetaKeywords = metaKeywords;
+            manufacturer.MetaDescription = metaDescription;
             manufacturer.MetaTitle = metaTitle;
             manufacturer.SEName = seName;
             manufacturer.PictureId = pictureId;
@@ -256,6 +257,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             manufacturer.Description = description;
             manufacturer.TemplateId = templateId;
             manufacturer.MetaKeywords = metaKeywords;
+            manufacturer.MetaDescription = metaDescription;
             manufacturer.MetaTitle = metaTitle;
             manufacturer.SEName = seName;
             manufacturer.PictureId = pictureId;

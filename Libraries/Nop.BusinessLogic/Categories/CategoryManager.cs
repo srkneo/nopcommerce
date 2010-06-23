@@ -227,6 +227,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             category.Description = description;
             category.TemplateId = templateId;
             category.MetaKeywords = metaKeywords;
+            category.MetaDescription = metaDescription;
             category.MetaTitle = metaTitle;
             category.SEName = seName;
             category.ParentCategoryId = parentCategoryId;
@@ -312,6 +313,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             category.Description = description;
             category.TemplateId = templateId;
             category.MetaKeywords = metaKeywords;
+            category.MetaDescription = metaDescription;
             category.MetaTitle = metaTitle;
             category.SEName = seName;
             category.ParentCategoryId = parentCategoryId;
