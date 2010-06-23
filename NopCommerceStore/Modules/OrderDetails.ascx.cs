@@ -26,6 +26,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
@@ -280,6 +281,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 this.BindData();
             }
+
+            //buttons
+            lbPDFInvoice.Visible = SettingManager.GetSettingValueBoolean("Features.SupportPDF");
         }
 
         protected void BtnReOrder_OnClick(object sender, EventArgs e)

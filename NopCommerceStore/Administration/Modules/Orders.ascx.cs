@@ -25,6 +25,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -36,6 +37,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 FillDropDowns();
                 SetDefaultValues();
+
+                //buttons
+                btnPrintPdfPackagingSlips.Visible = SettingManager.GetSettingValueBoolean("Features.SupportPDF");
             }
         }
 

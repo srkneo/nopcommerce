@@ -49,6 +49,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     BindGrid();
                 }
             }
+
+            //buttons
+            btnPDFExport.Visible = SettingManager.GetSettingValueBoolean("Features.SupportPDF");
         }
 
         protected void gvProducts_PageIndexChanging(object sender, GridViewPageEventArgs e)

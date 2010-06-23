@@ -6266,3 +6266,13 @@ BEGIN
 	SET ROWCOUNT 0
 END
 GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Features.SupportPDF')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'Features.SupportPDF', N'true', N'')
+END
+GO
