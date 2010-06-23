@@ -89,7 +89,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.BulkEditProducts.PriceColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="100px" Value='<%# Eval("Price") %>'
+                <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="70px" Value='<%# Eval("Price") %>'
                     ID="txtPrice" RequiredErrorMessage="<% $NopResources:Admin.BulkEditProducts.PriceColumn.RequiredErrorMessage %>"
                     MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.BulkEditProducts.PriceColumn.RangeErrorMessage %>">
                 </nopCommerce:DecimalTextBox>
@@ -99,7 +99,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.BulkEditProducts.OldPriceColumn %>"
             HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="100px" Value='<%# Eval("OldPrice") %>'
+                <nopCommerce:DecimalTextBox runat="server" CssClass="adminInput" Width="70px" Value='<%# Eval("OldPrice") %>'
                     ID="txtOldPrice" RequiredErrorMessage="<% $NopResources:Admin.BulkEditProducts.OldPriceColumn.RequiredErrorMessage %>"
                     MinimumValue="0" MaximumValue="999999" RangeErrorMessage="<% $NopResources:Admin.BulkEditProducts.OldPriceColumn.RangeErrorMessage %>">
                 </nopCommerce:DecimalTextBox>
