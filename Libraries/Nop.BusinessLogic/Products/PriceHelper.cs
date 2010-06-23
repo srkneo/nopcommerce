@@ -228,17 +228,42 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static decimal GetFinalPrice(ProductVariant productVariant, Customer customer, 
             decimal additionalCharge, bool includeDiscounts)
         {
+            return GetFinalPrice(productVariant, customer, additionalCharge, 
+                includeDiscounts, 1);
+        }
+
+        /// <summary>
+        /// Gets the final price
+        /// </summary>
+        /// <param name="productVariant">Product variant</param>
+        /// <param name="customer">The customer</param>
+        /// <param name="additionalCharge">Additional charge</param>
+        /// <param name="includeDiscounts">A value indicating whether include discounts or not for final price computation</param>
+        /// <param name="quantity">Shopping cart item quantity</param>
+        /// <returns>Final price</returns>
+        public static decimal GetFinalPrice(ProductVariant productVariant, Customer customer,
+            decimal additionalCharge, bool includeDiscounts, int quantity)
+        {
             decimal result = decimal.Zero;
 
+            //initial price
             decimal initialPrice = productVariant.Price;
 
             //price by customer role
-            decimal? cpcc = GetCustomPriceByCustomerRole(productVariant, customer);            
+            decimal? cpcc = GetCustomPriceByCustomerRole(productVariant, customer);
             if (cpcc.HasValue)
             {
                 initialPrice = cpcc.Value;
             }
             
+            //tier prices
+            if (productVariant.TierPrices.Count > 0)
+            {
+                decimal tierPrice = GetTierPrice(productVariant, quantity);
+                initialPrice = Math.Min(initialPrice, tierPrice);
+            }
+
+            //discount + additional charge
             if (includeDiscounts)
             {
                 decimal discountAmount = GetDiscountAmount(productVariant, customer, additionalCharge);
@@ -318,13 +343,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                 }
                 else
                 {
-                    finalPrice = GetFinalPrice(productVariant, customer, attributesTotalPrice, includeDiscounts);
-
-                    if (productVariant.TierPrices.Count > 0)
-                    {
-                        decimal tierPrice = GetTierPrice(productVariant, shoppingCartItem.Quantity);
-                        finalPrice = Math.Min(finalPrice, tierPrice);
-                    }
+                    finalPrice = GetFinalPrice(productVariant, 
+                        customer, 
+                        attributesTotalPrice, 
+                        includeDiscounts, 
+                        shoppingCartItem.Quantity);
                 }
             }
 

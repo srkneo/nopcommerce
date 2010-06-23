@@ -35,6 +35,9 @@ set @resources='
   <LocaleResource Name="Admin.ProductReviews.IPAddress">
     <Value>(IP Address: {0})</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.ProductVariantTierPrices.Title">
+    <Value></Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -9,9 +9,6 @@
             <asp:Panel runat="server" ID="pnlError" EnableViewState="false" Visible="false" class="messageBox messageBoxError">
                 <asp:Literal runat="server" ID="lErrorTitle" EnableViewState="false" />
             </asp:Panel>
-            <%=GetLocaleResourceString("Admin.ProductVariantTierPrices.Title")%>
-            <br />
-            <br />
             <asp:GridView ID="gvTierPrices" runat="server" AutoGenerateColumns="false" DataKeyNames="TierPriceId"
                 OnRowDeleting="gvTierPrices_RowDeleting" OnRowDataBound="gvTierPrices_RowDataBound"
                 OnRowCommand="gvTierPrices_RowCommand" Width="100%">
