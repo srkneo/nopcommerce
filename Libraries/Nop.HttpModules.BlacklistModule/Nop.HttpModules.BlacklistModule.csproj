@@ -80,6 +80,10 @@
       <Project>{EDF31192-A159-48DA-A737-9935A8A5BC18}</Project>
       <Name>Nop.BusinessLogic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Nop.Common\Nop.Common.csproj">
+      <Project>{A598DC05-2E62-4114-AC3E-A6E58E085AFF}</Project>
+      <Name>Nop.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

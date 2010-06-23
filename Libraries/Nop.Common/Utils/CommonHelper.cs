@@ -866,6 +866,25 @@ namespace NopSolutions.NopCommerce.Common.Utils
                 return str;
         }
 
+        /// <summary>
+        /// Get a value indicating whether content page is requested
+        /// </summary>
+        /// <returns>Result</returns>
+        public static bool IsContentPageRequested()
+        {
+            HttpContext context = HttpContext.Current;
+            HttpRequest request = context.Request;
+
+            if (!request.Url.LocalPath.ToLower().EndsWith(".aspx") &&
+                !request.Url.LocalPath.ToLower().EndsWith(".asmx") &&
+                !request.Url.LocalPath.ToLower().EndsWith(".ashx"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
         #endregion
     }

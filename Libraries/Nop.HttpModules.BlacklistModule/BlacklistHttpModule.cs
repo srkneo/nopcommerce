@@ -15,8 +15,9 @@
 using System;
 using System.Web;
 using NopSolutions.NopCommerce.BusinessLogic;
-using NopSolutions.NopCommerce.BusinessLogic.Security;
 using NopSolutions.NopCommerce.BusinessLogic.Installation;
+using NopSolutions.NopCommerce.BusinessLogic.Security;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.HttpModules
 {
@@ -59,6 +60,12 @@ namespace NopSolutions.NopCommerce.HttpModules
             {
                 try
                 {
+                    //exit if a request for a .net mapping that isn't a content page is made i.e. axd
+                    if (!CommonHelper.IsContentPageRequested())
+                    {
+                        return;
+                    }
+
                     if (HttpContext.Current != null && !HttpContext.Current.Request.Url.IsLoopback)
                     {
                         HttpApplication application = sender as HttpApplication;

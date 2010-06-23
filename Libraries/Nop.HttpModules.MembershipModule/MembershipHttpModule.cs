@@ -54,17 +54,6 @@ namespace NopSolutions.NopCommerce.HttpModules
             }
         }
 
-        private bool IsAspxPageRequested()
-        {
-            HttpContext context = HttpContext.Current;
-            HttpRequest request = context.Request;
-
-            string requestPath = request.Url.AbsolutePath;
-            string extension = System.IO.Path.GetExtension(requestPath);
-            bool isAspx = extension.Equals(".aspx", StringComparison.InvariantCultureIgnoreCase);
-            return isAspx;
-        }
-
         /// <summary>
         /// Handlers the AuthenticateRequest event of the application
         /// </summary>
@@ -74,6 +63,13 @@ namespace NopSolutions.NopCommerce.HttpModules
         {
             if (InstallerHelper.ConnectionStringIsSet())
             {
+                //exit if a request for a .net mapping that isn't a content page is made i.e. axd
+                if (!CommonHelper.IsContentPageRequested())
+                {
+                    return;
+                }
+                
+                //authentication
                 bool authenticated = false;
                 if (HttpContext.Current.User != null && HttpContext.Current.User.Identity != null)
                     authenticated = HttpContext.Current.User.Identity.IsAuthenticated;
@@ -143,6 +139,13 @@ namespace NopSolutions.NopCommerce.HttpModules
         {
             if (InstallerHelper.ConnectionStringIsSet())
             {
+                //exit if a request for a .net mapping that isn't a content page is made i.e. axd
+                if (!CommonHelper.IsContentPageRequested()) 
+                {
+                    return;
+                }
+
+                //session workflow
                 if (NopContext.Current.Session != null)
                 {
                     var dtNow = DateTime.UtcNow;
@@ -157,6 +160,7 @@ namespace NopSolutions.NopCommerce.HttpModules
                     }
                 }
 
+                //set current culture
                 var currentLanguage = NopContext.Current.WorkingLanguage;
                 if (currentLanguage != null)
                 {
@@ -176,6 +180,13 @@ namespace NopSolutions.NopCommerce.HttpModules
             {
                 try
                 {
+                    //exit if a request for a .net mapping that isn't a content page is made i.e. axd
+                    if (!CommonHelper.IsContentPageRequested())
+                    {
+                        return;
+                    }
+
+                    //session workflow
                     bool sessionReseted = false;
                     if (NopContext.Current["Nop.SessionReseted"] != null)
                     {
