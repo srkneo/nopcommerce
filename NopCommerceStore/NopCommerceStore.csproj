@@ -42,8 +42,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="AjaxControlToolkit">
       <HintPath>..\Dependencies\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="GCheckout, Version=1.3.2.0, Culture=neutral">
