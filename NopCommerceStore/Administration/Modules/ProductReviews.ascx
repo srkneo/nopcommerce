@@ -27,7 +27,7 @@
             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
             -
             <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
-            (<%#Eval("IPAddress").ToString()%>)
+            <%# string.Format(GetLocaleResourceString("Admin.ProductReviews.IPAddress"), Eval("IPAddress"))%>
         </p>
         <p>
             <b><a href="ProductDetails.aspx?ProductID=<%#Eval("ProductId")%>" title="<%=GetLocaleResourceString("Admin.ProductReviews.ViewProductDetails")%>">

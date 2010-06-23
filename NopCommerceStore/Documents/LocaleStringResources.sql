@@ -26,6 +26,15 @@ set @resources='
   <LocaleResource Name="RecentlyAddedProductsRSS.Tooltip">
     <Value>Click here to be informed automatically when we add new items to our site</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.BlogComments.IPAddress">
+    <Value>(IP Address: {0})</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.NewsComments.IPAddress">
+    <Value>(IP Address: {0})</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ProductReviews.IPAddress">
+    <Value>(IP Address: {0})</Value>
+  </LocaleResource>
 </Language>
 '
 

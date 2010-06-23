@@ -22,7 +22,7 @@
             <%#DateTimeHelper.ConvertToUserTime((DateTime)Eval("CreatedOn"), DateTimeKind.Utc).ToString()%>
             -
             <%#GetCustomerInfo(Convert.ToInt32(Eval("CustomerId")))%>
-            (<%#Eval("IPAddress").ToString()%>)
+            <%# string.Format(GetLocaleResourceString("Admin.BlogComments.IPAddress"), Eval("IPAddress"))%>
         </p>
         <p>
             <a href="BlogPostDetails.aspx?BlogPostID=<%#Eval("BlogPostId")%>">
