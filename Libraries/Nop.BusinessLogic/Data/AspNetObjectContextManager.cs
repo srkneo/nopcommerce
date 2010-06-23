@@ -46,7 +46,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
 
                 string ocKey = "nopocm_" + HttpContext.Current.GetHashCode().ToString("x");
 
-                lock (_lockObject)
+                //lock (_lockObject)
                 {
                     if (!HttpContext.Current.Items.Contains(ocKey))
                     {

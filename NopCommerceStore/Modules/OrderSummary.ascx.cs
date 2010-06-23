@@ -386,6 +386,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
         
         public string GetShoppingCartItemSubTotalString(ShoppingCartItem shoppingCartItem)
         {
+            //sub total
             var sb = new StringBuilder();
             decimal shoppingCartItemSubTotalWithDiscountBase = TaxManager.GetPrice(shoppingCartItem.ProductVariant, PriceHelper.GetSubTotal(shoppingCartItem, true));
             decimal shoppingCartItemSubTotalWithDiscount = CurrencyManager.ConvertCurrency(shoppingCartItemSubTotalWithDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
@@ -394,8 +395,10 @@ namespace NopSolutions.NopCommerce.Web.Modules
             sb.Append("<span class=\"productPrice\">");
             sb.Append(subTotalString);
             sb.Append("</span>");
-
-            decimal shoppingCartItemDiscountBase = TaxManager.GetPrice(shoppingCartItem.ProductVariant, PriceHelper.GetDiscountAmount(shoppingCartItem));
+            
+            //display an applied discount amount
+            decimal shoppingCartItemSubTotalWithoutDiscountBase = TaxManager.GetPrice(shoppingCartItem.ProductVariant, PriceHelper.GetSubTotal(shoppingCartItem, false));
+            decimal shoppingCartItemDiscountBase = shoppingCartItemSubTotalWithoutDiscountBase - shoppingCartItemSubTotalWithDiscountBase;
             if (shoppingCartItemDiscountBase > decimal.Zero)
             {
                 decimal shoppingCartItemDiscount = CurrencyManager.ConvertCurrency(shoppingCartItemDiscountBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
