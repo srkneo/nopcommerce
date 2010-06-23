@@ -49,19 +49,19 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
         private static int GetLength(ShipmentPackage ShipmentPackage)
         {
             int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalLength(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
-            return (value < 1 ? 1 : value);
+            return (value < 50 ? 50 : value);
         }
 
         private static int GetWidth(ShipmentPackage ShipmentPackage)
         {
             int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalWidth(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
-            return (value < 1 ? 1 : value);
+            return (value < 50 ? 50 : value);
         }
 
         private static int GetHeight(ShipmentPackage ShipmentPackage)
         {
             int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalHeight(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
-            return (value < 1 ? 1 : value);
+            return (value < 50 ? 50 : value);
         }
 
         private static ShippingOption RequestShippingOption(string ZipPostalCodeFrom, string ZipPostalCodeTo, string CountryCode, string ServiceType, int weight, int length, int width, int height)
