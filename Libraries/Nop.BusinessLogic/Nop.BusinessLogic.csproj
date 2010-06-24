@@ -245,6 +245,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="QuickBooks\EntityTypeEnum.cs" />
+    <Compile Include="QuickBooks\QBConnector.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QuickBooks\QBEditionEnum.cs" />
+    <Compile Include="QuickBooks\QBEntity.cs" />
+    <Compile Include="QuickBooks\QBXMLHelper.cs" />
+    <Compile Include="QuickBooks\QBManager.cs" />
+    <Compile Include="QuickBooks\SynStateEnum.cs" />
     <Compile Include="Security\BannedIpAddress.cs" />
     <Compile Include="Security\ACL.cs" />
     <Compile Include="Security\CustomerAction.cs" />
@@ -422,7 +431,9 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="Data\NopModel.edmx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

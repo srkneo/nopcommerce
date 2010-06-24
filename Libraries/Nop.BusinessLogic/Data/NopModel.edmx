@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NopSolutions.NopCommerce.BusinessLogic.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="NopSolutions.NopCommerce.BusinessLogic.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="NopSolutionsNopCommerceBusinessLogicDataStoreContainer">
           <EntitySet Name="Nop_ACL" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ACL" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ActivityLog" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ActivityLog" store:Type="Tables" Schema="dbo" />
@@ -100,6 +100,7 @@
           <EntitySet Name="Nop_ProductVariantAttributeValue" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariantAttributeValue" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ProductVariantAttributeValueLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariantAttributeValueLocalized" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_ProductVariantLocalized" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ProductVariantLocalized" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Nop_QBEntity" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QBEntity" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_QueuedEmail" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_QueuedEmail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_RecurringPayment" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_RecurringPayment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Nop_RecurringPaymentHistory" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_RecurringPaymentHistory" store:Type="Tables" Schema="dbo" />
@@ -1843,6 +1844,19 @@
           <Property Name="LanguageID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="400" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nop_QBEntity">
+          <Key>
+            <PropertyRef Name="EntityId" />
+          </Key>
+          <Property Name="EntityId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="QBEntityId" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="EntityTypeId" Type="int" Nullable="false" />
+          <Property Name="NopEntityId" Type="int" Nullable="false" />
+          <Property Name="SynStateId" Type="int" Nullable="false" />
+          <Property Name="SeqNum" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_QueuedEmail">
           <Key>
@@ -4883,6 +4897,7 @@
             <Parameter Name="ForumID" Mode="In" Type="Int32" />
             <Parameter Name="TopicCount" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="QBEntities" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QBEntity" />
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -7772,6 +7787,19 @@
           <Property Type="Int32" Name="SpecificationAttributeOptionId" Nullable="false" />
           <Property Type="String" Name="SpecificationAttributeOptionName" Nullable="true" />
         </ComplexType>
+        <EntityType Name="QBEntity">
+          <Key>
+            <PropertyRef Name="EntityId" />
+          </Key>
+          <Property Type="Int32" Name="EntityId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="QBEntityId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="NopEntityId" Nullable="false" />
+          <Property Type="String" Name="SeqNum" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
+          <Property Type="Int32" Name="EntityTypeId" Nullable="false" />
+          <Property Type="Int32" Name="SynStateId" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9609,6 +9637,20 @@
           <FunctionImportMapping FunctionImportName="Sp_Forums_PostLoadAll" FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_PostLoadAll" />
           <FunctionImportMapping FunctionImportName="Sp_Forums_TopicLoadAll" FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_TopicLoadAll" />
           <FunctionImportMapping FunctionImportName="Sp_Forums_TopicLoadActive" FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_Forums_TopicLoadActive" />
+          <EntitySetMapping Name="QBEntities">
+            <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.QBEntity">
+              <MappingFragment StoreEntitySet="Nop_QBEntity">
+                <ScalarProperty Name="SynStateId" ColumnName="SynStateId" />
+                <ScalarProperty Name="EntityTypeId" ColumnName="EntityTypeId" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="SeqNum" ColumnName="SeqNum" />
+                <ScalarProperty Name="NopEntityId" ColumnName="NopEntityId" />
+                <ScalarProperty Name="QBEntityId" ColumnName="QBEntityId" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -10491,6 +10533,7 @@
           <ConnectorPoint PointX="54.25" PointY="33.628326822916677" />
           <ConnectorPoint PointX="55.5" PointY="33.628326822916677" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QBEntity" Width="1.5" PointX="6.75" PointY="2.5" Height="2.2496956380208326" />
         </Diagram>
     </Diagrams>
   </Designer>

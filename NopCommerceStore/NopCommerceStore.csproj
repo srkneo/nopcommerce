@@ -376,6 +376,20 @@
     <Compile Include="Administration\BulkEditProducts.aspx.designer.cs">
       <DependentUpon>BulkEditProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Modules\ThirdPartyIntegration.ascx.cs">
+      <DependentUpon>ThirdPartyIntegration.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\ThirdPartyIntegration.ascx.designer.cs">
+      <DependentUpon>ThirdPartyIntegration.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Administration\ThirdPartyIntegration.aspx.cs">
+      <DependentUpon>ThirdPartyIntegration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\ThirdPartyIntegration.aspx.designer.cs">
+      <DependentUpon>ThirdPartyIntegration.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Modules\SpecificationAttributeOptions.ascx.cs">
       <DependentUpon>SpecificationAttributeOptions.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5563,6 +5577,8 @@
     <Content Include="Administration\CategoryTemplateAdd.aspx" />
     <Content Include="Administration\CategoryTemplateDetails.aspx" />
     <Content Include="Administration\CategoryTemplates.aspx" />
+    <Content Include="Administration\Modules\ThirdPartyIntegration.ascx" />
+    <Content Include="Administration\ThirdPartyIntegration.aspx" />
     <Content Include="Administration\Countries.aspx" />
     <Content Include="Administration\CountryAdd.aspx" />
     <Content Include="Administration\CountryDetails.aspx" />
@@ -5813,6 +5829,7 @@
     <Content Include="images\sp.gif" />
     <Content Include="images\UpdateProgress.gif" />
     <Content Include="Install\install.aspx" />
+    <Content Include="QBConnector.asmx" />
     <Content Include="Scripts\slimbox2.js" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />

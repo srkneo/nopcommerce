@@ -45,6 +45,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Templates;
 using NopSolutions.NopCommerce.BusinessLogic.Warehouses;
+using NopSolutions.NopCommerce.BusinessLogic.QuickBooks;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Data
 {
@@ -1579,6 +1580,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Warehouse> _warehouses;
+
+        public ObjectSet<QBEntity> QBEntities
+        {
+            get
+            {
+                if ((_qbEntities == null))
+                {
+                    _qbEntities = CreateObjectSet<QBEntity>();
+                }
+                return _qbEntities;
+            }
+        }
+        private ObjectSet<QBEntity> _qbEntities;
 
         #endregion
 

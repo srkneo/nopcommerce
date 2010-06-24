@@ -6267,6 +6267,96 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[Nop_QBEntity]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+BEGIN
+CREATE TABLE [dbo].[Nop_QBEntity](
+	[EntityId] [int] IDENTITY(1,1) NOT NULL,
+	[QBEntityId] [nvarchar](50) NOT NULL,
+	[EntityType] [int] NOT NULL,
+	[NopEntityId] [int] NOT NULL,
+	[SynState] [int] NOT NULL,
+	[SeqNum] [nvarchar](20) NOT NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedOn] [datetime] NOT NULL,
+ CONSTRAINT [PK_Nop_QBEntity] PRIMARY KEY CLUSTERED 
+(
+	[EntityId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.Edition')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.Edition', N'1', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.CultureName')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.CultureName', N'en-US', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.Username')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.Username', N'admin', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.Password')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.Password', N'admin', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.Password')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.Password', N'admin', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.ItemRef')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.ItemRef', N'Sales', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.DicsountAccountRef')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.DicsountAccountRef', N'Discounts Given', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.ShippingAccountRef')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.ShippingAccountRef', N'Sales', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.SalesTaxAccountRef')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.SalesTaxAccountRef', N'Sales', N'')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.Enabled')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.Enabled', N'False', N'')
+END
+GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_CustomerAction]
+		WHERE [SystemKeyword] = N'ManageThirdPartyIntegration')
+BEGIN
+	INSERT [dbo].[Nop_CustomerAction] ([Name], [SystemKeyword], [Comment], [DisplayOrder])
+	VALUES (N'Manage Third-party Integration', N'ManageThirdPartyIntegration', N'',200)
+END
+GO
+
 IF NOT EXISTS (
 		SELECT 1
 		FROM [dbo].[Nop_Setting]

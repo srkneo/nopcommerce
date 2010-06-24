@@ -37,6 +37,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.BusinessLogic.Utils;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.QuickBooks;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
 {
@@ -472,6 +473,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.AdminComment, customer.Active,
                     customer.Deleted, customer.RegistrationDate,
                     customer.TimeZoneId, customer.AvatarId);
+
+                QBManager.RequestSynchronization(customer);
             }
             return customer;
         }
@@ -502,6 +505,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     customer.AdminComment, customer.Active,
                     customer.Deleted, customer.RegistrationDate,
                     customer.TimeZoneId, customer.AvatarId);
+
+                QBManager.RequestSynchronization(customer);
             }
             return customer;
         }
@@ -1361,6 +1366,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     DateTime.UtcNow);
             }
 
+            QBManager.RequestSynchronization(customer);
+
             return customer;
         }
 
@@ -1471,6 +1478,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                 MessageManager.UpdateNewsLetterSubscription(subscriptionOld.NewsLetterSubscriptionId,
                     email, subscriptionOld.Active);
             }
+
+            QBManager.RequestSynchronization(customer);
 
             return customer;
         }

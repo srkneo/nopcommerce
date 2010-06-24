@@ -116,6 +116,7 @@
       </siteMapNode>
       <siteMapNode title="Access control list" url="~/administration/acl.aspx" description="Manage access control list" nopResourceTitle="Admin.Sitemap.ACLTitle" nopResourceDescription="Admin.Sitemap.ACLDescription" />
       <siteMapNode title="All Settings" url="~/administration/settings.aspx" description="Manage All Settings" nopResourceTitle="Admin.Sitemap.SettingsTitle" nopResourceDescription="Admin.Sitemap.SettingsDescription" />
+      <siteMapNode title="Third-party Integration" url="~/administration/thirdpartyintegration.aspx" description="Manage third-party integration" nopResourceTitle="Admin.Sitemap.ThirdPartyIntegrationTitle" nopResourceDescription="Admin.Sitemap.ThirdPartyIntegrationDescription" />
     </siteMapNode>
     <!-- End Configuration -->
 

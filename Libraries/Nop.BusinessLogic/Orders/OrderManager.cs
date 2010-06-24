@@ -41,6 +41,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Utils.Html;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
+using NopSolutions.NopCommerce.BusinessLogic.QuickBooks;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 {
@@ -869,6 +870,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             context.Orders.AddObject(order);
             context.SaveChanges();
 
+            QBManager.RequestSynchronization(order);
+
             return order;
         }
 
@@ -1186,6 +1189,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             order.Deleted = deleted;
             order.CreatedOn = createdOn;
             context.SaveChanges();
+
+            QBManager.RequestSynchronization(order);
+
             return order;
         }
 
@@ -4544,7 +4550,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         order.TrackingNumber, order.Deleted, order.CreatedOn);
 
                     InsertOrderNote(order.OrderId, string.Format("Order has been voided"), false, DateTime.UtcNow);
-
                 }
                 else
                 {

@@ -182,6 +182,87 @@ set @resources='
   <LocaleResource Name="Admin.PaymentMethodInfo.HidePaymentInfoForZeroOrders.Tooltip">
     <Value>A Skip/hide payment information page if order total is zero.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.ThirdPartyIntegrationTitle">
+    <Value>Third-party Integration</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.ThirdPartyIntegrationDescription">
+    <Value>Manage third-party integration</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.Title">
+    <Value>Third-party integration</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.SaveButton.Text">
+    <Value>Save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.SaveButton.Tooltip">
+    <Value>Save changes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Title">
+    <Value>QucikBooks</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Enabled">
+    <Value>Enabled</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Enabled.Tooltip">
+    <Value>Check if you want to enable QuickBooks integration feature.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Username">
+    <Value>Username</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Username.Tooltip">
+    <Value>Username wich will be used by QuickBooks Web Connector to connect to Web service</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password">
+    <Value>Password</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password.Tooltip">
+    <Value>Password wich will be used by QuickBooks Web Connector to connect to Web service</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ItemRef">
+    <Value>Item reference</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ItemRef.Tooltip">
+    <Value>Full name of item. Item should exists in QuickBooks</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.Username.ErrorMessage">
+    <Value>QuickBooks username is not specified</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.Password.ErrorMessage">
+    <Value>QuickBooks password is not specified</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.ItemRef.ErrorMessage">
+    <Value>QuickBooks item reference is not specified</Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.EditThirdPartyIntegration">
+    <Value>Third-party integration settings was changed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef">
+    <Value>Dicsount account reference</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef.Tooltip">
+    <Value>Full name of account. Account should exists in QuickBooks</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef.ErrorMessage">
+    <Value>QuickBooks discount account reference is not specified</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ShippingAccountRef">
+    <Value>Shipping account reference</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ShippingAccountRef.Tooltip">
+    <Value>Full name of account. Account should exists in QuickBooks</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ShippingAccountRef.ErrorMessage">
+    <Value>QuickBooks shipping account reference is not specified</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SalesTaxAccountRef">
+    <Value>Sales tax account reference</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SalesTaxAccountRef.Tooltip">
+    <Value>Full name of account. Account should exists in QuickBooks</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SalesTaxAccountRef.ErrorMessage">
+    <Value>QuickBooks sales tax account reference is not specified</Value>
+  </LocaleResource>
 </Language>
 '
 
