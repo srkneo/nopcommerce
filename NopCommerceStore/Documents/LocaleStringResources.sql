@@ -176,6 +176,12 @@ set @resources='
   <LocaleResource Name="Admin.SpecificationAttributeOptions.New.AddNewButton.Text">
     <Value>Add</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.PaymentMethodInfo.HidePaymentInfoForZeroOrders">
+    <Value>Skip/hide payment info for "zero" total orders:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PaymentMethodInfo.HidePaymentInfoForZeroOrders.Tooltip">
+    <Value>A Skip/hide payment information page if order total is zero.</Value>
+  </LocaleResource>
 </Language>
 '
 

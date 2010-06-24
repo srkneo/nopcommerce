@@ -150,13 +150,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="userTemplatePath">The user template path</param>
         /// <param name="className">The class name</param>
         /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="hidePaymentInfoForZeroOrders">A value indicating whether customers should provide their payment information with zero total orders</param>
         /// <param name="isActive">A value indicating whether the payment method is active</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
         public static PaymentMethod InsertPaymentMethod(string name,
             string visibleName, string description, string configureTemplatePath,
             string userTemplatePath, string className, string systemKeyword,
-            bool isActive, int displayOrder)
+            bool hidePaymentInfoForZeroOrders, bool isActive, int displayOrder)
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
             visibleName = CommonHelper.EnsureMaximumLength(visibleName, 100);
@@ -174,6 +175,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             paymentMethod.UserTemplatePath = userTemplatePath;
             paymentMethod.ClassName = className;
             paymentMethod.SystemKeyword = systemKeyword;
+            paymentMethod.HidePaymentInfoForZeroOrders = hidePaymentInfoForZeroOrders;
             paymentMethod.IsActive = isActive;
             paymentMethod.DisplayOrder = displayOrder;
 
@@ -199,13 +201,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         /// <param name="userTemplatePath">The user template path</param>
         /// <param name="className">The class name</param>
         /// <param name="systemKeyword">The system keyword</param>
+        /// <param name="hidePaymentInfoForZeroOrders">A value indicating whether customers should provide their payment information with zero total orders</param>
         /// <param name="isActive">A value indicating whether the payment method is active</param>
         /// <param name="displayOrder">The display order</param>
         /// <returns>Payment method</returns>
         public static PaymentMethod UpdatePaymentMethod(int paymentMethodId,
             string name, string visibleName, string description, string configureTemplatePath,
             string userTemplatePath, string className, string systemKeyword,
-            bool isActive, int displayOrder)
+            bool hidePaymentInfoForZeroOrders, bool isActive, int displayOrder)
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
             visibleName = CommonHelper.EnsureMaximumLength(visibleName, 100);
@@ -230,6 +233,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             paymentMethod.UserTemplatePath = userTemplatePath;
             paymentMethod.ClassName = className;
             paymentMethod.SystemKeyword = systemKeyword;
+            paymentMethod.HidePaymentInfoForZeroOrders = hidePaymentInfoForZeroOrders;
             paymentMethod.IsActive = isActive;
             paymentMethod.DisplayOrder = displayOrder;
             context.SaveChanges();

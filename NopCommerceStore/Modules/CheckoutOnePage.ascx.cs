@@ -137,7 +137,6 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     }
                     if(paymentMethod != null && paymentMethod.IsActive)
                     {
-
                         btnModifyShippingAddress.Enabled = true;
                         btnModifyBillingAddress.Enabled = true;
                         btnModifyShippingMethod.Enabled = true;

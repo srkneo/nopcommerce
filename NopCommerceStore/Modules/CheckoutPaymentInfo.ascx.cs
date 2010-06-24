@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Text;
@@ -110,6 +111,29 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         public void BindData()
         {
+            //validate whether we need to display this control
+            PaymentMethod paymentMethod = null;
+            if (NopContext.Current.User != null)
+            {
+                paymentMethod = NopContext.Current.User.LastPaymentMethod;
+            }
+            if (paymentMethod != null &&
+                paymentMethod.IsActive &&
+                paymentMethod.HidePaymentInfoForZeroOrders)
+            {
+
+                decimal? shoppingCartTotalBase = ShoppingCartManager.GetShoppingCartTotal(this.Cart,
+                NopContext.Current.User.LastPaymentMethodId, NopContext.Current.User);
+
+                if (shoppingCartTotalBase.HasValue && shoppingCartTotalBase.Value == decimal.Zero)
+                {
+                    this.PaymentInfo = this.GetPaymentInfo();
+                    var args1 = new CheckoutStepEventArgs() { PaymentInfoEntered = true };
+                    OnCheckoutStepChanged(args1);
+                    if (!this.OnePageCheckout)
+                        Response.Redirect("~/checkoutconfirm.aspx");
+                }
+            }
         }
 
         protected void btnNextStep_Click(object sender, EventArgs e)

@@ -1460,6 +1460,7 @@
           <Property Name="UserTemplatePath" Type="nvarchar" Nullable="false" MaxLength="500" />
           <Property Name="ClassName" Type="nvarchar" Nullable="false" MaxLength="500" />
           <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="HidePaymentInfoForZeroOrders" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
@@ -4836,10 +4837,10 @@
           </FunctionImport>
           <FunctionImport Name="Sp_TaxRateLoadAll" EntitySet="TaxRates" ReturnType="Collection(NopSolutions.NopCommerce.BusinessLogic.Data.TaxRate)" />
           <FunctionImport Name="Sp_Forums_ForumDelete">
-            <Parameter Name="ForumID" Mode="In" Type="Int32" />
+          <Parameter Name="ForumID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Sp_Forums_ForumUpdateCounts">
-            <Parameter Name="ForumID" Mode="In" Type="Int32" />
+          <Parameter Name="ForumID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Sp_Forums_PrivateMessageLoadAll" EntitySet="PrivateMessages" ReturnType="Collection(NopSolutions.NopCommerce.BusinessLogic.Data.PrivateMessage)">
             <Parameter Name="FromUserID" Mode="In" Type="Int32" />
@@ -5273,9 +5274,10 @@
           <Property Type="String" Name="UserTemplatePath" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ClassName" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="SystemKeyword" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="HidePaymentInfoForZeroOrders" Nullable="false" />
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
-          <NavigationProperty Name="NpRestrictedCountries" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_PaymentMethod_RestrictedCountries" FromRole="PaymentMethod" ToRole="Country" />
+          <NavigationProperty Name="NpRestrictedCountries" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.Nop_PaymentMethod_RestrictedCountries" FromRole="PaymentMethod" ToRole="Country" />          
         </EntityType>
         <EntityType Name="PaymentStatus">
           <Key>
@@ -8113,6 +8115,7 @@
           <EntitySetMapping Name="PaymentMethods">
             <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.PaymentMethod">
               <MappingFragment StoreEntitySet="Nop_PaymentMethod">
+                <ScalarProperty Name="HidePaymentInfoForZeroOrders" ColumnName="HidePaymentInfoForZeroOrders" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="SystemKeyword" ColumnName="SystemKeyword" />
@@ -9626,7 +9629,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NopModel" ZoomLevel="46">
+      <Diagram Name="NopModel" ZoomLevel="101">
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="3.125" PointX="23.625" PointY="11.25" Height="1.9210009765624996" IsExpanded="true" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="2" PointX="63.25" PointY="16.75" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.875" PointX="62.875" PointY="9.125" Height="1.9210009765624996" />
