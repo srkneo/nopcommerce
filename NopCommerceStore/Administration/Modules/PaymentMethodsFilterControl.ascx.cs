@@ -171,7 +171,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 gvPaymentMethodCountryMap.Columns.Add(tf);
                 
                 scriptBuilder.AppendFormat("$('.cbSelectAll_{0} input').bind('click', function() {{ $('.cbRestrict_{0} input').each(function() {{ this.checked = $('.cbSelectAll_{0} input')[0].checked; }}) }});", paymentMethod.PaymentMethodId);
-                scriptBuilder.AppendFormat("$('.cbRestrict_{0} input').bind('click', function() {{ if (this.checked == false) $('.cbSelectAll_{0} input')[0].checked = false; }});", paymentMethod.PaymentMethodId);
+                //scriptBuilder.AppendFormat("$('.cbRestrict_{0} input').bind('click', function() {{ if (this.checked == false) $('.cbSelectAll_{0} input')[0].checked = false; }});", paymentMethod.PaymentMethodId);
             }
             scriptBuilder.Append("});");
 
