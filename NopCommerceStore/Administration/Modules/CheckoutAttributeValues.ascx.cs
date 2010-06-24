@@ -110,11 +110,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                     SaveLocalizableContent(cav);
 
-                    if (checkoutAttribute != null)
-                    {
-                        string url = string.Format("CheckoutAttributeDetails.aspx?CheckoutAttributeID={0}&TabID={1}", checkoutAttribute.CheckoutAttributeId, "pnlValues");
-                        Response.Redirect(url);
-                    }
+                    string url = string.Format("CheckoutAttributeDetails.aspx?CheckoutAttributeID={0}&TabID={1}", checkoutAttribute.CheckoutAttributeId, "pnlValues");
+                    Response.Redirect(url);
                 }
             }
             catch (Exception exc)

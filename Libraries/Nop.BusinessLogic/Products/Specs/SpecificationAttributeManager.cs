@@ -348,20 +348,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         /// <returns>Specification attribute option</returns>
         public static List<SpecificationAttributeOption> GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId)
         {
-            int languageId = 0;
-            if (NopContext.Current != null)
-                languageId = NopContext.Current.WorkingLanguage.LanguageId;
-            return GetSpecificationAttributeOptionsBySpecificationAttribute(specificationAttributeId, languageId);
-        }
-
-        /// <summary>
-        /// Gets a specification attribute option by specification attribute id
-        /// </summary>
-        /// <param name="specificationAttributeId">The specification attribute identifier</param>
-        /// <param name="languageId">Language identifier</param>
-        /// <returns>Specification attribute option</returns>
-        public static List<SpecificationAttributeOption> GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId, int languageId)
-        {
             var context = ObjectContextHelper.CurrentObjectContext;
             var query = from sao in context.SpecificationAttributeOptions
                         orderby sao.DisplayOrder

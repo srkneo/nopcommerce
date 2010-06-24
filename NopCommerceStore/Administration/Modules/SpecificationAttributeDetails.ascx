@@ -1,6 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.SpecificationAttributeDetailsControl"
     CodeBehind="SpecificationAttributeDetails.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SpecificationAttributeInfo" Src="SpecificationAttributeInfo.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="SpecificationAttributeOptions" Src="SpecificationAttributeOptions.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ConfirmationBox" Src="ConfirmationBox.ascx" %>
 <div class="section-header">
     <div class="title">
@@ -16,7 +17,18 @@
             OnClick="DeleteButton_Click" CausesValidation="false" ToolTip="<% $NopResources:Admin.SpecificationAttributeDetails.DeleteButton.Tooltip %>" />
     </div>
 </div>
-<nopCommerce:SpecificationAttributeInfo ID="ctrlSpecificationAttributeInfo" runat="server" />
+<ajaxToolkit:TabContainer runat="server" ID="AttributeTabs" ActiveTabIndex="0">
+    <ajaxToolkit:TabPanel runat="server" ID="pnlAttributeInfo" HeaderText="<% $NopResources:Admin.SpecificationAttributeDetails.AttributeInfo %>">
+        <ContentTemplate>
+            <nopCommerce:SpecificationAttributeInfo ID="ctrlSpecificationAttributeInfo" runat="server" />
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+    <ajaxToolkit:TabPanel runat="server" ID="pnlOptions" HeaderText="<% $NopResources:Admin.SpecificationAttributeDetails.Options %>">
+        <ContentTemplate>
+            <nopCommerce:SpecificationAttributeOptions ID="ctrlSpecificationAttributeOptions" runat="server" />
+        </ContentTemplate>
+    </ajaxToolkit:TabPanel>
+</ajaxToolkit:TabContainer>
 <nopCommerce:ConfirmationBox runat="server" ID="cbDelete" TargetControlID="DeleteButton"
     YesText="<% $NopResources:Admin.Common.Yes %>" NoText="<% $NopResources:Admin.Common.No %>"
     ConfirmText="<% $NopResources:Admin.Common.AreYouSure %>" />

@@ -30,6 +30,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
     public partial class SpecificationAttributeDetailsControl : BaseNopAdministrationUserControl
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                this.SelectTab(this.AttributeTabs, this.TabId);
+            }
+        }
+
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -37,13 +45,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 try
                 {
                     SpecificationAttribute specificationAttribute = ctrlSpecificationAttributeInfo.SaveInfo();
+                    ctrlSpecificationAttributeOptions.SaveInfo();
 
                     CustomerActivityManager.InsertActivity(
                         "EditSpecAttribute",
                         GetLocaleResourceString("ActivityLog.EditSpecAttribute"),
                         specificationAttribute.Name);
 
-                    Response.Redirect("SpecificationAttributeDetails.aspx?SpecificationAttributeID=" + specificationAttribute.SpecificationAttributeId.ToString());
+                    if (specificationAttribute != null)
+                        Response.Redirect(string.Format("SpecificationAttributeDetails.aspx?SpecificationAttributeID={0}&TabID={1}", specificationAttribute.SpecificationAttributeId, this.GetActiveTabId(this.AttributeTabs)));
                 }
                 catch (Exception exc)
                 {
@@ -80,6 +90,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             get
             {
                 return CommonHelper.QueryStringInt("SpecificationAttributeId");
+            }
+        }
+
+        protected string TabId
+        {
+            get
+            {
+                return CommonHelper.QueryString("TabId");
             }
         }
     }

@@ -376,6 +376,13 @@
     <Compile Include="Administration\BulkEditProducts.aspx.designer.cs">
       <DependentUpon>BulkEditProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Modules\SpecificationAttributeOptions.ascx.cs">
+      <DependentUpon>SpecificationAttributeOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Modules\SpecificationAttributeOptions.ascx.designer.cs">
+      <DependentUpon>SpecificationAttributeOptions.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Payment\Alipay\HostedPaymentConfig.ascx.cs">
       <DependentUpon>HostedPaymentConfig.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -922,13 +929,6 @@
     <Compile Include="Administration\Modules\PricelistInfo.ascx.designer.cs">
       <DependentUpon>PricelistInfo.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\Modules\SpecificationAttributeOptionAdd.ascx.cs">
-      <DependentUpon>SpecificationAttributeOptionAdd.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\Modules\SpecificationAttributeOptionAdd.ascx.designer.cs">
-      <DependentUpon>SpecificationAttributeOptionAdd.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Administration\Payment\eWayUK\ConfigurePaymentMethod.ascx.cs">
       <DependentUpon>ConfigurePaymentMethod.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -956,13 +956,6 @@
     </Compile>
     <Compile Include="Administration\Shipping\FedExConfigure\ConfigureShipping.ascx.designer.cs">
       <DependentUpon>ConfigureShipping.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Administration\SpecificationAttributeOptionAdd.aspx.cs">
-      <DependentUpon>SpecificationAttributeOptionAdd.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\SpecificationAttributeOptionAdd.aspx.designer.cs">
-      <DependentUpon>SpecificationAttributeOptionAdd.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\CustomerAdd.aspx.cs">
       <DependentUpon>CustomerAdd.aspx</DependentUpon>
@@ -5608,6 +5601,7 @@
     <Content Include="Administration\MessageTemplateDetails.aspx" />
     <Content Include="Administration\MessageTemplates.aspx" />
     <Content Include="Administration\Modules\AddressDisplay.ascx" />
+    <Content Include="Administration\Modules\SpecificationAttributeOptions.ascx" />
     <Content Include="Administration\Modules\DecimalTextBox.ascx" />
     <Content Include="Administration\Modules\EmailTextBox.ascx" />
     <Content Include="Administration\Modules\nopCommerceNews.ascx" />
@@ -6042,12 +6036,10 @@
     <Content Include="Administration\RelatedProductAdd.aspx" />
     <Content Include="Administration\Modules\AdminLanguageSelector.ascx" />
     <Content Include="Administration\Modules\PricelistInfo.ascx" />
-    <Content Include="Administration\Modules\SpecificationAttributeOptionAdd.ascx" />
     <Content Include="Administration\Payment\eWayUK\ConfigurePaymentMethod.ascx" />
     <Content Include="Administration\Shipping\AustraliaPostConfigure\ConfigureShipping.ascx" />
     <Content Include="Administration\Shipping\CanadaPostConfigure\ConfigureShipping.ascx" />
     <Content Include="Administration\Shipping\FedExConfigure\ConfigureShipping.ascx" />
-    <Content Include="Administration\SpecificationAttributeOptionAdd.aspx" />
     <Content Include="Administration\CustomerAdd.aspx" />
     <Content Include="Administration\Modules\Blacklist.ascx" />
     <Content Include="Administration\Modules\BlacklistNetworkAdd.ascx" />
