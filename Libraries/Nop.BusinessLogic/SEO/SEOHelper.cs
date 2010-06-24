@@ -657,8 +657,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             string url = string.Format("{0}Boards/PostNew.aspx?TopicId={1}&QuotePostId={2}", CommonHelper.GetStoreLocation(), topicId, quotePostId);
             return url.ToLowerInvariant();
         }
-
-
+        
         /// <summary>
         /// Gets edit post URL
         /// </summary>
