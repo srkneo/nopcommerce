@@ -364,7 +364,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         #region Utilities
         private static XmlElement InitializeDocument(XmlDocument xml)
         {
-            xml.AppendChild(xml.CreateXmlDeclaration("1.0", null, null));
+            xml.AppendChild(xml.CreateXmlDeclaration("1.0", "utf-8", null));
             xml.AppendChild(xml.CreateProcessingInstruction("qbxml", "version=\"8.0\""));
         
             XmlElement elQBXML = xml.CreateElement("QBXML");
@@ -452,8 +452,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
 
         private static XmlElement CreateStrTypeNode(XmlDocument xml, string name, string value)
         {
+            value = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
+
             XmlElement el = xml.CreateElement(name);
-            el.InnerText = HttpUtility.HtmlEncode(value);
+            el.InnerText = value;
             return el;
         }
 

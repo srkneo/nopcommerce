@@ -212,7 +212,7 @@ set @resources='
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Username.Tooltip">
     <Value>Username wich will be used by QuickBooks Web Connector to connect to Web service</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.Username.ErrorMessage">
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Username.ErrorMessage">
     <Value>QuickBooks username is not specified</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password">
@@ -221,7 +221,7 @@ set @resources='
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password.Tooltip">
     <Value>Password wich will be used by QuickBooks Web Connector to connect to Web service</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.Password.ErrorMessage">
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password.ErrorMessage">
     <Value>QuickBooks password is not specified</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ItemRef">
@@ -230,7 +230,7 @@ set @resources='
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ItemRef.Tooltip">
     <Value>Full name of item. Item should exists in QuickBooks</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.ItemRef.ErrorMessage">
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ItemRef.ErrorMessage">
     <Value>QuickBooks item reference is not specified</Value>
   </LocaleResource>
   <LocaleResource Name="ActivityLog.EditThirdPartyIntegration">

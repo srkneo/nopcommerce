@@ -115,7 +115,7 @@
                                 ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.Username.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksUsername" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.Username.ErrorMessage %>" />
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksUsername" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.Username.ErrorMessage %>" />
                         </td>
                     </tr>
                     <tr id="pnlQuickBooksPassword">
@@ -125,7 +125,7 @@
                                 ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.Password.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksPassword" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.Password.ErrorMessage %>" />
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksPassword" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.Password.ErrorMessage %>" />
                         </td>
                     </tr>
                     <tr id="pnlQuickBooksItemRef">
@@ -135,7 +135,7 @@
                                 ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.ItemRef.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksItemRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.ItemRef.ErrorMessage %>" />
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksItemRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.ItemRef.ErrorMessage %>" />
                         </td>
                     </tr>
                     <tr id="pnlQuickBooksDiscountAccountRef">
@@ -145,7 +145,7 @@
                                 ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksDiscountAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.DiscountAccountRef.ErrorMessage %>" />
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksDiscountAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef.ErrorMessage %>" />
                         </td>
                     </tr>
                     <tr id="pnlQuickBooksShippingAccountRef">
@@ -155,7 +155,7 @@
                                 ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.ShippingAccountRef.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksShippingAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.ShippingAccountRef.ErrorMessage %>" />
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksShippingAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.ShippingAccountRef.ErrorMessage %>" />
                         </td>
                     </tr>
                     <tr id="pnlQuickBooksSalesTaxAccountRef">

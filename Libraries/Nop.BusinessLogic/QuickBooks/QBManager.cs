@@ -9,6 +9,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.Common;
+using NopSolutions.NopCommerce.Common.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
 {
@@ -100,11 +101,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         public static QBEntity CreateQBEntity(string qbEntityId, EntityTypeEnum entityType, int nopEntityId, SynStateEnum synState, string seqNum)
         {
             QBEntity entity = new QBEntity();
-            entity.QBEntityId = qbEntityId;
+
+            entity.QBEntityId = CommonHelper.EnsureMaximumLength(qbEntityId, 20);
             entity.EntityType = entityType;
             entity.NopEntityId = nopEntityId;
             entity.SynState = synState;
-            entity.SeqNum = seqNum;
+            entity.SeqNum = CommonHelper.EnsureMaximumLength(seqNum, 20);
             entity.CreatedOn = DateTime.UtcNow;
             entity.UpdatedOn = DateTime.UtcNow;
 
@@ -141,11 +143,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
                 context.QBEntities.Attach(entity);
             }
 
-            entity.QBEntityId = qbEntityId;
+            entity.QBEntityId = CommonHelper.EnsureMaximumLength(qbEntityId, 20);
             entity.EntityType = entityType;
             entity.NopEntityId = nopEntityId;
             entity.SynState = synState;
-            entity.SeqNum = seqNum;
+            entity.SeqNum = CommonHelper.EnsureMaximumLength(seqNum, 20);
             entity.CreatedOn = entity.CreatedOn;
             entity.UpdatedOn = DateTime.UtcNow;
 
