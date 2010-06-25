@@ -33,7 +33,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             {
                 case PaymentStatusEnum.Paid:
                     QBEntity qbInvPayment = GetQBEntityByNopId(EntityTypeEnum.ReceivePayment, order.OrderId);
-                    if (qbInvPayment == null)
+                    if (qbInvPayment == null && order.OrderTotal > Decimal.Zero)
                     {
                         RequestSynchronization(EntityTypeEnum.ReceivePayment, order.OrderId);
                     }
@@ -83,7 +83,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             {
                 qbEntity = CreateQBEntity(String.Empty, entityType, nopEntityId, SynStateEnum.Requested, String.Empty);
             }
-            else
+            else if(qbEntity.SynState != SynStateEnum.Requested)
             {
                 qbEntity = UpdateQBEntity(qbEntity.EntityId, qbEntity.QBEntityId, qbEntity.EntityType, qbEntity.NopEntityId, SynStateEnum.Requested, qbEntity.SeqNum);
             }

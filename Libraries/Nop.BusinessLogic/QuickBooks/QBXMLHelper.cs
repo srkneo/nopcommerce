@@ -166,11 +166,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             {
                 discTotal += order.RedeemedRewardPoints.UsedAmount;
             }
-
+            foreach(var gc in OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId))
+            {
+                discTotal += gc.UsedValue;
+            }
             if (discTotal != Decimal.Zero)
             {
                 elInvoiceAdd.AppendChild(CreateDiscountLineAddNode(xml, discTotal));
             }
+
 
             if (order.PaymentMethodAdditionalFeeInclTax != Decimal.Zero)
             {
@@ -306,6 +310,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             if (order.RedeemedRewardPoints != null)
             {
                 discTotal += order.RedeemedRewardPoints.UsedAmount;
+            }
+            foreach (var gc in OrderManager.GetAllGiftCardUsageHistoryEntries(null, null, order.OrderId))
+            {
+                discTotal += gc.UsedValue;
             }
             if (discTotal != Decimal.Zero)
             {
