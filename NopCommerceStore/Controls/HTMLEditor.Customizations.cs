@@ -38,7 +38,7 @@ using AjaxControlToolkit;
 using AjaxControlToolkit.HTMLEditor;
 using AjaxControlToolkit.HTMLEditor.ToolbarButton;
 
-[assembly: WebResource("editors.HTMLEditor.HTMLEditor.scripts.InsertDate.js", "application/x-javascript")]
+[assembly: WebResource("editors.HTMLEditor.HTMLEditorScripts.InsertDate.js", "application/x-javascript")]
 namespace AjaxControlToolkit.HTMLEditor.CustomToolbarButton
 {
     [ParseChildren(true)]
@@ -59,12 +59,12 @@ namespace AjaxControlToolkit.HTMLEditor.CustomToolbarButton
             set { ViewState["IconsInRow"] = value; }
         }
 
-        [DefaultValue("~/editors/HTMLEditor/HTMLEditor.icons/")]
+        [DefaultValue("~/editors/HTMLEditor/HTMLEditorIcons/")]
         [Category("Appearance")]
         [Description("Folder used for icons")]
         public string IconsFolder
         {
-            get { return (string)(ViewState["IconsFolder"] ?? "~/editors/HTMLEditor/HTMLEditor.icons/"); }
+            get { return (string)(ViewState["IconsFolder"] ?? "~/editors/HTMLEditor/HTMLEditorIcons/"); }
             set { ViewState["IconsFolder"] = value; }
         }
 
@@ -93,7 +93,7 @@ namespace AjaxControlToolkit.HTMLEditor.CustomToolbarButton
 
         public override string ScriptPath
         {
-            get { return "~/editors/HTMLEditor/HTMLEditor.scripts/InsertIcon.js"; }
+            get { return "~/editors/HTMLEditor/HTMLEditorScripts/InsertIcon.js"; }
         }
 
         public override string ToolTip
@@ -125,7 +125,7 @@ namespace AjaxControlToolkit.HTMLEditor.CustomToolbarButton
 
         public override string ScriptPath
         {
-            get { return "~/editors/HTMLEditor/HTMLEditor.scripts/InsertPicture.js"; }
+            get { return "~/editors/HTMLEditor/HTMLEditorScripts/InsertPicture.js"; }
         }
 
         public override string ToolTip
@@ -159,7 +159,7 @@ namespace AjaxControlToolkit.HTMLEditor.CustomToolbarButton
 
         public override string ScriptPath
         {
-            get { return "~/editors/HTMLEditor/HTMLEditor.scripts/InsertDate.js"; }
+            get { return "~/editors/HTMLEditor/HTMLEditorScripts/InsertDate.js"; }
         }
 
         public override string ToolTip
@@ -189,12 +189,12 @@ namespace AjaxControlToolkit.HTMLEditor.CustomPopups
             set { ViewState["IconsInRow"] = value; }
         }
 
-        [DefaultValue("~/editors/HTMLEditor/HTMLEditor.icons/")]
+        [DefaultValue("~/editors/HTMLEditor/HTMLEditorIcons/")]
         [Category("Appearance")]
         [Description("Folder used for icons")]
         public string IconsFolder
         {
-            get { return (string)(ViewState["IconsFolder"] ?? "~/editors/HTMLEditor/HTMLEditor.icons/"); }
+            get { return (string)(ViewState["IconsFolder"] ?? "~/editors/HTMLEditor/HTMLEditorIcons/"); }
             set { ViewState["IconsFolder"] = value; }
         }
 

@@ -170,7 +170,7 @@ namespace NopSolutions.NopCommerce.Web.Controls
         {
             get
             {
-                return "~/editors/HTMLEditor/HTMLEditor.customButtons/";
+                return "~/editors/HTMLEditor/HTMLEditorCustomButtons/";
             }
         }
     }
