@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 		Dependencies\PdfSharp.Charting.dll = Dependencies\PdfSharp.Charting.dll
 		Dependencies\PdfSharp.dll = Dependencies\PdfSharp.dll
 		Dependencies\RssToolkit.dll = Dependencies\RssToolkit.dll
+		Dependencies\USAePayAPI.dll = Dependencies\USAePayAPI.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{4CFBCFAB-08CD-4F5B-99FA-5BA79252B520}"

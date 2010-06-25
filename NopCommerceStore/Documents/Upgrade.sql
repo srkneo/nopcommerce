@@ -6637,3 +6637,14 @@ BEGIN
 	WHERE UpdatedOn < @OlderThan
 END
 GO
+
+--USAePay (integrated)
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_PaymentMethod]
+		WHERE [ClassName] = N'NopSolutions.NopCommerce.Payment.Methods.USAePay.USAePayPaymentProcessor, Nop.Payment.USAePay')
+BEGIN
+	INSERT [dbo].[Nop_PaymentMethod] ([Name], [VisibleName], [Description], [ConfigureTemplatePath], [UserTemplatePath], [ClassName], [SystemKeyword], [IsActive], [DisplayOrder]) 
+	VALUES (N'USA ePay (integrated)', N'Credit Card', N'', N'Payment\USAePayIntegrated\ConfigurePaymentMethod.ascx', N'~\Templates\Payment\USAePayIntegrated\PaymentModule.ascx', N'NopSolutions.NopCommerce.Payment.Methods.USAePay.USAePayPaymentProcessor, Nop.Payment.USAePay', N'USAEPAY.INTERGRATED', 0, 172)
+END
+GO
