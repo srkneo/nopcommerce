@@ -17,6 +17,7 @@ using System.Web.UI;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using NopSolutions.NopCommerce.BusinessLogic.QuickBooks;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.BusinessLogic.Orders;
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
@@ -38,7 +39,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             txtQuickBooksUsername.Text = QBManager.QBUsername;
             txtQuickBooksPassword.Text = QBManager.QBPassword;
             txtQuickBooksItemRef.Text = QBManager.QBItemRef;
-            txtQuickBooksDicsountAccountRef.Text = QBManager.QBDicsountAccountRef;
+            txtQuickBooksDiscountAccountRef.Text = QBManager.QBDiscountAccountRef;
             txtQuickBooksShippingAccountRef.Text = QBManager.QBShippingAccountRef;
             txtQuickBooksSalesTaxAccountRef.Text = QBManager.QBSalesTaxAccountRef;
         }
@@ -66,7 +67,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     QBManager.QBUsername = txtQuickBooksUsername.Text;
                     QBManager.QBPassword = txtQuickBooksPassword.Text;
                     QBManager.QBItemRef = txtQuickBooksItemRef.Text;
-                    QBManager.QBDicsountAccountRef = txtQuickBooksDicsountAccountRef.Text;
+                    QBManager.QBDiscountAccountRef = txtQuickBooksDiscountAccountRef.Text;
                     QBManager.QBShippingAccountRef = txtQuickBooksShippingAccountRef.Text;
                     QBManager.QBSalesTaxAccountRef = txtQuickBooksSalesTaxAccountRef.Text;
                     
@@ -78,6 +79,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     ProcessException(exc);
                 }
+            }
+        }
+
+        protected void btnQuickBooksSyn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (Order order in OrderManager.LoadAllOrders())
+                {
+                    QBManager.RequestSynchronization(order);
+                }
+                ShowMessage(GetLocaleResourceString("Admin.ThirdPartyIntegration.QuickBooks.SynchronizationSuccess"));
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex.Message);
             }
         }
 

@@ -112,22 +112,22 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtQuickBooksItemRef;
         
         /// <summary>
-        /// lblQuickBooksDicsountAccountRef control.
+        /// lblQuickBooksDiscountAccountRef control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblQuickBooksDicsountAccountRef;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.ToolTipLabelControl lblQuickBooksDiscountAccountRef;
         
         /// <summary>
-        /// txtQuickBooksDicsountAccountRef control.
+        /// txtQuickBooksDiscountAccountRef control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtQuickBooksDicsountAccountRef;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtQuickBooksDiscountAccountRef;
         
         /// <summary>
         /// lblQuickBooksShippingAccountRef control.
@@ -164,5 +164,14 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::NopSolutions.NopCommerce.Web.Administration.Modules.SimpleTextBox txtQuickBooksSalesTaxAccountRef;
+        
+        /// <summary>
+        /// btnQuickBooksSyn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnQuickBooksSyn;
     }
 }

@@ -13,6 +13,8 @@ using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.Common.Utils;
+using NopSolutions.NopCommerce.Common.Utils.Html;
+using System.Web;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
 {
@@ -207,20 +209,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             elCustomerAdd.AppendChild(CreateStrTypeNode(xml, "CompanyName", customer.Company));
             elCustomerAdd.AppendChild(CreateStrTypeNode(xml, "FirstName", customer.FirstName));
             elCustomerAdd.AppendChild(CreateStrTypeNode(xml, "LastName", customer.LastName));
-            elCustomerAdd.AppendChild(CreateStrTypeNode(xml, "Phone", customer.PhoneNumber));
-            elCustomerAdd.AppendChild(CreateStrTypeNode(xml, "Email", customer.Email));
 
             Address billAddr = customer.BillingAddress;
-            if(billAddr != null)
+            if (billAddr != null)
             {
                 elCustomerAdd.AppendChild(CreateAddressNode(xml, "BillAddress", billAddr.Address1, billAddr.Address2, billAddr.City, billAddr.StateProvince.Name, billAddr.ZipPostalCode, billAddr.Country.Name));
             }
 
             Address shipAddr = customer.ShippingAddress;
-            if(shipAddr != null)
+            if (shipAddr != null)
             {
                 elCustomerAdd.AppendChild(CreateAddressNode(xml, "ShipAddress", shipAddr.Address1, shipAddr.Address2, shipAddr.City, shipAddr.StateProvince.Name, shipAddr.ZipPostalCode, shipAddr.Country.Name));
             }
+
+            elCustomerAdd.AppendChild(CreateStrTypeNode(xml, "Phone", customer.PhoneNumber));
+            elCustomerAdd.AppendChild(CreateStrTypeNode(xml, "Email", customer.Email));
 
             return xml;
         }
@@ -250,20 +253,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             elCustomerMod.AppendChild(CreateStrTypeNode(xml, "CompanyName", customer.Company));
             elCustomerMod.AppendChild(CreateStrTypeNode(xml, "FirstName", customer.FirstName));
             elCustomerMod.AppendChild(CreateStrTypeNode(xml, "LastName", customer.LastName));
-            elCustomerMod.AppendChild(CreateStrTypeNode(xml, "Phone", customer.PhoneNumber));
-            elCustomerMod.AppendChild(CreateStrTypeNode(xml, "Email", customer.Email));
 
             Address billAddr = customer.BillingAddress;
-            if(billAddr != null)
+            if (billAddr != null)
             {
                 elCustomerMod.AppendChild(CreateAddressNode(xml, "BillAddress", billAddr.Address1, billAddr.Address2, billAddr.City, billAddr.StateProvince.Name, billAddr.ZipPostalCode, billAddr.Country.Name));
             }
 
             Address shipAddr = customer.ShippingAddress;
-            if(shipAddr != null)
+            if (shipAddr != null)
             {
                 elCustomerMod.AppendChild(CreateAddressNode(xml, "ShipAddress", shipAddr.Address1, shipAddr.Address2, shipAddr.City, shipAddr.StateProvince.Name, shipAddr.ZipPostalCode, shipAddr.Country.Name));
             }
+
+            elCustomerMod.AppendChild(CreateStrTypeNode(xml, "Phone", customer.PhoneNumber));
+            elCustomerMod.AppendChild(CreateStrTypeNode(xml, "Email", customer.Email));
 
             return xml;
         }
@@ -306,7 +310,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             if (discTotal != Decimal.Zero)
             {
                 elAppliedToTxnAdd.AppendChild(CreateAmtTypeNode(xml, "DiscountAmount", discTotal));
-                elAppliedToTxnAdd.AppendChild(CreateRefNode(xml, "DiscountAccountRef", QBManager.QBDicsountAccountRef));
+                elAppliedToTxnAdd.AppendChild(CreateRefNode(xml, "DiscountAccountRef", QBManager.QBDiscountAccountRef));
             }
 
             return xml;
@@ -391,7 +395,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         {
             XmlElement el = xml.CreateElement("DiscountLineAdd");
             el.AppendChild(CreateAmtTypeNode(xml, "Amount", amount));
-            el.AppendChild(CreateRefNode(xml, "AccountRef", QBManager.QBDicsountAccountRef));
+            el.AppendChild(CreateRefNode(xml, "AccountRef", QBManager.QBDiscountAccountRef));
             return el;
         }
 
@@ -449,7 +453,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         private static XmlElement CreateStrTypeNode(XmlDocument xml, string name, string value)
         {
             XmlElement el = xml.CreateElement(name);
-            el.InnerText = value;
+            el.InnerText = HttpUtility.HtmlEncode(value);
             return el;
         }
 

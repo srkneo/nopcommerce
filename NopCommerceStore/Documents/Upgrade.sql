@@ -6272,9 +6272,9 @@ BEGIN
 CREATE TABLE [dbo].[Nop_QBEntity](
 	[EntityId] [int] IDENTITY(1,1) NOT NULL,
 	[QBEntityId] [nvarchar](50) NOT NULL,
-	[EntityType] [int] NOT NULL,
+	[EntityTypeId] [int] NOT NULL,
 	[NopEntityId] [int] NOT NULL,
-	[SynState] [int] NOT NULL,
+	[SynStateId] [int] NOT NULL,
 	[SeqNum] [nvarchar](20) NOT NULL,
 	[CreatedOn] [datetime] NOT NULL,
 	[UpdatedOn] [datetime] NOT NULL,
@@ -6311,21 +6311,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.Password')
-BEGIN
-	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.Password', N'admin', N'')
-END
-GO
-
 IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.ItemRef')
 BEGIN
 	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.ItemRef', N'Sales', N'')
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.DicsountAccountRef')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Nop_Setting] WHERE [Name] = N'QB.DiscountAccountRef')
 BEGIN
-	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.DicsountAccountRef', N'Discounts Given', N'')
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description]) VALUES (N'QB.DiscountAccountRef', N'Discounts Given', N'')
 END
 GO
 

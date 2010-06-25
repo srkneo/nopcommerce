@@ -28,17 +28,23 @@
                 $('#pnlQuickBooksUsername').show();
                 $('#pnlQuickBooksPassword').show();
                 $('#pnlQuickBooksItemRef').show();
-                $('#pnlQuickBooksDicsountAccountRef').show();
+                $('#pnlQuickBooksDiscountAccountRef').show();
                 $('#pnlQuickBooksShippingAccountRef').show();
                 $('#pnlQuickBooksSalesTaxAccountRef').show();
+                $('#pnlQuickBooksSynButton').show();
+                $('#pnlQuickBooksSep1').show();
+                $('#pnlQuickBooksSep2').show();
             }
             else {
                 $('#pnlQuickBooksUsername').hide();
                 $('#pnlQuickBooksPassword').hide();
                 $('#pnlQuickBooksItemRef').hide();
-                $('#pnlQuickBooksDicsountAccountRef').hide();
+                $('#pnlQuickBooksDiscountAccountRef').hide();
                 $('#pnlQuickBooksShippingAccountRef').hide();
                 $('#pnlQuickBooksSalesTaxAccountRef').hide();
+                $('#pnlQuickBooksSynButton').hide();
+                $('#pnlQuickBooksSep1').hide();
+                $('#pnlQuickBooksSep2').hide();
             }
         }
     </script>
@@ -87,6 +93,11 @@
                             </ul>
                         </td>
                     </tr>
+                    <tr class="adminSeparator" id="pnlQuickBooksSep1">
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
                     <tr>
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ID="lblQuickBooksEnabled" Text="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.Enabled %>"
@@ -127,14 +138,14 @@
                             <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksItemRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.ItemRef.ErrorMessage %>" />
                         </td>
                     </tr>
-                    <tr id="pnlQuickBooksDicsountAccountRef">
+                    <tr id="pnlQuickBooksDiscountAccountRef">
                         <td class="adminTitle">
                             <nopCommerce:ToolTipLabel runat="server" ToolTipImage="~/Administration/Common/ico-help.gif"
-                                ID="lblQuickBooksDicsountAccountRef" Text="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef %>"
-                                ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef.Tooltip %>" />
+                                ID="lblQuickBooksDiscountAccountRef" Text="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef %>"
+                                ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksDicsountAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.DicsountAccountRef.ErrorMessage %>" />
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksDiscountAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.DiscountAccountRef.ErrorMessage %>" />
                         </td>
                     </tr>
                     <tr id="pnlQuickBooksShippingAccountRef">
@@ -154,7 +165,18 @@
                                 ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.SalesTaxAccountRef.Tooltip %>" />
                         </td>
                         <td class="adminData">
-                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksSalesTaxAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.SalesTaxAccountRef.ErrorMessage %>" />
+                            <nopCommerce:SimpleTextBox runat="server" ID="txtQuickBooksSalesTaxAccountRef" CssClass="adminInput" ErrorMessage="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.SalesTaxAccountRef.ErrorMessage %>" />
+                        </td>
+                    </tr>
+                    <tr class="adminSeparator" id="pnlQuickBooksSep2">
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr id="pnlQuickBooksSynButton">
+                        <td colspan="2">
+                            <asp:Button runat="server" ID="btnQuickBooksSyn" Text="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.SynButton.Text %>"
+            CssClass="adminButtonBlue" OnClick="btnQuickBooksSyn_Click" ToolTip="<% $NopResources:Admin.ThirdPartyIntegration.QuickBooks.SynButton.Tooltip %>" CausesValidation="false" />
                         </td>
                     </tr>
                 </table>

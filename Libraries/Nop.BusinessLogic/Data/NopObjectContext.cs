@@ -1256,6 +1256,19 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
         }
         private ObjectSet<QueuedEmail> _queuedEmails;
 
+        public ObjectSet<QBEntity> QBEntities
+        {
+            get
+            {
+                if ((_qbEntities == null))
+                {
+                    _qbEntities = CreateObjectSet<QBEntity>();
+                }
+                return _qbEntities;
+            }
+        }
+        private ObjectSet<QBEntity> _qbEntities;
+
         public ObjectSet<RecurringPaymentHistory> RecurringPaymentHistory
         {
             get
@@ -1580,19 +1593,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             }
         }
         private ObjectSet<Warehouse> _warehouses;
-
-        public ObjectSet<QBEntity> QBEntities
-        {
-            get
-            {
-                if ((_qbEntities == null))
-                {
-                    _qbEntities = CreateObjectSet<QBEntity>();
-                }
-                return _qbEntities;
-            }
-        }
-        private ObjectSet<QBEntity> _qbEntities;
 
         #endregion
 

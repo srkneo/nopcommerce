@@ -212,11 +212,17 @@ set @resources='
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Username.Tooltip">
     <Value>Username wich will be used by QuickBooks Web Connector to connect to Web service</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.Username.ErrorMessage">
+    <Value>QuickBooks username is not specified</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password">
     <Value>Password</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password.Tooltip">
     <Value>Password wich will be used by QuickBooks Web Connector to connect to Web service</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.Password.ErrorMessage">
+    <Value>QuickBooks password is not specified</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ItemRef">
     <Value>Item reference</Value>
@@ -224,25 +230,19 @@ set @resources='
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ItemRef.Tooltip">
     <Value>Full name of item. Item should exists in QuickBooks</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.Username.ErrorMessage">
-    <Value>QuickBooks username is not specified</Value>
-  </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.Password.ErrorMessage">
-    <Value>QuickBooks password is not specified</Value>
-  </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.ItemRef.ErrorMessage">
     <Value>QuickBooks item reference is not specified</Value>
   </LocaleResource>
   <LocaleResource Name="ActivityLog.EditThirdPartyIntegration">
     <Value>Third-party integration settings was changed</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef">
-    <Value>Dicsount account reference</Value>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef">
+    <Value>Discount account reference</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef.Tooltip">
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef.Tooltip">
     <Value>Full name of account. Account should exists in QuickBooks</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DicsountAccountRef.ErrorMessage">
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef.ErrorMessage">
     <Value>QuickBooks discount account reference is not specified</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.ShippingAccountRef">
@@ -262,6 +262,15 @@ set @resources='
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SalesTaxAccountRef.ErrorMessage">
     <Value>QuickBooks sales tax account reference is not specified</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SynButton.Text">
+    <Value>Synchronize</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SynButton.Tooltip">
+    <Value>Synchronize your orders and customers with QuickBooks</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SynchronizationSuccess">
+    <Value>Synchronization success</Value>
   </LocaleResource>
 </Language>
 '

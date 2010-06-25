@@ -870,7 +870,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             context.Orders.AddObject(order);
             context.SaveChanges();
 
-            QBManager.RequestSynchronization(order);
+            if (QBManager.QBIsEnabled)
+            {
+                QBManager.RequestSynchronization(order);
+            }
 
             return order;
         }
@@ -1190,7 +1193,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             order.CreatedOn = createdOn;
             context.SaveChanges();
 
-            QBManager.RequestSynchronization(order);
+            if (QBManager.QBIsEnabled)
+            {
+                QBManager.RequestSynchronization(order);
+            }
 
             return order;
         }

@@ -24,33 +24,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
     [System.Web.Services.WebServiceBindingAttribute(Name = "QBConnectorSoap", Namespace = "http://developer.intuit.com/")]
     public partial class QBConnector : System.Web.Services.WebService
     {
-        #region Properties
-        private static string Ticket
-        {
-            get
-            {
-                Setting setting = SettingManager.GetSettingByName("QB.Ticket");
-                if(setting == null)
-                {
-                    setting = SettingManager.SetParam("QB.Ticket", Guid.NewGuid().ToString());
-                }
-                return setting.Value;
-            }
-        }
-
-        private static bool IsTicketActive
-        {
-            get
-            {
-                return SettingManager.GetSettingValueBoolean("QB.Ticket.IsActive", false);
-            }
-            set
-            {
-                SettingManager.SetParam("QB.Ticket.IsActive", value.ToString());
-            }
-        }
-        #endregion
-
         #region Methods
         [WebMethod]
         /// <summary>
@@ -92,7 +65,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         {
             string[] rsp = new string[4];
 
-            if (!QBManager.QBIsEnabled|| !strUserName.Equals(QBManager.QBUsername) || !strPassword.Equals(QBManager.QBPassword))
+            if (!QBManager.QBIsEnabled || !strUserName.Equals(QBManager.QBUsername) || !strPassword.Equals(QBManager.QBPassword))
             {
                 rsp[1] = "nvu";
             }
@@ -112,7 +85,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         {
             try
             {
-                if(!Ticket.Equals(ticket) || !IsTicketActive)
+                if(!QBManager.QBIsEnabled || !Ticket.Equals(ticket) || !IsTicketActive)
                 {
                     return String.Empty;
                 }
@@ -167,7 +140,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         {
             try
             {
-                if (!Ticket.Equals(ticket) || !IsTicketActive)
+                if (!QBManager.QBIsEnabled || !Ticket.Equals(ticket) || !IsTicketActive)
                 {
                     return -1;
                 }
@@ -259,6 +232,33 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         {
             IsTicketActive = false;
             return "Closed";
+        }
+        #endregion
+
+        #region Properties
+        private static string Ticket
+        {
+            get
+            {
+                Setting setting = SettingManager.GetSettingByName("QB.Ticket");
+                if (setting == null)
+                {
+                    setting = SettingManager.SetParam("QB.Ticket", Guid.NewGuid().ToString());
+                }
+                return setting.Value;
+            }
+        }
+
+        private static bool IsTicketActive
+        {
+            get
+            {
+                return SettingManager.GetSettingValueBoolean("QB.Ticket.IsActive", false);
+            }
+            set
+            {
+                SettingManager.SetParam("QB.Ticket.IsActive", value.ToString());
+            }
         }
         #endregion
     }

@@ -7793,12 +7793,12 @@
           </Key>
           <Property Type="Int32" Name="EntityId" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="QBEntityId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="EntityTypeId" Nullable="false" />
           <Property Type="Int32" Name="NopEntityId" Nullable="false" />
+          <Property Type="Int32" Name="SynStateId" Nullable="false" />
           <Property Type="String" Name="SeqNum" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="DateTime" Name="UpdatedOn" Nullable="false" />
-          <Property Type="Int32" Name="EntityTypeId" Nullable="false" />
-          <Property Type="Int32" Name="SynStateId" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -9671,7 +9671,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NopModel" ZoomLevel="101">
+      <Diagram Name="NopModel" ZoomLevel="94">
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="3.125" PointX="23.625" PointY="11.25" Height="1.9210009765624996" IsExpanded="true" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="2" PointX="63.25" PointY="16.75" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.875" PointX="62.875" PointY="9.125" Height="1.9210009765624996" />
@@ -10533,7 +10533,7 @@
           <ConnectorPoint PointX="54.25" PointY="33.628326822916677" />
           <ConnectorPoint PointX="55.5" PointY="33.628326822916677" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QBEntity" Width="1.5" PointX="6.75" PointY="2.5" Height="2.2496956380208326" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QBEntity" Width="1.5" PointX="19" PointY="53.25" Height="2.2496956380208326" />
         </Diagram>
     </Diagrams>
   </Designer>
