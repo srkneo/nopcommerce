@@ -6618,3 +6618,22 @@ BEGIN
 		END
 END
 GO
+
+IF EXISTS (
+		SELECT *
+		FROM dbo.sysobjects
+		WHERE id = OBJECT_ID(N'[dbo].[Nop_ShoppingCartItemDeleteExpired]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[Nop_ShoppingCartItemDeleteExpired]
+GO
+CREATE PROCEDURE [dbo].[Nop_ShoppingCartItemDeleteExpired]
+(
+	@OlderThan datetime
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+		
+	DELETE FROM [Nop_ShoppingCartItem]
+	WHERE UpdatedOn < @OlderThan
+END
+GO

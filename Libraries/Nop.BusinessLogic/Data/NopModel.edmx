@@ -1461,9 +1461,9 @@
           <Property Name="UserTemplatePath" Type="nvarchar" Nullable="false" MaxLength="500" />
           <Property Name="ClassName" Type="nvarchar" Nullable="false" MaxLength="500" />
           <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="500" />
-          <Property Name="HidePaymentInfoForZeroOrders" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
+          <Property Name="HidePaymentInfoForZeroOrders" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Nop_PaymentMethod_RestrictedCountries">
           <Key>
@@ -4090,6 +4090,9 @@
         <Function Name="Nop_ShippingMethodLoadAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FilterByCountryID" Type="int" Mode="In" />
         </Function>
+        <Function Name="Nop_ShoppingCartItemDeleteExpired" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OlderThan" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="Nop_SpecificationAttributeOptionFilter_LoadByFilter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
           <Parameter Name="LanguageID" Type="int" Mode="In" />
@@ -4898,6 +4901,9 @@
             <Parameter Name="TopicCount" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="QBEntities" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QBEntity" />
+          <FunctionImport Name="Sp_ShoppingCartItemDeleteExpired">
+            <Parameter Name="OlderThan" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Language">
           <Key>
@@ -9651,6 +9657,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_ShoppingCartItemDeleteExpired" FunctionName="NopSolutions.NopCommerce.BusinessLogic.Data.Store.Nop_ShoppingCartItemDeleteExpired" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

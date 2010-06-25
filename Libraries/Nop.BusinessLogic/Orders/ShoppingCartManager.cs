@@ -55,15 +55,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static void DeleteExpiredShoppingCartItems(DateTime olderThan)
         {
             var context = ObjectContextHelper.CurrentObjectContext;
-            var query = from sci in context.ShoppingCartItems
-                        where sci.UpdatedOn < olderThan
-                        select sci;
-            var scItems = query.ToList();
-            foreach (var shoppingCartItem in scItems)
-            {
-                context.DeleteObject(shoppingCartItem);
-            }
-            context.SaveChanges();
+            context.Sp_ShoppingCartItemDeleteExpired(olderThan);
         }
 
         /// <summary>

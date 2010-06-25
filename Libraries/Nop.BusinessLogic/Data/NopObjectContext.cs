@@ -2601,6 +2601,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Data
             return result;
         }
 
+        public void Sp_ShoppingCartItemDeleteExpired(DateTime olderThan)
+        {
+            ObjectParameter olderThanParameter = new ObjectParameter("OlderThan", olderThan);
+            base.ExecuteFunction("Sp_ShoppingCartItemDeleteExpired", olderThanParameter);
+        }
         public List<SpecificationAttributeOptionFilter> Sp_SpecificationAttributeOptionFilter_LoadByFilter(int categoryId, int languageId)
         {
             ObjectParameter categoryIdParameter = new ObjectParameter("categoryId", categoryId);
