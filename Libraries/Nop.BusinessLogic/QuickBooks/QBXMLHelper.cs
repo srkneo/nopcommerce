@@ -452,7 +452,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
 
         private static XmlElement CreateStrTypeNode(XmlDocument xml, string name, string value)
         {
-            value = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
+            Encoding enc = Encoding.GetEncoding("us-ascii");
+            value = enc.GetString(enc.GetBytes(value));
 
             XmlElement el = xml.CreateElement(name);
             el.InnerText = value;

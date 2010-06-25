@@ -102,7 +102,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         {
             QBEntity entity = new QBEntity();
 
-            entity.QBEntityId = CommonHelper.EnsureMaximumLength(qbEntityId, 20);
+            entity.QBEntityId = CommonHelper.EnsureMaximumLength(qbEntityId, 50);
             entity.EntityType = entityType;
             entity.NopEntityId = nopEntityId;
             entity.SynState = synState;
@@ -143,7 +143,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
                 context.QBEntities.Attach(entity);
             }
 
-            entity.QBEntityId = CommonHelper.EnsureMaximumLength(qbEntityId, 20);
+            entity.QBEntityId = CommonHelper.EnsureMaximumLength(qbEntityId, 50);
             entity.EntityType = entityType;
             entity.NopEntityId = nopEntityId;
             entity.SynState = synState;
