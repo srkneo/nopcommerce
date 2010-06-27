@@ -272,6 +272,21 @@ set @resources='
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.SynchronizationSuccess">
     <Value>Synchronization success</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GiftCards.Title">
+    <Value>Gift cards</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GiftCards.ActivationOS">
+    <Value>Activation order status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GiftCards.ActivationOS.Tooltip">
+    <Value>Gift cards are activated when the order status is...</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GiftCards.DeactivationOS">
+    <Value>Deactivation order status:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.GlobalSettings.GiftCards.DeactivationOS.Tooltip">
+    <Value>Gift cards are deactivated when the order status is...</Value>
+  </LocaleResource>
 </Language>
 '
 

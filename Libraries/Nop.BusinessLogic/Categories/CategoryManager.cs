@@ -679,7 +679,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         }
         #endregion
         
-        #region Property
+        #region Properties
         /// <summary>
         /// Gets a value indicating whether categories cache is enabled
         /// </summary>

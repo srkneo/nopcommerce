@@ -209,6 +209,44 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         }
                     }
                 }
+
+                //gift cards activation
+                if (OrderManager.GiftCards_Activated.HasValue &&
+                   OrderManager.GiftCards_Activated.Value == updatedOrder.OrderStatus)
+                {
+                    var giftCards = GetAllGiftCards(order.OrderId,
+                        null, null,null,null,null,null,false, string.Empty);
+                    foreach (var gc in giftCards)
+                    {
+                        Language customerLang = LanguageManager.GetLanguageById(updatedOrder.CustomerLanguageId);
+                        if (customerLang == null)
+                            customerLang = NopContext.Current.WorkingLanguage;
+                        int queuedEmailId = MessageManager.SendGiftCardNotification(gc, customerLang.LanguageId);
+
+                        OrderManager.UpdateGiftCard(gc.GiftCardId,
+                            gc.PurchasedOrderProductVariantId, gc.Amount, true,
+                            gc.GiftCardCouponCode, gc.RecipientName, gc.RecipientEmail,
+                            gc.SenderName, gc.SenderEmail, gc.Message,
+                            true, gc.CreatedOn);
+                    }
+                }
+
+                //gift cards deactivation
+                if (OrderManager.GiftCards_Deactivated.HasValue &&
+                   OrderManager.GiftCards_Deactivated.Value == updatedOrder.OrderStatus)
+                {
+                    var giftCards = GetAllGiftCards(order.OrderId,
+                        null, null, null, null, null, null, true, string.Empty);
+                    foreach (var gc in giftCards)
+                    {
+                        OrderManager.UpdateGiftCard(gc.GiftCardId,
+                            gc.PurchasedOrderProductVariantId, gc.Amount, false,
+                            gc.GiftCardCouponCode, gc.RecipientName, gc.RecipientEmail,
+                            gc.SenderName, gc.SenderEmail, gc.Message,
+                            gc.IsRecipientNotified, gc.CreatedOn);
+                    }
+                }
+
                 return updatedOrder;
             }
             return null;
@@ -4690,7 +4728,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
         #endregion
 
-        #region Property
+        #region Properties
 
         /// <summary>
         /// Gets a value indicating whether cache is enabled
@@ -4820,6 +4858,66 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             set
             {
                 SettingManager.SetParam("RewardPoints.Earning.RewardPointsForPurchases.CanceledOS", ((int)value).ToString());
+            }
+        }
+
+        /// <summary>
+        /// Gift cards are activated when the order status is
+        /// </summary>
+        public static OrderStatusEnum? GiftCards_Activated
+        {
+            get
+            {
+                int os = SettingManager.GetSettingValueInteger("GiftCards.Activation.ActivatedOS");
+                if (os > 0)
+                {
+                    return (OrderStatusEnum)os;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    SettingManager.SetParam("GiftCards.Activation.ActivatedOS", ((int)value).ToString());
+                }
+                else
+                {
+                    SettingManager.SetParam("GiftCards.Activation.ActivatedOS", "0");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gift cards are deactivated when the order status is
+        /// </summary>
+        public static OrderStatusEnum? GiftCards_Deactivated
+        {
+            get
+            {
+                int os = SettingManager.GetSettingValueInteger("GiftCards.Activation.DeactivatedOS");
+                if (os > 0)
+                {
+                    return (OrderStatusEnum)os;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    SettingManager.SetParam("GiftCards.Activation.DeactivatedOS", ((int)value).ToString());
+                }
+                else
+                {
+                    SettingManager.SetParam("GiftCards.Activation.DeactivatedOS", "0");
+                }
             }
         }
         

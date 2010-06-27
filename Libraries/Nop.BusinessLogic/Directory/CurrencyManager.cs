@@ -357,7 +357,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
 
         #endregion
 
-        #region Property
+        #region Properties
 
         /// <summary>
         /// Gets or sets a primary store currency

@@ -348,7 +348,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
 
         #endregion
 
-        #region Property
+        #region Properties
         /// <summary>
         /// Gets a value indicating ACL feature is enabled
         /// </summary>

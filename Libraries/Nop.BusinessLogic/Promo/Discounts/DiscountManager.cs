@@ -723,7 +723,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
 
         #endregion
 
-        #region Property
+        #region Properties
         /// <summary>
         /// Gets a value indicating whether cache is enabled
         /// </summary>

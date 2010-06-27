@@ -1620,7 +1620,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
 
         #endregion
         
-        #region Property
+        #region Properties
 
         /// <summary>
         /// Gets a value indicating whether cache is enabled

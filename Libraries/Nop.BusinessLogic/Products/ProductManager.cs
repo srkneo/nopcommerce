@@ -3446,7 +3446,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
         #endregion
 
-        #region Property
+        #region Properties
         /// <summary>
         /// Gets a value indicating whether cache is enabled
         /// </summary>

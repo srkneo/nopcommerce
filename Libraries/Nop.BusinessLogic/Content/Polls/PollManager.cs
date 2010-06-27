@@ -426,7 +426,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
 
         #endregion
 
-        #region Property
+        #region Properties
         /// <summary>
         /// Gets a value indicating whether cache is enabled
         /// </summary>

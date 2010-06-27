@@ -316,7 +316,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
         }
         #endregion
 
-        #region Property
+        #region Properties
         /// <summary>
         /// Gets a value indicating whether cache is enabled
         /// </summary>

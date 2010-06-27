@@ -192,6 +192,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             CommonHelper.SelectListItem(ddlRewardPointsAwardedOrderStatus, ((int)OrderManager.RewardPointsForPurchases_Awarded).ToString());
             CommonHelper.SelectListItem(ddlRewardPointsCanceledOrderStatus, ((int)OrderManager.RewardPointsForPurchases_Canceled).ToString());
 
+            //gift cards
+            if (OrderManager.GiftCards_Activated.HasValue)
+                CommonHelper.SelectListItem(ddlGiftCardsActivationOrderStatus, ((int)OrderManager.GiftCards_Activated).ToString());
+            else
+                CommonHelper.SelectListItem(ddlGiftCardsActivationOrderStatus, 0);
+            if (OrderManager.GiftCards_Deactivated.HasValue)
+                CommonHelper.SelectListItem(ddlGiftCardsDeactivationOrderStatus, ((int)OrderManager.GiftCards_Deactivated).ToString());
+            else
+                CommonHelper.SelectListItem(ddlGiftCardsDeactivationOrderStatus, 0);
+
             //form fields
             cbffGenderEnabled.Checked = CustomerManager.FormFieldGenderEnabled;
             cbffDateOfBirthEnabled.Checked = CustomerManager.FormFieldDateOfBirthEnabled;
@@ -215,6 +225,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void FillDropDowns()
         {
+            //reward points
             this.ddlRewardPointsAwardedOrderStatus.Items.Clear();
             var orderStatuses1 = OrderManager.GetAllOrderStatuses();
             foreach (OrderStatus orderStatus in orderStatuses1)
@@ -230,6 +241,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.ddlRewardPointsCanceledOrderStatus.Items.Add(item2);
             }
 
+            //gift cards
+            this.ddlGiftCardsActivationOrderStatus.Items.Clear();
+            ListItem gcaosEmpty = new ListItem("---", "0");
+            this.ddlGiftCardsActivationOrderStatus.Items.Add(gcaosEmpty);
+            var orderStatuses3 = OrderManager.GetAllOrderStatuses();
+            foreach (OrderStatus orderStatus in orderStatuses3)
+            {
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
+                this.ddlGiftCardsActivationOrderStatus.Items.Add(item2);
+            }
+            this.ddlGiftCardsDeactivationOrderStatus.Items.Clear();
+            ListItem gcdosEmpty = new ListItem("---", "0");
+            this.ddlGiftCardsDeactivationOrderStatus.Items.Add(gcdosEmpty);
+            var orderStatuses4 = OrderManager.GetAllOrderStatuses();
+            foreach (OrderStatus orderStatus in orderStatuses4)
+            {
+                ListItem item2 = new ListItem(OrderManager.GetOrderStatusName(orderStatus.OrderStatusId), orderStatus.OrderStatusId.ToString());
+                this.ddlGiftCardsDeactivationOrderStatus.Items.Add(item2);
+            }
+
+            //timezones
             this.ddlDefaultStoreTimeZone.Items.Clear();
             var timeZones = DateTimeHelper.GetSystemTimeZones();
             foreach (TimeZoneInfo timeZone in timeZones)
@@ -239,6 +271,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.ddlDefaultStoreTimeZone.Items.Add(ddlDefaultStoreTimeZoneItem2);
             }
 
+            //etc
             CommonHelper.FillDropDownWithEnum(this.ddlCustomerNameFormat, typeof(CustomerNameFormatEnum));
             CommonHelper.FillDropDownWithEnum(this.ddlRegistrationMethod, typeof(CustomerRegistrationTypeEnum));
         }
@@ -412,6 +445,26 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     OrderManager.RewardPointsForPurchases_Points = txtRewardPointsForPurchases_Points.Value;
                     OrderManager.RewardPointsForPurchases_Awarded = (OrderStatusEnum)int.Parse(ddlRewardPointsAwardedOrderStatus.SelectedItem.Value);
                     OrderManager.RewardPointsForPurchases_Canceled = (OrderStatusEnum)int.Parse(ddlRewardPointsCanceledOrderStatus.SelectedItem.Value);
+
+                    //gift cards
+                    int gcaos = int.Parse(ddlGiftCardsActivationOrderStatus.SelectedItem.Value);
+                    if (gcaos > 0)
+                    {
+                        OrderManager.GiftCards_Activated = (OrderStatusEnum)gcaos;
+                    }
+                    else
+                    {
+                        OrderManager.GiftCards_Activated = null;
+                    }
+                    int gcdos = int.Parse(ddlGiftCardsDeactivationOrderStatus.SelectedItem.Value);
+                    if (gcdos > 0)
+                    {
+                        OrderManager.GiftCards_Deactivated = (OrderStatusEnum)gcdos;
+                    }
+                    else
+                    {
+                        OrderManager.GiftCards_Deactivated = null;
+                    }
 
                     //form fields
                     CustomerManager.FormFieldGenderEnabled = cbffGenderEnabled.Checked;

@@ -173,8 +173,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Language customerLang = LanguageManager.GetLanguageById(gc.PurchasedOrderProductVariant.Order.CustomerLanguageId);
                 if (customerLang==null)
                     customerLang = NopContext.Current.WorkingLanguage;
-                int queuedEmail = MessageManager.SendGiftCardNotification(gc, customerLang.LanguageId);
-                if (queuedEmail > 0)
+                int queuedEmailId = MessageManager.SendGiftCardNotification(gc, customerLang.LanguageId);
+                if (queuedEmailId > 0)
                 {
                     gc = OrderManager.UpdateGiftCard(gc.GiftCardId,
                         gc.PurchasedOrderProductVariantId, gc.Amount, gc.IsGiftCardActivated,

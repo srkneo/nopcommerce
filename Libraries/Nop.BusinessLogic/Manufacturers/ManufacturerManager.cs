@@ -621,7 +621,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         }
         #endregion
 
-        #region Property
+        #region Properties
 
         /// <summary>
         /// Gets a value indicating whether manufacturers cache is enabled

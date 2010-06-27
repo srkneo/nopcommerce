@@ -988,6 +988,35 @@
                 </table>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>
+       <ajaxToolkit:TabPanel runat="server" ID="pnlGiftCards" HeaderText="<% $NopResources:Admin.GlobalSettings.GiftCards.Title %>">
+            <ContentTemplate>
+                <table class="adminContent">
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblGiftCardsActivationOrderStatus" Text="<% $NopResources:Admin.GlobalSettings.GiftCards.ActivationOS %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.GiftCards.ActivationOS.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:DropDownList ID="ddlGiftCardsActivationOrderStatus" runat="server" CssClass="adminInput">
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="adminTitle">
+                            <nopCommerce:ToolTipLabel runat="server" ID="lblGiftCardsDectivationOrderStatus"
+                                Text="<% $NopResources:Admin.GlobalSettings.GiftCards.DeactivationOS %>"
+                                ToolTip="<% $NopResources:Admin.GlobalSettings.GiftCards.DeactivationOS.Tooltip %>"
+                                ToolTipImage="~/Administration/Common/ico-help.gif" />
+                        </td>
+                        <td class="adminData">
+                            <asp:DropDownList ID="ddlGiftCardsDeactivationOrderStatus" runat="server" CssClass="adminInput">
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
+                </table>
+            </ContentTemplate>
+        </ajaxToolkit:TabPanel>
         <ajaxToolkit:TabPanel runat="server" ID="pnlSecurity" HeaderText="<% $NopResources:Admin.GlobalSettings.Security.Title %>">
             <ContentTemplate>
                 <table class="adminContent">
