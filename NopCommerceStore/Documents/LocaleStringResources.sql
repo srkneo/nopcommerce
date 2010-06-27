@@ -287,6 +287,108 @@ set @resources='
   <LocaleResource Name="Admin.GlobalSettings.GiftCards.DeactivationOS.Tooltip">
     <Value>Gift cards are deactivated when the order status is...</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.MessageQueue.DeleteButton.Text">
+    <Value>Delete selected</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplateDetails.Language">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplateDetails.Language.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplateDetails.Subject.ErrorMessage">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplateDetails.DeleteButton">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplateDetails.DeleteButton.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplates.Language">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.MessageTemplates.Language.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.CreatedOn">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.CreatedOn.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.UpdatedOn">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.UpdatedOn.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.Language">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.Language.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Topics.Language">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Topics.Language.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Topics.EditInfo">
+    <Value>Edit</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Topics.EditInfo.Link">
+    <Value>Edit</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Topics.EditInfo.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.Title">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.BackToTopics">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.SaveButton.Text">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.SaveButton.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.DeleteButton.Text">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.DeleteButton.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Topics.Name">
+    <Value>System name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicInfo.Name.ErrorMessage">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicInfo.SystemName.ErrorMessage">
+    <Value>System name is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicInfo.Name">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicInfo.Name.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicInfo.SystemName">
+    <Value>System name:</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicInfo.SystemName.Tooltip">
+    <Value>System name of this topic.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.Topic.Tooltip">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.TopicLocalizedDetails.Topic">
+    <Value></Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -83,19 +83,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     }
                 }
             }
-            foreach (Topic topic in TopicManager.GetAllTopics())
-            {
-                foreach (Language language in publishedLanguages)
-                {
-                    LocalizedTopic localizedTopic = TopicManager.GetLocalizedTopic(topic.Name, language.LanguageId);
-                    if (localizedTopic == null)
-                    {
-                        warningResult.AppendFormat("You don't have localized version of topic [{0}] for {1}. <a href=\"Topics.aspx\">Create it now</a>", topic.Name, language.Name);
-                        warningResult.Append("<br />");
-                        warningResult.Append("<br />");
-                    }
-                }
-            }
 
             //shipping methods
             var srcmList = ShippingRateComputationMethodManager.GetAllShippingRateComputationMethods(false);

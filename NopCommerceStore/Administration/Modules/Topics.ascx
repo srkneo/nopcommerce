@@ -11,41 +11,20 @@
             id="btnAddNew" class="adminButtonBlue" title="<%=GetLocaleResourceString("Admin.Topics.AddNewButton.Tooltip")%>" />
     </div>
 </div>
-<table>
-    <tr>
-        <td class="adminTitle">
-            <nopCommerce:ToolTipLabel runat="server" ID="lblLanguage" Text="<% $NopResources:Admin.Topics.Language %>"
-                ToolTip="<% $NopResources:Admin.Topics.Language.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
-        </td>
-        <td class="adminData">
-            <asp:DropDownList ID="ddlLanguage" AutoPostBack="True" OnSelectedIndexChanged="ddlLanguage_SelectedIndexChanged"
-                CssClass="adminInput" runat="server">
-            </asp:DropDownList>
-        </td>
-    </tr>
-</table>
 <p>
 </p>
 <asp:GridView ID="gvTopics" runat="server" AutoGenerateColumns="False" Width="100%">
     <Columns>
-        <asp:TemplateField HeaderText="<% $NopResources:Admin.Topics.Name %>" ItemStyle-Width="40%">
+        <asp:TemplateField HeaderText="<% $NopResources:Admin.Topics.Name %>" ItemStyle-Width="50%">
             <ItemTemplate>
                 <%#Eval("Name")%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Topics.EditInfo %>" HeaderStyle-HorizontalAlign="Center"
-            ItemStyle-Width="30%" ItemStyle-HorizontalAlign="Center">
+            ItemStyle-Width="50%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
-                <a href="TopicDetails.aspx?TopicID=<%#Eval("TopicId")%>" title="<%#GetLocaleResourceString("Admin.Topics.EditInfo.Tooltip")%>">
+                <a href="TopicDetails.aspx?TopicID=<%#Eval("TopicId")%>">
                     <%#GetLocaleResourceString("Admin.Topics.EditInfo.Link")%></a>
-            </ItemTemplate>
-        </asp:TemplateField>
-        <asp:TemplateField HeaderText="<% $NopResources:Admin.Topics.EditContent %>" HeaderStyle-HorizontalAlign="Center"
-            ItemStyle-Width="30%" ItemStyle-HorizontalAlign="Center">
-            <ItemTemplate>
-                <a href="TopicLocalizedDetails.aspx?TopicID=<%#Eval("TopicId")%>&amp;LanguageID=<%#GetSelectedLanguageId()%>"
-                    title="<%#GetLocaleResourceString("Admin.Topics.EditContent.Tooltip")%>">
-                    <%#GetLocaleResourceString("Admin.Topics.EditContent.Link")%></a>
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>

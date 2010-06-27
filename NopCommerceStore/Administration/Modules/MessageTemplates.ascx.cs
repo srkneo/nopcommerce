@@ -30,22 +30,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
     public partial class MessageTemplatesControl : BaseNopAdministrationUserControl
     {
-        private void FillDropDowns()
-        {
-            this.ddlLanguage.Items.Clear();
-            var languages = LanguageManager.GetAllLanguages();
-            foreach (Language language in languages)
-            {
-                ListItem item2 = new ListItem(language.Name, language.LanguageId.ToString());
-                this.ddlLanguage.Items.Add(item2);
-            }
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                FillDropDowns();
                 BindGrid();
             }
         }
@@ -55,16 +43,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             var messageTemplateCollection = MessageManager.GetAllMessageTemplates();
             gvMessageTemplates.DataSource = messageTemplateCollection;
             gvMessageTemplates.DataBind();
-        }
-
-        protected string GetSelectedLanguageId()
-        {
-            return this.ddlLanguage.SelectedItem.Value;
-        }
-
-        protected void ddlLanguage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BindGrid();
         }
     }
 }

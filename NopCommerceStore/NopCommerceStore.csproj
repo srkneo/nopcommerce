@@ -1300,26 +1300,12 @@
     <Compile Include="Administration\Modules\TopicInfo.ascx.designer.cs">
       <DependentUpon>TopicInfo.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\Modules\TopicLocalizedDetails.ascx.cs">
-      <DependentUpon>TopicLocalizedDetails.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\Modules\TopicLocalizedDetails.ascx.designer.cs">
-      <DependentUpon>TopicLocalizedDetails.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Administration\Modules\Topics.ascx.cs">
       <DependentUpon>Topics.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Administration\Modules\Topics.ascx.designer.cs">
       <DependentUpon>Topics.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Administration\TopicLocalizedDetails.aspx.cs">
-      <DependentUpon>TopicLocalizedDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\TopicLocalizedDetails.aspx.designer.cs">
-      <DependentUpon>TopicLocalizedDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Topics.aspx.cs">
       <DependentUpon>Topics.aspx</DependentUpon>
@@ -6119,9 +6105,7 @@
     <Content Include="Administration\Modules\TopicAdd.ascx" />
     <Content Include="Administration\Modules\TopicDetails.ascx" />
     <Content Include="Administration\Modules\TopicInfo.ascx" />
-    <Content Include="Administration\Modules\TopicLocalizedDetails.ascx" />
     <Content Include="Administration\Modules\Topics.ascx" />
-    <Content Include="Administration\TopicLocalizedDetails.aspx" />
     <Content Include="Administration\Topics.aspx" />
     <Content Include="Administration\Modules\ShippingSettings.ascx" />
     <Content Include="Administration\ShippingSettings.aspx" />

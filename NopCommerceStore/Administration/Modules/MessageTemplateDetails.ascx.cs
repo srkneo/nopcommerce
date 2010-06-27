@@ -34,9 +34,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
     {
         private void BindData()
         {
-            Language language = LanguageManager.GetLanguageById(this.LanguageId);
-            MessageTemplate messageTemplate = MessageManager.GetMessageTemplateById(this.MessageTemplateId);
-            if (language != null && messageTemplate != null)
+            if (this.MessageTemplate != null)
             {
                 StringBuilder allowedTokensString = new StringBuilder();
                 string[] allowedTokens = MessageManager.GetListOfAllowedTokens();
@@ -49,24 +47,24 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 }
                 this.lblAllowedTokens.Text = allowedTokensString.ToString();
 
-                this.lblLanguage.Text = language.Name;
-                this.lblTemplate.Text = messageTemplate.Name;
-                LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageId);
-                if (localizedMessageTemplate != null)
-                {
-                    this.cbActive.Checked = localizedMessageTemplate.IsActive;
-                    this.txtBCCEmailAddresses.Text = localizedMessageTemplate.BccEmailAddresses;
-                    this.txtSubject.Text = localizedMessageTemplate.Subject;
-                    this.txtBody.Content = localizedMessageTemplate.Body;
-                }
-                else
-                {
-                    this.SaveButton.Text = "Save";
-                    this.DeleteButton.Visible = false;
-                }
+                this.lblTemplate.Text = this.MessageTemplate.Name;
+
+                var languages = this.GetLocalizableLanguagesSupported();
+                rptrLanguageTabs.DataSource = languages;
+                rptrLanguageTabs.DataBind();
+                rptrLanguageDivs.DataSource = languages;
+                rptrLanguageDivs.DataBind();
             }
             else
                 Response.Redirect("MessageTemplates.aspx");
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            BindJQuery();
+            BindJQueryIdTabs();
+
+            base.OnPreRender(e);
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -74,6 +72,29 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             if (!Page.IsPostBack)
             {
                 this.BindData();
+            }
+        }
+
+        protected void rptrLanguageDivs_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var txtBCCEmailAddresses = (TextBox)e.Item.FindControl("txtBCCEmailAddresses");
+                var txtSubject = (TextBox)e.Item.FindControl("txtSubject");
+                var txtBody = (AjaxControlToolkit.HTMLEditor.Editor)e.Item.FindControl("txtBody");
+                var cbActive = (CheckBox)e.Item.FindControl("cbActive");
+                var lblLanguageId = (Label)e.Item.FindControl("lblLanguageId");
+                
+                int languageId = int.Parse(lblLanguageId.Text);
+
+                var content = MessageManager.GetLocalizedMessageTemplate(this.MessageTemplate.Name, languageId);
+                if (content != null)
+                {
+                    txtBCCEmailAddresses.Text = content.BccEmailAddresses;
+                    txtSubject.Text = content.Subject;
+                    txtBody.Content = content.Body;
+                    cbActive.Checked = content.IsActive;
+                }
             }
         }
 
@@ -86,23 +107,43 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     MessageTemplate messageTemplate = MessageManager.GetMessageTemplateById(this.MessageTemplateId);
                     if (messageTemplate != null)
                     {
-                        LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageId);
-                        if (localizedMessageTemplate != null)
+                        foreach (RepeaterItem item in rptrLanguageDivs.Items)
                         {
-                            localizedMessageTemplate = MessageManager.UpdateLocalizedMessageTemplate(localizedMessageTemplate.MessageTemplateLocalizedId,
-                                localizedMessageTemplate.MessageTemplateId, localizedMessageTemplate.LanguageId, 
-                                txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content, cbActive.Checked);
-                            Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + localizedMessageTemplate.MessageTemplateId.ToString() + "&LanguageID=" + localizedMessageTemplate.LanguageId.ToString());
+                            if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                            {
+                                var txtBCCEmailAddresses = (TextBox)item.FindControl("txtBCCEmailAddresses");
+                                var txtSubject = (TextBox)item.FindControl("txtSubject");
+                                var txtBody = (AjaxControlToolkit.HTMLEditor.Editor)item.FindControl("txtBody");
+                                var cbActive = (CheckBox)item.FindControl("cbActive");
+                                var lblLanguageId = (Label)item.FindControl("lblLanguageId");
+
+                                int languageId = int.Parse(lblLanguageId.Text);
+                                string BCCEmailAddresses = txtBCCEmailAddresses.Text;
+                                string subject = txtSubject.Text;
+                                string body = txtBody.Content;
+                                bool active = cbActive.Checked;
+
+                                var content = MessageManager.GetLocalizedMessageTemplate(this.MessageTemplate.Name, languageId);
+                                if (content == null)
+                                {
+                                    content = MessageManager.InsertLocalizedMessageTemplate(this.MessageTemplateId,
+                                        languageId, BCCEmailAddresses, subject, body, active);
+                                }
+                                else
+                                {
+                                    content = MessageManager.UpdateLocalizedMessageTemplate(content.MessageTemplateLocalizedId,
+                                        content.MessageTemplateId, content.LanguageId,
+                                        BCCEmailAddresses, subject, body, active);
+                                }
+                            }
                         }
-                        else
-                        {
-                            localizedMessageTemplate = MessageManager.InsertLocalizedMessageTemplate(this.MessageTemplateId,
-                                this.LanguageId, txtBCCEmailAddresses.Text, txtSubject.Text, txtBody.Content, cbActive.Checked);
-                            Response.Redirect("MessageTemplateDetails.aspx?MessageTemplateID=" + this.MessageTemplateId.ToString() + "&LanguageID=" + this.LanguageId.ToString());
-                        }
+
+                        Response.Redirect(string.Format("MessageTemplateDetails.aspx?MessageTemplateID={0}", this.MessageTemplateId));
                     }
                     else
+                    {
                         Response.Redirect("MessageTemplates.aspx");
+                    }
                 }
                 catch (Exception exc)
                 {
@@ -111,23 +152,16 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        protected void DeleteButton_Click(object sender, EventArgs e)
+        MessageTemplate _messageTemplate;
+        public MessageTemplate MessageTemplate
         {
-            try
+            get
             {
-                MessageTemplate messageTemplate = MessageManager.GetMessageTemplateById(this.MessageTemplateId);
-                if (messageTemplate != null)
+                if (_messageTemplate == null)
                 {
-                    LocalizedMessageTemplate localizedMessageTemplate = MessageManager.GetLocalizedMessageTemplate(messageTemplate.Name, this.LanguageId);
-                    if (localizedMessageTemplate != null)
-                        MessageManager.DeleteLocalizedMessageTemplate(localizedMessageTemplate.MessageTemplateLocalizedId);
+                    _messageTemplate = MessageManager.GetMessageTemplateById(this.MessageTemplateId);
                 }
-
-                Response.Redirect("MessageTemplates.aspx");
-            }
-            catch (Exception exc)
-            {
-                ProcessException(exc);
+                return _messageTemplate;
             }
         }
 
@@ -136,14 +170,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             get
             {
                 return CommonHelper.QueryStringInt("MessageTemplateId");
-            }
-        }
-
-        public int LanguageId
-        {
-            get
-            {
-                return CommonHelper.QueryStringInt("LanguageId");
             }
         }
     }

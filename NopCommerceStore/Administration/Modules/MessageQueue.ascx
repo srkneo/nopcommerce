@@ -12,6 +12,8 @@
     <div class="options">
         <asp:Button ID="LoadButton" runat="server" Text="<% $NopResources:Admin.MessageQueue.LoadButton.Text %>"
             CssClass="adminButtonBlue" OnClick="LoadButton_Click" ToolTip="<% $NopResources:Admin.MessageQueue.LoadButton.Tooltip %>" />
+        <asp:Button runat="server" Text="<% $NopResources:Admin.MessageQueue.DeleteButton.Text %>"
+            CssClass="adminButtonBlue" ID="btnDelete" OnClick="btnDelete_Click" />
     </div>
 </div>
 <table width="100%" class="adminContent">
@@ -89,20 +91,42 @@
 </table>
 <p>
 </p>
+<script type="text/javascript">
+
+    $(window).bind('load', function () {
+        var cbHeader = $(".cbHeader input");
+        var cbRowItem = $(".cbRowItem input");
+        cbHeader.bind("click", function () {
+            cbRowItem.each(function () { this.checked = cbHeader[0].checked; })
+        });
+        cbRowItem.bind("click", function () { if ($(this).checked == false) cbHeader[0].checked = false; });
+    });
+    
+</script>
+
 <asp:GridView ID="gvQueuedEmails" runat="server" AutoGenerateColumns="False" Width="100%"
     OnPageIndexChanging="gvQueuedEmails_PageIndexChanging" AllowPaging="true" PageSize="15">
     <Columns>
+        <asp:TemplateField ItemStyle-Width="5%" ItemStyle-HorizontalAlign="Center">
+            <HeaderTemplate>
+                <asp:CheckBox ID="cbSelectAll" runat="server" CssClass="cbHeader" />
+            </HeaderTemplate>
+            <ItemTemplate>
+                <asp:CheckBox ID="cbQueuedEmail" runat="server" CssClass="cbRowItem" />
+                <asp:HiddenField ID="hfQueuedEmailId" runat="server" Value='<%# Eval("QueuedEmailId") %>' />
+            </ItemTemplate>
+        </asp:TemplateField>
         <asp:BoundField DataField="QueuedEmailId" HeaderText="<% $NopResources:Admin.MessageQueue.QueuedEmailIDColumn %>"
-            ItemStyle-Width="12%"></asp:BoundField>
+            ItemStyle-Width="10%"></asp:BoundField>
         <asp:BoundField DataField="Priority" HeaderText="<% $NopResources:Admin.MessageQueue.PriorityColumn %>"
             ItemStyle-Width="5%"></asp:BoundField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.MessageQueue.FromColumn %>"
-            ItemStyle-Width="25%">
+            ItemStyle-Width="20%">
             <ItemTemplate>
                 <%#GetFromInfo(Container.DataItem as QueuedEmail)%>
             </ItemTemplate>
         </asp:TemplateField>
-        <asp:TemplateField HeaderText="<% $NopResources:Admin.MessageQueue.ToColumn %>" ItemStyle-Width="25%">
+        <asp:TemplateField HeaderText="<% $NopResources:Admin.MessageQueue.ToColumn %>" ItemStyle-Width="20%">
             <ItemTemplate>
                 <%#GetToInfo(Container.DataItem as QueuedEmail)%>
             </ItemTemplate>

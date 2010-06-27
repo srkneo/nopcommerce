@@ -79,6 +79,13 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            BindJQuery();
+
+            base.OnPreRender(e);
+        }
+
         protected void gvQueuedEmails_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvQueuedEmails.PageIndex = e.NewPageIndex;
@@ -97,6 +104,31 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 {
                     ProcessException(exc);
                 }
+            }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (GridViewRow row in gvQueuedEmails.Rows)
+                {
+                    var cbQueuedEmail = row.FindControl("cbQueuedEmail") as CheckBox;
+                    var hfQueuedEmailId = row.FindControl("hfQueuedEmailId") as HiddenField;
+
+                    bool isChecked = cbQueuedEmail.Checked;
+                    int queuedEmailId = int.Parse(hfQueuedEmailId.Value);
+                    if (isChecked)
+                    {
+                        MessageManager.DeleteQueuedEmail(queuedEmailId);
+                    }
+                }
+
+                BindGrid();
+            }
+            catch (Exception ex)
+            {
+                ProcessException(ex);
             }
         }
 
