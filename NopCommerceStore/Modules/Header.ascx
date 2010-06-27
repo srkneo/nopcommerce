@@ -59,7 +59,7 @@
         <div class="header-currencyselector">
             <nopCommerce:CurrencySelector runat="server" ID="ctrlCurrencySelector"></nopCommerce:CurrencySelector>
         </div>
-        <div class="header-languageSelector">
+        <div class="header-languageselector">
             <nopCommerce:LanguageSelector runat="server" ID="ctrlLanguageSelector"></nopCommerce:LanguageSelector>
         </div>
     </div>

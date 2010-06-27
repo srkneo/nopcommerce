@@ -261,7 +261,7 @@ a.logo
 
 .header-languageselector
 {
-	float: left;
+	float: right;
 }
 
 .header-taxDisplayTypeSelector
@@ -851,7 +851,7 @@ ul.languagelist
 ul.languagelist li
 {
 	list-style: none;
-	display: inline-block;
+	display: inline;
 	padding: 0px 5px 0 5px;	
 }
 
