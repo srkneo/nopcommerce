@@ -33,51 +33,57 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
     {
         #region Constants
 
+        private const int MIN_LENGTH = 50; // 5 cm
+        private const int MIN_WEIGHT = 1; // 1 g
         private const int MAX_LENGTH = 1050; // 105 cm
         private const int MAX_WEIGHT = 20000; // 20 Kg
+        private const int MIN_GIRTH = 160; // 16 cm
+        private const int MAX_GIRTH = 1050; // 105 cm
 
         #endregion
 
         #region Utilities
 
-        private static int GetWeight(ShipmentPackage ShipmentPackage)
+        private static int GetWeight(ShipmentPackage shipmentPackage)
         {
-            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(ShipmentPackage.Items, ShipmentPackage.Customer), MeasureManager.BaseWeightIn, AustraliaPostSettings.MeasureWeight)));
-            return (value < 1 ? 1 : value);
+            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(ShippingManager.GetShoppingCartTotalWeigth(shipmentPackage.Items, shipmentPackage.Customer), MeasureManager.BaseWeightIn, AustraliaPostSettings.MeasureWeight)));
+            return (value < MIN_WEIGHT ? MIN_WEIGHT : value);
         }
 
-        private static int GetLength(ShipmentPackage ShipmentPackage)
+        private static int GetLength(ShipmentPackage shipmentPackage)
         {
-            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalLength(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
-            return (value < 50 ? 50 : value);
+            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(shipmentPackage.GetTotalLength(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
+            return (value < MIN_LENGTH ? MIN_LENGTH : value);
         }
 
-        private static int GetWidth(ShipmentPackage ShipmentPackage)
+        private static int GetWidth(ShipmentPackage shipmentPackage)
         {
-            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalWidth(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
-            return (value < 50 ? 50 : value);
+            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(shipmentPackage.GetTotalWidth(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
+            return (value < MIN_LENGTH ? MIN_LENGTH : value);
         }
 
-        private static int GetHeight(ShipmentPackage ShipmentPackage)
+        private static int GetHeight(ShipmentPackage shipmentPackage)
         {
-            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(ShipmentPackage.GetTotalHeight(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
-            return (value < 50 ? 50 : value);
+            int value = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertDimension(shipmentPackage.GetTotalHeight(), MeasureManager.BaseDimensionIn, AustraliaPostSettings.MeasureDimension)));
+            return (value < MIN_LENGTH ? MIN_LENGTH : value);
         }
-
-        private static ShippingOption RequestShippingOption(string ZipPostalCodeFrom, string ZipPostalCodeTo, string CountryCode, string ServiceType, int weight, int length, int width, int height)
+        
+        private static ShippingOption RequestShippingOption(string zipPostalCodeFrom, 
+            string zipPostalCodeTo, string countryCode, string serviceType, 
+            int weight, int length, int width, int height, int quantity)
         {
             ShippingOption shippingOption = new ShippingOption();
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendFormat("Pickup_Postcode={0}&", ZipPostalCodeFrom);
-            sb.AppendFormat("Destination_Postcode={0}&", ZipPostalCodeTo);
-            sb.AppendFormat("Country={0}&", CountryCode);
-            sb.AppendFormat("Service_Type={0}&", ServiceType);
+            sb.AppendFormat("Pickup_Postcode={0}&", zipPostalCodeFrom);
+            sb.AppendFormat("Destination_Postcode={0}&", zipPostalCodeTo);
+            sb.AppendFormat("Country={0}&", countryCode);
+            sb.AppendFormat("Service_Type={0}&", serviceType);
             sb.AppendFormat("Weight={0}&", weight);
             sb.AppendFormat("Length={0}&", length);
             sb.AppendFormat("Width={0}&", width);
             sb.AppendFormat("Height={0}&", height);
-            sb.Append("Quantity=1");
+            sb.AppendFormat("Quantity={0}&", quantity);
 
             HttpWebRequest request = WebRequest.Create(AustraliaPostSettings.GatewayUrl) as HttpWebRequest;
             request.Method = "POST";
@@ -120,7 +126,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
                 throw new NopException(err_msg);
             }
 
-            shippingOption.Name = ServiceType;
+            shippingOption.Name = serviceType;
             shippingOption.Description = String.Format("{0} Days", rspParams["days"]);
             shippingOption.Rate = Decimal.Parse(rspParams["charge"]);
 
@@ -154,49 +160,82 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.AustraliaPost
             }
 
             shipmentPackage.ZipPostalCodeFrom = AustraliaPostSettings.ShippedFromZipPostalCode;
-            string ZipPostalCodeFrom = shipmentPackage.ZipPostalCodeFrom;
-            string ZipPostalCodeTo = shipmentPackage.ShippingAddress.ZipPostalCode;
+            string zipPostalCodeFrom = shipmentPackage.ZipPostalCodeFrom;
+            string zipPostalCodeTo = shipmentPackage.ShippingAddress.ZipPostalCode;
             int weight = GetWeight(shipmentPackage);
             int length = GetLength(shipmentPackage);
             int width = GetWidth(shipmentPackage);
             int height = GetHeight(shipmentPackage);
+
             Country country = shipmentPackage.ShippingAddress.Country;
 
-            if(length > MAX_LENGTH)
+            //estimate packaging
+            int totalPackages = 1;
+            int totalPackagesDims = 1;
+            int totalPackagesWeights = 1;
+            if (length > MAX_LENGTH || width > MAX_LENGTH || height > MAX_LENGTH)
             {
-                error = "Length exceed.";
-                return shippingOptions;
+                totalPackagesDims = Convert.ToInt32(Math.Ceiling((decimal)Math.Max(Math.Max(length, width), height) / MAX_LENGTH));
             }
-            if(weight > MAX_WEIGHT)
+            if (weight > MAX_WEIGHT)
             {
-                error = "Weight exceed.";
-                return shippingOptions;
+                totalPackagesWeights = Convert.ToInt32(Math.Ceiling((decimal)weight / (decimal)MAX_WEIGHT));
+            }
+            totalPackages = totalPackagesDims > totalPackagesWeights ? totalPackagesDims : totalPackagesWeights;
+            if (totalPackages == 0)
+                totalPackages = 1;
+            if (totalPackages > 1)
+            {
+                //recalculate dims, weight
+                weight = weight / totalPackages;
+                height = height / totalPackages;
+                width = width / totalPackages;
+                length = length / totalPackages;
+                if (weight < MIN_WEIGHT)
+                    weight = MIN_WEIGHT;
+                if (height < MIN_LENGTH)
+                    height = MIN_LENGTH;
+                if (width < MIN_LENGTH)
+                    width = MIN_LENGTH;
+                if (length < MIN_LENGTH)
+                    length = MIN_LENGTH;
             }
 
+            int girth = height + height + width + width;
+            if (girth < MIN_GIRTH)
+            {
+                height = MIN_LENGTH;
+                width = MIN_LENGTH;
+            }
+            if (girth > MAX_GIRTH)
+            {
+                height = MAX_LENGTH / 4;
+                width = MAX_LENGTH / 4;
+            }
             try
             {
-                switch(country.ThreeLetterIsoCode)
+                switch (country.ThreeLetterIsoCode)
                 {
                     case "AUS":
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "Standard", weight, length, width, height));
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "Express", weight, length, width, height));
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "EXP_PLT", weight, length, width, height));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "Standard", weight, length, width, height, totalPackages));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "Express", weight, length, width, height, totalPackages));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "EXP_PLT", weight, length, width, height, totalPackages));
                         break;
                     default:
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "Air", weight, length, width, height));
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "Sea", weight, length, width, height));
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "ECI_D", weight, length, width, height));
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "ECI_M", weight, length, width, height));
-                        shippingOptions.Add(RequestShippingOption(ZipPostalCodeFrom, ZipPostalCodeTo, country.TwoLetterIsoCode, "EPI", weight, length, width, height));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "Air", weight, length, width, height, totalPackages));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "Sea", weight, length, width, height, totalPackages));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "ECI_D", weight, length, width, height, totalPackages));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "ECI_M", weight, length, width, height, totalPackages));
+                        shippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, country.TwoLetterIsoCode, "EPI", weight, length, width, height, totalPackages));
                         break;
                 }
 
-                foreach(ShippingOption shippingOption in shippingOptions)
+                foreach (ShippingOption shippingOption in shippingOptions)
                 {
                     shippingOption.Rate += AustraliaPostSettings.AdditionalHandlingCharge;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 error = ex.Message;
             }
