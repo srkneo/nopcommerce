@@ -1497,8 +1497,11 @@
           <Property Name="LanguageID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="400" />
           <Property Name="Published" Type="bit" Nullable="false" />
+          <Property Name="ShowOnHomePage" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
           <Property Name="SystemKeyword" Type="nvarchar" Nullable="false" MaxLength="400" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Nop_PollAnswer">
           <Key>
@@ -4902,7 +4905,7 @@
           </FunctionImport>
           <EntitySet Name="QBEntities" EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.QBEntity" />
           <FunctionImport Name="Sp_ShoppingCartItemDeleteExpired">
-            <Parameter Name="OlderThan" Mode="In" Type="DateTime" />
+          <Parameter Name="OlderThan" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Language">
@@ -5980,8 +5983,11 @@
           <Property Type="Int32" Name="LanguageId" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="Published" Nullable="false" />
+          <Property Type="Boolean" Name="ShowOnHomePage" Nullable="false" />
           <Property Type="Int32" Name="DisplayOrder" Nullable="false" />
           <Property Type="String" Name="SystemKeyword" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="StartDate" />
+          <Property Type="DateTime" Name="EndDate" />
         </EntityType>
         <EntityType Name="PollAnswer">
           <Key>
@@ -8673,6 +8679,9 @@
           <EntitySetMapping Name="Polls">
             <EntityTypeMapping TypeName="NopSolutions.NopCommerce.BusinessLogic.Data.Poll">
               <MappingFragment StoreEntitySet="Nop_Poll">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ShowOnHomePage" ColumnName="ShowOnHomePage" />
                 <ScalarProperty Name="SystemKeyword" ColumnName="SystemKeyword" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Published" ColumnName="Published" />
@@ -9678,7 +9687,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="NopModel" ZoomLevel="94">
+      <Diagram Name="NopModel" ZoomLevel="81">
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Language" Width="3.125" PointX="23.625" PointY="11.25" Height="1.9210009765624996" IsExpanded="true" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.Country" Width="2" PointX="63.25" PointY="16.75" Height="3.0714322916666674" />
         <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.StateProvince" Width="1.875" PointX="62.875" PointY="9.125" Height="1.9210009765624996" />

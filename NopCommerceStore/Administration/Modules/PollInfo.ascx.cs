@@ -51,6 +51,15 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 this.txtName.Text = poll.Name;
                 this.txtSystemKeyword.Text = poll.SystemKeyword;
                 this.cbPublished.Checked = poll.Published;
+                this.cbShowOnHomePage.Checked = poll.ShowOnHomePage;
+                if (poll.StartDate.HasValue)
+                {
+                    this.ctrlStartDate.SelectedDate = poll.StartDate;
+                }
+                if (poll.EndDate.HasValue)
+                {
+                    this.ctrlEndDate.SelectedDate = poll.EndDate;
+                }
                 this.txtDisplayOrder.Value = poll.DisplayOrder;
 
                 pnlPollAnswers.Visible = true;
@@ -143,16 +152,26 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         public Poll SaveInfo()
         {
             Poll poll = PollManager.GetPollById(this.PollId);
+            DateTime? startDate = ctrlStartDate.SelectedDate;
+            DateTime? endDate = ctrlEndDate.SelectedDate;
+            if (startDate.HasValue)
+            {
+                startDate = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
+            }
+            if (endDate.HasValue)
+            {
+                endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
+            }
 
             if (poll != null)
             {
                 poll = PollManager.UpdatePoll(poll.PollId, int.Parse(this.ddlLanguage.SelectedItem.Value),
-                    txtName.Text, txtSystemKeyword.Text, cbPublished.Checked, txtDisplayOrder.Value);
+                    txtName.Text, txtSystemKeyword.Text, cbPublished.Checked, cbShowOnHomePage.Checked, txtDisplayOrder.Value, startDate, endDate);
             }
             else
             {
                 poll = PollManager.InsertPoll(int.Parse(this.ddlLanguage.SelectedItem.Value),
-                txtName.Text, txtSystemKeyword.Text, cbPublished.Checked, txtDisplayOrder.Value);
+                    txtName.Text, txtSystemKeyword.Text, cbPublished.Checked, cbShowOnHomePage.Checked, txtDisplayOrder.Value, startDate, endDate);
             }
             return poll;
         }

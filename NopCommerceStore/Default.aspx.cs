@@ -59,9 +59,6 @@ namespace NopSolutions.NopCommerce.Web
                 ctrlNewsList.Visible = false;
             }
 
-            bool showPollsOnMainPage = SettingManager.GetSettingValueBoolean("Display.ShowPollsOnMainPage");
-            ctrlTodaysPoll.Visible = showPollsOnMainPage;
-
             bool showWelcomeMessageOnMainPage = SettingManager.GetSettingValueBoolean("Display.ShowWelcomeMessageOnMainPage");
             if (!showWelcomeMessageOnMainPage)
             {

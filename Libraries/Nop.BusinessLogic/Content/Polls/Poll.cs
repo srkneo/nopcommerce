@@ -62,9 +62,24 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         public bool Published { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the entity should be shown on home page
+        /// </summary>
+        public bool ShowOnHomePage { get; set; }
+
+        /// <summary>
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the poll start date and time
+        /// </summary>
+        public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the poll end date and time
+        /// </summary>
+        public DateTime? EndDate { get; set; }
 
         #endregion
 

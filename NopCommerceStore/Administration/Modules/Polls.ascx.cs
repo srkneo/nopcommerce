@@ -43,23 +43,6 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
         private void BindData()
         {
-            cbShowPollsOnMainPage.Checked = SettingManager.GetSettingValueBoolean("Display.ShowPollsOnMainPage");
-        }
-
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                try
-                {
-                    SettingManager.SetParam("Display.ShowPollsOnMainPage", cbShowPollsOnMainPage.Checked.ToString());
-                    Response.Redirect("Polls.aspx");
-                }
-                catch (Exception exc)
-                {
-                    ProcessException(exc);
-                }
-            }
         }
 
         void BindGrid()

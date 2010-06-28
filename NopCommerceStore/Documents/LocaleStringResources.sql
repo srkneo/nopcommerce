@@ -389,6 +389,39 @@ set @resources='
   <LocaleResource Name="Admin.TopicLocalizedDetails.Topic">
     <Value></Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Polls.ShowOnMainPage">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Polls.ShowOnMainPage.Tooltip">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Polls.SaveButton.Text">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Polls.SaveButton.Tooltip">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Polls.ShowOnHomePage">
+	<Value>Show On Home Page</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PollInfo.ShowOnHomePage">
+	<Value>Show On Home Page</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PollInfo.ShowOnHomePage.Tooltip">
+	<Value>Check if you want to show poll on home page</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PollInfo.StartDate">
+	<Value>Start Date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PollInfo.StartDate.Tooltip">
+	<Value>Set the poll start date or leave empty</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PollInfo.EndDate">
+	<Value>End Date</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PollInfo.EndDate.Tooltip">
+	<Value>Set the poll end date or leave empty</Value>
+  </LocaleResource>
 </Language>
 '
 

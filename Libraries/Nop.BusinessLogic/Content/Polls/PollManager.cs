@@ -99,7 +99,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <summary>
         /// Gets poll collection
         /// </summary>
-        /// <param name="languageId">Language identifier. 0 if you want to get all news</param>
+        /// <param name="languageId">Language identifier. 0 if you want to get all polls</param>
         /// <param name="pollCount">Poll count to load. 0 if you want to get all polls</param>
         /// <returns>Poll collection</returns>
         public static List<Poll> GetPolls(int languageId, int pollCount)
@@ -109,12 +109,22 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             var context = ObjectContextHelper.CurrentObjectContext;
             var query = (IQueryable<Poll>)context.Polls;
             if (!showHidden)
+            {
                 query = query.Where(p => p.Published);
+                query = query.Where(p => p.ShowOnHomePage);
+                query = query.Where(p => !p.StartDate.HasValue || p.StartDate <= DateTime.UtcNow);
+                query = query.Where(p => !p.EndDate.HasValue || p.EndDate >= DateTime.UtcNow);
+            }
             if (languageId > 0)
+            {
                 query = query.Where(p => p.LanguageId == languageId);
+            }
+
             query = query.OrderBy(p => p.DisplayOrder);
             if (pollCount > 0)
+            {
                 query = query.Take(pollCount);
+            }
 
             var polls = query.ToList();
 
@@ -151,10 +161,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <param name="name">The name</param>
         /// <param name="systemKeyword">The system keyword</param>
         /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="showOnHomePage">A value indicating whether the entity should be shown on home page</param>
         /// <param name="displayOrder">The display order</param>
+        /// <param name="startDate">The poll start date and time</param>
+        /// <param name="endDate">The poll end date and time</param>
         /// <returns>Poll</returns>
         public static Poll InsertPoll(int languageId, string name, string systemKeyword,
-            bool published, int displayOrder)
+            bool published, bool showOnHomePage, int displayOrder, DateTime? startDate, DateTime? endDate)
         {
             name = CommonHelper.EnsureMaximumLength(name, 400);
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 400);
@@ -164,7 +177,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             poll.Name = name;
             poll.SystemKeyword = systemKeyword;
             poll.Published = published;
+            poll.ShowOnHomePage = showOnHomePage;
             poll.DisplayOrder = displayOrder;
+            poll.StartDate = startDate;
+            poll.EndDate = endDate;
 
             var context = ObjectContextHelper.CurrentObjectContext;
             context.Polls.AddObject(poll);
@@ -187,10 +203,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// <param name="name">The name</param>
         /// <param name="systemKeyword">The system keyword</param>
         /// <param name="published">A value indicating whether the entity is published</param>
+        /// <param name="showOnHomePage">A value indicating whether the entity should be shown on home page</param>
         /// <param name="displayOrder">The display order</param>
+        /// <param name="startDate">The poll start date and time</param>
+        /// <param name="endDate">The poll end date and time</param>
         /// <returns>Poll</returns>
         public static Poll UpdatePoll(int pollId, int languageId, string name,
-            string systemKeyword, bool published, int displayOrder)
+            string systemKeyword, bool published, bool showOnHomePage, int displayOrder, DateTime? startDate, DateTime? endDate)
         {
             name = CommonHelper.EnsureMaximumLength(name, 400);
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 400);
@@ -207,7 +226,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             poll.Name = name;
             poll.SystemKeyword = systemKeyword;
             poll.Published = published;
+            poll.ShowOnHomePage = showOnHomePage;
             poll.DisplayOrder = displayOrder;
+            poll.StartDate = startDate;
+            poll.EndDate = endDate;
+
             context.SaveChanges();
 
             if (PollManager.CacheEnabled)

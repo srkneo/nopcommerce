@@ -6648,3 +6648,31 @@ BEGIN
 	VALUES (N'USA ePay (integrated)', N'Credit Card', N'', N'Payment\USAePayIntegrated\ConfigurePaymentMethod.ascx', N'~\Templates\Payment\USAePayIntegrated\PaymentModule.ascx', N'NopSolutions.NopCommerce.Payment.Methods.USAePay.USAePayPaymentProcessor, Nop.Payment.USAePay', N'USAEPAY.INTERGRATED', 0, 172)
 END
 GO
+
+-- ShowOnHomePage, StartDate and EndDate fields for Nop_Poll
+IF NOT EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_Poll]') and NAME='ShowOnHomePage')
+BEGIN
+	ALTER TABLE [dbo].[Nop_Poll] 
+	ADD ShowOnHomePage bit NOT NULL CONSTRAINT [DF_Nop_Poll_ShowOnHomePage] DEFAULT ((0))
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_Poll]') and NAME='StartDate')
+BEGIN
+	ALTER TABLE [dbo].[Nop_Poll] 
+	ADD StartDate datetime CONSTRAINT [DF_Nop_Poll_StartDate] DEFAULT ((NULL))
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[Nop_Poll]') and NAME='EndDate')
+BEGIN
+	ALTER TABLE [dbo].[Nop_Poll] 
+	ADD EndDate datetime CONSTRAINT [DF_Nop_Poll_EndDate] DEFAULT ((NULL))
+END
+GO
+
+IF EXISTS (SELECT 1	FROM [dbo].[Nop_Setting] WHERE [Name] = N'Display.ShowPollsOnMainPage')
+BEGIN
+	DELETE FROM [dbo].[Nop_Setting] WHERE [Name] = N'Display.ShowPollsOnMainPage'
+END
+GO

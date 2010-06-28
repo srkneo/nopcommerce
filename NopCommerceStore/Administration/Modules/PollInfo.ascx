@@ -1,8 +1,9 @@
-<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.PollInfoControl"
-    CodeBehind="PollInfo.ascx.cs" %>
+<%@ Control Language="C#" AutoEventWireup="true" Inherits="NopSolutions.NopCommerce.Web.Administration.Modules.PollInfoControl" CodeBehind="PollInfo.ascx.cs" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ToolTipLabel" Src="ToolTipLabelControl.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="NumericTextBox" Src="NumericTextBox.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="SimpleTextBox" Src="SimpleTextBox.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="DatePicker" Src="DatePicker.ascx" %>
+
 <asp:UpdatePanel ID="upPools" runat="server">
     <ContentTemplate>
         <asp:Panel runat="server" ID="pnlError" EnableViewState="false" Visible="false" class="messageBox messageBoxError">
@@ -49,6 +50,15 @@
             </tr>
             <tr>
                 <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblShowOnHomePage" Text="<% $NopResources:Admin.PollInfo.ShowOnHomePage %>"
+                        ToolTip="<% $NopResources:Admin.PollInfo.ShowOnHomePage.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <asp:CheckBox ID="cbShowOnHomePage" runat="server" Checked="True" />
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
                     <nopCommerce:ToolTipLabel runat="server" ID="lblDisplayOrder" Text="<% $NopResources:Admin.PollInfo.DisplayOrder %>"
                         ToolTip="<% $NopResources:Admin.PollInfo.DisplayOrder.Tooltip %>" ToolTipImage="~/Administration/Common/ico-help.gif" />
                 </td>
@@ -57,6 +67,26 @@
                         Value="1" RequiredErrorMessage="<% $NopResources:Admin.PollInfo.DisplayOrder.RequiredErrorMessage %>"
                         RangeErrorMessage="<% $NopResources:Admin.PollInfo.DisplayOrder.RangeErrorMessage %>"
                         MinimumValue="-99999" MaximumValue="99999"></nopCommerce:NumericTextBox>
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblStartDate" Text="<% $NopResources:Admin.PollInfo.StartDate %>"
+                        ToolTip="<% $NopResources:Admin.PollInfo.StartDate.ToolTip %>"
+                        ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <nopCommerce:DatePicker runat="server" ID="ctrlStartDate" />
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                    <nopCommerce:ToolTipLabel runat="server" ID="lblEndDate" Text="<% $NopResources:Admin.PollInfo.EndDate %>"
+                        ToolTip="<% $NopResources:Admin.PollInfo.EndDate.ToolTip %>"
+                        ToolTipImage="~/Administration/Common/ico-help.gif" />
+                </td>
+                <td class="adminData">
+                    <nopCommerce:DatePicker runat="server" ID="ctrlEndDate" />
                 </td>
             </tr>
         </table>
