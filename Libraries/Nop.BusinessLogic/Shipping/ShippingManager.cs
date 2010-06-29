@@ -108,6 +108,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Gets shopping cart weight
         /// </summary>
@@ -250,8 +251,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             {
                 //use last shipping option (get from cache)
                 //we have already discounted cache value
-                shippingTotalWithDiscount = lastShippingOption.Rate;
-                appliedDiscount = DiscountManager.GetDiscountById(lastShippingOption.AppliedDiscountId);
+                shippingTotalWithoutDiscount = lastShippingOption.Rate;
+
+                //discount
+                decimal discountAmount = GetShippingDiscount(customer, 
+                    shippingTotalWithoutDiscount.Value, out appliedDiscount);
+                shippingTotalWithDiscount = shippingTotalWithoutDiscount - discountAmount;
+                if (shippingTotalWithDiscount < decimal.Zero)
+                    shippingTotalWithDiscount = decimal.Zero;
+                shippingTotalWithDiscount = Math.Round(shippingTotalWithDiscount.Value, 2);
             }
             else
             {
@@ -402,7 +410,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="cart">Shopping cart</param>
         /// <param name="customer">Customer</param>
         /// <param name="shippingAddress">Shipping address</param>
-        /// <param name="allowedShippingRateComputationMethodId">Allowed shipping rate computation method identifier; null to load shipping options of all methods</param>
+        /// <param name="allowedShippingRateComputationMethodId">Filter by shipping rate computation method identifier; null to load shipping options of all shipping rate computation methods</param>
         /// <param name="error">Error</param>
         /// <returns>Shipping options</returns>
         public static List<ShippingOption> GetShippingOptions(ShoppingCart cart,
@@ -416,11 +424,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
             bool isFreeShipping = IsFreeShipping(cart, customer);
 
-            var ShipmentPackage = CreateShipmentPackage(cart, customer, shippingAddress);
+            //create a package
+            var shipmentPackage = CreateShipmentPackage(cart, customer, shippingAddress);
             var shippingRateComputationMethods = ShippingRateComputationMethodManager.GetAllShippingRateComputationMethods(false);
             if (shippingRateComputationMethods.Count == 0)
                 throw new NopException("Shipping rate computation method could not be loaded");
 
+            //get shipping options
             foreach (var srcm in shippingRateComputationMethods)
             {
                 if (allowedShippingRateComputationMethodId.HasValue &&
@@ -430,7 +440,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
 
                 var iShippingRateComputationMethod = Activator.CreateInstance(Type.GetType(srcm.ClassName)) as IShippingRateComputationMethod;
 
-                var shippingOptions2 = iShippingRateComputationMethod.GetShippingOptions(ShipmentPackage, ref error);
+                var shippingOptions2 = iShippingRateComputationMethod.GetShippingOptions(shipmentPackage, ref error);
                 if (shippingOptions2 != null)
                 {
                     foreach (var so2 in shippingOptions2)
@@ -441,6 +451,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
                 }
             }
 
+            //no shipping options loaded
             if (shippingOptions.Count == 0)
             {
                 error = "Shipping options could not be loaded";
@@ -449,26 +460,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             //additional shipping charges
             decimal additionalShippingCharge = GetShoppingCartAdditionalShippingCharge(cart, customer);
             shippingOptions.ForEach(so => so.Rate += additionalShippingCharge);
-
-            //discounts
-            foreach (var so in shippingOptions)
-            {
-                decimal rateWithoutDiscount = Math.Round(so.Rate, 2);
-                decimal rateWithDiscount = decimal.Zero;
-
-                Discount rateDiscount = null;
-                decimal rateDiscountAmount = GetShippingDiscount(customer, rateWithoutDiscount, out rateDiscount);
-                rateWithDiscount = rateWithoutDiscount - rateDiscountAmount;
-                if (rateWithDiscount < decimal.Zero)
-                    rateWithDiscount = decimal.Zero;
-
-                rateWithDiscount = Math.Round(rateWithDiscount, 2);
-
-                so.Rate = rateWithDiscount;
-                if (rateDiscount != null)
-                    so.AppliedDiscountId = rateDiscount.DiscountId;
-            }
-
+            
             //free shipping
             if (isFreeShipping)
             {

@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Directory;
 using NopSolutions.NopCommerce.BusinessLogic.Localization;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
+using NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts;
 using NopSolutions.NopCommerce.BusinessLogic.SEO;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
@@ -46,7 +47,17 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected string FormatShippingOption(ShippingOption shippingOption)
         {
-            decimal rateBase = TaxManager.GetShippingPrice(shippingOption.Rate, NopContext.Current.User);
+            //calculate discounted and taxed rate
+            Discount appliedDiscount = null;
+            decimal shippingTotalWithoutDiscount = shippingOption.Rate;
+            decimal discountAmount = ShippingManager.GetShippingDiscount(NopContext.Current.User, 
+                shippingTotalWithoutDiscount, out appliedDiscount);
+            decimal shippingTotalWithDiscount = shippingTotalWithoutDiscount - discountAmount;
+            if (shippingTotalWithDiscount < decimal.Zero)
+                shippingTotalWithDiscount = decimal.Zero;
+            shippingTotalWithDiscount = Math.Round(shippingTotalWithDiscount, 2);
+
+            decimal rateBase = TaxManager.GetShippingPrice(shippingTotalWithDiscount, NopContext.Current.User);
             decimal rate = CurrencyManager.ConvertCurrency(rateBase, CurrencyManager.PrimaryStoreCurrency, NopContext.Current.WorkingCurrency);
             string rateStr = PriceHelper.FormatShippingPrice(rate, true);
             return string.Format("({0})", rateStr);

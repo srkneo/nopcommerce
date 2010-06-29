@@ -93,20 +93,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             }
         }
 
-        /// <summary>
-        /// Gets or sets an applied discount identifier
-        /// </summary>
-        public int AppliedDiscountId
-        {
-            get
-            {
-                return _appliedDiscountId;
-            }
-            set
-            {
-                _appliedDiscountId = value;
-            }
-        }
         #endregion
     }
 }
