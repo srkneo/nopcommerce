@@ -18,6 +18,7 @@ using System.Collections.Specialized;
 using System.Configuration.Provider;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -53,7 +54,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <param name="name">Meta name</param>
         /// <param name="content">Content</param>
         /// <param name="overwriteExisting">Overwrite existing content if exists</param>
-        public static void RenderMetaTag(Page page, string name, 
+        public static void RenderMetaTag(Page page, string name,
             string content, bool overwriteExisting)
         {
             if (page == null || page.Header == null)
@@ -62,21 +63,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
             if (content == null)
                 content = string.Empty;
 
-            foreach (var control in page.Header.Controls)
-                if (control is HtmlMeta)
+            HtmlMeta control = page.Header.Controls.OfType<HtmlMeta>().FirstOrDefault(
+                meta => string.Equals(meta.Name, name, StringComparison.OrdinalIgnoreCase));
+            if (control == null)
+            {
+                control = new HtmlMeta();
+                control.Name = name;
+                control.Content = content;
+                page.Header.Controls.Add(control);
+            }
+            else
+            {
+                if (overwriteExisting)
+                    control.Content = content;
+                else
                 {
-                    var meta = (HtmlMeta)control;
-                    if (meta.Name.ToLower().Equals(name.ToLower()) && !string.IsNullOrEmpty(content))
-                    {
-                        if (overwriteExisting)
-                            meta.Content = content;
-                        else
-                        {
-                            if (String.IsNullOrEmpty(meta.Content))
-                                meta.Content = content;
-                        }
-                    }
+                    if (String.IsNullOrEmpty(control.Content))
+                        control.Content = content;
                 }
+            }
         }
 
         /// <summary>
