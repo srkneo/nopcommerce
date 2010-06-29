@@ -445,7 +445,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         }
                     }
 
-                    string topicURL = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                    string topicURL = SEOHelper.GetForumTopicUrl(forumTopic);
                     Response.Redirect(topicURL);
                     #endregion
                 }
@@ -508,7 +508,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         }
                     }
 
-                    string topicURL = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                    string topicURL = SEOHelper.GetForumTopicUrl(forumTopic);
                     Response.Redirect(topicURL);
                     #endregion
                 }
@@ -643,7 +643,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
                     if (forumTopic != null)
                     {
-                        string topicUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                        string topicUrl = SEOHelper.GetForumTopicUrl(forumTopic);
                         Response.Redirect(topicUrl);
                     }
                     else
@@ -656,7 +656,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
                     if (forumTopic != null)
                     {
-                        string topicUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                        string topicUrl = SEOHelper.GetForumTopicUrl(forumTopic);
                         Response.Redirect(topicUrl);
                     }
                     else

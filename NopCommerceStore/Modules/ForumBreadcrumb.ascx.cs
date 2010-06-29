@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
             if (forumTopic != null)
             {
-                hlForumTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                hlForumTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic);
                 hlForumTopic.Text = Server.HtmlEncode(forumTopic.Subject);
             }
             else

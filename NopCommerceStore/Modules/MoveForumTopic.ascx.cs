@@ -81,7 +81,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 }
 
                 ForumManager.MoveTopic(forumTopic.ForumTopicId, ctrlForumSelector.SelectedForumId);
-                string topicURL = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                string topicURL = SEOHelper.GetForumTopicUrl(forumTopic);
                 Response.Redirect(topicURL);
             }
             catch (Exception exc)
@@ -98,7 +98,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var forumTopic = ForumManager.GetTopicById(this.ForumTopicId);
                 if (forumTopic != null)
                 {
-                    string topicUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                    string topicUrl = SEOHelper.GetForumTopicUrl(forumTopic);
                     Response.Redirect(topicUrl);
                 }
                 else

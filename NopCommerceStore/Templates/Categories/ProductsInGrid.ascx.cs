@@ -199,7 +199,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var category = e.Item.DataItem as Category;
-                string categoryURL = SEOHelper.GetCategoryUrl(category.CategoryId);
+                string categoryURL = SEOHelper.GetCategoryUrl(category);
 
                 var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
                 if (hlImageLink != null)

@@ -59,7 +59,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 {
                     hlTopic.Text = Server.HtmlEncode(ForumManager.StripTopicSubject(forumTopic.Subject));
                     hlTopic.ToolTip = Server.HtmlEncode(forumTopic.Subject);
-                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic);
                 }
                 var customer = forumPost.User;
                 if(customer != null)

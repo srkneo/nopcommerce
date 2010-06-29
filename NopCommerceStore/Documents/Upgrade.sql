@@ -6686,3 +6686,13 @@ BEGIN
 	VALUES (N'Media.CategoryBreadcrumbEnabled', N'true', N'')
 END
 GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Cache.CheckoutAttributeManager.CacheEnabled')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'Cache.CheckoutAttributeManager.CacheEnabled', N'true', N'')
+END
+GO

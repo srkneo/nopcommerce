@@ -203,7 +203,7 @@ namespace NopSolutions.NopCommerce.Web.Templates.Categories
                 var hlCategory = e.Item.FindControl("hlCategory") as HyperLink;
                 if (hlCategory != null)
                 {
-                    hlCategory.NavigateUrl = SEOHelper.GetCategoryUrl(category.CategoryId);
+                    hlCategory.NavigateUrl = SEOHelper.GetCategoryUrl(category);
                     hlCategory.ToolTip = String.Format(GetLocaleResourceString("Media.Category.ImageLinkTitleFormat"), category.LocalizedName);
                     hlCategory.Text = Server.HtmlEncode(category.LocalizedName);
                 }

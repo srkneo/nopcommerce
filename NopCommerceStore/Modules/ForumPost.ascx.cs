@@ -212,7 +212,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 forumTopic = ForumManager.GetTopicById(forumPost.TopicId);
                 if (forumTopic != null)
                 {
-                    url = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                    url = SEOHelper.GetForumTopicUrl(forumTopic);
                 }
                 else
                 {

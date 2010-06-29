@@ -124,7 +124,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
         }
 
-        public string GetProductUrl(int productVariantId)
+        public string GetProductVarianUrl(int productVariantId)
         {
             string result = string.Empty;
             ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);

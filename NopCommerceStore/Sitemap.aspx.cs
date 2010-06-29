@@ -91,7 +91,7 @@ namespace NopSolutions.NopCommerce.Web
             foreach(Category category in categoryCollection)
             {
                 sb.Append("<li>");
-                sb.AppendFormat("<a href=\"{0}\">{1}</a>", SEOHelper.GetCategoryUrl(category.CategoryId), Server.HtmlEncode(category.LocalizedName));
+                sb.AppendFormat("<a href=\"{0}\">{1}</a>", SEOHelper.GetCategoryUrl(category), Server.HtmlEncode(category.LocalizedName));
                 var childCategoryCollection = CategoryManager.GetAllCategories(category.CategoryId);
                 if(childCategoryCollection.Count > 0)
                 {

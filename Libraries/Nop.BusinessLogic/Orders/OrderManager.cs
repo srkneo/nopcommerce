@@ -3509,10 +3509,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     }
                                 }
 
-                                ShoppingCartManager.DeleteShoppingCartItem(sc.ShoppingCartItemId, false);
-
                                 //inventory
                                 ProductManager.AdjustInventory(sc.ProductVariantId, true, sc.Quantity, sc.AttributesXml);
+                            }
+
+                            //clear shopping cart
+                            foreach (var sc in cart)
+                            {
+                                ShoppingCartManager.DeleteShoppingCartItem(sc.ShoppingCartItemId, false);
                             }
                         }
                         else

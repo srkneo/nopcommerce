@@ -1739,7 +1739,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             tokens.Add("Customer.Username", HttpUtility.HtmlEncode(customer.Username));
             tokens.Add("Customer.FullName", HttpUtility.HtmlEncode(customer.FullName));
 
-            tokens.Add("Forums.TopicURL", SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId));
+            tokens.Add("Forums.TopicURL", SEOHelper.GetForumTopicUrl(forumTopic));
             tokens.Add("Forums.TopicName", HttpUtility.HtmlEncode(forumTopic.Subject));
             tokens.Add("Forums.ForumURL", SEOHelper.GetForumUrl(forum));
             tokens.Add("Forums.ForumName", HttpUtility.HtmlEncode(forum.Name));

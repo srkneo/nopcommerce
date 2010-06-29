@@ -189,7 +189,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var hlTopic = e.Item.FindControl("hlTopic") as HyperLink;
                 if (hlTopic != null)
                 {
-                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic);
                     hlTopic.Text = Server.HtmlEncode(forumTopic.Subject);
                 }
 
@@ -252,7 +252,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 if (PageCount > NumToDisplay)
                 {
-                    result += createLink(SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId), "1");
+                    result += createLink(SEOHelper.GetForumTopicUrl(forumTopic), "1");
                     result += " ... ";
                     bool first = true;
 
@@ -265,7 +265,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         else
                             result += ", ";
 
-                        result += createLink(SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId, queryStringParam, iPost), iPost.ToString());
+                        result += createLink(SEOHelper.GetForumTopicUrl(forumTopic, queryStringParam, iPost), iPost.ToString());
                     }
                 }
                 else
@@ -280,7 +280,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         else
                             result += ", ";
 
-                        result += createLink(SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId, queryStringParam, iPost), iPost.ToString());
+                        result += createLink(SEOHelper.GetForumTopicUrl(forumTopic, queryStringParam, iPost), iPost.ToString());
                     }
                 }
             }

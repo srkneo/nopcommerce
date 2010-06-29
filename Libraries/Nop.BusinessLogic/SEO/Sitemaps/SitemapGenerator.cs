@@ -89,7 +89,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO.Sitemaps
             var categories = CategoryManager.GetAllCategories(parentCategoryId, false);
             foreach (var category in categories)
             {
-                var url = SEOHelper.GetCategoryUrl(category.CategoryId);
+                var url = SEOHelper.GetCategoryUrl(category);
                 var updateFrequency = UpdateFrequency.Weekly;
                 var updateTime = category.UpdatedOn;
                 WriteUrlLocation(url, updateFrequency, updateTime);

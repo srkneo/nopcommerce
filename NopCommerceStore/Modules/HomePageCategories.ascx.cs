@@ -61,7 +61,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
             {
                 var category = e.Item.DataItem as Category;
                 var hlImageLink = e.Item.FindControl("hlImageLink") as HyperLink;
-                string categoryURL = SEOHelper.GetCategoryUrl(category.CategoryId);
+                string categoryURL = SEOHelper.GetCategoryUrl(category);
                 if (hlImageLink != null)
                 {
                     hlImageLink.ImageUrl = PictureManager.GetPictureUrl(category.PictureId, SettingManager.GetSettingValueInteger("Media.Category.ThumbnailImageSize", 125), true);

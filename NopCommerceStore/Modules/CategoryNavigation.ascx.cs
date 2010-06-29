@@ -141,7 +141,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var link = new NopCommerceLi();
                 phCategories.Controls.Add(link);
 
-                string categoryURL = SEOHelper.GetCategoryUrl(category.CategoryId);
+                string categoryURL = SEOHelper.GetCategoryUrl(category);
                 if (currentCategory != null && currentCategory.CategoryId == category.CategoryId)
                     link.CssClass = "active";
                 else

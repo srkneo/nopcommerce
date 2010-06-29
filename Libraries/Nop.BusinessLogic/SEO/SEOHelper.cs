@@ -559,7 +559,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         /// <returns>Forum topic URL</returns>
         public static string GetForumTopicUrl(int topicId)
         {
-            return GetForumTopicUrl(topicId, "p", null); 
+            var topic = ForumManager.GetTopicById(topicId);
+            return GetForumTopicUrl(topic); 
+        }
+
+        /// <summary>
+        /// Gets forum topic URL
+        /// </summary>
+        /// <param name="topic">Forum topic</param>
+        /// <returns>Forum topic URL</returns>
+        public static string GetForumTopicUrl(ForumTopic topic)
+        {
+            return GetForumTopicUrl(topic, "p", null);
         }
 
         /// <summary>
@@ -572,7 +583,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetForumTopicUrl(int topicId, 
             string queryStringProperty, int? pageIndex)
         {
-            return GetForumTopicUrl(topicId, queryStringProperty, pageIndex, null);
+            var topic = ForumManager.GetTopicById(topicId);
+            return GetForumTopicUrl(topic, queryStringProperty, pageIndex);
+        }
+
+        /// <summary>
+        /// Gets forum topic URL
+        /// </summary>
+        /// <param name="topic">Forum topic</param>
+        /// <param name="queryStringProperty">Query string property</param>
+        /// <param name="pageIndex">Page index</param>
+        /// <returns>Forum topic URL</returns>
+        public static string GetForumTopicUrl(ForumTopic topic,
+            string queryStringProperty, int? pageIndex)
+        {
+            return GetForumTopicUrl(topic, queryStringProperty, pageIndex, null);
         }
 
         /// <summary>
@@ -586,7 +611,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.SEO
         public static string GetForumTopicUrl(int topicId, string queryStringProperty, 
             int? pageIndex, int? postId)
         {
-            return GetForumTopicUrl(ForumManager.GetTopicById(topicId), queryStringProperty, pageIndex, postId);
+            var topic = ForumManager.GetTopicById(topicId);
+            return GetForumTopicUrl(topic, queryStringProperty, pageIndex, postId);
         }
 
         /// <summary>

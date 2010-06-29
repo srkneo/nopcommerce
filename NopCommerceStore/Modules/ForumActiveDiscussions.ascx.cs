@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                 var hlTopic = e.Item.FindControl("hlTopic") as HyperLink;
                 if (hlTopic != null)
                 {
-                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic.ForumTopicId);
+                    hlTopic.NavigateUrl = SEOHelper.GetForumTopicUrl(forumTopic);
                     hlTopic.Text = Server.HtmlEncode(forumTopic.Subject);
                 }
 
