@@ -4,6 +4,8 @@
 <%@ Register TagPrefix="nopCommerce" TagName="PriceRangeFilter" Src="~/Modules/PriceRangeFilter.ascx" %>
 <%@ Register TagPrefix="nopCommerce" TagName="ProductSpecificationFilter" Src="~/Modules/ProductSpecificationFilter.ascx" %>
 <div class="category-page">
+    <% if (SettingManager.GetSettingValueBoolean("Media.CategoryBreadcrumbEnabled"))
+       { %>
     <div class="breadcrumb">
         <a href='<%=CommonHelper.GetStoreLocation()%>'>
             <%=GetLocaleResourceString("Breadcrumb.Top")%></a> /
@@ -20,6 +22,7 @@
     </div>
     <div class="clear">
     </div>
+    <% } %>
     <div class="category-description">
         <asp:Literal runat="server" ID="lDescription"></asp:Literal>
     </div>
