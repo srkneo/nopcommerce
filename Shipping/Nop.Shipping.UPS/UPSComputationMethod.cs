@@ -90,12 +90,15 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.UPS
             sb.Append("<RequestAction>Rate</RequestAction>");
             sb.Append("<RequestOption>Shop</RequestOption>");
             sb.Append("</Request>");
-            sb.Append("<PickupType>");
-            sb.AppendFormat("<Code>{0}</Code>", GetPickupTypeCode(pickupType));
-            sb.Append("</PickupType>");
-            sb.Append("<CustomerClassification>");
-            sb.AppendFormat("<Code>{0}</Code>", GetCustomerClassificationCode(customerClassification));
-            sb.Append("</CustomerClassification>");
+            if (String.Equals(countryCodeFrom, "US", StringComparison.InvariantCultureIgnoreCase) == true)
+            {
+                sb.Append("<PickupType>");
+                sb.AppendFormat("<Code>{0}</Code>", GetPickupTypeCode(pickupType));
+                sb.Append("</PickupType>");
+                sb.Append("<CustomerClassification>");
+                sb.AppendFormat("<Code>{0}</Code>", GetCustomerClassificationCode(customerClassification));
+                sb.Append("</CustomerClassification>");
+            }
             sb.Append("<Shipment>");
             sb.Append("<Shipper>");
             sb.Append("<Address>");
