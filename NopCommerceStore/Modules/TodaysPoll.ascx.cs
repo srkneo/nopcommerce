@@ -45,11 +45,16 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void BindData()
         {
-            var polls = PollManager.GetPolls(NopContext.Current.WorkingLanguage.LanguageId, 1);
+            var polls = PollManager.GetPolls(NopContext.Current.WorkingLanguage.LanguageId, Int32.MaxValue, true);
             if (polls.Count > 0)
-                PollControl.PollId = polls[0].PollId;
+            {
+                rptPollBlocks.DataSource = polls;
+                rptPollBlocks.DataBind();
+            }
             else
+            {
                 this.Visible = false;
+            }
         }
     }
 }

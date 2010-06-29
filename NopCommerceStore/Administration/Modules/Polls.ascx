@@ -25,20 +25,20 @@
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Polls.DisplayOrder %>" HeaderStyle-HorizontalAlign="Center"
-            ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
+            ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <%#Eval("DisplayOrder")%>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Polls.Published %>" HeaderStyle-HorizontalAlign="Center"
-            ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
+            ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <nopCommerce:ImageCheckBox runat="server" ID="cbPublished" Checked='<%# Eval("Published") %>'>
                 </nopCommerce:ImageCheckBox>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="<% $NopResources:Admin.Polls.ShowOnHomePage %>" HeaderStyle-HorizontalAlign="Center"
-            ItemStyle-Width="15%" ItemStyle-HorizontalAlign="Center">
+            ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center">
             <ItemTemplate>
                 <nopCommerce:ImageCheckBox runat="server" ID="cbShowOnHomePage" Checked='<%# Eval("ShowOnHomePage") %>' />
             </ItemTemplate>

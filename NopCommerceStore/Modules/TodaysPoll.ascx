@@ -7,6 +7,10 @@
     <div class="clear">
     </div>
     <div class="poll-item">
-        <nopCommerce:Poll ID="PollControl" runat="server" />
+        <asp:Repeater runat="server" ID="rptPollBlocks">
+            <ItemTemplate>
+                <nopCommerce:Poll ID="PollControl" runat="server" PollId='<%#Eval("PollId")%>' />
+            </ItemTemplate>
+        </asp:Repeater>
     </div>
 </div>

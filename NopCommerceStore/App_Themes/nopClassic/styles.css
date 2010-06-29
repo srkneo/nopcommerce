@@ -3067,7 +3067,7 @@ ul.languagelist li .selected
 	float: left;
 	text-align: left;
 	vertical-align: top;
-	padding-top: 10px;
+	padding: 10px;
 }
 
 .poll-take-poll, .poll-results
