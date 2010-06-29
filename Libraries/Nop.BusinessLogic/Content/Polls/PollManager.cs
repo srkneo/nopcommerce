@@ -112,9 +112,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// </summary>
         /// <param name="languageId">Language identifier. 0 if you want to get all polls</param>
         /// <param name="pollCount">Poll count to load. 0 if you want to get all polls</param>
-        /// <param name="shownOnHomePage">Retrieve only shown on home page polls</param>
+        /// <param name="loadShownOnHomePageOnly">Retrieve only shown on home page polls</param>
         /// <returns>Poll collection</returns>
-        public static List<Poll> GetPolls(int languageId, int pollCount, bool shownOnHomePage)
+        public static List<Poll> GetPolls(int languageId, int pollCount, bool loadShownOnHomePageOnly)
         {
             bool showHidden = NopContext.Current.IsAdmin;
 
@@ -126,7 +126,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
                 query = query.Where(p => !p.StartDate.HasValue || p.StartDate <= DateTime.UtcNow);
                 query = query.Where(p => !p.EndDate.HasValue || p.EndDate >= DateTime.UtcNow);
             }
-            if (shownOnHomePage)
+            if (loadShownOnHomePageOnly)
             {
                 query = query.Where(p => p.ShowOnHomePage);
             }
