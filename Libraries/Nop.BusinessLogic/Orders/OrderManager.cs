@@ -2991,7 +2991,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 bool shoppingCartRequiresShipping = false;
                 if (!paymentInfo.IsRecurringPayment)
                 {
-                    orderWeight = ShippingManager.GetShoppingCartTotalWeigth(cart, customer);
+                    orderWeight = ShippingManager.GetShoppingCartTotalWeight(cart, customer);
                     shoppingCartRequiresShipping = ShippingManager.ShoppingCartRequiresShipping(cart);
                     if (shoppingCartRequiresShipping)
                     {

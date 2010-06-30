@@ -117,11 +117,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         /// <summary>
         /// Gets the total weight
         /// </summary> 
-        public decimal TotalWeigth
+        public decimal TotalWeight
         {
             get
             {
-                decimal totalWeigth = decimal.Zero;
+                decimal totalWeight = decimal.Zero;
                 ProductVariant productVariant = this.ProductVariant;
                 if (productVariant != null)
                 {
@@ -133,9 +133,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                         attributesTotalWeight += pvaValue.WeightAdjustment;
                     }
                     decimal unitWeight = productVariant.Weight + attributesTotalWeight;
-                    totalWeigth = unitWeight * Quantity;
+                    totalWeight = unitWeight * Quantity;
                 }
-                return totalWeigth;
+                return totalWeight;
             }
         }
 

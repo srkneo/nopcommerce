@@ -115,12 +115,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
         /// <param name="cart">Cart</param>
         /// <param name="customer">Customer</param>
         /// <returns>Shopping cart weight</returns>
-        public static decimal GetShoppingCartTotalWeigth(ShoppingCart cart, Customer customer)
+        public static decimal GetShoppingCartTotalWeight(ShoppingCart cart, Customer customer)
         {
             decimal totalWeight = decimal.Zero;
             //shopping cart items
             foreach (var shoppingCartItem in cart)
-                totalWeight += shoppingCartItem.TotalWeigth;
+                totalWeight += shoppingCartItem.TotalWeight;
 
             //checkout attributes
             if (customer != null)

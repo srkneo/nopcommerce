@@ -103,7 +103,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.ShippingByWeightAndCountryCM
                     continue;
                 subTotal += PriceHelper.GetSubTotal(shoppingCartItem, shipmentPackage.Customer, true);
             }
-            decimal weight = ShippingManager.GetShoppingCartTotalWeigth(shipmentPackage.Items, shipmentPackage.Customer);
+            decimal weight = ShippingManager.GetShoppingCartTotalWeight(shipmentPackage.Items, shipmentPackage.Customer);
 
             var shippingMethods = ShippingMethodManager.GetAllShippingMethods(shipmentPackage.ShippingAddress.CountryId);
             foreach (var shippingMethod in shippingMethods)

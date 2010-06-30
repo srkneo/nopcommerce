@@ -230,7 +230,7 @@ namespace NopSolutions.NopCommerce.Shipping.Methods.CanadaPost
                 var item = new Item();
                 item.Quantity = sci.Quantity;
                 //Canada Post uses kg(s)
-                decimal unitWeight = sci.TotalWeigth / sci.Quantity;
+                decimal unitWeight = sci.TotalWeight / sci.Quantity;
                 item.Weight = Convert.ToInt32(Math.Ceiling(MeasureManager.ConvertWeight(unitWeight, MeasureManager.BaseWeightIn, usedMeasureWeight)));
                 
                 //Canada Post uses centimeters                
