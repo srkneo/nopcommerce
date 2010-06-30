@@ -6696,3 +6696,34 @@ BEGIN
 	VALUES (N'Cache.CheckoutAttributeManager.CacheEnabled', N'true', N'')
 END
 GO
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_CustomerAction]
+		WHERE [SystemKeyword] = N'ManagePromotionProviders')
+BEGIN
+	INSERT [dbo].[Nop_CustomerAction] ([Name], [SystemKeyword], [Comment], [DisplayOrder])
+	VALUES (N'Manage Promotion Providers', N'ManagePromotionProviders', N'',200)
+END
+GO
+
+IF EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_CustomerAction]
+		WHERE [SystemKeyword] = N'ManageProductFeeds')
+BEGIN
+	DELETE FROM [dbo].[Nop_CustomerAction] WHERE [SystemKeyword] = N'ManageProductFeeds'
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM [Nop_ActivityLogType] WHERE [SystemKeyword] = N'EditPromotionProviders')
+BEGIN
+	INSERT INTO [Nop_ActivityLogType] ([SystemKeyword], [Name], [Enabled]) VALUES (N'EditPromotionProviders', N'Edit promotion providers', 1)
+END
+GO
+
+IF NOT EXISTS(SELECT 1 FROM [Nop_ActivityLogType] WHERE [SystemKeyword] = N'EditThirdPartyIntegration')
+BEGIN
+	INSERT INTO [Nop_ActivityLogType] ([SystemKeyword], [Name], [Enabled]) VALUES (N'EditThirdPartyIntegration', N'Edit third-party integration', 1)
+END
+GO

@@ -422,6 +422,114 @@ set @resources='
   <LocaleResource Name="Admin.PollInfo.EndDate.Tooltip">
 	<Value>Set the poll end date or leave empty</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.PromotionProvidersHomeTitle">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.PromotionProvidersHomeDescription">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.PromotionProvidersTitle">
+	<Value>Pormotions Providers</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.PromotionProvidersDescription">
+	<Value>Manage your promotions providers</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.FroogleTitle">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Sitemap.FroogleDescription">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProvidersHome.PromotionProvidersHome">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProvidersHome.intro">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProvidersHome.Froogle.Title">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProvidersHome.Froogle.Description">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Title">
+	<Value>Promotion Providers</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.SaveButton.Text">
+	<Value>Save</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.SaveButton.Tooltip">
+	<Value>Save changes</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Froogle.Title">
+	<Value>Froogle</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Froogle.AllowPublicFroogleAccess">
+	<Value>Allow public access</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Froogle.AllowPublicFroogleAccess.Tooltip">
+	<Value>Check if you want to allow public froogle access</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.SuccessResult">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.EditPromotionProviders">
+	<Value>Promotion providers was changed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Froogle.GenerateButton.Text">
+	<Value>Generate feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Froogle.GenerateButton.Tooltip">
+	<Value>Generate froogle feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Froogle.SuccessResult">
+	<Value>Froogle feed has been successfully generated. {0} to see generated feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.Title">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.SaveButton.Text">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.SaveButton.ToolTip">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.GenerateButton.Text">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.GenerateButton.Tooltip">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.AllowPublicAccess">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.SuccessResult">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="">
+	<Value></Value>
+  </LocaleResource>vvv
 </Language>
 '
 

@@ -2077,13 +2077,6 @@
     <Compile Include="Administration\Modules\Polls.ascx.designer.cs">
       <DependentUpon>Polls.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\Modules\Froogle.ascx.cs">
-      <DependentUpon>Froogle.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\Modules\Froogle.ascx.designer.cs">
-      <DependentUpon>Froogle.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Administration\Modules\PricelistAdd.ascx.cs">
       <DependentUpon>PricelistAdd.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2224,12 +2217,12 @@
     <Compile Include="Administration\Modules\ProductsHome.ascx.designer.cs">
       <DependentUpon>ProductsHome.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\Modules\PromotionProvidersHome.ascx.cs">
-      <DependentUpon>PromotionProvidersHome.ascx</DependentUpon>
+    <Compile Include="Administration\Modules\PromotionProviders.ascx.cs">
+      <DependentUpon>PromotionProviders.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administration\Modules\PromotionProvidersHome.ascx.designer.cs">
-      <DependentUpon>PromotionProvidersHome.ascx</DependentUpon>
+    <Compile Include="Administration\Modules\PromotionProviders.ascx.designer.cs">
+      <DependentUpon>PromotionProviders.ascx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Modules\PromotionsHome.ascx.cs">
       <DependentUpon>PromotionsHome.ascx</DependentUpon>
@@ -2581,12 +2574,12 @@
     <Compile Include="Administration\NewsHome.aspx.designer.cs">
       <DependentUpon>NewsHome.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\PromotionProvidersHome.aspx.cs">
-      <DependentUpon>PromotionProvidersHome.aspx</DependentUpon>
+    <Compile Include="Administration\PromotionProviders.aspx.cs">
+      <DependentUpon>PromotionProviders.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administration\PromotionProvidersHome.aspx.designer.cs">
-      <DependentUpon>PromotionProvidersHome.aspx</DependentUpon>
+    <Compile Include="Administration\PromotionProviders.aspx.designer.cs">
+      <DependentUpon>PromotionProviders.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\ProductsHome.aspx.cs">
       <DependentUpon>ProductsHome.aspx</DependentUpon>
@@ -2755,13 +2748,6 @@
     </Compile>
     <Compile Include="Administration\Discounts.aspx.designer.cs">
       <DependentUpon>Discounts.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Administration\Froogle.aspx.cs">
-      <DependentUpon>Froogle.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\Froogle.aspx.designer.cs">
-      <DependentUpon>Froogle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\LanguageAdd.aspx.cs">
       <DependentUpon>LanguageAdd.aspx</DependentUpon>
@@ -5598,7 +5584,6 @@
     <Content Include="Administration\DiscountAdd.aspx" />
     <Content Include="Administration\DiscountDetails.aspx" />
     <Content Include="Administration\Discounts.aspx" />
-    <Content Include="Administration\Froogle.aspx" />
     <Content Include="Administration\LanguageAdd.aspx" />
     <Content Include="Administration\LanguageDetails.aspx" />
     <Content Include="Administration\Languages.aspx" />
@@ -6216,7 +6201,6 @@
     <Content Include="Administration\Modules\PollAdd.ascx" />
     <Content Include="Administration\Modules\PollDetails.ascx" />
     <Content Include="Administration\Modules\Polls.ascx" />
-    <Content Include="Administration\Modules\Froogle.ascx" />
     <Content Include="Administration\Modules\PricelistAdd.ascx" />
     <Content Include="Administration\Modules\PricelistDetails.ascx" />
     <Content Include="Administration\Modules\Pricelist.ascx" />
@@ -6237,7 +6221,7 @@
     <Content Include="Administration\Modules\OrderDetails.ascx" />
     <Content Include="Administration\Modules\PaymentHome.ascx" />
     <Content Include="Administration\Modules\ProductsHome.ascx" />
-    <Content Include="Administration\Modules\PromotionProvidersHome.ascx" />
+    <Content Include="Administration\Modules\PromotionProviders.ascx" />
     <Content Include="Administration\Modules\PromotionsHome.ascx" />
     <Content Include="Administration\Modules\SalesHome.ascx" />
     <Content Include="Administration\Modules\SalesReport.ascx" />
@@ -6288,7 +6272,7 @@
     <Content Include="Administration\PaymentSettingsHome.aspx" />
     <Content Include="Administration\TemplatesHome.aspx" />
     <Content Include="Administration\NewsHome.aspx" />
-    <Content Include="Administration\PromotionProvidersHome.aspx" />
+    <Content Include="Administration\PromotionProviders.aspx" />
     <Content Include="Administration\ProductsHome.aspx" />
     <Content Include="Administration\HelpHome.aspx" />
     <Content Include="Administration\SystemHome.aspx" />
