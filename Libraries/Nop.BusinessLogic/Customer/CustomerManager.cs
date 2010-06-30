@@ -1362,6 +1362,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     DateTime.UtcNow);
             }
 
+            //raise event             
+            EventContext.Current.OnCustomerCreated(null, 
+                new CustomerEventArgs() { Customer = customer});
+            
             return customer;
         }
 
@@ -1473,6 +1477,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
                     email, subscriptionOld.Active);
             }
 
+            //raise event             
+            EventContext.Current.OnCustomerUpdated(null,
+                new CustomerEventArgs() { Customer = customer });
+            
             return customer;
         }
 

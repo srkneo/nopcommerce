@@ -908,11 +908,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             context.Orders.AddObject(order);
             context.SaveChanges();
 
+            //quickbooks
             if (QBManager.QBIsEnabled)
             {
                 QBManager.RequestSynchronization(order);
             }
 
+            //raise event             
+            EventContext.Current.OnOrderCreated(null,
+                new OrderEventArgs() { Order = order });
+            
             return order;
         }
 
@@ -1231,11 +1236,17 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             order.CreatedOn = createdOn;
             context.SaveChanges();
 
+            //quickbooks
             if (QBManager.QBIsEnabled)
             {
                 QBManager.RequestSynchronization(order);
             }
 
+
+            //raise event             
+            EventContext.Current.OnOrderUpdated(null,
+                new OrderEventArgs() { Order = order });
+            
             return order;
         }
 
@@ -3668,6 +3679,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
                         //uncomment this line to support transactions
                         //scope.Complete();
+
+
+                        //raise event             
+                        EventContext.Current.OnOrderPlaced(null,
+                            new OrderEventArgs() { Order = order });
+            
                     }
                 }
             }

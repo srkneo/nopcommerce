@@ -28,10 +28,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Caching
     /// </summary>
     public partial class NopRequestCache
     {
-        #region Fields
-
-        #endregion
-
         #region Ctor
         
         /// <summary>

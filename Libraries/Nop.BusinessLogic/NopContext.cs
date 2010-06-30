@@ -51,7 +51,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         /// </summary>
         private NopContext()
         {
-
         }
         #endregion
 
@@ -178,13 +177,21 @@ namespace NopSolutions.NopCommerce.BusinessLogic
             get
             {
                 if (HttpContext.Current == null)
-                    return null;
-
+                {
+                    object data = Thread.GetData(Thread.GetNamedDataSlot("NopContext"));
+                    if (data != null)
+                    {
+                        return (NopContext)data;
+                    }
+                    NopContext context = new NopContext();
+                    Thread.SetData(Thread.GetNamedDataSlot("NopContext"), context);
+                    return context;
+                }
                 if (HttpContext.Current.Items["NopContext"] == null)
                 {
-                    NopContext context2 = new NopContext();
-                    HttpContext.Current.Items.Add("NopContext", context2);
-                    return context2;
+                    NopContext context = new NopContext();
+                    HttpContext.Current.Items.Add("NopContext", context);
+                    return context;
                 }
                 return (NopContext)HttpContext.Current.Items["NopContext"];
             }

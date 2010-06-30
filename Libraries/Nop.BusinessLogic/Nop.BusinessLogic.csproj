@@ -134,6 +134,8 @@
     <Compile Include="Content\Forums\ForumTopic.cs" />
     <Compile Include="Content\Forums\Forum.cs" />
     <Compile Include="Content\Polls\PollVotingRecord.cs" />
+    <Compile Include="Customer\CustomerEventArgs.cs" />
+    <Compile Include="EventContext.cs" />
     <Compile Include="Customer\CustomerReportByLanguageLine.cs" />
     <Compile Include="Customer\CustomerReportByAttributeKeyLine.cs" />
     <Compile Include="Customer\CustomerBestReportLine.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Messages\SMSManager.cs" />
     <Compile Include="Orders\BestSellersReportLine.cs" />
     <Compile Include="Orders\AppliedGiftCard.cs" />
+    <Compile Include="Orders\OrderEventArgs.cs" />
     <Compile Include="Orders\OrderProductVariantReportLine.cs" />
     <Compile Include="Orders\OrderIncompleteReportLine.cs" />
     <Compile Include="Orders\RewardPointsHistory.cs" />
@@ -185,6 +188,8 @@
     <Compile Include="Products\Attributes\CheckoutAttributeValue.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeValueLocalized.cs" />
     <Compile Include="Products\Attributes\CheckoutAttributeHelper.cs" />
+    <Compile Include="Products\ProductVariantEventArgs.cs" />
+    <Compile Include="Products\ProductEventArgs.cs" />
     <Compile Include="Products\ProductRating.cs" />
     <Compile Include="Products\ProductReviewHelpfulness.cs" />
     <Compile Include="Products\Extensions.cs" />
