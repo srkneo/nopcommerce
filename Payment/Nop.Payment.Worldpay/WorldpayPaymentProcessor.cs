@@ -125,7 +125,6 @@ namespace NopSolutions.NopCommerce.Payment.Methods.Worldpay
                 remotePostHelper.Add("testMode", "0");
             else
                 remotePostHelper.Add("testMode", "100");
-            //TODO remotePostHelper.Add("testMode", "101");
             remotePostHelper.Add("postcode", order.BillingZipPostalCode);
             Country billingCountry = CountryManager.GetCountryById(order.BillingCountryId);
             if (billingCountry != null)

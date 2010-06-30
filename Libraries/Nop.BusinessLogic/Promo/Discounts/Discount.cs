@@ -286,8 +286,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
                         }
                         else
                         {
-                            //TODO decide what to return when customer is not registered;
-                            //return true;
                             return false;
                         }
                     }

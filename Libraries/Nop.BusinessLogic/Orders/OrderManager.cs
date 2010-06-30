@@ -3551,7 +3551,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                                     opv.AttributeDescription, opv.AttributesXml, opv.Quantity, opv.DiscountAmountInclTax,
                                     opv.DiscountAmountExclTax, 0, false, 0);
 
-                                //UNDONE gift cards are not supported in recurring products
+                                //gift cards are not supported in recurring products
                                 //if (opv.ProductVariant.IsGiftCard)
                                 //{
                                 //    for (int i = 0; i < opv.Quantity; i++)

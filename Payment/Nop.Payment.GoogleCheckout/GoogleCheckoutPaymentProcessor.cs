@@ -480,8 +480,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.GoogleCheckout
             if (shoppingCartRequiresShipping)
             {
                 string shippingError = string.Empty;
-                //TODO AddMerchantCalculatedShippingMethod
-                //TODO AddCarrierCalculatedShippingOption
+                //AddMerchantCalculatedShippingMethod
+                //AddCarrierCalculatedShippingOption
                 List<ShippingOption> shippingOptions = ShippingManager.GetShippingOptions(cart, NopContext.Current.User, null, ref shippingError);
                 foreach (ShippingOption shippingOption in shippingOptions)
                     req.AddFlatRateShippingMethod(shippingOption.Name, TaxManager.GetShippingPrice(shippingOption.Rate, NopContext.Current.User));
