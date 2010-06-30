@@ -63,12 +63,12 @@
             </li>
             <li>
                 <div class="title">
-                    <a href="promotionprovidershome.aspx" title="<%=GetLocaleResourceString("Admin.PromotionsHome.PromotionProvidersHome.TitleDescription")%>">
-                        <%=GetLocaleResourceString("Admin.PromotionsHome.PromotionProvidersHome.Title")%></a>
+                    <a href="promotionproviders.aspx" title="<%=GetLocaleResourceString("Admin.PromotionsHome.PromotionProviders.TitleDescription")%>">
+                        <%=GetLocaleResourceString("Admin.PromotionsHome.PromotionProviders.Title")%></a>
                 </div>
                 <div class="description">
                     <p>
-                        <%=GetLocaleResourceString("Admin.PromotionsHome.PromotionProvidersHome.Description")%>
+                        <%=GetLocaleResourceString("Admin.PromotionsHome.PromotionProviders.Description")%>
                     </p>
                 </div>
             </li>

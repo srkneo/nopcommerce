@@ -234,7 +234,7 @@ set @resources='
     <Value>QuickBooks item reference is not specified</Value>
   </LocaleResource>
   <LocaleResource Name="ActivityLog.EditThirdPartyIntegration">
-    <Value>Third-party integration settings was changed</Value>
+    <Value>Third-party integration settings were changed</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.DiscountAccountRef">
     <Value>Discount account reference</Value>
@@ -474,7 +474,7 @@ set @resources='
 	<Value></Value>
   </LocaleResource>
   <LocaleResource Name="ActivityLog.EditPromotionProviders">
-	<Value>Promotion providers was changed</Value>
+	<Value>Promotion providers were changed</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.PromotionProviders.Froogle.GenerateButton.Text">
 	<Value>Generate feed</Value>
@@ -506,30 +506,24 @@ set @resources='
   <LocaleResource Name="Admin.Froogle.SuccessResult">
 	<Value></Value>
   </LocaleResource>
-  <LocaleResource Name="">
+  <LocaleResource Name="Admin.PromotionsHome.PromotionProvidersHome.TitleDescription">
 	<Value></Value>
   </LocaleResource>
-  <LocaleResource Name="">
+  <LocaleResource Name="Admin.PromotionsHome.PromotionProvidersHome.Title">
 	<Value></Value>
   </LocaleResource>
-  <LocaleResource Name="">
+  <LocaleResource Name="Admin.PromotionsHome.PromotionProvidersHome.Description">
 	<Value></Value>
   </LocaleResource>
-  <LocaleResource Name="">
-	<Value></Value>
+  <LocaleResource Name="Admin.PromotionsHome.PromotionProviders.TitleDescription">
+	<Value>Manage Promotion Providers.</Value>
   </LocaleResource>
-  <LocaleResource Name="">
-	<Value></Value>
+  <LocaleResource Name="Admin.PromotionsHome.PromotionProviders.Title">
+	<Value>Manage Promotion Providers</Value>
   </LocaleResource>
-  <LocaleResource Name="">
-	<Value></Value>
+  <LocaleResource Name="Admin.PromotionsHome.PromotionProviders.Description">
+	<Value>Manage various external promotion providers and sitemap settings for search engines.</Value>
   </LocaleResource>
-  <LocaleResource Name="">
-	<Value></Value>
-  </LocaleResource>
-  <LocaleResource Name="">
-	<Value></Value>
-  </LocaleResource>vvv
 </Language>
 '
 
